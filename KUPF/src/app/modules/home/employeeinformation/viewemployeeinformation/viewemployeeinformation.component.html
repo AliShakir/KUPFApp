@@ -1,0 +1,429 @@
+<div class="card mb-5 mb-xl-8">
+    <!--begin::Header-->
+    <div class="card-header border-0 pt-5">
+        <div class="card-toolbar">
+
+            <!--begin::Menu-->
+            <button type="button" class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
+                data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                <!--begin::Svg Icon | path: icons/duotune/general/gen024.svg-->
+                <span class="svg-icon svg-icon-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <rect x="5" y="5" width="5" height="5" rx="1" fill="currentColor"></rect>
+                            <rect x="14" y="5" width="5" height="5" rx="1" fill="currentColor" opacity="0.3"></rect>
+                            <rect x="5" y="14" width="5" height="5" rx="1" fill="currentColor" opacity="0.3"></rect>
+                            <rect x="14" y="14" width="5" height="5" rx="1" fill="currentColor" opacity="0.3"></rect>
+                        </g>
+                    </svg>
+                </span>
+                <!--end::Svg Icon-->
+            </button>
+            <!--begin::Menu 2-->
+            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-bold w-200px"
+                data-kt-menu="true">
+                <!--begin::Menu item-->
+                <div class="menu-item px-3">
+                    <div class="menu-content fs-6 text-dark fw-bolder px-3 py-4">Quick Actions</div>
+                </div>
+                <!--end::Menu item-->
+                <!--begin::Menu separator-->
+                <div class="separator mb-3 opacity-75"></div>
+                <!--end::Menu separator-->
+                <!--begin::Menu item-->
+                <div class="menu-item px-3">
+                    <a href="#" class="menu-link px-3">New Ticket</a>
+                </div>
+                <!--end::Menu item-->
+                <!--begin::Menu item-->
+                <div class="menu-item px-3">
+                    <a href="#" class="menu-link px-3">New Customer</a>
+                </div>
+                <!--end::Menu item-->
+                <!--begin::Menu item-->
+                <div class="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="right-start">
+                    <!--begin::Menu item-->
+                    <a href="#" class="menu-link px-3">
+                        <span class="menu-title">New Group</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <!--end::Menu item-->
+                    <!--begin::Menu sub-->
+                    <div class="menu-sub menu-sub-dropdown w-175px py-4">
+                        <!--begin::Menu item-->
+                        <div class="menu-item px-3">
+                            <a href="#" class="menu-link px-3">Admin Group</a>
+                        </div>
+                        <!--end::Menu item-->
+                        <!--begin::Menu item-->
+                        <div class="menu-item px-3">
+                            <a href="#" class="menu-link px-3">Staff Group</a>
+                        </div>
+                        <!--end::Menu item-->
+                        <!--begin::Menu item-->
+                        <div class="menu-item px-3">
+                            <a href="#" class="menu-link px-3">Member Group</a>
+                        </div>
+                        <!--end::Menu item-->
+                    </div>
+                    <!--end::Menu sub-->
+                </div>
+                <!--end::Menu item-->
+                <!--begin::Menu item-->
+                <div class="menu-item px-3">
+                    <a href="#" class="menu-link px-3">New Contact</a>
+                </div>
+                <!--end::Menu item-->
+                <!--begin::Menu separator-->
+                <div class="separator mt-3 opacity-75"></div>
+                <!--end::Menu separator-->
+                <!--begin::Menu item-->
+                <div class="menu-item px-3">
+                    <div class="menu-content px-3 py-3">
+                        <a class="btn btn-primary btn-sm px-4" href="#">Generate Reports</a>
+                    </div>
+                </div>
+                <!--end::Menu item-->
+            </div>
+            <!--end::Menu 2-->
+            <!--end::Menu-->
+        </div>
+        <h3 class="card-title align-items-start flex-column">
+            <a routerLink="/employee/add-employee" class="btn btn-primary w-100">
+
+                <span class="svg-icon svg-icon-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path
+                            d="M20 14H18V10H20C20.6 10 21 10.4 21 11V13C21 13.6 20.6 14 20 14ZM21 19V17C21 16.4 20.6 16 20 16H18V20H20C20.6 20 21 19.6 21 19ZM21 7V5C21 4.4 20.6 4 20 4H18V8H20C20.6 8 21 7.6 21 7Z"
+                            fill="currentColor"></path>
+                        <path opacity="0.3"
+                            d="M17 22H3C2.4 22 2 21.6 2 21V3C2 2.4 2.4 2 3 2H17C17.6 2 18 2.4 18 3V21C18 21.6 17.6 22 17 22ZM10 7C8.9 7 8 7.9 8 9C8 10.1 8.9 11 10 11C11.1 11 12 10.1 12 9C12 7.9 11.1 7 10 7ZM13.3 16C14 16 14.5 15.3 14.3 14.7C13.7 13.2 12 12 10.1 12C8.10001 12 6.49999 13.1 5.89999 14.7C5.59999 15.3 6.19999 16 7.39999 16H13.3Z"
+                            fill="currentColor"></path>
+                    </svg>
+                </span>
+                {{'AddNewContact' | translate}}</a>
+        </h3>
+    </div>
+    <!--end::Header-->
+    <!--begin::Body-->
+    <div class="card-body py-3">
+        <!--begin::Table container-->
+        <div class="table-responsive">
+            <!--begin::Table-->
+            <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+                <!--begin::Table head-->
+                <thead>
+                    <tr class="fw-bolder text-muted">
+                        <th class="min-w-100px">Actions</th>
+                        <th class="min-w-100px">University</th>
+                        <th class="min-w-140px">Employee Id</th>
+                        <th class="min-w-120px">Name</th>
+                        <th class="min-w-120px">Date Of Joining</th>
+                        <th class="min-w-120px">Department</th>
+                    </tr>
+                </thead>
+                <!--end::Table head-->
+                <!--begin::Table body-->
+                <tbody>
+                    <tr>
+                        <td class="text-right">
+                            <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
+                            </a>
+                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
+                            </a>
+                        </td>
+                        <td>
+                            <a href="javascript:void(0)"
+                                class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">Kuwait University
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">16800572
+
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">نجاه عبدالقادر جاسم القناعي
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">04/18/2010</a>
+                        </td>
+                        <td class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">كلية الآداب</td>
+                        
+
+                    </tr>
+                    <tr>
+                        <td class="text-right">
+                            <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
+
+                            </a>
+                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
+
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">Kuwait University
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">16900445</a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">سالم مرزوق راشد الطحيح
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">04/18/2012</a>
+                        </td>
+                        <td class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">كلية العلوم الإدارية</td>
+                        
+
+                    </tr>
+                    <tr>
+                        <td class="text-right">
+                            <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
+
+                            </a>
+                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
+
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">Kuwait University
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">16900577</a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">على ذياب على المشوط
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">04/18/2013</a>
+                        </td>
+                        <td class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">كلية العلوم</td>
+                        
+
+                    </tr>
+                    <tr>
+                        <td class="text-right">
+                            <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
+
+                            </a>
+                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
+
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">Kuwait University
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">16900585
+
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">ناصر حسن جوهر حياه
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">04/18/2020</a>
+                        </td>
+                        <td class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">كلية الطب</td>
+                      
+
+                    </tr>
+                    <tr>
+                        <td class="text-right">
+                            <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
+
+                            </a>
+                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
+
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">Kuwait University</a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">17000650
+
+
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">يعقوب يوسف حسين ابراهيم مقدس  بهبهاني
+
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">04/18/2014</a>
+                        </td>
+                        <td class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">كلية العلوم</td>
+                       
+
+                    </tr>
+                    <tr>
+                        <td class="text-right">
+                            <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
+
+                            </a>
+                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
+
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">Kuwait University</a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">17000669
+
+
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">ناجى سعود محمد الزيد
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">04/18/2012</a>
+                        </td>
+                        <td class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">كلية الطب</td>
+                       
+
+                    </tr>
+                    <tr>
+                        <td class="text-right">
+                            <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
+
+                            </a>
+                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
+
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">Kuwait University</a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">17000693
+
+
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">صالح عبدالله محمد جاسم الصفار
+
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">04/18/2013</a>
+                        </td>
+                        <td class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">كلية التربية</td>
+                       
+
+                    </tr>
+                    <tr>
+                        <td class="text-right">
+                            <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
+
+                            </a>
+                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
+
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">Kuwait University</a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">17000715
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">رضا حسن عبدالله الحسن
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">04/18/2015</a>
+                        </td>
+                        <td class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">كلية العلوم</td>
+                       
+
+                    </tr>
+                    <tr>
+                        <td class="text-right">
+                            <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
+
+                            </a>
+                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
+
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">Kuwait University</a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">17000758
+
+
+
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">يحيى على محمد احمد
+
+
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">04/18/2010</a>
+                        </td>
+                        <td class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">كلية الآداب</td>
+                       
+
+                    </tr>
+                    <tr>
+                        <td class="text-right">
+                            <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
+
+                            </a>
+                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
+
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">Kuwait University</a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">17000774
+
+
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">عباس على احمد محمد صالح
+
+
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">04/18/2021</a>
+                        </td>
+                        <td class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">كلية العلوم</td>
+                       
+
+                    </tr>
+                </tbody>
+                <!--end::Table body-->
+            </table>
+            <!--end::Table-->
+        </div>
+        <!--end::Table container-->
+    </div>
+    <!--begin::Body-->
+    <div class="card-footer">
+        
+    </div>
+</div>

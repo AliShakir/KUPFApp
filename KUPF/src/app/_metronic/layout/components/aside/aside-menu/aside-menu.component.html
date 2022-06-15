@@ -1,0 +1,363 @@
+<!-- Dashboard -->
+<div class="menu-item">
+  <a class="menu-link without-sub" routerLink="/dashboard" routerLinkActive="active"><span class="menu-icon">
+      <span [inlineSVG]="'./assets/media/icons/duotune/art/art002.svg'" class="svg-icon svg-icon-2"></span>
+    </span>
+    <span class="menu-title">DASHBOARD</span></a>
+</div>
+
+<!-- Layout builder -->
+<div class="menu-item">
+  <a class="menu-link without-sub" routerLink="/builder" routerLinkActive="active"><span class="menu-icon">
+      <span [inlineSVG]="'./assets/media/icons/duotune/general/gen019.svg'" class="svg-icon svg-icon-2"></span>
+    </span><span class="menu-title">Layout Builder</span></a>
+</div>
+<div class="menu-item">
+  <div class="menu-content pt-8 pb-2">
+    <span class="menu-section text-muted text-uppercase fs-8 ls-1">Basic Data</span>
+  </div>
+</div>
+
+<div class="menu-item">
+  <a class="menu-link without-sub" routerLink="/employee/view-contact" routerLinkActive="active"><span
+      class="menu-icon">
+      <span [inlineSVG]="'./assets/media/icons/duotune/general/gen019.svg'" class="svg-icon svg-icon-2"></span>
+    </span><span class="menu-title">View Contact</span></a>
+</div>
+<!-- Separator -->
+<div class="menu-item">
+  <div class="menu-content pt-8 pb-2">
+    <span class="menu-section text-uppercase fs-8 ls-1">Employees Data</span>
+  </div>
+</div>
+<div data-kt-menu-trigger="click" class="menu-item menu-accordion mb-1 hover">
+  <span class="menu-link">
+    <span class="menu-icon">
+      <!--begin::Svg Icon | path: icons/duotune/graphs/gra006.svg-->
+      <span class="svg-icon svg-icon-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M13 5.91517C15.8 6.41517 18 8.81519 18 11.8152C18 12.5152 17.9 13.2152 17.6 13.9152L20.1 15.3152C20.6 15.6152 21.4 15.4152 21.6 14.8152C21.9 13.9152 22.1 12.9152 22.1 11.8152C22.1 7.01519 18.8 3.11521 14.3 2.01521C13.7 1.91521 13.1 2.31521 13.1 3.01521V5.91517H13Z"
+            fill="currentColor"></path>
+          <path opacity="0.3"
+            d="M19.1 17.0152C19.7 17.3152 19.8 18.1152 19.3 18.5152C17.5 20.5152 14.9 21.7152 12 21.7152C9.1 21.7152 6.50001 20.5152 4.70001 18.5152C4.30001 18.0152 4.39999 17.3152 4.89999 17.0152L7.39999 15.6152C8.49999 16.9152 10.2 17.8152 12 17.8152C13.8 17.8152 15.5 17.0152 16.6 15.6152L19.1 17.0152ZM6.39999 13.9151C6.19999 13.2151 6 12.5152 6 11.8152C6 8.81517 8.2 6.41515 11 5.91515V3.01519C11 2.41519 10.4 1.91519 9.79999 2.01519C5.29999 3.01519 2 7.01517 2 11.8152C2 12.8152 2.2 13.8152 2.5 14.8152C2.7 15.4152 3.4 15.7152 4 15.3152L6.39999 13.9151Z"
+            fill="currentColor"></path>
+        </svg>
+      </span>
+      <!--end::Svg Icon-->
+    </span>
+    <span class="menu-title">Employees</span>
+    <span class="menu-arrow"></span>
+  </span>
+  <div class="menu-sub menu-sub-accordion" kt-hidden-height="241">
+    <div data-kt-menu-trigger="click" class="menu-item menu-accordion mb-1">
+      <span class="menu-link">
+        <span class="menu-bullet">
+          <span class="bullet bullet-dot"></span>
+        </span>
+        <span class="menu-title">Add Employee</span>
+        <span class="menu-arrow"></span>
+      </span>
+      <div class="menu-sub menu-sub-accordion" style="display: none; overflow: hidden;" kt-hidden-height="78">
+        <div class="menu-item">
+          <a class="menu-link" href="/metronic8/demo1/../demo1/apps/support-center/tickets/list.html">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title">Received thru Mobile </span>
+          </a>
+        </div>
+        <div class="menu-item">
+          <a class="menu-link" routerLink="/employee/view-employee" routerLinkActive="active">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title">Add Subscriber</span>
+          </a>
+        </div>
+        <div class="menu-item">
+          <a class="menu-link" href="/metronic8/demo1/../demo1/apps/support-center/tickets/view.html">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title">Create Account</span>
+          </a>
+        </div>
+        <div class="menu-item">
+          <a class="menu-link" href="/metronic8/demo1/../demo1/apps/support-center/tickets/view.html">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title">View Financials</span>
+          </a>
+        </div>
+        <div class="menu-item">
+          <a class="menu-link" href="/metronic8/demo1/../demo1/apps/support-center/tickets/view.html">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title">Import Employee</span>
+          </a>
+        </div>
+      </div>
+      <div class="menu-item">
+        <a class="menu-link" href="/metronic8/demo1/../demo1/apps/support-center/tickets/view.html">
+          <span class="menu-bullet">
+            <span class="bullet bullet-dot"></span>
+          </span>
+          <span class="menu-title">Import 1</span>
+        </a>
+      </div>
+      <div class="menu-item">
+        <a class="menu-link" href="/metronic8/demo1/../demo1/apps/support-center/tickets/view.html">
+          <span class="menu-bullet">
+            <span class="bullet bullet-dot"></span>
+          </span>
+          <span class="menu-title">Import 2</span>
+        </a>
+      </div>
+      <div class="menu-item">
+        <a class="menu-link" href="/metronic8/demo1/../demo1/apps/support-center/tickets/view.html">
+          <span class="menu-bullet">
+            <span class="bullet bullet-dot"></span>
+          </span>
+          <span class="menu-title">Register</span>
+        </a>
+      </div>
+      <div class="menu-item">
+        <a class="menu-link" href="/metronic8/demo1/../demo1/apps/support-center/tickets/view.html">
+          <span class="menu-bullet">
+            <span class="bullet bullet-dot"></span>
+          </span>
+          <span class="menu-title">Drop a member</span>
+        </a>
+      </div>
+      <div class="menu-item">
+        <a class="menu-link" href="/metronic8/demo1/../demo1/apps/support-center/tickets/view.html">
+          <span class="menu-bullet">
+            <span class="bullet bullet-dot"></span>
+          </span>
+          <span class="menu-title">Membership Cessation </span>
+        </a>
+      </div>
+      <div class="menu-item">
+        <a class="menu-link" href="/metronic8/demo1/../demo1/apps/support-center/tickets/view.html">
+          <span class="menu-bullet">
+            <span class="bullet bullet-dot"></span>
+          </span>
+          <span class="menu-title">Withdrawal </span>
+        </a>
+      </div>
+      <div class="menu-item">
+        <a class="menu-link" href="/metronic8/demo1/../demo1/apps/support-center/tickets/view.html">
+          <span class="menu-bullet">
+            <span class="bullet bullet-dot"></span>
+          </span>
+          <span class="menu-title">End of Service </span>
+        </a>
+      </div>
+      <div class="menu-item">
+        <a class="menu-link" href="/metronic8/demo1/../demo1/apps/support-center/tickets/view.html">
+          <span class="menu-bullet">
+            <span class="bullet bullet-dot"></span>
+          </span>
+          <span class="menu-title">Death Disability </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<!----------------------------------->
+<div class="menu-item">
+  <div class="menu-content pt-8 pb-2">
+    <span class="menu-section text-muted text-uppercase fs-8 ls-1">Setup</span>
+  </div>
+</div>
+
+<!-- Services -->
+<div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
+  <span class="menu-link"><span class="menu-icon"><span class="svg-icon svg-icon-2"
+        [inlineSVG]="'./assets/media/icons/duotune/general/gen040.svg'"></span></span><span class="menu-title"
+      data-link="/error">Setup</span><span class="menu-arrow"></span></span>
+  <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+    <div class="menu-item">
+      <a class="menu-link without-sub" routerLink="/references/reference-details" routerLinkActive="active"><span class="menu-bullet"><span
+            class="bullet bullet-dot"></span></span><span class="menu-title">Add References</span></a>
+    </div>
+    <div class="menu-item">
+      <a class="menu-link without-sub" routerLink="/error/500" routerLinkActive="active"><span class="menu-bullet"><span
+            class="bullet bullet-dot"></span></span><span class="menu-title">Add University </span></a>
+    </div>
+    <div class="menu-item">
+      <a class="menu-link without-sub" routerLink="/error/500" routerLinkActive="active"><span class="menu-bullet"><span
+            class="bullet bullet-dot"></span></span><span class="menu-title">Add Services Setup</span></a>
+    </div>
+    <div class="menu-item">
+      <a class="menu-link without-sub" routerLink="/error/500" routerLinkActive="active"><span class="menu-bullet"><span
+            class="bullet bullet-dot"></span></span><span class="menu-title">Add System Setup</span></a>
+    </div>
+    <div class="menu-item">
+      <a class="menu-link without-sub" routerLink="/error/500" routerLinkActive="active"><span class="menu-bullet"><span
+            class="bullet bullet-dot"></span></span><span class="menu-title">Add System Users</span></a>
+    </div>
+    <div class="menu-item">
+      <a class="menu-link without-sub" routerLink="/error/500" routerLinkActive="active"><span class="menu-bullet"><span
+            class="bullet bullet-dot"></span></span><span class="menu-title">Add System Users</span></a>
+    </div>
+    <div class="menu-item">
+      <a class="menu-link without-sub" routerLink="/error/500" routerLinkActive="active"><span class="menu-bullet"><span
+            class="bullet bullet-dot"></span></span><span class="menu-title">Add System Functions</span></a>
+    </div>
+    <div class="menu-item">
+      <a class="menu-link without-sub" routerLink="/error/500" routerLinkActive="active"><span class="menu-bullet"><span
+            class="bullet bullet-dot"></span></span><span class="menu-title">Add Roles</span></a>
+    </div>
+  </div>
+</div>
+<!-- System Users -->
+
+
+<!-- Separator -->
+<!-- <div class="menu-item">
+  <div class="menu-content pt-8 pb-2">
+    <span class="menu-section text-muted text-uppercase fs-8 ls-1">SMS</span>
+  </div>
+</div> -->
+<!-- Sms -->
+<!-- <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
+  <span class="menu-link"><span class="menu-icon"><span class="svg-icon svg-icon-2"
+        [inlineSVG]="'./assets/media/icons/duotune/general/gen040.svg'"></span></span><span class="menu-title"
+      data-link="/error">SMS</span><span class="menu-arrow"></span></span>
+  <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+    <div class="menu-item">
+      <a class="menu-link without-sub" routerLink="/error/404" routerLinkActive="active"><span class="menu-bullet"><span
+            class="bullet bullet-dot"></span></span><span class="menu-title">SMS Template</span></a>
+    </div>
+    <div class="menu-item">
+      <a class="menu-link without-sub" routerLink="/error/500" routerLinkActive="active"><span class="menu-bullet"><span
+            class="bullet bullet-dot"></span></span><span class="menu-title">SMS Sending</span></a>
+    </div>
+    <div class="menu-item">
+      <a class="menu-link without-sub" routerLink="/error/500" routerLinkActive="active"><span class="menu-bullet"><span
+            class="bullet bullet-dot"></span></span><span class="menu-title">SMS Status</span></a>
+    </div>
+  </div>
+</div> -->
+
+
+<!-- Separator -->
+<!-- <div class="menu-item">
+  <div class="menu-content pt-8 pb-2">
+    <span class="menu-section text-muted text-uppercase fs-8 ls-1">WhatsApp</span>
+  </div>
+</div> -->
+<!-- Whats App SMS -->
+<!-- <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
+  <span class="menu-link"><span class="menu-icon"><span class="svg-icon svg-icon-2"
+        [inlineSVG]="'./assets/media/icons/duotune/general/gen040.svg'"></span></span><span class="menu-title"
+      data-link="/error">WhatsApp</span><span class="menu-arrow"></span></span>
+  <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+    <div class="menu-item">
+      <a class="menu-link without-sub" routerLink="/error/404" routerLinkActive="active"><span class="menu-bullet"><span
+            class="bullet bullet-dot"></span></span><span class="menu-title">Preparation</span></a>
+    </div>
+    <div class="menu-item">
+      <a class="menu-link without-sub" routerLink="/error/500" routerLinkActive="active"><span class="menu-bullet"><span
+            class="bullet bullet-dot"></span></span><span class="menu-title">Sending</span></a>
+    </div>
+  </div>
+</div> -->
+
+<div class="menu-item">
+  <div class="menu-content pt-8 pb-2">
+    <span class="menu-section text-muted text-uppercase fs-8 ls-1">Services</span>
+  </div>
+</div>
+<!-- Whats App SMS -->
+<div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
+  <span class="menu-link"><span class="menu-icon"><span class="svg-icon svg-icon-2"
+        [inlineSVG]="'./assets/media/icons/duotune/general/gen040.svg'"></span></span><span class="menu-title"
+      data-link="/error">Services</span><span class="menu-arrow"></span></span>
+  <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+    <div class="menu-item">
+      <a class="menu-link without-sub" routerLink="/error/404" routerLinkActive="active"><span class="menu-bullet"><span
+            class="bullet bullet-dot"></span></span><span class="menu-title">Hajj Loan</span></a>
+    </div>
+    <div class="menu-item">
+      <a class="menu-link without-sub" routerLink="/error/500" routerLinkActive="active"><span class="menu-bullet"><span
+            class="bullet bullet-dot"></span></span><span class="menu-title">Social Loan</span></a>
+    </div>
+    <div class="menu-item">
+      <a class="menu-link without-sub" routerLink="/error/500" routerLinkActive="active"><span class="menu-bullet"><span
+            class="bullet bullet-dot"></span></span><span class="menu-title">Financial Loan</span></a>
+    </div>
+    <div class="menu-item">
+      <a class="menu-link without-sub" routerLink="/error/500" routerLinkActive="active"><span class="menu-bullet"><span
+            class="bullet bullet-dot"></span></span><span class="menu-title">Submit Request for Social Assistance
+        </span></a>
+    </div>
+    <div class="menu-item">
+      <a class="menu-link without-sub" routerLink="/error/500" routerLinkActive="active"><span class="menu-bullet"><span
+            class="bullet bullet-dot"></span></span><span class="menu-title">Request for the Discount </span></a>
+    </div>
+  </div>
+</div>
+<!-- Separator -->
+<div class="menu-item">
+  <div class="menu-content pt-8 pb-2">
+    <span class="menu-section text-muted text-uppercase fs-8 ls-1">Communication</span>
+  </div>
+</div>
+<!-- Whats App SMS -->
+<div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
+  <span class="menu-link"><span class="menu-icon"><span class="svg-icon svg-icon-2"
+        [inlineSVG]="'./assets/media/icons/duotune/general/gen040.svg'"></span></span><span class="menu-title"
+      data-link="/error">Communication</span><span class="menu-arrow"></span></span>
+  <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+    <div class="menu-item">
+      <a class="menu-link without-sub" routerLink="/error/404" routerLinkActive="active"><span class="menu-bullet"><span
+            class="bullet bullet-dot"></span></span><span class="menu-title">Register incoming Letter</span></a>
+    </div>
+    <div class="menu-item">
+      <a class="menu-link without-sub" routerLink="/error/500" routerLinkActive="active"><span class="menu-bullet"><span
+            class="bullet bullet-dot"></span></span><span class="menu-title">Register Outgoing Letter</span></a>
+    </div>
+    <div class="menu-item">
+      <a class="menu-link without-sub" routerLink="/error/500" routerLinkActive="active"><span class="menu-bullet"><span
+            class="bullet bullet-dot"></span></span><span class="menu-title">Print Label</span></a>
+    </div>
+    <div class="menu-item">
+      <a class="menu-link without-sub" routerLink="/error/500" routerLinkActive="active"><span class="menu-bullet"><span
+            class="bullet bullet-dot"></span></span><span class="menu-title">Archives </span></a>
+    </div>
+  </div>
+</div>
+
+
+<!-- Separator -->
+<div class="menu-item">
+  <div class="menu-content pt-8 pb-2">
+    <span class="menu-section text-muted text-uppercase fs-8 ls-1">Website Maintenance</span>
+  </div>
+</div>
+<!-- Whats App SMS -->
+<div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
+  <span class="menu-link"><span class="menu-icon"><span class="svg-icon svg-icon-2"
+        [inlineSVG]="'./assets/media/icons/duotune/general/gen040.svg'"></span></span><span class="menu-title"
+      data-link="/error">Website</span><span class="menu-arrow"></span></span>
+  <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+    <div class="menu-item">
+      <a class="menu-link without-sub" routerLink="/error/404" routerLinkActive="active"><span class="menu-bullet"><span
+            class="bullet bullet-dot"></span></span><span class="menu-title">Carousal Maintenance</span></a>
+    </div>
+    <div class="menu-item">
+      <a class="menu-link without-sub" routerLink="/error/500" routerLinkActive="active"><span class="menu-bullet"><span
+            class="bullet bullet-dot"></span></span><span class="menu-title">Special Offer Display
+          Maintenance</span></a>
+    </div>
+    <div class="menu-item">
+      <a class="menu-link without-sub" routerLink="/error/500" routerLinkActive="active"><span class="menu-bullet"><span
+            class="bullet bullet-dot"></span></span><span class="menu-title">Special Offer Received handling</span></a>
+    </div>
+  </div>
+</div>
