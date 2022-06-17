@@ -14,11 +14,11 @@ import { environment } from 'src/environments/environment';
 // #fake-start#
 import { FakeAPIService } from './_fake/fake-api.service';
 import { ViewContactComponent } from './modules/home/employeeinformation/view-contact/view-contact.component';
-import { TextInputComponent } from './modules/_forms/text-input/text-input.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ViewemployeeinformationComponent } from './modules/home/employeeinformation/viewemployeeinformation/viewemployeeinformation.component';
 import { AddReferenceComponent } from './modules/home/setup/add-reference/add-reference.component';
+import { LoginComponent } from './modules/home/auth/login/login.component';
 // #fake-end#
 
 function appInitializer(authService: AuthService) {
@@ -31,7 +31,7 @@ function appInitializer(authService: AuthService) {
 }
 
 @NgModule({
-  declarations: [AppComponent, ViewContactComponent,ViewemployeeinformationComponent, AddReferenceComponent],
+  declarations: [AppComponent, ViewContactComponent,ViewemployeeinformationComponent, AddReferenceComponent, LoginComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

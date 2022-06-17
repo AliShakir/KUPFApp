@@ -6,6 +6,11 @@
     <span class="menu-title">DASHBOARD</span></a>
 </div>
 
+<div class="menu-item">
+  <a class="menu-link without-sub" routerLink="/auth/login" routerLinkActive="active">
+    <span class="menu-title">Login</span></a>
+</div>
+
 <!-- Layout builder -->
 <div class="menu-item">
   <a class="menu-link without-sub" routerLink="/builder" routerLinkActive="active"><span class="menu-icon">
@@ -21,29 +26,26 @@
 <div class="menu-item">
   <a class="menu-link without-sub" routerLink="/employee/view-contact" routerLinkActive="active"><span
       class="menu-icon">
-      <span [inlineSVG]="'./assets/media/icons/duotune/general/gen019.svg'" class="svg-icon svg-icon-2"></span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M20 14H18V10H20C20.6 10 21 10.4 21 11V13C21 13.6 20.6 14 20 14ZM21 19V17C21 16.4 20.6 16 20 16H18V20H20C20.6 20 21 19.6 21 19ZM21 7V5C21 4.4 20.6 4 20 4H18V8H20C20.6 8 21 7.6 21 7Z" fill="currentColor"/>
+        <path opacity="0.3" d="M17 22H3C2.4 22 2 21.6 2 21V3C2 2.4 2.4 2 3 2H17C17.6 2 18 2.4 18 3V21C18 21.6 17.6 22 17 22ZM10 7C8.9 7 8 7.9 8 9C8 10.1 8.9 11 10 11C11.1 11 12 10.1 12 9C12 7.9 11.1 7 10 7ZM13.3 16C14 16 14.5 15.3 14.3 14.7C13.7 13.2 12 12 10.1 12C8.10001 12 6.49999 13.1 5.89999 14.7C5.59999 15.3 6.19999 16 7.39999 16H13.3Z" fill="currentColor"/>
+        </svg>
     </span><span class="menu-title">View Contact</span></a>
 </div>
 <!-- Separator -->
 <div class="menu-item">
   <div class="menu-content pt-8 pb-2">
-    <span class="menu-section text-uppercase fs-8 ls-1">Employees Data</span>
+    <span class="menu-section text-muted text-uppercase fs-8 ls-1">Employees Data</span>
   </div>
 </div>
 <div data-kt-menu-trigger="click" class="menu-item menu-accordion mb-1 hover">
   <span class="menu-link">
-    <span class="menu-icon">
-      <!--begin::Svg Icon | path: icons/duotune/graphs/gra006.svg-->
-      <span class="svg-icon svg-icon-2">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path
-            d="M13 5.91517C15.8 6.41517 18 8.81519 18 11.8152C18 12.5152 17.9 13.2152 17.6 13.9152L20.1 15.3152C20.6 15.6152 21.4 15.4152 21.6 14.8152C21.9 13.9152 22.1 12.9152 22.1 11.8152C22.1 7.01519 18.8 3.11521 14.3 2.01521C13.7 1.91521 13.1 2.31521 13.1 3.01521V5.91517H13Z"
-            fill="currentColor"></path>
-          <path opacity="0.3"
-            d="M19.1 17.0152C19.7 17.3152 19.8 18.1152 19.3 18.5152C17.5 20.5152 14.9 21.7152 12 21.7152C9.1 21.7152 6.50001 20.5152 4.70001 18.5152C4.30001 18.0152 4.39999 17.3152 4.89999 17.0152L7.39999 15.6152C8.49999 16.9152 10.2 17.8152 12 17.8152C13.8 17.8152 15.5 17.0152 16.6 15.6152L19.1 17.0152ZM6.39999 13.9151C6.19999 13.2151 6 12.5152 6 11.8152C6 8.81517 8.2 6.41515 11 5.91515V3.01519C11 2.41519 10.4 1.91519 9.79999 2.01519C5.29999 3.01519 2 7.01517 2 11.8152C2 12.8152 2.2 13.8152 2.5 14.8152C2.7 15.4152 3.4 15.7152 4 15.3152L6.39999 13.9151Z"
-            fill="currentColor"></path>
+    <span class="menu-icon">      
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path opacity="0.3" d="M22 12C22 17.5 17.5 22 12 22C6.5 22 2 17.5 2 12C2 6.5 6.5 2 12 2C17.5 2 22 6.5 22 12ZM12 7C10.3 7 9 8.3 9 10C9 11.7 10.3 13 12 13C13.7 13 15 11.7 15 10C15 8.3 13.7 7 12 7Z" fill="currentColor"/>
+        <path d="M12 22C14.6 22 17 21 18.7 19.4C17.9 16.9 15.2 15 12 15C8.8 15 6.09999 16.9 5.29999 19.4C6.99999 21 9.4 22 12 22Z" fill="currentColor"/>
         </svg>
-      </span>
+      <!--end::Svg Icon-->
       <!--end::Svg Icon-->
     </span>
     <span class="menu-title">Employees</span>
@@ -92,12 +94,9 @@
           </a>
         </div>
         <div class="menu-item">
-          <a class="menu-link" href="/metronic8/demo1/../demo1/apps/support-center/tickets/view.html">
-            <span class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
-            </span>
-            <span class="menu-title">Import Employee</span>
-          </a>
+          <a class="menu-link without-sub" routerLink="/employee/import-employee-master" routerLinkActive="active"><span
+              class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Import
+              Employees</span></a>
         </div>
       </div>
       <div class="menu-item">
@@ -141,7 +140,7 @@
         </a>
       </div>
       <div class="menu-item">
-        <a class="menu-link" href="/metronic8/demo1/../demo1/apps/support-center/tickets/view.html">
+        <a class="menu-link">
           <span class="menu-bullet">
             <span class="bullet bullet-dot"></span>
           </span>
@@ -175,22 +174,34 @@
 </div>
 
 <!-- Services -->
-<div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
-  <span class="menu-link"><span class="menu-icon"><span class="svg-icon svg-icon-2"
-        [inlineSVG]="'./assets/media/icons/duotune/general/gen040.svg'"></span></span><span class="menu-title"
-      data-link="/error">Setup</span><span class="menu-arrow"></span></span>
+<div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here">
+  <span class="menu-link">
+    <span class="menu-icon">
+      <!--begin::Svg Icon | path: assets/media/icons/duotune/abstract/abs040.svg-->
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path opacity="0.3" d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z" fill="currentColor"/>
+        <path d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z" fill="currentColor"/>
+        </svg>
+  <!--end::Svg Icon-->
+    </span><span class="menu-title"
+      data-link="/error">Setup</span>
+      <span class="menu-arrow">
+
+      </span></span>
   <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
     <div class="menu-item">
-      <a class="menu-link without-sub" routerLink="/references/reference-details" routerLinkActive="active"><span class="menu-bullet"><span
-            class="bullet bullet-dot"></span></span><span class="menu-title">Add References</span></a>
+      <a class="menu-link without-sub" routerLink="/setup/reference-details" routerLinkActive="active"><span
+          class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Add
+          References</span></a>
     </div>
     <div class="menu-item">
       <a class="menu-link without-sub" routerLink="/error/500" routerLinkActive="active"><span class="menu-bullet"><span
             class="bullet bullet-dot"></span></span><span class="menu-title">Add University </span></a>
     </div>
     <div class="menu-item">
-      <a class="menu-link without-sub" routerLink="/error/500" routerLinkActive="active"><span class="menu-bullet"><span
-            class="bullet bullet-dot"></span></span><span class="menu-title">Add Services Setup</span></a>
+      <a class="menu-link without-sub" routerLink="/service-setup/service-setup-details" routerLinkActive="active"><span
+          class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Add Services
+          Setup</span></a>
     </div>
     <div class="menu-item">
       <a class="menu-link without-sub" routerLink="/error/500" routerLinkActive="active"><span class="menu-bullet"><span
@@ -211,6 +222,26 @@
     <div class="menu-item">
       <a class="menu-link without-sub" routerLink="/error/500" routerLinkActive="active"><span class="menu-bullet"><span
             class="bullet bullet-dot"></span></span><span class="menu-title">Add Roles</span></a>
+    </div>
+    <div class="menu-item">
+      <a class="menu-link without-sub" routerLink="/service-setup/service-details" routerLinkActive="active"><span
+          class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Add
+          Service</span></a>
+    </div>
+    <div class="menu-item">
+      <a class="menu-link without-sub" routerLink="/service-setup/add-documents" routerLinkActive="active"><span
+          class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Add
+          Document</span></a>
+    </div>
+    <div class="menu-item">
+      <a class="menu-link without-sub" routerLink="/service-setup/manage-approvals" routerLinkActive="active"><span
+          class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Manage
+          Approvals</span></a>
+    </div>
+    <div class="menu-item">
+      <a class="menu-link without-sub" routerLink="/service-setup/import-emplyee-monthly-payment"
+        routerLinkActive="active"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span
+          class="menu-title">Import Employee Monthly Payment</span></a>
     </div>
   </div>
 </div>
@@ -275,8 +306,15 @@
 </div>
 <!-- Whats App SMS -->
 <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
-  <span class="menu-link"><span class="menu-icon"><span class="svg-icon svg-icon-2"
-        [inlineSVG]="'./assets/media/icons/duotune/general/gen040.svg'"></span></span><span class="menu-title"
+  <span class="menu-link"><span class="menu-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M3 2H10C10.6 2 11 2.4 11 3V10C11 10.6 10.6 11 10 11H3C2.4 11 2 10.6 2 10V3C2 2.4 2.4 2 3 2Z" fill="currentColor"/>
+      <path opacity="0.3" d="M14 2H21C21.6 2 22 2.4 22 3V10C22 10.6 21.6 11 21 11H14C13.4 11 13 10.6 13 10V3C13 2.4 13.4 2 14 2Z" fill="currentColor"/>
+      <path opacity="0.3" d="M3 13H10C10.6 13 11 13.4 11 14V21C11 21.6 10.6 22 10 22H3C2.4 22 2 21.6 2 21V14C2 13.4 2.4 13 3 13Z" fill="currentColor"/>
+      <path opacity="0.3" d="M14 13H21C21.6 13 22 13.4 22 14V21C22 21.6 21.6 22 21 22H14C13.4 22 13 21.6 13 21V14C13 13.4 13.4 13 14 13Z" fill="currentColor"/>
+      </svg>
+    </span>
+    <span class="menu-title"
       data-link="/error">Services</span><span class="menu-arrow"></span></span>
   <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
     <div class="menu-item">
@@ -310,25 +348,34 @@
 </div>
 <!-- Whats App SMS -->
 <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
-  <span class="menu-link"><span class="menu-icon"><span class="svg-icon svg-icon-2"
-        [inlineSVG]="'./assets/media/icons/duotune/general/gen040.svg'"></span></span><span class="menu-title"
-      data-link="/error">Communication</span><span class="menu-arrow"></span></span>
+  <span class="menu-link"><span class="menu-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M6 8.725C6 8.125 6.4 7.725 7 7.725H14L18 11.725V12.925L22 9.725L12.6 2.225C12.2 1.925 11.7 1.925 11.4 2.225L2 9.725L6 12.925V8.725Z" fill="currentColor"/>
+      <path opacity="0.3" d="M22 9.72498V20.725C22 21.325 21.6 21.725 21 21.725H3C2.4 21.725 2 21.325 2 20.725V9.72498L11.4 17.225C11.8 17.525 12.3 17.525 12.6 17.225L22 9.72498ZM15 11.725H18L14 7.72498V10.725C14 11.325 14.4 11.725 15 11.725Z" fill="currentColor"/>
+      </svg>
+  </span><span class="menu-title"
+      data-link="/error">Communication</span><span class="menu-arrow"></span>
+    </span>
   <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
     <div class="menu-item">
-      <a class="menu-link without-sub" routerLink="/error/404" routerLinkActive="active"><span class="menu-bullet"><span
-            class="bullet bullet-dot"></span></span><span class="menu-title">Register incoming Letter</span></a>
+      <a class="menu-link without-sub" routerLink="/communication/communication" routerLinkActive="active"><span
+          class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Register incoming
+          Letter</span></a>
     </div>
     <div class="menu-item">
-      <a class="menu-link without-sub" routerLink="/error/500" routerLinkActive="active"><span class="menu-bullet"><span
-            class="bullet bullet-dot"></span></span><span class="menu-title">Register Outgoing Letter</span></a>
+      <a class="menu-link without-sub" routerLink="/communication/communication-details" routerLinkActive="active"><span
+          class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Register Outgoing
+          Letter</span></a>
     </div>
     <div class="menu-item">
-      <a class="menu-link without-sub" routerLink="/error/500" routerLinkActive="active"><span class="menu-bullet"><span
-            class="bullet bullet-dot"></span></span><span class="menu-title">Print Label</span></a>
+      <a class="menu-link without-sub" routerLink="/communication/print-labels" routerLinkActive="active"><span
+          class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Print
+          Label</span></a>
     </div>
     <div class="menu-item">
-      <a class="menu-link without-sub" routerLink="/error/500" routerLinkActive="active"><span class="menu-bullet"><span
-            class="bullet bullet-dot"></span></span><span class="menu-title">Archives </span></a>
+      <a class="menu-link without-sub" routerLink="/communication/archieve" routerLinkActive="active"><span
+          class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Archives
+        </span></a>
     </div>
   </div>
 </div>
@@ -342,8 +389,12 @@
 </div>
 <!-- Whats App SMS -->
 <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
-  <span class="menu-link"><span class="menu-icon"><span class="svg-icon svg-icon-2"
-        [inlineSVG]="'./assets/media/icons/duotune/general/gen040.svg'"></span></span><span class="menu-title"
+  <span class="menu-link"><span class="menu-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path opacity="0.3" d="M21.3 11.9C21.3 17.1 17.1 21.3 12 21.3C6.8 21.3 2.70001 17.1 2.70001 11.9C2.70001 6.70002 6.9 2.5 12 2.5C17.2 2.6 21.3 6.80002 21.3 11.9Z" fill="currentColor"/>
+      <path d="M12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2ZM20 11.5C18.2 11.3 16.4 11.3 14.8 11.6C14.6 11 14.3 10.4 14.1 9.90002C15.6 9.10002 17.1 8.10002 18.3 6.90002C19.2 8.20002 19.9 9.8 20 11.5ZM16.7 5.59998C15.6 6.59998 14.4 7.49995 13.1 8.19995C12.4 6.79995 11.6 5.49995 10.7 4.19995C11.1 4.09995 11.5 4.09998 12 4.09998C13.8 3.99998 15.4 4.59998 16.7 5.59998ZM8.70001 4.69995C9.70001 6.09995 10.5 7.50002 11.3 8.90002C9.09999 9.70002 6.79999 10 4.29999 9.80005C4.89999 7.60005 6.60001 5.69995 8.70001 4.69995ZM4 12C4 11.9 4 11.9 4 11.8C4.5 11.8 5.10001 11.9 5.60001 11.9C7.90001 11.9 10.1 11.5 12.1 10.7C12.3 11.2 12.5 11.7 12.7 12.1C10.1 13 7.70001 14.6 5.70001 17C4.70001 15.6 4 13.9 4 12ZM7.20001 18.4C9.00001 16.3 11.1 14.8 13.4 14C14 15.8 14.4 17.6 14.7 19.5C13.8 19.8 12.9 20 11.9 20C10.2 20 8.60001 19.4 7.20001 18.4ZM16.6 18.5C16.3 16.8 15.9 15.2 15.4 13.5C16.8 13.3 18.3 13.3 19.8 13.5C19.4 15.6 18.3 17.3 16.6 18.5Z" fill="currentColor"/>
+      </svg>
+      </span><span class="menu-title"
       data-link="/error">Website</span><span class="menu-arrow"></span></span>
   <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
     <div class="menu-item">

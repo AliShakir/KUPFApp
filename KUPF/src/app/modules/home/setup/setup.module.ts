@@ -8,8 +8,6 @@ import { ReferenceDetailsComponent } from './reference-details/reference-details
 
 @NgModule({
   declarations: [
-    
-  
     ReferenceDetailsComponent
   ],
   imports: [
