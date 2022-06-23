@@ -1,0 +1,75 @@
+<div class="card mb-5 mb-xl-10">
+    <!--begin::Card header-->
+    <div class="card-header card-header-stretch pb-0 bg-light-danger">
+        <!--begin::Title-->
+        <div class="card-title">
+            <h3 class="m-0">Add Carousal</h3>
+        </div>
+        <h3 class="card-title align-items-start flex-column">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-warning">Cancel</button>
+                <button type="button" class="btn btn-dark" routerLink="/website-maintenace/carousal-details">Back</button>
+              </div>
+              
+        </h3>
+        <!--end::Title-->
+    </div>
+    <!--end::Card header-->
+    <!--begin::Tab content-->
+    <div id="kt_billing_payment_tab_content" class="card-body tab-content">
+        <!--begin::Tab panel-->
+        <div id="kt_billing_creditcard" class="tab-pane fade show active" role="tabpanel">
+            <!--begin::Title-->
+            <!-- <h3 class="mb-5">Personal Information</h3> -->
+            <!--end::Title-->
+            <!--begin::Row-->
+            <div class="row gx-9 gy-6">
+                <form autocomplete="off">  
+                    <div class="row mb-4">
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-form-label fw-bold fs-6"><span class="">Tenant Id
+                                </span></label>
+                            <select class="form-control bg-light" aria-label="Select example">
+                                <option>-Select-</option>
+                                <option value="1">Service 1</option>
+                                <option value="2">Service 2</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-form-label fw-bold fs-6"><span class="">Carousal Id
+                                </span></label>
+                            <select class="form-control bg-light" aria-label="Select example">
+                                <option>-Select-</option>
+                                <option value="1">Service 1</option>
+                                <option value="2">Service 2</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-4 fv-row">
+                            <div class="mt-4">
+                                <label for="formFile" class="form-label">Upload Image</label>
+                                <input class="form-control" type="file" id="formFile">
+                              </div>
+                        </div>
+                    </div>                  
+                    <div class="row mb-4">
+                        <div class="col-lg-4 fv-row">
+                            <div class="mt-4">
+                                <label for="formFile" class="form-label">From Date</label>
+                                <input class="form-control" type="date">
+                              </div>
+                        </div>
+                        <div class="col-lg-4 fv-row">
+                            <div class="mt-4">
+                                <label for="formFile" class="form-label">To Date</label>
+                                <input class="form-control" type="date">
+                              </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--end::Row-->
+        </div>
+
+    </div>
+</div>

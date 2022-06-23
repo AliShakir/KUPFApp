@@ -11,6 +11,8 @@ import { ServiceDetailsComponent } from './service-details/service-details.compo
 import { AddDocumentsComponent } from './add-documents/add-documents.component';
 import { ApprovalManagementComponent } from './approval-management/approval-management.component';
 import { ImportEmployeeMonthlyPaymentComponent } from './import-employee-monthly-payment/import-employee-monthly-payment.component';
+import { EmployeeMomentDetailsComponent } from './employee-moment-details/employee-moment-details.component';
+import { AddEmployeeMomentComponent } from './add-employee-moment/add-employee-moment.component';
 
 
 @NgModule({
@@ -22,6 +24,8 @@ import { ImportEmployeeMonthlyPaymentComponent } from './import-employee-monthly
     AddDocumentsComponent,
     ApprovalManagementComponent,
     ImportEmployeeMonthlyPaymentComponent,
+    EmployeeMomentDetailsComponent,
+    AddEmployeeMomentComponent,
   ],
   imports: [
     CommonModule,

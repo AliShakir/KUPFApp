@@ -7,11 +7,11 @@
     </div>
     <div id="kt_account_profile_details" class="collapse show">
       
-      <form [formGroup]='referenceForm' (ngSubmit)="addReference()"  autocomplete="off">
+      <form   autocomplete="off">
         <div class="card-body border-top p-9">
           <div class="row mb-6">
             <div class="col-lg-6 fv-row">
-              <app-text-input [formControl]='referenceForm.controls["employeeName"]'></app-text-input>
+              <input type="date" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" />
             </div>
             <div class="col-lg-6 fv-row">
               <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Arabic</span></label>

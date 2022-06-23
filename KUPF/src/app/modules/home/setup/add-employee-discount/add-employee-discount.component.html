@@ -1,0 +1,172 @@
+<div class="card mb-5 mb-xl-10">
+    <!--begin::Card header-->
+    <div class="card-header card-header-stretch pb-0 panel1bgColor">
+        <!--begin::Title-->
+        <div class="card-title">
+            <h3 class="m-0 text-white">{{formTitle}}</h3>            
+        </div>
+        <h3 class="card-title align-items-start flex-column">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-warning">Cancel</button>
+                <button type="button" class="btn btn-light-dark" routerLink="/references/employee-discount-details" routerLinkActive="active">Back</button>
+              </div>
+        </h3>
+        <!--end::Title-->
+    </div>
+    <!--end::Card header-->
+    <!--begin::Tab content-->
+    <div id="kt_billing_payment_tab_content" class="card-body tab-content">
+        <!--begin::Tab panel-->
+        <div id="kt_billing_creditcard" class="tab-pane fade show active" role="tabpanel">
+            <!--begin::Title-->
+            <!-- <h3 class="mb-5">Personal Information</h3> -->
+            <!--end::Title-->
+            <!--begin::Row-->
+            <div class="row gx-9 gy-6">
+                <form autocomplete="off">
+                    <div class="row mb-4">
+                        <div class="col-lg-3 fv-row">
+                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Employee Id
+                                </span></label>
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
+                        </div>
+                        <div class="col-lg-3 fv-row">
+                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Civil Id</span></label>
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
+                        </div>
+                        <div class="col-lg-3 fv-row">
+                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">PF Id</span></label>
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
+                        </div>
+                        <div class="col-lg-3 fv-row">
+                            <button type="button" class="btn btn-primary mt-13">Search</button>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-lg-6 fv-row">
+                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Name Arabic / English
+                                </span></label>
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-4">
+                        <!--begin::Table container-->
+                        <div class="table-responsive">
+                            <!--begin::Table-->
+                            <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+                                <!--begin::Table head-->
+                                <thead class="bg-light-dark">
+                                    <tr class="fw-bolder">
+                                        <th class="min-w-80px text-center">Actions</th>
+                                        <th class="min-w-100px">Services Procured</th>
+                                        <th class="min-w-100px">Finishing Date</th>
+                                        <th class="min-w-140px">Pending Amount</th>
+                                    </tr>
+                                </thead>
+                                <!--end::Table head-->
+                                <!--begin::Table body-->
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">
+                                            <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
+                                            </a>
+                                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="javascript:void(0)"
+                                                class="text-dark fw-bolder text-hover-primary  fs-6 ArFontStyle"
+                                                lang="AR-SA">Hajj Loan
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="javascript:void(0)"
+                                                class="text-dark fw-bolder text-hover-primary  fs-6 ArFontStyle"
+                                                lang="AR-SA">01-Jan-2023
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="#"
+                                                class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle"
+                                                lang="AR-SA">110.500
+
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">
+                                            <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
+                                            </a>
+                                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="javascript:void(0)"
+                                                class="text-dark fw-bolder text-hover-primary  fs-6 ArFontStyle"
+                                                lang="AR-SA">Social Financial Loan-Internet
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="javascript:void(0)"
+                                                class="text-dark fw-bolder text-hover-primary  fs-6 ArFontStyle"
+                                                lang="AR-SA">01-March-2023
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="#"
+                                                class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle"
+                                                lang="AR-SA">50.000
+
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <!--end::Table body-->
+                            </table>
+                            <!--end::Table-->
+
+
+                        </div>
+    <!--end::Table container-->
+                    </div>
+                    <div class="row mb 4">  
+                        <div class="col-lg-6 fv-row">
+                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Date of the Effect
+                                </span></label>
+                            <input type="date" class="form-control form-control-lg  mb-3 mb-lg-0" />
+                        </div>                      
+                        <div class="col-lg-6 fv-row">
+                            <label class="col-form-label fw-bold fs-6"><span class="">Service Type</span></label>
+                            <select class="form-control bg-light" aria-label="Select example">
+                                <option>-Select-</option>
+                                <option value="1">Service 1</option>
+                                <option value="2">Service 2</option>
+                                <option value="3">Service 3</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb 4">  
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-lg-6 col-form-label fw-bold fs-6"><span class="">Total Amount Received
+                                </span></label>
+                            <input type="number" class="form-control form-control-lg  mb-3 mb-lg-0" />
+                        </div>                      
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-form-label fw-bold fs-6"><span class="">Discount</span></label>
+                            <input type="number" class="form-control form-control-lg  mb-3 mb-lg-0" />
+                        </div>
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-form-label fw-bold fs-6"><span class="">Pending Payment</span></label>
+                            <input type="number" class="form-control form-control-lg  mb-3 mb-lg-0" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--end::Row-->
+        </div>
+
+    </div>
+    <!--end::Tab content-->
+</div>

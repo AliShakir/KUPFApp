@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -17,9 +18,11 @@ namespace API.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        public DataContext Context { get; }
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger,DataContext context)
         {
+            Context = context;
             _logger = logger;
         }
 

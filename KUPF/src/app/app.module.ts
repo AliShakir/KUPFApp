@@ -19,6 +19,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ViewemployeeinformationComponent } from './modules/home/employeeinformation/viewemployeeinformation/viewemployeeinformation.component';
 import { AddReferenceComponent } from './modules/home/setup/add-reference/add-reference.component';
 import { LoginComponent } from './modules/home/auth/login/login.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 // #fake-end#
 
 function appInitializer(authService: AuthService) {
@@ -31,7 +32,13 @@ function appInitializer(authService: AuthService) {
 }
 
 @NgModule({
-  declarations: [AppComponent, ViewContactComponent,ViewemployeeinformationComponent, AddReferenceComponent, LoginComponent],
+  declarations: [
+    AppComponent, 
+    ViewContactComponent,
+    ViewemployeeinformationComponent, 
+    AddReferenceComponent, 
+    LoginComponent
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -48,7 +55,7 @@ function appInitializer(authService: AuthService) {
     // #fake-end#
     AppRoutingModule,
     InlineSVGModule.forRoot(),
-    NgbModule,
+    NgbModule,    
     FormsModule,
     ReactiveFormsModule,
     TranslateModule.forRoot({  
@@ -57,7 +64,12 @@ function appInitializer(authService: AuthService) {
          useFactory: httpTranslateLoader,  
          deps: [HttpClient]  
          }  
-      }) 
+      }),
+      BsDatepickerModule.forRoot(),
+      
+  ],
+  exports:[
+  BsDatepickerModule
   ],
   providers: [
     {

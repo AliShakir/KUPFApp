@@ -7,7 +7,6 @@ import {locale as esLang} from './modules/i18n/vocabs/es';
 import {locale as jpLang} from './modules/i18n/vocabs/jp';
 import {locale as deLang} from './modules/i18n/vocabs/de';
 import {locale as frLang} from './modules/i18n/vocabs/fr';
-import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap/datepicker/ngb-date-struct';
 import { NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 

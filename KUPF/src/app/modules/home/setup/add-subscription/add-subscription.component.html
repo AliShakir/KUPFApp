@@ -1,0 +1,98 @@
+<div class="card mb-5 mb-xl-10">
+    <!--begin::Card header-->
+    <div class="card-header card-header-stretch pb-0 panelBgColor">
+        <!--begin::Title-->
+        <div class="card-title">
+            <h3 class="m-0 text-white">Add Subscription</h3>
+        </div>
+        <h3 class="card-title align-items-start flex-column">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-warning">Cancel</button>
+                <button type="button" class="btn btn-light-dark"
+                    routerLink="/references/subscription-details">Back</button>
+            </div>
+        </h3>
+        <!--end::Title-->
+    </div>
+    <!--end::Card header-->
+    <!--begin::Tab content-->
+    <div id="kt_billing_payment_tab_content" class="card-body tab-content">
+        <!--begin::Tab panel-->
+        <div id="kt_billing_creditcard" class="tab-pane fade show active" role="tabpanel">
+            <!--begin::Title-->
+            <!-- <h3 class="mb-5">Personal Information</h3> -->
+            <!--end::Title-->
+            <!--begin::Row-->
+            <div class="row gx-9 gy-6">
+                <form autocomplete="off">
+                    <div class="row mb-4">
+                        <div class="col-lg-6 fv-row">
+                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Service
+                                </span></label>
+                            <select class="form-control bg-light" aria-label="Select example">
+                                <option>-Select-</option>
+                                <option value="1">Subcriber</option>
+                                <option value="2">Re-Subscriber</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-6 fv-row">
+                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Status</span></label>
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
+                        </div>
+                    </div>
+                    <div class="row mb-4">                        
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Employee Id</span></label>
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
+                        </div>
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Civil Id
+                                </span></label>
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
+                        </div>
+                        <div class="col-lg-4 fv-row">                            
+                            <button type="button" class="btn btn-primary mt-13">Search</button>
+                        </div>
+                    </div>
+                    <div class="row mb 4">
+                        <div class="col-lg-6 fv-row">
+                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Name Arabic / English
+                                </span></label>
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
+                        </div>                       
+                    </div>
+                    <div class="row mb 4">
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-lg-6 col-form-label fw-bold fs-6"><span class="">PF Id
+                                </span></label>
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
+                        </div>
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-form-label fw-bold fs-6"><span class="">Earlier PF Id</span></label>
+                            <input type="number" class="form-control form-control-lg  mb-3 mb-lg-0" />
+                        </div>
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-form-label fw-bold fs-6"><span class="">Pending Payment</span></label>
+                            <input type="number" class="form-control form-control-lg  mb-3 mb-lg-0" />
+                        </div>
+                    </div>
+                    <div class="row mb 4">
+                        <div class="col-lg-6 fv-row">
+                            <label class="col-lg-6 col-form-label fw-bold fs-6"><span class="">Subcription Date
+                                </span></label>
+                            <input type="date" class="form-control form-control-lg  mb-3 mb-lg-0" />
+                        </div>
+                        <div class="col-lg-6 fv-row">
+                            <label class="col-form-label fw-bold fs-6"><span class=""><small class="text-muted">Monthly to be paid</small> Amount </span></label>
+                            <input type="number" class="form-control form-control-lg  mb-3 mb-lg-0" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--end::Row-->
+        </div>
+
+    </div>
+    <!--end::Tab content-->
+</div>

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { CommonService } from 'src/app/modules/_services/common.service';
 
 @Component({
   selector: 'app-add-service',
@@ -6,10 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-service.component.scss']
 })
 export class AddServiceComponent implements OnInit {
-
-  constructor() { }
+  
+  formTitle:string;
+  constructor(private common: CommonService) { }
 
   ngOnInit(): void {
+    this.formTitle = this.common.getFormTitle();
+    
   }
 
 }

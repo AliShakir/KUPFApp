@@ -1,95 +1,11 @@
 <div class="card mb-5 mb-xl-8">
     <!--begin::Header-->
-    <div class="card-header border-0 pt-5">
+    <div class="card-header border-0 pt-5 panelBgColor">
         <div class="card-toolbar">
-
-            <!--begin::Menu-->
-            <button type="button" class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
-                data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                <!--begin::Svg Icon | path: icons/duotune/general/gen024.svg-->
-                <span class="svg-icon svg-icon-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
-                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                            <rect x="5" y="5" width="5" height="5" rx="1" fill="currentColor"></rect>
-                            <rect x="14" y="5" width="5" height="5" rx="1" fill="currentColor" opacity="0.3"></rect>
-                            <rect x="5" y="14" width="5" height="5" rx="1" fill="currentColor" opacity="0.3"></rect>
-                            <rect x="14" y="14" width="5" height="5" rx="1" fill="currentColor" opacity="0.3"></rect>
-                        </g>
-                    </svg>
-                </span>
-                <!--end::Svg Icon-->
-            </button>
-            <!--begin::Menu 2-->
-            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-bold w-200px"
-                data-kt-menu="true">
-                <!--begin::Menu item-->
-                <div class="menu-item px-3">
-                    <div class="menu-content fs-6 text-dark fw-bolder px-3 py-4">Quick Actions</div>
-                </div>
-                <!--end::Menu item-->
-                <!--begin::Menu separator-->
-                <div class="separator mb-3 opacity-75"></div>
-                <!--end::Menu separator-->
-                <!--begin::Menu item-->
-                <div class="menu-item px-3">
-                    <a href="#" class="menu-link px-3">New Ticket</a>
-                </div>
-                <!--end::Menu item-->
-                <!--begin::Menu item-->
-                <div class="menu-item px-3">
-                    <a href="#" class="menu-link px-3">New Customer</a>
-                </div>
-                <!--end::Menu item-->
-                <!--begin::Menu item-->
-                <div class="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="right-start">
-                    <!--begin::Menu item-->
-                    <a href="#" class="menu-link px-3">
-                        <span class="menu-title">New Group</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <!--end::Menu item-->
-                    <!--begin::Menu sub-->
-                    <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                        <!--begin::Menu item-->
-                        <div class="menu-item px-3">
-                            <a href="#" class="menu-link px-3">Admin Group</a>
-                        </div>
-                        <!--end::Menu item-->
-                        <!--begin::Menu item-->
-                        <div class="menu-item px-3">
-                            <a href="#" class="menu-link px-3">Staff Group</a>
-                        </div>
-                        <!--end::Menu item-->
-                        <!--begin::Menu item-->
-                        <div class="menu-item px-3">
-                            <a href="#" class="menu-link px-3">Member Group</a>
-                        </div>
-                        <!--end::Menu item-->
-                    </div>
-                    <!--end::Menu sub-->
-                </div>
-                <!--end::Menu item-->
-                <!--begin::Menu item-->
-                <div class="menu-item px-3">
-                    <a href="#" class="menu-link px-3">New Contact</a>
-                </div>
-                <!--end::Menu item-->
-                <!--begin::Menu separator-->
-                <div class="separator mt-3 opacity-75"></div>
-                <!--end::Menu separator-->
-                <!--begin::Menu item-->
-                <div class="menu-item px-3">
-                    <div class="menu-content px-3 py-3">
-                        <a class="btn btn-primary btn-sm px-4" href="#">Generate Reports</a>
-                    </div>
-                </div>
-                <!--end::Menu item-->
-            </div>
-            <!--end::Menu 2-->
-            <!--end::Menu-->
-        </div>
+            <h3 class="text-dark">Employee Details</h3>
+        </div>         
         <h3 class="card-title align-items-start flex-column">
-            <a routerLink="/employee/add-employee" class="btn btn-primary w-100">
+            <a routerLink="/employee/add-employee" class="btn btn-primary w-100 ArFontStyle" lang="AR-SA">
 
                 <span class="svg-icon svg-icon-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -107,8 +23,105 @@
     <!--end::Header-->
     <!--begin::Body-->
     <div class="card-body py-3">
+        <div class="row mb-4">
+            <div class="col-lg-8 fv-row">
+                <div class="card-toolbar">
+                    <!--begin::Menu-->
+                    <button type="button" class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
+                        data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                        <!--begin::Svg Icon | path: icons/duotune/general/gen024.svg-->
+                        <span class="svg-icon svg-icon-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <rect x="5" y="5" width="5" height="5" rx="1" fill="currentColor"></rect>
+                                    <rect x="14" y="5" width="5" height="5" rx="1" fill="currentColor" opacity="0.3"></rect>
+                                    <rect x="5" y="14" width="5" height="5" rx="1" fill="currentColor" opacity="0.3"></rect>
+                                    <rect x="14" y="14" width="5" height="5" rx="1" fill="currentColor" opacity="0.3"></rect>
+                                </g>
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </button>
+                    <!--begin::Menu 2-->
+                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-bold w-200px"
+                        data-kt-menu="true">
+                        <!--begin::Menu item-->
+                        <div class="menu-item px-3">
+                            <div class="menu-content fs-6 text-dark fw-bolder px-3 py-4">Quick Actions</div>
+                        </div>
+                        <!--end::Menu item-->
+                        <!--begin::Menu separator-->
+                        <div class="separator mb-3 opacity-75"></div>
+                        <!--end::Menu separator-->
+                        <!--begin::Menu item-->
+                        <div class="menu-item px-3">
+                            <a href="#" class="menu-link px-3">New Ticket</a>
+                        </div>
+                        <!--end::Menu item-->
+                        <!--begin::Menu item-->
+                        <div class="menu-item px-3">
+                            <a href="#" class="menu-link px-3">New Customer</a>
+                        </div>
+                        <!--end::Menu item-->
+                        <!--begin::Menu item-->
+                        <div class="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="right-start">
+                            <!--begin::Menu item-->
+                            <a href="#" class="menu-link px-3">
+                                <span class="menu-title">New Group</span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <!--end::Menu item-->
+                            <!--begin::Menu sub-->
+                            <div class="menu-sub menu-sub-dropdown w-175px py-4">
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3">
+                                    <a href="#" class="menu-link px-3">Admin Group</a>
+                                </div>
+                                <!--end::Menu item-->
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3">
+                                    <a href="#" class="menu-link px-3">Staff Group</a>
+                                </div>
+                                <!--end::Menu item-->
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3">
+                                    <a href="#" class="menu-link px-3">Member Group</a>
+                                </div>
+                                <!--end::Menu item-->
+                            </div>
+                            <!--end::Menu sub-->
+                        </div>
+                        <!--end::Menu item-->
+                        <!--begin::Menu item-->
+                        <div class="menu-item px-3">
+                            <a href="#" class="menu-link px-3">New Contact</a>
+                        </div>
+                        <!--end::Menu item-->
+                        <!--begin::Menu separator-->
+                        <div class="separator mt-3 opacity-75"></div>
+                        <!--end::Menu separator-->
+                        <!--begin::Menu item-->
+                        <div class="menu-item px-3">
+                            <div class="menu-content px-3 py-3">
+                                <a class="btn btn-primary btn-sm px-4" href="#">Generate Reports</a>
+                            </div>
+                        </div>
+                        <!--end::Menu item-->
+                    </div>
+                    <!--end::Menu 2-->
+                    <!--end::Menu-->
+                </div>
+            </div>
+            <div class="col-lg-4 fv-row">
+                <select class="form-control form-control-solid">
+                    <option>-Select-</option>
+                    <option>Local</option>
+                    <option>Online</option>
+                </select>
+            </div>
+        </div>
         <!--begin::Table container-->
-        <div class="table-responsive">
+        <div class="table-responsive mt-3">
             <!--begin::Table-->
             <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
                 <!--begin::Table head-->
@@ -119,6 +132,7 @@
                         <th class="min-w-140px">Employee Id</th>
                         <th class="min-w-120px">Name</th>
                         <th class="min-w-120px">Date Of Joining</th>
+                        <th class="min-w-120px">Source</th>
                         <th class="min-w-120px">Department</th>
                     </tr>
                 </thead>
@@ -129,7 +143,7 @@
                         <td class="text-right">
                             <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
                             </a>
-                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
+                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2" routerLink="/employee/add-employee">
                             </a>
                         </td>
                         <td>
@@ -149,6 +163,8 @@
                         <td>
                             <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">04/18/2010</a>
                         </td>
+                        <td class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">Online </td>
+
                         <td class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">كلية الآداب</td>
                         
 
@@ -158,7 +174,7 @@
                             <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
 
                             </a>
-                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
+                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2" routerLink="/employee/add-employee">
 
                             </a>
                         </td>
@@ -176,6 +192,7 @@
                         <td>
                             <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">04/18/2012</a>
                         </td>
+                        <td class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">Offline </td>
                         <td class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">كلية العلوم الإدارية</td>
                         
 
@@ -185,7 +202,7 @@
                             <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
 
                             </a>
-                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
+                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2" routerLink="/employee/add-employee">
 
                             </a>
                         </td>
@@ -203,6 +220,7 @@
                         <td>
                             <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">04/18/2013</a>
                         </td>
+                        <td class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">Online </td>
                         <td class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">كلية العلوم</td>
                         
 
@@ -212,7 +230,7 @@
                             <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
 
                             </a>
-                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
+                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2" routerLink="/employee/add-employee">
 
                             </a>
                         </td>
@@ -232,6 +250,7 @@
                         <td>
                             <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">04/18/2020</a>
                         </td>
+                        <td class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">Offline </td>
                         <td class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">كلية الطب</td>
                       
 
@@ -241,7 +260,7 @@
                             <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
 
                             </a>
-                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
+                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2" routerLink="/employee/add-employee">
 
                             </a>
                         </td>
@@ -262,6 +281,7 @@
                         <td>
                             <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">04/18/2014</a>
                         </td>
+                        <td class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">Online </td>
                         <td class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">كلية العلوم</td>
                        
 
@@ -271,7 +291,7 @@
                             <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
 
                             </a>
-                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
+                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2" routerLink="/employee/add-employee">
 
                             </a>
                         </td>
@@ -291,6 +311,7 @@
                         <td>
                             <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">04/18/2012</a>
                         </td>
+                        <td class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">Offline </td>
                         <td class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">كلية الطب</td>
                        
 
@@ -300,7 +321,7 @@
                             <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
 
                             </a>
-                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
+                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2" routerLink="/employee/add-employee">
 
                             </a>
                         </td>
@@ -321,6 +342,7 @@
                         <td>
                             <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">04/18/2013</a>
                         </td>
+                        <td class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">Online </td>
                         <td class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">كلية التربية</td>
                        
 
@@ -330,7 +352,7 @@
                             <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
 
                             </a>
-                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
+                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2" routerLink="/employee/add-employee">
 
                             </a>
                         </td>
@@ -348,6 +370,7 @@
                         <td>
                             <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">04/18/2015</a>
                         </td>
+                        <td class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">Online </td>
                         <td class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">كلية العلوم</td>
                        
 
@@ -357,7 +380,7 @@
                             <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
 
                             </a>
-                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
+                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2" routerLink="/employee/add-employee">
 
                             </a>
                         </td>
@@ -380,6 +403,7 @@
                         <td>
                             <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">04/18/2010</a>
                         </td>
+                        <td class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">Offline </td>
                         <td class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">كلية الآداب</td>
                        
 
@@ -389,7 +413,7 @@
                             <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
 
                             </a>
-                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
+                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2" routerLink="/employee/add-employee">
 
                             </a>
                         </td>
@@ -411,6 +435,7 @@
                         <td>
                             <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">04/18/2021</a>
                         </td>
+                        <td class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">Offline </td>
                         <td class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">كلية العلوم</td>
                        
 

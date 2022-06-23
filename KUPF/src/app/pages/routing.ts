@@ -2,8 +2,12 @@ import { Routes } from '@angular/router';
 
 const Routing: Routes = [
   {
-    path :'auth',
-    loadChildren:()=>import('../modules/home/auth/auth-routing.module').then((m)=>m.AuthRoutingModule)
+    path :'users',
+    loadChildren:()=>import('../modules/home/auth/auth.module').then((m)=>m.AuthModule)
+  },
+  {
+    path :'website-maintenace',
+    loadChildren:()=>import('../modules/home/website/website.module').then((m)=>m.WebsiteModule)
   },
   {
     path :'employee',

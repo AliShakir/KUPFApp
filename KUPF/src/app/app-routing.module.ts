@@ -1,21 +1,24 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './modules/auth/services/auth.guard';
+import { LoginComponent } from './modules/home/auth/login/login.component';
 
 export const routes: Routes = [
-  {
-    path: 'auth',
-    loadChildren: () =>
-      import('./modules/auth/auth.module').then((m) => m.AuthModule),
-  },
-  {
-    path: 'error',
-    loadChildren: () =>
-      import('./modules/errors/errors.module').then((m) => m.ErrorsModule),
-  },
+  // {
+  //   path: 'auth',
+  //   loadChildren: () =>
+  //     import('./modules/auth/auth.module').then((m) => m.AuthModule),
+  // },
+  // {
+  //   path: 'error',
+  //   loadChildren: () =>
+  //     import('./modules/errors/errors.module').then((m) => m.ErrorsModule),
+  // },
+  {path:'',redirectTo:'dashboard', pathMatch:'full'},
+  {path:'login',component:LoginComponent},
   {
     path: '',
-    canActivate: [AuthGuard],
+    //canActivate: [AuthGuard],
     loadChildren: () =>
       import('./_metronic/layout/layout.module').then((m) => m.LayoutModule),
   },

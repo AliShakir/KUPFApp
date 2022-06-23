@@ -1,8 +1,20 @@
 <div class="card mb-5 mb-xl-8">
     <!--begin::Header-->
-    <div class="card-header border-0 pt-5">
+    <div class="card-header border-0 pt-5 panelBgColor1">
         <div class="card-toolbar">
-
+            <h3 class="text-dark">Service Setup Details</h3>
+        </div>  
+        <h3 class="card-title align-items-start flex-column">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-primary" routerLink="/service-setup/add-service-setup"> Add Setup Service</button>
+                <button type="button" class="btn btn-primary">Print</button>
+              </div>
+        </h3>
+    </div>
+    <!--end::Header-->
+    <!--begin::Body-->
+    <div class="card-body py-3">
+        <div class="card-toolbar">            
             <!--begin::Menu-->
             <button type="button" class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
                 data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
@@ -88,18 +100,8 @@
             <!--end::Menu 2-->
             <!--end::Menu-->
         </div>
-        <h3 class="card-title align-items-start flex-column">
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-primary" routerLink="/service-setup/add-service-setup"> Setup Service</button>
-                <button type="button" class="btn btn-primary">Print</button>
-              </div>
-        </h3>
-    </div>
-    <!--end::Header-->
-    <!--begin::Body-->
-    <div class="card-body py-3">
         <!--begin::Table container-->
-        <div class="table-responsive">
+        <div class="table-responsive mt-3">
             <!--begin::Table-->
             <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
                 <!--begin::Table head-->
@@ -107,6 +109,7 @@
                     <tr class="fw-bolder text-white">
                         <th class="min-w-80px text-center">Actions</th>
                         <th class="min-w-100px">Services</th>
+                        <th class="min-w-100px">Service Type</th>
                         <th class="min-w-140px">Min - Max</th>
                         <th class="min-w-120px">Discount Allow</th>
                         <th class="min-w-120px">For Employee</th>
@@ -125,6 +128,11 @@
                         <td>
                             <a href="javascript:void(0)"
                                 class="text-dark fw-bolder text-hover-primary  fs-6 ArFontStyle" lang="AR-SA">Hajj Loan			
+                            </a>
+                        </td>
+                        <td>
+                            <a href="javascript:void(0)"
+                                class="text-dark fw-bolder text-hover-primary  fs-6 ArFontStyle" lang="AR-SA">Regular			
                             </a>
                         </td>
                         <td>
@@ -154,6 +162,11 @@
                             </a>
                         </td>
                         <td>
+                            <a href="javascript:void(0)"
+                                class="text-dark fw-bolder text-hover-primary  fs-6 ArFontStyle" lang="AR-SA">Regular			
+                            </a>
+                        </td>
+                        <td>
                             <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">1
 
                             </a>
@@ -177,6 +190,11 @@
                         <td>
                             <a href="javascript:void(0)"
                                 class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">Masjid Donation – Nazha		
+                            </a>
+                        </td>
+                        <td>
+                            <a href="javascript:void(0)"
+                                class="text-dark fw-bolder text-hover-primary  fs-6 ArFontStyle" lang="AR-SA">Regular			
                             </a>
                         </td>
                         <td>
@@ -206,6 +224,11 @@
                             </a>
                         </td>
                         <td>
+                            <a href="javascript:void(0)"
+                                class="text-dark fw-bolder text-hover-primary  fs-6 ArFontStyle" lang="AR-SA">Regular			
+                            </a>
+                        </td>
+                        <td>
                             <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">3-6
 
                             </a>
@@ -229,6 +252,11 @@
                         <td>
                             <a href="javascript:void(0)"
                                 class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">Withdrawal Membership	
+                            </a>
+                        </td>
+                        <td>
+                            <a href="javascript:void(0)"
+                                class="text-dark fw-bolder text-hover-primary  fs-6 ArFontStyle" lang="AR-SA">Termination - الفصل من العمل			
                             </a>
                         </td>
                         <td>
@@ -258,7 +286,43 @@
                             </a>
                         </td>
                         <td>
+                            <a href="javascript:void(0)"
+                                class="text-dark fw-bolder text-hover-primary  fs-6 ArFontStyle" lang="AR-SA">Termination - الفصل من العمل			
+                            </a>
+                        </td>
+                        <td>
                             <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">10-15
+
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">No
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">Yes</a>
+                        </td>                       
+
+                    </tr>
+                    <tr>
+                        <td class="text-center">
+                            <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
+                            </a>
+                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
+                            </a>
+                        </td>
+                        <td>
+                            <a href="javascript:void(0)"
+                                class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">Discount On Loan
+                            </a>
+                        </td>
+                        <td>
+                            <a href="javascript:void(0)"
+                                class="text-dark fw-bolder text-hover-primary  fs-6 ArFontStyle" lang="AR-SA">Reimbursement - السداد			
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">1-15
 
                             </a>
                         </td>
