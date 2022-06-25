@@ -20,6 +20,10 @@ import { ViewemployeeinformationComponent } from './modules/home/employeeinforma
 import { AddReferenceComponent } from './modules/home/setup/add-reference/add-reference.component';
 import { LoginComponent } from './modules/home/auth/login/login.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { SearchTabComponent } from './modules/home/_partials/search-tab/search-tab.component';
+import { SearchTabModule } from './modules/home/_partials/search-tab.module';
+import { SetupModule } from './modules/home/setup/setup.module';
+import { ServiceSetupModule } from './modules/home/service-setup/service-setup.module';
 // #fake-end#
 
 function appInitializer(authService: AuthService) {
@@ -69,7 +73,8 @@ function appInitializer(authService: AuthService) {
       
   ],
   exports:[
-  BsDatepickerModule
+  BsDatepickerModule,
+ 
   ],
   providers: [
     {

@@ -13,5 +13,16 @@ namespace API.Data
         }
         public DbSet<FormTitleDt> FormTitleDT { get; set; }
         public DbSet<FormTitleHd> FormTitleHD { get; set; }
+        
+        // protected override void OnModelCreating(ModelBuilder modelBuilder)
+        // {
+        //     base.OnModelCreating(modelBuilder);
+        //     modelBuilder.Entity<FormTitleHd>()           
+        //     .HasMany(a=>a.FormTitleDts)
+        //     .WithOne(x=>x.FormTitleHds)
+        //     .IsRequired();
+            
+        // }
     }
+
 }

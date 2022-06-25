@@ -1,0 +1,214 @@
+<div class="card mb-5 mb-xl-10">
+    <div class="card-header border-0 cursor-pointer panelBgColor3" role="button" data-bs-toggle="collapse"
+        data-bs-target="#kt_account_email_preferences" aria-expanded="true"
+        aria-controls="kt_account_email_preferences">
+        <div class="card-title m-0">
+            <h3 class="fw-bolder m-0">Search</h3>
+        </div>
+    </div>
+    <div id="kt_account_email_preferences" class="collapse show">
+        <form class="form">            
+            <div class="card-body border-top px-9 py-9">                
+                <div class="row mb-4">
+                    <div class="col-lg-6 fv-row"></div>
+                    <div class="col-lg-4 fv-row">
+                        <select class="form-control form-control-solid" (change)="open(sponsorModal)">
+                            <option>-Select-</option>
+                            <option>Sponsor 1</option>
+                            <option>Sponsor 2</option>
+                            <option>Sponsor 3</option>
+                            <option>Sponsor 4</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-2">
+                        <label class="col-form-label fw-bold fs-6"><span class="">Select Sponsor </span></label>
+                    </div>
+                    
+                </div>
+                <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed p-6">
+                    <div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
+                        <div class="row mb-4">
+                            <div class="col-lg-3 fv-row">
+                                <label class="form-label" for="form3Example1">PF Id</label>
+                                <input type="text" id="form3Example1" class="form-control" />
+                            </div>
+                            <div class="col-lg-3 fv-row">
+                                <label class="form-label" for="form3Example2">CID</label>
+                                <input type="text" id="form3Example2" class="form-control" />
+                            </div>
+                            <div class="col-lg-3 fv-row">
+                                <label class="form-label" for="form3Example2">EM Id </label>
+                                <input type="text" id="form3Example2" class="form-control" />
+                            </div>
+                            <div class="col-lg-3 fv-row">
+                                <button type="button" class="btn btn-primary mt-8">Search</button>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="separator separator-dashed my-6"></div>
+                <div class="row mb-4">
+                    <div class="col-lg-3 fv-row">
+                        <label class="form-label" for="form3Example1">Name</label>
+                        <input type="text" id="form3Example1" class="form-control" readonly/>
+                    </div>
+                    <div class="col-lg-3 fv-row">
+                        <label class="form-label" for="form3Example1">Gender</label>
+                        <input type="text" id="form3Example1" class="form-control" readonly/>
+                    </div>
+                    <div class="col-lg-3 fv-row">
+                        <label class="form-label" for="form3Example1">Membership Date</label>
+                        <input type="text" id="form3Example1" class="form-control" readonly/>
+                    </div>
+                    <div class="col-lg-3 fv-row">
+                        <label class="form-label" for="form3Example1">Date of Birth</label>
+                        <input type="text" id="form3Example1" class="form-control" readonly/>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-lg-6 fv-row">
+                        <label class="form-label" for="form3Example1">Membership Status 3 YR 4 month</label>
+                        <input type="text" id="form3Example1" class="form-control" readonly/>
+                    </div>
+                    <div class="col-lg-3 fv-row">
+                        <label class="form-label" for="form3Example1">Nationality</label>
+                        <input type="text" id="form3Example1" class="form-control" readonly/>
+                    </div>
+                    <div class="col-lg-3 fv-row">
+                        <label class="form-label" for="form3Example1">Contract Type</label>
+                        <input type="text" id="form3Example1" class="form-control" readonly />
+                    </div>
+                    <div class="col-lg-3 fv-row">
+                        <label class="form-label" for="form3Example1">Occupation</label>
+                        <input type="text" id="form3Example1" class="form-control" readonly/>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-lg-3 fv-row">
+                        <label class="form-label" for="form3Example1">Department</label>
+                        <input type="text" id="form3Example1" class="form-control" readonly/>
+                    </div>
+                    <div class="col-lg-3 fv-row">
+                        <label class="form-label" for="form3Example1">Monthly Salary</label>
+                        <input type="number" id="form3Example1" class="form-control" readonly/>
+                    </div>
+                    <div class="col-lg-3 fv-row">
+                        <label class="form-label" for="form3Example1">Mobile</label>
+                        <input type="text" id="form3Example1" class="form-control" readonly/>
+                    </div>
+                    <div class="col-lg-3 fv-row">
+                        <label class="form-label" for="form3Example1">Land Line</label>
+                        <input type="text" id="form3Example1" class="form-control" readonly/>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-lg-6 fv-row">
+                        <label class="form-label" for="form3Example1">Notes</label>
+                        <input type="text" id="form3Example1" class="form-control" readonly/>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<ng-template #sponsorModal let-modal>
+    <div class="modal-header bg-light">
+        <button type="button" class="close" data-dismiss="modal" (click)="modal.dismiss('Cross click')">&times;</button>
+        <h4 class="modal-title" id="modal-basic-title">Sponsor</h4>
+    </div>
+    <div class="modal-body">
+        <form class="form">            
+            <div class="card-body">
+                <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed p-6">
+                    <div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
+                        <div class="row mb-2">
+                            <div class="col-lg-4 fv-row">
+                                <label class="form-label" for="form3Example1">PF Id</label>
+                                <input type="text" id="form3Example1" class="form-control" />
+                            </div>
+                            <div class="col-lg-4 fv-row">
+                                <label class="form-label" for="form3Example2">CID</label>
+                                <input type="text" id="form3Example2" class="form-control" />
+                            </div>
+                            <div class="col-lg-4 fv-row">
+                                <label class="form-label" for="form3Example2">EM Id </label>
+                                <input type="text" id="form3Example2" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="separator separator-dashed my-6"></div>
+                <div class="row mb-2">
+                    <div class="col-lg-3 fv-row">
+                        <label class="form-label" for="form3Example1">Name</label>
+                        <input type="text" id="form3Example1" class="form-control" readonly/>
+                    </div>
+                    <div class="col-lg-3 fv-row">
+                        <label class="form-label" for="form3Example1">Gender</label>
+                        <input type="text" id="form3Example1" class="form-control" readonly/>
+                    </div>
+                    <div class="col-lg-3 fv-row">
+                        <label class="form-label" for="form3Example1">Subscription Date</label>
+                        <input type="text" id="form3Example1" class="form-control" readonly/>
+                    </div>
+                    <div class="col-lg-3 fv-row">
+                        <label class="form-label" for="form3Example1">Date of Birth</label>
+                        <input type="text" id="form3Example1" class="form-control" readonly/>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-lg-3 fv-row">
+                        <label class="form-label" for="form3Example1">Membership Status</label>
+                        <input type="text" id="form3Example1" class="form-control" readonly/>
+                    </div>
+                    <div class="col-lg-3 fv-row">
+                        <label class="form-label" for="form3Example1">Nationality</label>
+                        <input type="text" id="form3Example1" class="form-control" readonly/>
+                    </div>
+                    <div class="col-lg-3 fv-row">
+                        <label class="form-label" for="form3Example1">Contract Type</label>
+                        <input type="text" id="form3Example1" class="form-control" readonly />
+                    </div>
+                    <div class="col-lg-3 fv-row">
+                        <label class="form-label" for="form3Example1">Occupation</label>
+                        <input type="text" id="form3Example1" class="form-control" readonly/>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-lg-3 fv-row">
+                        <label class="form-label" for="form3Example1">Department</label>
+                        <input type="text" id="form3Example1" class="form-control" readonly/>
+                    </div>
+                    <div class="col-lg-3 fv-row">
+                        <label class="form-label" for="form3Example1">Monthly Salary</label>
+                        <input type="number" id="form3Example1" class="form-control" readonly/>
+                    </div>
+                    <div class="col-lg-3 fv-row">
+                        <label class="form-label" for="form3Example1">Mobile</label>
+                        <input type="text" id="form3Example1" class="form-control" readonly/>
+                    </div>
+                    <div class="col-lg-3 fv-row">
+                        <label class="form-label" for="form3Example1">Land Line</label>
+                        <input type="text" id="form3Example1" class="form-control" readonly/>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-lg-6 fv-row">
+                        <label class="form-label" for="form3Example1">Notes</label>
+                        <input type="text" id="form3Example1" class="form-control" readonly/>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer bg-light">
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-primary" (click)="modal.close('Save click')">Save</button>
+            <button type="button" class="btn btn-warning" (click)="modal.close('Save click')">Cancel</button>
+            <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Delete</button>
+        </div>
+    </div>
+</ng-template>

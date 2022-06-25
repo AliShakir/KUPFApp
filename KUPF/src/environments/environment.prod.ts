@@ -156,6 +156,7 @@ export const environment = {
       'thumbnail': './assets/media/demos/demo20.png'
     },
   },
+  KUPFApiUrl:'api/'
 };
 
 /*

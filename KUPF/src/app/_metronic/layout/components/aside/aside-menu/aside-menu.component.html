@@ -15,7 +15,7 @@
 <!-- Separator -->
 <div class="menu-item">
   <div class="menu-content pt-8 pb-2">
-    <span class="menu-section text-muted text-uppercase fs-8 ls-1">Services</span>
+    <span class="menu-section text-muted text-uppercase fs-8 ls-1">Service</span>
   </div>
 </div>
 <!-- Membership Services -->
@@ -35,69 +35,24 @@
           fill="currentColor" />
       </svg>
     </span>
-    <span class="menu-title" data-link="/error">Membership Services</span><span class="menu-arrow"></span></span>
-  <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
-   
+    <span class="menu-title" data-link="/error">Membership Management</span><span class="menu-arrow"></span></span>
+  <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">   
     <div class="menu-item">
-      <a class="menu-link" routerLink="/references/employee-certificate-details" >        
+      <a class="menu-link" routerLink="/references/subscription-details" routerLinkActive="active">        
         <span class="menu-bullet">
           <span class="bullet bullet-dot"></span>
         </span>
-        <span class="menu-title">Employee Certficate</span>
-      </a>      
-    </div>    
-    <div data-kt-menu-trigger="click" class="menu-item menu-accordion here" routerLinkActive="active show">
-      <span class="menu-link">
-        <span class="menu-bullet">
-          <span class="bullet bullet-dot"></span>
-        </span>
-        <span class="menu-title">Services </span>
-        <span class="menu-arrow"></span>
-      </span>
-      <div class="menu-sub menu-sub-accordion" style="display: none; overflow: hidden;" kt-hidden-height="78">            
-        <div class="menu-item">
-          <a class="menu-link" routerLink="/references/subscription-details" routerLinkActive="active">        
-            <span class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
-            </span>
-            <span class="menu-title">Subscription</span>
-          </a>
-        </div>
-        <div class="menu-item">
-          <a class="menu-link" routerLink="/references/subscription-details" routerLinkActive="active">        
-            <span class="menu-bullet">
-              <span class="bullet bullet-dot"></span>
-            </span>
-            <span class="menu-title">Subscription from Online</span>
-          </a>      
-        </div>
-        
-        <div class="menu-item">
-          <a class="menu-link without-sub" routerLink="/service-setup/service-details"><span
-              class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Add Service</span>
-            </a>
-        </div>
-        <div class="menu-item">
-          <a class="menu-link without-sub"  routerLink="/service-setup/service-details" ><span class="menu-bullet"><span
-                class="bullet bullet-dot"></span></span><span class="menu-title">Hajj Loan</span></a>
-        </div>
-        <div class="menu-item">
-          <a class="menu-link without-sub" routerLink="/service-setup/service-details"><span class="menu-bullet"><span
-                class="bullet bullet-dot"></span></span><span class="menu-title">Social Loan</span></a>
-        </div>
-        <div class="menu-item">
-          <a class="menu-link without-sub" routerLink="/service-setup/service-details" ><span class="menu-bullet"><span
-                class="bullet bullet-dot"></span></span><span class="menu-title">Financial Loan</span></a>
-        </div>
-        <div class="menu-item">
-          <a class="menu-link without-sub" routerLink="/service-setup/service-details" ><span class="menu-bullet"><span
-                class="bullet bullet-dot"></span></span><span class="menu-title">Submit Request for Social Assistance
-            </span></a>
-        </div>
-        
-      </div>
-      
+        <span class="menu-title">Membership Request</span>
+      </a>
     </div>
+    <div class="menu-item">
+      <a class="menu-link" routerLink="/references/subscription-details" routerLinkActive="active">        
+        <span class="menu-bullet">
+          <span class="bullet bullet-dot"></span>
+        </span>
+        <span class="menu-title">Online Membership Request</span>
+      </a>      
+    </div> 
     <div data-kt-menu-trigger="click" class="menu-item menu-accordion here">
       <span class="menu-link">
         <span class="menu-bullet">
@@ -115,15 +70,14 @@
           <a class="menu-link without-sub" routerLink="/references/employee-discount-details" routerLinkActive="active"><span class="menu-bullet"><span
                 class="bullet bullet-dot"></span></span><span class="menu-title">Request for Loan Removal </span></a>
         </div>
-      </div>
-      
+      </div>      
     </div>
     <div data-kt-menu-trigger="click" class="menu-item menu-accordion here">
       <span class="menu-link">
         <span class="menu-bullet">
           <span class="bullet bullet-dot"></span>
         </span>
-        <span class="menu-title">Membership Management </span>
+        <span class="menu-title">Member’s Transaction </span>
         <span class="menu-arrow"></span>
       </span>
       <div class="menu-sub menu-sub-accordion" style="display: none; overflow: hidden;" kt-hidden-height="78">
@@ -175,6 +129,108 @@
       </div>
     </div>
   </div>
+  <!-- Separator -->
+<div class="menu-item">
+  <div class="menu-content pt-8 pb-2">
+    <span class="menu-section text-muted text-uppercase fs-8 ls-1">Services  Management</span>
+  </div>
+</div>
+  <div data-kt-menu-trigger="click" class="menu-item menu-accordion here" routerLinkActive="active show">
+    <span class="menu-link">
+      <span class="menu-bullet">
+        <span class="bullet bullet-dot"></span>
+      </span>
+      <span class="menu-title">Services  Management</span>
+      <span class="menu-arrow"></span>
+    </span>
+    <div class="menu-sub menu-sub-accordion" style="display: none; overflow: hidden;" kt-hidden-height="78">            
+      <div data-kt-menu-trigger="click" class="menu-item menu-accordion here">
+        <span class="menu-link">
+          <span class="menu-bullet">
+            <span class="bullet bullet-dot"></span>
+          </span>
+          <span class="menu-title">Financial Services </span>
+          <span class="menu-arrow"></span>
+        </span>
+        <div class="menu-sub menu-sub-accordion" style="display: none; overflow: hidden;" kt-hidden-height="78">
+          <div class="menu-item">
+            <a class="menu-link without-sub" routerLink="/service-setup/service-details"><span
+                class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Add Service</span>
+              </a>
+          </div>
+          <div class="menu-item">
+            <a class="menu-link without-sub"  routerLink="/service-setup/service-details" ><span class="menu-bullet"><span
+                  class="bullet bullet-dot"></span></span><span class="menu-title">Hajj Loan</span></a>
+          </div>
+          <div class="menu-item">
+            <a class="menu-link without-sub" routerLink="/service-setup/service-details"><span class="menu-bullet"><span
+                  class="bullet bullet-dot"></span></span><span class="menu-title">Social Loan</span></a>
+          </div>
+          <div class="menu-item">
+            <a class="menu-link without-sub" routerLink="/service-setup/service-details" ><span class="menu-bullet"><span
+                  class="bullet bullet-dot"></span></span><span class="menu-title">Financial Loan</span></a>
+          </div>
+          <div class="menu-item">
+            <a class="menu-link without-sub" routerLink="/service-setup/service-details" ><span class="menu-bullet"><span
+                  class="bullet bullet-dot"></span></span><span class="menu-title">Submit Request for Social Assistance
+              </span></a>
+          </div>
+        </div>      
+      </div>
+      <div data-kt-menu-trigger="click" class="menu-item menu-accordion here">
+        <span class="menu-link">
+          <span class="menu-bullet">
+            <span class="bullet bullet-dot"></span>
+          </span>
+          <span class="menu-title">Social Services </span>
+          <span class="menu-arrow"></span>
+        </span>
+        <div class="menu-sub menu-sub-accordion" style="display: none; overflow: hidden;" kt-hidden-height="78">
+          <div class="menu-item">
+            <a class="menu-link" routerLink="/references/employee-certificate-details" >        
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title">Employee Certficate</span>
+            </a>      
+          </div> 
+          <div class="menu-item">
+            <a class="menu-link" routerLink="/references/employee-certificate-details" >        
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title">Membership Certification </span>
+            </a>      
+          </div>
+          <div class="menu-item">
+            <a class="menu-link" routerLink="/references/employee-certificate-details" >        
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title">Debit Certification </span>
+            </a>      
+          </div>
+          <div class="menu-item">
+            <a class="menu-link" routerLink="/references/employee-certificate-details" >        
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title">Settlement Certification</span>
+            </a>      
+          </div>
+          <div class="menu-item">
+            <a class="menu-link" routerLink="/references/employee-certificate-details" >        
+              <span class="menu-bullet">
+                <span class="bullet bullet-dot"></span>
+              </span>
+              <span class="menu-title">Social Activity</span>
+            </a>      
+          </div> 
+        </div>      
+      </div>
+    
+  </div>
+ 
 </div>
 <!-- Separator -->
 <div class="menu-item">
@@ -199,7 +255,7 @@
           fill="currentColor" />
       </svg>
     </span>
-    <span class="menu-title" data-link="/error">Employees</span><span class="menu-arrow"></span>
+    <span class="menu-title" data-link="/error">Employee Management</span><span class="menu-arrow"></span>
   </span>
   <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
     <div data-kt-menu-trigger="click" class="menu-item menu-accordion mb-1">
@@ -347,7 +403,7 @@
     </div>
     <div class="menu-item">
       <a class="menu-link without-sub" routerLink="/service-setup/service-setup-details"  routerLinkActive="active"><span
-          class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title"> Services
+          class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title"> Service
           Setup</span></a>
     </div>
     <div class="menu-item">

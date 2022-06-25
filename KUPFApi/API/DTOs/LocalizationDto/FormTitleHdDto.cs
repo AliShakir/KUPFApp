@@ -1,16 +1,14 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
-#nullable disable
-
-namespace API.Models
+namespace API.DTOs.LocalizationDto
 {
-    public partial class FormTitleHd
-    {   
+    public class FormTitleHdDto
+    {
         public int TenentId { get; set; }
-        public int Language { get; set; }
-         [Key]
+        public int Language { get; set; }        
         public string FormId { get; set; }
         public string FormName { get; set; }
         public string HeaderName { get; set; }
@@ -18,6 +16,6 @@ namespace API.Models
         public string Navigation { get; set; }
         public string Remarks { get; set; }
         public string Status { get; set; }
-        public ICollection<FormTitleDt> FormTitleDts { get; set; }
+        public ICollection<FormTitleDtDto> FormTitleDts { get; set; }
     }
 }

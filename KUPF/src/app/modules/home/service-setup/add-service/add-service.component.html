@@ -1,18 +1,115 @@
+<div class="notice d-flex bg-light-primary rounded border-primary border border-dashed p-6 mb-3">
+    <div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
+        <div class="row">
+            <div class="btn-group " role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-primary float-left" >Save</button>
+                <button type="button" class="btn btn-warning float-left">Cancel</button>
+                <button type="button" class="btn btn-danger float-left">Back</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Parital View For Search-->
+<app-search-tab></app-search-tab>
+
+<!--Service Information-->
 <div class="card mb-5 mb-xl-10">
     <!--begin::Card header-->
     <div class="card-header card-header-stretch pb-0 panel1bgColor">
         <!--begin::Title-->
         <div class="card-title">
-            <h3 class="m-0 mr-3">Add {{formTitle}}</h3>
+            <h3 class="m-0">Service Information</h3>
         </div>
-        <h3 class="card-title align-items-start flex-column">
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-primary">Save</button>
-                <button type="button" class="btn btn-warning">Cancel</button>
-                <button type="button" class="btn btn-light-dark" routerLink="/service-setup/service-details" routerLinkActive="active" >Back</button>
-              </div>
-              
-        </h3>
+        <div class="card-title">
+            <h3 class="m-0 text-danger">Service Status</h3>
+        </div>
+        <!--end::Title-->
+    </div>
+    <!--end::Card header-->
+    <!--begin::Tab content-->
+    <div id="kt_billing_payment_tab_content" class="card-body tab-content">
+        <!--begin::Tab panel-->
+        <div id="kt_billing_creditcard" class="tab-pane fade show active" role="tabpanel">
+            <!--begin::Title-->
+            <!-- <h3 class="mb-5">Job Information</h3> -->
+            <!--end::Title-->
+            <!--begin::Row-->
+            <div class="row gx-9 gy-6">
+                <form autocomplete="off">
+                    <div class="row mb-6">
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-form-label fw-bold fs-6"><span class="">Service Type</span></label>
+                            <select class="form-control bg-light" aria-label="Select example">
+                                <option>-Select-</option>
+                                <option value="1">Type 1</option>
+                                <option value="2">Type 2</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-form-label fw-bold fs-6"><span class="">Service Sub Type</span></label>
+                            <select class="form-control bg-light" aria-label="Select example">
+                                <option>-Select-</option>
+                                <option value="1">Type 1</option>
+                                <option value="2">Type 2</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-form-label fw-bold fs-6"><span class="">Service Number</span></label>
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" readonly
+                                />
+                        </div>
+                    </div>
+                    <div class="row mb-6">
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-form-label fw-bold fs-6"><span class="">Amount</span></label>
+                            <input type="number" class="form-control form-control-lg  mb-3 mb-lg-0" 
+                                />
+                        </div>
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-form-label fw-bold fs-6"><span class="">Number of Installments</span></label>
+                            <input type="number" class="form-control form-control-lg  mb-3 mb-lg-0" 
+                                />
+                        </div>
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-form-label fw-bold fs-6"><span class="">Installment Amount</span></label>
+                            <input type="number" class="form-control form-control-lg  mb-3 mb-lg-0" 
+                                />
+                        </div>
+                    </div>
+                    <div class="row mb-6">
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-form-label fw-bold fs-6"><small class="text-danger">Incase of Gift By Default=Y </small> <span class=""> Gift Amount</span> </label>
+                            <input type="number" class="form-control form-control-lg  mb-3 mb-lg-0" 
+                                />
+                        </div>
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-form-label fw-bold fs-6"><span class="">Starting Deduction Month</span></label>
+                            <input type="number" class="form-control form-control-lg  mb-3 mb-lg-0" 
+                                />
+                        </div>
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-form-label fw-bold fs-6"><span class="">Untill the Month</span></label>
+                            <input type="date" class="form-control form-control-lg  mb-3 mb-lg-0" 
+                                />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--end::Row-->
+        </div>
+
+    </div>
+    <!--end::Tab content-->
+</div>
+<!--Payment Information-->
+<div class="card mb-5 mb-xl-10">
+    <!--begin::Card header-->
+    <div class="card-header card-header-stretch pb-0 panel2bgColor">
+        <!--begin::Title-->
+        <div class="card-title">
+            <h3 class="m-0">Payment Information</h3>
+        </div>
         <!--end::Title-->
     </div>
     <!--end::Card header-->
@@ -27,50 +124,49 @@
             <div class="row gx-9 gy-6">
                 <form autocomplete="off">                    
                     <div class="row mb-4">
-                        <div class="col-lg-6 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Employee Id
-                                </span></label>
-                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
-                        </div>
-                        <div class="col-lg-6 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Arabic</span></label>
-                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" readonly
-                                name="nameInArabic" />
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col-lg-6 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Service</span></label>
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Service 1</option>
-                                <option value="2">Service 2</option>
-                                <option value="3">Service 3</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-6 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Service Sub Type</span></label>
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Service 1</option>
-                                <option value="2">Service 2</option>
-                                <option value="3">Service 3</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
                         <div class="col-lg-4 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Date of Joining
-                                </span></label>
-                            <input type="date" class="form-control form-control-lg  mb-3 mb-lg-0" />
-                        </div>
-                        <div class="col-lg-4 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Job Contract</span></label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Beneficiary</span></label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0"
                                 name="nameInArabic" />
                         </div>
                         <div class="col-lg-4 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Occupation</span></label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Accountant</span></label>
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0"
+                                name="nameInArabic" />
+                        </div>
+                       
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-lg-6 col-form-label fw-bold fs-6"><span class="">Bank </span></label>
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0"
+                                name="nameInArabic" />
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Voucher Id</span></label>
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0"
+                                name="nameInArabic" />
+                        </div>
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Voucher Date</span></label>
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0"
+                                name="nameInArabic" />
+                        </div>
+                        
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-lg-6 col-form-label fw-bold fs-6"><span class="">Collected Date</span></label>
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0"
+                                name="nameInArabic" />
+                        </div>
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-lg-8 col-form-label fw-bold fs-6"><span class="">Collected by Relative</span></label>
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0"
+                                name="nameInArabic" />
+                        </div>
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-lg-8 col-form-label fw-bold fs-6"><span class="">Collected Person Civil ID </span></label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0"
                                 name="nameInArabic" />
                         </div>
@@ -82,11 +178,122 @@
 
     </div>
     <!--end::Tab content-->
+    
 </div>
 
+<!--Financial Details-->
 <div class="card mb-5 mb-xl-10">
     <!--begin::Card header-->
-    <div class="card-header card-header-stretch pb-0 panel2bgColor">
+    <div class="card-header card-header-stretch pb-0 panel3bgColor">
+        <!--begin::Title-->
+        <div class="card-title">
+            <h3 class="m-0">Financial Details</h3>
+        </div>
+        <!--end::Title-->
+    </div>
+    <!--end::Card header-->
+    <!--begin::Tab content-->
+    <div id="kt_billing_payment_tab_content" class="card-body tab-content">
+        <!--begin::Tab panel-->
+        <div id="kt_billing_creditcard" class="tab-pane fade show active" role="tabpanel">
+            <!--begin::Title-->
+            <!-- <h3 class="mb-5">Job Information</h3> -->
+            <!--end::Title-->
+            <!--begin::Row-->
+            <div class="row gx-9 gy-6">
+                <form autocomplete="off">
+                    <div class="row mb-6">
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-form-label fw-bold fs-6"><span class="">Loan Account</span></label>
+                            <select class="form-control bg-light" aria-label="Select example">
+                                <option>-Select-</option>
+                                <option value="1">Option 1</option>
+                                <option value="2">Option 2</option>
+                                <option value="2">Option 3</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-form-label fw-bold fs-6"><span class="">Hajj Account</span></label>
+                            <select class="form-control bg-light" aria-label="Select example">
+                                <option>-Select-</option>
+                                <option value="1">Option 1</option>
+                                <option value="2">Option 2</option>
+                                <option value="2">Option 3</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-form-label fw-bold fs-6"><span class="">Per Load Act</span></label>
+                            <select class="form-control bg-light" aria-label="Select example">
+                                <option>-Select-</option>
+                                <option value="1">Option 1</option>
+                                <option value="2">Option 2</option>
+                                <option value="2">Option 3</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-6">
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-form-label fw-bold fs-6"><span class="">Consumer Loan </span></label>
+                            <select class="form-control bg-light" aria-label="Select example">
+                                <option>-Select-</option>
+                                <option value="1">Option 1</option>
+                                <option value="2">Option 2</option>
+                                <option value="2">Option 3</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-form-label fw-bold fs-6"><span class="">Other Act # 1</span></label>
+                            <select class="form-control bg-light" aria-label="Select example">
+                                <option>-Select-</option>
+                                <option value="1">Option 1</option>
+                                <option value="2">Option 2</option>
+                                <option value="2">Option 3</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-form-label fw-bold fs-6"><span class="">Other Act # 2</span></label>
+                            <select class="form-control bg-light" aria-label="Select example">
+                                <option>-Select-</option>
+                                <option value="1">Option 1</option>
+                                <option value="2">Option 2</option>
+                                <option value="2">Option 3</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-6">
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-form-label fw-bold fs-6"><span class="">Other Act # 3 </span></label>
+                            <select class="form-control bg-light" aria-label="Select example">
+                                <option>-Select-</option>
+                                <option value="1">Option 1</option>
+                                <option value="2">Option 2</option>
+                                <option value="2">Option 3</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-form-label fw-bold fs-6"><span class="">Other Act # 4</span></label>
+                            <select class="form-control bg-light" aria-label="Select example">
+                                <option>-Select-</option>
+                                <option value="1">Option 1</option>
+                                <option value="2">Option 2</option>
+                                <option value="2">Option 3</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <!--end::Row-->
+        </div>
+
+    </div>
+    <!--end::Tab content-->
+</div>
+
+<!--Approval Details-->
+<div class="card mb-5 mb-xl-10">
+    <!--begin::Card header-->
+    <div class="card-header card-header-stretch pb-0 panel4BgColor">
         <!--begin::Title-->
         <div class="card-title">
             <h3 class="m-0">Approval Details Information</h3>
@@ -103,19 +310,7 @@
             <!--end::Title-->
             <!--begin::Row-->
             <div class="row gx-9 gy-6">
-                <form autocomplete="off">                    
-                    <div class="row mb-4">
-                        <div class="col-lg-6 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Service Amount
-                                </span></label>
-                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
-                        </div>
-                        <div class="col-lg-6 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Total Installments</span></label>
-                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0"
-                                name="nameInArabic" />
-                        </div>
-                    </div>
+                <form autocomplete="off">  
                     <div class="row mb-4">
                         <div class="col-lg-4 fv-row">
                             <label class="col-form-label fw-bold fs-6"><span class="">Approval 1 Role</span></label>
@@ -179,39 +374,18 @@
                                 name="nameInArabic" />
                         </div>
                     </div>
-                   
-                </form>
-            </div>
-            <!--end::Row-->
-        </div>
-
-    </div>
-    <!--end::Tab content-->
-</div>
-
-<div class="card mb-5 mb-xl-10">
-    <!--begin::Card header-->
-    <div class="card-header card-header-stretch pb-0 panel3bgColor">
-        <!--begin::Title-->
-        <div class="card-title">
-            <h3 class="m-0">Payment Information</h3>
-        </div>
-        <!--end::Title-->
-    </div>
-    <!--end::Card header-->
-    <!--begin::Tab content-->
-    <div id="kt_billing_payment_tab_content" class="card-body tab-content">
-        <!--begin::Tab panel-->
-        <div id="kt_billing_creditcard" class="tab-pane fade show active" role="tabpanel">
-            <!--begin::Title-->
-            <!-- <h3 class="mb-5">Personal Information</h3> -->
-            <!--end::Title-->
-            <!--begin::Row-->
-            <div class="row gx-9 gy-6">
-                <form autocomplete="off">                    
                     <div class="row mb-4">
                         <div class="col-lg-4 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Cheque Number</span></label>
+                            <label class="col-form-label fw-bold fs-6"><span class="">Approval 4 Role</span></label>
+                            <select class="form-control bg-light" aria-label="Select example">
+                                <option>-Select-</option>
+                                <option value="1">Role 1</option>
+                                <option value="2">Role 2</option>
+                                <option value="3">Role 3</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Approved By</span></label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0"
                                 name="nameInArabic" />
                         </div>
@@ -220,125 +394,29 @@
                             <input type="date" class="form-control form-control-lg  mb-3 mb-lg-0"
                                 name="nameInArabic" />
                         </div>
-                        <div class="col-lg-4 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Amount</span></label>
-                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0"
-                                name="nameInArabic" />
-                        </div>
                     </div>
                     <div class="row mb-4">
-                        <div class="col-lg-6 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Cheque Collected By</span></label>
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-form-label fw-bold fs-6"><span class="">Approval 5 Role</span></label>
+                            <select class="form-control bg-light" aria-label="Select example">
+                                <option>-Select-</option>
+                                <option value="1">Role 1</option>
+                                <option value="2">Role 2</option>
+                                <option value="3">Role 3</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Approved By</span></label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0"
                                 name="nameInArabic" />
                         </div>
-                        <div class="col-lg-6 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">On Date</span></label>
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Date</span></label>
                             <input type="date" class="form-control form-control-lg  mb-3 mb-lg-0"
                                 name="nameInArabic" />
                         </div>
                     </div>
-                </form>
-            </div>
-            <!--end::Row-->
-        </div>
 
-    </div>
-    <!--end::Tab content-->
-    
-</div>
-
-<div class="card mb-5 mb-xl-10">
-    <!--begin::Card header-->
-    <div class="card-header card-header-stretch pb-0 panelBgColor3">
-        <!--begin::Title-->
-        <div class="card-title">
-            <h3 class="m-0">Financial Details</h3>
-        </div>
-        <!--end::Title-->
-    </div>
-    <!--end::Card header-->
-    <!--begin::Tab content-->
-    <div id="kt_billing_payment_tab_content" class="card-body tab-content">
-        <!--begin::Tab panel-->
-        <div id="kt_billing_creditcard" class="tab-pane fade show active" role="tabpanel">
-            <!--begin::Title-->
-            <!-- <h3 class="mb-5">Job Information</h3> -->
-            <!--end::Title-->
-            <!--begin::Row-->
-            <div class="row gx-9 gy-6">
-                <form autocomplete="off">
-                    <div class="row mb-6">
-                        <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Loan Account</span></label>
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Married</option>
-                                <option value="2">Single</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Hajj Account</span></label>
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Married</option>
-                                <option value="2">Single</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Per Load Act</span></label>
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Married</option>
-                                <option value="2">Single</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mb-6">
-                        <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Consumer Loan </span></label>
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Married</option>
-                                <option value="2">Single</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Other Act # 1</span></label>
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Married</option>
-                                <option value="2">Single</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Other Act # 2</span></label>
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Married</option>
-                                <option value="2">Single</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mb-6">
-                        <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Other Act # 3 </span></label>
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Married</option>
-                                <option value="2">Single</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Other Act # 4</span></label>
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Married</option>
-                                <option value="2">Single</option>
-                            </select>
-                        </div>
-
-                    </div>
                 </form>
             </div>
             <!--end::Row-->
@@ -347,3 +425,5 @@
     </div>
     <!--end::Tab content-->
 </div>
+
+

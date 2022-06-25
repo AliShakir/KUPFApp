@@ -87,7 +87,8 @@ namespace API.Models
         public virtual DbSet<VwAwstatusCatWise> VwAwstatusCatWises { get; set; }
         public virtual DbSet<WebPage> WebPages { get; set; }
         public virtual DbSet<WebPageUrl> WebPageUrls { get; set; }
-
+        public DbSet<TestCompany> TestCompanies { get; set; }
+        public DbSet<TestEmployee> TestEmployees { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -99,6 +100,7 @@ namespace API.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+             
             modelBuilder.Entity<AccountHead>(entity =>
             {
                 entity.HasKey(e => new { e.TenentId, e.LocationId, e.HeadId });
@@ -1525,14 +1527,14 @@ namespace API.Models
 
             modelBuilder.Entity<FormTitleDt>(entity =>
             {
-                entity.HasKey(e => new { e.TenentId, e.FormId, e.Language, e.LabelId })
+                entity.HasKey(e => new { e.TenentId, e.FormTitleHdId, e.Language, e.LabelId })
                     .HasName("PK_FormTitleDT_1");
 
                 entity.ToTable("FormTitleDT");
 
                 entity.Property(e => e.TenentId).HasColumnName("TenentID");
 
-                entity.Property(e => e.FormId)
+                entity.Property(e => e.FormTitleHdId)
                     .HasMaxLength(40)
                     .HasColumnName("FormID")
                     .HasComment("Make sure you are not using any special character here");

@@ -9,6 +9,8 @@ import { AddEmployeeCertificateComponent } from './add-employee-certificate/add-
 import { EmployeeCertificateDetailsComponent } from './employee-certificate-details/employee-certificate-details.component';
 import { AddSubscriptionComponent } from './add-subscription/add-subscription.component';
 import { SubscriptionDetailsComponent } from './subscription-details/subscription-details.component';
+import { SearchTabModule } from '../_partials/search-tab.module';
+import { SearchTabComponent } from '../_partials/search-tab/search-tab.component';
 
 
 
@@ -22,10 +24,12 @@ import { SubscriptionDetailsComponent } from './subscription-details/subscriptio
     EmployeeCertificateDetailsComponent,
     AddSubscriptionComponent,
     SubscriptionDetailsComponent
+    
   ],
   imports: [
     CommonModule,
-    SetupRoutingModule
+    SetupRoutingModule,
+    SearchTabModule
   ]
 })
 export class SetupModule { }

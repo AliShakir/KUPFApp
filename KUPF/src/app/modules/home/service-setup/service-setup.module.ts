@@ -13,6 +13,8 @@ import { ApprovalManagementComponent } from './approval-management/approval-mana
 import { ImportEmployeeMonthlyPaymentComponent } from './import-employee-monthly-payment/import-employee-monthly-payment.component';
 import { EmployeeMomentDetailsComponent } from './employee-moment-details/employee-moment-details.component';
 import { AddEmployeeMomentComponent } from './add-employee-moment/add-employee-moment.component';
+import { SearchTabComponent } from '../_partials/search-tab/search-tab.component';
+import { SearchTabModule } from '../_partials/search-tab.module';
 
 
 @NgModule({
@@ -26,12 +28,14 @@ import { AddEmployeeMomentComponent } from './add-employee-moment/add-employee-m
     ImportEmployeeMonthlyPaymentComponent,
     EmployeeMomentDetailsComponent,
     AddEmployeeMomentComponent,
+     
   ],
   imports: [
     CommonModule,
     ServiceSetupRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    SearchTabModule
   ]
 })
 export class ServiceSetupModule { }
