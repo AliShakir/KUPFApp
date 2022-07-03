@@ -1,19 +1,26 @@
+<input type="hidden" #AddEmployee name="AddEmployee" value="AddEmployee">
+<div *ngFor="let label of formtileHd$ | async; let i = index">
+<div class="notice d-flex bg-light-primary rounded border-primary border border-dashed p-6 mb-3">
+  <div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
+      <div class="row">
+          <div class="btn-group " role="group" aria-label="Basic example">
+              <button type="button" class="btn btn-primary float-left ArFontStyle"  lang="AR-SA">{{label.formTitleDTLanguage[28].title}}</button>
+              <button type="button" class="btn btn-warning float-left ArFontStyle" lang="AR-SA">{{label.formTitleDTLanguage[29].title}}</button>
+              <button type="button" class="btn btn-danger float-left ArFontStyle" routerLink="/employee/view-employee" routerLinkActive="active" lang="AR-SA">{{label.formTitleDTLanguage[30].title}}</button>
+          </div>
+      </div>
+  </div>
+</div>
+<!-- TO GET FORM ID AND SETTINGUP LANGAUGE. -->
 
 <div class="card mb-5 mb-xl-10">
   <!--begin::Card header-->
   <div class="card-header card-header-stretch pb-0 panelBgColor">
     <!--begin::Title-->
     <div class="card-title">
-      <h3 class="m-0">Add Employee / Subscriber</h3>
+      <h3 class="m-0 ArFontStyle" lang="AR-SA">{{label.headerName}}</h3>
     </div>
-    <h3 class="card-title align-items-start flex-column">
-      <div class="btn-group" role="group" aria-label="Basic example">
-          <button type="button" class="btn btn-primary">Save</button>
-          <button type="button" class="btn btn-warning">Cancel</button>
-          <button type="button" class="btn btn-light-dark" routerLink="/employee/view-employee" routerLinkActive="active" >Back</button>
-        </div>
-        
-  </h3>
+  
     <!--end::Title-->
 
   </div>
@@ -27,24 +34,24 @@
       <!--end::Title-->
       <!--begin::Row-->
       <div class="row gx-9 gy-6">
-        <form [formGroup]='employeeForm' (ngSubmit)="registerEmployee()" autocomplete="off">
+        <form autocomplete="off">
           <div class="row mb-6">
-            <div class="col-lg-6 fv-row">
-              <app-text-input [formControl]='employeeForm.controls["employeeName"]' [label]='"Employee Name English"'>
-              </app-text-input>
+            <div class="col-lg-6 fv-row">             
+              <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA"><span class="">{{label.formTitleDTLanguage[0].title}}</span></label>
+              <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" readonly name="nameInArabic" />
             </div>
             <div class="col-lg-6 fv-row">
-              <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Arabic</span></label>
+              <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA"><span class="">{{label.formTitleDTLanguage[1].title}}</span></label>
               <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" readonly name="nameInArabic" />
             </div>
           </div>
           <div class="row mb-6">
             <div class="col-lg-4 fv-row">
-              <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Date of Birth</span></label>
+              <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA"><span class="">{{label.formTitleDTLanguage[2].title}}</span></label>
               <input type="date" class="form-control form-control-lg  mb-3 mb-lg-0" />
             </div>
             <div class="col-lg-4 fv-row">
-              <label class="col-form-label fw-bold fs-6"><span class="">Gender</span></label>
+              <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA"><span class="">{{label.formTitleDTLanguage[3].title}}</span></label>
               <select class="form-control bg-light" aria-label="Select example">
                 <option>-Select-</option>
                 <option value="1">Male</option>
@@ -53,7 +60,7 @@
               </select>
             </div>
             <div class="col-lg-4 fv-row">
-              <label class="col-form-label fw-bold fs-6"><span class="">Marital Status</span></label>
+              <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA"><span class="">{{label.formTitleDTLanguage[4].title}}</span></label>
               <select class="form-control bg-light" aria-label="Select example">
                 <option>-Select-</option>
                 <option value="1">Married</option>
@@ -65,23 +72,26 @@
 
           <div class="row mb-6">
             <div class="col-lg-4 fv-row">
-              <app-text-input [formControl]='employeeForm.controls["employeeMobile"]' [label]='"Mobile"'>
-              </app-text-input>
+              <label class="col-lg-6 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA"><span class="">{{label.formTitleDTLanguage[5].title}}</span></label>
+              <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" readonly name="nameInArabic" />
             </div>
             <div class="col-lg-4 fv-row">
-              <app-text-input [formControl]='employeeForm.controls["landLine"]' [label]='"Landline"'></app-text-input>
+              <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA"><span class="">{{label.formTitleDTLanguage[6].title}}</span></label>
+              <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" readonly name="nameInArabic" />
             </div>
             <div class="col-lg-4 fv-row">
-              <app-text-input [formControl]='employeeForm.controls["email"]' [label]='"Email"'></app-text-input>
+              <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA"><span class="">{{label.formTitleDTLanguage[7].title}}</span></label>
+              <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" readonly name="nameInArabic" />
             </div>
           </div>
           <div class="row mb-6">
             <div class="col-lg-6 fv-row">
-              <app-text-input [formControl]='employeeForm.controls["kinName"]' [label]='"Kin Name"'></app-text-input>
+              <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA"><span class="">{{label.formTitleDTLanguage[8].title}}</span></label>
+              <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" readonly name="nameInArabic" />
             </div>
             <div class="col-lg-6 fv-row">
-              <app-text-input [formControl]='employeeForm.controls["kinMobile"]' [label]='"Kin Mobile"'>
-              </app-text-input>
+              <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA"><span class="">{{label.formTitleDTLanguage[9].title}}</span></label>
+              <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" readonly name="nameInArabic" />
             </div>
           </div>
         </form>
@@ -98,7 +108,7 @@
   <div class="card-header card-header-stretch pb-0 panelBgColor">
     <!--begin::Title-->
     <div class="card-title">
-      <h3 class="m-0">Job Details</h3>
+      <h3 class="m-0 ArFontStyle"  lang="AR-SA">{{label.formTitleDTLanguage[32].title}}</h3>
     </div>
     <!--end::Title-->
 
@@ -113,10 +123,10 @@
       <!--end::Title-->
       <!--begin::Row-->
       <div class="row gx-9 gy-6">
-        <form [formGroup]='employeeForm' (ngSubmit)="registerEmployee()" autocomplete="off">
+        <form autocomplete="off">
           <div class="row mb-6">            
             <div class="col-lg-4 fv-row">
-              <label class="col-form-label fw-bold fs-6"><span class="">Department</span></label>
+              <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA"><span class="">{{label.formTitleDTLanguage[10].title}}</span></label>
               <select class="form-control bg-light" aria-label="Select example">
                 <option>-Select-</option>
                 <option value="1">Male</option>
@@ -125,7 +135,7 @@
               </select>
             </div>
             <div class="col-lg-4 fv-row">
-              <label class="col-form-label fw-bold fs-6"><span class="">Occupation</span></label>
+              <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA"><span class="">{{label.formTitleDTLanguage[11].title}}</span></label>
               <select class="form-control bg-light" aria-label="Select example">
                 <option>-Select-</option>
                 <option value="1">Male</option>
@@ -133,20 +143,23 @@
                 <option value="3">Other</option>
               </select>
             </div>
-            <div class="col-lg-4 fv-row">
-              <app-text-input [formControl]='employeeForm.controls["monthlySalary"]' [label]='"Monthly Salary"'>
-              </app-text-input>
+            <div class="col-lg-4 fv-row">             
+              <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA"><span class="">{{label.formTitleDTLanguage[12].title}}</span></label>
+              <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" readonly name="nameInArabic" />
             </div>
           </div>
           <div class="row mb-6">
             <div class="col-lg-4 fv-row">
-              <app-text-input [formControl]='employeeForm.controls["civilId"]' [label]='"Civil ID"'></app-text-input>
+              <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA"><span class="">{{label.formTitleDTLanguage[13].title}}</span></label>
+              <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" readonly name="nameInArabic" />
             </div>
-            <div class="col-lg-4 fv-row">
-              <app-text-input [formControl]='employeeForm.controls["paci"]' [label]='"PACI"'></app-text-input>
+            <div class="col-lg-4 fv-row">              
+              <label class="col-lg-6 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA"><span class="">{{label.formTitleDTLanguage[14].title}}</span></label>
+              <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" readonly name="nameInArabic" />
             </div>
-            <div class="col-lg-4 fv-row">
-              <app-text-input [formControl]='employeeForm.controls["otherId"]' [label]='"Other ID"'></app-text-input>
+            <div class="col-lg-4 fv-row">              
+              <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA"><span class="">{{label.formTitleDTLanguage[15].title}}</span></label>
+              <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" readonly name="nameInArabic" />
             </div>
           </div>
         </form>
@@ -162,7 +175,7 @@
   <div class="card-header card-header-stretch pb-0 panelBgColor">
     <!--begin::Title-->
     <div class="card-title">
-      <h3 class="m-0">Membership Details</h3>
+      <h3 class="m-0 ArFontStyle"  lang="AR-SA">{{label.formTitleDTLanguage[33].title}}</h3>
     </div>
     <!--end::Title-->
   </div>
@@ -176,25 +189,25 @@
       <!--end::Title-->
       <!--begin::Row-->
       <div class="row gx-9 gy-6">
-        <form [formGroup]='employeeForm' (ngSubmit)="registerEmployee()" autocomplete="off">
+        <form autocomplete="off">
           <div class="row mb-6">
             <div class="col-lg-6 fv-row">
-              <app-text-input [formControl]='employeeForm.controls["membership"]' [label]='"Membership"'>
-              </app-text-input>
+              <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">{{label.formTitleDTLanguage[16].title}}</span></label>
+              <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" readonly name="nameInArabic" />
             </div>
             <div class="col-lg-6 fv-row">
-              <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Membership Joining Date</span></label>
+              <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">{{label.formTitleDTLanguage[17].title}}</span></label>
               <input type="date" class="form-control form-control-lg  mb-3 mb-lg-0" name="membershipJoiningDate" />
             </div>
           </div>
           <div class="row mb-6">
-            <div class="col-lg-6 fv-row">
-              <app-text-input [formControl]='employeeForm.controls["termination"]' [label]='"Termination"'>
-              </app-text-input>
+            <div class="col-lg-6 fv-row">             
+              <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">{{label.formTitleDTLanguage[18].title}}</span></label>
+              <input type="date" class="form-control form-control-lg  mb-3 mb-lg-0" name="membershipJoiningDate" />
             </div>
             <div class="col-lg-6 fv-row">
-              <app-text-input [formControl]='employeeForm.controls["terminationDate"]' [label]='"Termination Date"' type="date">
-              </app-text-input>
+              <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">{{label.formTitleDTLanguage[19].title}}</span></label>
+              <input type="date" class="form-control form-control-lg  mb-3 mb-lg-0" name="membershipJoiningDate" />
             </div>
           </div>
         </form>
@@ -211,7 +224,7 @@
   <div class="card-header card-header-stretch pb-0 panelBgColor">
     <!--begin::Title-->
     <div class="card-title">
-      <h3 class="m-0">Financial Details</h3>
+      <h3 class="m-0 ArFontStyle"  lang="AR-SA">{{label.formTitleDTLanguage[34].title}}</h3>
     </div>
     <!--end::Title-->
   </div>
@@ -225,10 +238,10 @@
       <!--end::Title-->
       <!--begin::Row-->
       <div class="row gx-9 gy-6">
-        <form [formGroup]='employeeForm' (ngSubmit)="registerEmployee()" autocomplete="off">
+        <form autocomplete="off">
           <div class="row mb-6">
             <div class="col-lg-4 fv-row">
-              <label class="col-form-label fw-bold fs-6"><span class="">Loan Account</span></label>
+              <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA"><span class="">{{label.formTitleDTLanguage[20].title}}</span></label>
               <select class="form-control bg-light" aria-label="Select example">
                 <option>-Select-</option>
                 <option value="1">Married</option>
@@ -236,7 +249,7 @@
               </select>
             </div>
             <div class="col-lg-4 fv-row">
-              <label class="col-form-label fw-bold fs-6"><span class="">Hajj Account</span></label>
+              <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA"><span class="">{{label.formTitleDTLanguage[21].title}}</span></label>
               <select class="form-control bg-light" aria-label="Select example">
                 <option>-Select-</option>
                 <option value="1">Married</option>
@@ -244,7 +257,7 @@
               </select>
             </div>
             <div class="col-lg-4 fv-row">
-              <label class="col-form-label fw-bold fs-6"><span class="">Per Load Act</span></label>
+              <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA"><span class="">{{label.formTitleDTLanguage[22].title}}</span></label>
               <select class="form-control bg-light" aria-label="Select example">
                 <option>-Select-</option>
                 <option value="1">Married</option>
@@ -254,7 +267,7 @@
           </div>
           <div class="row mb-6">
             <div class="col-lg-4 fv-row">
-              <label class="col-form-label fw-bold fs-6"><span class="">Consumer Loan </span></label>
+              <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA"><span class="">{{label.formTitleDTLanguage[23].title}} </span></label>
               <select class="form-control bg-light" aria-label="Select example">
                 <option>-Select-</option>
                 <option value="1">Married</option>
@@ -262,7 +275,7 @@
               </select>
             </div>
             <div class="col-lg-4 fv-row">
-              <label class="col-form-label fw-bold fs-6"><span class="">Other Act # 1</span></label>
+              <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA"><span class="">{{label.formTitleDTLanguage[24].title}}</span></label>
               <select class="form-control bg-light" aria-label="Select example">
                 <option>-Select-</option>
                 <option value="1">Married</option>
@@ -270,7 +283,7 @@
               </select>
             </div>
             <div class="col-lg-4 fv-row">
-              <label class="col-form-label fw-bold fs-6"><span class="">Other Act # 2</span></label>
+              <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA"><span class="">{{label.formTitleDTLanguage[25].title}}</span></label>
               <select class="form-control bg-light" aria-label="Select example">
                 <option>-Select-</option>
                 <option value="1">Married</option>
@@ -280,7 +293,7 @@
           </div>
           <div class="row mb-6">
             <div class="col-lg-4 fv-row">
-              <label class="col-form-label fw-bold fs-6"><span class="">Other Act # 3 </span></label>
+              <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA"><span class="">{{label.formTitleDTLanguage[26].title}} </span></label>
               <select class="form-control bg-light" aria-label="Select example">
                 <option>-Select-</option>
                 <option value="1">Married</option>
@@ -288,7 +301,7 @@
               </select>
             </div>
             <div class="col-lg-4 fv-row">
-              <label class="col-form-label fw-bold fs-6"><span class="">Other Act # 4</span></label>
+              <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA"><span class="">{{label.formTitleDTLanguage[27].title}}</span></label>
               <select class="form-control bg-light" aria-label="Select example">
                 <option>-Select-</option>
                 <option value="1">Married</option>
@@ -303,12 +316,7 @@
     </div>
 
   </div>
-  <div class="card-footer d-flex justify-content-end py-6 px-9 ">
-    <div class="d-flex">
-      <a href="#" class="btn btn-primary me-3">Save</a>
-      <a href="#" class="btn btn-warning  me-3">Cancel</a>
-      <a href="#" class="btn btn-light" routerLink="/employee/view-employee">Back</a>
-  </div>
-  </div>
+  
   <!--end::Tab content-->
+</div>
 </div>

@@ -1,9 +1,11 @@
-<div class="card mb-5 mb-xl-10">
+<!-- TO GET FORM ID AND SETTINGUP LANGAUGE. -->
+<input type="hidden" #ImportEmployeeMaster name="ImportEmployeeMaster" value="ImportEmployeeMaster">
+<div class="card mb-5 mb-xl-10" *ngFor="let label of formtileHd$ | async; let i = index">
     <!--begin::Card header-->
     <div class="card-header card-header-stretch pb-0 bg-primary">
         <!--begin::Title-->
         <div class="card-title">
-            <h3 class="m-0 text-white">Import Employees</h3>
+            <h3 class="m-0 text-white ArFontStyle" lang="AR-SA">{{label.headerName}}</h3>
         </div>
         <!--end::Title-->
     </div>
@@ -18,13 +20,12 @@
             <!--begin::Row-->
             <div class="row gx-9 gy-6">
                 <form autocomplete="off">
-                    <div class="row mb-4">
-                       
+                    <div class="row mb-4">                       
                         <div class="col-lg-6 fv-row">
                             <div class="mt-4">
-                                <label for="formFile" class="form-label"> Select File </label>
+                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">{{label.formTitleDTLanguage[0].title}} </label>
                                 <input class="form-control" type="file" id="formFile">
-                                <span><small class="text-danger">Only .xlsx files are allowed</small></span>
+                                <span><small class="text-danger ArFontStyle" lang="AR-SA">{{label.formTitleDTLanguage[3].title}}</small></span>
                               </div>
                         </div>
                     </div>
@@ -37,8 +38,8 @@
     </div>
     <!--end::Tab content-->
     <div class="card-footer d-flex justify-content-end py-6 px-9 ">
-        <button type="button" class="btn btn-primary float-right">
-            ... Upload
+        <button type="button" class="btn btn-primary float-right ArFontStyle" lang="AR-SA">{{label.formTitleDTLanguage[4].title}}
+           
         </button>
     </div>
 </div>

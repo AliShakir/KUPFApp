@@ -123,9 +123,10 @@
                         <th class="min-w-100px"># Employee</th>
                         <th class="min-w-140px">Employee Arabic Name</th>
                         <th class="min-w-120px">Services</th>
-                        <th class="min-w-120px">Total Installments</th>
+                        <th class="min-w-120px">Status</th>
+                        <th class="min-w-120px">Tot Inst</th>
                         <th class="min-w-120px">Amount</th>
-                        <th class="min-w-120px">Discounted</th>
+                        <th class="min-w-120px">Disc</th>
                     </tr>
                 </thead>
                 <!--end::Table head-->
@@ -138,6 +139,9 @@
                             </a>
                             | <a href="javascript:void(0)" class="text-danger fw-bolder">
                                 Reject
+                            </a>
+                            | <a href="javascript:void(0)" class="text-primary fw-bolder" (click)="open(employeePerformanceModal)">
+                                Details
                             </a>
                         </td>
                         <td>
@@ -153,6 +157,11 @@
                         <td>
                             <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">
                             Hajj Loan
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">
+                            Online
                             </a>
                         </td>
                         <td>
@@ -180,6 +189,9 @@
                             | <a href="javascript:void(0)" class="text-danger fw-bolder">
                                 Reject
                             </a>
+                            | <a href="javascript:void(0)" class="text-primary fw-bolder" (click)="open(employeePerformanceModal)">
+                                Details
+                            </a>
                         </td>
                         <td>
                             <a href="javascript:void(0)"
@@ -194,6 +206,11 @@
                         <td>
                             <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">
                             Hajj Loan
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">
+                            Online
                             </a>
                         </td>
                         <td>
@@ -221,6 +238,9 @@
                             | <a href="javascript:void(0)" class="text-danger fw-bolder">
                                 Reject
                             </a>
+                            | <a href="javascript:void(0)" class="text-primary fw-bolder" (click)="open(employeePerformanceModal)">
+                                Details
+                            </a>
                         </td>
                         <td>
                             <a href="javascript:void(0)"
@@ -235,6 +255,11 @@
                         <td>
                             <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">
                             Financial Loan
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">
+                            Local
                             </a>
                         </td>
                         <td>
@@ -262,6 +287,9 @@
                             | <a href="javascript:void(0)" class="text-danger fw-bolder">
                                 Reject
                             </a>
+                            | <a href="javascript:void(0)" class="text-primary fw-bolder" (click)="open(employeePerformanceModal)">
+                                Details
+                            </a>
                         </td>
                         <td>
                             <a href="javascript:void(0)"
@@ -276,6 +304,11 @@
                         <td>
                             <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">
                             Social Loan
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">
+                            Online
                             </a>
                         </td>
                         <td>
@@ -303,6 +336,9 @@
                             | <a href="javascript:void(0)" class="text-danger fw-bolder">
                                 Reject
                             </a>
+                            | <a href="javascript:void(0)" class="text-primary fw-bolder " (click)="open(employeePerformanceModal)">
+                                Details
+                            </a>
                         </td>
                         <td>
                             <a href="javascript:void(0)"
@@ -317,6 +353,11 @@
                         <td>
                             <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">
                             Social Loan
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">
+                            Local
                             </a>
                         </td>
                         <td>
@@ -348,3 +389,26 @@
         
     </div>
 </div>
+
+<!--TO DISPLAY EMPLOYEE CONTACT DETAILS IN MODAL POPUP-->
+<ng-template #employeePerformanceModal let-modal>
+    <div class="modal-header bg-light">
+      <button type="button" class="close" data-dismiss="modal" (click)="modal.dismiss('Cross click')">&times;</button>
+      <h4 class="modal-title" id="modal-basic-title">Employee Performance</h4>
+    </div>
+    <div class="modal-body">
+      <!-- end::Header-->
+      <!-- begin::Body-->
+      
+        <!--begin::Contacts-->
+       <app-contact-details></app-contact-details>
+        <!--end::Contacts-->
+   
+      <!-- end: Card Body-->
+    </div>
+    <div class="modal-footer bg-light">
+      <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-warning" (click)="modal.close('Save click')">Close</button>
+      </div>
+    </div>
+  </ng-template>

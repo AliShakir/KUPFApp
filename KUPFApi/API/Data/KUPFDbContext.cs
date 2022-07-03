@@ -8,129 +8,137 @@ namespace API.Models
 {
     public partial class KUPFDbContext : DbContext
     {
-        public KUPFDbContext()
+        public KUPFDbContext(DbContextOptions options) : base(options)
         {
+
         }
 
-        public KUPFDbContext(DbContextOptions<KUPFDbContext> options)
-            : base(options)
-        {
-        }
-
-        public virtual DbSet<AccountHead> AccountHeads { get; set; }
-        public virtual DbSet<AccountType> AccountTypes { get; set; }
-        public virtual DbSet<ChequeBook> ChequeBooks { get; set; }
-        public virtual DbSet<Coa> Coas { get; set; }
-        public virtual DbSet<CostCenter> CostCenters { get; set; }
-        public virtual DbSet<CrupMst> CrupMsts { get; set; }
-        public virtual DbSet<Crupaudit> Crupaudits { get; set; }
-        public virtual DbSet<DeletedVoucher> DeletedVouchers { get; set; }
-        public virtual DbSet<DetailedEmployee> DetailedEmployees { get; set; }
-        public virtual DbSet<DetailedEmployeeImport> DetailedEmployeeImports { get; set; }
-        public virtual DbSet<DrCrTemplate> DrCrTemplates { get; set; }
-        public virtual DbSet<FaaccountGroup> FaaccountGroups { get; set; }
-        public virtual DbSet<FaactIntegSetup> FaactIntegSetups { get; set; }
-        public virtual DbSet<FaactPredGroup> FaactPredGroups { get; set; }
-        public virtual DbSet<FacashBankMaster> FacashBankMasters { get; set; }
-        public virtual DbSet<FachequeBook> FachequeBooks { get; set; }
-        public virtual DbSet<FacostCenter> FacostCenters { get; set; }
-        public virtual DbSet<Faglaccount> Faglaccounts { get; set; }
-        public virtual DbSet<Family> Families { get; set; }
-        public virtual DbSet<Faslaccount> Faslaccounts { get; set; }
-        public virtual DbSet<FinancialPeriod> FinancialPeriods { get; set; }
-        public virtual DbSet<FormTitleDt> FormTitleDts { get; set; }
-        public virtual DbSet<FormTitleHd> FormTitleHds { get; set; }
-        public virtual DbSet<Iccatsubcat> Iccatsubcats { get; set; }
-        public virtual DbSet<LettersHd> LettersHds { get; set; }
-        public virtual DbSet<Location> Locations { get; set; }
-        public virtual DbSet<Mapping> Mappings { get; set; }
-        public virtual DbSet<MappingHead> MappingHeads { get; set; }
-        public virtual DbSet<Mycompanysetup> Mycompanysetups { get; set; }
-        public virtual DbSet<RefLabelMst> RefLabelMsts { get; set; }
-        public virtual DbSet<RefTableAdmin> RefTableAdmins { get; set; }
-        public virtual DbSet<Reftable> Reftables { get; set; }
-        public virtual DbSet<ServiceSetup> ServiceSetups { get; set; }
-        public virtual DbSet<SubHead> SubHeads { get; set; }
-        public virtual DbSet<SubSubHead> SubSubHeads { get; set; }
-        public virtual DbSet<TblAccountMst> TblAccountMsts { get; set; }
-        public virtual DbSet<TblActSlsetup> TblActSlsetups { get; set; }
-        public virtual DbSet<TblAudit> TblAudits { get; set; }
-        public virtual DbSet<TblCityStatesCounty> TblCityStatesCounties { get; set; }
-        public virtual DbSet<TblCountry> TblCountries { get; set; }
-        public virtual DbSet<TblDistrictStatesCounty> TblDistrictStatesCounties { get; set; }
-        public virtual DbSet<TblImportCoa> TblImportCoas { get; set; }
-        public virtual DbSet<TblImportCoav2> TblImportCoav2s { get; set; }
-        public virtual DbSet<TblImportVoucher> TblImportVouchers { get; set; }
-        public virtual DbSet<TblState> TblStates { get; set; }
-        public virtual DbSet<Tblcompanysetup> Tblcompanysetups { get; set; }
-        public virtual DbSet<TblcontactDelAdre> TblcontactDelAdres { get; set; }
-        public virtual DbSet<Tblperiod> Tblperiods { get; set; }
-        public virtual DbSet<Tbltranssubtype> Tbltranssubtypes { get; set; }
-        public virtual DbSet<Tbltranstype> Tbltranstypes { get; set; }
-        public virtual DbSet<TestTable> TestTables { get; set; }
-        public virtual DbSet<TotalJv> TotalJvs { get; set; }
-        public virtual DbSet<TransactionDt> TransactionDts { get; set; }
-        public virtual DbSet<TransactionHd> TransactionHds { get; set; }
-        public virtual DbSet<TransactionHddapprovalDetail> TransactionHddapprovalDetails { get; set; }
-        public virtual DbSet<TransactionHddm> TransactionHddms { get; set; }
-        public virtual DbSet<TreeFunction> TreeFunctions { get; set; }
-        public virtual DbSet<TreeNode> TreeNodes { get; set; }
-        public virtual DbSet<University> Universities { get; set; }
-        public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<UserDtl> UserDtls { get; set; }
-        public virtual DbSet<UserMst> UserMsts { get; set; }
-        public virtual DbSet<UserPage> UserPages { get; set; }
-        public virtual DbSet<Voucher> Vouchers { get; set; }
-        public virtual DbSet<VoucherDetail> VoucherDetails { get; set; }
-        public virtual DbSet<VoucherDetailHistory> VoucherDetailHistories { get; set; }
-        public virtual DbSet<VoucherType> VoucherTypes { get; set; }
-        public virtual DbSet<VwAwstatusCatWise> VwAwstatusCatWises { get; set; }
-        public virtual DbSet<WebPage> WebPages { get; set; }
-        public virtual DbSet<WebPageUrl> WebPageUrls { get; set; }
+        public DbSet<AccountHead> AccountHeads { get; set; }
+        public DbSet<AccountType> AccountTypes { get; set; }
+        public DbSet<ChequeBook> ChequeBooks { get; set; }
+        public DbSet<Coa> Coas { get; set; }
+        public DbSet<CostCenter> CostCenters { get; set; }
+        public DbSet<CrupMst> CrupMsts { get; set; }
+        public DbSet<Crupaudit> Crupaudits { get; set; }
+        public DbSet<DeletedVoucher> DeletedVouchers { get; set; }
+        public DbSet<DetailedEmployee> DetailedEmployees { get; set; }
+        public DbSet<DetailedEmployeeImport> DetailedEmployeeImports { get; set; }
+        public DbSet<DrCrTemplate> DrCrTemplates { get; set; }
+        public DbSet<FaaccountGroup> FaaccountGroups { get; set; }
+        public DbSet<FaactIntegSetup> FaactIntegSetups { get; set; }
+        public DbSet<FaactPredGroup> FaactPredGroups { get; set; }
+        public DbSet<FacashBankMaster> FacashBankMasters { get; set; }
+        public DbSet<FachequeBook> FachequeBooks { get; set; }
+        public DbSet<FacostCenter> FacostCenters { get; set; }
+        public DbSet<Faglaccount> Faglaccounts { get; set; }
+        public DbSet<Family> Families { get; set; }
+        public DbSet<Faslaccount> Faslaccounts { get; set; }
+        public DbSet<FinancialPeriod> FinancialPeriods { get; set; }
+        public DbSet<FormTitleDt> FormTitleDt { get; set; }
+        public DbSet<FormTitleHd> FormTitleHd { get; set; }
+        public DbSet<Iccatsubcat> Iccatsubcats { get; set; }
+        public DbSet<LettersHd> LettersHds { get; set; }
+        public DbSet<Location> Locations { get; set; }
+        public DbSet<Mapping> Mappings { get; set; }
+        public DbSet<MappingHead> MappingHeads { get; set; }
+        public DbSet<Mycompanysetup> Mycompanysetups { get; set; }
+        public DbSet<RefLabelMst> RefLabelMsts { get; set; }
+        public DbSet<RefTableAdmin> RefTableAdmins { get; set; }
+        public DbSet<Reftable> Reftables { get; set; }
+        public DbSet<ServiceSetup> ServiceSetups { get; set; }
+        public DbSet<SubHead> SubHeads { get; set; }
+        public DbSet<SubSubHead> SubSubHeads { get; set; }
+        public DbSet<TblAccountMst> TblAccountMsts { get; set; }
+        public DbSet<TblActSlsetup> TblActSlsetups { get; set; }
+        public DbSet<TblAudit> TblAudits { get; set; }
+        public DbSet<TblCityStatesCounty> TblCityStatesCounties { get; set; }
+        public DbSet<TblCountry> TblCountries { get; set; }
+        public DbSet<TblDistrictStatesCounty> TblDistrictStatesCounties { get; set; }
+        public DbSet<TblImportCoa> TblImportCoas { get; set; }
+        public DbSet<TblImportCoav2> TblImportCoav2s { get; set; }
+        public DbSet<TblImportVoucher> TblImportVouchers { get; set; }
+        public DbSet<TblState> TblStates { get; set; }
+        public DbSet<Tblcompanysetup> Tblcompanysetups { get; set; }
+        public DbSet<TblcontactDelAdre> TblcontactDelAdres { get; set; }
+        public DbSet<Tblperiod> Tblperiods { get; set; }
+        public DbSet<Tbltranssubtype> Tbltranssubtypes { get; set; }
+        public DbSet<Tbltranstype> Tbltranstypes { get; set; }
+        public DbSet<TestTable> TestTables { get; set; }
+        public DbSet<TotalJv> TotalJvs { get; set; }
+        public DbSet<TransactionDt> TransactionDts { get; set; }
+        public DbSet<TransactionHd> TransactionHds { get; set; }
+        public DbSet<TransactionHddapprovalDetail> TransactionHddapprovalDetails { get; set; }
+        public DbSet<TransactionHddm> TransactionHddms { get; set; }
+        public DbSet<TreeFunction> TreeFunctions { get; set; }
+        public DbSet<TreeNode> TreeNodes { get; set; }
+        public DbSet<University> Universities { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<UserDtl> UserDtls { get; set; }
+        public DbSet<UserMst> UserMsts { get; set; }
+        public DbSet<UserPage> UserPages { get; set; }
+        public DbSet<Voucher> Vouchers { get; set; }
+        public DbSet<VoucherDetail> VoucherDetails { get; set; }
+        public DbSet<VoucherDetailHistory> VoucherDetailHistories { get; set; }
+        public DbSet<VoucherType> VoucherTypes { get; set; }
+        public DbSet<VwAwstatusCatWise> VwAwstatusCatWises { get; set; }
+        public DbSet<WebPage> WebPages { get; set; }
+        public DbSet<WebPageUrl> WebPageUrls { get; set; }
         public DbSet<TestCompany> TestCompanies { get; set; }
         public DbSet<TestEmployee> TestEmployees { get; set; }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=213.202.212.198,5553;Initial Catalog=KUPFDb;User ID=kupd1;Password=sE4cC6fD2iE8mY0rM1bS2qF2m");
-            }
-        }
+        public DbSet<FormTitleHDLanguage> FormTitleHDLanguage { get; set; }
+        public DbSet<FormTitleDTLanguage> FormTitleDTLanguage { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-             
-            modelBuilder.Entity<AccountHead>(entity =>
-            {
-                entity.HasKey(e => new { e.TenentId, e.LocationId, e.HeadId });
 
-                entity.ToTable("AccountHead", "Accounts");
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<AccountHead>(builder =>
+               {
+                   builder.HasNoKey();
+                   builder.ToTable("AccountHead");
+                   builder.Property(e => e.BalanceAmt)
+                   .HasColumnType("decimal(18, 2)")
+                   .HasDefaultValueSql("((0))");
+               });
 
-                entity.Property(e => e.TenentId)
-                    .HasColumnName("TenentID")
-                    .HasDefaultValueSql("((1))");
+            // modelBuilder.Entity<FormTitleHDLanguage>()
+            //     .HasMany(p=>p.FormTitleDTLanguage)
+            //     .WithOne(c=>c.FormTitleHDLanguage)
+            //     .HasPrincipalKey(p => new {p.FormId, p.FormTitleDTLanguage})
+            //     .IsRequired();
 
-                entity.Property(e => e.LocationId).HasColumnName("LocationID");
 
-                entity.Property(e => e.HeadId).HasColumnName("HeadID");
+                    // modelBuilder.Entity<AccountHead>(entity =>
+            // {
+            //     entity.HasKey(e => new { e.TenentId, e.LocationId, e.HeadId });
 
-                entity.Property(e => e.ArabicHeadName).HasMaxLength(250);
+            //     entity.ToTable("AccountHead", "Accounts");
 
-                entity.Property(e => e.BalanceAmt)
-                    .HasColumnType("decimal(18, 2)")
-                    .HasDefaultValueSql("((0))");
+            //     entity.Property(e => e.TenentId)
+            //         .HasColumnName("TenentID")
+            //         .HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.Crupid).HasColumnName("crupid");
+            //     entity.Property(e => e.LocationId).HasColumnName("LocationID");
 
-                entity.Property(e => e.FamilyId).HasColumnName("Family_ID");
+            //     entity.Property(e => e.HeadId).HasColumnName("HeadID");
 
-                entity.Property(e => e.HeadName).HasMaxLength(250);
+            //     entity.Property(e => e.ArabicHeadName).HasMaxLength(250);
 
-                entity.Property(e => e.IsActive)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
-            });
+            //     entity.Property(e => e.BalanceAmt)
+            //         .HasColumnType("decimal(18, 2)")
+            //         .HasDefaultValueSql("((0))");
+
+            //     entity.Property(e => e.Crupid).HasColumnName("crupid");
+
+            //     entity.Property(e => e.FamilyId).HasColumnName("Family_ID");
+
+            //     entity.Property(e => e.HeadName).HasMaxLength(250);
+
+            //     entity.Property(e => e.IsActive)
+            //         .IsRequired()
+            //         .HasDefaultValueSql("((1))");
+            // });
 
             modelBuilder.Entity<AccountType>(entity =>
             {
@@ -1525,75 +1533,75 @@ namespace API.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<FormTitleDt>(entity =>
-            {
-                entity.HasKey(e => new { e.TenentId, e.FormTitleHdId, e.Language, e.LabelId })
-                    .HasName("PK_FormTitleDT_1");
+            // modelBuilder.Entity<FormTitleDt>(entity =>
+            // {
+            //     entity.HasKey(e => new { e.TenentId, e.FormTitleHdId, e.Language, e.LabelId })
+            //         .HasName("PK_FormTitleDT_1");
 
-                entity.ToTable("FormTitleDT");
+            //     entity.ToTable("FormTitleDT");
 
-                entity.Property(e => e.TenentId).HasColumnName("TenentID");
+            //     entity.Property(e => e.TenentId).HasColumnName("TenentID");
 
-                entity.Property(e => e.FormTitleHdId)
-                    .HasMaxLength(40)
-                    .HasColumnName("FormID")
-                    .HasComment("Make sure you are not using any special character here");
+            //     entity.Property(e => e.FormTitleHdId)
+            //         .HasMaxLength(40)
+            //         .HasColumnName("FormID")
+            //         .HasComment("Make sure you are not using any special character here");
 
-                entity.Property(e => e.Language).HasComment("1= English 2=Arabic you can take from reftable refsubtype='Language'");
+            //     entity.Property(e => e.Language).HasComment("1= English 2=Arabic you can take from reftable refsubtype='Language'");
 
-                entity.Property(e => e.LabelId)
-                    .HasMaxLength(40)
-                    .HasColumnName("LabelID");
+            //     entity.Property(e => e.LabelId)
+            //         .HasMaxLength(40)
+            //         .HasColumnName("LabelID");
 
-                entity.Property(e => e.ArabicTitle)
-                    .HasMaxLength(150)
-                    .HasComment("English or Arabic Text");
+            //     entity.Property(e => e.ArabicTitle)
+            //         .HasMaxLength(150)
+            //         .HasComment("English or Arabic Text");
 
-                entity.Property(e => e.Attiribute)
-                    .HasMaxLength(100)
-                    .HasComment("incase color or any special effect u want to apply thru this");
+            //     entity.Property(e => e.Attiribute)
+            //         .HasMaxLength(100)
+            //         .HasComment("incase color or any special effect u want to apply thru this");
 
-                entity.Property(e => e.Remarks).HasMaxLength(50);
+            //     entity.Property(e => e.Remarks).HasMaxLength(50);
 
-                entity.Property(e => e.Rl)
-                    .HasMaxLength(5)
-                    .HasColumnName("RL")
-                    .HasComment(" RL=Right to left or LR=Left to Right");
+            //     entity.Property(e => e.Rl)
+            //         .HasMaxLength(5)
+            //         .HasColumnName("RL")
+            //         .HasComment(" RL=Right to left or LR=Left to Right");
 
-                entity.Property(e => e.Status).HasMaxLength(10);
+            //     entity.Property(e => e.Status).HasMaxLength(10);
 
-                entity.Property(e => e.Title)
-                    .HasMaxLength(150)
-                    .HasComment("English or Arabic Text");
-            });
+            //     entity.Property(e => e.Title)
+            //         .HasMaxLength(150)
+            //         .HasComment("English or Arabic Text");
+            // });
 
-            modelBuilder.Entity<FormTitleHd>(entity =>
-            {
-                entity.HasKey(e => new { e.TenentId, e.FormId, e.Language });
+            // modelBuilder.Entity<FormTitleHd>(entity =>
+            // {
+            //     entity.HasKey(e => new { e.TenentId, e.FormId, e.Language });
 
-                entity.ToTable("FormTitleHD");
+            //     entity.ToTable("FormTitleHD");
 
-                entity.Property(e => e.TenentId).HasColumnName("TenentID");
+            //     entity.Property(e => e.TenentId).HasColumnName("TenentID");
 
-                entity.Property(e => e.FormId)
-                    .HasMaxLength(40)
-                    .HasColumnName("FormID")
-                    .HasComment("Make sure you are not using any special character here");
+            //     entity.Property(e => e.FormId)
+            //         .HasMaxLength(40)
+            //         .HasColumnName("FormID")
+            //         .HasComment("Make sure you are not using any special character here");
 
-                entity.Property(e => e.Language).HasComment("1= English 2=Arabic you can take from reftable refsubtype='Language'");
+            //     entity.Property(e => e.Language).HasComment("1= English 2=Arabic you can take from reftable refsubtype='Language'");
 
-                entity.Property(e => e.FormName).HasMaxLength(50);
+            //     entity.Property(e => e.FormName).HasMaxLength(50);
 
-                entity.Property(e => e.HeaderName).HasMaxLength(150);
+            //     entity.Property(e => e.HeaderName).HasMaxLength(150);
 
-                entity.Property(e => e.Navigation).HasMaxLength(150);
+            //     entity.Property(e => e.Navigation).HasMaxLength(150);
 
-                entity.Property(e => e.Remarks).HasMaxLength(250);
+            //     entity.Property(e => e.Remarks).HasMaxLength(250);
 
-                entity.Property(e => e.Status).HasMaxLength(10);
+            //     entity.Property(e => e.Status).HasMaxLength(10);
 
-                entity.Property(e => e.SubHeader).HasMaxLength(100);
-            });
+            //     entity.Property(e => e.SubHeader).HasMaxLength(100);
+            // });
 
             modelBuilder.Entity<Iccatsubcat>(entity =>
             {
@@ -5324,9 +5332,9 @@ namespace API.Models
                 entity.Property(e => e.WebPageId).HasColumnName("WebPage_ID");
             });
 
-            OnModelCreatingPartial(modelBuilder);
+            //OnModelCreatingPartial(modelBuilder);
         }
 
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+        //partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

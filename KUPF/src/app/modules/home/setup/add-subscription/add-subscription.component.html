@@ -11,7 +11,7 @@
             <div class="btn-group" role="group" aria-label="Basic example">
                 <button type="button" class="btn btn-primary">Save</button>
                 <button type="button" class="btn btn-warning">Cancel</button>
-                <button type="button" class="btn btn-success ">More Details</button>
+                <button type="button" class="btn btn-success " (click)="open(employeePerformanceModal)">Details</button>
                 <button type="button" class="btn btn-light-dark"
                     routerLink="/references/subscription-details">Back</button>
             </div>
@@ -41,7 +41,7 @@
                         </div>
                         <div class="col-lg-6 fv-row">
                             <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Status</span></label>
-                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0 ArFontStyle" lang="AR-SA" value="في تَقَدم" readonly/>
                         </div>
                     </div>
                     <div class="row mb-4">                        
@@ -53,9 +53,6 @@
                             <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Civil Id
                                 </span></label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
-                        </div>
-                        <div class="col-lg-4 fv-row">                            
-                            <button type="button" class="btn btn-primary mt-13">Search</button>
                         </div>
                     </div>
                     <div class="row mb 4">
@@ -99,3 +96,26 @@
     </div>
     <!--end::Tab content-->
 </div>
+
+<!--TO DISPLAY EMPLOYEE CONTACT DETAILS IN MODAL POPUP-->
+<ng-template #employeePerformanceModal let-modal>
+    <div class="modal-header bg-light">
+      <button type="button" class="close" data-dismiss="modal" (click)="modal.dismiss('Cross click')">&times;</button>
+      <h4 class="modal-title" id="modal-basic-title">Employee Performance</h4>
+    </div>
+    <div class="modal-body">
+      <!-- end::Header-->
+      <!-- begin::Body-->
+      
+        <!--begin::Contacts-->
+       <app-contact-details></app-contact-details>
+        <!--end::Contacts-->
+   
+      <!-- end: Card Body-->
+    </div>
+    <div class="modal-footer bg-light">
+      <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-warning" (click)="modal.close('Save click')">Close</button>
+      </div>
+    </div>
+  </ng-template>

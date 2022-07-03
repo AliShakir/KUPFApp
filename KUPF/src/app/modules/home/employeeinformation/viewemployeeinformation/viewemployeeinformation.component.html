@@ -1,8 +1,9 @@
-<div class="card mb-5 mb-xl-8">
+<input type="hidden" #EmployeeGrid name="EmployeeGrid" value="EmployeeGrid">
+<div class="card mb-5 mb-xl-8" *ngFor="let label of formtileHd$ | async; let i = index">
     <!--begin::Header-->
     <div class="card-header border-0 pt-5 panelBgColor">
-        <div class="card-toolbar">
-            <h3 class="text-dark">Employee Details</h3>
+        <div class="card-toolbar">            
+            <h3 class="m-0 ArFontStyle" lang="AR-SA">{{label.headerName}}</h3>
         </div>         
         <h3 class="card-title align-items-start flex-column">
             <a routerLink="/employee/add-employee" class="btn btn-primary w-100 ArFontStyle" lang="AR-SA">
@@ -17,7 +18,7 @@
                             fill="currentColor"></path>
                     </svg>
                 </span>
-                {{'AddNewContact' | translate}}</a>
+                {{label.formTitleDTLanguage[1].title}}</a>
         </h3>
     </div>
     <!--end::Header-->
@@ -127,13 +128,13 @@
                 <!--begin::Table head-->
                 <thead>
                     <tr class="fw-bolder text-muted">
-                        <th class="min-w-100px">Actions</th>
-                        <th class="min-w-100px">University</th>
-                        <th class="min-w-140px">Employee Id</th>
-                        <th class="min-w-120px">Name</th>
-                        <th class="min-w-120px">Date Of Joining</th>
-                        <th class="min-w-120px">Source</th>
-                        <th class="min-w-120px">Department</th>
+                        <th class="min-w-100px ArFontStyle"  lang="AR-SA">{{label.formTitleDTLanguage[2].title}}</th>
+                        <th class="min-w-100px ArFontStyle"  lang="AR-SA">{{label.formTitleDTLanguage[3].title}}</th>
+                        <th class="min-w-140px ArFontStyle"  lang="AR-SA">{{label.formTitleDTLanguage[4].title}}</th>
+                        <th class="min-w-120px ArFontStyle"  lang="AR-SA">{{label.formTitleDTLanguage[5].title}}</th>
+                        <th class="min-w-120px ArFontStyle"  lang="AR-SA">{{label.formTitleDTLanguage[6].title}}</th>
+                        <th class="min-w-120px ArFontStyle"  lang="AR-SA">{{label.formTitleDTLanguage[7].title}}</th>
+                        <th class="min-w-120px ArFontStyle"  lang="AR-SA">{{label.formTitleDTLanguage[8].title}}</th>
                     </tr>
                 </thead>
                 <!--end::Table head-->

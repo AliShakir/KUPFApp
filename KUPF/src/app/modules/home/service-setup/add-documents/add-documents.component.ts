@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Observable } from 'rxjs';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
+import { GetFormLabels } from 'src/app/modules/models/GetFormLables';
 import { LocalizationService } from 'src/app/modules/_services/localization.service';
 
 @Component({
@@ -9,20 +12,26 @@ import { LocalizationService } from 'src/app/modules/_services/localization.serv
 })
 export class AddDocumentsComponent implements OnInit {
   
-  formtileHd: FormTitleHd[] = []; 
-  constructor(private localizationService: LocalizationService) { }
-
+  /******************* */
+  formtileHd$ :Observable<FormTitleHd[]>; 
+  id:string = '';
+  languageId:any;
+  // FormId to get form/App language
+  @ViewChild('AddDocuments') hidden:ElementRef;
+  /******************* */
+  constructor(private localizationService: LocalizationService) {
+    
+  }  
   ngOnInit(): void {
-    this.localizationService.getGetData().subscribe(
-      (response:FormTitleHd[]) => {
-        this.formtileHd = response
-        //console.log(this.formtileHd);
-        
-      },
-      (error) => {
-        console.log(error)
-      }
-    )
+    
   }
+  ngAfterViewInit() {
+    this.id = this.hidden.nativeElement.value ;
+    //
+    this.languageId = localStorage.getItem('langType');
+    this.formtileHd$ = this.localizationService.getFormLabels(this.id,this.languageId);    
+    
+  }
+  
 }
 

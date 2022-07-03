@@ -18,6 +18,6 @@ namespace API.Models
         public string Navigation { get; set; }
         public string Remarks { get; set; }
         public string Status { get; set; }
-        public ICollection<FormTitleDt> FormTitleDts { get; set; }
+        public ICollection<FormTitleDt> FormTitleDt { get; set; }
     }
 }

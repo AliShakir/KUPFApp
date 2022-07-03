@@ -8,7 +8,7 @@ namespace API.Models
     public partial class TblcontactDelAdre
     {
         public int TenentId { get; set; }
-        public decimal ContactMyId { get; set; }
+        public int ContactMyId { get; set; }
         public int DeliveryAdressId { get; set; }
         public int? CompId { get; set; }
         public int? CompLoc { get; set; }

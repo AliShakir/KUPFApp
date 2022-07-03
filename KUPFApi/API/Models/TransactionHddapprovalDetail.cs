@@ -10,7 +10,7 @@ namespace API.Models
         public int TenentId { get; set; }
         public long Mytransid { get; set; }
         public int LocationId { get; set; }
-        public decimal SerApprovalId { get; set; }
+        public int SerApprovalId { get; set; }
         public string SerApproval { get; set; }
         public int? EmployeeId { get; set; }
         public int? ServiceId { get; set; }

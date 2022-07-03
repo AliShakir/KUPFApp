@@ -2,50 +2,19 @@
   <!-- Header -->
   <div class="card-header border-0 pt-5">
     <h3 class="card-title align-items-start flex-column">
-      <span class="card-label font-weight-bolder text-dark"
-        >Trending Items</span
-      >
-      <span class="text-muted mt-3 font-weight-bold font-size-sm"
-        >More than 400+ new members</span
-      >
+      <span class="card-label font-weight-bolder text-dark">Trending Items</span>
+      <span class="text-muted mt-3 font-weight-bold font-size-sm">More than 400+ new members</span>
     </h3>
     <div class="card-toolbar">
       <ul class="nav nav-pills nav-pills-sm nav-dark-75">
-        <li
-          class="nav-item"
-          (click)="setCurrentTab(TABS[0])"
-          [style.cursor]="'pointer'"
-        >
-          <a
-            class="nav-link py-2 px-4"
-            [class.active]="currentTab === TABS[0]"
-            data-toggle="tab"
-            >Month</a
-          >
+        <li class="nav-item" (click)="setCurrentTab(TABS[0])" [style.cursor]="'pointer'">
+          <a class="nav-link py-2 px-4" [class.active]="currentTab === TABS[0]" data-toggle="tab">Month</a>
         </li>
-        <li
-          class="nav-item"
-          (click)="setCurrentTab(TABS[1])"
-          [style.cursor]="'pointer'"
-        >
-          <a
-            class="nav-link py-2 px-4"
-            [class.active]="currentTab === TABS[1]"
-            data-toggle="tab"
-            >Week</a
-          >
+        <li class="nav-item" (click)="setCurrentTab(TABS[1])" [style.cursor]="'pointer'">
+          <a class="nav-link py-2 px-4" [class.active]="currentTab === TABS[1]" data-toggle="tab">Week</a>
         </li>
-        <li
-          class="nav-item"
-          (click)="setCurrentTab(TABS[2])"
-          [style.cursor]="'pointer'"
-        >
-          <a
-            class="nav-link py-2 px-4"
-            [class.active]="currentTab === TABS[2]"
-            data-toggle="tab"
-            >Day</a
-          >
+        <li class="nav-item" (click)="setCurrentTab(TABS[2])" [style.cursor]="'pointer'">
+          <a class="nav-link py-2 px-4" [class.active]="currentTab === TABS[2]" data-toggle="tab">Day</a>
         </li>
       </ul>
     </div>
@@ -54,14 +23,8 @@
   <div class="card-body pt-2 pb-0 mt-n3">
     <div class="tab-content mt-5" id="myTabTables6">
       <!--begin::Tap pane-->
-      <div
-        class="tab-pane fade"
-        [class.active]="currentTab === TABS[0]"
-        [class.show]="currentTab === TABS[0]"
-        id="kt_tab_pane_6_1"
-        role="tabpanel"
-        aria-labelledby="kt_tab_pane_6_1"
-      >
+      <div class="tab-pane fade" [class.active]="currentTab === TABS[0]" [class.show]="currentTab === TABS[0]"
+        id="kt_tab_pane_6_1" role="tabpanel" aria-labelledby="kt_tab_pane_6_1">
         <!--begin::Table-->
         <div class="table-responsive">
           <table class="table table-borderless table-vertical-center">
@@ -78,42 +41,30 @@
                 <th class="pl-0 py-5">
                   <div class="symbol symbol-50 symbol-light mr-2">
                     <span class="symbol-label">
-                      <span
-                        [inlineSVG]="'./assets/media/svg/misc/005-bebo.svg'"
-                        class="svg-icon h-50 align-self-center"
-                      ></span>
+                      <span [inlineSVG]="'./assets/media/svg/misc/005-bebo.svg'"
+                        class="svg-icon h-50 align-self-center"></span>
                     </span>
                   </div>
                 </th>
                 <td class="py-6 pl-0">
-                  <a
-                    href="#"
-                    class="
+                  <a href="#" class="
                       text-dark
                       font-weight-bolder
                       text-hover-primary
                       mb-1
                       font-size-lg
-                    "
-                    >Active Customers</a
-                  >
-                  <span class="text-muted font-weight-bold d-block"
-                    >Best Customers</span
-                  >
+                    ">Active Customers</a>
+                  <span class="text-muted font-weight-bold d-block">Best Customers</span>
                 </td>
                 <td>
                   <div class="d-flex flex-column w-100 mr-2">
-                    <div
-                      class="
+                    <div class="
                         d-flex
                         align-items-center
                         justify-content-between
                         mb-2
-                      "
-                    >
-                      <span
-                        class="text-muted mr-2 font-size-sm font-weight-bold"
-                      >
+                      ">
+                      <span class="text-muted mr-2 font-size-sm font-weight-bold">
                         71%
                       </span>
                       <span class="text-muted font-size-sm font-weight-bold">
@@ -121,25 +72,16 @@
                       </span>
                     </div>
                     <div class="progress progress-xs w-100">
-                      <div
-                        class="progress-bar bg-danger"
-                        role="progressbar"
-                        style="width: 71%"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
+                      <div class="progress-bar bg-danger" role="progressbar" style="width: 71%" aria-valuenow="50"
+                        aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
                 </td>
                 <td class="text-right pr-0">
                   <a href="#" class="btn btn-icon btn-light btn-sm">
-                    <span
-                      [inlineSVG]="
+                    <span [inlineSVG]="
                         './assets/media/svg/icons/Navigation/Arrow-right.svg'
-                      "
-                      class="svg-icon svg-icon-md svg-icon-success"
-                    ></span>
+                      " class="svg-icon svg-icon-md svg-icon-success"></span>
                   </a>
                 </td>
               </tr>
@@ -147,44 +89,31 @@
                 <th class="pl-0 py-5">
                   <div class="symbol symbol-50 symbol-light mr-2">
                     <span class="symbol-label">
-                      <span
-                        [inlineSVG]="
+                      <span [inlineSVG]="
                           './assets/media/svg/misc/014-kickstarter.svg'
-                        "
-                        class="svg-icon h-50 align-self-center"
-                      ></span>
+                        " class="svg-icon h-50 align-self-center"></span>
                     </span>
                   </div>
                 </th>
                 <td class="pl-0">
-                  <a
-                    href="#"
-                    class="
+                  <a href="#" class="
                       text-dark
                       font-weight-bolder
                       text-hover-primary
                       mb-1
                       font-size-lg
-                    "
-                    >Bestseller Theme</a
-                  >
-                  <span class="text-muted font-weight-bold d-block"
-                    >Amazing Templates</span
-                  >
+                    ">Bestseller Theme</a>
+                  <span class="text-muted font-weight-bold d-block">Amazing Templates</span>
                 </td>
                 <td>
                   <div class="d-flex flex-column w-100 mr-2">
-                    <div
-                      class="
+                    <div class="
                         d-flex
                         align-items-center
                         justify-content-between
                         mb-2
-                      "
-                    >
-                      <span
-                        class="text-muted mr-2 font-size-sm font-weight-bold"
-                      >
+                      ">
+                      <span class="text-muted mr-2 font-size-sm font-weight-bold">
                         50%
                       </span>
                       <span class="text-muted font-size-sm font-weight-bold">
@@ -192,25 +121,16 @@
                       </span>
                     </div>
                     <div class="progress progress-xs w-100">
-                      <div
-                        class="progress-bar bg-info"
-                        role="progressbar"
-                        style="width: 50%"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
+                      <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50"
+                        aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
                 </td>
                 <td class="text-right pr-0">
                   <a href="#" class="btn btn-icon btn-light btn-sm">
-                    <span
-                      [inlineSVG]="
+                    <span [inlineSVG]="
                         './assets/media/svg/icons/Navigation/Arrow-right.svg'
-                      "
-                      class="svg-icon svg-icon-md svg-icon-success"
-                    ></span>
+                      " class="svg-icon svg-icon-md svg-icon-success"></span>
                   </a>
                 </td>
               </tr>
@@ -218,42 +138,30 @@
                 <td class="pl-0 py-5">
                   <div class="symbol symbol-50 symbol-light mr-2">
                     <span class="symbol-label">
-                      <span
-                        [inlineSVG]="'./assets/media/svg/misc/006-plurk.svg'"
-                        class="svg-icon h-50 align-self-center"
-                      ></span>
+                      <span [inlineSVG]="'./assets/media/svg/misc/006-plurk.svg'"
+                        class="svg-icon h-50 align-self-center"></span>
                     </span>
                   </div>
                 </td>
                 <td class="pl-0">
-                  <a
-                    href="#"
-                    class="
+                  <a href="#" class="
                       text-dark
                       font-weight-bolder
                       text-hover-primary
                       mb-1
                       font-size-lg
-                    "
-                    >Top Authors</a
-                  >
-                  <span class="text-muted font-weight-bold d-block"
-                    >Successful Fellas</span
-                  >
+                    ">Top Authors</a>
+                  <span class="text-muted font-weight-bold d-block">Successful Fellas</span>
                 </td>
                 <td>
                   <div class="d-flex flex-column w-100 mr-2">
-                    <div
-                      class="
+                    <div class="
                         d-flex
                         align-items-center
                         justify-content-between
                         mb-2
-                      "
-                    >
-                      <span
-                        class="text-muted mr-2 font-size-sm font-weight-bold"
-                      >
+                      ">
+                      <span class="text-muted mr-2 font-size-sm font-weight-bold">
                         65%
                       </span>
                       <span class="text-muted font-size-sm font-weight-bold">
@@ -261,25 +169,16 @@
                       </span>
                     </div>
                     <div class="progress progress-xs w-100">
-                      <div
-                        class="progress-bar bg-danger"
-                        role="progressbar"
-                        style="width: 65%"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
+                      <div class="progress-bar bg-danger" role="progressbar" style="width: 65%" aria-valuenow="50"
+                        aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
                 </td>
                 <td class="text-right pr-0">
                   <a href="#" class="btn btn-icon btn-light btn-sm">
-                    <span
-                      [inlineSVG]="
+                    <span [inlineSVG]="
                         './assets/media/svg/icons/Navigation/Arrow-right.svg'
-                      "
-                      class="svg-icon svg-icon-md svg-icon-success"
-                    ></span>
+                      " class="svg-icon svg-icon-md svg-icon-success"></span>
                   </a>
                 </td>
               </tr>
@@ -287,42 +186,30 @@
                 <th class="pl-0 py-5">
                   <div class="symbol symbol-50 symbol-light mr-2">
                     <span class="symbol-label">
-                      <span
-                        [inlineSVG]="'./assets/media/svg/misc/015-telegram.svg'"
-                        class="svg-icon h-50 align-self-center"
-                      ></span>
+                      <span [inlineSVG]="'./assets/media/svg/misc/015-telegram.svg'"
+                        class="svg-icon h-50 align-self-center"></span>
                     </span>
                   </div>
                 </th>
                 <td class="pl-0">
-                  <a
-                    href="#"
-                    class="
+                  <a href="#" class="
                       text-dark
                       font-weight-bolder
                       text-hover-primary
                       mb-1
                       font-size-lg
-                    "
-                    >Popular Authors</a
-                  >
-                  <span class="text-muted font-weight-bold d-block"
-                    >Most Successful</span
-                  >
+                    ">Popular Authors</a>
+                  <span class="text-muted font-weight-bold d-block">Most Successful</span>
                 </td>
                 <td>
                   <div class="d-flex flex-column w-100 mr-2">
-                    <div
-                      class="
+                    <div class="
                         d-flex
                         align-items-center
                         justify-content-between
                         mb-2
-                      "
-                    >
-                      <span
-                        class="text-muted mr-2 font-size-sm font-weight-bold"
-                      >
+                      ">
+                      <span class="text-muted mr-2 font-size-sm font-weight-bold">
                         83%
                       </span>
                       <span class="text-muted font-size-sm font-weight-bold">
@@ -330,25 +217,16 @@
                       </span>
                     </div>
                     <div class="progress progress-xs w-100">
-                      <div
-                        class="progress-bar bg-success"
-                        role="progressbar"
-                        style="width: 83%"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
+                      <div class="progress-bar bg-success" role="progressbar" style="width: 83%" aria-valuenow="50"
+                        aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
                 </td>
                 <td class="text-right pr-0">
                   <a href="#" class="btn btn-icon btn-light btn-sm">
-                    <span
-                      [inlineSVG]="
+                    <span [inlineSVG]="
                         './assets/media/svg/icons/Navigation/Arrow-right.svg'
-                      "
-                      class="svg-icon svg-icon-md svg-icon-success"
-                    ></span>
+                      " class="svg-icon svg-icon-md svg-icon-success"></span>
                   </a>
                 </td>
               </tr>
@@ -356,42 +234,30 @@
                 <th class="pl-0 py-5">
                   <div class="symbol symbol-50 symbol-light mr-2">
                     <span class="symbol-label">
-                      <span
-                        [inlineSVG]="'./assets/media/svg/misc/003-puzzle.svg'"
-                        class="svg-icon h-50 align-self-center"
-                      ></span>
+                      <span [inlineSVG]="'./assets/media/svg/misc/003-puzzle.svg'"
+                        class="svg-icon h-50 align-self-center"></span>
                     </span>
                   </div>
                 </th>
                 <td class="pl-0">
-                  <a
-                    href="#"
-                    class="
+                  <a href="#" class="
                       text-dark
                       font-weight-bolder
                       text-hover-primary
                       mb-1
                       font-size-lg
-                    "
-                    >New Users</a
-                  >
-                  <span class="text-muted font-weight-bold d-block"
-                    >Awesome Users</span
-                  >
+                    ">New Users</a>
+                  <span class="text-muted font-weight-bold d-block">Awesome Users</span>
                 </td>
                 <td>
                   <div class="d-flex flex-column w-100 mr-2">
-                    <div
-                      class="
+                    <div class="
                         d-flex
                         align-items-center
                         justify-content-between
                         mb-2
-                      "
-                    >
-                      <span
-                        class="text-muted mr-2 font-size-sm font-weight-bold"
-                      >
+                      ">
+                      <span class="text-muted mr-2 font-size-sm font-weight-bold">
                         47%
                       </span>
                       <span class="text-muted font-size-sm font-weight-bold">
@@ -399,25 +265,16 @@
                       </span>
                     </div>
                     <div class="progress progress-xs w-100">
-                      <div
-                        class="progress-bar bg-primary"
-                        role="progressbar"
-                        style="width: 47%"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
+                      <div class="progress-bar bg-primary" role="progressbar" style="width: 47%" aria-valuenow="50"
+                        aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
                 </td>
                 <td class="text-right pr-0">
                   <a href="#" class="btn btn-icon btn-light btn-sm">
-                    <span
-                      [inlineSVG]="
+                    <span [inlineSVG]="
                         './assets/media/svg/icons/Navigation/Arrow-right.svg'
-                      "
-                      class="svg-icon svg-icon-md svg-icon-success"
-                    ></span>
+                      " class="svg-icon svg-icon-md svg-icon-success"></span>
                   </a>
                 </td>
               </tr>
@@ -429,14 +286,8 @@
       <!--end::Tap pane-->
 
       <!--begin::Tap pane-->
-      <div
-        class="tab-pane fade"
-        [class.active]="currentTab === TABS[1]"
-        [class.show]="currentTab === TABS[1]"
-        id="kt_tab_pane_6_2"
-        role="tabpanel"
-        aria-labelledby="kt_tab_pane_6_2"
-      >
+      <div class="tab-pane fade" [class.active]="currentTab === TABS[1]" [class.show]="currentTab === TABS[1]"
+        id="kt_tab_pane_6_2" role="tabpanel" aria-labelledby="kt_tab_pane_6_2">
         <!--begin::Table-->
         <div class="table-responsive">
           <table class="table table-borderless table-vertical-center">
@@ -453,42 +304,30 @@
                 <th class="pl-0 py-5">
                   <div class="symbol symbol-50 symbol-light mr-2">
                     <span class="symbol-label">
-                      <span
-                        [inlineSVG]="'./assets/media/svg/misc/015-telegram.svg'"
-                        class="svg-icon h-50 align-self-center"
-                      ></span>
+                      <span [inlineSVG]="'./assets/media/svg/misc/015-telegram.svg'"
+                        class="svg-icon h-50 align-self-center"></span>
                     </span>
                   </div>
                 </th>
                 <td class="pl-0">
-                  <a
-                    href="#"
-                    class="
+                  <a href="#" class="
                       text-dark
                       font-weight-bolder
                       text-hover-primary
                       mb-1
                       font-size-lg
-                    "
-                    >Popular Authors</a
-                  >
-                  <span class="text-muted font-weight-bold d-block"
-                    >Most Successful</span
-                  >
+                    ">Popular Authors</a>
+                  <span class="text-muted font-weight-bold d-block">Most Successful</span>
                 </td>
                 <td>
                   <div class="d-flex flex-column w-100 mr-2">
-                    <div
-                      class="
+                    <div class="
                         d-flex
                         align-items-center
                         justify-content-between
                         mb-2
-                      "
-                    >
-                      <span
-                        class="text-muted mr-2 font-size-sm font-weight-bold"
-                      >
+                      ">
+                      <span class="text-muted mr-2 font-size-sm font-weight-bold">
                         83%
                       </span>
                       <span class="text-muted font-size-sm font-weight-bold">
@@ -496,25 +335,16 @@
                       </span>
                     </div>
                     <div class="progress progress-xs w-100">
-                      <div
-                        class="progress-bar bg-success"
-                        role="progressbar"
-                        style="width: 83%"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
+                      <div class="progress-bar bg-success" role="progressbar" style="width: 83%" aria-valuenow="50"
+                        aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
                 </td>
                 <td class="text-right pr-0">
                   <a href="#" class="btn btn-icon btn-light btn-sm">
-                    <span
-                      [inlineSVG]="
+                    <span [inlineSVG]="
                         './assets/media/svg/icons/Navigation/Arrow-right.svg'
-                      "
-                      class="svg-icon svg-icon-md svg-icon-success"
-                    ></span>
+                      " class="svg-icon svg-icon-md svg-icon-success"></span>
                   </a>
                 </td>
               </tr>
@@ -522,42 +352,30 @@
                 <th class="pl-0 py-5">
                   <div class="symbol symbol-50 symbol-light mr-2">
                     <span class="symbol-label">
-                      <span
-                        [inlineSVG]="'./assets/media/svg/misc/003-puzzle.svg'"
-                        class="svg-icon h-50 align-self-center"
-                      ></span>
+                      <span [inlineSVG]="'./assets/media/svg/misc/003-puzzle.svg'"
+                        class="svg-icon h-50 align-self-center"></span>
                     </span>
                   </div>
                 </th>
                 <td class="pl-0">
-                  <a
-                    href="#"
-                    class="
+                  <a href="#" class="
                       text-dark
                       font-weight-bolder
                       text-hover-primary
                       mb-1
                       font-size-lg
-                    "
-                    >New Users</a
-                  >
-                  <span class="text-muted font-weight-bold d-block"
-                    >Awesome Users</span
-                  >
+                    ">New Users</a>
+                  <span class="text-muted font-weight-bold d-block">Awesome Users</span>
                 </td>
                 <td>
                   <div class="d-flex flex-column w-100 mr-2">
-                    <div
-                      class="
+                    <div class="
                         d-flex
                         align-items-center
                         justify-content-between
                         mb-2
-                      "
-                    >
-                      <span
-                        class="text-muted mr-2 font-size-sm font-weight-bold"
-                      >
+                      ">
+                      <span class="text-muted mr-2 font-size-sm font-weight-bold">
                         47%
                       </span>
                       <span class="text-muted font-size-sm font-weight-bold">
@@ -565,25 +383,16 @@
                       </span>
                     </div>
                     <div class="progress progress-xs w-100">
-                      <div
-                        class="progress-bar bg-primary"
-                        role="progressbar"
-                        style="width: 47%"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
+                      <div class="progress-bar bg-primary" role="progressbar" style="width: 47%" aria-valuenow="50"
+                        aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
                 </td>
                 <td class="text-right pr-0">
                   <a href="#" class="btn btn-icon btn-light btn-sm">
-                    <span
-                      [inlineSVG]="
+                    <span [inlineSVG]="
                         './assets/media/svg/icons/Navigation/Arrow-right.svg'
-                      "
-                      class="svg-icon svg-icon-md svg-icon-success"
-                    ></span>
+                      " class="svg-icon svg-icon-md svg-icon-success"></span>
                   </a>
                 </td>
               </tr>
@@ -591,42 +400,30 @@
                 <th class="pl-0 py-5">
                   <div class="symbol symbol-50 symbol-light mr-2">
                     <span class="symbol-label">
-                      <span
-                        [inlineSVG]="'./assets/media/svg/misc/005-bebo.svg'"
-                        class="svg-icon h-50 align-self-center"
-                      ></span>
+                      <span [inlineSVG]="'./assets/media/svg/misc/005-bebo.svg'"
+                        class="svg-icon h-50 align-self-center"></span>
                     </span>
                   </div>
                 </th>
                 <td class="py-6 pl-0">
-                  <a
-                    href="#"
-                    class="
+                  <a href="#" class="
                       text-dark
                       font-weight-bolder
                       text-hover-primary
                       mb-1
                       font-size-lg
-                    "
-                    >Active Customers</a
-                  >
-                  <span class="text-muted font-weight-bold d-block"
-                    >Best Customers</span
-                  >
+                    ">Active Customers</a>
+                  <span class="text-muted font-weight-bold d-block">Best Customers</span>
                 </td>
                 <td>
                   <div class="d-flex flex-column w-100 mr-2">
-                    <div
-                      class="
+                    <div class="
                         d-flex
                         align-items-center
                         justify-content-between
                         mb-2
-                      "
-                    >
-                      <span
-                        class="text-muted mr-2 font-size-sm font-weight-bold"
-                      >
+                      ">
+                      <span class="text-muted mr-2 font-size-sm font-weight-bold">
                         71%
                       </span>
                       <span class="text-muted font-size-sm font-weight-bold">
@@ -634,25 +431,16 @@
                       </span>
                     </div>
                     <div class="progress progress-xs w-100">
-                      <div
-                        class="progress-bar bg-danger"
-                        role="progressbar"
-                        style="width: 71%"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
+                      <div class="progress-bar bg-danger" role="progressbar" style="width: 71%" aria-valuenow="50"
+                        aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
                 </td>
                 <td class="text-right pr-0">
                   <a href="#" class="btn btn-icon btn-light btn-sm">
-                    <span
-                      [inlineSVG]="
+                    <span [inlineSVG]="
                         './assets/media/svg/icons/Navigation/Arrow-right.svg'
-                      "
-                      class="svg-icon svg-icon-md svg-icon-success"
-                    ></span>
+                      " class="svg-icon svg-icon-md svg-icon-success"></span>
                   </a>
                 </td>
               </tr>
@@ -660,42 +448,30 @@
                 <td class="pl-0 py-5">
                   <div class="symbol symbol-50 symbol-light mr-2">
                     <span class="symbol-label">
-                      <span
-                        [inlineSVG]="'./assets/media/svg/misc/006-plurk.svg'"
-                        class="svg-icon h-50 align-self-center"
-                      ></span>
+                      <span [inlineSVG]="'./assets/media/svg/misc/006-plurk.svg'"
+                        class="svg-icon h-50 align-self-center"></span>
                     </span>
                   </div>
                 </td>
                 <td class="pl-0">
-                  <a
-                    href="#"
-                    class="
+                  <a href="#" class="
                       text-dark
                       font-weight-bolder
                       text-hover-primary
                       mb-1
                       font-size-lg
-                    "
-                    >Top Authors</a
-                  >
-                  <span class="text-muted font-weight-bold d-block"
-                    >Successful Fellas</span
-                  >
+                    ">Top Authors</a>
+                  <span class="text-muted font-weight-bold d-block">Successful Fellas</span>
                 </td>
                 <td>
                   <div class="d-flex flex-column w-100 mr-2">
-                    <div
-                      class="
+                    <div class="
                         d-flex
                         align-items-center
                         justify-content-between
                         mb-2
-                      "
-                    >
-                      <span
-                        class="text-muted mr-2 font-size-sm font-weight-bold"
-                      >
+                      ">
+                      <span class="text-muted mr-2 font-size-sm font-weight-bold">
                         65%
                       </span>
                       <span class="text-muted font-size-sm font-weight-bold">
@@ -703,25 +479,16 @@
                       </span>
                     </div>
                     <div class="progress progress-xs w-100">
-                      <div
-                        class="progress-bar bg-danger"
-                        role="progressbar"
-                        style="width: 65%"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
+                      <div class="progress-bar bg-danger" role="progressbar" style="width: 65%" aria-valuenow="50"
+                        aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
                 </td>
                 <td class="text-right pr-0">
                   <a href="#" class="btn btn-icon btn-light btn-sm">
-                    <span
-                      [inlineSVG]="
+                    <span [inlineSVG]="
                         './assets/media/svg/icons/Navigation/Arrow-right.svg'
-                      "
-                      class="svg-icon svg-icon-md svg-icon-success"
-                    ></span>
+                      " class="svg-icon svg-icon-md svg-icon-success"></span>
                   </a>
                 </td>
               </tr>
@@ -729,44 +496,31 @@
                 <th class="pl-0 py-5">
                   <div class="symbol symbol-50 symbol-light mr-2">
                     <span class="symbol-label">
-                      <span
-                        [inlineSVG]="
+                      <span [inlineSVG]="
                           './assets/media/svg/misc/014-kickstarter.svg'
-                        "
-                        class="svg-icon h-50 align-self-center"
-                      ></span>
+                        " class="svg-icon h-50 align-self-center"></span>
                     </span>
                   </div>
                 </th>
                 <td class="pl-0">
-                  <a
-                    href="#"
-                    class="
+                  <a href="#" class="
                       text-dark
                       font-weight-bolder
                       text-hover-primary
                       mb-1
                       font-size-lg
-                    "
-                    >Bestseller Theme</a
-                  >
-                  <span class="text-muted font-weight-bold d-block"
-                    >Amazing Templates</span
-                  >
+                    ">Bestseller Theme</a>
+                  <span class="text-muted font-weight-bold d-block">Amazing Templates</span>
                 </td>
                 <td>
                   <div class="d-flex flex-column w-100 mr-2">
-                    <div
-                      class="
+                    <div class="
                         d-flex
                         align-items-center
                         justify-content-between
                         mb-2
-                      "
-                    >
-                      <span
-                        class="text-muted mr-2 font-size-sm font-weight-bold"
-                      >
+                      ">
+                      <span class="text-muted mr-2 font-size-sm font-weight-bold">
                         50%
                       </span>
                       <span class="text-muted font-size-sm font-weight-bold">
@@ -774,25 +528,16 @@
                       </span>
                     </div>
                     <div class="progress progress-xs w-100">
-                      <div
-                        class="progress-bar bg-info"
-                        role="progressbar"
-                        style="width: 50%"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
+                      <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50"
+                        aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
                 </td>
                 <td class="text-right pr-0">
                   <a href="#" class="btn btn-icon btn-light btn-sm">
-                    <span
-                      [inlineSVG]="
+                    <span [inlineSVG]="
                         './assets/media/svg/icons/Navigation/Arrow-right.svg'
-                      "
-                      class="svg-icon svg-icon-md svg-icon-success"
-                    ></span>
+                      " class="svg-icon svg-icon-md svg-icon-success"></span>
                   </a>
                 </td>
               </tr>
@@ -804,14 +549,8 @@
       <!--end::Tap pane-->
 
       <!--begin::Tap pane-->
-      <div
-        class="tab-pane fade"
-        [class.active]="currentTab === TABS[2]"
-        [class.show]="currentTab === TABS[2]"
-        id="kt_tab_pane_6_3"
-        role="tabpanel"
-        aria-labelledby="kt_tab_pane_6_3"
-      >
+      <div class="tab-pane fade" [class.active]="currentTab === TABS[2]" [class.show]="currentTab === TABS[2]"
+        id="kt_tab_pane_6_3" role="tabpanel" aria-labelledby="kt_tab_pane_6_3">
         <!--begin::Table-->
         <div class="table-responsive">
           <table class="table table-borderless table-vertical-center">
@@ -828,42 +567,30 @@
                 <td class="pl-0 py-5">
                   <div class="symbol symbol-50 symbol-light mr-2">
                     <span class="symbol-label">
-                      <span
-                        [inlineSVG]="'./assets/media/svg/misc/006-plurk.svg'"
-                        class="svg-icon h-50 align-self-center"
-                      ></span>
+                      <span [inlineSVG]="'./assets/media/svg/misc/006-plurk.svg'"
+                        class="svg-icon h-50 align-self-center"></span>
                     </span>
                   </div>
                 </td>
                 <td class="pl-0">
-                  <a
-                    href="#"
-                    class="
+                  <a href="#" class="
                       text-dark
                       font-weight-bolder
                       text-hover-primary
                       mb-1
                       font-size-lg
-                    "
-                    >Top Authors</a
-                  >
-                  <span class="text-muted font-weight-bold d-block"
-                    >Successful Fellas</span
-                  >
+                    ">Top Authors</a>
+                  <span class="text-muted font-weight-bold d-block">Successful Fellas</span>
                 </td>
                 <td>
                   <div class="d-flex flex-column w-100 mr-2">
-                    <div
-                      class="
+                    <div class="
                         d-flex
                         align-items-center
                         justify-content-between
                         mb-2
-                      "
-                    >
-                      <span
-                        class="text-muted mr-2 font-size-sm font-weight-bold"
-                      >
+                      ">
+                      <span class="text-muted mr-2 font-size-sm font-weight-bold">
                         65%
                       </span>
                       <span class="text-muted font-size-sm font-weight-bold">
@@ -871,25 +598,16 @@
                       </span>
                     </div>
                     <div class="progress progress-xs w-100">
-                      <div
-                        class="progress-bar bg-danger"
-                        role="progressbar"
-                        style="width: 65%"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
+                      <div class="progress-bar bg-danger" role="progressbar" style="width: 65%" aria-valuenow="50"
+                        aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
                 </td>
                 <td class="text-right pr-0">
                   <a href="#" class="btn btn-icon btn-light btn-sm">
-                    <span
-                      [inlineSVG]="
+                    <span [inlineSVG]="
                         './assets/media/svg/icons/Navigation/Arrow-right.svg'
-                      "
-                      class="svg-icon svg-icon-md svg-icon-success"
-                    ></span>
+                      " class="svg-icon svg-icon-md svg-icon-success"></span>
                   </a>
                 </td>
               </tr>
@@ -897,42 +615,30 @@
                 <th class="pl-0 py-5">
                   <div class="symbol symbol-50 symbol-light mr-2">
                     <span class="symbol-label">
-                      <span
-                        [inlineSVG]="'./assets/media/svg/misc/015-telegram.svg'"
-                        class="svg-icon h-50 align-self-center"
-                      ></span>
+                      <span [inlineSVG]="'./assets/media/svg/misc/015-telegram.svg'"
+                        class="svg-icon h-50 align-self-center"></span>
                     </span>
                   </div>
                 </th>
                 <td class="pl-0">
-                  <a
-                    href="#"
-                    class="
+                  <a href="#" class="
                       text-dark
                       font-weight-bolder
                       text-hover-primary
                       mb-1
                       font-size-lg
-                    "
-                    >Popular Authors</a
-                  >
-                  <span class="text-muted font-weight-bold d-block"
-                    >Most Successful</span
-                  >
+                    ">Popular Authors</a>
+                  <span class="text-muted font-weight-bold d-block">Most Successful</span>
                 </td>
                 <td>
                   <div class="d-flex flex-column w-100 mr-2">
-                    <div
-                      class="
+                    <div class="
                         d-flex
                         align-items-center
                         justify-content-between
                         mb-2
-                      "
-                    >
-                      <span
-                        class="text-muted mr-2 font-size-sm font-weight-bold"
-                      >
+                      ">
+                      <span class="text-muted mr-2 font-size-sm font-weight-bold">
                         83%
                       </span>
                       <span class="text-muted font-size-sm font-weight-bold">
@@ -940,25 +646,16 @@
                       </span>
                     </div>
                     <div class="progress progress-xs w-100">
-                      <div
-                        class="progress-bar bg-success"
-                        role="progressbar"
-                        style="width: 83%"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
+                      <div class="progress-bar bg-success" role="progressbar" style="width: 83%" aria-valuenow="50"
+                        aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
                 </td>
                 <td class="text-right pr-0">
                   <a href="#" class="btn btn-icon btn-light btn-sm">
-                    <span
-                      [inlineSVG]="
+                    <span [inlineSVG]="
                         './assets/media/svg/icons/Navigation/Arrow-right.svg'
-                      "
-                      class="svg-icon svg-icon-md svg-icon-success"
-                    ></span>
+                      " class="svg-icon svg-icon-md svg-icon-success"></span>
                   </a>
                 </td>
               </tr>
@@ -966,42 +663,30 @@
                 <th class="pl-0 py-5">
                   <div class="symbol symbol-50 symbol-light mr-2">
                     <span class="symbol-label">
-                      <span
-                        [inlineSVG]="'./assets/media/svg/misc/003-puzzle.svg'"
-                        class="svg-icon h-50 align-self-center"
-                      ></span>
+                      <span [inlineSVG]="'./assets/media/svg/misc/003-puzzle.svg'"
+                        class="svg-icon h-50 align-self-center"></span>
                     </span>
                   </div>
                 </th>
                 <td class="pl-0">
-                  <a
-                    href="#"
-                    class="
+                  <a href="#" class="
                       text-dark
                       font-weight-bolder
                       text-hover-primary
                       mb-1
                       font-size-lg
-                    "
-                    >New Users</a
-                  >
-                  <span class="text-muted font-weight-bold d-block"
-                    >Awesome Users</span
-                  >
+                    ">New Users</a>
+                  <span class="text-muted font-weight-bold d-block">Awesome Users</span>
                 </td>
                 <td>
                   <div class="d-flex flex-column w-100 mr-2">
-                    <div
-                      class="
+                    <div class="
                         d-flex
                         align-items-center
                         justify-content-between
                         mb-2
-                      "
-                    >
-                      <span
-                        class="text-muted mr-2 font-size-sm font-weight-bold"
-                      >
+                      ">
+                      <span class="text-muted mr-2 font-size-sm font-weight-bold">
                         47%
                       </span>
                       <span class="text-muted font-size-sm font-weight-bold">
@@ -1009,25 +694,16 @@
                       </span>
                     </div>
                     <div class="progress progress-xs w-100">
-                      <div
-                        class="progress-bar bg-primary"
-                        role="progressbar"
-                        style="width: 47%"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
+                      <div class="progress-bar bg-primary" role="progressbar" style="width: 47%" aria-valuenow="50"
+                        aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
                 </td>
                 <td class="text-right pr-0">
                   <a href="#" class="btn btn-icon btn-light btn-sm">
-                    <span
-                      [inlineSVG]="
+                    <span [inlineSVG]="
                         './assets/media/svg/icons/Navigation/Arrow-right.svg'
-                      "
-                      class="svg-icon svg-icon-md svg-icon-success"
-                    ></span>
+                      " class="svg-icon svg-icon-md svg-icon-success"></span>
                   </a>
                 </td>
               </tr>
@@ -1035,42 +711,30 @@
                 <th class="pl-0 py-5">
                   <div class="symbol symbol-50 symbol-light mr-2">
                     <span class="symbol-label">
-                      <span
-                        [inlineSVG]="'./assets/media/svg/misc/005-bebo.svg'"
-                        class="svg-icon h-50 align-self-center"
-                      ></span>
+                      <span [inlineSVG]="'./assets/media/svg/misc/005-bebo.svg'"
+                        class="svg-icon h-50 align-self-center"></span>
                     </span>
                   </div>
                 </th>
                 <td class="py-6 pl-0">
-                  <a
-                    href="#"
-                    class="
+                  <a href="#" class="
                       text-dark
                       font-weight-bolder
                       text-hover-primary
                       mb-1
                       font-size-lg
-                    "
-                    >Active Customers</a
-                  >
-                  <span class="text-muted font-weight-bold d-block"
-                    >Best Customers</span
-                  >
+                    ">Active Customers</a>
+                  <span class="text-muted font-weight-bold d-block">Best Customers</span>
                 </td>
                 <td>
                   <div class="d-flex flex-column w-100 mr-2">
-                    <div
-                      class="
+                    <div class="
                         d-flex
                         align-items-center
                         justify-content-between
                         mb-2
-                      "
-                    >
-                      <span
-                        class="text-muted mr-2 font-size-sm font-weight-bold"
-                      >
+                      ">
+                      <span class="text-muted mr-2 font-size-sm font-weight-bold">
                         71%
                       </span>
                       <span class="text-muted font-size-sm font-weight-bold">
@@ -1078,25 +742,16 @@
                       </span>
                     </div>
                     <div class="progress progress-xs w-100">
-                      <div
-                        class="progress-bar bg-danger"
-                        role="progressbar"
-                        style="width: 71%"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
+                      <div class="progress-bar bg-danger" role="progressbar" style="width: 71%" aria-valuenow="50"
+                        aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
                 </td>
                 <td class="text-right pr-0">
                   <a href="#" class="btn btn-icon btn-light btn-sm">
-                    <span
-                      [inlineSVG]="
+                    <span [inlineSVG]="
                         './assets/media/svg/icons/Navigation/Arrow-right.svg'
-                      "
-                      class="svg-icon svg-icon-md svg-icon-success"
-                    ></span>
+                      " class="svg-icon svg-icon-md svg-icon-success"></span>
                   </a>
                 </td>
               </tr>
@@ -1104,44 +759,31 @@
                 <th class="pl-0 py-5">
                   <div class="symbol symbol-50 symbol-light mr-2">
                     <span class="symbol-label">
-                      <span
-                        [inlineSVG]="
+                      <span [inlineSVG]="
                           './assets/media/svg/misc/014-kickstarter.svg'
-                        "
-                        class="svg-icon h-50 align-self-center"
-                      ></span>
+                        " class="svg-icon h-50 align-self-center"></span>
                     </span>
                   </div>
                 </th>
                 <td class="pl-0">
-                  <a
-                    href="#"
-                    class="
+                  <a href="#" class="
                       text-dark
                       font-weight-bolder
                       text-hover-primary
                       mb-1
                       font-size-lg
-                    "
-                    >Bestseller Theme</a
-                  >
-                  <span class="text-muted font-weight-bold d-block"
-                    >Amazing Templates</span
-                  >
+                    ">Bestseller Theme</a>
+                  <span class="text-muted font-weight-bold d-block">Amazing Templates</span>
                 </td>
                 <td>
                   <div class="d-flex flex-column w-100 mr-2">
-                    <div
-                      class="
+                    <div class="
                         d-flex
                         align-items-center
                         justify-content-between
                         mb-2
-                      "
-                    >
-                      <span
-                        class="text-muted mr-2 font-size-sm font-weight-bold"
-                      >
+                      ">
+                      <span class="text-muted mr-2 font-size-sm font-weight-bold">
                         50%
                       </span>
                       <span class="text-muted font-size-sm font-weight-bold">
@@ -1149,25 +791,16 @@
                       </span>
                     </div>
                     <div class="progress progress-xs w-100">
-                      <div
-                        class="progress-bar bg-info"
-                        role="progressbar"
-                        style="width: 50%"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
+                      <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50"
+                        aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
                 </td>
                 <td class="text-right pr-0">
                   <a href="#" class="btn btn-icon btn-light btn-sm">
-                    <span
-                      [inlineSVG]="
+                    <span [inlineSVG]="
                         './assets/media/svg/icons/Navigation/Arrow-right.svg'
-                      "
-                      class="svg-icon svg-icon-md svg-icon-success"
-                    ></span>
+                      " class="svg-icon svg-icon-md svg-icon-success"></span>
                   </a>
                 </td>
               </tr>

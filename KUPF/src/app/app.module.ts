@@ -24,6 +24,7 @@ import { SearchTabComponent } from './modules/home/_partials/search-tab/search-t
 import { SearchTabModule } from './modules/home/_partials/search-tab.module';
 import { SetupModule } from './modules/home/setup/setup.module';
 import { ServiceSetupModule } from './modules/home/service-setup/service-setup.module';
+import { FilterLabelsPipe } from './modules/home/Pipes/filter-labels.pipe';
 // #fake-end#
 
 function appInitializer(authService: AuthService) {
@@ -41,7 +42,7 @@ function appInitializer(authService: AuthService) {
     ViewContactComponent,
     ViewemployeeinformationComponent, 
     AddReferenceComponent, 
-    LoginComponent
+    LoginComponent, FilterLabelsPipe
   ],
   imports: [
     BrowserModule,

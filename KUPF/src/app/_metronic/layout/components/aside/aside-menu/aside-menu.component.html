@@ -6,7 +6,8 @@
 </div>
 <!-- Dashboard -->
 <div class="menu-item menu-accordion here"> 
-  <a class="menu-link without-sub" routerLink="/dashboard" ><span class="menu-icon">
+  <a class="menu-link without-sub" routerLink="/dashboard" >
+    <span class="menu-icon">
       <span [inlineSVG]="'./assets/media/icons/duotune/art/art002.svg'" class="svg-icon svg-icon-2"></span>
     </span>
     <span class="menu-title">Dashboard</span></a>
@@ -53,24 +54,10 @@
         <span class="menu-title">Online Membership Request</span>
       </a>      
     </div> 
-    <div data-kt-menu-trigger="click" class="menu-item menu-accordion here">
-      <span class="menu-link">
-        <span class="menu-bullet">
-          <span class="bullet bullet-dot"></span>
-        </span>
-        <span class="menu-title">After Services </span>
-        <span class="menu-arrow"></span>
-      </span>
-      <div class="menu-sub menu-sub-accordion" style="display: none; overflow: hidden;" kt-hidden-height="78">
-        <div class="menu-item">
-          <a class="menu-link without-sub" routerLink="/references/employee-discount-details" routerLinkActive="active"><span class="menu-bullet"><span
-                class="bullet bullet-dot"></span></span><span class="menu-title">Request for the Discount </span></a>
-        </div>
-        <div class="menu-item">
-          <a class="menu-link without-sub" routerLink="/references/employee-discount-details" routerLinkActive="active"><span class="menu-bullet"><span
-                class="bullet bullet-dot"></span></span><span class="menu-title">Request for Loan Removal </span></a>
-        </div>
-      </div>      
+    <div class="menu-item">
+      <a class="menu-link without-sub" routerLink="/service-setup/manage-approvals" routerLinkActive="active"><span
+          class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Manage
+          Approvals</span></a>
     </div>
     <div data-kt-menu-trigger="click" class="menu-item menu-accordion here">
       <span class="menu-link">
@@ -228,7 +215,25 @@
           </div> 
         </div>      
       </div>
-    
+      <div data-kt-menu-trigger="click" class="menu-item menu-accordion here">
+        <span class="menu-link">
+          <span class="menu-bullet">
+            <span class="bullet bullet-dot"></span>
+          </span>
+          <span class="menu-title">After Services </span>
+          <span class="menu-arrow"></span>
+        </span>
+        <div class="menu-sub menu-sub-accordion" style="display: none; overflow: hidden;" kt-hidden-height="78">
+          <div class="menu-item">
+            <a class="menu-link without-sub" routerLink="/references/employee-discount-details" routerLinkActive="active"><span class="menu-bullet"><span
+                  class="bullet bullet-dot"></span></span><span class="menu-title">Request for the Discount </span></a>
+          </div>
+          <div class="menu-item">
+            <a class="menu-link without-sub" routerLink="/references/employee-discount-details" routerLinkActive="active"><span class="menu-bullet"><span
+                  class="bullet bullet-dot"></span></span><span class="menu-title">Request for Loan Removal </span></a>
+          </div>
+        </div>      
+      </div>
   </div>
  
 </div>
@@ -424,11 +429,7 @@
           class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">
           Document</span></a>
     </div>
-    <div class="menu-item">
-      <a class="menu-link without-sub" routerLink="/service-setup/manage-approvals" routerLinkActive="active"><span
-          class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Manage
-          Approvals</span></a>
-    </div>
+    
   </div>
 </div>
 

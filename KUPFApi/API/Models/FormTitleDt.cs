@@ -9,8 +9,11 @@ namespace API.Models
 {
     public partial class FormTitleDt
     { 
+        [Column("TenentId")]
         public int TenentId { get; set; }
-        public string FormTitleHdId { get; set; }
+        [Column("FormId")]
+        public string FormId { get; set; }
+        [Column("Language")]
         public int Language { get; set; }
         [Key]
         public string LabelId { get; set; }
@@ -20,6 +23,7 @@ namespace API.Models
         public string Attiribute { get; set; }
         public string Remarks { get; set; }
         public string Status { get; set; }
+        
         
         
     }

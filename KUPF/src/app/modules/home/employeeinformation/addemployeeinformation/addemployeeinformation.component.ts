@@ -1,7 +1,9 @@
 
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
+import { LocalizationService } from 'src/app/modules/_services/localization.service';
 
 @Component({
   selector: 'app-addemployeeinformation',
@@ -14,13 +16,29 @@ export class AddemployeeinformationComponent implements OnInit {
   private unsubscribe: Subscription[] = [];
   
   employeeForm : FormGroup;
-  constructor(private cdr: ChangeDetectorRef) {
+  /********************/
+  id:string = '';
+  languageId:any;
+  // FormId to get form/App language
+  @ViewChild('AddEmployee') hidden:ElementRef;
+  formtileHd$ :Observable<FormTitleHd[]>; 
+  /********************/
+  
+  constructor(private cdr: ChangeDetectorRef,private localizationService: LocalizationService) {
     const loadingSubscr = this.isLoading$
       .asObservable()
       .subscribe((res) => (this.isLoading = res));
     this.unsubscribe.push(loadingSubscr);
   }
-
+  ngAfterViewInit() {
+    this.id = this.hidden.nativeElement.value ;
+    //
+    this.languageId = localStorage.getItem('langType');
+    console.log(this.id);
+    console.log(this.languageId);
+    this.formtileHd$ = this.localizationService.getFormLabels(this.id,this.languageId);    
+    
+  }
   ngOnInit(): void {
     this.initializeForm();
   }

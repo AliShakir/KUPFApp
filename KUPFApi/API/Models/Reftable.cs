@@ -8,7 +8,7 @@ namespace API.Models
     public partial class Reftable
     {
         public int TenentId { get; set; }
-        public decimal Refid { get; set; }
+        public int Refid { get; set; }
         public string Reftype { get; set; }
         public string Refsubtype { get; set; }
         public string Shortname { get; set; }

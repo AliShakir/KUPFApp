@@ -2,13 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.DTOs;
+using API.DTOs.GetEntityDto;
+using API.DTOs.LocalizationDto;
 using API.Models;
 
 namespace API.Servivces.Interfaces
 {
     public interface ILocalizationService
     {
-        Task<IEnumerable<FormTitleHd>> GetFormLanguageByFormName(string formId);
-        
+        Task<IEnumerable<FormTitleHDLanguageDto>> GetFormLanguageByFormName(string formId,int LanguageId);
+        Task<IEnumerable<TestCompaniesDto>> GetCompanyAndEmployees();
     }
 }
