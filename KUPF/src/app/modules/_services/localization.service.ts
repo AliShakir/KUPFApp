@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams, HttpParamsOptions } from '@angular
 import { Injectable } from '@angular/core';
 import { map, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { FormTitleDt } from '../models/formTitleDt';
 import { FormTitleHd } from '../models/formTitleHd';
 import { GetFormLabels } from '../models/GetFormLables';
 
@@ -15,19 +16,29 @@ export class LocalizationService {
   
   //
   formTitleHd : FormTitleHd[] = [];
+  formTitleDt : FormTitleDt[] = [];
   constructor(private httpClient:HttpClient) { }
 
  
-  getFormLabels(formId:string,languageId:string)
+  getFormHeaderLabels(formId:string,languageId:string)
   {
     if(this.formTitleHd.length > 0 )return of (this.formTitleHd);    
-    return this.httpClient.get<FormTitleHd[]>(this.baseUrl + `FormLabels/GetFormLabels/` + formId + "/" + languageId).pipe(
+    return this.httpClient.get<FormTitleHd[]>(this.baseUrl + `FormLabels/GetFormHeaderLabels/` + formId + "/" + languageId).pipe(
       map(formTitleHd =>{
         this.formTitleHd = formTitleHd;
         return formTitleHd;
       })     
     )    
   }
-  
+  getFormBodyLabels(formId:string,languageId:string)
+  {
+    if(this.formTitleDt.length > 0 )return of (this.formTitleDt);    
+    return this.httpClient.get<FormTitleDt[]>(this.baseUrl + `FormLabels/GetFormBodyLabels/` + formId + "/" + languageId).pipe(
+      map(formTitleDt =>{
+        this.formTitleDt = formTitleDt;
+        return formTitleDt;
+      })     
+    )    
+  }
    
 }

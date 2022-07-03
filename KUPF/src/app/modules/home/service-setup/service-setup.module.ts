@@ -25,7 +25,7 @@ import { FilterLabelsPipe } from '../Pipes/filter-labels.pipe';
     ImportEmployeeMonthlyPaymentComponent,
     EmployeeMomentDetailsComponent,
     AddEmployeeMomentComponent,
-    
+    FilterLabelsPipe
   ],
   imports: [
     CommonModule,

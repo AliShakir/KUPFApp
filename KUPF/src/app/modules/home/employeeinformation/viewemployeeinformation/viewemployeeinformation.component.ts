@@ -27,7 +27,7 @@ formtileHd$ :Observable<FormTitleHd[]>;
     this.languageId = localStorage.getItem('langType');
     console.log(this.id);
     console.log(this.languageId);
-    this.formtileHd$ = this.localizationService.getFormLabels(this.id,this.languageId);    
+    this.formtileHd$ = this.localizationService.getFormHeaderLabels(this.id,this.languageId);    
     
   }
 

@@ -21,7 +21,7 @@ namespace API.Servivces.Implementation.Localization
         public LocalizationService(KUPFDbContext context, IMapper mapper)
         {
             _mapper = mapper;
-            _context = context;            
+            _context = context;
         }
 
         public async Task<IEnumerable<TestCompaniesDto>> GetCompanyAndEmployees()
@@ -31,10 +31,18 @@ namespace API.Servivces.Implementation.Localization
                         .ToListAsync();
         }
 
-        public async Task<IEnumerable<FormTitleHDLanguageDto>> GetFormLanguageByFormName(string formId,int languageId)
+        public async Task<IEnumerable<FormTitleHDLanguageDto>> GetFormHeaderLabelsByFormName(string formId, int languageId)
         {
-            var result = await _context.FormTitleHDLanguage.Where(c=>c.FormID == formId && c.Language == languageId).Include(o=> o.FormTitleDTLanguage.Where(p=>p.Language == languageId)).ToListAsync();
+            var result = await _context.FormTitleHDLanguage.Where(c => c.FormID == formId && c.Language == languageId).ToListAsync();
             var data = _mapper.Map<IEnumerable<FormTitleHDLanguageDto>>(result);
+            return data;
+        }
+
+        
+        public async Task<IEnumerable<FormTitleDTLanguageDto>> GetFormBodyLabelsByFormName(string formId, int languageId)
+        {
+            var result = await _context.FormTitleDTLanguage.Where(c => c.FormID == formId && c.Language == languageId).ToListAsync();
+            var data = _mapper.Map<IEnumerable<FormTitleDTLanguageDto>>(result);
             return data;
         }
     }

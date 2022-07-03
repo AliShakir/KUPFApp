@@ -11,7 +11,8 @@ namespace API.Servivces.Interfaces
 {
     public interface ILocalizationService
     {
-        Task<IEnumerable<FormTitleHDLanguageDto>> GetFormLanguageByFormName(string formId,int LanguageId);
+        Task<IEnumerable<FormTitleHDLanguageDto>> GetFormHeaderLabelsByFormName(string formId,int LanguageId);
+        Task<IEnumerable<FormTitleDTLanguageDto>> GetFormBodyLabelsByFormName(string formId,int languageId);
         Task<IEnumerable<TestCompaniesDto>> GetCompanyAndEmployees();
     }
 }

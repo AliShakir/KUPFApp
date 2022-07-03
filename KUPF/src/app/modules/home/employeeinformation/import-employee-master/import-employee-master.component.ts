@@ -23,7 +23,7 @@ export class ImportEmployeeMasterComponent implements OnInit {
     this.id = this.hidden.nativeElement.value ;
     //
     this.languageId = localStorage.getItem('langType');
-    this.formtileHd$ = this.localizationService.getFormLabels(this.id,this.languageId);    
+    this.formtileHd$ = this.localizationService.getFormHeaderLabels(this.id,this.languageId);    
     
   }
 }

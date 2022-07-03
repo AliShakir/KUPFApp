@@ -26,11 +26,19 @@ namespace API.Controllers
             _mapper = mapper;
            _localizationService = localizationService;
         }
-        [HttpGet("GetFormLabels")]
-        [Route("GetFormLabels/{formId}/{languageId}")]
-        public async Task<ActionResult<IEnumerable<FormTitleHDLanguageViewModel>>> GetFormLabels(string formId,int languageId)
+        [HttpGet]
+        [Route("GetFormHeaderLabels/{formId}/{languageId}")]
+        public async Task<ActionResult<IEnumerable<FormTitleHDLanguageViewModel>>> GetFormHeaderLabels(string formId,int languageId)
         {            
-            var result = await _localizationService.GetFormLanguageByFormName(formId,languageId);
+            var result = await _localizationService.GetFormHeaderLabelsByFormName(formId,languageId);
+
+            return Ok(result);
+        }
+        [HttpGet]
+        [Route("GetFormBodyLabels/{formId}/{languageId}")]
+        public async Task<ActionResult<IEnumerable<FormTitleDTLanguageViewModel>>> GetFormBodyLabels(string formId,int languageId)
+        {            
+            var result = await _localizationService.GetFormBodyLabelsByFormName(formId,languageId);
 
             return Ok(result);
         }

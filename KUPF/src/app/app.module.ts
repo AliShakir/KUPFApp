@@ -42,7 +42,7 @@ function appInitializer(authService: AuthService) {
     ViewContactComponent,
     ViewemployeeinformationComponent, 
     AddReferenceComponent, 
-    LoginComponent, FilterLabelsPipe
+    LoginComponent
   ],
   imports: [
     BrowserModule,
