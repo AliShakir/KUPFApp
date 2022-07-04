@@ -34,7 +34,6 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
 
-            //
             services.AddScoped<ILocalizationService, LocalizationService>();
             //
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
@@ -72,14 +71,15 @@ namespace API
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
-           
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
             app.UseMiddleware<ExceptionMiddleware>();
-            // if (env.IsDevelopment())
-            // {
-            //     app.UseDeveloperExceptionPage();
-            //     app.UseSwagger();
-            //     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
-            // }
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
+            }
 
             app.UseHttpsRedirection();
 

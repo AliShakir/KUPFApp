@@ -2,6 +2,7 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { FormTitleDt } from 'src/app/modules/models/formTitleDt';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
 import { LocalizationService } from 'src/app/modules/_services/localization.service';
 
@@ -16,29 +17,25 @@ export class AddemployeeinformationComponent implements OnInit {
   private unsubscribe: Subscription[] = [];
   
   employeeForm : FormGroup;
-  /********************/
-  id:string = '';
-  languageId:any;
-  // FormId to get form/App language
-  @ViewChild('AddEmployee') hidden:ElementRef;
-  formtileHd$ :Observable<FormTitleHd[]>; 
-  /********************/
-  
+
+  /*********************/
+ formHeaderLabels$ :Observable<FormTitleHd[]>; 
+ formBodyLabels$ :Observable<FormTitleDt[]>; 
+ formBodyLabels :FormTitleDt[]=[]; 
+ id:string = '';
+ languageId:any;
+ // FormId to get form/App language
+ @ViewChild('AddEmployee') hidden:ElementRef;
+/*********************/
+ 
   constructor(private cdr: ChangeDetectorRef,private localizationService: LocalizationService) {
     const loadingSubscr = this.isLoading$
       .asObservable()
       .subscribe((res) => (this.isLoading = res));
     this.unsubscribe.push(loadingSubscr);
   }
-  ngAfterViewInit() {
-    this.id = this.hidden.nativeElement.value ;
-    //
-    this.languageId = localStorage.getItem('langType');
-    console.log(this.id);
-    console.log(this.languageId);
-    this.formtileHd$ = this.localizationService.getFormHeaderLabels(this.id,this.languageId);    
-    
-  }
+ 
+
   ngOnInit(): void {
     this.initializeForm();
   }
@@ -83,5 +80,28 @@ export class AddemployeeinformationComponent implements OnInit {
 
   ngOnDestroy() {
     this.unsubscribe.forEach((sb) => sb.unsubscribe());
+  }
+
+  ngAfterViewInit() {
+    // TO get the form id...
+    this.id = this.hidden.nativeElement.value;
+    
+    // TO GET THE LANGUAGE ID
+    this.languageId = localStorage.getItem('langType');
+    
+    // Get form header labels
+    this.formHeaderLabels$ = this.localizationService.getFormHeaderLabels(this.id,this.languageId);
+    
+    // Get form body labels 
+    this.formBodyLabels$= this.localizationService.getFormBodyLabels(this.id,this.languageId)
+    
+    // Get observable as normal array of items
+    this.formBodyLabels$.subscribe((data)=>{
+      this.formBodyLabels = data 
+      console.log(this.formBodyLabels);    
+    },error=>{
+      console.log(error);
+    })  
+    
   }
 }

@@ -1,12 +1,12 @@
 <input type="hidden" #EmployeeGrid name="EmployeeGrid" value="EmployeeGrid">
-<div class="card mb-5 mb-xl-8" *ngFor="let label of formtileHd$ | async; let i = index">
+<div class="card mb-5 mb-xl-8">
     <!--begin::Header-->
-    <div class="card-header border-0 pt-5 panelBgColor">
+    <div class="card-header border-0 pt-5 panelBgColor" *ngFor="let label of formHeaderLabels$ | async; let i = index">
         <div class="card-toolbar">            
             <h3 class="m-0 ArFontStyle" lang="AR-SA">{{label.headerName}}</h3>
         </div>         
         <h3 class="card-title align-items-start flex-column">
-            <a routerLink="/employee/add-employee" class="btn btn-primary w-100 ArFontStyle" lang="AR-SA">
+            <a routerLink="/employee/add-employee" class="btn btn-primary w-100 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'btnAddContact'">
 
                 <span class="svg-icon svg-icon-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -18,7 +18,7 @@
                             fill="currentColor"></path>
                     </svg>
                 </span>
-                {{label.formTitleDTLanguage[1].title}}</a>
+               {{item.title}}</a>
         </h3>
     </div>
     <!--end::Header-->
@@ -128,13 +128,13 @@
                 <!--begin::Table head-->
                 <thead>
                     <tr class="fw-bolder text-muted">
-                        <th class="min-w-100px ArFontStyle"  lang="AR-SA">{{label.formTitleDTLanguage[2].title}}</th>
-                        <th class="min-w-100px ArFontStyle"  lang="AR-SA">{{label.formTitleDTLanguage[3].title}}</th>
-                        <th class="min-w-140px ArFontStyle"  lang="AR-SA">{{label.formTitleDTLanguage[4].title}}</th>
-                        <th class="min-w-120px ArFontStyle"  lang="AR-SA">{{label.formTitleDTLanguage[5].title}}</th>
-                        <th class="min-w-120px ArFontStyle"  lang="AR-SA">{{label.formTitleDTLanguage[6].title}}</th>
-                        <th class="min-w-120px ArFontStyle"  lang="AR-SA">{{label.formTitleDTLanguage[7].title}}</th>
-                        <th class="min-w-120px ArFontStyle"  lang="AR-SA">{{label.formTitleDTLanguage[8].title}}</th>
+                        <th class="min-w-100px ArFontStyle"  lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblAction'">{{item.title}}</th>
+                        <th class="min-w-100px ArFontStyle"  lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblUniversity'">{{item.title}}</th>
+                        <th class="min-w-140px ArFontStyle"  lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblEmployeeId'">{{item.title}}</th>
+                        <th class="min-w-120px ArFontStyle"  lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblName'">{{item.title}}</th>
+                        <th class="min-w-120px ArFontStyle"  lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'DateOfJoining'">{{item.title}}</th>
+                        <th class="min-w-120px ArFontStyle"  lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'Source'">{{item.title}}</th>
+                        <th class="min-w-120px ArFontStyle"  lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblDepartment'">{{item.title}}</th>
                     </tr>
                 </thead>
                 <!--end::Table head-->

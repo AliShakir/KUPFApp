@@ -20,18 +20,14 @@ export class ImportEmployeeMonthlyPaymentComponent implements OnInit {
   // FormId to get form/App language
   @ViewChild('ImportEmployeeMonthlyPayment') hidden:ElementRef;
   /******************* */
-  MyLabels: FormTitleDt[] =[];
-  searchTerm:string = '';
+  
+  
   constructor(private localizationService: LocalizationService) {
     
   }  
  
   ngOnInit(): void {
-    //this.formtileHd$ = this.localizationService.getFormHeaderLabels('CarousalMaintenance','1');
-  
-    // this.formtileHd$.forEach((index) => {
-    //   console.log(index.formTitleDTLanguage);
-    // });
+    
     
   }
   ngAfterViewInit() {

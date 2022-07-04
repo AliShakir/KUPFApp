@@ -16,6 +16,7 @@ export class LocalizationService {
   
   //
   formTitleHd : FormTitleHd[] = [];
+  //
   formTitleDt : FormTitleDt[] = [];
   constructor(private httpClient:HttpClient) { }
 

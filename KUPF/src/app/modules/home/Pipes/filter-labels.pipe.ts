@@ -11,14 +11,11 @@ export class FilterLabelsPipe implements PipeTransform {
       
     
     const langId:number  = JSON.parse(localStorage.getItem('langType')!);
-    console.log(langId);
     for(let i = 0; i < items.length; i++)
     {     
-      
-      //const values = items.filter((c: {LabelId: string;Language: string;}) => c.LabelId === searchTerm && c.Language == langId);      
-      const arr = items.filter(c=>c.labelId == searchTerm && c.language == langId );
-         
-      return arr;
+      const values = items.filter(c=>c.labelId == searchTerm && c.language == langId );  
+
+      return values;
     }    
 }
 

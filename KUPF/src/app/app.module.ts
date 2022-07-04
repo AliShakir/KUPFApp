@@ -40,9 +40,8 @@ function appInitializer(authService: AuthService) {
   declarations: [
     AppComponent, 
     ViewContactComponent,
-    ViewemployeeinformationComponent, 
     AddReferenceComponent, 
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,7 +74,7 @@ function appInitializer(authService: AuthService) {
   ],
   exports:[
   BsDatepickerModule,
- 
+  
   ],
   providers: [
     {

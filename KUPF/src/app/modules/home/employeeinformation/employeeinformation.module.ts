@@ -8,12 +8,18 @@ import { DropdownMenusModule, WidgetsModule } from 'src/app/_metronic/partials';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TextInputComponent } from '../../_forms/text-input/text-input.component';
 import { ImportEmployeeMasterComponent } from './import-employee-master/import-employee-master.component';
+import { FilterLabelsPipe } from '../Pipes/filter-labels.pipe';
+import { SharedModule } from '../../_sharedModule/SharedModule';
+import { ViewemployeeinformationComponent } from './viewemployeeinformation/viewemployeeinformation.component';
+
 
 @NgModule({
   declarations: [
     AddemployeeinformationComponent,
     TextInputComponent,
-    ImportEmployeeMasterComponent    
+    ImportEmployeeMasterComponent,
+    ViewemployeeinformationComponent  
+
   ],
   imports: [
     CommonModule,
@@ -23,6 +29,7 @@ import { ImportEmployeeMasterComponent } from './import-employee-master/import-e
     WidgetsModule,
     ReactiveFormsModule,
     FormsModule,
+    SharedModule
   ]
 })
 export class EmployeeinformationModule { }

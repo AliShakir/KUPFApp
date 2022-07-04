@@ -14,6 +14,7 @@ import { EmployeeMomentDetailsComponent } from './employee-moment-details/employ
 import { AddEmployeeMomentComponent } from './add-employee-moment/add-employee-moment.component';
 import { SearchTabModule } from '../_partials/search-tab.module';
 import { FilterLabelsPipe } from '../Pipes/filter-labels.pipe';
+import { SharedModule } from '../../_sharedModule/SharedModule';
 @NgModule({
   declarations: [
     ServiceSetupDetailsComponent,
@@ -24,8 +25,8 @@ import { FilterLabelsPipe } from '../Pipes/filter-labels.pipe';
     ApprovalManagementComponent,
     ImportEmployeeMonthlyPaymentComponent,
     EmployeeMomentDetailsComponent,
-    AddEmployeeMomentComponent,
-    FilterLabelsPipe
+    AddEmployeeMomentComponent, 
+     
   ],
   imports: [
     CommonModule,
@@ -33,7 +34,7 @@ import { FilterLabelsPipe } from '../Pipes/filter-labels.pipe';
     ReactiveFormsModule,
     FormsModule,
     SearchTabModule,
-    
+    SharedModule
   ]
 })
 export class ServiceSetupModule { }
