@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs';
+import { FormTitleDt } from 'src/app/modules/models/formTitleDt';
+import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
 
 @Component({
   selector: 'app-add-subscription',
@@ -7,6 +10,15 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./add-subscription.component.scss']
 })
 export class AddSubscriptionComponent implements OnInit {
+/*********************/
+formHeaderLabels$ :Observable<FormTitleHd[]>; 
+formBodyLabels$ :Observable<FormTitleDt[]>; 
+formBodyLabels :FormTitleDt[]=[]; 
+id:string = '';
+languageId:any;
+// FormId to get form/App language
+@ViewChild('ImportEmployeeMaster') hidden:ElementRef;
+/*********************/
 
   closeResult: string = '';
   constructor(private modalService: NgbModal) {}

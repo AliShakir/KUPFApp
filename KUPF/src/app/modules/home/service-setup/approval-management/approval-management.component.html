@@ -1,8 +1,10 @@
+<!-- TO GET FORM ID AND SETTINGUP LANGAUGE. -->
+<input type="hidden" #ManageApprovals name="ManageApprovals" value="ManageApprovals">
 <div class="card mb-5 mb-xl-8">
     <!--begin::Header-->
-    <div class="card-header border-0 pt-5 panel3bgColor">
+    <div class="card-header border-0 pt-5 panel3bgColor" *ngFor="let label of formHeaderLabels$ | async; let i = index">
         <div class="card-toolbar">
-            <h3 class="text-dark">Manage Approvals</h3>
+            <h3 class="text-dark ArFontStyle" lang="AR-SA">{{label.headerName}}</h3>
         </div>        
     </div>
     <!--end::Header-->
@@ -107,7 +109,7 @@
                 </select>
             </div>
             <div class="col-lg-2 fv-row">
-                <label class="col-form-label fw-bold fs-6"><span class="">Select Reason </span></label>
+                <label class="col-form-label fw-bold fs-6" *ngFor="let item of formBodyLabels | filterLabels:'lblSelectFile'">Select Reason</label>
             </div>
             
             
@@ -119,14 +121,14 @@
                 <!--begin::Table head-->
                 <thead class="bg-secondary">
                     <tr class="fw-bolder">
-                        <th class="min-w-80px text-center">Approval</th>
-                        <th class="min-w-100px"># Employee</th>
-                        <th class="min-w-140px">Employee Arabic Name</th>
-                        <th class="min-w-120px">Services</th>
-                        <th class="min-w-120px">Status</th>
-                        <th class="min-w-120px">Tot Inst</th>
-                        <th class="min-w-120px">Amount</th>
-                        <th class="min-w-120px">Disc</th>
+                        <th class="min-w-80px text-center ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblActions'">{{item.title}}</th>
+                        <th class="min-w-100px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblEmployee'">{{item.title}}</th>
+                        <th class="min-w-140px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblEmployeeArabicName'">{{item.title}}</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblServices'">{{item.title}}</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblServices'">{{item.title}}</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblInstallment'">{{item.title}}</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblAmount'">{{item.title}}</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblDiscounted'">{{item.title}}</th>
                     </tr>
                 </thead>
                 <!--end::Table head-->
