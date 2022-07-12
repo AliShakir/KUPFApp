@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { FormTitleDt } from 'src/app/modules/models/formTitleDt';
+import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
 import { CommonService } from 'src/app/modules/_services/common.service';
 
 @Component({
@@ -8,6 +11,16 @@ import { CommonService } from 'src/app/modules/_services/common.service';
   styleUrls: ['./service-details.component.scss']
 })
 export class ServiceDetailsComponent implements OnInit {
+
+    /*********************/
+formHeaderLabels$ :Observable<FormTitleHd[]>; 
+formBodyLabels$ :Observable<FormTitleDt[]>; 
+formBodyLabels :FormTitleDt[]=[]; 
+id:string = '';
+languageId:any;
+// FormId to get form/App language
+@ViewChild('ServiceSetupDetail') hidden:ElementRef;
+/*********************/
 
   
   formTitle:string;

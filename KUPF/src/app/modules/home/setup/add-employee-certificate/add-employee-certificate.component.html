@@ -1,3 +1,15 @@
+<div class="notice d-flex bg-light-primary rounded border-primary border border-dashed p-6 mb-3">
+    <div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
+        <div class="row">
+            <div class="btn-group " role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-primary float-left" >Save</button>
+                <button type="button" class="btn btn-warning float-left">Cancel</button>
+                <button type="button" class="btn btn-danger float-left"  routerLink="/references/employee-certificate-details">Back</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <app-search-tab></app-search-tab>
 <div class="card mb-5 mb-xl-10">
     <!--begin::Card header-->
@@ -6,13 +18,7 @@
         <div class="card-title">
             <h3 class="m-0">Add Employee Certificate</h3>            
         </div>
-        <h3 class="card-title align-items-start flex-column">
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-primary">Save</button>
-                <button type="button" class="btn btn-warning">Cancel</button>
-                <button type="button" class="btn btn-light-dark" routerLink="/references/employee-certificate-details">Back</button>
-              </div>
-        </h3>
+        
         <!--end::Title-->
     </div>
     <!--end::Card header-->
@@ -25,32 +31,7 @@
             <!--end::Title-->
             <!--begin::Row-->
             <div class="row gx-9 gy-6">
-                <form autocomplete="off">
-                    <div class="row mb-4">
-                        <div class="col-lg-3 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Employee Id
-                                </span></label>
-                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
-                        </div>
-                        <div class="col-lg-3 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Civil Id</span></label>
-                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
-                        </div>
-                        <div class="col-lg-3 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">PF Id</span></label>
-                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
-                        </div>
-                        <div class="col-lg-3 fv-row">
-                            <button type="button" class="btn btn-primary mt-13">Search</button>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col-lg-6 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Name Arabic / English
-                                </span></label>
-                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
-                        </div>
-                    </div>
+                <form autocomplete="off">                    
                     <div class="row mb-4">
                         <!--begin::Table container-->
                         <div class="table-responsive">
