@@ -1,14 +1,16 @@
+<!-- TO GET FORM ID AND SETTINGUP LANGAUGE. -->
+<input type="hidden" #SubscriptionDetails name="SubscriptionDetails" value="SubscriptionDetails">
 <div class="card mb-5 mb-xl-8 ">
     <!--begin::Header-->
-    <div class="card-header border-0 pt-5 panel1bgColor">        
+    <div class="card-header border-0 pt-5 panel1bgColor" *ngFor="let label of formHeaderLabels$ | async let i = index;">     
         <div class="card-toolbar">
-            <h3 class="text-white">Subscription Details</h3>
+            <h3 class="text-white ArFontStyle" lang="AR-SA" id="SubscriptionDetails">{{label.headerName}}</h3>
         </div>  
         <h3 class="card-title align-items-start flex-column">
             <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-primary" routerLink="/references/add-subscription"> Add Subcription</button>
-                <button type="button" class="btn btn-primary">Print</button>
-              </div>
+                <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA" routerLink="/references/add-subscription" *ngFor="let item of formBodyLabels | filterLabels:'btnAddSubscription'">{{item.title}}</button>
+                <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'btnPrint'">{{item.title}}</button>
+              </div> 
         </h3>
     </div>
     <!--end::Header-->
@@ -107,13 +109,13 @@
                 <!--begin::Table head-->
                 <thead class="bg-light-primary">
                     <tr class="fw-bolder">
-                        <th class="min-w-80px text-center">Actions</th>
-                        <th class="min-w-100px">Employee Name - Emp#- PF</th>
-                        <th class="min-w-100px">Status</th>
-                        <th class="min-w-140px">Mobile</th>
-                        <th class="min-w-120px">Status</th>
-                        <th class="min-w-120px">Date Subscribed</th>
-                        <th class="min-w-120px">Services (List,Amt Due)</th>
+                        <th class="min-w-80px text-center ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblActions'">{{item.title}}</th>
+                        <th class="min-w-100px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblEmployee NameEmpNoPF'">{{item.title}}</th>
+                        <th class="min-w-100px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblStatus'">{{item.title}}</th>
+                        <th class="min-w-140px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblMobile'">{{item.title}}</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA" >Status</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblDateSubscribed'">{{item.title}}</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblServices'">{{item.title}} (List,Amt Due)</th>
                         
                     </tr>
                 </thead>

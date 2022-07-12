@@ -5,6 +5,7 @@ import { FinancialDetialsComponent } from './financial-detials/financial-detials
 import { ApprovalDetialsComponent } from './approval-detials/approval-detials.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ContactDetailsComponent } from './contact-details/contact-details.component';
+import { SharedModule } from '../../_sharedModule/SharedModule';
 
 
 
@@ -18,12 +19,14 @@ import { ContactDetailsComponent } from './contact-details/contact-details.compo
   imports: [
     CommonModule,
     NgbModule,
+    SharedModule
   ],
   exports: [
     SearchTabComponent,
     FinancialDetialsComponent,
     ApprovalDetialsComponent,
-    ContactDetailsComponent
+    ContactDetailsComponent,
+    
   ]
 })
 export class SearchTabModule { }

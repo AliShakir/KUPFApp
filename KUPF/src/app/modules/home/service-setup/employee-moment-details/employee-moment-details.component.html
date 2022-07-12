@@ -1,13 +1,15 @@
+<!-- TO GET FORM ID AND SETTINGUP LANGAUGE. -->
+<input type="hidden" #MembershipTransactions name="MembershipTransactions" value="MembershipTransactions">
 <div class="card mb-5 mb-xl-8">
     <!--begin::Header-->
-    <div class="card-header border-0 pt-5 panelBgColor">
+    <div class="card-header border-0 pt-5 panelBgColor" *ngFor="let label of formHeaderLabels$ | async let i = index;">
         <div class="card-toolbar">
-            <h3 class="text-white">Membership Transactions</h3>
+            <h3 class="text-white ArFontStyle" lang="AR-SA" id="MembershipTransactions">{{label.headerName}}</h3>
         </div>
         <h3 class="card-title align-items-start flex-column">
             <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-primary" (click)="openLoanForm()"> Add New</button>
-                <button type="button" class="btn btn-primary">Print</button>
+                <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA" (click)="openLoanForm()" *ngFor="let item of formBodyLabels | filterLabels:'btnAdd'">{{item.title}}</button>
+                <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'btnPrint'">{{item.title}}</button>
               </div>
         </h3>
     </div>
@@ -114,7 +116,7 @@
                 </select>
             </div>
                 <div class="col-lg-2">
-                    <label class="col-form-label fw-bold fs-6"><span class="">Select Service Type </span></label>
+                    <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblSelectServiceType'">{{item.title}} </label>
                 </div>
                 
         </div>
@@ -125,11 +127,11 @@
                 <!--begin::Table head-->
                 <thead class="bg-success">
                     <tr class="fw-bolder text-white">
-                        <th class="min-w-80px text-center">Actions</th>
-                        <th class="min-w-100px">Employee Name - Emp#- PF</th>
-                        <th class="min-w-140px">Services</th>
-                        <th class="min-w-120px">Service Year</th>
-                        <th class="min-w-120px">Status</th>
+                        <th class="min-w-80px text-center ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblActions'">{{item.title}}</th>
+                        <th class="min-w-100px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblEmployee NameEmpNoPF'">{{item.title}}</th>
+                        <th class="min-w-140px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblServices'">{{item.title}}</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblServiceYear'">{{item.title}}</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblStatus'">{{item.title}}</th>
                     </tr>
                 </thead>
                 <!--end::Table head-->

@@ -1,9 +1,13 @@
+
+<!-- TO GET FORM ID AND SETTINGUP LANGAUGE. -->
+<input type="hidden" #SearchForm name="SearchForm" value="SearchForm">
+
 <div class="card mb-5 mb-xl-10">
     <div class="card-header border-0 cursor-pointer panelBgColor3" role="button" data-bs-toggle="collapse"
         data-bs-target="#kt_account_email_preferences" aria-expanded="true"
-        aria-controls="kt_account_email_preferences">
+        aria-controls="kt_account_email_preferences" *ngFor="let label of formHeaderLabels$ | async let i = index;">
         <div class="card-title m-0">
-            <h3 class="fw-bolder m-0">Search</h3>
+            <h3 class="fw-bolder m-0 ArFontStyle" lang="AR-SA" id="SearchForm">{{label.headerName}}</h3>
         </div>
     </div>
     <div id="kt_account_email_preferences" class="collapse show">
@@ -21,27 +25,26 @@
                         </select>
                     </div>
                     <div class="col-lg-2">
-                        <button type="button" class="btn btn-sm btn-success" (click)="open(sponsorModal)">Select Sponsor</button>
-                    </div>
-                    
+                        <button type="button" class="btn btn-sm btn-success ArFontStyle" lang="AR-SA" (click)="open(sponsorModal)"  *ngFor="let item of formBodyLabels | filterLabels:'btnSelectSponsor'">{{item.title}}</button>
+                    </div>                    
                 </div>
                 <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed p-6">
                     <div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
                         <div class="row mb-4">
                             <div class="col-lg-3 fv-row">
-                                <label class="form-label" for="form3Example1">PF Id</label>
+                                <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblPFId'">{{item.title}}</label>
                                 <input type="text" id="form3Example1" class="form-control" />
                             </div>
                             <div class="col-lg-3 fv-row">
-                                <label class="form-label" for="form3Example2">CID</label>
+                                <label class="form-label" for="form3Example2 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblCId'">{{item.title}}</label>
                                 <input type="text" id="form3Example2" class="form-control" />
                             </div>
                             <div class="col-lg-3 fv-row">
-                                <label class="form-label" for="form3Example2">EM Id </label>
+                                <label class="form-label" for="form3Example2 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblEmpId'">{{item.title}}</label>
                                 <input type="text" id="form3Example2" class="form-control" />
                             </div>
                             <div class="col-lg-3 fv-row">
-                                <button type="button" class="btn btn-primary mt-8">Search</button>
+                                <button type="button" class="btn btn-primary mt-8 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'btnSearch'">{{item.title}}</button>
                             </div>
                             
                         </div>
@@ -51,61 +54,63 @@
                 <div class="separator separator-dashed my-6"></div>
                 <div class="row mb-4">
                     <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1">Name</label>
+                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblName'">{{item.title}}</label>
+                        <input type="text" id="form3Example1" class="form-control ArFontStyle" lang="AR-SA" readonly />
+                    </div>
+                    <div class="col-lg-3 fv-row">
+                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblGender'">{{item.title}}</label>
                         <input type="text" id="form3Example1" class="form-control" readonly/>
                     </div>
                     <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1">Gender</label>
+                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblMembershipDate'">{{item.title}}</label>
                         <input type="text" id="form3Example1" class="form-control" readonly/>
                     </div>
                     <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1">Membership Date</label>
-                        <input type="text" id="form3Example1" class="form-control" readonly/>
-                    </div>
-                    <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1">Date of Birth</label>
+                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblDateOfBirth'">{{item.title}}</label>
                         <input type="text" id="form3Example1" class="form-control" readonly/>
                     </div>
                 </div>
                 <div class="row mb-4">
                     <div class="col-lg-6 fv-row">
-                        <label class="form-label" for="form3Example1">Membership Status 3 YR 4 month</label>
+                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblMembershipStatus'">{{item.title}}</label>
                         <input type="text" id="form3Example1" class="form-control" readonly/>
                     </div>
                     <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1">Nationality</label>
+                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblNationality'">{{item.title}}</label>
                         <input type="text" id="form3Example1" class="form-control" readonly/>
                     </div>
                     <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1">Contract Type</label>
+                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblContractType'">{{item.title}}</label>
                         <input type="text" id="form3Example1" class="form-control" readonly />
-                    </div>
+                    </div>                    
+                </div>
+                <div class="row mb-4">
                     <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1">Occupation</label>
+                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblOccupation'">{{item.title}}</label>
                         <input type="text" id="form3Example1" class="form-control" readonly/>
                     </div>
                 </div>
                 <div class="row mb-4">
                     <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1">Department</label>
+                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblDepartment'">{{item.title}}</label>
                         <input type="text" id="form3Example1" class="form-control" readonly/>
                     </div>
                     <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1">Monthly Salary</label>
+                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblMonthlySalary'">{{item.title}}</label>
                         <input type="number" id="form3Example1" class="form-control" readonly/>
                     </div>
                     <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1">Mobile</label>
+                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblMobile'">{{item.title}}</label>
                         <input type="text" id="form3Example1" class="form-control" readonly/>
                     </div>
                     <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1">Land Line</label>
+                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblLandLine'">{{item.title}}</label>
                         <input type="text" id="form3Example1" class="form-control" readonly/>
                     </div>
                 </div>
                 <div class="row mb-4">
                     <div class="col-lg-6 fv-row">
-                        <label class="form-label" for="form3Example1">Notes</label>
+                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblNotes'">{{item.title}}</label>
                         <input type="text" id="form3Example1" class="form-control" readonly/>
                     </div>
                 </div>
@@ -117,7 +122,7 @@
 <ng-template #sponsorModal let-modal>
     <div class="modal-header bg-light">
         <button type="button" class="close" data-dismiss="modal" (click)="modal.dismiss('Cross click')">&times;</button>
-        <h4 class="modal-title" id="modal-basic-title">Sponsor</h4>
+        <h4 class="modal-title" id="modal-basic-title ArFontStyle" lang="AR-SA">Sponsor</h4>
     </div>
     <div class="modal-body">
         <form class="form">            
@@ -126,15 +131,15 @@
                     <div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
                         <div class="row mb-2">
                             <div class="col-lg-4 fv-row">
-                                <label class="form-label" for="form3Example1">PF Id</label>
+                                <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA">PF Id</label>
                                 <input type="text" id="form3Example1" class="form-control" />
                             </div>
                             <div class="col-lg-4 fv-row">
-                                <label class="form-label" for="form3Example2">CID</label>
+                                <label class="form-label" for="form3Example2 ArFontStyle" lang="AR-SA">CID</label>
                                 <input type="text" id="form3Example2" class="form-control" />
                             </div>
                             <div class="col-lg-4 fv-row">
-                                <label class="form-label" for="form3Example2">EM Id </label>
+                                <label class="form-label" for="form3Example2 ArFontStyle" lang="AR-SA">EM Id </label>
                                 <input type="text" id="form3Example2" class="form-control" />
                             </div>
                         </div>
@@ -143,61 +148,61 @@
                 <div class="separator separator-dashed my-6"></div>
                 <div class="row mb-2">
                     <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1">Name</label>
+                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA">Name</label>
                         <input type="text" id="form3Example1" class="form-control" readonly/>
                     </div>
                     <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1">Gender</label>
+                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA">Gender</label>
                         <input type="text" id="form3Example1" class="form-control" readonly/>
                     </div>
                     <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1">Subscription Date</label>
+                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA">Subscription Date</label>
                         <input type="text" id="form3Example1" class="form-control" readonly/>
                     </div>
                     <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1">Date of Birth</label>
+                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA">Date of Birth</label>
                         <input type="text" id="form3Example1" class="form-control" readonly/>
                     </div>
                 </div>
                 <div class="row mb-2">
                     <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1">Membership Status</label>
+                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA">Membership Status</label>
                         <input type="text" id="form3Example1" class="form-control" readonly/>
                     </div>
                     <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1">Nationality</label>
+                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA">Nationality</label>
                         <input type="text" id="form3Example1" class="form-control" readonly/>
                     </div>
                     <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1">Contract Type</label>
+                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA">Contract Type</label>
                         <input type="text" id="form3Example1" class="form-control" readonly />
                     </div>
                     <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1">Occupation</label>
+                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA">Occupation</label>
                         <input type="text" id="form3Example1" class="form-control" readonly/>
                     </div>
                 </div>
                 <div class="row mb-2">
                     <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1">Department</label>
+                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA">Department</label>
                         <input type="text" id="form3Example1" class="form-control" readonly/>
                     </div>
                     <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1">Monthly Salary</label>
+                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA">Monthly Salary</label>
                         <input type="number" id="form3Example1" class="form-control" readonly/>
                     </div>
                     <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1">Mobile</label>
+                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA">Mobile</label>
                         <input type="text" id="form3Example1" class="form-control" readonly/>
                     </div>
                     <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1">Land Line</label>
+                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA">Land Line</label>
                         <input type="text" id="form3Example1" class="form-control" readonly/>
                     </div>
                 </div>
                 <div class="row mb-2">
                     <div class="col-lg-6 fv-row">
-                        <label class="form-label" for="form3Example1">Notes</label>
+                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA">Notes</label>
                         <input type="text" id="form3Example1" class="form-control" readonly/>
                     </div>
                 </div>
@@ -206,9 +211,9 @@
     </div>
     <div class="modal-footer bg-light">
         <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-primary" (click)="modal.close('Save click')">Save</button>
-            <button type="button" class="btn btn-warning" (click)="modal.close('Save click')">Cancel</button>
-            <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Delete</button>
+            <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA" (click)="modal.close('Save click')">Save</button>
+            <button type="button" class="btn btn-warning ArFontStyle" lang="AR-SA" (click)="modal.close('Save click')">Cancel</button>
+            <button type="button" class="btn btn-danger ArFontStyle" lang="AR-SA" (click)="modal.close('Save click')">Delete</button>
         </div>
     </div>
 </ng-template>

@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs';
+import { FormTitleDt } from 'src/app/modules/models/formTitleDt';
+import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
+import { LocalizationService } from 'src/app/modules/_services/localization.service';
 
 declare var window: any;
 @Component({
@@ -33,4 +37,5 @@ export class ReferenceDetailsComponent implements OnInit {
       return  `with: ${reason}`;
     }
   }
+  
 }

@@ -1,3 +1,17 @@
+<!-- TO GET FORM ID AND SETTINGUP LANGAUGE. -->
+<input type="hidden" #AddSubscription name="AddSubscription" value="AddSubscription">
+<div class="notice d-flex bg-light-primary rounded border-primary border border-dashed p-6 mb-3">
+    <div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
+        <div class="row">
+            <div class="btn-group " role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'btnSave'">{{item.title}}</button>
+                <button type="button" class="btn btn-warning ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'btnCancel'">{{item.title}}</button>          
+                <button type="button" class="btn btn-light-dark ArFontStyle" lang="AR-SA" routerLink="/service-setup/employee-monent-details" *ngFor="let item of formBodyLabels | filterLabels:'btnBack'">{{item.title}}</button>
+
+            </div>
+        </div>
+    </div>
+  </div>
 
 <app-search-tab></app-search-tab>
 <div class="card mb-5 mb-xl-10">
@@ -7,13 +21,6 @@
         <div class="card-title">
             <h3 class="m-0 text-white">{{formTitle}}</h3>
         </div>
-        <h3 class="card-title align-items-start flex-column">
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-primary">Save</button>
-                <button type="button" class="btn btn-warning">Cancel</button>
-                <button type="button" class="btn btn-light-dark" routerLink="/service-setup/employee-monent-details">Back</button>
-              </div>
-        </h3>
         <!--end::Title-->
     </div>
     <!--end::Card header-->

@@ -19,14 +19,14 @@ export class EngagesComponent implements OnInit {
     // Set Language to AR
     localStorage.setItem('lang',lang);
     // Set Language value 
-    localStorage.setItem('langType','1');
+    localStorage.setItem('langType','2');
     location.reload();    
   }
   switchToEn(lang:string) {  
     // Set Language to EN
     localStorage.setItem('lang',lang);
     // Set Language value
-    localStorage.setItem('langType','2');
+    localStorage.setItem('langType','1');
     location.reload();    
   }
 }

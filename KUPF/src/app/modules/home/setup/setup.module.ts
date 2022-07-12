@@ -11,6 +11,7 @@ import { AddSubscriptionComponent } from './add-subscription/add-subscription.co
 import { SubscriptionDetailsComponent } from './subscription-details/subscription-details.component';
 import { SearchTabModule } from '../_partials/search-tab.module';
 import { SearchTabComponent } from '../_partials/search-tab/search-tab.component';
+import { SharedModule } from '../../_sharedModule/SharedModule';
 
 
 
@@ -29,7 +30,8 @@ import { SearchTabComponent } from '../_partials/search-tab/search-tab.component
   imports: [
     CommonModule,
     SetupRoutingModule,
-    SearchTabModule
+    SearchTabModule,
+    SharedModule
   ]
 })
 export class SetupModule { }
