@@ -1,14 +1,16 @@
+<!-- TO GET FORM ID AND SETTINGUP LANGAUGE. -->
+<input type="hidden" #OutgoingLetterDetails name="OutgoingLetterDetails" value="OutgoingLetterDetails">
 <div class="card mb-5 mb-xl-8 ">
     <!--begin::Header-->
-    <div class="card-header border-0 pt-5 panel1bgColor">        
+    <div class="card-header border-0 pt-5 panel1bgColor" *ngFor="let label of formHeaderLabels$ | async let i = index;">     
         <div class="card-toolbar">
-            <h3 class="text-dark">Outgoing Letter Details</h3>
+            <h3 class="text-dark ArFontStyle" lang="AR-SA" id="OutgoingLetterDetails">{{label.headerName}}</h3>
         </div>
        
         <h3 class="card-title align-items-start flex-column">
             <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-primary" routerLink="/communication/add-outgoing-letter"> Add Outgoing Letter</button>
-                <button type="button" class="btn btn-primary">Print</button>
+                <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA" routerLink="/communication/add-outgoing-letter" *ngFor="let item of formBodyLabels | filterLabels:'btnAddIncomingLetter'">{{item.title}}</button>
+                <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'btnPrint'">{{item.title}}</button>
               </div>
         </h3>
     </div>
@@ -109,12 +111,12 @@
                 <!--begin::Table head-->
                 <thead class="bg-secondary">
                     <tr class="fw-bolder">
-                        <th class="min-w-80px text-center">Actions</th>
-                        <th class="min-w-100px">Date</th>
-                        <th class="min-w-140px">Letter Type</th>
-                        <th class="min-w-120px">Filed At</th>
-                        <th class="min-w-120px">Search Tags</th>
-                        <th class="min-w-120px">Description</th>
+                        <th class="min-w-80px text-center ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblActions'">{{item.title}}</th>
+                        <th class="min-w-100px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblDate'">{{item.title}}</th>
+                        <th class="min-w-140px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblLetterType'">{{item.title}}</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblFiledAt'">{{item.title}}</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblSearchTags'">{{item.title}}</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblDescription'">{{item.title}}</th>
                     </tr>
                 </thead>
                 <!--end::Table head-->

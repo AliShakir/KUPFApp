@@ -1,21 +1,23 @@
+<!-- TO GET FORM ID AND SETTINGUP LANGAUGE. -->
+<input type="hidden" #AddIncomingLetters name="AddIncomingLetters" value="AddIncomingLetters">
 <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed p-6 mb-3">
     <div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
         <div class="row">
             <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-primary">Save</button>
-                <button type="button" class="btn btn-warning">Cancel</button>
-                <button type="button" class="btn btn-light-dark" routerLink="/communication/incoming-letter-details" routerLinkActive="active" >Back</button>
-                <button type="button" class="btn btn-success">Print Label</button>  
+                <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'btnSave'">{{item.title}}</button>
+                <button type="button" class="btn btn-warning ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'btnCancel'">{{item.title}}</button>
+                <button type="button" class="btn btn-light-dark ArFontStyle" lang="AR-SA" routerLink="/communication/incoming-letter-details" routerLinkActive="active" *ngFor="let item of formBodyLabels | filterLabels:'btnBack'">{{item.title}}</button>
+                <button type="button" class="btn btn-success ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'btnPrintLabel'">{{item.title}}</button>  
             </div>
         </div>
     </div>
 </div>
 <div class="card mb-5 mb-xl-10">
     <!--begin::Card header-->
-    <div class="card-header card-header-stretch pb-0 panel1bgColor">
+    <div class="card-header card-header-stretch pb-0 panel1bgColor" *ngFor="let label of formHeaderLabels$ | async let i = index;">
         <!--begin::Title-->
         <div class="card-title">
-            <h3 class="m-0 text-white">Add Incoming Letter</h3>
+            <h3 class="m-0 text-white ArFontStyle" lang="AR-SA">{{label.headerName}}</h3>
         </div>
         <!--end::Title-->
     </div>
@@ -32,7 +34,7 @@
                 <form autocomplete="off">
                     <div class="row mb-4">
                         <div class="col-lg-6 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Letter Type</span></label>
+                            <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblLetterType'">{{item.title}}</label>
                             <select class="form-control bg-light" aria-label="Select example">
                                 <option>-Select-</option>
                                 <option value="1">Type 1</option>
@@ -41,14 +43,13 @@
                             </select>
                         </div>
                         <div class="col-lg-6 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Document Date
-                                </span></label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6" *ngFor="let item of formBodyLabels | filterLabels:'lblDocumentDate'">{{item.title}}</label>
                             <input type="date" class="form-control form-control-lg  mb-3 mb-lg-0" />
                         </div>                        
                     </div>
                     <div class="row mb-4">
                         <div class="col-lg-6 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Sender / Receiver Party</span></label>
+                            <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblSenderReceiverParty'">{{item.title}}</label>
                             <select class="form-control bg-light" aria-label="Select example">
                                 <option>-Select-</option>
                                 <option value="1">Type 1</option>
@@ -57,14 +58,13 @@
                             </select>
                         </div>
                         <div class="col-lg-6 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Representative
-                                </span></label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblRepresentative'">{{item.title}}</label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
                         </div>
                     </div>
                     <div class="row mb-4">
                         <div class="col-lg-6 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Approved By</span></label>
+                            <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblApprovedBy'">{{item.title}}</label>
                             <select class="form-control bg-light" aria-label="Select example">
                                 <option>-Select-</option>
                                 <option value="1">Option 1</option>
@@ -73,14 +73,13 @@
                             </select>
                         </div>
                         <div class="col-lg-6 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Date
-                                </span></label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblDate'">{{item.title}}</label>
                             <input type="date" class="form-control form-control-lg  mb-3 mb-lg-0" />
                         </div>                        
                     </div>
                     <div class="row mb-4">
                         <div class="col-lg-6 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Filed At</span></label>
+                            <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblFiledAt'">{{item.title}}</label>
                             <select class="form-control bg-light" aria-label="Select example">
                                 <option>-Select-</option>
                                 <option value="1">Option 1</option>
@@ -89,16 +88,14 @@
                             </select>
                         </div>
                         <div class="col-lg-6 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Description
-                                </span></label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblDescription'">{{item.title}}</label>
                             
                             <textarea class="form-control form-control-lg  mb-3 mb-lg-0"></textarea>
                         </div>                        
                     </div>
                     <div class="row mb-4">                        
                         <div class="col-lg-6 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Search Tags
-                                </span></label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblSearchTags'">{{item.title}}</label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
                         </div>                        
                     </div>

@@ -9,6 +9,7 @@ import { AddOutgoingLettersComponent } from './add-outgoing-letters/add-outgoing
 import { OutgoingLetterDetailsComponent } from './outgoing-letter-details/outgoing-letter-details.component';
 import { AddIncomingLettersComponent } from './add-incoming-letters/add-incoming-letters.component';
 import { IncomingLetterDetailsComponent } from './incoming-letter-details/incoming-letter-details.component';
+import { SharedModule } from '../../_sharedModule/SharedModule';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { IncomingLetterDetailsComponent } from './incoming-letter-details/incomi
     CommonModule,
     CommunicationRoutingModule,  
     ReactiveFormsModule, 
-    FormsModule
+    FormsModule,
+    SharedModule
   ]
 })
 export class CommunicationModule { }

@@ -1,14 +1,16 @@
+<!-- TO GET FORM ID AND SETTINGUP LANGAUGE. -->
+<input type="hidden" #EmployeeDiscountDetails name="EmployeeDiscountDetails" value="EmployeeDiscountDetails">
 <div class="card mb-5 mb-xl-8 ">
     <!--begin::Header-->
-    <div class="card-header border-0 pt-5 panel1bgColor"> 
+    <div class="card-header border-0 pt-5 panel1bgColor" *ngFor="let label of formHeaderLabels$ | async let i = index;">
         <div class="card-toolbar">
-            <h3 class="text-white">Discount Details</h3>
+            <h3 class="text-white ArFontStyle" lang="AR-SA" id="EmployeeDiscountDetails">{{label.headerName}}</h3>
         </div>       
         <div class="card-toolbar"> 
             <h3 class="card-title align-items-start flex-column">
                 <div class="btn-group" role="group" aria-label="Basic example">
-                    <button type="button" class="btn btn-primary" routerLink="/references/add-employee-discount"> Add Discount</button>
-                    <button type="button" class="btn btn-primary">Print</button>
+                    <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA" routerLink="/references/add-employee-discount"*ngFor="let item of formBodyLabels | filterLabels:'btnAddEmployeeDiscount'">{{item.title}}</button>
+                    <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'btnPrint'">{{item.title}}</button>
                   </div>
             </h3>
         </div>        
@@ -114,7 +116,7 @@
                 </select>
             </div>
             <div class="col-lg-2">
-                <label class="col-form-label fw-bold fs-6"><span class="">Select </span></label>
+                <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblSelect'">{{item.title}}</label>
             </div>
         </div>
         <!--begin::Table container-->
@@ -124,12 +126,12 @@
                 <!--begin::Table head-->
                 <thead class="bg-light-primary">
                     <tr class="fw-bolder">
-                        <th class="min-w-80px text-center">Actions</th>
-                        <th class="min-w-100px">Employee Name - Emp#- PF</th>
-                        <th class="min-w-100px">Requested Discount</th>
-                        <th class="min-w-140px">Status</th>
-                        <th class="min-w-120px">Services Procured</th>
-                        <th class="min-w-120px">Pending Amount</th>
+                        <th class="min-w-80px text-center ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblActions'">{{item.title}}</th>
+                        <th class="min-w-100px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblEmployeeNameEmpPF'">{{item.title}}</th>
+                        <th class="min-w-100px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblRequestDiscount'">{{item.title}}</th>
+                        <th class="min-w-140px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblStatus'">{{item.title}}</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblServicesProdured'">{{item.title}}</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblPendingAmount'">{{item.title}}</th>
                     </tr>
                 </thead>
                 <!--end::Table head-->
