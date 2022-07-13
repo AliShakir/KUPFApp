@@ -1,15 +1,17 @@
+<!-- TO GET FORM ID AND SETTINGUP LANGAUGE. -->
+<input type="hidden" #AddUniversityTenant name="AddUniversityTenant" value="AddUniversityTenant">
 <div class="card mb-5 mb-xl-10 ">
     <!--begin::Card header-->
-    <div class="card-header card-header-stretch pb-0 panelBgColor">
+    <div class="card-header card-header-stretch pb-0 panelBgColor" *ngFor="let label of formHeaderLabels$ | async let i = index;">
         <!--begin::Title-->
         <div class="card-title">
-            <h3 class="m-0 text-white">Add University Tenant</h3>
+            <h3 class="m-0 text-white ArFontStyle" lang="AR-SA" id="AddUniversityTenant">{{label.headerName}}</h3>
             
         </div>
         <h3 class="card-title align-items-start flex-column">
             <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-primary">Save</button>
-                <button type="button" class="btn btn-warning">Cancel</button>
+                <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'btnSave'">{{item.title}}</button>
+                <button type="button" class="btn btn-warning ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'btnCancel'">{{item.title}}</button>
               </div>
         </h3>
         <!--end::Title-->
@@ -27,116 +29,108 @@
                 <form autocomplete="off">
                     <div class="row mb-6">
                         <div class="col-lg-4 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Tenant ID
-                                </span></label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'Tenant ID'">{{item.title}}</label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0 ">
                         </div>
                         <div class="col-lg-4 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Location ID
-                                </span></label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblLocationID'">{{item.title}}</label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0 ">
                         </div>
                         <div class="col-lg-4 fv-row">
-                            <label class="col-lg-6 col-form-label fw-bold fs-6"><span class="">Physical Location
-                                </span></label>
+                            <label class="col-lg-6 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblPhysicalLocation'">{{item.title}}</label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0 ">
                         </div>
                     </div>
                     <div class="row mb-6">
                         <div class="col-lg-6 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class=""> Name in Arabic
-                                </span></label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblNameInArabic'">{{item.title}}</label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0 ">
                         </div>
                         <div class="col-lg-6 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Name in
-                                    English</span></label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblNameInEnglish'">{{item.title}}</label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" name="nameInArabic" />
                         </div>
                     </div>
                     <div class="row mb-6">
                         <div class="col-lg-3 fv-row">
-                            <label class="col-lg-8 col-form-label fw-bold fs-6"><span class=""> University Id By User
-                                </span></label>
+                            <label class="col-lg-12 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblUniversityIdByUser'"> {{item.title}}</label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0 ">
                         </div>
                         <div class="col-lg-3 fv-row">
-                            <label class="col-lg-6 col-form-label fw-bold fs-6"><span class="">Date of
-                                    Begining</span></label>
+                            <label class="col-lg-6 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblDateOfBegining'">{{item.title}}</label>
                             <input type="date" class="form-control form-control-lg  mb-3 mb-lg-0" />
                         </div>
                         <div class="col-lg-3 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">PACI ID</span></label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblPACIID'">{{item.title}}</label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
                         </div>
                         <div class="col-lg-3 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Civil ID</span></label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblCivilID'">{{item.title}}</label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
                         </div>
                     </div>
                     <div class="row mb-6">
                         <div class="col-lg-4 fv-row">
-                            <label class="col-lg-8 col-form-label fw-bold fs-6"><span class="">1 Email </span></label>
+                            <label class="col-lg-8 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblEmail1'">{{item.title}}</label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0 ">
                         </div>
                         <div class="col-lg-4 fv-row">
-                            <label class="col-lg-6 col-form-label fw-bold fs-6"><span class="">2 Email</span></label>
+                            <label class="col-lg-6 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblEmail2'">{{item.title}}</label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
                         </div>
                         <div class="col-lg-4 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">3 Email</span></label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblEmail3'">{{item.title}}</label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
                         </div>
                     </div>
                     <div class="row mb-6">
                         <div class="col-lg-6 fv-row">
-                            <label class="col-lg-8 col-form-label fw-bold fs-6"><span class="">1 Address Line
-                                </span></label>
+                            <label class="col-lg-8 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblAddressLine1'">{{item.title}}
+                                </label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0 ">
                         </div>
                         <div class="col-lg-6 fv-row">
-                            <label class="col-lg-6 col-form-label fw-bold fs-6"><span class="">2 Address
-                                    Line</span></label>
+                            <label class="col-lg-6 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblAddressLine2'">{{item.title}}
+                                    Line</label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
                         </div>
                     </div>
                     <div class="row mb-6">
                         <div class="col-lg-4 fv-row">
-                            <label class="col-lg-8 col-form-label fw-bold fs-6"><span class="">Country Id
-                                </span></label>
+                            <label class="col-lg-8 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblCountryId'">{{item.title}}
+                                </label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0 ">
                         </div>
                         <div class="col-lg-4 fv-row">
-                            <label class="col-lg-6 col-form-label fw-bold fs-6"><span class="">State </span></label>
+                            <label class="col-lg-6 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblState'">{{item.title}} </label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
                         </div>
                         <div class="col-lg-4 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">City</span></label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblCity'">{{item.title}}</label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
                         </div>
                     </div>
                     <div class="row mb-6">
                         <div class="col-lg-4 fv-row">
-                            <label class="col-lg-8 col-form-label fw-bold fs-6"><span class="">Bus Phone </span></label>
+                            <label class="col-lg-8 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblBusPhone'">{{item.title}} </label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0 ">
                         </div>
                         <div class="col-lg-4 fv-row">
-                            <label class="col-lg-6 col-form-label fw-bold fs-6"><span class="">Mobile </span></label>
+                            <label class="col-lg-6 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblMobile'">{{item.title}} </label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
                         </div>
                         <div class="col-lg-4 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-                                    class="">Alternative</span></label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblAlternative'">{{item.title}}</label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
                         </div>
                     </div>
                     <div class="row mb-6">
                         <div class="col-lg-4 fv-row">
-                            <label class="col-lg-8 col-form-label fw-bold fs-6"><span class="">1 Fax </span></label>
+                            <label class="col-lg-8 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblFax1'">{{item.title}}</label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0 ">
                         </div>
                         <div class="col-lg-4 fv-row">
-                            <label class="col-lg-6 col-form-label fw-bold fs-6"><span class="">2 Fax </span></label>
+                            <label class="col-lg-6 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblFax2'">{{item.title}} </label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
                         </div>
                     </div>
@@ -154,7 +148,7 @@
     <div class="card-header card-header-stretch pb-0 panelBgColor">
         <!--begin::Title-->
         <div class="card-title">
-            <h3 class="m-0 text-white">Services</h3>
+            <h3 class="m-0 text-white ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblServices'">{{item.title}}</h3>
         </div>
         <!--end::Title-->
     </div>
@@ -171,7 +165,7 @@
                 <form autocomplete="off">
                     <div class="row mb-6">
                         <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Primary Language</span></label>
+                            <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblPrimaryLanguage'">{{item.title}}</label>
                             <select class="form-control bg-light" aria-label="Select example">
                                 <option>-Select-</option>
                                 <option value="1">Service 1</option>
@@ -179,8 +173,8 @@
                             </select>
                         </div>
                         <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Regular Service
-                                </span></label>
+                            <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblRegularService'">{{item.title}}
+                                </label>
                             <select class="form-control bg-light" aria-label="Select example">
                                 <option>-Select-</option>
                                 <option value="1">Service 1</option>
@@ -188,8 +182,8 @@
                             </select>
                         </div>
                         <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Infrastructure Service                                
-                                </span></label>
+                            <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblInfrastructureService'">{{item.title}}                                
+                                </label>
                             <select class="form-control bg-light" aria-label="Select example">
                                 <option>-Select-</option>
                                 <option value="1">Service 1</option>
@@ -199,7 +193,7 @@
                     </div>
                     <div class="row mb-6">
                         <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Custom Service</span></label>
+                            <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblCustomService'">{{item.title}}</label>
                             <select class="form-control bg-light" aria-label="Select example">
                                 <option>-Select-</option>
                                 <option value="1">Service 1</option>
@@ -207,8 +201,8 @@
                             </select>
                         </div>
                         <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Temination Service
-                                </span></label>
+                            <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblTeminationService'">{{item.title}}
+                                </label>
                             <select class="form-control bg-light" aria-label="Select example">
                                 <option>-Select-</option>
                                 <option value="1">Service 1</option>
@@ -216,8 +210,7 @@
                             </select>
                         </div>
                         <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Reimbursement Service                                
-                                </span></label>
+                            <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblReimbursementService'">{{item.title}}</label>
                             <select class="form-control bg-light" aria-label="Select example">
                                 <option>-Select-</option>
                                 <option value="1">Service 1</option>
@@ -231,198 +224,6 @@
         </div>
     </div>
 </div>
-<div class="card mb-5 mb-xl-10">
-    <!--begin::Card header-->
-    <div class="card-header card-header-stretch pb-0 panelBgColor">
-        <!--begin::Title-->
-        <div class="card-title">
-            <h3 class="m-0 text-white">Approval Details</h3>
-        </div>
-        <!--end::Title-->
-    </div>
-    <!--end::Card header-->
-    <!--begin::Tab content-->
-    <div id="kt_billing_payment_tab_content" class="card-body tab-content">
-        <!--begin::Tab panel-->
-        <div id="kt_billing_creditcard" class="tab-pane fade show active" role="tabpanel">
-            <!--begin::Title-->
-            <!-- <h3 class="mb-5">Job Information</h3> -->
-            <!--end::Title-->
-            <!--begin::Row-->
-            <div class="row gx-9 gy-6">
-                <form autocomplete="off">
-                    <div class="row mb-4">
-                        <div class="col-lg-2 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Approval 1 </span></label>
-                        </div>
-                        <div class="col-lg-3 fv-row">
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Role 1</option>
-                                <option value="2">Role 2</option>
-                                <option value="3">Role 3</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col-lg-2 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Approval 2 </span></label>
-                        </div>
-                        <div class="col-lg-3 fv-row">
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Role 1</option>
-                                <option value="2">Role 2</option>
-                                <option value="3">Role 3</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col-lg-2 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Approval 3 </span></label>
-                        </div>
-                        <div class="col-lg-3 fv-row">
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Role 1</option>
-                                <option value="2">Role 2</option>
-                                <option value="3">Role 3</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col-lg-2 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Approval 4 </span></label>
-                        </div>
-                        <div class="col-lg-3 fv-row">
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Role 1</option>
-                                <option value="2">Role 2</option>
-                                <option value="3">Role 3</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col-lg-2 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Approval 5 </span></label>
-                        </div>
-                        <div class="col-lg-3 fv-row">
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Role 1</option>
-                                <option value="2">Role 2</option>
-                                <option value="3">Role 3</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        
-                    </div>
-                </form>
-            </div>
-            <!--end::Row-->
-        </div>
-    </div>
-</div>
-
-<div class="card mb-5 mb-xl-10">
-    <!--begin::Card header-->
-    <div class="card-header card-header-stretch pb-0 panelBgColor">
-        <!--begin::Title-->
-        <div class="card-title">
-            <h3 class="m-0 text-white">Financial Details </h3>
-        </div>
-        <!--end::Title-->
-    </div>
-    <!--end::Card header-->
-    <!--begin::Tab content-->
-    <div id="kt_billing_payment_tab_content" class="card-body tab-content">
-        <!--begin::Tab panel-->
-        <div id="kt_billing_creditcard" class="tab-pane fade show active" role="tabpanel">
-            <!--begin::Title-->
-            <!-- <h3 class="mb-5">Job Information</h3> -->
-            <!--end::Title-->
-            <!--begin::Row-->
-            <div class="row gx-9 gy-6">
-                <form autocomplete="off">
-                    <div class="row mb-6">
-                        <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Loan Account</span></label>
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Service 1</option>
-                                <option value="2">Service 2</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Hajj Account</span></label>
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Service 1</option>
-                                <option value="2">Service 2</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Per Load Act</span></label>
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Service 1</option>
-                                <option value="2">Service 2</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mb-6">
-                        <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Consumer Loan </span></label>
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Service 1</option>
-                                <option value="2">Service 2</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Other Act # 1</span></label>
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Service 1</option>
-                                <option value="2">Service 2</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Other Act # 2</span></label>
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Service 1</option>
-                                <option value="2">Service 2</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mb-6">
-                        <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Other Act # 3 </span></label>
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Service 1</option>
-                                <option value="2">Service 2</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Other Act # 4</span></label>
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Service 1</option>
-                                <option value="2">Service 2</option>
-                            </select>
-                        </div>
-
-                    </div>
-                </form>
-            </div>
-            <!--end::Row-->
-        </div>
-
-    </div>
-    
-    <!--end::Tab content-->
-</div>
+<app-approval-detials></app-approval-detials>
+<br/>
+<app-financial-detials></app-financial-detials>

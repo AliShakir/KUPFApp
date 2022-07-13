@@ -1,15 +1,17 @@
+<!-- TO GET FORM ID AND SETTINGUP LANGAUGE. -->
+<input type="hidden" #AddCarousal name="AddCarousal" value="AddCarousal">
 <div class="card mb-5 mb-xl-10">
     <!--begin::Card header-->
-    <div class="card-header card-header-stretch pb-0 bg-light-danger">
+    <div class="card-header card-header-stretch pb-0 bg-light-danger" *ngFor="let label of formHeaderLabels$ | async let i = index;">
         <!--begin::Title-->
         <div class="card-title">
-            <h3 class="m-0">Add Carousal</h3>
+            <h3 class="m-0 ArFontStyle" lang="AR-SA" id="AddCarousal">{{label.headerName}}</h3>
         </div>
         <h3 class="card-title align-items-start flex-column">
             <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-primary">Save</button>
-                <button type="button" class="btn btn-warning">Cancel</button>
-                <button type="button" class="btn btn-dark" routerLink="/website-maintenace/carousal-details">Back</button>
+                <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'btnSave'">{{item.title}}</button>
+                <button type="button" class="btn btn-warning ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'btnCancel'">{{item.title}}</button>
+                <button type="button" class="btn btn-dark ArFontStyle" lang="AR-SA" routerLink="/website-maintenace/carousal-details" *ngFor="let item of formBodyLabels | filterLabels:'btnBack'">{{item.title}}</button>
               </div>
               
         </h3>
@@ -28,8 +30,7 @@
                 <form autocomplete="off">  
                     <div class="row mb-4">
                         <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Tenant Id
-                                </span></label>
+                            <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblTenantId'">{{item.title}}</label>
                             <select class="form-control bg-light" aria-label="Select example">
                                 <option>-Select-</option>
                                 <option value="1">Service 1</option>
@@ -37,8 +38,7 @@
                             </select>
                         </div>
                         <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Carousal Id
-                                </span></label>
+                            <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblCarousalId'">{{item.title}}</label>
                             <select class="form-control bg-light" aria-label="Select example">
                                 <option>-Select-</option>
                                 <option value="1">Service 1</option>
@@ -47,7 +47,7 @@
                         </div>
                         <div class="col-lg-4 fv-row">
                             <div class="mt-4">
-                                <label for="formFile" class="form-label">Upload Image</label>
+                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblUploadImage'">{{item.title}}</label>
                                 <input class="form-control" type="file" id="formFile">
                               </div>
                         </div>
@@ -55,13 +55,13 @@
                     <div class="row mb-4">
                         <div class="col-lg-4 fv-row">
                             <div class="mt-4">
-                                <label for="formFile" class="form-label">From Date</label>
+                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblFromDate'">{{item.title}}</label>
                                 <input class="form-control" type="date">
                               </div>
                         </div>
                         <div class="col-lg-4 fv-row">
                             <div class="mt-4">
-                                <label for="formFile" class="form-label">To Date</label>
+                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblToDate'">{{item.title}}</label>
                                 <input class="form-control" type="date">
                               </div>
                         </div>

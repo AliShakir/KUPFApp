@@ -6,6 +6,7 @@ import { SpecialOfferMaintenaceComponent } from './special-offer-maintenace/spec
 import { OfferReceivedMaintenaceComponent } from './offer-received-maintenace/offer-received-maintenace.component';
 import { AddCarousalComponent } from './add-carousal/add-carousal.component';
 import { CarousalDetailsComponent } from './carousal-details/carousal-details.component';
+import { SharedModule } from '../../_sharedModule/SharedModule';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { CarousalDetailsComponent } from './carousal-details/carousal-details.co
   ],
   imports: [
     CommonModule,
-    WebsiteRoutingModule
+    WebsiteRoutingModule,
+    SharedModule
   ]
 })
 export class WebsiteModule { }

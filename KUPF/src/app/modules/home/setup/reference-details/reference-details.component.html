@@ -1,8 +1,10 @@
+<!-- TO GET FORM ID AND SETTINGUP LANGAUGE. -->
+<input type="hidden" #RefTableEntry name="RefTableEntry" value="RefTableEntry">
 <div class="card mb-5 mb-xl-8">
     <!--begin::Header-->
-    <div class="card-header border-0 pt-5 bg-light">        
+    <div class="card-header border-0 pt-5 bg-light" *ngFor="let label of formHeaderLabels$ | async let i = index;">        
         <div class="card-toolbar">
-            <h3>Ref Table</h3>
+            <h3 class="text-dark ArFontStyle" lang="AR-SA" id="RefTableEntry">{{label.headerName}}</h3>
         </div>
         <h3 class="card-title align-items-start flex-column">
             <a class="btn btn-primary w-100" (click)="open(mymodal)">
@@ -116,13 +118,13 @@
                 <!--begin::Table head-->
                 <thead>
                     <tr class="fw-bolder text-muted">
-                        <th class="min-w-100px">Actions</th>
-                        <th class="min-w-100px">Sr No</th>
-                        <th class="min-w-140px">Middle Name</th>
-                        <th class="min-w-120px">Category Name</th>
-                        <th class="min-w-120px">Short Name</th>
-                        <th class="min-w-120px">Ref Name</th>
-                        <th class="min-w-120px">Switch Name</th>
+                        <th class="min-w-100px ArFontStyle" lang="AR-SA">Action</th>
+                        <th class="min-w-100px ArFontStyle" lang="AR-SA">Sr No</th>
+                        <th class="min-w-140px ArFontStyle" lang="AR-SA">Middle Name</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA">Category Name</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA">Short Name</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA">Ref Name</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA">Switch Name</th>
                     </tr>
                 </thead>
                 <!--end::Table head-->

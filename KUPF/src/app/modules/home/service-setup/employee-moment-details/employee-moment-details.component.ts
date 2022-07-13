@@ -13,7 +13,7 @@ import { LocalizationService } from 'src/app/modules/_services/localization.serv
 })
 export class EmployeeMomentDetailsComponent implements OnInit {
 
-   /*********************/
+/*********************/
 formHeaderLabels$ :Observable<FormTitleHd[]>; 
 formBodyLabels$ :Observable<FormTitleDt[]>; 
 formBodyLabels :FormTitleDt[]=[]; 

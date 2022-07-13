@@ -1,12 +1,13 @@
+<!-- TO GET FORM ID AND SETTINGUP LANGAUGE. -->
+<input type="hidden" #CarousalDetails name="CarousalDetails" value="CarousalDetails">
 <div class="card mb-5 mb-xl-8">
     <!--begin::Header-->
-    <div class="card-header border-0 pt-5 bg-light-danger">
+    <div class="card-header border-0 pt-5 bg-light-danger" *ngFor="let label of formHeaderLabels$ | async let i = index;">
         <div class="card-toolbar">
-            <h3 class="text-dark">Carousal Maintenance</h3>
+            <h3 class="text-dark ArFontStyle" lang="AR-SA" id="CarousalDetails">{{label.headerName}}</h3>
         </div>
         <h3 class="card-title align-items-start flex-column">
-            <button type="button" class="btn btn-primary" routerLink="/website-maintenace/add-carousal">Add
-                Carousal</button>
+            <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA" routerLink="/website-maintenace/add-carousal" *ngFor="let item of formBodyLabels | filterLabels:'btnAddCarousal'">{{item.title}}</button>
         </h3>
     </div>
     <!--end::Header-->
@@ -105,10 +106,10 @@
                 <!--begin::Table head-->
                 <thead class="bg-dark">
                     <tr class="fw-bolder text-white">
-                        <th class="min-w-80px text-center">Actions</th>
-                        <th class="min-w-140px">Carousal</th>
-                        <th class="min-w-120px">From Date</th>
-                        <th class="min-w-120px">To Date</th>
+                        <th class="min-w-80px text-center ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblAction'">{{item.title}}</th>
+                        <th class="min-w-140px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblCarousal'">{{item.title}}</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblFromDate'">{{item.title}}</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblToDate'">{{item.title}}</th>
                     </tr>
                 </thead>
                 <!--end::Table head-->

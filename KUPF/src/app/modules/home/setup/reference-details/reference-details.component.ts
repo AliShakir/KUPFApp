@@ -14,9 +14,17 @@ declare var window: any;
 })
 export class ReferenceDetailsComponent implements OnInit {
 
- 
+ /*********************/
+formHeaderLabels$ :Observable<FormTitleHd[]>; 
+formBodyLabels$ :Observable<FormTitleDt[]>; 
+formBodyLabels :FormTitleDt[]=[]; 
+id:string = '';
+languageId:any;
+// FormId to get form/App language
+@ViewChild('RefTableEntry') hidden:ElementRef;
+/*********************/
   closeResult: string = '';
-  constructor(public translate: TranslateService,private modalService: NgbModal) { }
+  constructor(public translate: TranslateService,private modalService: NgbModal,private localizationService: LocalizationService) { }
 
   ngOnInit(): void {
    
@@ -37,5 +45,25 @@ export class ReferenceDetailsComponent implements OnInit {
       return  `with: ${reason}`;
     }
   }
-  
+  ngAfterViewInit() {
+    
+    // TO get the form id...
+    this.id = this.hidden.nativeElement.value;
+    
+    // TO GET THE LANGUAGE ID
+    this.languageId = localStorage.getItem('langType');
+    
+    // Get form header labels
+    this.formHeaderLabels$ = this.localizationService.getFormHeaderLabels(this.id,this.languageId);
+    
+    // Get form body labels 
+    this.formBodyLabels$= this.localizationService.getFormBodyLabels(this.id,this.languageId)
+    
+    // Get observable as normal array of items
+    this.formBodyLabels$.subscribe((data)=>{
+      this.formBodyLabels = data   
+    },error=>{
+      console.log(error);
+    })
+  }
 }

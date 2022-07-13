@@ -1,13 +1,16 @@
+<!-- TO GET FORM ID AND SETTINGUP LANGAUGE. -->
+<input type="hidden" #ServiceSetupDetail name="ServiceSetupDetail" value="ServiceSetupDetail">
 <div class="card mb-5 mb-xl-8">
     <!--begin::Header-->
-    <div class="card-header border-0 pt-5 panelBgColor1">
+    <div class="card-header border-0 pt-5 panelBgColor1" *ngFor="let label of formHeaderLabels$ | async let i = index;">
         <div class="card-toolbar">
-            <h3 class="text-dark">Service Setup Details</h3>
+            <h3 class="text-dark ArFontStyle" lang="AR-SA" id="ServiceSetupDetail">{{label.headerName}}</h3>
         </div>  
         <h3 class="card-title align-items-start flex-column">
             <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-primary" routerLink="/service-setup/add-service-setup"> Add Setup Service</button>
-                <button type="button" class="btn btn-primary">Print</button>
+                <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA" routerLink="/service-setup/add-service-setup" > Add Setup Service</button>
+
+                <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA">Print</button>
               </div>
         </h3>
     </div>
@@ -107,12 +110,12 @@
                 <!--begin::Table head-->
                 <thead class="bg-danger">
                     <tr class="fw-bolder text-white">
-                        <th class="min-w-80px text-center">Actions</th>
-                        <th class="min-w-100px">Services</th>
-                        <th class="min-w-100px">Service Type</th>
-                        <th class="min-w-140px">Min - Max</th>
-                        <th class="min-w-120px">Discount Allow</th>
-                        <th class="min-w-120px">For Employee</th>
+                        <th class="min-w-80px text-center ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblAction'">Actions</th>
+                        <th class="min-w-100px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblServices'">Services</th>
+                        <th class="min-w-100px ArFontStyle" lang="AR-SA" >Service Type</th>
+                        <th class="min-w-140px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblMinMax'">Min - Max</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblDiscountAllow'">Discount Allow</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblForEmployee'">For Employee</th>
                     </tr>
                 </thead>
                 <!--end::Table head-->

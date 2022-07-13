@@ -1,12 +1,14 @@
+<!-- TO GET FORM ID AND SETTINGUP LANGAUGE. -->
+<input type="hidden" #SystemUserDetails name="SystemUserDetails" value="SystemUserDetails">
 <div class="card mb-5 mb-xl-8 ">
     <!--begin::Header-->
     <div class="card-header border-0 pt-5 panel1bgColor">        
         <div class="card-toolbar">
-            <h3 class="text-white">Users</h3>
+            <h3 class="text-white ArFontStyle" lang="AR-SA">Users</h3>
         </div>
         <h3 class="card-title align-items-start flex-column">
             <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-primary" routerLink="/users/add-user"> Add New User</button>
+                <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA" routerLink="/users/add-user" *ngFor="let item of formBodyLabels | filterLabels:'btnAddUser'">{{item.title}}</button>
               </div>
         </h3>
     </div>
@@ -107,12 +109,12 @@
                 <!--begin::Table head-->
                 <thead class="bg-secondary">
                     <tr class="fw-bolder">
-                        <th class="min-w-80px text-center">Actions</th>
-                        <th class="min-w-100px">Full Name</th>
-                        <th class="min-w-140px">Tenant</th>
-                        <th class="min-w-120px">Location</th>
-                        <th class="min-w-120px">Email</th>
-                        <th class="min-w-120px">Username</th>
+                        <th class="min-w-80px text-center ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblActions'">{{item.title}}</th>
+                           <th class="min-w-100px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblFullName'">{{item.title}}</th>
+                      <th class="min-w-140px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblTenant'">{{item.title}}</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblLocation'">{{item.title}}</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblEmail'">{{item.title}}</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblUsername'">{{item.title}}</th>
                     </tr>
                 </thead>
                 <!--end::Table head-->
