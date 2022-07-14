@@ -16,15 +16,10 @@ import { FakeAPIService } from './_fake/fake-api.service';
 import { ViewContactComponent } from './modules/home/employeeinformation/view-contact/view-contact.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { ViewemployeeinformationComponent } from './modules/home/employeeinformation/viewemployeeinformation/viewemployeeinformation.component';
 import { AddReferenceComponent } from './modules/home/setup/add-reference/add-reference.component';
 import { LoginComponent } from './modules/home/auth/login/login.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { SearchTabComponent } from './modules/home/_partials/search-tab/search-tab.component';
-import { SearchTabModule } from './modules/home/_partials/search-tab.module';
-import { SetupModule } from './modules/home/setup/setup.module';
-import { ServiceSetupModule } from './modules/home/service-setup/service-setup.module';
-import { FilterLabelsPipe } from './modules/home/Pipes/filter-labels.pipe';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 // #fake-end#
 
 function appInitializer(authService: AuthService) {
@@ -72,17 +67,20 @@ function appInitializer(authService: AuthService) {
       BsDatepickerModule.forRoot(),
       
   ],
+  
   exports:[
   BsDatepickerModule,
   
-  ],
+  ],//providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
   providers: [
     {
-      provide: APP_INITIALIZER,
+      provide: APP_INITIALIZER, 
       useFactory: appInitializer,
       multi: true,
       deps: [AuthService],
     },
+    
+    
   ],
   bootstrap: [AppComponent],
 })

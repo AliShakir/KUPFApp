@@ -15,18 +15,23 @@ export class EngagesComponent implements OnInit {
   ngOnInit(): void {
     
   }
-  switchToAr(lang:string) {  
+  switchToAr(lang:string) { 
+   
+    // Get current URL
+    let currentUrl =  window.location.origin
     // Set Language to AR
     localStorage.setItem('lang',lang);
     // Set Language value 
     localStorage.setItem('langType','2');
-    location.reload();    
+    location.href = currentUrl+'/#/dashboard';    
   }
   switchToEn(lang:string) {  
+    // Get current URL
+    let currentUrl =  window.location.origin
     // Set Language to EN
     localStorage.setItem('lang',lang);
     // Set Language value
     localStorage.setItem('langType','1');
-    location.reload();    
+    location.href = currentUrl+'/#/dashboard'; 
   }
 }

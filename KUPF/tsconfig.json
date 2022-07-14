@@ -1,5 +1,6 @@
 /* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
+  "exclude": ["dist"],
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
@@ -20,13 +21,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ]    
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": false,
-    "enableIvy": true
+    "enableIvy": true,
+    
   }
 }
