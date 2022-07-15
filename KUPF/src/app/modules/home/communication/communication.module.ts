@@ -10,6 +10,7 @@ import { OutgoingLetterDetailsComponent } from './outgoing-letter-details/outgoi
 import { AddIncomingLettersComponent } from './add-incoming-letters/add-incoming-letters.component';
 import { IncomingLetterDetailsComponent } from './incoming-letter-details/incoming-letter-details.component';
 import { SharedModule } from '../../_sharedModule/SharedModule';
+import { NgxTranslateModule } from '../../i18n/translation.module';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { SharedModule } from '../../_sharedModule/SharedModule';
     CommunicationRoutingModule,  
     ReactiveFormsModule, 
     FormsModule,
-    SharedModule
+    SharedModule,
+    NgxTranslateModule
   ]
 })
 export class CommunicationModule { }

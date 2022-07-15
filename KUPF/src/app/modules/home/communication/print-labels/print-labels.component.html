@@ -1,19 +1,20 @@
 <!-- TO GET FORM ID AND SETTINGUP LANGAUGE. -->
 <input type="hidden" #PrintLabels name="PrintLabels" value="PrintLabels">
 <div class="card mb-5 mb-xl-10">    
-    <div class="card-header card-header-stretch pb-0 panelBackgroundColor" *ngFor="let label of formHeaderLabels$ | async let i = index;">
+    <div class="card-header card-header-stretch pb-0 panelBackgroundColor">
        
         <div class="card-title">
-            <h3 class="m-0 ArFontStyle" lang="AR-SA" id="PrintLabels">{{label.headerName}}</h3>
+            <h3 class="m-0 ArFontStyle" lang="AR-SA" id="PrintLabels">{{'PrintLabelsHeader.headerName' | translate}}</h3>
         </div>       
     </div>
+    
     <div id="kt_billing_payment_tab_content" class="card-body tab-content">       
         <div id="kt_billing_creditcard" class="tab-pane fade show active" role="tabpanel">           
             <div class="row gx-9 gy-6">
                 <form autocomplete="off">                   
                     <div class="row mb-4">
                         <div class="col-lg-6 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblSelectLetter'">{{item.title}}</label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" >{{'PrintLabel1.title' | translate}}</label>
                             <select class="form-control form-control-solid">
                                 <option>-Select</option>
                                 <option>Letter 1</option>
@@ -22,7 +23,7 @@
                             </select>
                         </div>
                         <div class="col-lg-6 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblLabelTemplate'">{{item.title}}</label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{'PrintLabel2.title' | translate}}</label>
                             <select class="form-control form-control-solid">
                                 <option>-Select</option>
                                 <option>Lable 1</option>
@@ -33,7 +34,7 @@
                     </div>
                     <div class="row mb-4">
                         <div class="col-lg-6 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblCopies'">{{item.title}}</label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{'PrintLabel4.title' | translate}}</label>
                             <input type="number" class="form-control form-control-lg  mb-3 mb-lg-0" />
                         </div>                        
                     </div>
@@ -44,7 +45,7 @@
     
     <div class="card-footer d-flex justify-content-end py-6 px-9 ">
         <div class="d-flex">
-            <a href="#" class="btn btn-primary me-3 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'btnPrint'">{{item.title}}</a>
+            <a href="#" class="btn btn-primary me-3 ArFontStyle" lang="AR-SA">{{'PrintLabel5.title' | translate}}</a>
         </div>
     </div>
 </div> 

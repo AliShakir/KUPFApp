@@ -6,17 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
+  lang: any;
   constructor() {}
 
   ngOnInit(): void {
     
-    if (localStorage.getItem('lang') === null) {
-      
-      localStorage.setItem('lang','en');
-      
-      localStorage.setItem('langType','1');
-      
-    }   
+    //this.lang = localStorage.getItem('lang') || 'en';  
     
+  }
+  changeLang(e: any) {    
+    localStorage.setItem('lang', e.target.value);
+    window.location.reload();
   }
 }

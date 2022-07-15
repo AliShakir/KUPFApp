@@ -14,7 +14,7 @@ namespace API.Models
         public string FormId { get; set; }
         public string FormName { get; set; }
         public string HeaderName { get; set; }
-        public string SubHeader { get; set; }
+        public string SubHeaderName { get; set; }
         public string Navigation { get; set; }
         public string Remarks { get; set; }
         public string Status { get; set; }

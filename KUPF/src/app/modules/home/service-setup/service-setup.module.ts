@@ -15,6 +15,7 @@ import { AddEmployeeMomentComponent } from './add-employee-moment/add-employee-m
 import { SearchTabModule } from '../_partials/search-tab.module';
 import { FilterLabelsPipe } from '../Pipes/filter-labels.pipe';
 import { SharedModule } from '../../_sharedModule/SharedModule';
+import { NgxTranslateModule } from '../../i18n';
 @NgModule({
   declarations: [
     ServiceSetupDetailsComponent,
@@ -34,7 +35,8 @@ import { SharedModule } from '../../_sharedModule/SharedModule';
     ReactiveFormsModule,
     FormsModule,
     SearchTabModule,
-    SharedModule
+    SharedModule,
+    NgxTranslateModule
   ]
 })
 export class ServiceSetupModule { }

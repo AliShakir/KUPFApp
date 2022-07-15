@@ -1,17 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
-using API.DTOs;
-using API.DTOs.GetEntityDto;
 using API.DTOs.LocalizationDto;
 using API.Models;
 using API.Servivces.Interfaces;
-using API.ViewModels.GetEntityViewModel;
 using API.ViewModels.Localization;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 
 namespace API.Controllers
 {
@@ -42,8 +39,15 @@ namespace API.Controllers
 
             return Ok(result);
         }
+        [HttpGet]
+        [Route("GetAllFormBodyLabels/{formId}/{langId}")]
+        public async Task<ActionResult<IEnumerable<FormTitleDTLanguageViewModel>>> GetAllFormBodyLabels(string formId, int langId)
+        {            
+            var result = await _localizationService.GetAll(formId, langId);           
+            return Ok(result);
+        }
         [HttpGet("GetCompanyAndEmployees")]
-        public async Task<ActionResult<IEnumerable<TestCompany>>> GetCompanyAndEmployees()
+        public async Task<ActionResult<IEnumerable<FormTitleDTLanguageViewModel>>> GetCompanyAndEmployees()
         {
             var result = await _localizationService.GetCompanyAndEmployees();
             

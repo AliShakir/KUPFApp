@@ -20,6 +20,8 @@ import { AddReferenceComponent } from './modules/home/setup/add-reference/add-re
 import { LoginComponent } from './modules/home/auth/login/login.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { PrintLabelsComponent } from './modules/home/communication/print-labels/print-labels.component';
+import { NgxTranslateModule } from './modules/i18n';
 // #fake-end#
 
 function appInitializer(authService: AuthService) {
@@ -36,7 +38,7 @@ function appInitializer(authService: AuthService) {
     AppComponent, 
     ViewContactComponent,
     AddReferenceComponent, 
-    LoginComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -57,20 +59,22 @@ function appInitializer(authService: AuthService) {
     NgbModule,    
     FormsModule,
     ReactiveFormsModule,
-    TranslateModule.forRoot({  
-      loader: {  
-         provide: TranslateLoader,  
-         useFactory: httpTranslateLoader,  
-         deps: [HttpClient]  
-         }  
-      }),
+    NgxTranslateModule,
+    // TranslateModule.forRoot({  
+    //   defaultLanguage: 'en',
+    //   loader: {  
+    //      provide: TranslateLoader,  
+    //      useFactory: httpTranslateLoader,  
+    //      deps: [HttpClient]  
+    //      }  
+    //   }),
       BsDatepickerModule.forRoot(),
       
   ],
   
   exports:[
   BsDatepickerModule,
-  
+  NgxTranslateModule
   ],//providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
   providers: [
     {
@@ -86,6 +90,3 @@ function appInitializer(authService: AuthService) {
 })
 export class AppModule {}
 // AOT compilation support  
-export function httpTranslateLoader(http: HttpClient) {  
-  return new TranslateHttpLoader(http);  
-}

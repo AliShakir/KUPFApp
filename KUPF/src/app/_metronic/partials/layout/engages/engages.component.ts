@@ -7,31 +7,51 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./engages.component.scss']
 })
 export class EngagesComponent implements OnInit {
-
-  constructor() {  
+  siteLanguage = 'English';
+  languageList =[
+    {code: 'en', label:'English'},
+    {code: 'ar', label:'Arabic'}
+  ]
+  constructor(private translate: TranslateService) { 
 }
 
 
   ngOnInit(): void {
     
   }
-  switchToAr(lang:string) { 
-   
+  switchToAr(localeCode:string) { 
+  //  const selectedLanguage = this.languageList
+  //  .find((langauage)=> langauage.code === localeCode)
+  //  ?.label.toString();
+  //  if(selectedLanguage){
+  //   this.siteLanguage = selectedLanguage;
+  //   this.translate.use(localeCode);
+  //  }
     // Get current URL
-    let currentUrl =  window.location.origin
+    //let currentUrl =  window.location.origin
     // Set Language to AR
-    localStorage.setItem('lang',lang);
+    localStorage.setItem('lang',localeCode);
     // Set Language value 
     localStorage.setItem('langType','2');
-    location.href = currentUrl+'/#/dashboard';    
+    location.reload();
+    //location.href = currentUrl+'/#/dashboard';    
   }
-  switchToEn(lang:string) {  
+  switchToEn(localeCode:string) {  
+  //   const selectedLanguage = this.languageList
+  //  .find((langauage)=> langauage.code === localeCode)
+  //  ?.label.toString();
+  //  if(selectedLanguage){
+  //   this.siteLanguage = selectedLanguage;
+  //   this.translate.use(localeCode);
     // Get current URL
     let currentUrl =  window.location.origin
     // Set Language to EN
-    localStorage.setItem('lang',lang);
+    localStorage.setItem('lang',localeCode);
     // Set Language value
     localStorage.setItem('langType','1');
-    location.href = currentUrl+'/#/dashboard'; 
+    location.reload();
+   // location.href = currentUrl+'/#/dashboard'; 
   }
 }
+
+

@@ -1,18 +1,18 @@
 <!-- TO GET FORM ID AND SETTINGUP LANGAUGE. -->
 <input type="hidden" #AddDocuments name="AddDocuments" value="AddDocuments">
 
-<div class="card mb-5 mb-xl-10" *ngFor="let document of formtileHd$ | async; let i = index">
+<div class="card mb-5 mb-xl-10" >
     
     <!--begin::Card header-->
     <div class="card-header card-header-stretch pb-0 panel2bgColor">
         <!--begin::Title-->
         <div class="card-title">
-            <h3 class="m-0 ArFontStyle" lang="AR-SA">{{document.headerName}}</h3>
+            <h3 class="m-0 ArFontStyle" lang="AR-SA">{{'AddDocumentsHeader.headerName' | translate}}</h3>
         </div>
         <h3 class="card-title align-items-start flex-column">
             <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA">{{document.formTitleDTLanguage[14].title}}</button>
-                <button type="button" class="btn btn-warning ArFontStyle" lang="AR-SA">{{document.formTitleDTLanguage[15].title}}</button>
+                <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA">{{'AddDocumentsLable14.title' | translate}}</button>
+                <button type="button" class="btn btn-warning ArFontStyle" lang="AR-SA">{{'AddDocumentsLable15.title' | translate}}</button>
               </div>
               
         </h3>
@@ -32,17 +32,16 @@
                 <form autocomplete="off">  
                    <div class="row mb-4"> 
                         <div class="col-lg-4 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA"><span class="">{{document.formTitleDTLanguage[1].title}}
-                                </span></label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{'AddDocumentsLable8.title' | translate}}</label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
                         </div>
                         <div class="col-lg-4 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA"><span class="">{{document.formTitleDTLanguage[2].title}}</span></label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{'AddDocumentsLable7.title' | translate}}</label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" readonly
                                 name="nameInArabic" />
                         </div>
                         <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA"><span class="">{{document.formTitleDTLanguage[3].title}}</span></label>
+                            <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{'AddDocumentsLable6.title' | translate}}</label>
                             <select class="form-control bg-light" aria-label="Select example">
                                 <option>-Select-</option>
                                 <option value="1">Service 1</option>
@@ -53,8 +52,7 @@
                     </div>
                     <div class="row mb-4">
                         <div class="col-lg-6 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA"><span class="">{{document.formTitleDTLanguage[4].title}}
-                                </span></label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{'AddDocumentsLable9.title' | translate}}</label>
                             <select class="form-control bg-light" aria-label="Select example">
                                 <option>-Select-</option>
                                 <option value="1">Document 1</option>
@@ -64,15 +62,14 @@
                         </div>
                         <div class="col-lg-6 fv-row">
                             <div class="mt-4">
-                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">{{document.formTitleDTLanguage[9].title}}</label>
+                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">{{'AddDocumentsLable1.title' | translate}}</label>
                                 <input class="form-control" type="file" id="formFile">
                               </div>
                         </div>
                     </div>
                     <div class="row mb-4">
                         <div class="col-lg-6 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA"><span class="">{{document.formTitleDTLanguage[5].title}}
-                                </span></label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{'AddDocumentsLable10.title' | translate}}</label>
                             <select class="form-control bg-light" aria-label="Select example">
                                 <option>-Select-</option>
                                 <option value="1">Document 1</option>
@@ -82,15 +79,14 @@
                         </div>
                         <div class="col-lg-6 fv-row">
                             <div class="mt-4">
-                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">{{document.formTitleDTLanguage[10].title}}</label>
+                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">{{'AddDocumentsLable2.title' | translate}}</label>
                                 <input class="form-control" type="file" id="formFile">
                               </div>
                         </div>
                     </div>
                     <div class="row mb-4">
                         <div class="col-lg-6 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA"><span class="">{{document.formTitleDTLanguage[6].title}}
-                                </span></label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{'AddDocumentsLable11.title' | translate}}</label>
                             <select class="form-control bg-light" aria-label="Select example">
                                 <option>-Select-</option>
                                 <option value="1">Document 1</option>
@@ -100,15 +96,14 @@
                         </div>
                         <div class="col-lg-6 fv-row">
                             <div class="mt-4">
-                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">{{document.formTitleDTLanguage[11].title}}</label>
+                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">{{'AddDocumentsLable3.title' | translate}}</label>
                                 <input class="form-control" type="file" id="formFile">
                               </div>
                         </div>
                     </div>
                     <div class="row mb-4">
                         <div class="col-lg-6 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA"><span class="">{{document.formTitleDTLanguage[7].title}}
-                                </span></label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{'AddDocumentsLable12.title' | translate}}</label>
                             <select class="form-control bg-light" aria-label="Select example">
                                 <option>-Select-</option>
                                 <option value="1">Document 1</option>
@@ -118,15 +113,14 @@
                         </div>
                         <div class="col-lg-6 fv-row">
                             <div class="mt-4">
-                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">{{document.formTitleDTLanguage[12].title}}</label>
+                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">{{'AddDocumentsLable4.title' | translate}}</label>
                                 <input class="form-control" type="file" id="formFile">
                               </div>
                         </div>
                     </div>
                     <div class="row mb-4">
                         <div class="col-lg-6 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA"><span class="">{{document.formTitleDTLanguage[8].title}}
-                                </span></label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{'AddDocumentsLable13.title' | translate}}</label>
                             <select class="form-control bg-light" aria-label="Select example">
                                 <option>-Select-</option>
                                 <option value="1">Document 1</option>
@@ -136,7 +130,7 @@
                         </div>
                         <div class="col-lg-6 fv-row">
                             <div class="mt-4">
-                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">{{document.formTitleDTLanguage[13].title}}</label>
+                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">{{'AddDocumentsLable14.title' | translate}}</label>
                                 <input class="form-control" type="file" id="formFile">
                               </div>
                         </div>
