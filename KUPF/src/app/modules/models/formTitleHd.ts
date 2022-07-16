@@ -2,14 +2,16 @@ import { FormTitleDt } from "./formTitleDt";
 
 export interface FormTitleHd {
     
+    id:string;
     tenentId: number;
     language: number;
-    formId: string;
+    formID: string;
     formName: string;
     headerName: string;
-    subHeader: string;
+    subHeaderName: string;
     navigation: string;
     remarks: string;
     status: string;
-    formTitleDts: FormTitleDt[];
+    orderBy:number;
+    formTitleDTLanguage: FormTitleDt[];
 }

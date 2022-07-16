@@ -24,9 +24,10 @@ export class LocalizationService {
   getFormHeaderLabels(formId:string,languageId:string)
   {
     if(this.formTitleHd.length > 0 )return of (this.formTitleHd);    
-    return this.httpClient.get<FormTitleHd[]>(`https://kupfapi.erp53.com/api/FormLabels/GetFormHeaderLabels/` + formId + "/" + languageId).pipe(
+    return this.httpClient.get<FormTitleHd[]>(this.baseUrl+`FormLabels/GetFormHeaderLabels/` + formId + "/" + languageId).pipe(
       map(formTitleHd =>{
         this.formTitleHd = formTitleHd;
+        
         return formTitleHd;
       })     
     )    
@@ -34,12 +35,14 @@ export class LocalizationService {
   getFormBodyLabels(formId:string,languageId:string)
   {
     if(this.formTitleDt.length > 0 )return of (this.formTitleDt);    
-    return this.httpClient.get<FormTitleDt[]>(`https://kupfapi.erp53.com/api/FormLabels/GetFormBodyLabels/` + formId + "/" + languageId).pipe(
+    return this.httpClient.get<FormTitleDt[]>(this.baseUrl+`FormLabels/GetFormBodyLabels/` + formId + "/" + languageId).pipe(
       map(formTitleDt =>{
         this.formTitleDt = formTitleDt;
         return formTitleDt;
       })     
+      
     )    
+    
   }
    
 }

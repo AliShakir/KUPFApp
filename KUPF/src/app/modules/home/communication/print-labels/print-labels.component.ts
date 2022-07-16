@@ -14,6 +14,7 @@ export class PrintLabelsComponent implements OnInit {
 
 /*********************/
 formHeaderLabels$ :Observable<FormTitleHd[]>; 
+formHeaderLabels: FormTitleHd[]=[]; 
 formBodyLabels$ :Observable<FormTitleDt[]>; 
 formBodyLabels :FormTitleDt[]=[]; 
 id:string = '';
@@ -27,35 +28,18 @@ lang: any;
   }
 
   ngOnInit(): void {
-    //this.translate.setDefaultLang('ar');
-    this.lang = localStorage.getItem('lang');
-    this.translate.use(this.lang);  
-   
+    // TO GET THE LANGUAGE ID
+    this.languageId = localStorage.getItem('langType');
+    
+    // Get form header labels
+    this.formHeaderLabels$ = this.localizationService.getFormHeaderLabels(`PrintLabels`,this.languageId);    
+    this.formHeaderLabels$.subscribe((data)=>{
+      this.formHeaderLabels = data;
+      console.log(data);
+    },error=>{
+      console.log(error);
+    })
   }
-  changeLang(e: any) {    
-    localStorage.setItem('lang', e.target.value);
-    window.location.reload();
-  }
-  // ngAfterViewInit() {
-    
-  //   // TO get the form id...
-  //   this.id = this.hidden.nativeElement.value;
-    
-  //   // TO GET THE LANGUAGE ID
-  //   this.languageId = localStorage.getItem('langType');
-    
-  //   // Get form header labels
-  //   this.formHeaderLabels$ = this.localizationService.getFormHeaderLabels(this.id,this.languageId);
-    
-  //   // Get form body labels 
-  //   this.formBodyLabels$= this.localizationService.getFormBodyLabels(this.id,this.languageId)
-    
-  //   // Get observable as normal array of items
-  //   this.formBodyLabels$.subscribe((data)=>{
-  //     this.formBodyLabels = data  
-  //     console.log(this.formBodyLabels);
-  //   },error=>{
-  //     console.log(error);
-  //   })
-  // }
+
+  
 }

@@ -2,10 +2,10 @@ import { FormTitleHd } from "./formTitleHd";
 
 export interface FormTitleDt {
    
-    id:number;
+    id:number;   
+    tenentId: number;
     formTitleHDLanguageId:string;
     formID:string;
-    tenentId: number;
     language: number;
     labelId: string;
     title: string;
@@ -14,4 +14,5 @@ export interface FormTitleDt {
     attiribute: string;
     remarks: string;
     status: string;
+    orderBy:number;
 }

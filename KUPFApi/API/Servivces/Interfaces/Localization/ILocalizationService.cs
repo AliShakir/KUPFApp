@@ -14,6 +14,6 @@ namespace API.Servivces.Interfaces
         Task<IEnumerable<FormTitleHDLanguageDto>> GetFormHeaderLabelsByFormName(string formId,int LanguageId);
         Task<IEnumerable<FormTitleDTLanguageDto>> GetFormBodyLabelsByFormName(string formId,int languageId);
         Task<IEnumerable<TestCompaniesDto>> GetCompanyAndEmployees();
-        Task<IEnumerable<FormTitleDTLanguageDto>> GetAll(string formId, int langId);
+        Task<IEnumerable<FormTitleHDLanguageDto>> GetAll(string formId, int langId);
     }
 }

@@ -35,7 +35,7 @@ namespace API.Servivces.Implementation.Localization
 
         public async Task<IEnumerable<FormTitleHDLanguageDto>> GetFormHeaderLabelsByFormName(string formId, int languageId)
         {
-            var result = await _context.FormTitleHDLanguage.Where(c => c.FormID == formId && c.Language == languageId).ToListAsync();
+            var result = await _context.FormTitleHDLanguage.Where(c => c.FormID == formId && c.Language == languageId).Include(x=>x.FormTitleDTLanguage).OrderBy(o=>o.OrderBy).ToListAsync();
             var data = _mapper.Map<IEnumerable<FormTitleHDLanguageDto>>(result);
             return data;
         }
@@ -43,16 +43,16 @@ namespace API.Servivces.Implementation.Localization
         
         public async Task<IEnumerable<FormTitleDTLanguageDto>> GetFormBodyLabelsByFormName(string formId, int languageId)
         {
-            var result = await _context.FormTitleDTLanguage.Where(c => c.FormID == formId && c.Language == languageId).ToListAsync();
+            var result = await _context.FormTitleDTLanguage.Where(c => c.FormID == formId && c.Language == languageId).OrderBy(o => o.OrderBy).ToListAsync();
             var data = _mapper.Map<IEnumerable<FormTitleDTLanguageDto>>(result);
             return data;
         }
 
-        public async Task<IEnumerable<FormTitleDTLanguageDto>> GetAll(string formId, int langId)
+        public async Task<IEnumerable<FormTitleHDLanguageDto>> GetAll(string formId, int langId)
         {
-            var result = await _context.FormTitleDTLanguage.Where(x=>x.FormID== formId && x.Language== langId).ToListAsync();
+            var result = await _context.FormTitleHDLanguage.Where(x=>x.FormID== formId && x.Language== langId).Include(c=>c.FormTitleDTLanguage).OrderBy(o => o.OrderBy).ToListAsync();
             
-            var data = _mapper.Map<IEnumerable<FormTitleDTLanguageDto>>(result);
+            var data = _mapper.Map<IEnumerable<FormTitleHDLanguageDto>>(result);
             return data;
         }
     }
