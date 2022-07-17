@@ -35,7 +35,8 @@ namespace API.Servivces.Implementation.Localization
 
         public async Task<IEnumerable<FormTitleHDLanguageDto>> GetFormHeaderLabelsByFormName(string formId, int languageId)
         {
-            var result = await _context.FormTitleHDLanguage.Where(c => c.FormID == formId && c.Language == languageId).Include(x=>x.FormTitleDTLanguage).OrderBy(o=>o.OrderBy).ToListAsync();
+            //var result = await _context.FormTitleHDLanguage.OrderBy(x=>x.OrderBy).Include(o=>o.FormTitleDTLanguage.OrderBy(x=>x.OrderBy)).ToListAsync();
+            var result = await _context.FormTitleHDLanguage.Where(c => c.FormID == formId && c.Language == languageId).ToListAsync();
             var data = _mapper.Map<IEnumerable<FormTitleHDLanguageDto>>(result);
             return data;
         }
@@ -43,7 +44,7 @@ namespace API.Servivces.Implementation.Localization
         
         public async Task<IEnumerable<FormTitleDTLanguageDto>> GetFormBodyLabelsByFormName(string formId, int languageId)
         {
-            var result = await _context.FormTitleDTLanguage.Where(c => c.FormID == formId && c.Language == languageId).OrderBy(o => o.OrderBy).ToListAsync();
+            var result = await _context.FormTitleDTLanguage.Where(c => c.FormID == formId && c.Language == languageId).ToListAsync();
             var data = _mapper.Map<IEnumerable<FormTitleDTLanguageDto>>(result);
             return data;
         }
@@ -52,6 +53,13 @@ namespace API.Servivces.Implementation.Localization
         {
             var result = await _context.FormTitleHDLanguage.Where(x=>x.FormID== formId && x.Language== langId).Include(c=>c.FormTitleDTLanguage).OrderBy(o => o.OrderBy).ToListAsync();
             
+            var data = _mapper.Map<IEnumerable<FormTitleHDLanguageDto>>(result);
+            return data;
+        }
+
+        public async Task<IEnumerable<FormTitleHDLanguageDto>> GetAllAppLabels()
+        {
+            var result = await _context.FormTitleHDLanguage.Include(o=>o.FormTitleDTLanguage.OrderBy(x=>x.OrderBy)).ToListAsync();
             var data = _mapper.Map<IEnumerable<FormTitleHDLanguageDto>>(result);
             return data;
         }

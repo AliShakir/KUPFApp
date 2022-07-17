@@ -22,22 +22,22 @@ languageId:any;
 /*********************/
 
   constructor(private localizationService: LocalizationService) { 
-    console.log(`subscription details constructor called`);
-    //this.id = this.hidden.nativeElement.value;
-    this.languageId = localStorage.getItem('langType');
+    // console.log(`subscription details constructor called`);
+    // //this.id = this.hidden.nativeElement.value;
+    // this.languageId = localStorage.getItem('langType');
     
-    // Get form header labels
-    this.formHeaderLabels$ = this.localizationService.getFormHeaderLabels('SubscriptionDetails',this.languageId);
+    // // Get form header labels
+    // this.formHeaderLabels$ = this.localizationService.getFormHeaderLabels('SubscriptionDetails',this.languageId);
     
-    // Get form body labels 
-    this.formBodyLabels$= this.localizationService.getFormBodyLabels('SubscriptionDetails',this.languageId)
+    // // Get form body labels 
+    // this.formBodyLabels$= this.localizationService.getFormBodyLabels('SubscriptionDetails',this.languageId)
     
-    // Get observable as normal array of items
-    this.formBodyLabels$.subscribe((data)=>{
-      this.formBodyLabels = data   
-    },error=>{
-      console.log(error);
-    })
+    // // Get observable as normal array of items
+    // this.formBodyLabels$.subscribe((data)=>{
+    //   this.formBodyLabels = data   
+    // },error=>{
+    //   console.log(error);
+    // })
     
   }
 
@@ -48,27 +48,27 @@ languageId:any;
     
 
 }
-  // ngAfterViewInit() {
+  ngAfterViewInit() {
     
-  //   // TO get the form id...
-  //   this.id = this.hidden.nativeElement.value;
+    // TO get the form id...
+    this.id = this.hidden.nativeElement.value;
     
-  //   // TO GET THE LANGUAGE ID
-  //   this.languageId = localStorage.getItem('langType');
+    // TO GET THE LANGUAGE ID
+    this.languageId = localStorage.getItem('langType');
     
-  //   // Get form header labels
-  //   this.formHeaderLabels$ = this.localizationService.getFormHeaderLabels(this.id,this.languageId);
+    // Get form header labels
+    this.formHeaderLabels$ = this.localizationService.getFormHeaderLabels(this.id,this.languageId);
     
-  //   // Get form body labels 
-  //   this.formBodyLabels$= this.localizationService.getFormBodyLabels(this.id,this.languageId)
+    // Get form body labels 
+    this.formBodyLabels$= this.localizationService.getFormBodyLabels(this.id,this.languageId)
     
-  //   // Get observable as normal array of items
-  //   this.formBodyLabels$.subscribe((data)=>{
-  //     this.formBodyLabels = data   
-  //   },error=>{
-  //     console.log(error);
-  //   })
-  // }
+    // Get observable as normal array of items
+    this.formBodyLabels$.subscribe((data)=>{
+      this.formBodyLabels = data   
+    },error=>{
+      console.log(error);
+    })
+  }
 
  
 }

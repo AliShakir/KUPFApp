@@ -21,7 +21,7 @@ namespace API.Models
         public string Attiribute { get; set; }
         public string Remarks { get; set; }
         public string Status { get; set; }
-        public int OrderBy { get; set; }
+        public int? OrderBy { get; set; }
         public FormTitleHDLanguage FormTitleHDLanguage { get; set; }
     }
 }

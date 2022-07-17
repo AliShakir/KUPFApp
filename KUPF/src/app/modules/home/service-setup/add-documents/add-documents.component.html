@@ -4,15 +4,15 @@
 <div class="card mb-5 mb-xl-10" >
     
     <!--begin::Card header-->
-    <div class="card-header card-header-stretch pb-0 panel2bgColor">
+    <div class="card-header card-header-stretch pb-0 panel2bgColor" *ngFor="let document of formHeaderLabels$ | async; let i = index">
         <!--begin::Title-->
         <div class="card-title">
-            <h3 class="m-0 ArFontStyle" lang="AR-SA">{{'AddDocumentsHeader.headerName' | translate}}</h3>
+            <h3 class="m-0 ArFontStyle" lang="AR-SA">{{document.headerName}}</h3>
         </div>
         <h3 class="card-title align-items-start flex-column">
             <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA">{{'AddDocumentsLable14.title' | translate}}</button>
-                <button type="button" class="btn btn-warning ArFontStyle" lang="AR-SA">{{'AddDocumentsLable15.title' | translate}}</button>
+                <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA"*ngFor="let item of formBodyLabels | filterLabels:'btnSave'">{{item.title}}</button>
+                <button type="button" class="btn btn-warning ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'btnCancel'">{{item.title}}</button>
               </div>
               
         </h3>
@@ -32,16 +32,16 @@
                 <form autocomplete="off">  
                    <div class="row mb-4"> 
                         <div class="col-lg-4 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{'AddDocumentsLable8.title' | translate}}</label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblArabic'">{{item.title}}</label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
                         </div>
                         <div class="col-lg-4 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{'AddDocumentsLable7.title' | translate}}</label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblEmployeeId'">{{item.title}}</label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" readonly
                                 name="nameInArabic" />
                         </div>
                         <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{'AddDocumentsLable6.title' | translate}}</label>
+                            <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblService'">{{item.title}}</label>
                             <select class="form-control bg-light" aria-label="Select example">
                                 <option>-Select-</option>
                                 <option value="1">Service 1</option>
@@ -52,7 +52,7 @@
                     </div>
                     <div class="row mb-4">
                         <div class="col-lg-6 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{'AddDocumentsLable9.title' | translate}}</label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblDocumentType1'">{{item.title}}</label>
                             <select class="form-control bg-light" aria-label="Select example">
                                 <option>-Select-</option>
                                 <option value="1">Document 1</option>
@@ -62,14 +62,14 @@
                         </div>
                         <div class="col-lg-6 fv-row">
                             <div class="mt-4">
-                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">{{'AddDocumentsLable1.title' | translate}}</label>
+                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblPath1'">{{item.title}}</label>
                                 <input class="form-control" type="file" id="formFile">
                               </div>
                         </div>
                     </div>
                     <div class="row mb-4">
                         <div class="col-lg-6 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{'AddDocumentsLable10.title' | translate}}</label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblDocumentType2'">{{item.title}}</label>
                             <select class="form-control bg-light" aria-label="Select example">
                                 <option>-Select-</option>
                                 <option value="1">Document 1</option>
@@ -79,14 +79,14 @@
                         </div>
                         <div class="col-lg-6 fv-row">
                             <div class="mt-4">
-                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">{{'AddDocumentsLable2.title' | translate}}</label>
+                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblPath2'">{{item.title}}</label>
                                 <input class="form-control" type="file" id="formFile">
                               </div>
                         </div>
                     </div>
                     <div class="row mb-4">
                         <div class="col-lg-6 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{'AddDocumentsLable11.title' | translate}}</label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblDocumentType3'">{{item.title}}</label>
                             <select class="form-control bg-light" aria-label="Select example">
                                 <option>-Select-</option>
                                 <option value="1">Document 1</option>
@@ -96,14 +96,14 @@
                         </div>
                         <div class="col-lg-6 fv-row">
                             <div class="mt-4">
-                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">{{'AddDocumentsLable3.title' | translate}}</label>
+                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblPath3'">{{item.title}}</label>
                                 <input class="form-control" type="file" id="formFile">
                               </div>
                         </div>
                     </div>
                     <div class="row mb-4">
                         <div class="col-lg-6 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{'AddDocumentsLable12.title' | translate}}</label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblDocumentTyp4'">{{item.title}}</label>
                             <select class="form-control bg-light" aria-label="Select example">
                                 <option>-Select-</option>
                                 <option value="1">Document 1</option>
@@ -113,14 +113,14 @@
                         </div>
                         <div class="col-lg-6 fv-row">
                             <div class="mt-4">
-                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">{{'AddDocumentsLable4.title' | translate}}</label>
+                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblPath4'">{{item.title}}</label>
                                 <input class="form-control" type="file" id="formFile">
                               </div>
                         </div>
                     </div>
                     <div class="row mb-4">
                         <div class="col-lg-6 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{'AddDocumentsLable13.title' | translate}}</label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblDocumentTyp5'">{{item.title}}</label>
                             <select class="form-control bg-light" aria-label="Select example">
                                 <option>-Select-</option>
                                 <option value="1">Document 1</option>
@@ -130,7 +130,7 @@
                         </div>
                         <div class="col-lg-6 fv-row">
                             <div class="mt-4">
-                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">{{'AddDocumentsLable14.title' | translate}}</label>
+                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblPath5'">{{item.title}}</label>
                                 <input class="form-control" type="file" id="formFile">
                               </div>
                         </div>

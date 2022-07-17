@@ -17,5 +17,6 @@ namespace API.ViewModels.Localization
         public string Attiribute { get; set; }
         public string Remarks { get; set; }
         public string Status { get; set; }
+        public int? OrderBy { get; set; }
     }
 }

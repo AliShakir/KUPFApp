@@ -28,18 +28,20 @@ lang: any;
   }
 
   ngOnInit(): void {
-    // TO GET THE LANGUAGE ID
-    this.languageId = localStorage.getItem('langType');
     
-    // Get form header labels
-    this.formHeaderLabels$ = this.localizationService.getFormHeaderLabels(`PrintLabels`,this.languageId);    
-    this.formHeaderLabels$.subscribe((data)=>{
-      this.formHeaderLabels = data;
-      console.log(data);
-    },error=>{
-      console.log(error);
-    })
   }
-
+  ngAfterViewInit(){
+// TO GET THE LANGUAGE ID
+this.languageId = localStorage.getItem('langType');
+    
+// Get form header labels
+this.formHeaderLabels$ = this.localizationService.getFormHeaderLabels(`PrintLabels`,this.languageId);    
+this.formHeaderLabels$.subscribe((data)=>{
+  this.formHeaderLabels = data;
+  localStorage.setItem('PrintLabels',JSON.stringify(this.formHeaderLabels));
+},error=>{
+  console.log(error);
+})
+  }
   
 }

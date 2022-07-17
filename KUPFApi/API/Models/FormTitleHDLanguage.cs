@@ -20,7 +20,7 @@ namespace API.Models
         public string Navigation { get; set; }
         public string Remarks { get; set; }
         public string Status { get; set; }
-        public int OrderBy { get; set; }
+        public int? OrderBy { get; set; }
         public ICollection<FormTitleDTLanguage> FormTitleDTLanguage { get; set; }
     }
 }

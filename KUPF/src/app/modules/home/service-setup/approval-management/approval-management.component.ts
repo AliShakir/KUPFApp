@@ -56,7 +56,8 @@ languageId:any;
     
     // Get observable as normal array of items
     this.formBodyLabels$.subscribe((data)=>{
-      this.formBodyLabels = data      
+      this.formBodyLabels = data 
+      console.log(this.formBodyLabels);     
     },error=>{
       console.log(error);
     })  

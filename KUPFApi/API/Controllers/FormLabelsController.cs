@@ -53,5 +53,12 @@ namespace API.Controllers
             
             return Ok(result);
         }
+        [HttpGet]
+        [Route("GetAllAppLabels")]
+        public async Task<ActionResult<IEnumerable<FormTitleDTLanguageViewModel>>> GetAllAppLabels()
+        {
+            var result = await _localizationService.GetAllAppLabels();
+            return Ok(result);
+        }
     }
 }
