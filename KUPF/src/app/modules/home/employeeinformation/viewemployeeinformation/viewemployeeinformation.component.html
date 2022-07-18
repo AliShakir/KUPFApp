@@ -1,12 +1,12 @@
 <input type="hidden" #EmployeeGrid name="EmployeeGrid" value="EmployeeGrid">
 <div class="card mb-5 mb-xl-8">
     <!--begin::Header-->
-    <div class="card-header border-0 pt-5 panelBgColor" *ngFor="let label of formHeaderLabels$ | async; let i = index">
-        <div class="card-toolbar">            
+    <div class="card-header border-0 pt-5 panelBgColor">
+        <div class="card-toolbar" *ngFor="let label of formHeaderLabels; let i = index">            
             <h3 class="m-0 ArFontStyle" lang="AR-SA">{{label.headerName}}</h3>
         </div>         
-        <h3 class="card-title align-items-start flex-column">
-            <a routerLink="/employee/add-employee" class="btn btn-primary w-100 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'btnAddContact'">
+        <h3 class="card-title align-items-start flex-column" *ngFor="let bodyLabel of formBodyLabels; let i = index">
+            <a routerLink="/employee/add-employee" class="btn btn-primary w-100 ArFontStyle" lang="AR-SA">
 
                 <span class="svg-icon svg-icon-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -18,12 +18,12 @@
                             fill="currentColor"></path>
                     </svg>
                 </span>
-               {{item.title}}</a>
+                {{bodyLabel[0].title}}</a>
         </h3>
     </div>
     <!--end::Header-->
     <!--begin::Body-->
-    <div class="card-body py-3">
+    <div class="card-body py-3"  *ngFor="let bodyLabel of formBodyLabels; let i = index">
         <div class="row mb-4">
             <div class="col-lg-8 fv-row">
                 <div class="card-toolbar">
@@ -128,13 +128,13 @@
                 <!--begin::Table head-->
                 <thead>
                     <tr class="fw-bolder text-muted">
-                        <th class="min-w-100px ArFontStyle"  lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblAction'">{{item.title}}</th>
-                        <th class="min-w-100px ArFontStyle"  lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblUniversity'">{{item.title}}</th>
-                        <th class="min-w-140px ArFontStyle"  lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblEmployeeId'">{{item.title}}</th>
-                        <th class="min-w-120px ArFontStyle"  lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblName'">{{item.title}}</th>
-                        <th class="min-w-120px ArFontStyle"  lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'DateOfJoining'">{{item.title}}</th>
-                        <th class="min-w-120px ArFontStyle"  lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'Source'">{{item.title}}</th>
-                        <th class="min-w-120px ArFontStyle"  lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblDepartment'">{{item.title}}</th>
+                        <th class="min-w-100px ArFontStyle">{{bodyLabel[1].title}}</th>
+                        <th class="min-w-100px ArFontStyle">{{bodyLabel[2].title}}</th>
+                        <th class="min-w-140px ArFontStyle">{{bodyLabel[3].title}}</th>
+                        <th class="min-w-120px ArFontStyle">{{bodyLabel[4].title}}</th>
+                        <th class="min-w-120px ArFontStyle">{{bodyLabel[5].title}}</th>
+                        <th class="min-w-120px ArFontStyle">{{bodyLabel[6].title}}</th>
+                        <th class="min-w-120px ArFontStyle">{{bodyLabel[7].title}}</th>
                     </tr>
                 </thead>
                 <!--end::Table head-->

@@ -1,15 +1,11 @@
 <!-- TO GET FORM ID AND SETTINGUP LANGAUGE. -->
 <input type="hidden" #ImportEmployeeMonthlyPayment name="ImportEmployeeMonthlyPayment" value="ImportEmployeeMonthlyPayment">
-<!-- <li *ngFor="let item of MyLabels | filterLabels:'lblSelectFile'">
-    <span>{{item.Title}}</span>
-
-</li> -->
 
 <div class="card mb-5 mb-xl-10" >
     <!--begin::Card header-->
-    <div class="card-header card-header-stretch pb-0 panel2bgColor" *ngFor="let label of formHeaderLabels$ | async let i = index;">
+    <div class="card-header card-header-stretch pb-0 panel2bgColor">
         <!--begin::Title-->
-        <div class="card-title">
+        <div class="card-title" *ngFor="let label of formHeaderLabels; let i = index">
             <h3 class="m-0 ArFontStyle" lang="AR-SA" id="lblHeader">{{label.headerName}}</h3>
         </div>
         <!--end::Title-->
@@ -26,18 +22,18 @@
             <!-- <h3 class="mb-5">Personal Information</h3> -->
             <!--end::Title-->
             <!--begin::Row-->
-            <div class="row gx-9 gy-6">
+            <div class="row gx-9 gy-6" *ngFor="let bodyLabel of formBodyLabels; let i = index">
                 <form autocomplete="off">
                     <div class="row mb-4">     
                         <div class="col-lg-6 fv-row">
                             <div class="mt-4">                                
-                                <label class="form-label ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblPeriod'">{{item.title}} </label>
+                                <label class="form-label ArFontStyle" lang="AR-SA">{{bodyLabel[0].title}} </label>
                                 <input class="form-control" type="date">
                               </div>
                         </div>                  
                         <div class="col-lg-6 fv-row">
                             <div class="mt-4">
-                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblSelectFile'"> {{item.title}}</label>
+                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">{{bodyLabel[1].title}}</label>
                                 <input class="form-control" type="file" id="formFile"> 
                                 
                               </div>
@@ -50,9 +46,8 @@
 
     </div>
     <!--end::Tab content-->
-    <div class="card-footer d-flex justify-content-end py-6 px-9 ">
-        <button type="button" class="btn btn-primary float-right ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'btnUpload'">{{item.title}}
-        </button>
+    <div class="card-footer d-flex justify-content-end py-6 px-9" *ngFor="let bodyLabel of formBodyLabels; let i = index">
+        <button type="button" class="btn btn-primary float-right ArFontStyle" lang="AR-SA">{{bodyLabel[2].title}}</button>
 
     </div>
 </div>

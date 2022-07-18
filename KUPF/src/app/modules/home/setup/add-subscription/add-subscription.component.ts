@@ -12,15 +12,38 @@ import { LocalizationService } from 'src/app/modules/_services/localization.serv
   styleUrls: ['./add-subscription.component.scss']
 })
 export class AddSubscriptionComponent implements OnInit {
-  /*********************/
-  formHeaderLabels$: Observable<FormTitleHd[]>;
-  formBodyLabels$: Observable<FormTitleDt[]>;
-  formBodyLabels: FormTitleDt[] = [];
-  id: string = '';
-  languageId: any;
-  // FormId to get form/App language
-  @ViewChild('AddSubscription') hidden: ElementRef;
-  /*********************/
+  // /*********************/
+  // formHeaderLabels$: Observable<FormTitleHd[]>;
+  // formBodyLabels$: Observable<FormTitleDt[]>;
+  // formBodyLabels: FormTitleDt[] = [];
+  // id: string = '';
+  // languageId: any;
+  // // FormId to get form/App language
+  // @ViewChild('AddSubscription') hidden: ElementRef;
+  // /*********************/
+//#region 
+    /*----------------------------------------------------*/
+
+    // Language Type e.g. 1 = ENGLISH and 2 =  ARABIC
+    languageType: any;
+
+    // Selected Language
+    language: any;
+
+    // We will get form lables from lcale storage and will put into array.
+    AppFormLabels: FormTitleHd[] = [];
+
+    // We will filter form header labels array
+    formHeaderLabels: any[] = [];
+
+    // We will filter form body labels array
+    formBodyLabels: any[] = [];
+
+    // FormId
+    formId: string;
+
+    /*----------------------------------------------------*/  
+  //#endregion
 
   closeResult: string = '';
   constructor(private modalService: NgbModal,
@@ -31,28 +54,52 @@ export class AddSubscriptionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(`add subscription ngOnInit called`);
-    this.languageId = localStorage.getItem('langType');
+    
+    //#region TO SETUP THE FORM LOCALIZATION    
+    // TO GET THE LANGUAGE ID e.g. 1 = ENGLISH and 2 =  ARABIC
+    this.languageType = localStorage.getItem('langType');
 
-    // // Get form header labels
-    this.formHeaderLabels$ = this.localizationService.getFormHeaderLabels('AddSubscription', this.languageId);
+    // To get the selected language...
+    this.language = localStorage.getItem('lang');
 
-    // Get form body labels
-    this.formBodyLabels$ = this.localizationService.getFormBodyLabels('AddSubscription', this.languageId)
+    // To setup the form id so will will get form labels based on form Id
+    this.formId = 'AddSubscription';
 
-    // Get observable as normal array of items
-    this.formBodyLabels$.subscribe((data) => {
-      this.formBodyLabels = data
-      console.log(data);
-    }, error => {
-      console.log(error);
-    })
-    // this.router.events.subscribe((routerEvent) => {
-    //     if(routerEvent instanceof NavigationEnd){
-    //       console.log('OK 123')
-    //     }
+    // Check if LocalStorage is Not NULL
+    if (localStorage.getItem('AppLabels') != null) {
 
+      // Get data from LocalStorage
+      this.AppFormLabels = JSON.parse(localStorage.getItem('AppLabels') || '{}');
+
+      for (let labels of this.AppFormLabels) {
+
+        if (labels.formID == this.formId && labels.language == this.languageType) {
+
+          this.formHeaderLabels.push(labels);
+
+          this.formBodyLabels.push(labels.formTitleDTLanguage);
+
+        }
+      }
+    }
+    //#endregion
+
+    // this.languageId = localStorage.getItem('langType');
+
+    // // // Get form header labels
+    // this.formHeaderLabels$ = this.localizationService.getFormHeaderLabels('AddSubscription', this.languageId);
+
+    // // Get form body labels
+    // this.formBodyLabels$ = this.localizationService.getFormBodyLabels('AddSubscription', this.languageId)
+
+    // // Get observable as normal array of items
+    // this.formBodyLabels$.subscribe((data) => {
+    //   this.formBodyLabels = data
+    //   console.log(data);
+    // }, error => {
+    //   console.log(error);
     // })
+    
   }
 
 
@@ -72,63 +119,8 @@ export class AddSubscriptionComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
-  // ngAfterViewInit() {
+  
 
-  //   // TO get the form id...
-  //   this.id = this.hidden.nativeElement.value;
-
-  //   // TO GET THE LANGUAGE ID
-  //   this.languageId = localStorage.getItem('langType');
-
-  //   // Get form header labels
-  //   this.formHeaderLabels$ = this.localizationService.getFormHeaderLabels(this.id,this.languageId);
-
-  //   // Get form body labels
-  //   this.formBodyLabels$= this.localizationService.getFormBodyLabels(this.id,this.languageId)
-
-  //   // Get observable as normal array of items
-  //   this.formBodyLabels$.subscribe((data)=>{
-  //     this.formBodyLabels = data
-  //   },error=>{
-  //     console.log(error);
-  //   })
-  // }
-
-
-ngOnChanges() {
-    //console.log(`add subscription ngOnChanges`);
-
-}
-
-ngDoCheck() {
-    //console.log("add subscription ngDoCheck")
-
-}
-
-ngAfterContentInit() {
-    //console.log("add subscription ngAfterContentInit");
-
-}
-
-ngAfterContentChecked() {
-   // console.log("add subscription ngAfterContentChecked");
-
-}
-
-ngAfterViewInit() {
-    console.log("add subscription ngAfterViewInit");
-
-}
-
-ngAfterViewChecked() {
-    //console.log("add subscription ngAfterViewChecked");
-
-}
-
-ngOnDestroy() {
-    //console.log("add subscription ngOnDestroy");
-
-}
 
 
 

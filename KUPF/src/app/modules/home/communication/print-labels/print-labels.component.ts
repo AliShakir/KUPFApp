@@ -1,9 +1,5 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { Observable, of } from 'rxjs';
-import { FormTitleDt } from 'src/app/modules/models/formTitleDt';
+import { Component, OnInit } from '@angular/core';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
-import { LocalizationService } from 'src/app/modules/_services/localization.service';
 
 @Component({
   selector: 'app-print-labels',

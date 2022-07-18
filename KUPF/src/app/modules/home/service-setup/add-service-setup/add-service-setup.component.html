@@ -2,14 +2,14 @@
     <!--begin::Card header-->
     <div class="card-header card-header-stretch pb-0 panelBgColor1">
         <!--begin::Title-->
-        <div class="card-title">
-            <h3 class="m-0">Service Setup</h3>
+        <div class="card-title" *ngFor="let label of formHeaderLabels; let i = index">
+            <h3 class="m-0">{{label.headerName}}</h3>
         </div>
         <h3 class="card-title align-items-start flex-column">
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-primary">Save</button>
-                <button type="button" class="btn btn-warning">Cancel</button>
-                <button type="button" class="btn btn-light-dark" routerLink="/service-setup/service-setup-details" routerLinkActive="active" >Back</button>
+            <div class="btn-group" role="group" aria-label="Basic example" *ngFor="let bodyLabel of formBodyLabels; let i = index">
+                <button type="button" class="btn btn-primary ArFontStyle">{{bodyLabel[0].title}}</button>
+                <button type="button" class="btn btn-warning ArFontStyle ">{{bodyLabel[1].title}}</button>
+                <button type="button" class="btn btn-light-dark ArFontStyle" routerLink="/service-setup/service-setup-details" routerLinkActive="active" >{{bodyLabel[2].title}}</button>
               </div>
               
         </h3>
@@ -25,23 +25,23 @@
             <!-- <h3 class="mb-5">Personal Information</h3> -->
             <!--end::Title-->
             <!--begin::Row-->
-            <div class="row gx-9 gy-6">
+            <div class="row gx-9 gy-6" *ngFor="let bodyLabel of formBodyLabels; let i = index">
                 <form  (ngSubmit)="addServiceSetup()" autocomplete="off">
                     <div class="row mb-6">
                         <div class="col-lg-6 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Service ID
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"><span class="">{{bodyLabel[3].title}}
                                 </span></label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0 readonly">
                         </div>
                     </div>
                     <div class="row mb-6">
                         <div class="col-lg-6 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Service Name English
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"><span class="">{{bodyLabel[4].title}}
                                 </span></label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
                         </div>
                         <div class="col-lg-6 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="">Arabic</span></label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"><span class="">{{bodyLabel[5].title}}</span></label>
                             <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" readonly
                                 name="nameInArabic" />
                         </div>
@@ -57,13 +57,13 @@
                         </div>
                         <!--begin::Label-->
                         <!--begin::Label-->
-                        <label class="col-lg-11 col-form-label fw-bold fs-6">Allowed Non Employes</label>
+                        <label class="col-lg-11 col-form-label fw-bold fs-6 ArFontStyle">{{bodyLabel[6].title}}</label>
                         <!--begin::Label-->
                     </div>
 
                     <div class="row mb-6">
                         <div class="col-lg-3 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Service Type</span></label>
+                            <label class="col-form-label fw-bold fs-6 ArFontStyle"><span class="">{{bodyLabel[7].title}}</span></label>
                             <select class="form-control bg-light" aria-label="Select example">
                                 <option>-Select-</option>
                                 <option value="1">Service Type 1</option>
@@ -72,8 +72,7 @@
                             </select>
                         </div>
                         <div class="col-lg-3 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Minimum Month Of
-                                    Services</span></label>
+                            <label class="col-form-label fw-bold fs-6 ArFontStyle"><span class="">{{bodyLabel[8].title}}</span></label>
                             <select class="form-control bg-light" aria-label="Select example">
                                 <option>-Select-</option>
                                 <option value="1">1</option>
@@ -84,7 +83,7 @@
                             </select>
                         </div>
                         <div class="col-lg-3 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Minimum Installment</span></label>
+                            <label class="col-form-label fw-bold fs-6 ArFontStyle"><span class="">{{bodyLabel[9].title}}</span></label>
                             <select class="form-control bg-light" aria-label="Select example">
                                 <option>-Select-</option>
                                 <option value="1">0</option>
@@ -92,7 +91,7 @@
                             </select>
                         </div>
                         <div class="col-lg-3 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Maximum Installment</span></label>
+                            <label class="col-form-label fw-bold fs-6 ArFontStyle"><span class="">{{bodyLabel[10].title}}</span></label>
                             <select class="form-control bg-light" aria-label="Select example">
                                 <option>-Select-</option>
                                 <option value="1">1</option>
@@ -108,6 +107,18 @@
                     </div>
                     <div class="row mb-6">
                         <!--begin::Label-->
+                        <div class="col-lg-1 d-flex align-items-center ArFontStyle">
+                            <div class="form-check form-check-solid form-switch fv-row">
+                                <input class="form-check-input w-45px h-30px" type="checkbox" id="allowmarketing"
+                                    checked="checked">
+                                <label class="form-check-label" for="allowmarketing"></label>
+                            </div>
+                        </div>
+                        <!--begin::Label-->
+                        <!--begin::Label-->
+                        <label class="col-lg-5 col-form-label fw-bold fs-6 ArFontStyle">{{bodyLabel[11].title}} </label>
+                        <!--begin::Label-->
+                        <!--begin::Label-->
                         <div class="col-lg-1 d-flex align-items-center">
                             <div class="form-check form-check-solid form-switch fv-row">
                                 <input class="form-check-input w-45px h-30px" type="checkbox" id="allowmarketing"
@@ -117,19 +128,7 @@
                         </div>
                         <!--begin::Label-->
                         <!--begin::Label-->
-                        <label class="col-lg-5 col-form-label fw-bold fs-6">Allow to be Frozen </label>
-                        <!--begin::Label-->
-                        <!--begin::Label-->
-                        <div class="col-lg-1 d-flex align-items-center">
-                            <div class="form-check form-check-solid form-switch fv-row">
-                                <input class="form-check-input w-45px h-30px" type="checkbox" id="allowmarketing"
-                                    checked="checked">
-                                <label class="form-check-label" for="allowmarketing"></label>
-                            </div>
-                        </div>
-                        <!--begin::Label-->
-                        <!--begin::Label-->
-                        <label class="col-lg-5 col-form-label fw-bold fs-6">Previous Employments </label>
+                        <label class="col-lg-5 col-form-label fw-bold fs-6 ArFontStyle">{{bodyLabel[12].title}} </label>
                         <!--begin::Label-->
                     </div>
                     <div class="row mb-6">
@@ -143,7 +142,7 @@
                         </div>
                         <!--begin::Label-->
                         <!--begin::Label-->
-                        <label class="col-lg-5 col-form-label fw-bold fs-6"> % Allow Discount in </label>
+                        <label class="col-lg-5 col-form-label fw-bold fs-6 ArFontStyle"> % {{bodyLabel[13].title}} </label>
                         <!--begin::Label-->
                         <!--begin::Label-->
                         <div class="col-lg-1 d-flex align-items-center">
@@ -156,7 +155,7 @@
                         
                         <!--begin::Label-->
                         <!--begin::Label-->
-                        <label class="col-lg-5 col-form-label fw-bold fs-6">Installment Can Bypassed </label>
+                        <label class="col-lg-5 col-form-label fw-bold fs-6 ArFontStyle">{{bodyLabel[14].title}} </label>
                         <!--begin::Label-->
                     </div>
                 </form>
@@ -167,209 +166,13 @@
     </div>
     <!--end::Tab content-->
 </div>
+<app-approval-detials>
 
-<div class="card mb-5 mb-xl-10">
-    <!--begin::Card header-->
-    <div class="card-header card-header-stretch pb-0 panelBgColor2">
-        <!--begin::Title-->
-        <div class="card-title">
-            <h3 class="m-0">Approval Details</h3>
-        </div>
-        <!--end::Title-->
-    </div>
-    <!--end::Card header-->
-    <!--begin::Tab content-->
-    <div id="kt_billing_payment_tab_content" class="card-body tab-content">
-        <!--begin::Tab panel-->
-        <div id="kt_billing_creditcard" class="tab-pane fade show active" role="tabpanel">
-            <!--begin::Title-->
-            <!-- <h3 class="mb-5">Job Information</h3> -->
-            <!--end::Title-->
-            <!--begin::Row-->
-            <div class="row gx-9 gy-6">
-                <form autocomplete="off">
-                    <div class="row mb-4">
-                        <div class="col-lg-2 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Approval 1 </span></label>
-                        </div>
-                        <div class="col-lg-3 fv-row">
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Role 1</option>
-                                <option value="2">Role 2</option>
-                                <option value="3">Role 3</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-2 fv-row" style="text-align: left;">
-                            <label class="col-form-label fw-bold "><span class="">Final Approval </span></label>
-                        </div>
-                        <div class="col-lg-3 fv-row">
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col-lg-2 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Approval 2 </span></label>
-                        </div>
-                        <div class="col-lg-3 fv-row">
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Role 1</option>
-                                <option value="2">Role 2</option>
-                                <option value="3">Role 3</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col-lg-2 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Approval 3 </span></label>
-                        </div>
-                        <div class="col-lg-3 fv-row">
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Role 1</option>
-                                <option value="2">Role 2</option>
-                                <option value="3">Role 3</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col-lg-2 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Approval 4 </span></label>
-                        </div>
-                        <div class="col-lg-3 fv-row">
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Role 1</option>
-                                <option value="2">Role 2</option>
-                                <option value="3">Role 3</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col-lg-2 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Approval 5 </span></label>
-                        </div>
-                        <div class="col-lg-3 fv-row">
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Role 1</option>
-                                <option value="2">Role 2</option>
-                                <option value="3">Role 3</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        
-                    </div>
-                </form>
-            </div>
-            <!--end::Row-->
-        </div>
-    </div>
-</div>
+</app-approval-detials>
+<br>
+<app-financial-detials>
 
-<div class="card mb-5 mb-xl-10">
-    <!--begin::Card header-->
-    <div class="card-header card-header-stretch pb-0 panelBgColor3">
-        <!--begin::Title-->
-        <div class="card-title">
-            <h3 class="m-0">Financial Details</h3>
-        </div>
-        <!--end::Title-->
-    </div>
-    <!--end::Card header-->
-    <!--begin::Tab content-->
-    <div id="kt_billing_payment_tab_content" class="card-body tab-content">
-        <!--begin::Tab panel-->
-        <div id="kt_billing_creditcard" class="tab-pane fade show active" role="tabpanel">
-            <!--begin::Title-->
-            <!-- <h3 class="mb-5">Job Information</h3> -->
-            <!--end::Title-->
-            <!--begin::Row-->
-            <div class="row gx-9 gy-6">
-                <form autocomplete="off">
-                    <div class="row mb-6">
-                        <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Loan Account</span></label>
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Married</option>
-                                <option value="2">Single</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Hajj Account</span></label>
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Married</option>
-                                <option value="2">Single</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Per Load Act</span></label>
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Married</option>
-                                <option value="2">Single</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mb-6">
-                        <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Consumer Loan </span></label>
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Married</option>
-                                <option value="2">Single</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Other Act # 1</span></label>
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Married</option>
-                                <option value="2">Single</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Other Act # 2</span></label>
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Married</option>
-                                <option value="2">Single</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mb-6">
-                        <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Other Act # 3 </span></label>
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Married</option>
-                                <option value="2">Single</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6"><span class="">Other Act # 4</span></label>
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Married</option>
-                                <option value="2">Single</option>
-                            </select>
-                        </div>
+</app-financial-detials>
 
-                    </div>
-                </form>
-            </div>
-            <!--end::Row-->
-        </div>
 
-    </div>
-    <!--end::Tab content-->
-</div>
+

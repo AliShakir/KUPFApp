@@ -5,12 +5,12 @@
 <div class="card mb-5 mb-xl-10">
     <div class="card-header border-0 cursor-pointer panelBgColor3" role="button" data-bs-toggle="collapse"
         data-bs-target="#kt_account_email_preferences" aria-expanded="true"
-        aria-controls="kt_account_email_preferences" *ngFor="let label of formHeaderLabels$ | async let i = index;">
-        <div class="card-title m-0">
-            <h3 class="fw-bolder m-0 ArFontStyle" lang="AR-SA" id="SearchForm">{{label.headerName}}</h3>
+        aria-controls="kt_account_email_preferences">
+        <div class="card-title m-0" *ngFor="let label of formHeaderLabels let i = index;">
+            <h3 class="fw-bolder m-0 ArFontStyle" lang="AR-SA" id="SearchForm" >{{label.headerName}}</h3>
         </div>
     </div>
-    <div id="kt_account_email_preferences" class="collapse show">
+    <div id="kt_account_email_preferences" class="collapse show" *ngFor="let bodyLabel of formBodyLabels; let i = index">
         <form class="form">            
             <div class="card-body border-top px-9 py-9">                
                 <div class="row mb-4">
@@ -25,26 +25,26 @@
                         </select>
                     </div>
                     <div class="col-lg-2">
-                        <button type="button" class="btn btn-sm btn-success ArFontStyle" lang="AR-SA" (click)="open(sponsorModal)"  *ngFor="let item of formBodyLabels | filterLabels:'btnSelectSponsor'">{{item.title}}</button>
+                        <button type="button" class="btn btn-sm btn-success" lang="AR-SA" (click)="open(sponsorModal)" [style]='arabicFont'>{{bodyLabel[0].title}}</button>
                     </div>                    
                 </div>
                 <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed p-6">
                     <div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
                         <div class="row mb-4">
                             <div class="col-lg-3 fv-row">
-                                <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblPFId'">{{item.title}}</label>
+                                <label class="form-label" for="form3Example1 " lang="AR-SA" [style]='arabicFont'>{{bodyLabel[2].title}}</label>
                                 <input type="text" id="form3Example1" class="form-control" />
                             </div>
                             <div class="col-lg-3 fv-row">
-                                <label class="form-label" for="form3Example2 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblCId'">{{item.title}}</label>
+                                <label class="form-label" for="form3Example2 " lang="AR-SA" [style]='arabicFont'>{{bodyLabel[3].title}}</label>
                                 <input type="text" id="form3Example2" class="form-control" />
                             </div>
                             <div class="col-lg-3 fv-row">
-                                <label class="form-label" for="form3Example2 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblEmpId'">{{item.title}}</label>
+                                <label class="form-label" for="form3Example2 " lang="AR-SA" [style]='arabicFont'>{{bodyLabel[4].title}}</label>
                                 <input type="text" id="form3Example2" class="form-control" />
                             </div>
                             <div class="col-lg-3 fv-row">
-                                <button type="button" class="btn btn-primary mt-8 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'btnSearch'">{{item.title}}</button>
+                                <button type="button" class="btn btn-primary mt-8 " lang="AR-SA" [style]='arabicFont'>{{bodyLabel[5].title}}</button>
                             </div>
                             
                         </div>
@@ -54,63 +54,63 @@
                 <div class="separator separator-dashed my-6"></div>
                 <div class="row mb-4">
                     <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblName'">{{item.title}}</label>
-                        <input type="text" id="form3Example1" class="form-control ArFontStyle" lang="AR-SA" readonly />
+                        <label class="form-label" for="form3Example1 " lang="AR-SA" [style]='arabicFont'>{{bodyLabel[6].title}}</label>
+                        <input type="text" id="form3Example1" class="form-control " lang="AR-SA" readonly />
                     </div>
                     <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblGender'">{{item.title}}</label>
+                        <label class="form-label" for="form3Example1 " lang="AR-SA" [style]='arabicFont'>{{bodyLabel[7].title}}</label>
                         <input type="text" id="form3Example1" class="form-control" readonly/>
                     </div>
                     <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblMembershipDate'">{{item.title}}</label>
+                        <label class="form-label" for="form3Example1 " lang="AR-SA" [style]='arabicFont'>{{bodyLabel[8].title}}</label>
                         <input type="text" id="form3Example1" class="form-control" readonly/>
                     </div>
                     <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblDateOfBirth'">{{item.title}}</label>
+                        <label class="form-label" for="form3Example1 " lang="AR-SA" [style]='arabicFont'>{{bodyLabel[9].title}}</label>
                         <input type="text" id="form3Example1" class="form-control" readonly/>
                     </div>
                 </div>
                 <div class="row mb-4">
                     <div class="col-lg-6 fv-row">
-                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblMembershipStatus'">{{item.title}}</label>
+                        <label class="form-label" for="form3Example1 " lang="AR-SA" [style]='arabicFont'>{{bodyLabel[10].title}}</label>
                         <input type="text" id="form3Example1" class="form-control" readonly/>
                     </div>
                     <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblNationality'">{{item.title}}</label>
+                        <label class="form-label" for="form3Example1 " lang="AR-SA" [style]='arabicFont'>{{bodyLabel[11].title}}</label>
                         <input type="text" id="form3Example1" class="form-control" readonly/>
                     </div>
                     <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblContractType'">{{item.title}}</label>
+                        <label class="form-label" for="form3Example1 " lang="AR-SA" [style]='arabicFont'>{{bodyLabel[12].title}}</label>
                         <input type="text" id="form3Example1" class="form-control" readonly />
                     </div>                    
                 </div>
                 <div class="row mb-4">
                     <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblOccupation'">{{item.title}}</label>
+                        <label class="form-label" for="form3Example1 " lang="AR-SA" [style]='arabicFont'>{{bodyLabel[13].title}}</label>
                         <input type="text" id="form3Example1" class="form-control" readonly/>
                     </div>
                 </div>
                 <div class="row mb-4">
                     <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblDepartment'">{{item.title}}</label>
+                        <label class="form-label" for="form3Example1 " lang="AR-SA" [style]='arabicFont'>{{bodyLabel[14].title}}</label>
                         <input type="text" id="form3Example1" class="form-control" readonly/>
                     </div>
                     <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblMonthlySalary'">{{item.title}}</label>
+                        <label class="form-label" for="form3Example1 " lang="AR-SA" [style]='arabicFont'>{{bodyLabel[15].title}}</label>
                         <input type="number" id="form3Example1" class="form-control" readonly/>
                     </div>
                     <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblMobile'">{{item.title}}</label>
+                        <label class="form-label" for="form3Example1 " lang="AR-SA" [style]='arabicFont'>{{bodyLabel[16].title}}</label>
                         <input type="text" id="form3Example1" class="form-control" readonly/>
                     </div>
                     <div class="col-lg-3 fv-row">
-                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblLandLine'">{{item.title}}</label>
+                        <label class="form-label" for="form3Example1" lang="AR-SA"  [style]='arabicFont'>{{bodyLabel[17].title}}</label>
                         <input type="text" id="form3Example1" class="form-control" readonly/>
                     </div>
                 </div>
                 <div class="row mb-4">
                     <div class="col-lg-6 fv-row">
-                        <label class="form-label" for="form3Example1 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblNotes'">{{item.title}}</label>
+                        <label class="form-label" for="form3Example1 " lang="AR-SA" [style]='arabicFont'>{{bodyLabel[18].title}}</label>
                         <input type="text" id="form3Example1" class="form-control" readonly/>
                     </div>
                 </div>

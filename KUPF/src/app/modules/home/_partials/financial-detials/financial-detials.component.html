@@ -2,15 +2,15 @@
 <input type="hidden" #FinancialDetails name="FinancialDetails" value="FinancialDetails">
 <ngb-accordion #acc="ngbAccordion" class="mb-2" opened="false"><!--activeIds="ngb-panel-0"-->
     <ngb-panel>
-        <ng-template ngbPanelTitle *ngFor="let label of formHeaderLabels$ | async let i = index;">
-            <h3 class="m-0 ArFontStyle" lang="AR-SA" id="AddSubscription">{{label.headerName}}</h3>  
+        <ng-template ngbPanelTitle *ngFor="let label of formHeaderLabels; let i = index">
+            <h3 class="m-0 ArFontStyle" lang="AR-SA" id="FinancialDetails">{{label.headerName}}</h3>  
           </ng-template>
       <ng-template ngbPanelContent>
-        <div class="row gx-9 gy-6">
+        <div class="row gx-9 gy-6" *ngFor="let bodyLabel of formBodyLabels; let i = index">
             <form autocomplete="off">
                 <div class="row mb-6">
                     <div class="col-lg-4 fv-row">
-                        <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblLoanAccount'">{{item.title}}</label>
+                        <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[0].title}}</label>
                         <select class="form-control bg-light" aria-label="Select example">
                             <option>-Select-</option>
                             <option value="1">Option 1</option>
@@ -19,7 +19,7 @@
                         </select>
                     </div>
                     <div class="col-lg-4 fv-row">
-                        <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblHajjAccount'">{{item.title}}</label>
+                        <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[1].title}}</label>
                         <select class="form-control bg-light" aria-label="Select example">
                             <option>-Select-</option>
                             <option value="1">Option 1</option>
@@ -28,36 +28,7 @@
                         </select>
                     </div>
                     <div class="col-lg-4 fv-row">
-                        <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblPerLoad Act'">{{item.title}}</label>
-                        <select class="form-control bg-light" aria-label="Select example">
-                            <option>-Select-</option>
-                            <option value="1">Option 1</option>
-                            <option value="2">Option 2</option>
-                            <option value="2">Option 3</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row mb-6">
-                    <div class="col-lg-4 fv-row">
-                        <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblConsumerLoan'">{{item.title}} </label>
-                        <select class="form-control bg-light" aria-label="Select example">
-                            <option>-Select-</option>
-                            <option value="1">Option 1</option>
-                            <option value="2">Option 2</option>
-                            <option value="2">Option 3</option>
-                        </select>
-                    </div>
-                    <div class="col-lg-4 fv-row">
-                        <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblOtherAct1'">{{item.title}} </label>
-                        <select class="form-control bg-light" aria-label="Select example">
-                            <option>-Select-</option>
-                            <option value="1">Option 1</option>
-                            <option value="2">Option 2</option>
-                            <option value="2">Option 3</option>
-                        </select>
-                    </div>
-                    <div class="col-lg-4 fv-row">
-                        <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblOtherAct2'">{{item.title}} </label>
+                        <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[2].title}}</label>
                         <select class="form-control bg-light" aria-label="Select example">
                             <option>-Select-</option>
                             <option value="1">Option 1</option>
@@ -68,7 +39,7 @@
                 </div>
                 <div class="row mb-6">
                     <div class="col-lg-4 fv-row">
-                        <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblOtherAct3'">{{item.title}} </label>
+                        <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[3].title}} </label>
                         <select class="form-control bg-light" aria-label="Select example">
                             <option>-Select-</option>
                             <option value="1">Option 1</option>
@@ -77,7 +48,36 @@
                         </select>
                     </div>
                     <div class="col-lg-4 fv-row">
-                        <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblOtherAct4'">{{item.title}} </label>
+                        <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[4].title}} </label>
+                        <select class="form-control bg-light" aria-label="Select example">
+                            <option>-Select-</option>
+                            <option value="1">Option 1</option>
+                            <option value="2">Option 2</option>
+                            <option value="2">Option 3</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-4 fv-row">
+                        <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[5].title}} </label>
+                        <select class="form-control bg-light" aria-label="Select example">
+                            <option>-Select-</option>
+                            <option value="1">Option 1</option>
+                            <option value="2">Option 2</option>
+                            <option value="2">Option 3</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-6">
+                    <div class="col-lg-4 fv-row">
+                        <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[6].title}} </label>
+                        <select class="form-control bg-light" aria-label="Select example">
+                            <option>-Select-</option>
+                            <option value="1">Option 1</option>
+                            <option value="2">Option 2</option>
+                            <option value="2">Option 3</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-4 fv-row">
+                        <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[7].title}} </label>
                         <select class="form-control bg-light" aria-label="Select example">
                             <option>-Select-</option>
                             <option value="1">Option 1</option>

@@ -2,9 +2,9 @@
 <input type="hidden" #ImportArchieves name="ImportArchieves" value="ImportArchieves">
 <div class="card mb-5 mb-xl-10">
     <!--begin::Card header-->
-    <div class="card-header card-header-stretch pb-0 panelBackgroundColor" *ngFor="let label of formHeaderLabels$ | async let i = index;">
+    <div class="card-header card-header-stretch pb-0 panelBackgroundColor">
         <!--begin::Title-->
-        <div class="card-title">
+        <div class="card-title" *ngFor="let label of formHeaderLabels; let i = index">
             <h3 class="m-0 ArFontStyle" lang="AR-SA" id="ImportArchieves">{{label.headerName}}</h3>
         </div>
         <!--end::Title-->
@@ -21,11 +21,11 @@
             <div class="row gx-9 gy-6">
                 <form autocomplete="off">                    
                     <div class="row mb-4">
-                        <div class="col-lg-6 fv-row">
+                        <div class="col-lg-6 fv-row" *ngFor="let bodyLabel of formBodyLabels; let i = index">
                             <div class="mt-4">
-                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblUploadExcelSheet'">{{item.title}}</label>
+                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA" >{{bodyLabel[0].title}}</label>
                                 <input class="form-control" type="file" id="formFile">
-                                <span><small class="text-danger ArFontStyle" lang="AR-SA"> Only .xlsx file are allowed</small></span>
+                                <span><small class="text-danger ArFontStyle" lang="AR-SA"></small></span>
                               </div>
                         </div>
                     </div>
@@ -33,12 +33,11 @@
             </div>
             <!--end::Row-->
         </div>
-
     </div>
     <!--end::Tab content-->
-    <div class="card-footer d-flex justify-content-end py-6 px-9 ">
+    <div class="card-footer d-flex justify-content-end py-6 px-9 " *ngFor="let bodyLabel of formBodyLabels; let i = index">
        <div class="d-flex">
-            <a href="#" class="btn btn-primary me-3 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'btnUpload'">{{item.title}}</a>
+            <a href="#" class="btn btn-primary me-3 ArFontStyle">{{bodyLabel[2].title}}</a>
         </div>
     </div>
 </div>

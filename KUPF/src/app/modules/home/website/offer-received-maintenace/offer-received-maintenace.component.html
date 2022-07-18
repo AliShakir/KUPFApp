@@ -2,15 +2,15 @@
 <input type="hidden" #OfferDetails name="OfferDetails" value="OfferDetails">
 <div class="card mb-5 mb-xl-10">
     <!--begin::Card header-->
-    <div class="card-header card-header-stretch pb-0 bg-light-dark" *ngFor="let label of formHeaderLabels$ | async let i = index;">
+    <div class="card-header card-header-stretch pb-0 bg-light-dark">
         <!--begin::Title-->
-        <div class="card-title">
+        <div class="card-title" *ngFor="let label of formHeaderLabels; let i = index">
             <h3 class="m-0 ArFontStyle" lang="AR-SA" id="AddSpecialOffer">{{label.headerName}}</h3>
         </div>
-        <h3 class="card-title align-items-start flex-column">
+        <h3 class="card-title align-items-start flex-column" *ngFor="let bodyLabel of formBodyLabels; let i = index">
             <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-primary ArFontStyle" *ngFor="let item of formBodyLabels | filterLabels:'btnSave'">{{item.title}}</button>
-                <button type="button" class="btn btn-warning ArFontStyle" *ngFor="let item of formBodyLabels | filterLabels:'btnCancle'">{{item.title}}</button>
+                <button type="button" class="btn btn-primary ArFontStyle">{{bodyLabel[0].title}}</button>
+                <button type="button" class="btn btn-warning ArFontStyle">{{bodyLabel[1].title}}</button>
               </div>
               
         </h3>
@@ -25,17 +25,17 @@
             <!-- <h3 class="mb-5">Personal Information</h3> -->
             <!--end::Title-->
             <!--begin::Row-->
-            <div class="row gx-9 gy-6">
+            <div class="row gx-9 gy-6" *ngFor="let bodyLabel of formBodyLabels; let i = index">
                 <form autocomplete="off">
                     <div class="row mb-4">
                         <div class="col-lg-6 fv-row">
                             <div class="mt-4">
-                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblUploadImage'">{{item.title}}</label>
+                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">{{bodyLabel[2].title}}</label>
                                 <input class="form-control" type="file" id="formFile">
                               </div>
                         </div> 
                         <div class="col-lg-6 fv-row">
-                            <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblSpecialOffer'">{{item.title}}</label>
+                            <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[3].title}}</label>
                             <select class="form-control bg-light" aria-label="Select example">
                                 <option>-Select-</option>
                                 <option value="1">ConsumerLoanType</option>
@@ -49,18 +49,18 @@
                         </div>
                                                
                     </div>
-                    <div class="row mb-4">                   
+                    <div class="row mb-4">                
                         
                         <div class="col-lg-4 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblOfferStart'">{{item.title}}</label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[4].title}}</label>
                             <input type="date" class="form-control form-control-lg  mb-3 mb-lg-0" />
                         </div>
                         <div class="col-lg-4 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblOfferEnd'">{{item.title}}</label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[5].title}}</label>
                             <input type="date" class="form-control form-control-lg  mb-3 mb-lg-0" />
                         </div>
                         <div class="col-lg-4 fv-row">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblAmount'">{{item.title}}</label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[6].title}}</label>
                             <input type="number" class="form-control form-control-lg  mb-3 mb-lg-0" />
                         </div>
                     </div>
@@ -69,15 +69,14 @@
             </div>
             <!--end::Row-->
         </div>
-        <!-- <app-date-input [formControl]='registerForm.controls["dateOfBirth"]' [label]='"dateOfBirth"' [maxDate]="maxDate"></app-date-input> -->
        
     </div>
     
 </div>
 <div class="card mb-5 mb-xl-8">
     <!--begin::Header-->
-    <div class="card-header border-0 pt-5 bg-light-dark" *ngFor="let item of formBodyLabels | filterLabels:'lblOfferDetails'">       
-        <h3 class="m-0 ArFontStyle" lang="AR-SA"> {{item.title}} </h3>
+    <div class="card-header border-0 pt-5 bg-light-dark" *ngFor="let bodyLabel of formBodyLabels; let i = index">       
+        <h3 class="m-0 ArFontStyle" lang="AR-SA">{{bodyLabel[8].title}}</h3>
     </div>
     <!--end::Header-->
     <!--begin::Body-->
@@ -174,12 +173,12 @@
             <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
                 <!--begin::Table head-->
                 <thead class="bg-dark">
-                    <tr class="fw-bolder text-white">
-                        <th class="min-w-80px text-center ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblAction'">{{item.title}}</th>
-                        <th class="min-w-100px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblOfferDetails'">{{item.title}}</th>
-                        <th class="min-w-120px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblOfferStart'">{{item.title}}</th>
-                        <th class="min-w-120px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblOfferEnd'">{{item.title}}</th>
-                        <th class="min-w-120px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblAmount'">{{item.title}}</th>
+                    <tr class="fw-bolder text-white" *ngFor="let bodyLabel of formBodyLabels; let i = index">
+                        <th class="min-w-80px text-center ArFontStyle" lang="AR-SA">{{bodyLabel[7].title}}</th>
+                        <th class="min-w-100px ArFontStyle" lang="AR-SA">{{bodyLabel[3].title}}</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA">{{bodyLabel[4].title}}</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA">{{bodyLabel[5].title}}</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA">{{bodyLabel[6].title}}</th>
                     </tr>
                 </thead>
                 <!--end::Table head-->

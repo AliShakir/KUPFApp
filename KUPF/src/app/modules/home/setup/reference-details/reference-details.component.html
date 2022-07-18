@@ -2,11 +2,11 @@
 <input type="hidden" #RefTableEntry name="RefTableEntry" value="RefTableEntry">
 <div class="card mb-5 mb-xl-8">
     <!--begin::Header-->
-    <div class="card-header border-0 pt-5 bg-light" *ngFor="let label of formHeaderLabels$ | async let i = index;">        
-        <div class="card-toolbar">
+    <div class="card-header border-0 pt-5 bg-light">        
+        <div class="card-toolbar" *ngFor="let label of formHeaderLabels; let i = index">
             <h3 class="text-dark ArFontStyle" lang="AR-SA" id="RefTableEntry">{{label.headerName}}</h3>
         </div>
-        <h3 class="card-title align-items-start flex-column">
+        <h3 class="card-title align-items-start flex-column" *ngFor="let bodyLabel of formBodyLabels; let i = index">
             <a class="btn btn-primary w-100" (click)="open(mymodal)">
 
                 <span class="svg-icon svg-icon-2">
@@ -19,7 +19,7 @@
                             fill="currentColor"></path>
                     </svg>
                 </span>
-                Add Ref Table</a>
+                {{bodyLabel[1].title}}</a>
         </h3>
     </div>
     <!--end::Header-->
@@ -117,14 +117,14 @@
             <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
                 <!--begin::Table head-->
                 <thead>
-                    <tr class="fw-bolder text-muted">
+                    <tr class="fw-bolder text-muted" *ngFor="let bodyLabel of formBodyLabels; let i = index">
                         <th class="min-w-100px ArFontStyle" lang="AR-SA">Action</th>
                         <th class="min-w-100px ArFontStyle" lang="AR-SA">Sr No</th>
-                        <th class="min-w-140px ArFontStyle" lang="AR-SA">Middle Name</th>
-                        <th class="min-w-120px ArFontStyle" lang="AR-SA">Category Name</th>
-                        <th class="min-w-120px ArFontStyle" lang="AR-SA">Short Name</th>
-                        <th class="min-w-120px ArFontStyle" lang="AR-SA">Ref Name</th>
-                        <th class="min-w-120px ArFontStyle" lang="AR-SA">Switch Name</th>
+                        <th class="min-w-140px ArFontStyle" lang="AR-SA">{{bodyLabel[2].title}}</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA">{{bodyLabel[3].title}}</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA">{{bodyLabel[4].title}}</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA">{{bodyLabel[5].title}}</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA">{{bodyLabel[6].title}}</th>
                     </tr>
                 </thead>
                 <!--end::Table head-->
