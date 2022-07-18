@@ -5,7 +5,12 @@
 /MyWork/Running Projects/Mr. Johar/KUPF/KUPF/.angular
 /MyWork/Running Projects/Mr. Johar/KUPF/KUPF/.vscode
 /MyWork/Running Projects/Mr. Johar/KUPF/KUPF/.tmp.driveupload
-
+/.angular/cache
+/.angular
+/.vscode
+/.tmp.driveupload
+/API/bin
+/API/obj
 .tmp.driveupload
 desktop.ini
 .angular
