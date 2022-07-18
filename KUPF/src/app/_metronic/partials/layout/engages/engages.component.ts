@@ -7,50 +7,38 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./engages.component.scss']
 })
 export class EngagesComponent implements OnInit {
-  siteLanguage = 'English';
-  languageList =[
-    {code: 'en', label:'English'},
-    {code: 'ar', label:'Arabic'}
-  ]
-  constructor(private translate: TranslateService) { 
-}
+
+  ifLanguageAlreadySelected: string | null;
+  ifAlreadySelected:boolean;
+  constructor() { }
 
 
   ngOnInit(): void {
-    
+
   }
-  switchToAr(localeCode:string) { 
-  //  const selectedLanguage = this.languageList
-  //  .find((langauage)=> langauage.code === localeCode)
-  //  ?.label.toString();
-  //  if(selectedLanguage){
-  //   this.siteLanguage = selectedLanguage;
-  //   this.translate.use(localeCode);
-  //  }
-    // Get current URL
-    //let currentUrl =  window.location.origin
-    // Set Language to AR
-    localStorage.setItem('lang',localeCode);
-    // Set Language value 
-    localStorage.setItem('langType','2');
-    location.reload();
-    //location.href = currentUrl+'/#/dashboard';    
+  // Set Language to AR
+  switchToAr(language: string) {
+    this.ifLanguageAlreadySelected = localStorage.getItem('lang');
+    if (this.ifLanguageAlreadySelected != 'ar') {
+      localStorage.setItem('lang', language);
+      // Set Language value 
+      localStorage.setItem('langType', '2');
+      location.reload();
+    }
+
+
+
   }
-  switchToEn(localeCode:string) {  
-  //   const selectedLanguage = this.languageList
-  //  .find((langauage)=> langauage.code === localeCode)
-  //  ?.label.toString();
-  //  if(selectedLanguage){
-  //   this.siteLanguage = selectedLanguage;
-  //   this.translate.use(localeCode);
-    // Get current URL
-    let currentUrl =  window.location.origin
-    // Set Language to EN
-    localStorage.setItem('lang',localeCode);
-    // Set Language value
-    localStorage.setItem('langType','1');
-    location.reload();
-   // location.href = currentUrl+'/#/dashboard'; 
+  // Set Language to EN
+  switchToEn(language: string) {
+    this.ifLanguageAlreadySelected = localStorage.getItem('lang');
+    if (this.ifLanguageAlreadySelected != 'en') {
+      this.ifAlreadySelected = true;
+      localStorage.setItem('lang', language);
+      // Set Language value
+      localStorage.setItem('langType', '1');
+      location.reload();
+    }
   }
 }
 
