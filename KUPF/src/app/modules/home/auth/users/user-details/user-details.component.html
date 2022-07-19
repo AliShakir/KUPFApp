@@ -2,20 +2,22 @@
 <input type="hidden" #SystemUserDetails name="SystemUserDetails" value="SystemUserDetails">
 <div class="card mb-5 mb-xl-8 ">
     <!--begin::Header-->
-    <div class="card-header border-0 pt-5 panel1bgColor">        
-        <div class="card-toolbar">
-            <h3 class="text-white ArFontStyle" lang="AR-SA">Users</h3>
+    <div class="card-header border-0 pt-5 panel1bgColor">
+        <div class="card-toolbar" *ngFor="let label of formHeaderLabels; let i = index">
+            <h3 class="text-white ArFontStyle" lang="AR-SA">{{label.headerName}}</h3>
         </div>
         <h3 class="card-title align-items-start flex-column">
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA" routerLink="/users/add-user" *ngFor="let item of formBodyLabels | filterLabels:'btnAddUser'">{{item.title}}</button>
-              </div>
+            <div class="btn-group" role="group" aria-label="Basic example"
+                *ngFor="let bodyLabel of formBodyLabels; let i = index">
+                <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA"
+                    routerLink="/users/add-user">{{bodyLabel[0].title}}</button>
+            </div>
         </h3>
     </div>
     <!--end::Header-->
     <!--begin::Body-->
     <div class="card-body py-3">
-        <div class="card-toolbar">            
+        <div class="card-toolbar">
             <!--begin::Menu-->
             <button type="button" class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
                 data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
@@ -102,188 +104,213 @@
             <!--end::Menu-->
         </div>
         <!--begin::Table container-->
-         <!--begin::Table container-->
-         <div class="table-responsive mt-3">
+        <!--begin::Table container-->
+        <div class="table-responsive mt-3">
             <!--begin::Table-->
             <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
                 <!--begin::Table head-->
                 <thead class="bg-secondary">
-                    <tr class="fw-bolder">
-                        <th class="min-w-80px text-center ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblActions'">{{item.title}}</th>
-                           <th class="min-w-100px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblFullName'">{{item.title}}</th>
-                      <th class="min-w-140px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblTenant'">{{item.title}}</th>
-                        <th class="min-w-120px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblLocation'">{{item.title}}</th>
-                        <th class="min-w-120px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblEmail'">{{item.title}}</th>
-                        <th class="min-w-120px ArFontStyle" lang="AR-SA" *ngFor="let item of formBodyLabels | filterLabels:'lblUsername'">{{item.title}}</th>
+                    <tr class="fw-bolder" *ngFor="let bodyLabel of formBodyLabels; let i = index">
+                        <th class="min-w-80px text-center ArFontStyle" lang="AR-SA">{{bodyLabel[1].title}}</th>
+                        <th class="min-w-100px ArFontStyle" lang="AR-SA">{{bodyLabel[2].title}}</th>
+                        <th class="min-w-140px ArFontStyle" lang="AR-SA">{{bodyLabel[3].title}}</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA">{{bodyLabel[4].title}}</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA">{{bodyLabel[5].title}}</th>
+                        <th class="min-w-120px ArFontStyle" lang="AR-SA">{{bodyLabel[6].title}}</th>
                     </tr>
                 </thead>
                 <!--end::Table head-->
                 <!--begin::Table body-->
                 <tbody>
                     <tr>
-                        <td class="text-center">                            
+                        <td class="text-center">
                             <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
                             </a>
                             | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
-                            </a>                            
+                            </a>
                         </td>
                         <td>
-                            <a href="javascript:void(0)"class="text-dark fw-bolder text-hover-primary  fs-6 ArFontStyle" lang="AR-SA">		
+                            <a href="javascript:void(0)"
+                                class="text-dark fw-bolder text-hover-primary  fs-6 ArFontStyle" lang="AR-SA">
                                 رشيد سالم احمد العميرى
                             </a>
                         </td>
                         <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle"
+                                lang="AR-SA">
                                 21
                             </a>
                         </td>
                         <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle"
+                                lang="AR-SA">
                                 الكويت
                             </a>
                         </td>
                         <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle"
+                                lang="AR-SA">
                                 rasheed.alameeri@ku.edu.kw
                             </a>
-                        </td>   
+                        </td>
                         <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle"
+                                lang="AR-SA">
                                 rashid786
                             </a>
-                        </td>   
+                        </td>
                     </tr>
                     <tr>
-                        <td class="text-center">                            
+                        <td class="text-center">
                             <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
                             </a>
                             | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
-                            </a>                            
+                            </a>
                         </td>
                         <td>
-                            <a href="javascript:void(0)"class="text-dark fw-bolder text-hover-primary  fs-6 ArFontStyle" lang="AR-SA">		
+                            <a href="javascript:void(0)"
+                                class="text-dark fw-bolder text-hover-primary  fs-6 ArFontStyle" lang="AR-SA">
                                 نجاه عبدالقادر جاسم القناعي
                             </a>
                         </td>
                         <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle"
+                                lang="AR-SA">
                                 21
                             </a>
                         </td>
                         <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle"
+                                lang="AR-SA">
                                 الكويت
                             </a>
                         </td>
                         <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle"
+                                lang="AR-SA">
                                 najat.elquenaey@ku.edu.kw
                             </a>
-                        </td>   
+                        </td>
                         <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle"
+                                lang="AR-SA">
                                 najat_jasim12
                             </a>
-                        </td>   
+                        </td>
                     </tr>
                     <tr>
-                        <td class="text-center">                            
+                        <td class="text-center">
                             <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
                             </a>
                             | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
-                            </a>                            
+                            </a>
                         </td>
                         <td>
-                            <a href="javascript:void(0)"class="text-dark fw-bolder text-hover-primary  fs-6 ArFontStyle" lang="AR-SA">		
+                            <a href="javascript:void(0)"
+                                class="text-dark fw-bolder text-hover-primary  fs-6 ArFontStyle" lang="AR-SA">
                                 سالم مرزوق راشد الطحيح
                             </a>
                         </td>
                         <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle"
+                                lang="AR-SA">
                                 21
                             </a>
                         </td>
                         <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle"
+                                lang="AR-SA">
                                 الكويت
                             </a>
                         </td>
                         <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle"
+                                lang="AR-SA">
                                 salem.altuhaih@ku.edu.kw
                             </a>
-                        </td>   
+                        </td>
                         <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle"
+                                lang="AR-SA">
                                 salem.altuhaih
                             </a>
-                        </td>   
+                        </td>
                     </tr>
                     <tr>
-                        <td class="text-center">                            
+                        <td class="text-center">
                             <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
                             </a>
                             | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
-                            </a>                            
+                            </a>
                         </td>
                         <td>
-                            <a href="javascript:void(0)"class="text-dark fw-bolder text-hover-primary  fs-6 ArFontStyle" lang="AR-SA">		
+                            <a href="javascript:void(0)"
+                                class="text-dark fw-bolder text-hover-primary  fs-6 ArFontStyle" lang="AR-SA">
                                 على ذياب على المشوط
                             </a>
                         </td>
                         <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle"
+                                lang="AR-SA">
                                 21
                             </a>
                         </td>
                         <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle"
+                                lang="AR-SA">
                                 الكويت
                             </a>
                         </td>
                         <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle"
+                                lang="AR-SA">
                                 ali.almishwat@ku.edu.kw
                             </a>
-                        </td>   
+                        </td>
                         <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle"
+                                lang="AR-SA">
                                 ali.almishwat
                             </a>
-                        </td>   
+                        </td>
                     </tr>
                     <tr>
-                        <td class="text-center">                            
+                        <td class="text-center">
                             <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
                             </a>
                             | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
-                            </a>                            
+                            </a>
                         </td>
                         <td>
-                            <a href="javascript:void(0)"class="text-dark fw-bolder text-hover-primary  fs-6 ArFontStyle" lang="AR-SA">		
+                            <a href="javascript:void(0)"
+                                class="text-dark fw-bolder text-hover-primary  fs-6 ArFontStyle" lang="AR-SA">
                                 ناصر حسن جوهر حياه
                             </a>
                         </td>
                         <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle"
+                                lang="AR-SA">
                                 21
                             </a>
                         </td>
                         <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle"
+                                lang="AR-SA">
                                 الكويت
                             </a>
                         </td>
                         <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle"
+                                lang="AR-SA">
                                 nasser.hayat@ku.edu.kw
                             </a>
-                        </td>   
+                        </td>
                         <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">
+                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle"
+                                lang="AR-SA">
                                 nasser.hayat
                             </a>
-                        </td>   
+                        </td>
                     </tr>
                 </tbody>
                 <!--end::Table body-->
@@ -295,6 +322,6 @@
     </div>
     <!--begin::Body-->
     <div class="card-footer">
-        
+
     </div>
 </div>

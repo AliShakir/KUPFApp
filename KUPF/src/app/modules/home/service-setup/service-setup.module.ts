@@ -36,7 +36,8 @@ import { NgxTranslateModule } from '../../i18n';
     FormsModule,
     SearchTabModule,
     SharedModule,
-    NgxTranslateModule
+    NgxTranslateModule,
+    
   ]
 })
 export class ServiceSetupModule { }
