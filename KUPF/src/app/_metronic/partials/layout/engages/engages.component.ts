@@ -30,12 +30,10 @@ export class EngagesComponent implements OnInit {
       localStorage.setItem('lang', language);
       // Set Language value 
       localStorage.setItem('langType', '2');
-    //   this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-    //     this.router.navigate([this.currentURL]);
-    //     console.log(this.currentURL);
-    // });
-      location.reload();
-      //this.reload(this.currentURL);
+      let currentUrl = this.router.url;
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+      this.router.onSameUrlNavigation = 'reload';
+      this.router.navigate([currentUrl]);
     }
 
 
@@ -48,13 +46,12 @@ export class EngagesComponent implements OnInit {
       this.ifAlreadySelected = true;
       localStorage.setItem('lang', language);
       // Set Language value
-      localStorage.setItem('langType', '1');
-    //   this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-    //     this.router.navigate([this.currentURL]);
-    //     console.log(this.currentURL);
-    // });
-      //this.reload(this.currentURL);
-      location.reload();
+      localStorage.setItem('langType', '1');      
+        let currentUrl = this.router.url;
+          this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+          this.router.onSameUrlNavigation = 'reload';
+          this.router.navigate([currentUrl]);
+      
     }
   }
   

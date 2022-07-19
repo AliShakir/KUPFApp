@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
 
 @Component({
@@ -34,7 +35,7 @@ export class SubscriptionDetailsComponent implements OnInit {
   //#endregion
 
 
-  constructor() {
+  constructor(private router: Router) {
 
   }
 
@@ -70,5 +71,10 @@ export class SubscriptionDetailsComponent implements OnInit {
     }
     //#endregion
   }
-
+  reloadPage(){
+    let currentUrl = this.router.url;
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+      this.router.onSameUrlNavigation = 'reload';
+      this.router.navigate([currentUrl]);
+  }
 }
