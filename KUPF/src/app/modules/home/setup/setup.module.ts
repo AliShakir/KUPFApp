@@ -10,8 +10,8 @@ import { EmployeeCertificateDetailsComponent } from './employee-certificate-deta
 import { AddSubscriptionComponent } from './add-subscription/add-subscription.component';
 import { SubscriptionDetailsComponent } from './subscription-details/subscription-details.component';
 import { SearchTabModule } from '../_partials/search-tab.module';
-import { SearchTabComponent } from '../_partials/search-tab/search-tab.component';
 import { SharedModule } from '../../_sharedModule/SharedModule';
+import { ManageFormLabelsComponent } from './manage-form-labels/manage-form-labels.component';
 
 
 
@@ -24,8 +24,8 @@ import { SharedModule } from '../../_sharedModule/SharedModule';
     AddEmployeeCertificateComponent,
     EmployeeCertificateDetailsComponent,
     AddSubscriptionComponent,
-    SubscriptionDetailsComponent
-    
+    SubscriptionDetailsComponent,
+    ManageFormLabelsComponent
   ],
   imports: [
     CommonModule,

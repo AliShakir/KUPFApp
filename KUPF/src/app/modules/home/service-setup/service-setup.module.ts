@@ -10,12 +10,12 @@ import { ServiceDetailsComponent } from './service-details/service-details.compo
 import { AddDocumentsComponent } from './add-documents/add-documents.component';
 import { ApprovalManagementComponent } from './approval-management/approval-management.component';
 import { ImportEmployeeMonthlyPaymentComponent } from './import-employee-monthly-payment/import-employee-monthly-payment.component';
-import { EmployeeMomentDetailsComponent } from './employee-moment-details/employee-moment-details.component';
-import { AddEmployeeMomentComponent } from './add-employee-moment/add-employee-moment.component';
+import { EmployeeMovementDetailsComponent } from './employee-moment-details/employee-movement-details.component';
+import { AddEmployeeMovementComponent } from './add-employee-moment/add-employee-movement.component';
 import { SearchTabModule } from '../_partials/search-tab.module';
-import { FilterLabelsPipe } from '../Pipes/filter-labels.pipe';
 import { SharedModule } from '../../_sharedModule/SharedModule';
 import { NgxTranslateModule } from '../../i18n';
+import { ManageFormLabelsComponent } from '../setup/manage-form-labels/manage-form-labels.component';
 @NgModule({
   declarations: [
     ServiceSetupDetailsComponent,
@@ -25,9 +25,9 @@ import { NgxTranslateModule } from '../../i18n';
     AddDocumentsComponent,
     ApprovalManagementComponent,
     ImportEmployeeMonthlyPaymentComponent,
-    EmployeeMomentDetailsComponent,
-    AddEmployeeMomentComponent, 
-     
+    EmployeeMovementDetailsComponent,
+    AddEmployeeMovementComponent
+    
   ],
   imports: [
     CommonModule,

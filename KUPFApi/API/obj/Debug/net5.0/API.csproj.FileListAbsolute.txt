@@ -66,10 +66,6 @@ E:\MyWork\Running Projects\Mr. Johar\KUPF\KUPFApi\API\obj\Debug\net5.0\API.dll
 E:\MyWork\Running Projects\Mr. Johar\KUPF\KUPFApi\API\obj\Debug\net5.0\ref\API.dll
 E:\MyWork\Running Projects\Mr. Johar\KUPF\KUPFApi\API\obj\Debug\net5.0\API.pdb
 E:\MyWork\Running Projects\Mr. Johar\KUPF\KUPFApi\API\obj\Debug\net5.0\API.genruntimeconfig.cache
-E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\publish\publish\publish\publish\web.config
-E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\publish\publish\publish\web.config
-E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\publish\publish\web.config
-E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\publish\web.config
 E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\web.config
 E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\appsettings.Development.json
 E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\appsettings.json
@@ -77,22 +73,6 @@ E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\
 E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\API.runtimeconfig.json
 E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\appsettings.Development.json
 E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\appsettings.json
-E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\publish\API.deps.json
-E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\publish\API.runtimeconfig.json
-E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\publish\appsettings.Development.json
-E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\publish\appsettings.json
-E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\publish\publish\API.deps.json
-E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\publish\publish\API.runtimeconfig.json
-E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\publish\publish\appsettings.Development.json
-E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\publish\publish\appsettings.json
-E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\publish\publish\publish\API.deps.json
-E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\publish\publish\publish\API.runtimeconfig.json
-E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\publish\publish\publish\appsettings.Development.json
-E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\publish\publish\publish\appsettings.json
-E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\publish\publish\publish\publish\API.deps.json
-E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\publish\publish\publish\publish\API.runtimeconfig.json
-E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\publish\publish\publish\publish\appsettings.Development.json
-E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\publish\publish\publish\publish\appsettings.json
 E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\API.exe
 E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\API.deps.json
 E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\API.runtimeconfig.json
@@ -159,3 +139,18 @@ E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\obj\Debug\net5.0\API.dll
 E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\obj\Debug\net5.0\ref\API.dll
 E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\obj\Debug\net5.0\API.pdb
 E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\obj\Debug\net5.0\API.genruntimeconfig.cache
+E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\publish\publish\web.config
+E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\publish\web.config
+E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\publish\API.deps.json
+E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\publish\API.runtimeconfig.json
+E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\publish\appsettings.Development.json
+E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\publish\appsettings.json
+E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\publish\publish\API.deps.json
+E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\publish\publish\API.runtimeconfig.json
+E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\publish\publish\appsettings.Development.json
+E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\bin\Debug\net5.0\publish\publish\publish\appsettings.json
+E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\publish\publish\publish\web.config
+E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\publish\publish\publish\API.deps.json
+E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\publish\publish\publish\API.runtimeconfig.json
+E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\publish\publish\publish\appsettings.Development.json
+E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\publish\publish\publish\appsettings.json

@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 
 const Routing: Routes = [
+  
   {
     path :'users',
     loadChildren:()=>import('../modules/home/auth/auth.module').then((m)=>m.AuthModule)

@@ -60,5 +60,12 @@ namespace API.Controllers
             var result = await _localizationService.GetAllAppLabels();
             return Ok(result);
         }
+        [HttpGet]
+        [Route("GetDistinctFormLabels")]
+        public async Task<ActionResult<IEnumerable<GetDistinctHDFormNameViewModel>>> GetDistinctFormLabels()
+        {
+            var result = await _localizationService.GetDistinctFormLabels();
+            return Ok(result);
+        }
     }
 }

@@ -2,7 +2,7 @@
 <div class="aside-logo flex-column-auto" id="kt_aside_logo">
   <!-- begin::Logo -->
   <ng-container *ngIf="asideTheme === 'dark'">
-    <a routerLink="/dashboard">
+    <a (click)="refreshLocalStorage()" href="javascript:void(0)">
       <img
         alt="Logo"
         class="logo" width="210px"

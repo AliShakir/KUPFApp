@@ -63,5 +63,12 @@ namespace API.Servivces.Implementation.Localization
             var data = _mapper.Map<IEnumerable<FormTitleHDLanguageDto>>(result);
             return data;
         }
+
+        public async Task<IEnumerable<GetDistinctHDFormNameDto>> GetDistinctFormLabels()
+        {
+            var result = await _context.FormTitleHDLanguage.Select(c => new GetDistinctHDFormNameDto { FormID = c.FormID }).Distinct().ToListAsync();
+            var data = _mapper.Map<IEnumerable<GetDistinctHDFormNameDto>>(result);
+            return data;
+        }
     }
 }

@@ -1,5 +1,4 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { FormTitleDt } from 'src/app/modules/models/formTitleDt';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
@@ -7,12 +6,11 @@ import { CommonService } from 'src/app/modules/_services/common.service';
 import { LocalizationService } from 'src/app/modules/_services/localization.service';
 
 @Component({
-  selector: 'app-employee-moment-details',
-  templateUrl: './employee-moment-details.component.html',
-  styleUrls: ['./employee-moment-details.component.scss']
+  selector: 'app-add-employee-movement',
+  templateUrl: './add-employee-movement.component.html',
+  styleUrls: ['./add-employee-movement.component.scss']
 })
-export class EmployeeMomentDetailsComponent implements OnInit {
-
+export class AddEmployeeMovementComponent implements OnInit {
 // /*********************/
 // formHeaderLabels$ :Observable<FormTitleHd[]>; 
 // formBodyLabels$ :Observable<FormTitleDt[]>; 
@@ -20,7 +18,7 @@ export class EmployeeMomentDetailsComponent implements OnInit {
 // id:string = '';
 // languageId:any;
 // // FormId to get form/App language
-// @ViewChild('MembershipTransactions') hidden:ElementRef;
+// @ViewChild('AddSubscription') hidden:ElementRef;
 // /*********************/
 //#region 
     /*----------------------------------------------------*/
@@ -45,10 +43,11 @@ export class EmployeeMomentDetailsComponent implements OnInit {
 
     /*----------------------------------------------------*/  
   //#endregion
-  selectedOpt: string = '';
-  constructor(private common: CommonService, private router: Router,private localizationService: LocalizationService) { }
+  formTitle:string;
+  constructor(private common: CommonService,private localizationService: LocalizationService) { }
 
   ngOnInit(): void {
+     this.formTitle = this.common.getFormTitle();
      //#region TO SETUP THE FORM LOCALIZATION    
     // TO GET THE LANGUAGE ID e.g. 1 = ENGLISH and 2 =  ARABIC
     this.languageType = localStorage.getItem('langType');
@@ -57,7 +56,7 @@ export class EmployeeMomentDetailsComponent implements OnInit {
     this.language = localStorage.getItem('lang');
 
     // To setup the form id so will will get form labels based on form Id
-    this.formId = 'MembershipTransactions';
+    this.formId = 'AddEmployeeMovement';
 
     // Check if LocalStorage is Not NULL
     if (localStorage.getItem('AppLabels') != null) {
@@ -72,44 +71,31 @@ export class EmployeeMomentDetailsComponent implements OnInit {
           this.formHeaderLabels.push(labels);
 
           this.formBodyLabels.push(labels.formTitleDTLanguage);
-
+          console.log(labels);
         }
       }
     }
     //#endregion
   }
-  openLoanForm(){    
-    this.redirectTo('/service-setup/add-employee-moment');
-}
-  // Selec dropdown value on Change
-  getSelectedService(event :any){
-    this.selectedOpt = event.target.value;
-    this.common.sendFormTitle(this.selectedOpt); 
-  }
-  // Manually redirect to URL to dynamicall change title of form
-redirectTo(uri:string){
-  this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
-  this.router.navigate([uri]));
-}
-ngAfterViewInit() {
+  ngAfterViewInit() {
     
-  // // TO get the form id...
-  // this.id = this.hidden.nativeElement.value;
-  
-  // // TO GET THE LANGUAGE ID
-  // this.languageId = localStorage.getItem('langType');
-  
-  // // Get form header labels
-  // this.formHeaderLabels$ = this.localizationService.getFormHeaderLabels(this.id,this.languageId);
-  
-  // // Get form body labels 
-  // this.formBodyLabels$= this.localizationService.getFormBodyLabels(this.id,this.languageId)
-  
-  // // Get observable as normal array of items
-  // this.formBodyLabels$.subscribe((data)=>{
-  //   this.formBodyLabels = data   
-  // },error=>{
-  //   console.log(error);
-  // })
-}
+    // // TO get the form id...
+    // this.id = this.hidden.nativeElement.value;
+    
+    // // TO GET THE LANGUAGE ID
+    // this.languageId = localStorage.getItem('langType');
+    
+    // // Get form header labels
+    // this.formHeaderLabels$ = this.localizationService.getFormHeaderLabels(this.id,this.languageId);
+    
+    // // Get form body labels 
+    // this.formBodyLabels$= this.localizationService.getFormBodyLabels(this.id,this.languageId)
+    
+    // // Get observable as normal array of items
+    // this.formBodyLabels$.subscribe((data)=>{
+    //   this.formBodyLabels = data   
+    // },error=>{
+    //   console.log(error);
+    // })
+  }
 }

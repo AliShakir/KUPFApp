@@ -10,7 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class EngagesComponent implements OnInit {
 
   ifLanguageAlreadySelected: string | null;
-  ifAlreadySelected:boolean;
+  ifAlreadySelected: boolean;
   currentURL: string = '';
   constructor(private router: Router) { }
 
@@ -23,13 +23,14 @@ export class EngagesComponent implements OnInit {
   }
   // Set Language to AR
   switchToAr(language: string) {
-   
+
     this.ifLanguageAlreadySelected = localStorage.getItem('lang');
     if (this.ifLanguageAlreadySelected != 'ar') {
-      
+
       localStorage.setItem('lang', language);
       // Set Language value 
       localStorage.setItem('langType', '2');
+      // TO REFRESH / RELOAD THE PAGE WITHOUT REFRESH THE WHOLE PAGE.
       let currentUrl = this.router.url;
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
       this.router.onSameUrlNavigation = 'reload';
@@ -46,15 +47,16 @@ export class EngagesComponent implements OnInit {
       this.ifAlreadySelected = true;
       localStorage.setItem('lang', language);
       // Set Language value
-      localStorage.setItem('langType', '1');      
-        let currentUrl = this.router.url;
-          this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-          this.router.onSameUrlNavigation = 'reload';
-          this.router.navigate([currentUrl]);
-      
+      localStorage.setItem('langType', '1');
+      // TO REFRESH / RELOAD THE PAGE WITHOUT REFRESH THE WHOLE PAGE.
+      let currentUrl = this.router.url;
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+      this.router.onSameUrlNavigation = 'reload';
+      this.router.navigate([currentUrl]);
+
     }
   }
-  
+
 }
 
 

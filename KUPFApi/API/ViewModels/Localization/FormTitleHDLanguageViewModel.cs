@@ -16,5 +16,7 @@ namespace API.ViewModels.Localization
         public string Remarks { get; set; }
         public string Status { get; set; }
         public int? OrderBy { get; set; }
-    }
+        public ICollection <FormTitleDTLanguageViewModel> FormTitleDTLanguage { get; set; }
+    
+}
 }

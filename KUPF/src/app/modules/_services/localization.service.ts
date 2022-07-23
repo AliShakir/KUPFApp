@@ -39,14 +39,15 @@ export class LocalizationService {
       map(formTitleDt =>{
         this.formTitleDt = formTitleDt;
         return formTitleDt;
-      })     
-      
+      })
     )
   }
+  
   getAppLabels()
   {
+    
     if(this.formTitleHd.length > 0 )return of (this.formTitleHd);    
-    return this.httpClient.get<FormTitleHd[]>(this.baseUrl+`FormLabels/GetAllAppLabels/`).pipe(
+    return this.httpClient.get<FormTitleHd[]>(`https://kupfapi.erp53.com/api/FormLabels/GetAllAppLabels/`).pipe(
       map(formTitleHd =>{
         this.formTitleHd = formTitleHd;        
         return formTitleHd;

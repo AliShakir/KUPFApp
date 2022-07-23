@@ -6,7 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { NavigationCancel, NavigationEnd, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { LayoutService } from '../../core/layout.service';
 import { environment } from './../../../../../environments/environment';
 import {
@@ -15,6 +15,8 @@ import {
   ToggleComponent,
   ScrollComponent,
 } from '../../../kt/components';
+import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
+import { LocalizationService } from 'src/app/modules/_services/localization.service';
 
 @Component({
   selector: 'app-aside',
@@ -22,6 +24,11 @@ import {
   styleUrls: ['./aside.component.scss'],
 })
 export class AsideComponent implements OnInit, OnDestroy {
+  /*********************/
+  AppFormLabels$: Observable<FormTitleHd[]>;
+  AppFormLabels: FormTitleHd[] = [];
+  lang: any;
+  /*********************/
   asideTheme: string = '';
   asideMinimize: boolean = false;
   asideMenuCSSClasses: string = '';
@@ -29,7 +36,7 @@ export class AsideComponent implements OnInit, OnDestroy {
   @ViewChild('ktAsideScroll', { static: true }) ktAsideScroll: ElementRef;
   private unsubscribe: Subscription[] = [];
 
-  constructor(private layout: LayoutService, private router: Router) {}
+  constructor(private layout: LayoutService, private router: Router,private localizationService: LocalizationService) {}
 
   ngOnInit(): void {
     this.asideTheme = this.layout.getProp('aside.theme') as string;
@@ -62,4 +69,28 @@ export class AsideComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.unsubscribe.forEach((sb) => sb.unsubscribe());
   }
-}
+  refreshLocalStorage(){
+    localStorage.removeItem('AppLabels');
+    // 
+    if (localStorage.getItem('AppLabels') === null) {
+      this.lang = localStorage.getItem('lang');
+      // Get form body labels 
+      this.AppFormLabels$ = this.localizationService.getAppLabels()
+      // Get observable as normal array of items
+      this.AppFormLabels$.subscribe({
+        next: data => {
+          this.AppFormLabels = data;
+          localStorage.setItem('AppLabels', JSON.stringify(this.AppFormLabels));
+        },
+        error: error => {
+          console.log(error);
+        },
+        complete: () => {
+          console.log('Request completed');
+          location.reload();
+        }
+      })
+    }
+   }
+  }
+

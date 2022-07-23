@@ -38,6 +38,7 @@ export class AddServiceSetupComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeForm();
+    
     //#region TO SETUP THE FORM LOCALIZATION    
     // TO GET THE LANGUAGE ID e.g. 1 = ENGLISH and 2 =  ARABIC
     this.languageType = localStorage.getItem('langType');
@@ -50,20 +51,17 @@ export class AddServiceSetupComponent implements OnInit {
 
     // Check if LocalStorage is Not NULL
     if (localStorage.getItem('AppLabels') != null) {
-
+      
       // Get data from LocalStorage
       this.AppFormLabels = JSON.parse(localStorage.getItem('AppLabels') || '{}');
 
       for (let labels of this.AppFormLabels) {
-
         if (labels.formID == this.formId && labels.language == this.languageType) {
-
           this.formHeaderLabels.push(labels);
-
-          this.formBodyLabels.push(labels.formTitleDTLanguage);
-
+          this.formBodyLabels.push(labels.formTitleDTLanguage);          
         }
       }
+      
     }
     //#endregion
   }

@@ -8,7 +8,7 @@
         </div>
         <h3 class="card-title align-items-start flex-column">
             <div class="btn-group" role="group" aria-label="Basic example" *ngFor="let bodyLabel of formBodyLabels; let i = index">
-                <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA" (click)="openLoanForm()">{{bodyLabel[0].title}}</button>
+                <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA" routerLink="/service-setup/add-employee-movement">{{bodyLabel[0].title}}</button>
                 <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA" >{{bodyLabel[1].title}}</button>
               </div>
         </h3>

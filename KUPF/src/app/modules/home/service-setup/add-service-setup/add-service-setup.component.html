@@ -3,18 +3,16 @@
     <div class="card-header card-header-stretch pb-0 panelBgColor1">
         <!--begin::Title-->
         <div class="card-title" *ngFor="let label of formHeaderLabels; let i = index">
-            <h3 class="m-0">{{label.headerName}}</h3>
+            <h3 class="m-0 ArFontStyle">{{label.headerName}}</h3>
         </div>
         <h3 class="card-title align-items-start flex-column">
             <div class="btn-group" role="group" aria-label="Basic example" *ngFor="let bodyLabel of formBodyLabels; let i = index">
                 <button type="button" class="btn btn-primary ArFontStyle">{{bodyLabel[0].title}}</button>
                 <button type="button" class="btn btn-warning ArFontStyle ">{{bodyLabel[1].title}}</button>
                 <button type="button" class="btn btn-light-dark ArFontStyle" routerLink="/service-setup/service-setup-details" routerLinkActive="active" >{{bodyLabel[2].title}}</button>
-              </div>
-              
+              </div>              
         </h3>
         <!--end::Title-->
-
     </div>
     <!--end::Card header-->
     <!--begin::Tab content-->
@@ -142,7 +140,7 @@
                         </div>
                         <!--begin::Label-->
                         <!--begin::Label-->
-                        <label class="col-lg-5 col-form-label fw-bold fs-6 ArFontStyle"> % {{bodyLabel[13].title}} </label>
+                        <label class="col-lg-5 col-form-label fw-bold fs-6 ArFontStyle"> {{bodyLabel[13].title}} </label>
                         <!--begin::Label-->
                         <!--begin::Label-->
                         <div class="col-lg-1 d-flex align-items-center">
