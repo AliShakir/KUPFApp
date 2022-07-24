@@ -12,6 +12,8 @@ import { SubscriptionDetailsComponent } from './subscription-details/subscriptio
 import { SearchTabModule } from '../_partials/search-tab.module';
 import { SharedModule } from '../../_sharedModule/SharedModule';
 import { ManageFormLabelsComponent } from './manage-form-labels/manage-form-labels.component';
+import { NgxTranslateModule } from '../../i18n';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 
@@ -31,7 +33,9 @@ import { ManageFormLabelsComponent } from './manage-form-labels/manage-form-labe
     CommonModule,
     SetupRoutingModule,
     SearchTabModule,
-    SharedModule
+    SharedModule,
+    NgxPaginationModule
+    
   ]
 })
 export class SetupModule { }

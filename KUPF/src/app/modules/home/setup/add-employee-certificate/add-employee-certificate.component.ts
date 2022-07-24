@@ -70,7 +70,7 @@ export class AddEmployeeCertificateComponent implements OnInit {
           this.formHeaderLabels.push(labels);
 
           this.formBodyLabels.push(labels.formTitleDTLanguage);
-
+          
         }
       }
     }

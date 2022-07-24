@@ -7,6 +7,7 @@ using API.Common;
 using API.DTOs;
 using API.DTOs.GetEntityDto;
 using API.DTOs.LocalizationDto;
+using API.Helpers;
 using API.Models;
 using API.Servivces.Interfaces;
 using AutoMapper;
@@ -63,12 +64,31 @@ namespace API.Servivces.Implementation.Localization
             var data = _mapper.Map<IEnumerable<FormTitleHDLanguageDto>>(result);
             return data;
         }
-
-        public async Task<IEnumerable<GetDistinctHDFormNameDto>> GetDistinctFormLabels()
+        /// <summary>
+        /// Get all form header labels.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<FormTitleHDLanguageDto>> GetAllFormHeaderLabels()
         {
-            var result = await _context.FormTitleHDLanguage.Select(c => new GetDistinctHDFormNameDto { FormID = c.FormID }).Distinct().ToListAsync();
-            var data = _mapper.Map<IEnumerable<GetDistinctHDFormNameDto>>(result);
+            var result = await _context.FormTitleHDLanguage.OrderBy(c=>c.FormID).ToListAsync();
+            var data = _mapper.Map<IEnumerable<FormTitleHDLanguageDto>>(result);
             return data;
         }
+
+        public async Task<IEnumerable<FormTitleHDLanguageDto>> GetFormHeaderLabelsByFormId(string formId)
+        {
+            var result = await _context.FormTitleHDLanguage.Where(c => c.FormID == formId).ToListAsync();
+            var data = _mapper.Map<IEnumerable<FormTitleHDLanguageDto>>(result);
+            return data;
+        }
+
+        public async Task<IEnumerable<FormTitleDTLanguageDto>> GetFormBodyLabelsByFormId(string formId)
+        {
+            var result = await _context.FormTitleDTLanguage.Where(c => c.FormID == formId).ToListAsync();
+            var data = _mapper.Map<IEnumerable<FormTitleDTLanguageDto>>(result);
+            return data;
+        }
+
+       
     }
 }

@@ -1,4 +1,3 @@
-
 <div class="card mb-5 mb-xl-10">
     <!--begin::Card header-->
     <div class="card-header card-header-stretch pb-0 panel2bgColor">
@@ -17,24 +16,70 @@
             <!-- <h3 class="mb-5">Personal Information</h3> -->
             <!--end::Title-->
             <!--begin::Row-->
-            <div class="row gx-9 gy-6">
-                <form autocomplete="off">
-                    <div class="row">
-                        <div class="col-lg-6 fv-row">
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Role 1</option>
-                                <option value="2">Role 2</option>
-                                <option value="3">Role 3</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-2 fv-row">
-                            <label class="col-form-label fw-bold fs-6">Select Form</label>
-                        </div>
-                    </div>
-                </form>
-            </div>
+
             <!--end::Row-->
+            <div class="row gx-9 gy-6">
+                <div class="row mb-2">
+                    <div class="col-lg-4 fv-row">
+
+                    </div>
+                    <div class="col-lg-6 fv-row">
+                        <input type="text" class="form-control" placeholder="search..." />
+                    </div>
+                    <div class="col-lg-2 fv-row">
+                        <label class="col-form-label fw-bold fs-6">Search</label>
+                    </div>
+                </div>
+                <!--begin::Table container-->
+                <div class="table-responsive mt-3">
+                    <!--begin::Table-->
+                    <table class="table table-row-bordered">
+                        <!--begin::Table head-->
+                        <thead class="bg-primary">
+                            <tr class="fw-bolder">
+                                <th class="ArFontStyle" lang="AR-SA">Tenent Id</th>
+                                <th class="ArFontStyle" lang="AR-SA">Language</th>
+                                <th class="ArFontStyle" lang="AR-SA">Form Id</th>
+                                <th class="ArFontStyle" lang="AR-SA">Form Name</th>
+                                <th class="ArFontStyle" lang="AR-SA">Header Name</th>
+                            </tr>
+                        </thead>
+                        <!--end::Table head-->
+                        <!--begin::Table body-->
+                        <tbody>
+                            <tr
+                                *ngFor="let item of formTitleHd$ | async | paginate: { itemsPerPage: 5, currentPage: page }">
+                                <td>
+                                    <a href="javascript:void(0)" class="text-dark text-hover-primary ArFontStyle"
+                                        lang="AR-SA">{{item.tenentId}}</a>
+                                </td>
+                                <td>
+                                    <a href="#" class="text-dark text-hover-primary d-block ArFontStyle"
+                                        lang="AR-SA">{{item.language}}</a>
+                                </td>
+                                <td>
+                                    <a href="#" class="text-dark text-hover-primary d-block mb-1 fs-6 ArFontStyle"
+                                        lang="AR-SA">{{item.formID}}</a>
+                                </td>
+                                <td>
+                                    <a href="#" class="text-dark text-hover-primary d-block mb-1 fs-6 ArFontStyle"
+                                        lang="AR-SA">{{item.formName}}</a>
+                                </td>
+                                <td>
+                                    <a href="#" class="text-dark text-hover-primary d-block mb-1 fs-6 ArFontStyle"
+                                        lang="AR-SA">{{item.headerName}}</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <!--end::Table body-->
+                        <div class="has-text-centered">
+                            <pagination-controls (pageChange)="page = $event"></pagination-controls>
+                        </div>
+                    </table>
+                    <!--end::Table-->
+                </div>
+                <!--end::Table container-->
+            </div>
         </div>
     </div>
 </div>
