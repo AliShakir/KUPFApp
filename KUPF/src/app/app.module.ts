@@ -1,7 +1,7 @@
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { ClipboardModule } from 'ngx-clipboard';
 import { TranslateModule } from '@ngx-translate/core';
@@ -19,6 +19,8 @@ import { AddReferenceComponent } from './modules/home/setup/add-reference/add-re
 import { LoginComponent } from './modules/home/auth/login/login.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgxTranslateModule } from './modules/i18n';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { LoadingInterceptor } from './modules/_interceptors/loading.interceptor';
 // #fake-end#
 
 function appInitializer(authService: AuthService) {
@@ -66,21 +68,22 @@ function appInitializer(authService: AuthService) {
     //      }  
     //   }),
       BsDatepickerModule.forRoot(),
-      
+      NgxSpinnerModule
   ],
   
   exports:[
   BsDatepickerModule,
-  NgxTranslateModule
+  NgxTranslateModule,
+  NgxSpinnerModule
   ],//providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
   providers: [
     {
       provide: APP_INITIALIZER,     
       useFactory: appInitializer,
       multi: true,
-      deps: [AuthService],
-      
+      deps: [AuthService]      
     },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
     
   
     

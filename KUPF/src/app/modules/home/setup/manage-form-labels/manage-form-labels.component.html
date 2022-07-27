@@ -1,9 +1,9 @@
 <div class="card mb-5 mb-xl-10">
     <!--begin::Card header-->
-    <div class="card-header card-header-stretch pb-0 panel2bgColor">
+    <div class="card-header card-header-stretch pb-0 panel1bgColor">
         <!--begin::Title-->
         <div class="card-title">
-            <h3 class="m-0 ArFontStyle" lang="AR-SA">Manage App Language</h3>
+            <h3 class="m-0 text-white ArFontStyle" lang="AR-SA">Manage App Language</h3>
         </div>
         <!--end::Title-->
     </div>
@@ -15,70 +15,120 @@
             <!--begin::Title-->
             <!-- <h3 class="mb-5">Personal Information</h3> -->
             <!--end::Title-->
-            <!--begin::Row-->
-
-            <!--end::Row-->
             <div class="row gx-9 gy-6">
-                <div class="row mb-2">
-                    <div class="col-lg-4 fv-row">
-
-                    </div>
+                <div class="row mb-4">
                     <div class="col-lg-6 fv-row">
-                        <input type="text" class="form-control" placeholder="search..." />
+                        <div class="d-flex align-items-center position-relative my-1">
+                            <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+                            <span class="svg-icon svg-icon-1 position-absolute ms-6">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor"></rect>
+                                    <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor"></path>
+                                </svg>
+                            </span>
+                            <!--end::Svg Icon-->
+                            <input type="text" data-kt-user-table-filter="search" class="form-control form-control-solid w-450px ps-14" placeholder="Search..." [(ngModel)]="searchTerm">
+                        </div>
                     </div>
-                    <div class="col-lg-2 fv-row">
+                    <div class="col-lg-3 fv-row">
+                       
+                    </div>
+                    <div class="col-lg-3 fv-row">
+                        <select class="form-control form-control-solid">                            
+                            <option>10</option>
+                            <option>20</option>
+                            <option>35</option>
+                            <option>50</option>
+                        </select>
+                    </div>
+                    <!-- <div class="col-lg-6 fv-row">
+                        <input type="text" class="form-control" placeholder="search..." [(ngModel)]="searchTerm" />
+                    </div>
+                    <div class="col-lg-1 fv-row">
                         <label class="col-form-label fw-bold fs-6">Search</label>
-                    </div>
+                    </div> -->
                 </div>
-                <!--begin::Table container-->
-                <div class="table-responsive mt-3">
-                    <!--begin::Table-->
-                    <table class="table table-row-bordered">
+
+                <div class="table-responsive">
+                    <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer"
+                        id="kt_table_users">
                         <!--begin::Table head-->
-                        <thead class="bg-primary">
-                            <tr class="fw-bolder">
-                                <th class="ArFontStyle" lang="AR-SA">Tenent Id</th>
-                                <th class="ArFontStyle" lang="AR-SA">Language</th>
-                                <th class="ArFontStyle" lang="AR-SA">Form Id</th>
-                                <th class="ArFontStyle" lang="AR-SA">Form Name</th>
-                                <th class="ArFontStyle" lang="AR-SA">Header Name</th>
+                        <thead>
+                            <!--begin::Table row-->
+                            <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+                                <th class="min-w-125px sorting text-center" tabindex="0" aria-controls="kt_table_users" rowspan="1"
+                                    colspan="1" aria-label="User: activate to sort column ascending"
+                                    style="width: 238.188px;">Edit</th>
+                                <th class="min-w-125px sorting" tabindex="0" aria-controls="kt_table_users" rowspan="1"
+                                    colspan="1" aria-label="User: activate to sort column ascending"
+                                    style="width: 238.188px;">Form Id</th>
+                                <th class="min-w-125px sorting" tabindex="0" aria-controls="kt_table_users" rowspan="1"
+                                    colspan="1" aria-label="Role: activate to sort column ascending"
+                                    style="width: 138.891px;">Form Name</th>
+                                <th class="min-w-125px sorting sorting_asc" tabindex="0" aria-controls="kt_table_users"
+                                    rowspan="1" colspan="1" aria-label="Last login: activate to sort column descending"
+                                    style="width: 138.891px;" aria-sort="ascending">
+                                    Header Name
+                                    
+                                    <i class="fa fa-sort hand-icon text-primary" *ngIf="sortBy != 'headerName'" (click)="sortBy='headerName';
+                                    sortOrder='ASC'"></i>
+                                    
+                                    <i class="fa fa-sort-up hand-icon text-primary" *ngIf="sortBy == 'headerName' && sortOrder=='ASC'"
+                                     (click)="sortOrder='DESC'">  </i>
+
+                                     <i class="fa fa-sort-down hand-icon text-primary" *ngIf="sortBy == 'headerName' && sortOrder=='DESC'"
+                                     (click)="sortOrder='ASC'">  </i>
+
+                                </th>
+                                <th class="min-w-125px sorting" tabindex="0" aria-controls="kt_table_users" rowspan="1"
+                                    colspan="1" aria-label="Two-step: activate to sort column ascending"
+                                    style="width: 138.891px;">Sub Header 
+                                    
+                                    
+                                </th>
+                                <th class="min-w-125px sorting" tabindex="0" aria-controls="kt_table_users" rowspan="1"
+                                    colspan="1" aria-label="Joined Date: activate to sort column ascending"
+                                    style="width: 178.422px;">Navigation</th>
+                                
                             </tr>
+                            <!--end::Table row-->
                         </thead>
                         <!--end::Table head-->
                         <!--begin::Table body-->
-                        <tbody>
-                            <tr
-                                *ngFor="let item of formTitleHd$ | async | paginate: { itemsPerPage: 5, currentPage: page }">
-                                <td>
-                                    <a href="javascript:void(0)" class="text-dark text-hover-primary ArFontStyle"
-                                        lang="AR-SA">{{item.tenentId}}</a>
-                                </td>
-                                <td>
-                                    <a href="#" class="text-dark text-hover-primary d-block ArFontStyle"
-                                        lang="AR-SA">{{item.language}}</a>
-                                </td>
-                                <td>
-                                    <a href="#" class="text-dark text-hover-primary d-block mb-1 fs-6 ArFontStyle"
-                                        lang="AR-SA">{{item.formID}}</a>
-                                </td>
-                                <td>
-                                    <a href="#" class="text-dark text-hover-primary d-block mb-1 fs-6 ArFontStyle"
-                                        lang="AR-SA">{{item.formName}}</a>
-                                </td>
-                                <td>
-                                    <a href="#" class="text-dark text-hover-primary d-block mb-1 fs-6 ArFontStyle"
-                                        lang="AR-SA">{{item.headerName}}</a>
-                                </td>
-                            </tr>
-                        </tbody>
+                        <tbody class="text-gray-600 fw-semibold">
+                            
+                                <tr
+                                    *ngFor="let item of formTitleHd$ | async | filterLabels : searchTerm |sort:sortBy:sortOrder">
+                                    <td class="ArFontStyle  text-center">
+                                        <!-- <a routerLink="/references/update-labels/{{item.formID}}" id={{item.formID}}>
+                                            Select
+                                        </a> -->
+                                        <a routerLink="/references/update-labels/{{item.formID}}" class="btn btn-primary btn-sm" role="button" aria-pressed="true">Select</a>
+                                    </td>
+                                    <td class="ArFontStyle">
+                                        {{item.formID}}
+                                    </td>
+                                    <td class="ArFontStyle">
+                                        {{item.formName}}
+                                    </td>
+                                    <td class="ArFontStyle">
+                                        {{item.headerName}}
+                                    </td>
+                                    <td class="ArFontStyle">
+                                        {{item.subHeaderName}}
+                                    </td>
+                                    <td class="ArFontStyle">
+                                        {{item.navigation}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        
                         <!--end::Table body-->
-                        <div class="has-text-centered">
-                            <pagination-controls (pageChange)="page = $event"></pagination-controls>
-                        </div>
                     </table>
-                    <!--end::Table-->
+                    <div class="has-text-centered">
+                        <pagination-controls (pageChange)="page = $event"></pagination-controls>
+                    </div>
                 </div>
-                <!--end::Table container-->
             </div>
         </div>
     </div>

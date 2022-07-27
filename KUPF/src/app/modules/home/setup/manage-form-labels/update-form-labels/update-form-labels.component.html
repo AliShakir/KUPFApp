@@ -1,0 +1,100 @@
+<div class="card mb-5 mb-xl-10">
+    <div class="card-header card-header-stretch pb-0 panel1bgColor">
+        <div class="card-title">
+            <h3 class="m-0 text-white ArFontStyle" lang="AR-SA" id="PrintLabels">Form Header Labels</h3>
+        </div>
+    </div>
+    <div id="kt_billing_payment_tab_content" class="card-body tab-content">
+        <div id="kt_billing_creditcard" class="tab-pane fade show active" role="tabpanel">
+            <div class="row gx-9 gy-6">
+                <form #profileForm="ngForm" (ngSubmit)="submit(profileForm.value)" autocomplete="off" id="header-form">
+                    <div class="row mb-2" *ngFor="let item of formTitleHd$ | async">
+                        <div class="col-lg-3 fv-row">
+                            <label class="col-lg-6 col-form-label fw-bold fs-6 ArFontStyle">Id</label>
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0 " disabled
+                                value="{{item.id}}" />
+                        </div>
+                        <div class="col-lg-3 fv-row">
+                            <label class="col-lg-6 col-form-label fw-bold fs-6 ArFontStyle">Form Name</label>
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" disabled
+                                value="{{item.formName}}" />
+                        </div>
+                        <div class="col-lg-3 fv-row">
+                            <label class="col-lg-6 col-form-label fw-bold fs-6 ArFontStyle">Header Name</label>
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0 ArFontStyle"
+                                value="{{item.headerName}}" />
+                        </div>
+                        <div class="col-lg-3 fv-row">
+                            <label class="col-lg-8 col-form-label fw-bold fs-6 ArFontStyle">Sub Header Name</label>
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0 ArFontStyle"
+                                value="{{item.subHeaderName}}">
+                        </div>
+                        <!-- <input required minlength="3" maxlength="10" ngModel name="{{item.id}}" type="text"
+                            #firstName="ngModel" class="form-control" id="{{item.id}}">
+
+                            <span class="text-danger" *ngIf="firstName.touched && !firstName.valid">
+                                First Name is required.
+                            </span> -->
+                            <!-- <div class="alert alert-danger" *ngIf="firstName.touched && !firstName.valid">
+                            <div *ngIf="firstName.errors && firstName.errors['required']">First Name is required.</div>
+                            <div *ngIf="firstName.errors && firstName.errors['minlength']">First Name is minimum {{
+                                firstName.errors && firstName.errors['minlength'].requiredLength }} character.</div>
+                            <div *ngIf="firstName.errors && firstName.errors['maxlength']">First Name is maximum 10
+                                character.</div>
+                        </div> -->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer d-flex justify-content-end py-6 px-9 ">
+        <div class="d-flex">
+            <!-- <a href="#" class="btn btn-primary me-3 ArFontStyle" lang="AR-SA">Save</a> -->
+            <input class="btn btn-primary" type="submit" form="header-form">
+        </div>
+    </div>
+</div>
+
+<div class="card mb-5 mb-xl-10">
+    <div class="card-header card-header-stretch pb-0 panel1bgColor">
+        <div class="card-title">
+            <h3 class="m-0 ArFontStyle text-white" lang="AR-SA" id="PrintLabels">Form Body Labels</h3>
+        </div>
+    </div>
+    <div id="kt_billing_payment_tab_content" class="card-body tab-content">
+        <div id="kt_billing_creditcard" class="tab-pane fade show active" role="tabpanel">
+            <div class="row gx-9 gy-6">
+                <form autocomplete="off">
+                    <div class="row mb-2" *ngFor="let item of formTitleDt$ | async">
+                        <div class="col-lg-3 fv-row">
+                            <label class="col-lg-6 col-form-label fw-bold fs-6 ArFontStyle">Id</label>
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0 " disabled
+                                value="{{item.id}}" />
+                        </div>
+                        <div class="col-lg-3 fv-row">
+                            <label class="col-lg-6 col-form-label fw-bold fs-6 ArFontStyle">Label Id</label>
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" disabled
+                                value="{{item.labelId}}" />
+                        </div>
+                        <div class="col-lg-3 fv-row">
+                            <label class="col-lg-6 col-form-label fw-bold fs-6 ArFontStyle">Title</label>
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0 ArFontStyle"
+                                value="{{item.title}}" />
+                        </div>
+                        <div class="col-lg-3 fv-row">
+                            <label class="col-lg-8 col-form-label fw-bold fs-6 ArFontStyle">Arabic Title</label>
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0 ArFontStyle"
+                                value="{{item.arabicTitle}}" />
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer d-flex justify-content-end py-6 px-9 ">
+        <div class="d-flex">
+            <a href="#" class="btn btn-primary me-3 ArFontStyle" lang="AR-SA">Save</a>
+        </div>
+    </div>
+</div>

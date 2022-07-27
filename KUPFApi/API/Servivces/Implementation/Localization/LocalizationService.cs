@@ -42,7 +42,7 @@ namespace API.Servivces.Implementation.Localization
             return data;
         }
 
-        
+
         public async Task<IEnumerable<FormTitleDTLanguageDto>> GetFormBodyLabelsByFormName(string formId, int languageId)
         {
             var result = await _context.FormTitleDTLanguage.Where(c => c.FormID == formId && c.Language == languageId).ToListAsync();
@@ -52,15 +52,15 @@ namespace API.Servivces.Implementation.Localization
 
         public async Task<IEnumerable<FormTitleHDLanguageDto>> GetAll(string formId, int langId)
         {
-            var result = await _context.FormTitleHDLanguage.Where(x=>x.FormID== formId && x.Language== langId).Include(c=>c.FormTitleDTLanguage).OrderBy(o => o.OrderBy).ToListAsync();
-            
+            var result = await _context.FormTitleHDLanguage.Where(x => x.FormID == formId && x.Language == langId).Include(c => c.FormTitleDTLanguage).OrderBy(o => o.OrderBy).ToListAsync();
+
             var data = _mapper.Map<IEnumerable<FormTitleHDLanguageDto>>(result);
             return data;
         }
 
         public async Task<IEnumerable<FormTitleHDLanguageDto>> GetAllAppLabels()
         {
-            var result = await _context.FormTitleHDLanguage.Include(o=>o.FormTitleDTLanguage.OrderBy(x=>x.OrderBy)).ToListAsync();
+            var result = await _context.FormTitleHDLanguage.Include(o => o.FormTitleDTLanguage.OrderBy(x => x.OrderBy)).ToListAsync();
             var data = _mapper.Map<IEnumerable<FormTitleHDLanguageDto>>(result);
             return data;
         }
@@ -70,11 +70,14 @@ namespace API.Servivces.Implementation.Localization
         /// <returns></returns>
         public async Task<IEnumerable<FormTitleHDLanguageDto>> GetAllFormHeaderLabels()
         {
-            var result = await _context.FormTitleHDLanguage.OrderBy(c=>c.FormID).ToListAsync();
+            var result = await _context.FormTitleHDLanguage.OrderBy(c => c.FormID).ToListAsync();
             var data = _mapper.Map<IEnumerable<FormTitleHDLanguageDto>>(result);
             return data;
         }
-
+        /// <summary>
+        /// Get form header labels by form Id.
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<FormTitleHDLanguageDto>> GetFormHeaderLabelsByFormId(string formId)
         {
             var result = await _context.FormTitleHDLanguage.Where(c => c.FormID == formId).ToListAsync();
@@ -82,6 +85,10 @@ namespace API.Servivces.Implementation.Localization
             return data;
         }
 
+        /// <summary>
+        /// Get form body labels by form Id.
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<FormTitleDTLanguageDto>> GetFormBodyLabelsByFormId(string formId)
         {
             var result = await _context.FormTitleDTLanguage.Where(c => c.FormID == formId).ToListAsync();
@@ -89,6 +96,57 @@ namespace API.Servivces.Implementation.Localization
             return data;
         }
 
-       
+        public async Task<FormTitleHDLanguage> GetFormHeaderById(Guid id)
+        {
+            var result = await _context.FormTitleHDLanguage.Where(c => c.Id == id).FirstOrDefaultAsync();
+            if (result != null)
+            {
+                //var data = _mapper.Map<FormTitleHDLanguage>(result);
+                return result;
+            }
+            return null;
+
+        }
+        /// <summary>
+        /// Edit form header labels by Id.
+        /// </summary>
+        /// <returns></returns>
+        public Task<FormTitleDTLanguageDto> EditFormBodyLabels(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+        public Task<IEnumerable<FormTitleDTLanguageDto>> EditFormHeaderLabels(string formId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void EditFormHeaderLabels(FormTitleHDLanguage formHeader)
+        {
+            _context.Entry(formHeader).State = EntityState.Modified;
+        }
+
+        public void EditFormBodyLabels(FormTitleDTLanguage formTitleDTLanguage)
+        {
+            _context.Entry(formTitleDTLanguage).State = EntityState.Modified;
+        }
+
+        public async Task<bool> SaveAllAsync()
+        {
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<FormTitleDTLanguage> GetFormBodyById(int id)
+        {
+            var result = await _context.FormTitleDTLanguage.Where(c => c.Id == id).FirstOrDefaultAsync();
+            if (result != null)
+            {
+                return result;
+            }
+            return null;
+        }
+        // public void Update(AppUser user)
+        // {
+        //     _context.Entry(user).State = EntityState.Modified;
+        // }
     }
 }

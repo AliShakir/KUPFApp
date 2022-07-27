@@ -20,5 +20,6 @@ namespace API.DTOs.LocalizationDto
         public string Remarks { get; set; }
         public string Status { get; set; }
         public int? OrderBy { get; set; }
+        public FormTitleHDLanguageDto FormTitleHDLanguage { get; set; }
     }
 }

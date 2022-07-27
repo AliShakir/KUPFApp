@@ -20,5 +20,13 @@ namespace API.Servivces.Interfaces
         Task<IEnumerable<FormTitleHDLanguageDto>> GetAllFormHeaderLabels();
         Task<IEnumerable<FormTitleHDLanguageDto>> GetFormHeaderLabelsByFormId(string formId);
         Task<IEnumerable<FormTitleDTLanguageDto>> GetFormBodyLabelsByFormId(string formId);
+
+        Task<FormTitleHDLanguage> GetFormHeaderById(Guid id);
+        Task<FormTitleDTLanguage> GetFormBodyById(int id);
+        void EditFormHeaderLabels(FormTitleHDLanguage formHeader);
+         
+        void EditFormBodyLabels(FormTitleDTLanguage formBody);
+
+        Task<bool> SaveAllAsync();
     }
 }

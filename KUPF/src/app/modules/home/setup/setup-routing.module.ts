@@ -10,6 +10,7 @@ import { EmployeeCertificateDetailsComponent } from './employee-certificate-deta
 import { AddSubscriptionComponent } from './add-subscription/add-subscription.component';
 import { SubscriptionDetailsComponent } from './subscription-details/subscription-details.component';
 import { ManageFormLabelsComponent } from './manage-form-labels/manage-form-labels.component';
+import { UpdateFormLabelsComponent } from './manage-form-labels/update-form-labels/update-form-labels.component';
 
 
 const routes: Routes = [
@@ -22,7 +23,8 @@ const routes: Routes = [
   { path: 'employee-certificate-details', component: EmployeeCertificateDetailsComponent },
   { path: 'add-subscription', component: AddSubscriptionComponent },
   { path: 'subscription-details', component: SubscriptionDetailsComponent },
-  { path: 'manage-form-labels', component: ManageFormLabelsComponent }
+  { path: 'manage-form-labels', component: ManageFormLabelsComponent },
+  { path: 'update-labels/:formID', component: UpdateFormLabelsComponent }
 
 ];
 @NgModule({

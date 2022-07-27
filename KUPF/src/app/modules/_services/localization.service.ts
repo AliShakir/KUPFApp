@@ -57,8 +57,8 @@ export class LocalizationService {
   }
   // Get all form header labels.
   getAllFormHeaderLabels() {
-    if (this.formTitleHd.length > 0) return of(this.formTitleHd);
-    return this.httpClient.get<FormTitleHd[]>(this.baseUrl + `FormLabels/GetAllFormHeaderLabels`).pipe(
+    //if (this.formTitleHd.length > 0) return of(this.formTitleHd);
+    return this.httpClient.get<FormTitleHd[]>(`https://kupfapi.erp53.com/api/FormLabels/GetAllFormHeaderLabels`).pipe(
       map(formTitleHd => {
         this.formTitleHd = formTitleHd; 
         return formTitleHd;
@@ -66,9 +66,9 @@ export class LocalizationService {
     )
   }
 
-  GetFormHeaderLabelsByFormId(formId: string) {
-    if (this.formTitleHd.length > 0) return of(this.formTitleHd);
-    return this.httpClient.get<FormTitleHd[]>(this.baseUrl + `FormLabels/GetFormHeaderLabelsByFormId?formId=`+formId).pipe(
+  // / Get all form header labels by form Id.
+  GetFormHeaderLabelsByFormId(formId: string) {    
+    return this.httpClient.get<FormTitleHd[]>(`https://kupfapi.erp53.com/api/FormLabels/GetFormHeaderLabelsByFormId?formId=`+formId).pipe(      
       map(formTitleHd => {
         this.formTitleHd = formTitleHd; 
         return formTitleHd;
@@ -76,11 +76,12 @@ export class LocalizationService {
     )
   }
 
+  // Get all form body labels by form Id.
   GetFormBodyLabelsByFormId(formId: string) {
-    if (this.formTitleDt.length > 0) return of(this.formTitleDt);
-    return this.httpClient.get<FormTitleDt[]>(this.baseUrl + `FormLabels/GetFormBodyLabelsByFormId/`+ formId).pipe(
+    //if (this.formTitleDt.length > 0) return of(this.formTitleDt);
+    return this.httpClient.get<FormTitleDt[]>(`https://kupfapi.erp53.com/api/FormLabels/GetFormBodyLabelsByFormId?formId=`+ formId).pipe(
       map(formTitleDt => {
-        this.formTitleDt = formTitleDt; 
+        this.formTitleDt = formTitleDt;
         return formTitleDt;
       })
     )

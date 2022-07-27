@@ -6,6 +6,7 @@ import { ApprovalDetialsComponent } from './approval-detials/approval-detials.co
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ContactDetailsComponent } from './contact-details/contact-details.component';
 import { SharedModule } from '../../_sharedModule/SharedModule';
+import { SortPipe } from '../Pipes/sort.pipe';
 
 
 
@@ -14,19 +15,21 @@ import { SharedModule } from '../../_sharedModule/SharedModule';
     SearchTabComponent,
     FinancialDetialsComponent,
     ApprovalDetialsComponent,
-    ContactDetailsComponent
+    ContactDetailsComponent,
+    SortPipe
   ],
   imports: [
     CommonModule,
     NgbModule,
-    SharedModule
+    SharedModule,
+    
   ],
   exports: [
     SearchTabComponent,
     FinancialDetialsComponent,
     ApprovalDetialsComponent,
     ContactDetailsComponent,
-    
+    SortPipe
   ]
 })
 export class SearchTabModule { }

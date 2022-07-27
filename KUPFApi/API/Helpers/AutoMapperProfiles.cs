@@ -35,6 +35,10 @@ namespace API.Helpers
             //
             CreateMap<FormTitleHDLanguage, GetDistinctHDFormNameDto>();
             CreateMap<GetDistinctHDFormNameDto, GetDistinctHDFormNameViewModel>();
+
+            CreateMap<FormTitleHDLanguageDto, FormTitleHDLanguage>();
+            //CreateMap<FormTitleHDLanguage,FormTitleHDLanguage>();
+            CreateMap<FormTitleDTLanguageDto,FormTitleHDLanguage>();
         }
     }
 }

@@ -83,5 +83,35 @@ namespace API.Controllers
             var result = await _localizationService.GetFormBodyLabelsByFormId(formId);
             return Ok(result);
         }
+        [HttpPut]
+        [Route("EditFormHeaderLabels")]
+        public async Task<ActionResult> EditFormHeaderLabels(FormTitleHDLanguageDto formTitleHDLanguageDto)
+        {
+
+            var existingFormHeader = await _localizationService.GetFormHeaderById(formTitleHDLanguageDto.Id);
+
+            existingFormHeader.HeaderName = formTitleHDLanguageDto.HeaderName;
+            existingFormHeader.SubHeaderName = formTitleHDLanguageDto.SubHeaderName;
+            _localizationService.EditFormHeaderLabels(existingFormHeader);
+
+            if (await _localizationService.SaveAllAsync()) return NoContent();
+
+            return BadRequest("Faild to update record");
+        }
+        [HttpPut]
+        [Route("EditFormBodyLabels")]
+        public async Task<ActionResult> EditFormBodyLabels(FormTitleDTLanguageDto formTitleDTLanguageDto)
+        {
+
+            var existingFormBodyLabels = await _localizationService.GetFormBodyById(formTitleDTLanguageDto.Id);
+
+            existingFormBodyLabels.Title = formTitleDTLanguageDto.Title;
+            existingFormBodyLabels.ArabicTitle = formTitleDTLanguageDto.ArabicTitle;
+            _localizationService.EditFormBodyLabels(existingFormBodyLabels);
+
+            if (await _localizationService.SaveAllAsync()) return NoContent();
+
+            return BadRequest("Faild to update record");
+        }
     }
 }
