@@ -1,0 +1,32 @@
+table {
+    width: 100%;
+  }
+  .example-margin {
+    margin: 0 12px;
+  }
+  table {
+    border-collapse: collapse;
+  }
+  
+  th {
+    /* row border */
+    border-bottom: 1px solid #b8b6b2;
+  }
+  
+  td.mat-cell {
+    /* row padding */
+    padding: 20px 0;
+    border: none;
+  }
+  
+  tr.mat-row {
+    /* row border */
+    border: 1px solid #b8b6b2;
+  }
+  mat-footer-row, mat-header-row, mat-row {
+    border-bottom-width: 20px;
+  }
+  .mat-header-cell {
+  background-color: rgb(131, 188, 241);
+  
+}

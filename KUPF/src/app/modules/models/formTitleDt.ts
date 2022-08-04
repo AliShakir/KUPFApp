@@ -15,4 +15,6 @@ export interface FormTitleDt {
     remarks: string;
     status: string;
     orderBy:number;
+    // For Inline Edit
+    isBodyEdit:boolean;
 }

@@ -12,13 +12,13 @@ import { SubscriptionDetailsComponent } from './subscription-details/subscriptio
 import { SearchTabModule } from '../_partials/search-tab.module';
 import { SharedModule } from '../../_sharedModule/SharedModule';
 import { ManageFormLabelsComponent } from './manage-form-labels/manage-form-labels.component';
-import { NgxTranslateModule } from '../../i18n';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UpdateFormLabelsComponent } from './manage-form-labels/update-form-labels/update-form-labels.component';
-import { FilterLabelsPipe } from '../Pipes/filter-labels.pipe';
-
+import { MaterialModule } from '../../material/material.module';
+import { ToastrModule } from 'ngx-toastr';
+import { UserFunctionsComponent } from '../auth/users/user-functions/user-functions.component';
 
 
 @NgModule({
@@ -42,7 +42,9 @@ import { FilterLabelsPipe } from '../Pipes/filter-labels.pipe';
     NgxPaginationModule,
     Ng2SearchPipeModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MaterialModule,
+   
   ]
 })
 export class SetupModule { }

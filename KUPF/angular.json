@@ -36,8 +36,11 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "styles": [
-              "./node_modules/ngx-spinner/animations/line-scale-party.css",
+            "styles": [              
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "./node_modules/ngx-spinner/animations/line-scale-party.css",    
+              "./node_modules/ngx-toastr/toastr.css",   
+              "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",     
               "src/styles.scss"
             ],
             "scripts": []
@@ -106,7 +109,7 @@
               "src/assets"
             ],
             "styles": [
-              
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
             "scripts": []

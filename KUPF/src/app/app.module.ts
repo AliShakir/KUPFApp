@@ -21,6 +21,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgxTranslateModule } from './modules/i18n';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from './modules/_interceptors/loading.interceptor';
+import { ToastrModule } from 'ngx-toastr';
+
 // #fake-end#
 
 function appInitializer(authService: AuthService) {
@@ -45,6 +47,13 @@ function appInitializer(authService: AuthService) {
     TranslateModule.forRoot(),
     HttpClientModule,
     ClipboardModule,
+    ToastrModule.forRoot({
+      "positionClass" : "toast-top-left",
+          "closeButton" : true,
+          "newestOnTop" : false,
+          "progressBar" : true,
+          "preventDuplicates" : false,
+    }),
     // #fake-start#
     environment.isMockEnabled
       ? HttpClientInMemoryWebApiModule.forRoot(FakeAPIService, {
@@ -67,14 +76,15 @@ function appInitializer(authService: AuthService) {
     //      deps: [HttpClient]  
     //      }  
     //   }),
-      BsDatepickerModule.forRoot(),
-      NgxSpinnerModule
+      
+      NgxSpinnerModule,  
   ],
   
   exports:[
-  BsDatepickerModule,
+  
   NgxTranslateModule,
-  NgxSpinnerModule
+  NgxSpinnerModule,
+  
   ],//providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
   providers: [
     {

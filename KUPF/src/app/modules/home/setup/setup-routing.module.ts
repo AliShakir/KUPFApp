@@ -11,6 +11,7 @@ import { AddSubscriptionComponent } from './add-subscription/add-subscription.co
 import { SubscriptionDetailsComponent } from './subscription-details/subscription-details.component';
 import { ManageFormLabelsComponent } from './manage-form-labels/manage-form-labels.component';
 import { UpdateFormLabelsComponent } from './manage-form-labels/update-form-labels/update-form-labels.component';
+import { UserFunctionsComponent } from '../auth/users/user-functions/user-functions.component';
 
 
 const routes: Routes = [
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'subscription-details', component: SubscriptionDetailsComponent },
   { path: 'manage-form-labels', component: ManageFormLabelsComponent },
   { path: 'update-labels/:formID', component: UpdateFormLabelsComponent }
+  
 
 ];
 @NgModule({

@@ -1,0 +1,194 @@
+<ngb-accordion #ngbSearchUser="ngbAccordion" activeIds="ngb-panel-0">
+    <ngb-panel title="Search User">        
+        <ng-template ngbPanelContent>
+            <div class="row mb-4">
+                <div class="col-lg-4 fv-row">
+                    <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">Tenant Id</label>
+                    <select class="form-control bg-light" aria-label="Select example">
+                        <option>-Select-</option>
+                        <option value="1">Tenant 1</option>
+                        <option value="2">Tenant 2</option>
+                        <option value="3">Tenant 3</option>
+                    </select>
+                </div>
+                <div class="col-lg-4 fv-row">
+                    <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">Location</label>
+                    <select class="form-control bg-light" aria-label="Select example">
+                        <option>-Select-</option>
+                        <option value="1">Location 1</option>
+                        <option value="2">Location 2</option>
+                        <option value="3">Location 3</option>
+                    </select>
+                </div>
+                <div class="col-lg-4 fv-row">
+                    <button mat-raised-button color="accent" style="margin-top: 45px">Go</button>                    
+                </div>
+            </div>
+        </ng-template>
+    </ngb-panel>
+</ngb-accordion>
+<br />
+<ngb-accordion #ngbAddUser="ngbAccordion" activeIds="ngb-panel-0" opened="true">
+    <ngb-panel title="Add User">
+        <ng-template ngbPanelContent>
+            <form autocomplete="off">
+                <div class="row mb-4">
+                    <div class="col-lg-6 fv-row">
+                                  
+                    </div>
+                    <div class="col-lg-6 fv-row">
+                        <div class="text-left">
+                            <button mat-raised-button color="primary" class="float-left">Add</button> |       
+                            <button mat-raised-button color="accent" class="float-left">Cancel</button>        
+                        </div>                               
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-lg-6 fv-row">
+                        <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">First Name</label>
+                        <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" disabled />
+                    </div>
+                    <div class="col-lg-6 fv-row">
+                        <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Last Name</label>
+                        <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" disabled />
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-lg-6 fv-row">
+                        <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Address Line 1</label>
+                        <textarea class="form-control form-control-lg  mb-3 mb-lg-0" disabled></textarea>
+                    </div>
+                    <div class="col-lg-6 fv-row">
+                        <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Address Line 2</label>
+                        <textarea class="form-control form-control-lg  mb-3 mb-lg-0" disabled></textarea>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-lg-6 fv-row">
+                        <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Phone Number</label>
+                        <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" disabled />
+                    </div>
+                    <div class="col-lg-6 fv-row">
+                        <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Pin Code</label>
+                        <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" disabled />
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-lg-6 fv-row">
+                        <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Email</label>
+                        <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" disabled />
+                    </div>
+                    <div class="col-lg-6 fv-row">
+                        <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Mobile Number</label>
+                        <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" disabled />
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-lg-6 fv-row">
+                        <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Login Id</label>
+                        <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" disabled />
+                    </div>
+                    <div class="col-lg-6 fv-row">
+                        <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Pass</label>
+                        <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" disabled />
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-lg-6 fv-row">
+                        <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">User Type</label>
+                        <select class="form-control bg-light" aria-label="Select example" disabled>
+                            <option>-Select-</option>
+                            <option value="1">User Type 1</option>
+                            <option value="1">User Type 2</option>
+                            <option value="1">User Type 3</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-6 fv-row">
+                        <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Title</label>
+                        <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" disabled />
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-lg-6 fv-row">
+                        <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Active Date</label>
+                        <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" disabled />
+                        <span class="text-danger">(Active Start Date)</span>
+                    </div>
+                    <div class="col-lg-6 fv-row">
+                        <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Till Date</label>
+                        <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" disabled />
+                        <span class="text-danger">(Active End Date)</span>
+                    </div>
+                </div>
+                <div class="col-lg-12 fv-row">
+                    <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Remarks</label>
+                    <textarea class="form-control form-control-lg  mb-3 mb-lg-0" disabled></textarea>
+                </div>
+            </form>
+        </ng-template>
+    </ngb-panel>
+</ngb-accordion>
+<br />
+<ngb-accordion #ngbListUsers="ngbAccordion" activeIds="ngb-panel-0">
+    <ngb-panel title="List">
+        <ng-template ngbPanelContent>
+            <form [formGroup]="formGroup">
+                <mat-form-field appearance="fill" class="w-100" floatLabel="never">
+                    <mat-label>Search</mat-label>
+                    <input type="search" matInput formControlName="searchTerm" (keyup)="filterRecords()"
+                        class="ArFontStyle" />
+                    <mat-icon matPrefix class="material-icons">search</mat-icon>
+                    <mat-icon matSuffix (click)="clearFilter()" class="material-icons">close</mat-icon>
+                </mat-form-field>
+                <table mat-table [dataSource]="dataSource">
+
+                    <ng-container matColumnDef="firstName">
+                        <th mat-header-cell *matHeaderCellDef class="text-right"> First Name </th>
+                        <td mat-cell *matCellDef="let element" class="text-right"> {{element.firstName}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="lastName">
+                        <th mat-header-cell *matHeaderCellDef class="text-right"> Last Name </th>
+                        <td mat-cell *matCellDef="let element" class="text-right"> {{element.lastName}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="city">
+                        <th mat-header-cell *matHeaderCellDef class="text-right"> City </th>
+                        <td mat-cell *matCellDef="let element" class="text-right"> {{element.city}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="phoneNumber">
+                        <th mat-header-cell *matHeaderCellDef class="text-right"> Phone Number </th>
+                        <td mat-cell *matCellDef="let element" class="text-right"> {{element.phoneNumber}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="loginName">
+                        <th mat-header-cell *matHeaderCellDef class="text-right"> Login Name </th>
+                        <td mat-cell *matCellDef="let element" class="text-right"> {{element.loginName}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="userType">
+                        <th mat-header-cell *matHeaderCellDef class="text-right"> User Type </th>
+                        <td mat-cell *matCellDef="let element" class="text-right"> {{element.userType}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef class="text-right"></th>
+                        <td mat-cell *matCellDef="let element" class="text-right">
+                            <button mat-raised-button color="accent">Edit</button> |
+                            <button mat-raised-button color="warn">Del</button> |
+                            <button mat-raised-button color="primary">Change Password</button>                            
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                    aria-label="Select page of periodic elements">
+                </mat-paginator>
+
+            </form>
+        </ng-template>
+    </ngb-panel>
+</ngb-accordion>

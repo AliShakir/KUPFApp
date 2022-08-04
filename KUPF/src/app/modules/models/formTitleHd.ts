@@ -14,4 +14,6 @@ export interface FormTitleHd {
     status: string;
     orderBy:number;
     formTitleDTLanguage: FormTitleDt[];
+    // For Inline Edit
+    isHeaderEdit:boolean;
 }

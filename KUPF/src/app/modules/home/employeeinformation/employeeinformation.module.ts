@@ -11,7 +11,8 @@ import { ImportEmployeeMasterComponent } from './import-employee-master/import-e
 import { FilterLabelsPipe } from '../Pipes/filter-labels.pipe';
 import { SharedModule } from '../../_sharedModule/SharedModule';
 import { ViewemployeeinformationComponent } from './viewemployeeinformation/viewemployeeinformation.component';
-
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,13 @@ import { ViewemployeeinformationComponent } from './viewemployeeinformation/view
     WidgetsModule,
     ReactiveFormsModule,
     FormsModule,
-    SharedModule
+    SharedModule,
+    BsDatepickerModule.forRoot(),
+    BsDropdownModule.forRoot()
+  ],
+  exports:[
+    BsDatepickerModule,
+    BsDropdownModule
   ]
 })
 export class EmployeeinformationModule { }

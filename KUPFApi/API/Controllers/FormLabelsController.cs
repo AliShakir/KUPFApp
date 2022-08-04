@@ -88,7 +88,13 @@ namespace API.Controllers
         public async Task<ActionResult> EditFormHeaderLabels(FormTitleHDLanguageDto formTitleHDLanguageDto)
         {
 
+            if (formTitleHDLanguageDto == null)
+                throw new Exception("Invalid input request");
+
             var existingFormHeader = await _localizationService.GetFormHeaderById(formTitleHDLanguageDto.Id);
+
+            if (existingFormHeader == null)
+                throw new Exception("Sorry, record not found.");            
 
             existingFormHeader.HeaderName = formTitleHDLanguageDto.HeaderName;
             existingFormHeader.SubHeaderName = formTitleHDLanguageDto.SubHeaderName;
