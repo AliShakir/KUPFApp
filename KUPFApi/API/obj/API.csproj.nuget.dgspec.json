@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\MyWork\\GitHub11July2022\\KUPFApp\\KUPFApp\\kupfapi\\api\\API.csproj": {}
+    "E:\\MyWork\\GitHub11July2022\\KUPFApp\\KUPFApp\\KUPFApi\\API\\API.csproj": {}
   },
   "projects": {
-    "E:\\MyWork\\GitHub11July2022\\KUPFApp\\KUPFApp\\kupfapi\\api\\API.csproj": {
+    "E:\\MyWork\\GitHub11July2022\\KUPFApp\\KUPFApp\\KUPFApi\\API\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\MyWork\\GitHub11July2022\\KUPFApp\\KUPFApp\\kupfapi\\api\\API.csproj",
+        "projectUniqueName": "E:\\MyWork\\GitHub11July2022\\KUPFApp\\KUPFApp\\KUPFApi\\API\\API.csproj",
         "projectName": "API",
-        "projectPath": "E:\\MyWork\\GitHub11July2022\\KUPFApp\\KUPFApp\\kupfapi\\api\\API.csproj",
+        "projectPath": "E:\\MyWork\\GitHub11July2022\\KUPFApp\\KUPFApp\\KUPFApi\\API\\API.csproj",
         "packagesPath": "C:\\Users\\Shakir\\.nuget\\packages\\",
-        "outputPath": "E:\\MyWork\\GitHub11July2022\\KUPFApp\\KUPFApp\\kupfapi\\api\\obj\\",
+        "outputPath": "E:\\MyWork\\GitHub11July2022\\KUPFApp\\KUPFApp\\KUPFApi\\API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Shakir\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -67,6 +67,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[5.0.0, )"
+            },
+            "Microsoft.Extensions.Logging.Console": {
+              "target": "Package",
+              "version": "[6.0.0, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

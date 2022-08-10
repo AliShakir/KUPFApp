@@ -139,3 +139,15 @@ E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\KUPFApi\API\obj\Debug\net5.0\ref\API.
 E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\KUPFApi\API\obj\Debug\net5.0\API.pdb
 E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\KUPFApi\API\obj\Debug\net5.0\API.genruntimeconfig.cache
 E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\obj\Debug\net5.0\API.csproj.AssemblyReference.cache
+E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\KUPFApi\API\bin\Debug\net5.0\Microsoft.Extensions.Configuration.dll
+E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\KUPFApi\API\bin\Debug\net5.0\Microsoft.Extensions.Configuration.Abstractions.dll
+E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\KUPFApi\API\bin\Debug\net5.0\Microsoft.Extensions.Configuration.Binder.dll
+E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\KUPFApi\API\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.dll
+E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\KUPFApi\API\bin\Debug\net5.0\Microsoft.Extensions.Logging.dll
+E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\KUPFApi\API\bin\Debug\net5.0\Microsoft.Extensions.Logging.Abstractions.dll
+E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\KUPFApi\API\bin\Debug\net5.0\Microsoft.Extensions.Logging.Configuration.dll
+E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\KUPFApi\API\bin\Debug\net5.0\Microsoft.Extensions.Logging.Console.dll
+E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\KUPFApi\API\bin\Debug\net5.0\Microsoft.Extensions.Options.ConfigurationExtensions.dll
+E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\KUPFApi\API\bin\Debug\net5.0\System.Diagnostics.DiagnosticSource.dll
+E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\KUPFApi\API\bin\Debug\net5.0\System.Text.Encodings.Web.dll
+E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\KUPFApi\API\bin\Debug\net5.0\System.Text.Json.dll

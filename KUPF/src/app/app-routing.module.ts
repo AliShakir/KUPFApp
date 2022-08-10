@@ -14,8 +14,11 @@ export const routes: Routes = [
   //   loadChildren: () =>
   //     import('./modules/errors/errors.module').then((m) => m.ErrorsModule),
   // },
-  {path:'',redirectTo:'dashboard', pathMatch:'full'},
-  {path:'login',component:LoginComponent},
+  // {path:'',redirectTo:'dashboard', pathMatch:'full'},
+  // {path:'login',component:LoginComponent},
+  { path: '', component: LoginComponent, pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  
 
   {
     path: '',

@@ -24,6 +24,7 @@ namespace API.Controllers
             _mapper = mapper;
            _localizationService = localizationService;
         }
+        //Done...
         [HttpGet]
         [Route("GetFormHeaderLabels/{formId}/{languageId}")]
         public async Task<ActionResult<IEnumerable<FormTitleHDLanguageViewModel>>> GetFormHeaderLabels(string formId,int languageId)
@@ -32,6 +33,7 @@ namespace API.Controllers
 
             return Ok(result);
         }
+        //Done...
         [HttpGet]
         [Route("GetFormBodyLabels/{formId}/{languageId}")]
         public async Task<ActionResult<IEnumerable<FormTitleDTLanguageViewModel>>> GetFormBodyLabels(string formId,int languageId)
@@ -54,6 +56,7 @@ namespace API.Controllers
             
             return Ok(result);
         }
+        //Done...
         [HttpGet]
         [Route("GetAllAppLabels")]
         public async Task<ActionResult<IEnumerable<FormTitleDTLanguageViewModel>>> GetAllAppLabels()
@@ -61,6 +64,7 @@ namespace API.Controllers
             var result = await _localizationService.GetAllAppLabels();
             return Ok(result);
         }
+        //Done...
         [HttpGet]
         [Route("GetAllFormHeaderLabels")]
         public async Task<ActionResult<IEnumerable<GetDistinctHDFormNameViewModel>>> GetAllFormHeaderLabels()

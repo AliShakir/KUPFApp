@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Logging;
 
 #nullable disable
 
@@ -8,6 +9,7 @@ namespace API.Models
 {
     public partial class KUPFDbContext : DbContext
     {
+        
         public KUPFDbContext(DbContextOptions options) : base(options)
         {
 
@@ -87,6 +89,7 @@ namespace API.Models
         public DbSet<TestEmployee> TestEmployees { get; set; }
         public DbSet<FormTitleHDLanguage> FormTitleHDLanguage { get; set; }
         public DbSet<FormTitleDTLanguage> FormTitleDTLanguage { get; set; }
+        public DbSet<FUNCTION_MST> FUNCTION_MST { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -2191,7 +2194,7 @@ namespace API.Models
                     .HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.Refid)
-                    .HasColumnType("numeric(18, 0)")
+                    .HasColumnType("int")
                     .HasColumnName("REFID");
 
                 entity.Property(e => e.Reftype)

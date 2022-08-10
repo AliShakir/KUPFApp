@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.DTOs;
+using API.DTOs.EmployeeDto;
 using API.DTOs.GetEntityDto;
 using API.DTOs.LocalizationDto;
+using API.DTOs.RefTable;
 using API.Models;
 using API.ViewModels.GetEntityViewModel;
 using API.ViewModels.Localization;
@@ -21,7 +23,7 @@ namespace API.Helpers
             CreateMap<TestCompany, TestCompaniesDto>();
             CreateMap<TestEmployee, TestEmployeesDto>();
             
-            // Get entity by Id (Guid)
+           
             CreateMap<GetEntityViewModel, GetEntityDto>();
 
             //
@@ -39,6 +41,14 @@ namespace API.Helpers
             CreateMap<FormTitleHDLanguageDto, FormTitleHDLanguage>();
             //CreateMap<FormTitleHDLanguage,FormTitleHDLanguage>();
             CreateMap<FormTitleDTLanguageDto,FormTitleHDLanguage>();
+            //
+            CreateMap<DetailedEmployee, DetailedEmployeeDto>();
+            CreateMap<DetailedEmployeeDto, DetailedEmployee>();
+
+            CreateMap<FUNCTION_MST, FunctionMstDto>();
+            CreateMap<UserMst, UserMstDto>();
+            CreateMap<Reftable, RefTableDto>();
+
         }
     }
 }

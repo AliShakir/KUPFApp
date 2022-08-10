@@ -5,8 +5,12 @@ using System.Text.Json.Serialization;
 using API.Helpers;
 using API.Middleware;
 using API.Models;
+using API.Servivces;
+using API.Servivces.Implementation;
+using API.Servivces.Implementation.DetailedEmployee;
 using API.Servivces.Implementation.Localization;
 using API.Servivces.Interfaces;
+using API.Servivces.Interfaces.DetailedEmployee;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,8 +37,16 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            //
             services.AddScoped<ILocalizationService, LocalizationService>();
+            //
+            services.AddScoped<IDetailedEmployeeService, DetailedEmployeeService>();
+            //
+            services.AddScoped<IFunctionMstService, FunctionMstService>();
+            //
+            services.AddScoped<IUserMstService, UserMstService>();
+            //
+            services.AddScoped<IRefTableService, RefTableService>();
             //
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 

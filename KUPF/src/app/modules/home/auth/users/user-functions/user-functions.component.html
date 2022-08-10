@@ -33,7 +33,18 @@
         <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
             <ngb-panel title="Module Wise Menu">
                 <ng-template ngbPanelContent>
-                    <div class="mat-elevation-z8">
+                    <div class="row mb-4">
+                        <div class="col-lg-6 fv-row">
+                                      
+                        </div>
+                        <div class="col-lg-6 fv-row">
+                            <div class="text-left">
+                                <button mat-raised-button color="primary" class="float-left">Submit Menu Module Wise</button> |       
+                                <button mat-raised-button color="accent" class="float-left">Next</button>        
+                            </div>                               
+                        </div>
+                    </div>
+                    <div class="mat-elevation-z8">                       
                         <table mat-table [dataSource]="dataSource">
                             <ng-container matColumnDef="chk1">
                                 <th mat-header-cell *matHeaderCellDef>
@@ -125,22 +136,20 @@
                                 </th>
                             </ng-container>
                            <ng-container matColumnDef="menuItem"> 
-                                <th mat-header-cell *matHeaderCellDef> Menu Item </th>
+                                <th mat-header-cell *matHeaderCellDef class="headerCheckBoxes"> <strong>Menu Item</strong> </th>
                                 <td mat-cell *matCellDef="let element" class="text-right"> 
-                                    <section class="example-section">
-                                        <mat-checkbox class="example-margin"></mat-checkbox>
-                                    </section>    
+                                    <strong>Test</strong>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="admin" class="text-center">
-                                <th mat-header-cell *matHeaderCellDef> Admin </th>
+                                <th mat-header-cell *matHeaderCellDef class="headerCheckBoxes"> <strong>Admin</strong> </th>
                                 <td mat-cell *matCellDef="let element">                                    
                                         <mat-checkbox class="example-margin" [ngModel]="element.admin" [disabled]="true"></mat-checkbox>                                   
                                 </td>
                             </ng-container>
 
                             <ng-container matColumnDef="add" class="text-center">
-                                <th mat-header-cell *matHeaderCellDef> Add </th>
+                                <th mat-header-cell *matHeaderCellDef class="headerCheckBoxes"> <strong>Add</strong> </th>
                                 <td mat-cell *matCellDef="let element">
                                     <section class="example-section">
                                         <mat-checkbox class="example-margin"></mat-checkbox>
@@ -149,7 +158,7 @@
                             </ng-container>
 
                             <ng-container matColumnDef="edit" class="text-center">
-                                <th mat-header-cell *matHeaderCellDef> Edit </th>
+                                <th mat-header-cell *matHeaderCellDef class="headerCheckBoxes"> <strong>Edit</strong> </th>
                                 <td mat-cell *matCellDef="let element">
                                     <section class="example-section">
                                         <mat-checkbox class="example-margin"></mat-checkbox>
@@ -158,7 +167,7 @@
                             </ng-container>
 
                             <ng-container matColumnDef="delete" class="text-center">
-                                <th mat-header-cell *matHeaderCellDef> Delete </th>
+                                <th mat-header-cell *matHeaderCellDef class="headerCheckBoxes"> <strong>Delete</strong> </th>
                                 <td mat-cell *matCellDef="let element">
                                     <section class="example-section">
                                         <mat-checkbox class="example-margin"></mat-checkbox>
@@ -166,7 +175,7 @@
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="print" class="text-center">
-                                <th mat-header-cell *matHeaderCellDef> Print </th>
+                                <th mat-header-cell *matHeaderCellDef class="headerCheckBoxes"> <strong>Print</strong> </th>
                                 <td mat-cell *matCellDef="let element">
                                     <section class="example-section">
                                         <mat-checkbox class="example-margin"></mat-checkbox>
@@ -174,7 +183,7 @@
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="label" class="text-center">
-                                <th mat-header-cell *matHeaderCellDef> Label </th>
+                                <th mat-header-cell *matHeaderCellDef class="headerCheckBoxes"> <strong>Label</strong> </th>
                                 <td mat-cell *matCellDef="let element">
                                     <section class="example-section">
                                         <mat-checkbox class="example-margin"></mat-checkbox>
@@ -182,7 +191,7 @@
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="sp1" class="text-center">
-                                <th mat-header-cell *matHeaderCellDef> SP1 </th>
+                                <th mat-header-cell *matHeaderCellDef class="headerCheckBoxes"> <strong>SP1</strong> </th>
                                 <td mat-cell *matCellDef="let element">
                                     <section class="example-section">
                                         <mat-checkbox class="example-margin"></mat-checkbox>
@@ -191,7 +200,7 @@
                             </ng-container>
 
                             <ng-container matColumnDef="sp2" class="text-center">
-                                <th mat-header-cell *matHeaderCellDef> SP2 </th>
+                                <th mat-header-cell *matHeaderCellDef class="headerCheckBoxes"> <strong>SP2</strong> </th>
                                 <td mat-cell *matCellDef="let element">
                                     <section class="example-section">
                                         <mat-checkbox class="example-margin"></mat-checkbox>
@@ -199,7 +208,7 @@
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="sp3" class="text-center"> 
-                                <th mat-header-cell *matHeaderCellDef> SP3 </th>
+                                <th mat-header-cell *matHeaderCellDef class="headerCheckBoxes"> <strong>SP3</strong> </th>
                                 <td mat-cell *matCellDef="let element">
                                     <section class="example-section">
                                         <mat-checkbox class="example-margin"></mat-checkbox>
@@ -207,7 +216,7 @@
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="sp4" class="text-center">
-                                <th mat-header-cell *matHeaderCellDef> SP4 </th>
+                                <th mat-header-cell *matHeaderCellDef class="headerCheckBoxes"> <strong>SP4</strong> </th>
                                 <td mat-cell *matCellDef="let element">
                                     <section class="example-section">
                                         <mat-checkbox class="example-margin"></mat-checkbox>
@@ -215,7 +224,7 @@
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="sp5" class="text-center">
-                                <th mat-header-cell *matHeaderCellDef> SP5 </th>
+                                <th mat-header-cell *matHeaderCellDef class="headerCheckBoxes"><strong>SP5</strong>  </th>
                                 <td mat-cell *matCellDef="let element">
                                     <section class="example-section">
                                         <mat-checkbox class="example-margin"></mat-checkbox>
@@ -223,7 +232,7 @@
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="activeMenu" class="text-center">
-                                <th mat-header-cell *matHeaderCellDef> Active Menu </th>
+                                <th mat-header-cell *matHeaderCellDef class="headerCheckBoxes"><strong> Active Menu </strong></th>
                                 <td mat-cell *matCellDef="let element">
                                     <section class="example-section">
                                         <mat-checkbox class="example-margin"></mat-checkbox>
@@ -234,10 +243,10 @@
                             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                         </table>
-
+<!-- 
                         <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
                             aria-label="Select page of periodic elements">
-                        </mat-paginator>
+                        </mat-paginator> -->
                     </div>
                 </ng-template>
             </ngb-panel>

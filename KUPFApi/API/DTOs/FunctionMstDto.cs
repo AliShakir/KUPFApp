@@ -1,0 +1,59 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace API.DTOs
+{
+    public class FunctionMstDto
+    {
+        public int TenentID { get; set; }
+        public int MENU_ID { get; set; }
+        public int MASTER_ID { get; set; }
+        public int MODULE_ID { get; set; }
+        public string MENU_TYPE { get; set; }
+        public string MENU_NAME1 { get; set; }
+        public string MENU_NAME2 { get; set; }
+        public string MENU_NAME3 { get; set; }
+        public string LINK { get; set; }
+        public string Urloption { get; set; }
+        public string URLREWRITE { get; set; }
+        public string MENU_LOCATION { get; set; }
+        public string MENU_ORDER { get; set; }
+        public string DOC_PARENT { get; set; }
+        public string CRUP_ID { get; set; }
+        public string ADDFLAGE { get; set; }
+        public string EDITFLAGE { get; set; }
+        public string DELFLAGE { get; set; }
+        public string PRINTFLAGE { get; set; }
+        public string AMIGLOBALE { get; set; }
+        public string MYPERSONAL { get; set; }
+        public string SMALLTEXT { get; set; }
+        public string ACTIVETILLDATE { get; set; }
+        public string ICONPATH { get; set; }
+        public string COMMANLINE { get; set; }
+        public string ACTIVE_FLAG { get; set; }
+        public string METATITLE { get; set; }
+        public string METAKEYWORD { get; set; }
+        public string METADESCRIPTION { get; set; }
+        public string HEADERVISIBLEDATA { get; set; }
+        public string HEADERINVISIBLEDATA { get; set; }
+        public string FOOTERVISIBLEDATA { get; set; }
+        public string FOOTERINVISIBLEDATA { get; set; }
+        public int REFID { get; set; }
+        public int MYBUSID { get; set; }
+        public int LABLEFLAG { get; set; }
+        public int SP1 { get; set; }
+        public int SP2 { get; set; }
+        public int SP3 { get; set; }
+        public int SP4 { get; set; }
+        public int SP5 { get; set; }
+        public string SP1Name { get; set; }
+        public string SP2Name { get; set; }
+        public string SP3Name { get; set; }
+        public string SP4Name { get; set; }
+        public string SP5Name { get; set; }
+        public int ACTIVEMENU { get; set; }
+        public int MENUDATE { get; set; }
+    }
+}

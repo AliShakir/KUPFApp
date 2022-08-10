@@ -95,30 +95,36 @@ export class AddemployeeinformationComponent implements OnInit {
 
   initializeForm(){
     this.addEmployeeForm = new FormGroup({
-      employeeNameEnglish: new FormControl('',Validators.required),
-      employeeNameArabic: new FormControl('',Validators.required),
-      // landLine: new FormControl('',Validators.required),
-      // email: new FormControl('',Validators.required),
-      // kinName: new FormControl('',Validators.required),
-      // kinMobile: new FormControl('',Validators.required),
-      // membership: new FormControl('',Validators.required),
-      // membershipJoiningDate: new FormControl('',Validators.required),
-      // termination: new FormControl('',Validators.required),
-      // terminationDate: new FormControl('',Validators.required),
-      // civilId: new FormControl('',Validators.required),
-      // paci: new FormControl('',Validators.required),
-      // otherId: new FormControl('',Validators.required),
-      // loanAccount: new FormControl('',Validators.required),
-      // hajjAccount: new FormControl('',Validators.required),
-      // perLoadAct: new FormControl('',Validators.required),
-      // consumerLoan: new FormControl('',Validators.required),
-      // otherAcc1: new FormControl('',Validators.required),
-      // otherAcc2: new FormControl('',Validators.required),
-      // otherAcc3: new FormControl('',Validators.required),
-      // otherAcc4: new FormControl('',Validators.required),
-      // dateOfJoining: new FormControl('',Validators.required)
+      englishName: new FormControl('',Validators.required),
+      arabicName: new FormControl('',Validators.required),
+      empBirthday: new FormControl('',Validators.required),
+      empGender: new FormControl('',Validators.required),
+      empMaritalStatus: new FormControl('',Validators.required),
+      mobileNumber: new FormControl('',Validators.required),
+      empWorkTelephone: new FormControl('',Validators.required),
+      empWorkEmail: new FormControl('',Validators.required),
+      next2KinName: new FormControl('',Validators.required),
+      next2KinMobNumber: new FormControl('',Validators.required),
+      civilId: new FormControl('',Validators.required),
+      paci: new FormControl('',Validators.required),
+      otherId: new FormControl('',Validators.required),
+      loanAccount: new FormControl('',Validators.required),
+      hajjAccount: new FormControl('',Validators.required),
+      perLoadAct: new FormControl('',Validators.required),
+      consumerLoan: new FormControl('',Validators.required),
+      otherAcc1: new FormControl('',Validators.required),
+      otherAcc2: new FormControl('',Validators.required),
+      otherAcc3: new FormControl('',Validators.required),
+      otherAcc4: new FormControl('',Validators.required),
+      dateOfJoining: new FormControl('',Validators.required),
+      gender: new FormControl('',Validators.required)
     })
   }
+  
+  get gender(){return this.addEmployeeForm.get('gender')}
+
+ 
+
   registerEmployee(){
     console.log(this.addEmployeeForm.value);
     console.log('OK');

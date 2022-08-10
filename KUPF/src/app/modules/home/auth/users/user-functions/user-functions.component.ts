@@ -49,8 +49,5 @@ const ELEMENT_DATA: PeriodicElement[] = [
   {menuItem:'Menu Item',admin: true, add: 'Beryllium', edit: 9.0122, delete: 'Be',print:'Test',label:'test',sp1:'test',sp2:'test',sp3:'test',sp4:'test',sp5:'test',activeMenu:'test'},
   {menuItem:'Menu Item',admin: true, add: 'Boron', edit: 10.811, delete: 'B',print:'Test',label:'test',sp1:'test',sp2:'test',sp3:'test',sp4:'test',sp5:'test',activeMenu:'test'},
   {menuItem:'Menu Item',admin: true, add: 'Carbon', edit: 12.0107, delete: 'C',print:'Test',label:'test',sp1:'test',sp2:'test',sp3:'test',sp4:'test',sp5:'test',activeMenu:'test'},
-  {menuItem:'Menu Item',admin: true, add: 'Nitrogen', edit: 14.0067, delete: 'N',print:'Test',label:'test',sp1:'test',sp2:'test',sp3:'test',sp4:'test',sp5:'test',activeMenu:'test'},
-  {menuItem:'Menu Item',admin: true, add: 'Oxygen', edit: 15.9994, delete: 'O',print:'Test',label:'test',sp1:'test',sp2:'test',sp3:'test',sp4:'test',sp5:'test',activeMenu:'test'},
-  {menuItem:'Menu Item',admin: true, add: 'Fluorine', edit: 18.9984, delete: 'F',print:'Test',label:'test',sp1:'test',sp2:'test',sp3:'test',sp4:'test',sp5:'test',activeMenu:'test'},
-  {menuItem:'Menu Item',admin: true, add: 'Neon', edit: 20.1797, delete: 'Ne',print:'Test',label:'test',sp1:'test',sp2:'test',sp3:'test',sp4:'test',sp5:'test',activeMenu:'test'},
+  {menuItem:'Menu Item',admin: true, add: 'Nitrogen', edit: 14.0067, delete: 'N',print:'Test',label:'test',sp1:'test',sp2:'test',sp3:'test',sp4:'test',sp5:'test',activeMenu:'test'}
 ];
