@@ -8,6 +8,10 @@ namespace API.Servivces
 {
     public interface IRefTableService
     {
-        Task<IEnumerable<RefTableDto>> GetRefTableDataAsync();
+        Task<int> AddRefTableAsync(RefTableDto refTableDto);
+        Task<int> UpdatRefTableAsync(RefTableDto refTableDto);
+        Task<int> DeleteRefTableAsync(int id);
+        Task<RefTableDto> GetRefTableByIdAsync(int userId);
+        Task<IEnumerable<RefTableDto>> GetRefTableAsync();
     }
 }

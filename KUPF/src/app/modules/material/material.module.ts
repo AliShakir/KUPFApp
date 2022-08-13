@@ -7,10 +7,13 @@ import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import {MatStepperModule} from '@angular/material/stepper';
 const MaterialComponents = [
-  MatButtonModule,MatTableModule,MatPaginatorModule,MatSortModule,
+  MatButtonModule,MatTableModule,
+  MatPaginatorModule,MatSortModule,
   MatFormFieldModule,MatInputModule,
-  MatTooltipModule,MatCheckboxModule
+  MatTooltipModule,MatCheckboxModule,
+  MatStepperModule
 
 ]
 

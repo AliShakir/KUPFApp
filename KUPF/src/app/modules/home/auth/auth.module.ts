@@ -10,6 +10,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MaterialModule } from '../../material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserMstComponent } from './users/user-mst/user-mst.component';
+import { FunctionMstComponent } from './users/function-mst/function-mst.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { UserMstComponent } from './users/user-mst/user-mst.component';
     AddUserComponent,
     UserDetailsComponent,
     UserFunctionsComponent,
-    UserMstComponent
+    UserMstComponent,
+    FunctionMstComponent
   ],
   imports: [
     CommonModule,

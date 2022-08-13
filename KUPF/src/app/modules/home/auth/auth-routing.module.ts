@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { UserDetailsComponent } from './users/user-details/user-details.component';
 import { UserFunctionsComponent } from './users/user-functions/user-functions.component';
 import { UserMstComponent } from './users/user-mst/user-mst.component';
+import { FunctionMstComponent } from './users/function-mst/function-mst.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'user-details', component: UserDetailsComponent },
   { path: 'user-functions', component: UserFunctionsComponent },
   { path: 'user-mst', component: UserMstComponent },
+  { path: 'function-mst', component: FunctionMstComponent },
 ];
 
 @NgModule({

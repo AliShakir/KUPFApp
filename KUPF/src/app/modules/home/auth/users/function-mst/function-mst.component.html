@@ -1,0 +1,246 @@
+
+  <!--    -->
+  
+  <div class="card mb-5 mb-xl-10">
+    <!--begin::Card header-->
+    <div class="card-header card-header-stretch pb-0 panel1bgColor">
+        <!--begin::Title-->
+        <div class="card-title">
+            <h3 class="m-0 text-white ArFontStyle" lang="AR-SA">Function MST</h3>
+        </div>
+        <!--end::Title-->
+    </div>
+    <!--end::Card header-->
+    <!--begin::Tab content-->
+    <div id="kt_billing_payment_tab_content" class="card-body tab-content">
+        <!--begin::Tab panel-->
+        <div id="kt_billing_creditcard" class="tab-pane fade show active" role="tabpanel">
+            <mat-stepper [linear]="isLinear" #stepper>
+                <mat-step [stepControl]="firstFormGroup">
+                  <form [formGroup]="firstFormGroup">
+                    <ng-template matStepLabel>Menu</ng-template>        
+                    <div class="row mb-4">
+                        <div class="col-lg-3 fv-row">
+                            <label class="form-label" for="form3Example1 " lang="AR-SA" >Menu Id</label>
+                            <input type="text" id="form3Example1" class="form-control " lang="AR-SA"  />
+                        </div>
+                        <div class="col-lg-3 fv-row">
+                            <label class="form-label" for="form3Example1 " lang="AR-SA" >Master Id</label>
+                            <input type="text" id="form3Example1" class="form-control" />
+                        </div>
+                        <div class="col-lg-3 fv-row">
+                            <label class="form-label" for="form3Example1 " lang="AR-SA" >Module Id</label>
+                            <input type="text" id="form3Example1" class="form-control" />
+                        </div>
+                        <div class="col-lg-3 fv-row">
+                            <label class="form-label" for="form3Example1 " lang="AR-SA" >Menu Type</label>
+                            <input type="text" id="form3Example1" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-lg-3 fv-row">
+                            <label class="form-label" for="form3Example1 " lang="AR-SA" >Menu Name 1</label>
+                            <input type="text" id="form3Example1" class="form-control " lang="AR-SA"  />
+                        </div>
+                        <div class="col-lg-3 fv-row">
+                            <label class="form-label" for="form3Example1 " lang="AR-SA" >Menu Name 2</label>
+                            <input type="text" id="form3Example1" class="form-control" />
+                        </div>
+                        <div class="col-lg-3 fv-row">
+                            <label class="form-label" for="form3Example1 " lang="AR-SA" >Menu Name 3</label>
+                            <input type="text" id="form3Example1" class="form-control" />
+                        </div>
+                    </div>
+                    <div>
+                      <button mat-raised-button color="primary" matStepperNext>Next</button>
+                    </div>
+                  </form>
+                </mat-step>
+                <mat-step [stepControl]="secondFormGroup" label="Management">
+                  <form [formGroup]="secondFormGroup">
+                    <div class="row mb-4">
+                        <div class="col-lg-3 fv-row">
+                            <label class="form-label" for="form3Example1 " lang="AR-SA" >Link</label>
+                            <input type="text" id="form3Example1" class="form-control " lang="AR-SA"  />
+                        </div>
+                        <div class="col-lg-3 fv-row">
+                            <label class="form-label" for="form3Example1 " lang="AR-SA" >Url Option</label>
+                            <input type="text" id="form3Example1" class="form-control" />
+                        </div>
+                        <div class="col-lg-3 fv-row">
+                            <label class="form-label" for="form3Example1 " lang="AR-SA" >Url Rewrite</label>
+                            <input type="text" id="form3Example1" class="form-control" />
+                        </div>
+                        <div class="col-lg-3 fv-row">
+                            <label class="form-label" for="form3Example1 " lang="AR-SA" >Menu Location</label>
+                            <input type="text" id="form3Example1" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-lg-3 fv-row">
+                            <label class="form-label" for="form3Example1 " lang="AR-SA" >Menu Order</label>
+                            <input type="text" id="form3Example1" class="form-control " lang="AR-SA"  />
+                        </div>
+                        <div class="col-lg-3 fv-row">
+                            <label class="form-label" for="form3Example1 " lang="AR-SA" >Doc Parent</label>
+                            <input type="text" id="form3Example1" class="form-control" />
+                        </div>
+                    </div>
+                    <div>            
+                        <button mat-raised-button color="primary" matStepperNext>Next</button>
+                        <button mat-raised-button color="accent"  style="margin-right: 4px"  matStepperPrevious>Back</button>
+                      </div>
+                  </form>
+                </mat-step>
+                <mat-step [stepControl]="secondFormGroup" label="Active Menu">
+                    <form [formGroup]="secondFormGroup">
+                        <div class="row mb-4">
+                            <div class="col-lg-3 fv-row">
+                                <label class="form-label" for="form3Example1 " lang="AR-SA" >Active Menu</label>
+                                <input type="text" id="form3Example1" class="form-control " lang="AR-SA"  />
+                            </div>
+                            <div class="col-lg-3 fv-row">
+                                <label class="form-label" for="form3Example1 " lang="AR-SA" >Active Tell Date</label>
+                                <input type="text" id="form3Example1" class="form-control" />
+                            </div>
+                        </div>
+                        <div>            
+                            <button mat-raised-button color="primary" matStepperNext>Next</button>
+                            <button mat-raised-button color="accent"  style="margin-right: 4px"  matStepperPrevious>Back</button>
+                          </div>
+                    </form>
+                  </mat-step>
+                  <mat-step [stepControl]="secondFormGroup" label="Basic Flags">
+                    <form [formGroup]="secondFormGroup">
+                        <div class="row mb-4">
+                            <div class="col-lg-3 fv-row">
+                                <label class="form-label" for="form3Example1 " lang="AR-SA" >Add Flage</label>
+                                <input type="text" id="form3Example1" class="form-control " lang="AR-SA"  />
+                            </div>
+                            <div class="col-lg-3 fv-row">
+                                <label class="form-label" for="form3Example1 " lang="AR-SA" >Edit Flage</label>
+                                <input type="text" id="form3Example1" class="form-control" />
+                            </div>
+                            <div class="col-lg-3 fv-row">
+                                <label class="form-label" for="form3Example1 " lang="AR-SA" >Delete Flage</label>
+                                <input type="text" id="form3Example1" class="form-control" />
+                            </div>
+                            <div class="col-lg-3 fv-row">
+                                <label class="form-label" for="form3Example1 " lang="AR-SA" >My Personal</label>
+                                <input type="text" id="form3Example1" class="form-control" />
+                            </div>
+                        </div>
+                        <div>            
+                            <button mat-raised-button color="primary" matStepperNext>Next</button>
+                            <button mat-raised-button color="accent"  style="margin-right: 4px"  matStepperPrevious>Back</button>
+                          </div>
+                    </form>
+                  </mat-step>
+                  <mat-step [stepControl]="secondFormGroup" label="Extended Flags">
+                    <form [formGroup]="secondFormGroup">
+                        <div class="row mb-4">
+                            <div class="col-lg-3 fv-row">
+                                <label class="form-label" for="form3Example1 " lang="AR-SA" >Sp1</label>
+                                <input type="text" id="form3Example1" class="form-control " lang="AR-SA"  />
+                            </div>
+                            <div class="col-lg-3 fv-row">
+                                <label class="form-label" for="form3Example1 " lang="AR-SA" >Sp2</label>
+                                <input type="text" id="form3Example1" class="form-control" />
+                            </div>
+                            <div class="col-lg-3 fv-row">
+                                <label class="form-label" for="form3Example1 " lang="AR-SA" >Sp3</label>
+                                <input type="text" id="form3Example1" class="form-control" />
+                            </div>
+                            <div class="col-lg-3 fv-row">
+                                <label class="form-label" for="form3Example1 " lang="AR-SA" >Sp4</label>
+                                <input type="text" id="form3Example1" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-lg-3 fv-row">
+                                <label class="form-label" for="form3Example1 " lang="AR-SA" >Sp5</label>
+                                <input type="text" id="form3Example1" class="form-control " lang="AR-SA"  />
+                            </div>                
+                        </div>
+                      <div>            
+                        <button mat-raised-button color="primary" matStepperNext>Next</button>
+                        <button mat-raised-button color="accent"  style="margin-right: 4px"  matStepperPrevious>Back</button>
+                      </div>
+                    </form>
+                  </mat-step>
+                <mat-step>
+                    
+                  <ng-template matStepLabel>Done</ng-template>
+                  <p>You are now done.</p>
+                  <div>
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button (click)="stepper.reset()">Reset</button>
+                  </div>
+                </mat-step>
+              </mat-stepper>
+        </div>
+    </div>
+</div>
+<br/>
+<ngb-accordion #ngbListUsers="ngbAccordion" activeIds="ngb-panel-0">
+    <ngb-panel title="List">
+        <ng-template ngbPanelContent>
+            <form [formGroup]="formGroup">
+                <mat-form-field appearance="fill" class="w-100" floatLabel="never">
+                    <mat-label>Search</mat-label>
+                    <input type="search" matInput formControlName="searchTerm" (keyup)="filterRecords()"
+                        class="ArFontStyle" />
+                    <mat-icon matPrefix class="material-icons">search</mat-icon>
+                    <mat-icon matSuffix (click)="clearFilter()" class="material-icons">close</mat-icon>
+                </mat-form-field>
+                <table mat-table [dataSource]="functionMst">
+
+                    <ng-container matColumnDef="ModuleId">
+                        <th mat-header-cell *matHeaderCellDef class="text-right"> Module Id </th>
+                        <td mat-cell *matCellDef="let element" class="text-right ArFontStyle"> {{element.modulE_ID}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="MenuType">
+                        <th mat-header-cell *matHeaderCellDef class="text-right"> Menu Type </th>
+                        <td mat-cell *matCellDef="let element" class="text-right ArFontStyle"> {{element.menU_TYPE}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="MenuName1">
+                        <th mat-header-cell *matHeaderCellDef class="text-right"> Menu Name 1 </th>
+                        <td mat-cell *matCellDef="let element" class="text-right ArFontStyle"> {{element.menU_NAME1}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="MenuName2">
+                        <th mat-header-cell *matHeaderCellDef class="text-right"> Menu Name 2 </th>
+                        <td mat-cell *matCellDef="let element" class="text-right ArFontStyle"> {{element.menU_NAME2}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="MenuName3">
+                        <th mat-header-cell *matHeaderCellDef class="text-right"> Menu Name 3 </th>
+                        <td mat-cell *matCellDef="let element" class="text-right ArFontStyle"> {{element.menU_NAME3}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Link">
+                        <th mat-header-cell *matHeaderCellDef class="text-right"> Link </th>
+                        <td mat-cell *matCellDef="let element" class="text-right ArFontStyle"> {{element.link}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef class="text-right"></th>
+                        <td mat-cell *matCellDef="let element" class="text-right">
+                            <button mat-raised-button color="accent">Edit</button> |
+                            <button mat-raised-button color="warn">Del</button>                           
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                    <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                    aria-label="Select page of periodic elements">
+                </mat-paginator>
+
+            </form>
+        </ng-template>
+    </ngb-panel>
+</ngb-accordion>

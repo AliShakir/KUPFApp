@@ -20,11 +20,62 @@ namespace API.Servivces.Implementation
             _context = context;
             _mapper = mapper;
         }
-        public async Task<IEnumerable<UserMstDto>> GetUserMstDataAsync()
+
+        public async Task<int> AddUserMstAsync(UserMstDto userMstDto)
+        {
+            int result = 0;
+            if (_context != null)
+            {
+                var newUserMst = _mapper.Map<UserMst>(userMstDto);
+                await _context.UserMsts.AddAsync(newUserMst);
+                result = await _context.SaveChangesAsync();
+                return result;
+            }
+            return result;
+        }
+        public async Task<int> UpdatUserMstAsync(UserMstDto userMstDto)
+        {
+            int result = 0;
+            if (_context != null)
+            {
+                var existingUserMst = _mapper.Map<Models.UserMst>(userMstDto);
+                _context.UserMsts.Update(existingUserMst);
+
+                result = await _context.SaveChangesAsync();
+                return result;
+            };
+            return result;
+        }
+        public async Task<int> DeleteUserMstAsync(int id)
+        {
+            int result = 0;
+
+            if (_context != null)
+            {
+                var userMst = await _context.UserMsts.FirstOrDefaultAsync(x => x.UserId == id);
+
+                if (userMst != null)
+                {
+                    _context.UserMsts.Remove(userMst);
+
+                    result = await _context.SaveChangesAsync();
+                }
+                return result;
+            }
+            return result;
+        }
+        public async Task<UserMstDto> GetUserMstByIdAsync(int userId)
+        {
+            var result = await _context.UserMsts.Where(c => c.UserId == userId).FirstOrDefaultAsync();
+            var data = _mapper.Map<UserMstDto>(result);
+            return data;
+        }
+        public async Task<IEnumerable<UserMstDto>> GetUserMstAsync()
         {
             var result = await _context.UserMsts.ToListAsync();
             var data = _mapper.Map<IEnumerable<UserMstDto>>(result);
             return data;
         }
+        
     }
 }

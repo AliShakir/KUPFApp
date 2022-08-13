@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>API</name>
+    </assembly>
+    <members>
+        <member name="M:API.Controllers.FunctionUserController.AddFunctionUser(API.DTOs.FunctionUserDto)">
+            <summary>
+            Add New Function User
+            </summary>
+            <param name="functionUserDto">Function User</param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Servivces.Implementation.Localization.LocalizationService.GetAllFormHeaderLabels">
+            <summary>
+            Get all form header labels.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Servivces.Implementation.Localization.LocalizationService.GetFormHeaderLabelsByFormId(System.String)">
+            <summary>
+            Get form header labels by form Id.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Servivces.Implementation.Localization.LocalizationService.GetFormBodyLabelsByFormId(System.String)">
+            <summary>
+            Get form body labels by form Id.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Servivces.Implementation.Localization.LocalizationService.EditFormBodyLabels(System.Guid)">
+            <summary>
+            Edit form header labels by Id.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Servivces.Implementation.RefTableService.GetRefTableAsync">
+            <summary>
+            fsfsfsfsfsf
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

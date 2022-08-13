@@ -8,6 +8,10 @@ namespace API.Servivces.Interfaces
 {
     public interface IUserMstService
     {
-        Task<IEnumerable<UserMstDto>> GetUserMstDataAsync();
+        Task<int> AddUserMstAsync(UserMstDto userMstDto);
+        Task<int> UpdatUserMstAsync(UserMstDto userMstDto);
+        Task<int> DeleteUserMstAsync(int id);
+        Task<UserMstDto> GetUserMstByIdAsync(int userId);        
+        Task<IEnumerable<UserMstDto>> GetUserMstAsync();
     }
 }

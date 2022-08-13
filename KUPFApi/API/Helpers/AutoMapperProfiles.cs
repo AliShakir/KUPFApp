@@ -44,10 +44,19 @@ namespace API.Helpers
             //
             CreateMap<DetailedEmployee, DetailedEmployeeDto>();
             CreateMap<DetailedEmployeeDto, DetailedEmployee>();
-
+            //
             CreateMap<FUNCTION_MST, FunctionMstDto>();
+            CreateMap<FunctionMstDto,FUNCTION_MST>();
+            //
             CreateMap<UserMst, UserMstDto>();
+            CreateMap<UserMstDto, UserMst>();
+            //
             CreateMap<Reftable, RefTableDto>();
+            CreateMap<RefTableDto, Reftable>();
+            //
+            CreateMap<FunctionUserDto, FUNCTION_USER>();
+            CreateMap<FUNCTION_USER, FunctionUserDto>();
+            
 
         }
     }

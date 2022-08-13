@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json.Serialization;
 using API.Helpers;
 using API.Middleware;
 using API.Models;
@@ -13,13 +9,10 @@ using API.Servivces.Interfaces;
 using API.Servivces.Interfaces.DetailedEmployee;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 namespace API
@@ -48,6 +41,10 @@ namespace API
             //
             services.AddScoped<IRefTableService, RefTableService>();
             //
+            services.AddScoped<IFunctionUserService, FunctionUserService>();
+            //
+            services.AddScoped<ICrupMstServivce, CrupMstService>();
+            //
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
             services.AddDbContext<KUPFDbContext>(options =>
@@ -75,7 +72,16 @@ namespace API
            
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
+                //c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                   
+                    Title = "KUPF API",
+                    Version = "v1",
+                    Description = "An API to perform KUPF operations",             
+                    
+                });
+
             });
         }
 
@@ -92,6 +98,7 @@ namespace API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
             }
+
             //if (env.IsProduction())
             //{
             //  app.UseDeveloperExceptionPage();

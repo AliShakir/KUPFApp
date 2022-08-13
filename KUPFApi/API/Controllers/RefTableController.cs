@@ -1,4 +1,5 @@
 ﻿using API.DTOs.RefTable;
+using API.Models;
 using API.Servivces;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -16,16 +17,60 @@ namespace API.Controllers
     {
         private readonly IRefTableService _refTableService;
         public IMapper _mapper { get; }
-        public RefTableController(IRefTableService refTableService, IMapper mapper)
+        private readonly KUPFDbContext _context;
+        public RefTableController(IRefTableService refTableService, IMapper mapper, KUPFDbContext context)
         {
             _mapper = mapper;
             _refTableService = refTableService;
+            _context = context;
         }
+        
+        [HttpPost]
+        [Route("AddRefTable")]
+        public async Task<ActionResult<int>> AddRefTable(RefTableDto refTableDto)
+        {
+            await _refTableService.AddRefTableAsync(refTableDto);
+            await _context.SaveChangesAsync();
+            return refTableDto.Refid;
+        }
+        
+        [HttpPut]
+        [Route("UpdateRefTable")]
+        public async Task<ActionResult<int>> UpdateRefTable(RefTableDto refTableDto)
+        {
+            if (refTableDto != null)
+            {
+                var result = await _refTableService.UpdatRefTableAsync(refTableDto);
+                return result;
+            }
+            return null;
+        }
+        
+        [HttpDelete]
+        [Route("DeleteRefTable")]
+        public async Task<int> DeleteRefTable(int refId)
+        {
+            int result = 0;
+            if (refId != 0)
+            {
+                result = await _refTableService.DeleteRefTableAsync(refId);
+            }
+            return result;
+        }
+        
+        [HttpGet]
+        [Route("GetRefTableById/{refId}")]
+        public async Task<ActionResult<IEnumerable<RefTableDto>>> GetRefTableByIdAsync(int refId)
+        {
+            var result = await _refTableService.GetRefTableByIdAsync(refId);
+            return Ok(result);
+        }
+
         [HttpGet]
         [Route("GetRefTableData")]
         public async Task<ActionResult<IEnumerable<RefTableDto>>> GetRefTableData()
         {
-            var result = await _refTableService.GetRefTableDataAsync();
+            var result = await _refTableService.GetRefTableAsync();
             return Ok(result);
         }
     }
