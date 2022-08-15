@@ -45,6 +45,10 @@ namespace API
             //
             services.AddScoped<ICrupMstServivce, CrupMstService>();
             //
+            services.AddScoped<ICrupAuditService, CrupAuditService>();
+            //
+            services.AddScoped<ILoginService, LoginService>();
+            //
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
             services.AddDbContext<KUPFDbContext>(options =>
@@ -52,18 +56,12 @@ namespace API
                 options.UseSqlServer(_config.GetConnectionString("MsSqlConnection"));
             });
             //Enable CORS    
-            // services.AddCors(c =>    
-            // {    
-            //     c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyMethod()    
-            //      .AllowAnyHeader());    
-            // });   
-            services.AddCors(options=>
-            {
-                options.AddDefaultPolicy(builder=>
-                {
-                    builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
-                });
-            });
+            //services.AddCors(c =>    
+            //{    
+            //    c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyMethod()    
+            //     .AllowAnyHeader());    
+            //});   
+            
             services.AddControllers();            
             services.AddControllersWithViews()
             .AddNewtonsoftJson(options =>
@@ -83,6 +81,9 @@ namespace API
                 });
 
             });
+            services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin()
+                                                                   .AllowAnyMethod()
+                                                                    .AllowAnyHeader()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -101,14 +102,14 @@ namespace API
 
             //if (env.IsProduction())
             //{
-            //  app.UseDeveloperExceptionPage();
-            //  app.UseSwagger();
-            //  app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
+            //    app.UseDeveloperExceptionPage();
+            //    app.UseSwagger();
+            //    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
             //}
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            app.UseCors();
+            app.UseCors("AllowAll");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

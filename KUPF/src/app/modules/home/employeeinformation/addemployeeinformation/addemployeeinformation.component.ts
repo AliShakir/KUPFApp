@@ -2,9 +2,12 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { DetailedEmployee } from 'src/app/modules/models/DetailedEmployee';
 import { FormTitleDt } from 'src/app/modules/models/formTitleDt';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
+import { EmployeeService } from 'src/app/modules/_services/employee.service';
 import { LocalizationService } from 'src/app/modules/_services/localization.service';
 
 @Component({
@@ -19,15 +22,6 @@ export class AddemployeeinformationComponent implements OnInit {
   
   addEmployeeForm : FormGroup;
 
-//   /*********************/
-//  formHeaderLabels$ :Observable<FormTitleHd[]>; 
-//  formBodyLabels$ :Observable<FormTitleDt[]>; 
-//  formBodyLabels :FormTitleDt[]=[]; 
-//  id:string = '';
-//  languageId:any;
-//  // FormId to get form/App language
-//  @ViewChild('AddEmployee') hidden:ElementRef;
-// /*********************/
   //#region 
     /*----------------------------------------------------*/
 
@@ -52,7 +46,7 @@ export class AddemployeeinformationComponent implements OnInit {
     /*----------------------------------------------------*/  
   //#endregion
   datePickerConfig: Partial<BsDatepickerConfig> | undefined;
-  constructor(private cdr: ChangeDetectorRef,private localizationService: LocalizationService) {
+  constructor(private cdr: ChangeDetectorRef,private employeeService: EmployeeService,private toastrService: ToastrService) {
     this.datePickerConfig = Object.assign({},{containerClass:'theme-dark-blue'})
     const loadingSubscr = this.isLoading$
       .asObservable()
@@ -105,31 +99,40 @@ export class AddemployeeinformationComponent implements OnInit {
       empWorkEmail: new FormControl('',Validators.required),
       next2KinName: new FormControl('',Validators.required),
       next2KinMobNumber: new FormControl('',Validators.required),
-      civilId: new FormControl('',Validators.required),
-      paci: new FormControl('',Validators.required),
-      otherId: new FormControl('',Validators.required),
-      loanAccount: new FormControl('',Validators.required),
-      hajjAccount: new FormControl('',Validators.required),
-      perLoadAct: new FormControl('',Validators.required),
+
+      department: new FormControl('',Validators.required),
+      departmentName: new FormControl('',Validators.required),
+      salary: new FormControl('',Validators.required),
+      
+      empCidNum: new FormControl('',Validators.required),
+      empPaciNum: new FormControl('',Validators.required),
+      empOtherId: new FormControl('',Validators.required),
+
+      loanAct: new FormControl('',Validators.required),
+      hajjAct: new FormControl('',Validators.required),
+      persLoanAct: new FormControl('',Validators.required),
       consumerLoan: new FormControl('',Validators.required),
-      otherAcc1: new FormControl('',Validators.required),
+      otherAct1: new FormControl('',Validators.required),
       otherAcc2: new FormControl('',Validators.required),
       otherAcc3: new FormControl('',Validators.required),
       otherAcc4: new FormControl('',Validators.required),
       dateOfJoining: new FormControl('',Validators.required),
-      gender: new FormControl('',Validators.required)
+      
     })
   }
   
-  get gender(){return this.addEmployeeForm.get('gender')}
+  //get gender(){return this.addEmployeeForm.get('gender')}
 
  
-
-  registerEmployee(){
-    console.log(this.addEmployeeForm.value);
-    console.log('OK');
+//Save employee data...
+  submitForm(){
+    this.employeeService.AddEmployee(this.addEmployeeForm.value).subscribe(()=>{
+      this.toastrService.success('Saved successfully','Success');   
+      this.addEmployeeForm.reset();
+    })
+    
   }
-  saveSettings() {
+saveSettings() {
     this.isLoading$.next(true);
     setTimeout(() => {
       this.isLoading$.next(false);
@@ -141,26 +144,5 @@ export class AddemployeeinformationComponent implements OnInit {
     this.unsubscribe.forEach((sb) => sb.unsubscribe());
   }
 
-  ngAfterViewInit() {
-    // // TO get the form id...
-    // this.id = this.hidden.nativeElement.value;
-    
-    // // TO GET THE LANGUAGE ID
-    // this.languageId = localStorage.getItem('langType');
-    
-    // // Get form header labels
-    // this.formHeaderLabels$ = this.localizationService.getFormHeaderLabels(this.id,this.languageId);
-    
-    // // Get form body labels 
-    // this.formBodyLabels$= this.localizationService.getFormBodyLabels(this.id,this.languageId)
-    
-    // // Get observable as normal array of items
-    // this.formBodyLabels$.subscribe((data)=>{
-    //   this.formBodyLabels = data 
-    //   console.log(this.formBodyLabels);    
-    // },error=>{
-    //   console.log(error);
-    // })  
-    
-  }
+  
 }

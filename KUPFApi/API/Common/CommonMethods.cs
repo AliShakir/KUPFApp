@@ -1,0 +1,25 @@
+using System;
+
+namespace API.Common
+{
+    public static class CommonMethods
+    {
+        
+        public static Int64 CreateEmployeeId()
+        {
+            Random rnd = new Random();
+		    Int64 employeeId  = rnd.Next(1, 1000000); 
+            return employeeId;
+        }
+        public static string DecodePass(string base64EncodedData)
+        {
+            var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
+            return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
+        }
+        public static string EncodePass(string plainText)
+        {
+        var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+        return System.Convert.ToBase64String(plainTextBytes);
+        }
+    }
+}

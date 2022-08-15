@@ -62,7 +62,7 @@
 
         <!--begin::Action-->
         <div class="text-center">
-          <button type="submit" [disabled]="!loginForm.valid" class="btn btn-lg btn-primary w-100 mb-5" (click)="submit()">
+          <button type="submit" [disabled]="!loginForm.valid" class="btn btn-lg btn-primary w-100 mb-5" (click)="login()">
             <ng-container *ngIf="isLoading$ | async">
               <span class="indicator-progress" [style.display]="'block'">
                 Please wait...

@@ -8,9 +8,10 @@ namespace API.Servivces.Interfaces
 {
     public interface ICrupMstServivce
     {
-        int InsertCrupMstAsync(CrupMstDto crupMstDto);
-        int UpdatCrupMstAsync(CrupMstDto crupMstDto);
-        int DeleteCrupMstAsync(int tenantId, int locationId, Int64 crupId);
-        IEnumerable<CrupMstDto> GetCrupMstAsync(int tenantId,int locationId, Int64 crupId);
+        int InsertCrupMst(CrupMstDto crupMstDto);
+        int UpdatCrupMst(CrupMstDto crupMstDto);
+        int DeleteCrupMst(int tenantId, int locationId, Int64 crupId);
+        CrupMstDto GetCrupMst(int tenantId,int locationId, Int64 crupId);
+        Int64 MstSetCellMax(int tenantId, int locationId);
     }
 }

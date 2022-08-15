@@ -65,7 +65,7 @@ namespace API.Controllers
         }
         [HttpGet]
         [Route("GetFunctionUser")]
-        public async Task<ActionResult<IEnumerable<FunctionUserDto>>> GetFunctionUser()
+        public async Task<ActionResult<FunctionUserDto>> GetFunctionUser()
         {
             var result = await _functionUserService.GetFunctionUserAsync();
             return Ok(result);

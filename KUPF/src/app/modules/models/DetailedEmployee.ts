@@ -1,4 +1,4 @@
-declare module namespace {
+
 
     export interface DetailedEmployee {
         tenentId: number;
@@ -31,7 +31,7 @@ declare module namespace {
         empPaciNum: string;
         empOtherId: string;
         empStatus: number;
-        joinedDate: Date;
+        dateOfJoining: Date;
         endDate: Date;
         terminationId: number;
         subscriptionDate: Date;
@@ -40,10 +40,10 @@ declare module namespace {
         hajjAct: string;
         persLoanAct: string;
         otherAct1: string;
-        otherAct2: string;
-        otherAct3: string;
-        otherAct4: string;
-        otherAct5: string;
+        otherAcc2: string;
+        otherAcc3: string;
+        otherAcc4: string;
+        otherAcc5: string;
         empStreet1: string;
         empStreet2: string;
         cityCode: string;
@@ -65,5 +65,5 @@ declare module namespace {
         synId: number;
     }
 
-}
+
 

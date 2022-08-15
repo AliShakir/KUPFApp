@@ -16,7 +16,7 @@ constructor(private httpClient: HttpClient) { }
 
 getAllFunctionMst() {  
   //if (this.functionMst.length > 0) return of(this.functionMst);
-  return this.httpClient.get<FunctionMst[]>(this.baseUrl + `FunctionMst/GetFunctionMst`).pipe(
+  return this.httpClient.get<FunctionMst[]>(`https://kupfapi.erp53.com/api/FunctionMst/GetFunctionMst`).pipe(
     map(functionMst => {
       this.functionMst = functionMst;
       console.log(this.functionMst);

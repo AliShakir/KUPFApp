@@ -1,4 +1,5 @@
-﻿using API.DTOs.EmployeeDto;
+﻿using API.Common;
+using API.DTOs.EmployeeDto;
 using API.Models;
 using API.Servivces.Interfaces.DetailedEmployee;
 using AutoMapper;
@@ -40,6 +41,11 @@ namespace API.Servivces.Implementation.DetailedEmployee
             if (_context != null)
             {
                 var newEmployee = _mapper.Map<Models.DetailedEmployee>(detailedEmployeeDto);
+                newEmployee.TenentId = 21;
+                newEmployee.LocationId = 1;
+                newEmployee.EmployeeId = CommonMethods.CreateEmployeeId().ToString();
+                //newEmployee.EmployeeLoginId = "ali@ali.com";
+                //newEmployee.EmployeePassword = CommonMethods.EncodePass("Shakir");
                 await _context.DetailedEmployees.AddAsync(newEmployee);
                 await _context.SaveChangesAsync();
                 return detailedEmployeeDto.EmployeeId;         

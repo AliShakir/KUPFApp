@@ -13,6 +13,7 @@ import { SharedModule } from '../../_sharedModule/SharedModule';
 import { ViewemployeeinformationComponent } from './viewemployeeinformation/viewemployeeinformation.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { SearchTabModule } from '../_partials/search-tab.module';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     FormsModule,
     SharedModule,
     BsDatepickerModule.forRoot(),
-    BsDropdownModule.forRoot()
+    BsDropdownModule.forRoot(),
+    SearchTabModule,
   ],
   exports:[
     BsDatepickerModule,

@@ -29,29 +29,36 @@ namespace API.Controllers
         [Route("AddCrupMst")]
         public ActionResult<int> AddCrupMst(CrupMstDto crupMstDto)
         {
-            int result = _crupMstService.InsertCrupMstAsync(crupMstDto);           
+            int result = _crupMstService.InsertCrupMst(crupMstDto);           
             return result;
         }
         [HttpPost]
         [Route("UpdateCrupMst")]
         public ActionResult<int> UpdateCrupMst(CrupMstDto crupMstDto)
         {
-            int result = _crupMstService.UpdatCrupMstAsync(crupMstDto);
+            int result = _crupMstService.UpdatCrupMst(crupMstDto);
             return result;
         }
         [HttpPost]
         [Route("DeleteCrupMst")]
         public ActionResult<int> DeleteCrupMst(int tenantId, int locationId, Int64 crupId)
         {
-            int result = _crupMstService.DeleteCrupMstAsync(tenantId, locationId, crupId);
+            int result = _crupMstService.DeleteCrupMst(tenantId, locationId, crupId);
             return result;
         }
-        //[HttpPost]
-        //[Route("SelectCrupMst")]
-        //public async Task<ActionResult<IEnumerable<CrupMstDto>>> SelectCrupMst(int tenantId, int locationId, Int64 crupId)
-        //{
-        //    var result = await _crupMstService.GetCrupMstAsync(tenantId, locationId, crupId);            
-        //    return result.ToList();
-        //}
+        [HttpPost]
+        [Route("SelectCrupMst")]
+        public async Task<ActionResult<CrupMstDto>> SelectCrupMst(int tenantId, int locationId, Int64 crupId)
+        {
+            var result = _crupMstService.GetCrupMst(tenantId, locationId, crupId);
+            return result;
+        }
+        [HttpPost]
+        [Route("MstSetCellMax")]
+        public ActionResult<Int64> MstSetCellMax(int tenantId, int locationId)
+        {
+            Int64 result = _crupMstService.MstSetCellMax(tenantId, locationId);
+            return result;
+        }
     }
 }

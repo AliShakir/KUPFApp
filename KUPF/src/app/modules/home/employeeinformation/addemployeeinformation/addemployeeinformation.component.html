@@ -5,10 +5,13 @@
     <div class="row">
       <div class="btn-group " role="group" aria-label="Basic example"
         *ngFor="let bodyLabel of formBodyLabels; let i = index">
+        <!-- Save Button -->
         <button type="button" class="btn btn-primary float-left ArFontStyle"
-          lang="AR-SA">{{bodyLabel[0].title}}</button>
+          lang="AR-SA" (click)="submitForm()">{{bodyLabel[0].title}}</button>
+        <!-- Cancel Button -->
         <button type="button" class="btn btn-warning float-left ArFontStyle"
           lang="AR-SA">{{bodyLabel[1].title}}</button>
+        <!-- Back Button -->
         <button type="button" class="btn btn-danger float-left ArFontStyle" routerLink="/employee/view-employee"
           routerLinkActive="active" lang="AR-SA">{{bodyLabel[2].title}}</button>
       </div>
@@ -38,30 +41,30 @@
       <!--end::Title-->
       <!--begin::Row-->
       <div class="row gx-9 gy-6">
-        <form autocomplete="off" [formGroup]="addEmployeeForm" (ngSubmit)="onSubmit()">
+        <form autocomplete="off" [formGroup]="addEmployeeForm" (ngSubmit)="onSubmit()" id="employeeForm">
           <div class="row mb-6">
             <div class="col-lg-6 fv-row">
               <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"
                 lang="AR-SA">{{bodyLabel[4].title}}</label>
-              <app-text-input [formControl]='addEmployeeForm.controls["englishName"]' lang="AR-SA" label="Employee Name"></app-text-input>
+              <app-text-input [formControl]='addEmployeeForm.controls["englishName"]' lang="AR-SA"
+                label="Employee Name"></app-text-input>
             </div>
             <div class="col-lg-6 fv-row">
               <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"
                 lang="AR-SA">{{bodyLabel[5].title}}</label>
-              <app-text-input [formControl]='addEmployeeForm.controls["arabicName"]' [label]='"Arabic Name"'></app-text-input>
+              <app-text-input [formControl]='addEmployeeForm.controls["arabicName"]' [label]='"Arabic Name"'>
+              </app-text-input>
             </div>
           </div>
           <div class="row mb-6">
             <div class="col-lg-4 fv-row">
               <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"
                 lang="AR-SA">{{bodyLabel[6].title}}</label>
-              <input type="text" class="form-control" 
-              bsDatepicker [bsConfig]="datePickerConfig"/>
+              <input type="text" class="form-control" bsDatepicker [bsConfig]="datePickerConfig" [formControl]='addEmployeeForm.controls["empBirthday"]'/>
             </div>
             <div class="col-lg-4 fv-row">
               <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[7].title}}</label>
-              <select class="form-control bg-light" aria-label="Select example" 
-             >
+              <select class="form-control bg-light" aria-label="Select example" [formControl]='addEmployeeForm.controls["empGender"]'>
                 <option>-Select-</option>
                 <option value="1">Male</option>
                 <option value="2">Female</option>
@@ -70,10 +73,10 @@
             </div>
             <div class="col-lg-4 fv-row">
               <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[8].title}}</label>
-              <select class="form-control bg-light" aria-label="Select example">
+              <select class="form-control bg-light" aria-label="Select example" [formControl]='addEmployeeForm.controls["empMaritalStatus"]'>
                 <option>-Select-</option>
-                <option value="1">Married</option>
-                <option value="2">Single</option>
+                <option value="Married">Married</option>
+                <option value="Single">Single</option>
               </select>
             </div>
           </div>
@@ -82,29 +85,34 @@
             <div class="col-lg-4 fv-row">
               <label class="col-lg-6 col-form-label fw-bold fs-6 ArFontStyle"
                 lang="AR-SA">{{bodyLabel[9].title}}</label>
-                <app-text-input [formControl]='addEmployeeForm.controls["mobileNumber"]' [label]='"Mobile Number"'></app-text-input>
+              <app-text-input [formControl]='addEmployeeForm.controls["mobileNumber"]' [label]='"Mobile Number"'>
+              </app-text-input>
             </div>
             <div class="col-lg-4 fv-row">
               <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"
                 lang="AR-SA">{{bodyLabel[10].title}}</label>
-                <app-text-input [formControl]='addEmployeeForm.controls["empWorkTelephone"]' [label]='"Land Line"'></app-text-input>
+              <app-text-input [formControl]='addEmployeeForm.controls["empWorkTelephone"]' [label]='"Land Line"'>
+              </app-text-input>
             </div>
             <div class="col-lg-4 fv-row">
               <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"
                 lang="AR-SA">{{bodyLabel[11].title}}</label>
-                <app-text-input [formControl]='addEmployeeForm.controls["empWorkEmail"]' [label]='"Email"'></app-text-input>
+              <app-text-input [formControl]='addEmployeeForm.controls["empWorkEmail"]' [label]='"Email"'>
+              </app-text-input>
             </div>
           </div>
           <div class="row mb-6">
             <div class="col-lg-6 fv-row">
               <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"
                 lang="AR-SA">{{bodyLabel[12].title}}</label>
-                <app-text-input [formControl]='addEmployeeForm.controls["next2KinName"]' [label]='"Kin Name"'></app-text-input>
+              <app-text-input [formControl]='addEmployeeForm.controls["next2KinName"]' [label]='"Kin Name"'>
+              </app-text-input>
             </div>
             <div class="col-lg-6 fv-row">
               <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"
                 lang="AR-SA">{{bodyLabel[13].title}}</label>
-                <app-text-input [formControl]='addEmployeeForm.controls["next2KinMobNumber"]' [label]='"Kin Mobile"'></app-text-input>
+              <app-text-input [formControl]='addEmployeeForm.controls["next2KinMobNumber"]' [label]='"Kin Mobile"'>
+              </app-text-input>
             </div>
           </div>
         </form>
@@ -124,7 +132,6 @@
         <h3 class="m-0 ArFontStyle" lang="AR-SA">{{bodyLabel[14].title}}</h3>
       </div>
       <!--end::Title-->
-
     </div>
     <!--end::Card header-->
     <!--begin::Tab content-->
@@ -132,7 +139,6 @@
       <!--begin::Tab panel-->
       <div id="kt_billing_creditcard" class="tab-pane fade show active" role="tabpanel">
         <!--begin::Title-->
-
         <!--end::Title-->
         <!--begin::Row-->
         <div class="row gx-9 gy-6">
@@ -159,24 +165,28 @@
               <div class="col-lg-4 fv-row">
                 <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"
                   lang="AR-SA">{{bodyLabel[17].title}}</label>
-                <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" readonly name="nameInArabic" />
+                <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" 
+                [formControl]='addEmployeeForm.controls["salary"]'/>
               </div>
             </div>
             <div class="row mb-6">
               <div class="col-lg-4 fv-row">
                 <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"
                   lang="AR-SA">{{bodyLabel[18].title}}</label>
-                <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" readonly name="nameInArabic" />
+                <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" 
+                [formControl]='addEmployeeForm.controls["empCidNum"]'/>
               </div>
               <div class="col-lg-4 fv-row">
                 <label class="col-lg-6 col-form-label fw-bold fs-6 ArFontStyle"
                   lang="AR-SA">{{bodyLabel[19].title}}</label>
-                <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" readonly name="nameInArabic" />
+                <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" 
+                name="nameInArabic" [formControl]='addEmployeeForm.controls["empPaciNum"]'/>
               </div>
               <div class="col-lg-4 fv-row">
                 <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"
                   lang="AR-SA">{{bodyLabel[20].title}}</label>
-                <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" readonly name="nameInArabic" />
+                <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" 
+                name="nameInArabic" [formControl]='addEmployeeForm.controls["empOtherId"]'/>
               </div>
             </div>
           </form>
@@ -235,101 +245,89 @@
     </div>
     <!--end::Tab content-->
   </div>
-
+  
   <div class="card mb-5 mb-xl-10" *ngFor="let bodyLabel of formBodyLabels; let i = index">
-    <!--begin::Card header-->
     <div class="card-header card-header-stretch pb-0 panelBgColor">
-      <!--begin::Title-->
       <div class="card-title">
         <h3 class="m-0 ArFontStyle" lang="AR-SA">{{bodyLabel[26].title}}</h3>
       </div>
-      <!--end::Title-->
-    </div>
-    <!--end::Card header-->
-    <!--begin::Tab content-->
+    </div>    
     <div id="kt_billing_payment_tab_content" class="card-body tab-content">
-      <!--begin::Tab panel-->
-      <div id="kt_billing_creditcard" class="tab-pane fade show active" role="tabpanel">
-        <!--begin::Title-->
-        <!-- <h3 class="mb-5">Job Information</h3> -->
-        <!--end::Title-->
-        <!--begin::Row-->
+      <div id="kt_billing_creditcard" class="tab-pane fade show active" role="tabpanel">       
         <div class="row gx-9 gy-6">
           <form autocomplete="off">
             <div class="row mb-6">
               <div class="col-lg-4 fv-row">
                 <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[27].title}}</label>
-                <select class="form-control bg-light" aria-label="Select example">
+                <select class="form-control bg-light" 
+                aria-label="Select example" [formControl]='addEmployeeForm.controls["consumerLoan"]'>
                   <option>-Select-</option>
-                  <option value="1">Married</option>
-                  <option value="2">Single</option>
+                  <option value="1">consumer loan</option>
                 </select>
               </div>
               <div class="col-lg-4 fv-row">
                 <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[28].title}}</label>
-                <select class="form-control bg-light" aria-label="Select example">
+                <select class="form-control bg-light" 
+                aria-label="Select example" [formControl]='addEmployeeForm.controls["persLoanAct"]'>
                   <option>-Select-</option>
-                  <option value="1">Married</option>
-                  <option value="2">Single</option>
+                  <option value="1">Per Loan Act</option>
                 </select>
               </div>
               <div class="col-lg-4 fv-row">
                 <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[29].title}}</label>
-                <select class="form-control bg-light" aria-label="Select example">
+                <select class="form-control bg-light" 
+                aria-label="Select example" [formControl]='addEmployeeForm.controls["hajjAct"]'>
                   <option>-Select-</option>
-                  <option value="1">Married</option>
-                  <option value="2">Single</option>
+                  <option value="1">Hajj Account</option>
                 </select>
               </div>
             </div>
             <div class="row mb-6">
               <div class="col-lg-4 fv-row">
                 <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[30].title}}</label>
-                <select class="form-control bg-light" aria-label="Select example">
+                <select class="form-control bg-light" 
+                aria-label="Select example" [formControl]='addEmployeeForm.controls["loanAct"]'>
                   <option>-Select-</option>
-                  <option value="1">Married</option>
-                  <option value="2">Single</option>
-                </select>
-              </div>
-              <div class="col-lg-4 fv-row">
-                <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[30].title}}</label>
-                <select class="form-control bg-light" aria-label="Select example">
-                  <option>-Select-</option>
-                  <option value="1">Married</option>
-                  <option value="2">Single</option>
+                  <option value="1">Loan Account</option>
                 </select>
               </div>
               <div class="col-lg-4 fv-row">
                 <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[31].title}}</label>
-                <select class="form-control bg-light" aria-label="Select example">
+                <select class="form-control bg-light" 
+                aria-label="Select example" [formControl]='addEmployeeForm.controls["otherAct1"]'>
                   <option>-Select-</option>
-                  <option value="1">Married</option>
-                  <option value="2">Single</option>
+                  <option value="1">Other Acc 1</option>
+                </select>
+              </div>
+              <div class="col-lg-4 fv-row">
+                <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[32].title}}</label>
+                <select class="form-control bg-light" 
+                aria-label="Select example" [formControl]='addEmployeeForm.controls["otherAcc2"]'>
+                  <option>-Select-</option>
+                  <option value="1">Other Acc 2</option>
                 </select>
               </div>
             </div>
             <div class="row mb-6">
               <div class="col-lg-4 fv-row">
-                <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[32].title}}</label>
-                <select class="form-control bg-light" aria-label="Select example">
+                <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[33].title}}</label>
+                <select class="form-control bg-light" 
+                aria-label="Select example" [formControl]='addEmployeeForm.controls["otherAcc3"]'>
                   <option>-Select-</option>
-                  <option value="1">Married</option>
-                  <option value="2">Single</option>
+                  <option value="1">Other Acc 3</option>
                 </select>
               </div>
               <div class="col-lg-4 fv-row">
-                <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[33].title}}</label>
-                <select class="form-control bg-light" aria-label="Select example">
+                <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[34].title}}</label>
+                <select class="form-control bg-light" 
+                aria-label="Select example" [formControl]='addEmployeeForm.controls["otherAcc4"]'>
                   <option>-Select-</option>
-                  <option value="1">Married</option>
-                  <option value="2">Single</option>
+                  <option value="1">Other Acc 4</option>
                 </select>
               </div>
             </div>
           </form>
         </div>
-        <!--end::Row-->
       </div>
     </div>
-    <!--end::Tab content-->
   </div>

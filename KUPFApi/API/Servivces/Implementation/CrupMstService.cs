@@ -24,7 +24,7 @@ namespace API.Servivces.Implementation
             _context = context;
             _mapper = mapper;
         }
-        public int InsertCrupMstAsync(CrupMstDto crupMstDto)
+        public int InsertCrupMst(CrupMstDto crupMstDto)
         {
             int result = 0;
             if (crupMstDto != null)
@@ -60,7 +60,7 @@ namespace API.Servivces.Implementation
             }
             return result;
         }
-        public int UpdatCrupMstAsync(CrupMstDto crupMstDto)
+        public int UpdatCrupMst(CrupMstDto crupMstDto)
         {
             int result = 0;
             if (crupMstDto != null)
@@ -94,7 +94,7 @@ namespace API.Servivces.Implementation
             };
             return result;
         }
-        public int DeleteCrupMstAsync(int tenantId, int locationId, Int64 crupId)
+        public int DeleteCrupMst(int tenantId, int locationId, Int64 crupId)
         {
             int result = 0;
 
@@ -121,11 +121,9 @@ namespace API.Servivces.Implementation
             }
             return result;
         }
-
-        public IEnumerable<CrupMstDto> GetCrupMstAsync(int tenantId, int locationId, Int64 crupId)
-        {
-            int result = 0;
-            List<CrupMstDto> list = new List<CrupMstDto>();
+        public CrupMstDto GetCrupMst(int tenantId, int locationId, Int64 crupId)
+        {           
+            CrupMstDto crupMst = new CrupMstDto();
             if (tenantId != 0 && locationId != 0 && crupId != 0)
             {
                 var dbconfig = new ConfigurationBuilder()
@@ -134,7 +132,7 @@ namespace API.Servivces.Implementation
                 var dbconnectionStr = dbconfig["ConnectionStrings:MsSqlConnection"];
                 using (SqlConnection connection = new SqlConnection(dbconnectionStr))
                 {
-                    string sql = "KU_CRUP_MSTDelete";
+                    string sql = "KU_CRUP_MSTSelect";
                     using (SqlCommand cmd = new SqlCommand(sql, connection))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
@@ -142,14 +140,60 @@ namespace API.Servivces.Implementation
                         cmd.Parameters.AddWithValue("@LocationID", locationId);
                         cmd.Parameters.AddWithValue("@CRUP_ID", crupId);
                         connection.Open();
+                        using (SqlDataReader dataReader = cmd.ExecuteReader())
+                        {
+                            while (dataReader.Read())
+                            {                                
+                                crupMst.TenantId = Convert.ToInt32(dataReader["TENANT_ID"]);
+                                crupMst.LocationId = Convert.ToInt32(dataReader["LocationID"]);
+                                crupMst.CrupId = Convert.ToInt32(dataReader["CRUP_ID"]);
+                                crupMst.MySerial = Convert.ToInt32(dataReader["MySerial"]);
+                                crupMst.MenuId = Convert.ToInt32(dataReader["MENU_ID"]);
+                                crupMst.Physicallocid = Convert.ToString(dataReader["PHYSICALLOCID"]);
+                                crupMst.ActivityNote = Convert.ToString(dataReader["ActivityNote"]);
+                                crupMst.CreatedBy = Convert.ToString(dataReader["CREATED_BY"]);
+                                crupMst.CreatedDt = Convert.ToDateTime(dataReader["CREATED_DT"]);
+                                crupMst.UpdatedBy = Convert.ToString(dataReader["UPDATED_BY"]);
+                                crupMst.UpdatedDt = Convert.ToDateTime(dataReader["UPDATED_DT"]);                                
+                            }
+                            connection.Close();
+                        }
+                    }
+                }
+            }
+            return crupMst;
+        }
+        public Int64 MstSetCellMax(int tenantId, int locationId)
+        {
+            Int64 result = 0;
+
+            if (tenantId != 0 && locationId != 0)
+            {
+                var dbconfig = new ConfigurationBuilder()
+                  .SetBasePath(Directory.GetCurrentDirectory())
+                  .AddJsonFile("appsettings.json").Build();
+                var dbconnectionStr = dbconfig["ConnectionStrings:MsSqlConnection"];
+               
+                using (SqlConnection connection = new SqlConnection(dbconnectionStr))
+                {
+                    string sql = "KU_CRUP_MSTSelMAX";
+                    using (SqlCommand cmd = new SqlCommand(sql, connection))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@TENANT_ID", tenantId);
+                        cmd.Parameters.AddWithValue("@LocationID", locationId);
+                        connection.Open();
+
+                        // Return Value From Sp...
+                        var returnParameter = cmd.Parameters.Add("@MyCRUP_ID", SqlDbType.BigInt);
+                        returnParameter.Direction = ParameterDirection.ReturnValue;                        
                         cmd.ExecuteNonQuery();
+                        result = Convert.ToInt64(returnParameter.Value);
                         connection.Close();
                     }
                 }
             }
-            return list;
+            return result;
         }
-
-
     }
 }
