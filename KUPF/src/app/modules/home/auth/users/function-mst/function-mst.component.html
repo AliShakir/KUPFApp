@@ -16,13 +16,13 @@
         <!--begin::Tab panel-->
         <div id="kt_billing_creditcard" class="tab-pane fade show active" role="tabpanel">
             <mat-stepper [linear]="isLinear" #stepper>
-                <mat-step [stepControl]="firstFormGroup">
-                  <form [formGroup]="firstFormGroup">
+                <mat-step [stepControl]="menuFormGroup">
+                  <form [formGroup]="menuFormGroup">
                     <ng-template matStepLabel>Menu</ng-template>        
                     <div class="row mb-4">
                         <div class="col-lg-3 fv-row">
-                            <label class="form-label" for="form3Example1 " lang="AR-SA" >Menu Id</label>
-                            <input type="text" id="form3Example1" class="form-control " lang="AR-SA"  />
+                            <label class="form-label" for="form3Example1 " lang="AR-SA" >Menu Id</label>                            
+                            <input type="text" id="form3Example1" class="form-control" formControlName="menU_ID"/>
                         </div>
                         <div class="col-lg-3 fv-row">
                             <label class="form-label" for="form3Example1 " lang="AR-SA" >Master Id</label>
@@ -56,8 +56,8 @@
                     </div>
                   </form>
                 </mat-step>
-                <mat-step [stepControl]="secondFormGroup" label="Management">
-                  <form [formGroup]="secondFormGroup">
+                <!-- <mat-step [stepControl]="managementFormGroup" label="Management">
+                  <form [formGroup]="managementFormGroup">
                     <div class="row mb-4">
                         <div class="col-lg-3 fv-row">
                             <label class="form-label" for="form3Example1 " lang="AR-SA" >Link</label>
@@ -92,8 +92,8 @@
                       </div>
                   </form>
                 </mat-step>
-                <mat-step [stepControl]="secondFormGroup" label="Active Menu">
-                    <form [formGroup]="secondFormGroup">
+                <mat-step [stepControl]="activeMenuFormGroup" label="Active Menu">
+                    <form [formGroup]="activeMenuFormGroup">
                         <div class="row mb-4">
                             <div class="col-lg-3 fv-row">
                                 <label class="form-label" for="form3Example1 " lang="AR-SA" >Active Menu</label>
@@ -110,8 +110,8 @@
                           </div>
                     </form>
                   </mat-step>
-                  <mat-step [stepControl]="secondFormGroup" label="Basic Flags">
-                    <form [formGroup]="secondFormGroup">
+                  <mat-step [stepControl]="basicFlagsFormGroup" label="Basic Flags">
+                    <form [formGroup]="basicFlagsFormGroup">
                         <div class="row mb-4">
                             <div class="col-lg-3 fv-row">
                                 <label class="form-label" for="form3Example1 " lang="AR-SA" >Add Flage</label>
@@ -136,8 +136,8 @@
                           </div>
                     </form>
                   </mat-step>
-                  <mat-step [stepControl]="secondFormGroup" label="Extended Flags">
-                    <form [formGroup]="secondFormGroup">
+                  <mat-step [stepControl]="extendedFlagsFormGroup" label="Extended Flags">
+                    <form [formGroup]="extendedFlagsFormGroup">
                         <div class="row mb-4">
                             <div class="col-lg-3 fv-row">
                                 <label class="form-label" for="form3Example1 " lang="AR-SA" >Sp1</label>
@@ -163,20 +163,12 @@
                             </div>                
                         </div>
                       <div>            
-                        <button mat-raised-button color="primary" matStepperNext>Next</button>
-                        <button mat-raised-button color="accent"  style="margin-right: 4px"  matStepperPrevious>Back</button>
-                      </div>
+                     
+                        <button mat-raised-button color="primary"  style="margin-right: 4px"  matStepperPrevious>Back</button>
+                        <button mat-raised-button color="accent"  style="margin-right: 4px" >Save</button>  
+                    </div>
                     </form>
-                  </mat-step>
-                <mat-step>
-                    
-                  <ng-template matStepLabel>Done</ng-template>
-                  <p>You are now done.</p>
-                  <div>
-                    <button mat-button matStepperPrevious>Back</button>
-                    <button mat-button (click)="stepper.reset()">Reset</button>
-                  </div>
-                </mat-step>
+                  </mat-step>                 -->
               </mat-stepper>
         </div>
     </div>
@@ -193,7 +185,7 @@
                     <mat-icon matPrefix class="material-icons">search</mat-icon>
                     <mat-icon matSuffix (click)="clearFilter()" class="material-icons">close</mat-icon>
                 </mat-form-field>
-                <table mat-table [dataSource]="functionMst">
+                <!-- <table mat-table [dataSource]="functionMst">
 
                     <ng-container matColumnDef="ModuleId">
                         <th mat-header-cell *matHeaderCellDef class="text-right"> Module Id </th>
@@ -234,9 +226,9 @@
                     </ng-container>
                     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
                     <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
-                </table>
+                </table> -->
 
-                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
                     aria-label="Select page of periodic elements">
                 </mat-paginator>
 

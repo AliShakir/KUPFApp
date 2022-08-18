@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "jZMWgDGaAuQp8tJbESBZmfEWm43YakGX7t3nzyrzXFdE608jQqdFMlAx7Rvp3n9T8qRtLmY0GqBQ2whkCta1TA==",
+  "dgSpecHash": "eZZ2fSPUOXb7Xz0b6W0uz61y2EqAB0Y1tRLa5HmlxfDOa4UIjktotPSpKkNrAPYVc5WiqS/q1UQjDi1eSbBXlw==",
   "success": true,
-  "projectFilePath": "E:\\MyWork\\GitHub11July2022\\KUPFApp\\KUPFApp\\kupfapi\\api\\API.csproj",
+  "projectFilePath": "E:\\MyWork\\GitHub11July2022\\KUPFApp\\KUPFApp\\KUPFApi\\API\\API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Shakir\\.nuget\\packages\\automapper\\11.0.0\\automapper.11.0.0.nupkg.sha512",
     "C:\\Users\\Shakir\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",

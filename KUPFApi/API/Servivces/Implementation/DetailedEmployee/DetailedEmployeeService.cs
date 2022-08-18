@@ -43,9 +43,7 @@ namespace API.Servivces.Implementation.DetailedEmployee
                 var newEmployee = _mapper.Map<Models.DetailedEmployee>(detailedEmployeeDto);
                 newEmployee.TenentId = 21;
                 newEmployee.LocationId = 1;
-                newEmployee.EmployeeId = CommonMethods.CreateEmployeeId().ToString();
-                //newEmployee.EmployeeLoginId = "ali@ali.com";
-                //newEmployee.EmployeePassword = CommonMethods.EncodePass("Shakir");
+                newEmployee.EmployeeId = CommonMethods.CreateEmployeeId().ToString();                
                 await _context.DetailedEmployees.AddAsync(newEmployee);
                 await _context.SaveChangesAsync();
                 return detailedEmployeeDto.EmployeeId;         

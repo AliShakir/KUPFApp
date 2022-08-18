@@ -22,6 +22,7 @@ import { NgxTranslateModule } from './modules/i18n';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from './modules/_interceptors/loading.interceptor';
 import { ToastrModule } from 'ngx-toastr';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 // #fake-end#
 
@@ -77,14 +78,15 @@ function appInitializer(authService: AuthService) {
     //      }  
     //   }),
       
-      NgxSpinnerModule,  
+      NgxSpinnerModule, 
+      NgSelectModule, 
   ],
   
   exports:[
   
   NgxTranslateModule,
   NgxSpinnerModule,
-  
+  NgSelectModule,
   ],//providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
   providers: [
     {

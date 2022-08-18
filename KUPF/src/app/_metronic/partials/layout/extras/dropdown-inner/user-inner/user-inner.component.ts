@@ -2,6 +2,7 @@ import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { TranslationService } from '../../../../../../modules/i18n';
 import { AuthService, UserType } from '../../../../../../modules/auth';
+import { LoginService } from 'src/app/modules/_services/login.service';
 
 @Component({
   selector: 'app-user-inner',
@@ -19,7 +20,8 @@ export class UserInnerComponent implements OnInit, OnDestroy {
 
   constructor(
     private auth: AuthService,
-    private translationService: TranslationService
+    private translationService: TranslationService,
+    private loginService: LoginService
   ) {}
 
   ngOnInit(): void {
@@ -48,7 +50,10 @@ export class UserInnerComponent implements OnInit, OnDestroy {
       }
     });
   }
-
+ Logout(){
+  this.loginService.logout();
+  localStorage.removeItem('user');
+ }
   ngOnDestroy() {
     this.unsubscribe.forEach((sb) => sb.unsubscribe());
   }

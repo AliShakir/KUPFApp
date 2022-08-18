@@ -23,18 +23,29 @@ namespace API.Controllers
         }
         [HttpPost]
         [Route("EmployeeLogin")]
-        public async Task<ActionResult<LoginDto>> EmployeeLogin(LoginDto loginDto)
+        public async Task<ActionResult<IEnumerable<LoginDto>>> EmployeeLogin(LoginDto loginDto)
         {
             string decodedPass = CommonMethods.EncodePass(loginDto.password);
-            var user = await _context.DetailedEmployees.
-                Where(c => c.EmployeeLoginId == loginDto.username && c.EmployeePassword == decodedPass)
-                .FirstOrDefaultAsync();
-            if (user != null)
+            var user = await _context.UserMsts.
+                Where(c => c.LoginId == loginDto.username && c.Password == decodedPass)
+                .ToListAsync();
+            List<LoginDto> userList = new List<LoginDto>();
+            if (user.Count() >= 1 )
             {
-                return Ok("success");
+                for (int i = 0; i < user.Count(); i++)
+                {
+                    var dto = new LoginDto
+                    {
+                        username = user[i].LoginId,
+                        LocationId = user[i].LocationId,
+                        TenantId = user[i].TenentId
+                    };
+                    userList.Add(dto);
+                }
+                return userList;
             }
 
-            return Ok("Failure");
+            return userList;
         }
     }
 }

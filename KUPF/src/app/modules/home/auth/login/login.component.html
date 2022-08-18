@@ -4,53 +4,63 @@
     flex-column flex-column-fluid
     bgi-position-y-bottom
     position-x-center
-    bgi-no-repeat bgi-size-contain bgi-attachment-fixed
-  " style="background-image: url('./assets/media/illustrations/sketchy-1/14.png')">
+    bgi-no-repeat bgi-size-contain 
+  " style="background-image: url('./assets/media/illustrations/sketchy-1/14.png');">
   <div class="d-flex flex-center flex-column flex-column-fluid p-10 pb-lg-20">
-    <a routerLink="/" class="mb-8"><img alt="Logo" src="./assets/media/logos/logo-blue.png" /></a>
+    <a routerLink="/" class="mb-6">
+      <img alt="Logo" src="./assets/media/logos/SSF logo.png" style="width: 500px;height: 80px;" />
+    </a>
     <div class="w-lg-500px bg-white rounded shadow-sm p-10 p-lg-15 mx-auto">
+      <!-- <ng-select bindLabel="name" placeholder="Select item" appendTo="body" [searchable]="true" [clearable]="true">
+        <ng-option [value]="item.id" *ngFor="let item of items">
+          {{item.name}}
+        </ng-option>
+      </ng-select> -->
       <form class="form w-100" [formGroup]="loginForm">
         <!--begin::Heading-->
         <div class="text-center mb-7">
-          <h1 class="text-dark mb-3">Sign In to KUPF</h1>
-          <div class="text-gray-400 fw-bold fs-4">
-            New Here?
-            <a routerLink="/auth/registration" id="kt_login_signup" class="link-primary fw-bolder">SignUp</a>
+          <h1 class="text-dark mb-3 fw-bolder">Sign In to KUPF</h1>
+        </div>
+        <!--Tenant ID-->
+        <div class="row">
+          <div class="col-md-6">
+            <label class="form-label fs-6 fw-bolder text-dark ArFontStyle" lang="AR-SA">هوية المستأجر</label>
+          </div>
+          <div class="col-md-6 text-left">
+            <label class="form-label fs-6 fw-bolder text-dark ">Tenant Id</label>
+          </div>          
+        </div>
+        <div class="fv-row mb-10">
+          <input type="number" class="form-control form-control-lg form-control-solid" />
+        </div>
+        <!-- end::Alert info-->
+        <div class="row">
+          <div class="col-md-6">
+            <label class="form-label fs-6 fw-bolder text-dark ArFontStyle" lang="AR-SA">البريد الإلكتروني</label>
+          </div>
+          <div class="col-md-6 text-left">
+            <label class="form-label fs-6 fw-bolder text-dark ">Login ID</label>
           </div>
         </div>
-        <!--end::Heading-->
-
-        <!-- begin::Alert info-->
-        <ng-container *ngIf="!hasError">
-          <div class="mb-10 bg-white p-8 rounded">
-          
-          </div>
-        </ng-container>
-        <!-- end::Alert info-->
-
         <div class="fv-row mb-10">
-          <label class="form-label fs-6 fw-bolder text-dark">Email</label>
           <input type="text" class="form-control form-control-lg form-control-solid" formControlName="username"
             required />
-            <div *ngIf="(username?.invalid && username?.touched) || username?.dirty">
-              <span *ngIf="username.errors?.required" class="text-danger">Primary enter a valid email address</span>
-              <span *ngIf="username.errors?.pattern" class="text-danger">Invalid email address</span>
-            </div>
+          <div *ngIf="(username?.invalid && username?.touched) || username?.dirty">
+            <span *ngIf="username.errors?.required" class="text-danger">Primary enter username</span>
+          </div>
         </div>
-
         <!--end::Form group-->
 
         <!--begin::Form group-->
-        <div class="fv-row mb-10">
-          <div class="d-flex justify-content-between mt-n5">
-            <div class="d-flex flex-stack mb-2">
-              <label class="form-label fw-bolder text-dark fs-6 mb-0">Password </label>
-              <a routerLink="/auth/forgot-password" class="link-primary fs-6 fw-bolder" id="kt_login_forgot"
-                [style.margin-right]="'5px'">
-                ? Forgot Password
-              </a>
-            </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="form-label fw-bolder text-dark fs-6 mb-0 ArFontStyle" lang="AR-SA">كلمه السر</label>
           </div>
+          <div class="col-md-6 text-left">
+            <label class="form-label fw-bolder text-dark fs-6 mb-0">Password </label>
+          </div>
+        </div>
+        <div class="fv-row mb-10">
           <input type="password" class="form-control form-control-lg form-control-solid" formControlName="password"
             required />
           <span class="text-danger" *ngIf="loginForm.controls['password'].invalid && (loginForm.controls['password'].dirty 
@@ -58,11 +68,39 @@
             Please enter password
           </span>
         </div>
+        <!--Location ID-->
+        <div class="row">
+          <div class="col-md-6">
+            <label class="form-label fs-6 fw-bolder text-dark ArFontStyle" lang="AR-SA">معرف الموقع</label>
+          </div>
+          <div class="col-md-6 text-left">
+            <label class="form-label fs-6 fw-bolder text-dark ">Location Id</label>
+          </div>
+          <!-- <ng-select bindLabel="name" placeholder="Select Location" appendTo="body">
+            <ng-option [value]="item.id" *ngFor="let item of items">
+              {{item.name}}
+            </ng-option>
+          </ng-select> -->
+          
+            <select  formControlName="locations" id="locations" (change)="onLocationChange($event)" class="form-control form-control-lg form-control-solid">            
+              <option>-Select-</option>
+              <option *ngFor="let order of model; let i = index" [value]="model[i].locationId">              
+                {{model[i].locationId}}              
+              </option>            
+            </select>
+          
+          
+        </div>
         <!--end::Form group-->
-
+        <div class="row mb-4 text-left">
+          <a routerLink="/auth/forgot-password" class="link-primary fs-6 fw-bolder">
+            ? Forgot Password
+          </a>
+        </div>
         <!--begin::Action-->
         <div class="text-center">
-          <button type="submit" [disabled]="!loginForm.valid" class="btn btn-lg btn-primary w-100 mb-5" (click)="login()">
+          <button type="submit" [disabled]="!loginForm.valid" class="btn btn-lg btn-primary w-100 mb-5"
+            (click)="login()">
             <ng-container *ngIf="isLoading$ | async">
               <span class="indicator-progress" [style.display]="'block'">
                 Please wait...
@@ -74,22 +112,6 @@
             </ng-container>
           </button>
 
-          <!-- begin::Separator  -->
-          <div class="text-center text-muted text-uppercase fw-bolder mb-5">or</div>
-          <!-- end::Separator  -->
-
-          <a class="
-          btn btn-flex
-          flex-center
-          btn-light btn-lg
-          w-100
-          mb-5
-          cursor-pointer
-        ">
-            <img class="h-20px me-3" src="./assets/media/svg/brand-logos/google-icon.svg" />
-
-            Continue with Google
-          </a>
         </div>
         <!--end::Action-->
       </form>

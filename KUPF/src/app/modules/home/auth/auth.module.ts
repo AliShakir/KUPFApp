@@ -11,6 +11,7 @@ import { MaterialModule } from '../../material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserMstComponent } from './users/user-mst/user-mst.component';
 import { FunctionMstComponent } from './users/function-mst/function-mst.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { FunctionMstComponent } from './users/function-mst/function-mst.componen
     NgbModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    
   ]
 })
 export class AuthModule { }

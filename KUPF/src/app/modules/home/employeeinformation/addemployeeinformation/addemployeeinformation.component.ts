@@ -7,6 +7,18 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { DetailedEmployee } from 'src/app/modules/models/DetailedEmployee';
 import { FormTitleDt } from 'src/app/modules/models/formTitleDt';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
+import { SelectConsumerLoanAcDto } from 'src/app/modules/models/SelectConsumerLoanActDto';
+import { SelectDepartmentsDto } from 'src/app/modules/models/SelectDepartmentsDto';
+import { SelectHajjAcDto } from 'src/app/modules/models/SelectHajjAcDto';
+import { SelectLoanAcDto } from 'src/app/modules/models/SelectLoanAcDto';
+import { SelectOccupationsDto } from 'src/app/modules/models/SelectOccupationsDto';
+import { SelectOtherAct1Dto } from 'src/app/modules/models/SelectOtherAct1Dto';
+import { SelectOtherAct2Dto } from 'src/app/modules/models/SelectOtherAct2Dto';
+import { SelectOtherAct3Dto } from 'src/app/modules/models/SelectOtherAct3Dto';
+import { SelectOtherAct4Dto } from 'src/app/modules/models/SelectOtherAct4Dto';
+import { SelectPerLoanActDto } from 'src/app/modules/models/SelectPerLoanActDto';
+import { SelectTerminationsDto } from 'src/app/modules/models/SelectTerminationsDto';
+import { DbCommonService } from 'src/app/modules/_services/db-common.service';
 import { EmployeeService } from 'src/app/modules/_services/employee.service';
 import { LocalizationService } from 'src/app/modules/_services/localization.service';
 
@@ -22,6 +34,20 @@ export class AddemployeeinformationComponent implements OnInit {
   
   addEmployeeForm : FormGroup;
 
+  //
+  occupations$: Observable<SelectOccupationsDto[]>;
+  departments$: Observable<SelectDepartmentsDto[]>;
+  terminations$: Observable<SelectTerminationsDto[]>;
+
+  hajjAccounts$: Observable<SelectHajjAcDto[]>;
+  loanAccounts$: Observable<SelectLoanAcDto[]>;
+  perLoanAccounts$: Observable<SelectPerLoanActDto[]>;
+  consumerLoanAccounts$: Observable<SelectConsumerLoanAcDto[]>;
+  otherAct1$: Observable<SelectOtherAct1Dto[]>;
+  otherAct2$: Observable<SelectOtherAct2Dto[]>;
+  otherAct3$: Observable<SelectOtherAct3Dto[]>;
+  otherAct4$: Observable<SelectOtherAct4Dto[]>;
+  
   //#region 
     /*----------------------------------------------------*/
 
@@ -46,7 +72,11 @@ export class AddemployeeinformationComponent implements OnInit {
     /*----------------------------------------------------*/  
   //#endregion
   datePickerConfig: Partial<BsDatepickerConfig> | undefined;
-  constructor(private cdr: ChangeDetectorRef,private employeeService: EmployeeService,private toastrService: ToastrService) {
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private employeeService: EmployeeService,
+    private toastrService: ToastrService,
+    private commonDbService: DbCommonService) {
     this.datePickerConfig = Object.assign({},{containerClass:'theme-dark-blue'})
     const loadingSubscr = this.isLoading$
       .asObservable()
@@ -85,7 +115,30 @@ export class AddemployeeinformationComponent implements OnInit {
       }
     }
     //#endregion
-  }
+ 
+    // To FillUp Occupations
+    this.occupations$ = this.commonDbService.GetOccupations();
+    // To FillUp Departments
+    this.departments$ = this.commonDbService.GetDepartments();
+    // To FillUp terminations
+    this.terminations$ = this.commonDbService.GetTerminations();
+    // To FillUp hajjAccounts
+    this.hajjAccounts$ = this.commonDbService.GetHajjAccounts();
+    // To FillUp LoanAcounts
+    this.loanAccounts$ = this.commonDbService.GetLoanAccounts();
+    // To FillUp LoanAcounts
+    this.perLoanAccounts$ = this.commonDbService.GetPerLoanAccounts();
+    // To FillUp ConsumerLoanAccounts
+    this.consumerLoanAccounts$ = this.commonDbService.GetConsumerLoanAccounts();
+    // To FillUp OtherAct1
+    this.otherAct1$ = this.commonDbService.GetOtherAcc1();
+    // To FillUp OtherAct2
+    this.otherAct2$ = this.commonDbService.GetOtherAcc2();
+    // To FillUp OtherAct3
+    this.otherAct3$ = this.commonDbService.GetOtherAcc3();
+    // To FillUp OtherAct4
+    this.otherAct4$ = this.commonDbService.GetOtherAcc4();
+   }
 
   initializeForm(){
     this.addEmployeeForm = new FormGroup({

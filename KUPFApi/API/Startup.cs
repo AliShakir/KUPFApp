@@ -49,6 +49,8 @@ namespace API
             //
             services.AddScoped<ILoginService, LoginService>();
             //
+            services.AddScoped<ICommonService, CommonService>();
+            //
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
             services.AddDbContext<KUPFDbContext>(options =>
@@ -81,15 +83,16 @@ namespace API
                 });
 
             });
-            services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin()
-                                                                   .AllowAnyMethod()
-                                                                    .AllowAnyHeader()));
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-
+            app.UseCors(options=> 
+            options.WithOrigins("http://localhost:4200")
+            .AllowAnyMethod()
+            .AllowAnyHeader());
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
             app.UseMiddleware<ExceptionMiddleware>();
@@ -109,7 +112,7 @@ namespace API
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            app.UseCors("AllowAll");
+            
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

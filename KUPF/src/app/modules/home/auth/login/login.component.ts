@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { first, Observable, Subscription } from 'rxjs';
 import { Login } from 'src/app/modules/models/login';
+import { DbCommonService } from 'src/app/modules/_services/db-common.service';
 import { LoginService } from 'src/app/modules/_services/login.service';
 
 @Component({
@@ -17,6 +18,8 @@ hasError: boolean;
 returnUrl: string;
 isLoading$: Observable<boolean>;
 
+//
+loginDto: Login[]=[];
 // private fields
 private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
 loginForm: FormGroup;
@@ -25,7 +28,8 @@ constructor(
   private fb: FormBuilder,
   private router: Router,
   private loginService: LoginService,
-  private toastr: ToastrService
+  private toastr: ToastrService,
+  private OccupationService: DbCommonService
 ) {
   
 }
@@ -36,38 +40,36 @@ ngOnInit(): void {
 
 initForm() {
   this.loginForm = this.fb.group({
-       username: new FormControl('',{
-        validators:[Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")],        
-       }),
+       username: new FormControl('',Validators.required),
        password: ['', Validators.required],
+       locations:['']
   });
 }
 // To access username in .html file.
 get username(){return this.loginForm.get('username')}
-submit() {
- //this.router.navigateByUrl('/dashboard');
-this.loginService.Login(this.loginForm.value);
-}
 
+//If user has multiple locations so login to the selected location...
+onLocationChange(e:any){
+  if(e.target.value != 0){
+    if(e.target.value=='-Select-'){
+      this.toastr.error('Invalid Location')
+    }else{
+      this.router.navigateByUrl('/dashboard')    
+    }
+    
+  }
+}
 ngOnDestroy() {
   this.unsubscribe.forEach((sb) => sb.unsubscribe());
 }
-isUserValid :Boolean = false;
-login() {
+
+// User Login
+login() { 
   this.loginService.Login([this.loginForm.value.username,this.loginForm.value.password])
-  .subscribe(res => {
-    if(res == 'Failure'){
-      this.isUserValid= false;
-      this.toastr.error("Invalid username or password");
-    } else{
-      this.isUserValid = true;
-      this.router.navigateByUrl('/dashboard')
-    }
-    
-  },
-    (error) => {
-      this.toastr.error("OK");
-    })
+  if(localStorage.length > 0){
+    this.model = JSON.parse(localStorage.getItem("user") || '{}');    
+    this.loginForm.controls.locations.patchValue(this.model[0].locationId)
+  }
 
 }
 }

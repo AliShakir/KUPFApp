@@ -19,7 +19,6 @@ getAllFunctionMst() {
   return this.httpClient.get<FunctionMst[]>(`https://kupfapi.erp53.com/api/FunctionMst/GetFunctionMst`).pipe(
     map(functionMst => {
       this.functionMst = functionMst;
-      console.log(this.functionMst);
       return functionMst;
     })
   )

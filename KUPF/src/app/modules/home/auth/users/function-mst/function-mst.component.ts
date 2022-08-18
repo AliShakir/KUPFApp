@@ -47,10 +47,8 @@ export class FunctionMstComponent implements OnInit {
   // Search Term
   searchTerm: string = '';
   //#endregion
-
   
-
-
+  
   constructor(private functionMstService: FunctionMstService, private _formBuilder: FormBuilder) {
 
     this.formGroup = new FormGroup({
@@ -58,27 +56,49 @@ export class FunctionMstComponent implements OnInit {
     })
   }
 
-  firstFormGroup = this._formBuilder.group({
-    firstCtrl: ['', Validators.required],
+  menuFormGroup = this._formBuilder.group({
+    menU_ID: ['', Validators.required],
+    masteR_ID: ['', Validators.required],
+    modulE_ID: ['', Validators.required],
+    menU_TYPE: ['', Validators.required],
+    menU_NAME1: ['', Validators.required],
+    menU_NAME2: ['', Validators.required],
+    menU_NAME3: ['', Validators.required],
   });
-  secondFormGroup = this._formBuilder.group({
+  managementFormGroup = this._formBuilder.group({
+   // secondCtrl: ['', Validators.required],
+  });
+  activeMenuFormGroup = this._formBuilder.group({
     secondCtrl: ['', Validators.required],
   });
+  basicFlagsFormGroup = this._formBuilder.group({
+    secondCtrl: ['', Validators.required],
+  });
+  extendedFlagsFormGroup = this._formBuilder.group({
+    secondCtrl: ['', Validators.required],
+  });
+  doneFormGroup = this._formBuilder.group({
+    secondCtrl: ['', Validators.required],
+  });
+  
   isLinear = false;
-
+  get menU_ID() {
+    return this.menuFormGroup.get('menU_ID');
+  }
   ngOnInit(): void {
-   this.functionMst$ = this.functionMstService.getAllFunctionMst()
-   this.functionMst$.subscribe((resoponse: FunctionMst[]) => {
-    this.functionMst = new MatTableDataSource<FunctionMst>(resoponse);
-    this.functionMst.paginator = this.paginator;
-    this.functionMst.sort = this.sort;
-    this.isLoadingCompleted = true;
-  }, error => {
-    // Incase of any error
-    console.log(error);
-    this.dataLoadingStatus = 'Error fetching the data';
-    this.isError = true;
-  })
+    
+   //this.functionMst$ = this.functionMstService.getAllFunctionMst()
+  //  this.functionMst$.subscribe((resoponse: FunctionMst[]) => {
+  //   this.functionMst = new MatTableDataSource<FunctionMst>(resoponse);
+  //   this.functionMst.paginator = this.paginator;
+  //   this.functionMst.sort = this.sort;
+  //   this.isLoadingCompleted = true;
+  // }, error => {
+  //   // Incase of any error
+  //   console.log(error);
+  //   this.dataLoadingStatus = 'Error fetching the data';
+  //   this.isError = true;
+  // })
   }
   filterRecords() {
     if (this.formGroup.value.searchTerm != null && this.functionMst) {

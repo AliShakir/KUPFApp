@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.DTOs;
+using API.DTOs.DropDown;
 using API.DTOs.EmployeeDto;
 using API.DTOs.GetEntityDto;
 using API.DTOs.LocalizationDto;
@@ -56,8 +57,23 @@ namespace API.Helpers
             //
             CreateMap<FunctionUserDto, FUNCTION_USER>();
             CreateMap<FUNCTION_USER, FunctionUserDto>();
-            
 
+            //
+            CreateMap<Reftable, SelectOccupationDto>();
+            CreateMap<Reftable, SelectDepartmentDto>();
+            CreateMap<Reftable, SelectTerminationDto>();
+
+            //
+            CreateMap<ServiceSetup, SelectHajjLoanDto>();
+            CreateMap<ServiceSetup, SelectLoanActDto>();
+            CreateMap<ServiceSetup, SelectPerLoanActDto>();
+            CreateMap<ServiceSetup, SelectConsumerLoanActDto>();
+            CreateMap<ServiceSetup, SelectOtherAct1Dto>();
+            CreateMap<ServiceSetup, SelectOtherAct2Dto>();
+            CreateMap<ServiceSetup, SelectOtherAct3Dto>();
+            CreateMap<ServiceSetup, SelectOtherAct4Dto>();
+
+            //
         }
     }
 }

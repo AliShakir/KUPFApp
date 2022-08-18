@@ -9,5 +9,7 @@ namespace API.DTOs
     {
         public string username { get; set; }
         public string password { get; set; }
+        public int TenantId { get; set; }
+        public int LocationId { get; set; }
     }
 }
