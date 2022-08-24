@@ -1,26 +1,15 @@
 
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { DetailedEmployee } from 'src/app/modules/models/DetailedEmployee';
-import { FormTitleDt } from 'src/app/modules/models/formTitleDt';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
-import { SelectConsumerLoanAcDto } from 'src/app/modules/models/SelectConsumerLoanActDto';
 import { SelectDepartmentsDto } from 'src/app/modules/models/SelectDepartmentsDto';
-import { SelectHajjAcDto } from 'src/app/modules/models/SelectHajjAcDto';
-import { SelectLoanAcDto } from 'src/app/modules/models/SelectLoanAcDto';
 import { SelectOccupationsDto } from 'src/app/modules/models/SelectOccupationsDto';
-import { SelectOtherAct1Dto } from 'src/app/modules/models/SelectOtherAct1Dto';
-import { SelectOtherAct2Dto } from 'src/app/modules/models/SelectOtherAct2Dto';
-import { SelectOtherAct3Dto } from 'src/app/modules/models/SelectOtherAct3Dto';
-import { SelectOtherAct4Dto } from 'src/app/modules/models/SelectOtherAct4Dto';
-import { SelectPerLoanActDto } from 'src/app/modules/models/SelectPerLoanActDto';
 import { SelectTerminationsDto } from 'src/app/modules/models/SelectTerminationsDto';
 import { DbCommonService } from 'src/app/modules/_services/db-common.service';
 import { EmployeeService } from 'src/app/modules/_services/employee.service';
-import { LocalizationService } from 'src/app/modules/_services/localization.service';
 
 @Component({
   selector: 'app-addemployeeinformation',
@@ -33,20 +22,12 @@ export class AddemployeeinformationComponent implements OnInit {
   private unsubscribe: Subscription[] = [];
   
   addEmployeeForm : FormGroup;
-
+  isChildFormSet = false;
+  showChildComponent = false;
   //
   occupations$: Observable<SelectOccupationsDto[]>;
   departments$: Observable<SelectDepartmentsDto[]>;
   terminations$: Observable<SelectTerminationsDto[]>;
-
-  hajjAccounts$: Observable<SelectHajjAcDto[]>;
-  loanAccounts$: Observable<SelectLoanAcDto[]>;
-  perLoanAccounts$: Observable<SelectPerLoanActDto[]>;
-  consumerLoanAccounts$: Observable<SelectConsumerLoanAcDto[]>;
-  otherAct1$: Observable<SelectOtherAct1Dto[]>;
-  otherAct2$: Observable<SelectOtherAct2Dto[]>;
-  otherAct3$: Observable<SelectOtherAct3Dto[]>;
-  otherAct4$: Observable<SelectOtherAct4Dto[]>;
   
   //#region 
     /*----------------------------------------------------*/
@@ -76,18 +57,28 @@ export class AddemployeeinformationComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private employeeService: EmployeeService,
     private toastrService: ToastrService,
-    private commonDbService: DbCommonService) {
+    private commonDbService: DbCommonService,private fb: FormBuilder) {
     this.datePickerConfig = Object.assign({},{containerClass:'theme-dark-blue'})
     const loadingSubscr = this.isLoading$
       .asObservable()
       .subscribe((res) => (this.isLoading = res));
     this.unsubscribe.push(loadingSubscr);
   }
- 
+  selectedStatus: number | undefined;
+  maritalStatusArray = [
+      { id: 1, name: 'Married' },
+      { id: 2, name: 'Single' }
+  ];
+  selectedGender: number | undefined;
+  genderArray = [
+      { id: 1, name: 'Male' },
+      { id: 2, name: 'Female' }
+  ];
 
   ngOnInit(): void {
     this.initializeForm();
-     //#region TO SETUP THE FORM LOCALIZATION    
+
+    //#region TO SETUP THE FORM LOCALIZATION    
     // TO GET THE LANGUAGE ID e.g. 1 = ENGLISH and 2 =  ARABIC
     this.languageType = localStorage.getItem('langType');
 
@@ -116,32 +107,19 @@ export class AddemployeeinformationComponent implements OnInit {
     }
     //#endregion
  
+    //#region Filling All dropDown from db    
     // To FillUp Occupations
     this.occupations$ = this.commonDbService.GetOccupations();
     // To FillUp Departments
     this.departments$ = this.commonDbService.GetDepartments();
     // To FillUp terminations
-    this.terminations$ = this.commonDbService.GetTerminations();
-    // To FillUp hajjAccounts
-    this.hajjAccounts$ = this.commonDbService.GetHajjAccounts();
-    // To FillUp LoanAcounts
-    this.loanAccounts$ = this.commonDbService.GetLoanAccounts();
-    // To FillUp LoanAcounts
-    this.perLoanAccounts$ = this.commonDbService.GetPerLoanAccounts();
-    // To FillUp ConsumerLoanAccounts
-    this.consumerLoanAccounts$ = this.commonDbService.GetConsumerLoanAccounts();
-    // To FillUp OtherAct1
-    this.otherAct1$ = this.commonDbService.GetOtherAcc1();
-    // To FillUp OtherAct2
-    this.otherAct2$ = this.commonDbService.GetOtherAcc2();
-    // To FillUp OtherAct3
-    this.otherAct3$ = this.commonDbService.GetOtherAcc3();
-    // To FillUp OtherAct4
-    this.otherAct4$ = this.commonDbService.GetOtherAcc4();
-   }
+    this.terminations$ = this.commonDbService.GetTerminations();    
+    //#endregion
+   
+  }
 
   initializeForm(){
-    this.addEmployeeForm = new FormGroup({
+    this.addEmployeeForm = this.fb.group({
       englishName: new FormControl('',Validators.required),
       arabicName: new FormControl('',Validators.required),
       empBirthday: new FormControl('',Validators.required),
@@ -152,26 +130,18 @@ export class AddemployeeinformationComponent implements OnInit {
       empWorkEmail: new FormControl('',Validators.required),
       next2KinName: new FormControl('',Validators.required),
       next2KinMobNumber: new FormControl('',Validators.required),
-
       department: new FormControl('',Validators.required),
       departmentName: new FormControl('',Validators.required),
-      salary: new FormControl('',Validators.required),
-      
+      salary: new FormControl('',Validators.required),      
       empCidNum: new FormControl('',Validators.required),
       empPaciNum: new FormControl('',Validators.required),
       empOtherId: new FormControl('',Validators.required),
-
-      loanAct: new FormControl('',Validators.required),
-      hajjAct: new FormControl('',Validators.required),
-      persLoanAct: new FormControl('',Validators.required),
-      consumerLoan: new FormControl('',Validators.required),
-      otherAct1: new FormControl('',Validators.required),
-      otherAcc2: new FormControl('',Validators.required),
-      otherAcc3: new FormControl('',Validators.required),
-      otherAcc4: new FormControl('',Validators.required),
-      dateOfJoining: new FormControl('',Validators.required),
-      
-    })
+      membership: new FormControl('',Validators.required),
+      membershipJoiningDate: new FormControl('',Validators.required),
+      termination: new FormControl('',Validators.required),
+      terminationDate: new FormControl('',Validators.required),
+                       
+    })    
   }
   
   //get gender(){return this.addEmployeeForm.get('gender')}
@@ -179,11 +149,20 @@ export class AddemployeeinformationComponent implements OnInit {
  
 //Save employee data...
   submitForm(){
+     
     this.employeeService.AddEmployee(this.addEmployeeForm.value).subscribe(()=>{
       this.toastrService.success('Saved successfully','Success');   
       this.addEmployeeForm.reset();
     })
     
+  }
+  addChildComponent(): void {
+    this.showChildComponent = true;
+  }
+
+  onChange(form: FormGroup<any>) {
+    // reset the form value to the newly emitted form group value.
+    this.addEmployeeForm = form;
   }
 saveSettings() {
     this.isLoading$.next(true);

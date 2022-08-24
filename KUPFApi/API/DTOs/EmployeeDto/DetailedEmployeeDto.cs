@@ -44,6 +44,7 @@ namespace API.DTOs.EmployeeDto
         public DateTime? ReSubscripedDate { get; set; }
         public string LoanAct { get; set; }
         public string HajjAct { get; set; }
+        public string ConsumerLoanAct { get; set; }
         public string PersLoanAct { get; set; }
         public string OtherAct1 { get; set; }
         public string OtherAct2 { get; set; }
@@ -69,5 +70,11 @@ namespace API.DTOs.EmployeeDto
         public DateTime? SyncDate { get; set; }
         public string Syncby { get; set; }
         public int? SynId { get; set; }
+        public string RefName1 { get; set; }
+        public string RefName2 { get; set; }
+        public string? Membership { get; set; }
+        public DateTime? MembershipJoiningDate { get; set; }
+        public string? Termination { get; set; }
+        public DateTime? TerminationDate { get; set; }
     }
 }

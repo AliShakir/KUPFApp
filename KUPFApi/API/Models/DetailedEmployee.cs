@@ -15,7 +15,7 @@ namespace API.Models
         public DateTime? SubscribedDate { get; set; }
         public decimal? AgreedSubAmount { get; set; }
         public DateTime? ReSubscribed { get; set; }
-        public string EmployeeType { get; set; }
+        public string EmployeeType { get; set; } 
         public string ArabicName { get; set; }
         public string EnglishName { get; set; }
         public int? JobTitleCode { get; set; }
@@ -42,6 +42,7 @@ namespace API.Models
         public int? TerminationId { get; set; }
         public DateTime? SubscriptionDate { get; set; }
         public DateTime? ReSubscripedDate { get; set; }
+        public string ConsumerLoanAct { get; set; }
         public string LoanAct { get; set; }
         public string HajjAct { get; set; }
         public string PersLoanAct { get; set; }
@@ -69,5 +70,9 @@ namespace API.Models
         public DateTime? SyncDate { get; set; }
         public string Syncby { get; set; }
         public int? SynId { get; set; }
+        public string? Membership { get; set; }
+        public DateTime? MembershipJoiningDate { get; set; }
+        public string? Termination { get; set; }
+        public DateTime? TerminationDate { get; set; }
     }
 }

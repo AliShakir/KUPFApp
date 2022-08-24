@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs';
-
 import { environment } from 'src/environments/environment';
+import { CoaDto } from '../models/CoaDto';
 import { SelectConsumerLoanAcDto } from '../models/SelectConsumerLoanActDto';
 import { SelectDepartmentsDto } from '../models/SelectDepartmentsDto';
 import { SelectHajjAcDto } from '../models/SelectHajjAcDto';
@@ -45,7 +46,10 @@ export class DbCommonService {
   //
   otherAct4: SelectOtherAct4Dto[]=[];
   //
-  constructor(private httpClient: HttpClient) { }
+  coaDto : CoaDto[]=[];
+  //loanAct: number;
+  
+  constructor(private httpClient: HttpClient,private toastr: ToastrService) { }
 
   // Get all Occupations.
   GetOccupations() {    
@@ -147,4 +151,39 @@ export class DbCommonService {
       })
     )
   }
+
+
+// To verify the Loan account number.
+VerifyLoanAct(accountNo: string | number){ 
+  return this.httpClient.get<CoaDto[]>(this.baseUrl + `Common/VerifyAccount/`+ accountNo);  
+}
+// To verify the Hajj account number.
+VerifyHajjAct(accountNo: string | number){ 
+  return this.httpClient.get<CoaDto[]>(this.baseUrl + `Common/VerifyAccount/`+ accountNo);  
+}
+// To verify the Per lOan account number.
+VerifyPerLoanAct(accountNo: string | number){ 
+  return this.httpClient.get<CoaDto[]>(this.baseUrl + `Common/VerifyAccount/`+ accountNo);  
+}
+// To verify Consumer account number.
+VerifyConsumerLoanAct(accountNo: string | number){ 
+  return this.httpClient.get<CoaDto[]>(this.baseUrl + `Common/VerifyAccount/`+ accountNo);  
+}
+// To verify Other account 1 number.
+VerifyOtherAct1(accountNo: string | number){ 
+  return this.httpClient.get<CoaDto[]>(this.baseUrl + `Common/VerifyAccount/`+ accountNo);  
+}
+// To verify Other account 2 number.
+VerifyOtherAct2(accountNo: string | number){ 
+  return this.httpClient.get<CoaDto[]>(this.baseUrl + `Common/VerifyAccount/`+ accountNo);  
+}
+// To verify Other account 3 number.
+VerifyOtherAct3(accountNo: string | number){ 
+  return this.httpClient.get<CoaDto[]>(this.baseUrl + `Common/VerifyAccount/`+ accountNo);  
+}
+// To verify Other account 4 number.
+VerifyOtherAct4(accountNo: string | number){ 
+  return this.httpClient.get<CoaDto[]>(this.baseUrl + `Common/VerifyAccount/`+ accountNo);  
+}
+
 }

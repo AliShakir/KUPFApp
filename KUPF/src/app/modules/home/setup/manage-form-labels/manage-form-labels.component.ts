@@ -16,6 +16,7 @@ import { LocalizationService } from 'src/app/modules/_services/localization.serv
 export class ManageFormLabelsComponent implements OnInit {
 
   /* Material Table Configuration */
+  
   //#region
   // To display table column headers
   columnsToDisplay: string[] = ['action', 'formID', 'formName', 'headerName', 'subHeaderName'];

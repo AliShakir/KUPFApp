@@ -6,7 +6,7 @@
 //@import "./assets/sass/style.dark";
 
 @import "./assets/sass/style.angular.scss";
-@import "~@ng-select/ng-select/themes/ant.design.theme.css";
+@import "~@ng-select/ng-select/themes/default.theme.css";
 .card {
     transition: box-shadow .3s;
     box-shadow: 0 0 11px rgba(33,33,33,.2);
@@ -21,6 +21,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .ArFontStyle{
   font-family:"Tahoma","sans-serif"
+}
+/*************************Style for ng-select***************************/
+.ng-select.ng-select-single .ng-select-container {
+  height: 43px;
 }
 /*************************Start of styles for material***************************/
 

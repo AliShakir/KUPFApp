@@ -14,6 +14,9 @@ import { ViewemployeeinformationComponent } from './viewemployeeinformation/view
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { SearchTabModule } from '../_partials/search-tab.module';
+import { MaterialModule } from '../../material/material.module';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -35,10 +38,14 @@ import { SearchTabModule } from '../_partials/search-tab.module';
     BsDatepickerModule.forRoot(),
     BsDropdownModule.forRoot(),
     SearchTabModule,
+    MaterialModule,
+    NgSelectModule,
+    NgbModule,
   ],
   exports:[
     BsDatepickerModule,
-    BsDropdownModule
+    BsDropdownModule,
+    NgSelectModule,
   ]
 })
 export class EmployeeinformationModule { }

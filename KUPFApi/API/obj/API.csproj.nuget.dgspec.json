@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\MyWork\\GitHub11July2022\\KUPFApp\\KUPFApp\\KUPFApi\\API\\API.csproj": {}
+    "E:\\MyWork\\GitHub11July2022\\KUPFApp\\KUPFApp\\kupfapi\\api\\API.csproj": {}
   },
   "projects": {
-    "E:\\MyWork\\GitHub11July2022\\KUPFApp\\KUPFApp\\KUPFApi\\API\\API.csproj": {
+    "E:\\MyWork\\GitHub11July2022\\KUPFApp\\KUPFApp\\kupfapi\\api\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\MyWork\\GitHub11July2022\\KUPFApp\\KUPFApp\\KUPFApi\\API\\API.csproj",
+        "projectUniqueName": "E:\\MyWork\\GitHub11July2022\\KUPFApp\\KUPFApp\\kupfapi\\api\\API.csproj",
         "projectName": "API",
-        "projectPath": "E:\\MyWork\\GitHub11July2022\\KUPFApp\\KUPFApp\\KUPFApi\\API\\API.csproj",
+        "projectPath": "E:\\MyWork\\GitHub11July2022\\KUPFApp\\KUPFApp\\kupfapi\\api\\API.csproj",
         "packagesPath": "C:\\Users\\Shakir\\.nuget\\packages\\",
-        "outputPath": "E:\\MyWork\\GitHub11July2022\\KUPFApp\\KUPFApp\\KUPFApi\\API\\obj\\",
+        "outputPath": "E:\\MyWork\\GitHub11July2022\\KUPFApp\\KUPFApp\\kupfapi\\api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Shakir\\AppData\\Roaming\\NuGet\\NuGet.Config",

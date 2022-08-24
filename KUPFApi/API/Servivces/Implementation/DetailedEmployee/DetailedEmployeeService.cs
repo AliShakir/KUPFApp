@@ -30,9 +30,25 @@ namespace API.Servivces.Implementation.DetailedEmployee
         }
 
         public async Task<IEnumerable<DetailedEmployeeDto>> GetEmployeesAsync()
-        {
-           var result = await _context.DetailedEmployees.Take(5).ToListAsync();
-           var data = _mapper.Map<IEnumerable<DetailedEmployeeDto>>(result);
+        {           
+           var detailsList = await _context.DetailedEmployees.ToListAsync();
+           var refTableList = await _context.Reftables.ToListAsync();
+            var data = (from e in detailsList
+                        join r in refTableList
+                     on e.Department equals r.Refid
+                     where r.Reftype == "KUPF" && r.Refsubtype == "Department"
+                        select new DetailedEmployeeDto
+                     {
+                         EmpCidNum = e.EmpCidNum,
+                         Pfid = e.Pfid,
+                         EmployeeId = e.EmployeeId,
+                         MobileNumber = e.MobileNumber,
+                         EnglishName = e.EnglishName,
+                         ArabicName = e.ArabicName,
+                         RefName1 = r.Refname1,
+                         RefName2 = r.Refname2
+                     }).ToList();
+           
            return data;
         }
 

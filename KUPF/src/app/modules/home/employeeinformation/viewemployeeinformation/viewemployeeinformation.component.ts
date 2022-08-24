@@ -1,9 +1,13 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { ThisReceiver } from '@angular/compiler';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Observable } from 'rxjs';
-import { FormTitleDt } from 'src/app/modules/models/formTitleDt';
+import { DetailedEmployee } from 'src/app/modules/models/DetailedEmployee';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
-import { LocalizationService } from 'src/app/modules/_services/localization.service';
+import { EmployeeService } from 'src/app/modules/_services/employee.service';
 
 @Component({
   selector: 'app-viewemployeeinformation',
@@ -11,14 +15,7 @@ import { LocalizationService } from 'src/app/modules/_services/localization.serv
   styleUrls: ['./viewemployeeinformation.component.scss']
 })
 export class ViewemployeeinformationComponent implements OnInit {
-//  /*********************/
-//  formHeaderLabels$ :Observable<FormTitleHd[]>; 
-//  formBodyLabels$ :Observable<FormTitleDt[]>; 
-//  formBodyLabels :FormTitleDt[]=[]; 
-//  id:string = '';
-//  languageId:any;
-//  // FormId to get form/App language
-//  @ViewChild('EmployeeGrid') hidden:ElementRef;
+//  
 //#region 
     /*----------------------------------------------------*/
 
@@ -42,11 +39,54 @@ export class ViewemployeeinformationComponent implements OnInit {
 
     /*----------------------------------------------------*/  
   //#endregion
+  
+  //#region
+  // To display table column headers
+  columnsToDisplay: string[] = ['action', 'IdPfIdCivilId', 'mobileNo','employeeName','source','department'];
+
+  // Getting data as abservable.
+  detailedEmployee$: Observable<DetailedEmployee[]>;
+
+  // We need a normal array of data so we will subscribe to the observable and will get data
+  detailedEmployee: MatTableDataSource<DetailedEmployee> = new MatTableDataSource<any>([]);
+
+  // Paginator
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  // Sorting
+  @ViewChild(MatSort) sort!: MatSort;
+
+  // Hide footer while loading.
+  isLoadingCompleted: boolean = false;
+
+  // Incase of any error will display error message.
+  dataLoadingStatus: string = '';
+
+  // True of any error
+  isError: boolean = false;
+
+  // formGroup
+  formGroup: FormGroup;
+
+  // Search Term
+  searchTerm: string = '';
+
+  //local Storage Emploee Details
+  localStorageEmployee: DetailedEmployee[]=[];
+  //#endregion
+
+  lang: any = '';
 
 
-  constructor() { }
+  constructor(private employeeService: EmployeeService) {
+    this.formGroup = new FormGroup({
+      searchTerm: new FormControl(null)
+    })
+   }
 
   ngOnInit(): void {
+  this.lang = localStorage.getItem('lang');
+
      //#region TO SETUP THE FORM LOCALIZATION    
     // TO GET THE LANGUAGE ID e.g. 1 = ENGLISH and 2 =  ARABIC
     this.languageType = localStorage.getItem('langType');
@@ -75,28 +115,45 @@ export class ViewemployeeinformationComponent implements OnInit {
       }
     }
     //#endregion
-  }
-  ngAfterViewInit() {
-    // TO get the form id...
-    // this.id = this.hidden.nativeElement.value;
-    
-    // // TO GET THE LANGUAGE ID
-    // this.languageId = localStorage.getItem('langType');
-    
-    // // Get form header labels
-    // this.formHeaderLabels$ = this.localizationService.getFormHeaderLabels(this.id,this.languageId);
-    
-    // // Get form body labels 
-    // this.formBodyLabels$= this.localizationService.getFormBodyLabels(this.id,this.languageId)
-    
-    // // Get observable as normal array of items
-    // this.formBodyLabels$.subscribe((data)=>{
-    //   this.formBodyLabels = data      
+    debugger;
+    //if (localStorage.getItem('DetailedEmployee') == null){
+      this.detailedEmployee$ = this.employeeService.GetAllEmployees();
+      //
+      this.detailedEmployee$.subscribe((response:DetailedEmployee[])=>{
+      this.detailedEmployee = new MatTableDataSource<DetailedEmployee>(response);
+      this.detailedEmployee.paginator = this.paginator;
+      this.detailedEmployee.sort = this.sort;
+      this.isLoadingCompleted = true;  
+       
+      },error=>{
+        console.log(error);
+        this.dataLoadingStatus = 'Error fetching the data';
+        this.isError = true;
+      })
       
-    // },error=>{
-    //   console.log(error);
-    // })  
+      // this.detailedEmployee$.subscribe((response:DetailedEmployee[])=>{        
+      //   localStorage.setItem('DetailedEmployee',JSON.stringify(response)); 
+      //   console.log(response);         
+      //   },error=>{
+      //     console.log(error);          
+      //   })
+        
+       
+    // }else {
+    //   this.detailedEmployee = JSON.parse(localStorage.getItem('DetailedEmployee') || '{}');
+    // }    
     
   }
+  //#region Material Search and Clear Filter
+  filterRecords() {
+    if (this.formGroup.value.searchTerm != null && this.detailedEmployee) {
+      this.detailedEmployee.filter = this.formGroup.value.searchTerm.trim();
+    }
+  }
+  clearFilter() {
+    this.formGroup?.patchValue({ searchTerm: "" });
+    this.filterRecords();
+  }
+  //#endregion
 
 }

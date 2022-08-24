@@ -7,6 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ContactDetailsComponent } from './contact-details/contact-details.component';
 import { SharedModule } from '../../_sharedModule/SharedModule';
 import { SortPipe } from '../Pipes/sort.pipe';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -22,7 +23,8 @@ import { SortPipe } from '../Pipes/sort.pipe';
     CommonModule,
     NgbModule,
     SharedModule,
-    
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     SearchTabComponent,

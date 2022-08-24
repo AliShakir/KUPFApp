@@ -74,6 +74,7 @@ namespace API.Helpers
             CreateMap<ServiceSetup, SelectOtherAct4Dto>();
 
             //
+            CreateMap<Coa, CoaDto>();
         }
     }
 }

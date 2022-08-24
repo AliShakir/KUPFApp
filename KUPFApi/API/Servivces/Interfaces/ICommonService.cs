@@ -20,5 +20,7 @@ namespace API.Servivces.Interfaces
         Task<IEnumerable<SelectOtherAct2Dto>> GetOtherAcc2Async();
         Task<IEnumerable<SelectOtherAct3Dto>> GetOtherAcc3Async();
         Task<IEnumerable<SelectOtherAct4Dto>> GetOtherAcc4Async();
+
+        Task<IEnumerable<CoaDto>> VerifyAccount(Int64 accountNo);
     }
 }

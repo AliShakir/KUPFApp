@@ -39,6 +39,7 @@
         loanAct: string;
         hajjAct: string;
         persLoanAct: string;
+        consumerLoanAct:string;
         otherAct1: string;
         otherAcc2: string;
         otherAcc3: string;
@@ -63,6 +64,10 @@
         syncDate: Date;
         syncby: string;
         synId: number;
+        membership :string;
+        membershipJoiningDate:Date;
+        termination:string;
+        terminationDate:Date;
     }
 
 

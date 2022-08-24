@@ -102,6 +102,14 @@ namespace API.Controllers
             var result = await _commonServiceService.GetOtherAcc4Async();
             return result;
         }
+        
+        [HttpGet]
+        [Route("VerifyAccount/{accountNo}")]
+        public async Task<IEnumerable<CoaDto>> VerifyAccount(Int64 accountNo)
+        {
+            var result = await _commonServiceService.VerifyAccount(accountNo);
+            return result;
+        }
 
     }
 }

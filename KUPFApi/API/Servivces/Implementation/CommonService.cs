@@ -118,5 +118,12 @@ namespace API.Servivces.Implementation
             var data = _mapper.Map<IEnumerable<SelectOtherAct4Dto>>(result);
             return data;
         }
+
+        public async Task<IEnumerable<CoaDto>> VerifyAccount(Int64 accountNo)
+        {            
+            var result = await _context.Coas.Where(c =>c.AccountNumber == accountNo && c.HeadId == 5).ToListAsync();
+            var data = _mapper.Map<IEnumerable<CoaDto>>(result);
+            return data;
+        }
     }
 }
