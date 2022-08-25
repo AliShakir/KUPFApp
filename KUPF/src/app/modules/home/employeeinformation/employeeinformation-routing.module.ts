@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AddemployeeinformationComponent } from './addemployeeinformation/addemployeeinformation.component';
+import { EditemployeeinformationComponent } from './editemployeeinformation/editemployeeinformation.component';
 
 import { ImportEmployeeMasterComponent } from './import-employee-master/import-employee-master.component';
 import { ViewContactComponent } from './view-contact/view-contact.component';
@@ -10,7 +11,8 @@ const routes: Routes = [
   { path: 'add-employee', component: AddemployeeinformationComponent },
   { path: 'view-employee', component: ViewemployeeinformationComponent },
   { path: 'view-contact', component: ViewContactComponent },
-  { path: 'import-employee-master', component: ImportEmployeeMasterComponent }
+  { path: 'import-employee-master', component: ImportEmployeeMasterComponent },
+  { path: 'edit-employee/:id', component: EditemployeeinformationComponent }
 
 ];
 

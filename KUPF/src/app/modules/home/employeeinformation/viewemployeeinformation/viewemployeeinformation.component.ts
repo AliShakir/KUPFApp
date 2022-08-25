@@ -4,6 +4,9 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { DetailedEmployee } from 'src/app/modules/models/DetailedEmployee';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
@@ -15,34 +18,34 @@ import { EmployeeService } from 'src/app/modules/_services/employee.service';
   styleUrls: ['./viewemployeeinformation.component.scss']
 })
 export class ViewemployeeinformationComponent implements OnInit {
-//  
-//#region 
-    /*----------------------------------------------------*/
+  //  
+  //#region 
+  /*----------------------------------------------------*/
 
-    // Language Type e.g. 1 = ENGLISH and 2 =  ARABIC
-    languageType: any;
+  // Language Type e.g. 1 = ENGLISH and 2 =  ARABIC
+  languageType: any;
 
-    // Selected Language
-    language: any;
+  // Selected Language
+  language: any;
 
-    // We will get form lables from lcale storage and will put into array.
-    AppFormLabels: FormTitleHd[] = [];
+  // We will get form lables from lcale storage and will put into array.
+  AppFormLabels: FormTitleHd[] = [];
 
-    // We will filter form header labels array
-    formHeaderLabels: any[] = [];
+  // We will filter form header labels array
+  formHeaderLabels: any[] = [];
 
-    // We will filter form body labels array
-    formBodyLabels: any[] = [];
+  // We will filter form body labels array
+  formBodyLabels: any[] = [];
 
-    // FormId
-    formId: string;
+  // FormId
+  formId: string;
 
-    /*----------------------------------------------------*/  
+  /*----------------------------------------------------*/
   //#endregion
-  
+
   //#region
   // To display table column headers
-  columnsToDisplay: string[] = ['action', 'IdPfIdCivilId', 'mobileNo','employeeName','source','department'];
+  columnsToDisplay: string[] = ['action', 'IdPfIdCivilId', 'mobileNo', 'employeeName', 'source', 'department'];
 
   // Getting data as abservable.
   detailedEmployee$: Observable<DetailedEmployee[]>;
@@ -72,22 +75,28 @@ export class ViewemployeeinformationComponent implements OnInit {
   searchTerm: string = '';
 
   //local Storage Emploee Details
-  localStorageEmployee: DetailedEmployee[]=[];
+  localStorageEmployee: DetailedEmployee[] = [];
   //#endregion
 
   lang: any = '';
+  // Modal close result...
+  closeResult = '';
 
-
-  constructor(private employeeService: EmployeeService) {
+  constructor(
+    private employeeService: EmployeeService,
+    private modalService: NgbModal,
+    private toastr: ToastrService,
+    private router:Router
+  ) {
     this.formGroup = new FormGroup({
       searchTerm: new FormControl(null)
     })
-   }
+  }
 
   ngOnInit(): void {
-  this.lang = localStorage.getItem('lang');
+    this.lang = localStorage.getItem('lang');
 
-     //#region TO SETUP THE FORM LOCALIZATION    
+    //#region TO SETUP THE FORM LOCALIZATION    
     // TO GET THE LANGUAGE ID e.g. 1 = ENGLISH and 2 =  ARABIC
     this.languageType = localStorage.getItem('langType');
 
@@ -115,34 +124,22 @@ export class ViewemployeeinformationComponent implements OnInit {
       }
     }
     //#endregion
-    debugger;
-    //if (localStorage.getItem('DetailedEmployee') == null){
-      this.detailedEmployee$ = this.employeeService.GetAllEmployees();
-      //
-      this.detailedEmployee$.subscribe((response:DetailedEmployee[])=>{
+    
+    
+    this.detailedEmployee$ = this.employeeService.GetAllEmployees();
+    //
+    this.detailedEmployee$.subscribe((response: DetailedEmployee[]) => {
       this.detailedEmployee = new MatTableDataSource<DetailedEmployee>(response);
       this.detailedEmployee.paginator = this.paginator;
       this.detailedEmployee.sort = this.sort;
-      this.isLoadingCompleted = true;  
-       
-      },error=>{
-        console.log(error);
-        this.dataLoadingStatus = 'Error fetching the data';
-        this.isError = true;
-      })
-      
-      // this.detailedEmployee$.subscribe((response:DetailedEmployee[])=>{        
-      //   localStorage.setItem('DetailedEmployee',JSON.stringify(response)); 
-      //   console.log(response);         
-      //   },error=>{
-      //     console.log(error);          
-      //   })
-        
-       
-    // }else {
-    //   this.detailedEmployee = JSON.parse(localStorage.getItem('DetailedEmployee') || '{}');
-    // }    
-    
+      this.isLoadingCompleted = true;
+
+    }, error => {
+      console.log(error);
+      this.dataLoadingStatus = 'Error fetching the data';
+      this.isError = true;
+    })
+
   }
   //#region Material Search and Clear Filter
   filterRecords() {
@@ -155,5 +152,48 @@ export class ViewemployeeinformationComponent implements OnInit {
     this.filterRecords();
   }
   //#endregion
+  
+  //#region Delete operation and Modal Config
+  open(content:any, id:number) {  
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {  
+      this.closeResult = `Closed with: ${result}`;        
+      if (result === 'yes') {  
+        this.employeeService.DeleteEmployee(id).subscribe(
+          res => {
+            this.toastr.success('Deleted Successfully', 'Deleted')            
+          },
+          error => {
+            console.log(error);
+          },()=>{
+            // TO REFRESH / RELOAD THE PAGE WITHOUT REFRESH THE WHOLE PAGE.
+            this.detailedEmployee$.subscribe((response: DetailedEmployee[]) => {
+              this.detailedEmployee = new MatTableDataSource<DetailedEmployee>(response);
+              this.detailedEmployee.paginator = this.paginator;
+              this.detailedEmployee.sort = this.sort;
+              this.isLoadingCompleted = true;
+        
+            }, error => {
+              console.log(error);
+              this.dataLoadingStatus = 'Error fetching the data';
+              this.isError = true;
+            })
+          })
+      }  
+    }, (reason) => {  
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;  
+    });  
+          
+  }  
 
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+  //#endregion
+ 
 }

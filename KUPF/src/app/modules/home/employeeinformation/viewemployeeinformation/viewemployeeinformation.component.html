@@ -1,6 +1,5 @@
 <input type="hidden" #EmployeeGrid name="EmployeeGrid" value="EmployeeGrid">
-<div class="card mb-5 mb-xl-8">
-    <!--begin::Header-->
+<div class="card mb-5 mb-xl-8">    
     <div class="card-header border-0 pt-5 panelBgColor">
         <div class="card-toolbar" *ngFor="let label of formHeaderLabels; let i = index">            
             <h3 class="m-0 ArFontStyle" lang="AR-SA">{{label.headerName}}</h3>
@@ -20,8 +19,6 @@
                 {{bodyLabel[0].title}}</a>
         </h3>
     </div>
-    <!--end::Header-->
-    <!--begin::Body-->
     <div class="card-body py-3"  *ngFor="let bodyLabel of formBodyLabels; let i = index">
         <div class="row mb-4">
             <div class="col-lg-8 fv-row">
@@ -48,8 +45,8 @@
                         <ng-container matColumnDef="action">
                             <th mat-header-cell *matHeaderCellDef class="ArFontStyle">{{bodyLabel[1].title}}</th>
                             <td mat-cell *matCellDef="let item" class="w-20 text-right">
-                                <button mat-raised-button color="warn">Delete</button> | 
-                                <button mat-raised-button color="accent">Edit</button><!--routerLink="/references/update-labels/{{item.formID}}" id={{item.formID}}-->
+                                <button mat-raised-button color="warn" (click)="open(content,item.employeeId)">Delete</button> | 
+                                <button mat-raised-button color="accent" routerLink="/employee/edit-employee/{{item.employeeId}}" id={{item.employeeId}}>Edit</button>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="IdPfIdCivilId">
@@ -103,3 +100,24 @@
         </div>
     </div>
 </div>
+
+<!--Delete Employeee Modal-->
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Delete Employee</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="mb-3">
+            <span>Do you want to delete this record</span> 
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer text-right">
+      <button mat-raised-button color="warn" (click)="modal.close('yes')">Yes</button> &nbsp;&nbsp; 
+      <button mat-raised-button color="accent" (click)="modal.close('Save click')">No</button>
+    </div>
+</ng-template>
+
+<!--routerLink="/references/update-labels/{{item.formID}}" id={{item.formID}}-->

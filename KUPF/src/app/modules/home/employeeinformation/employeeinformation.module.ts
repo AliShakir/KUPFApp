@@ -17,13 +17,15 @@ import { SearchTabModule } from '../_partials/search-tab.module';
 import { MaterialModule } from '../../material/material.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { EditemployeeinformationComponent } from './editemployeeinformation/editemployeeinformation.component';
 
 @NgModule({
   declarations: [
     AddemployeeinformationComponent,
     TextInputComponent,
     ImportEmployeeMasterComponent,
-    ViewemployeeinformationComponent  
+    ViewemployeeinformationComponent,
+    EditemployeeinformationComponent  
 
   ],
   imports: [
