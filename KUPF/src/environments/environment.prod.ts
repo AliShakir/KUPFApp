@@ -156,7 +156,7 @@ export const environment = {
       'thumbnail': './assets/media/demos/demo20.png'
     },
   },
-  KUPFApiUrl:'api/'
+  KUPFApiUrl:'https://kupfapi.erp53.com/api/'
 };
 
 /*

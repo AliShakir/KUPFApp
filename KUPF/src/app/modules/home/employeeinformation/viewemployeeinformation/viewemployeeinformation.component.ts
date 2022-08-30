@@ -133,7 +133,6 @@ export class ViewemployeeinformationComponent implements OnInit {
       this.detailedEmployee.paginator = this.paginator;
       this.detailedEmployee.sort = this.sort;
       this.isLoadingCompleted = true;
-
     }, error => {
       console.log(error);
       this.dataLoadingStatus = 'Error fetching the data';
@@ -144,7 +143,7 @@ export class ViewemployeeinformationComponent implements OnInit {
   //#region Material Search and Clear Filter
   filterRecords() {
     if (this.formGroup.value.searchTerm != null && this.detailedEmployee) {
-      this.detailedEmployee.filter = this.formGroup.value.searchTerm.trim();
+        this.detailedEmployee.filter = this.formGroup.value.searchTerm.trim();
     }
   }
   clearFilter() {

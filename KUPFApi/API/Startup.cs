@@ -90,7 +90,7 @@ namespace API
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseCors(options=> 
-            options.WithOrigins("http://localhost:4200")
+            options.WithOrigins("http://localhost:4200", "https://kupf.erp53.com")
             .AllowAnyMethod()
             .AllowAnyHeader());
             // Enable middleware to serve generated Swagger as a JSON endpoint.
@@ -103,12 +103,12 @@ namespace API
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
             }
 
-            //if (env.IsProduction())
-            //{
-            //    app.UseDeveloperExceptionPage();
-            //    app.UseSwagger();
-            //    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
-            //}
+            if (env.IsProduction())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
+            }
             app.UseHttpsRedirection();
 
             app.UseRouting();

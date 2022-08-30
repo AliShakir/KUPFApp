@@ -71,10 +71,10 @@ namespace API.Servivces.Implementation
             return data;
         }
 
-        public async Task<FunctionUserDto> GetFunctionUserByIdAsync(int id)
+        public async Task<IEnumerable<FunctionUserDto>> GetFunctionUserByIdAsync(int masterId)
         {
-            var result = await _context.FUNCTION_USER.Where(c => c.MODULE_ID == id).FirstOrDefaultAsync();
-            var data = _mapper.Map<FunctionUserDto>(result);
+            var result = await _context.FUNCTION_USER.Where(c => c.MASTER_ID == masterId).ToListAsync();
+            var data = _mapper.Map<IEnumerable<FunctionUserDto>>(result);
             return data;
         }
 

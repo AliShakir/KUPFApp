@@ -75,6 +75,14 @@ namespace API.Helpers
 
             //
             CreateMap<Coa, CoaDto>();
+            // These can be deleted latter
+            CreateMap<TestTableDto, TestTable>();
+            CreateMap<TestTable, TestTableDto>();
+            // These can be deleted latter
+
+            //
+            CreateMap<UserMst, SelectUserDto>();
+            CreateMap<FUNCTION_USER, SelectMasterIdDto>();
         }
     }
 }

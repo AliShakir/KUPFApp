@@ -14,9 +14,24 @@ baseUrl = environment.KUPFApiUrl;
 functionMst: FunctionMst[] = [];
 constructor(private httpClient: HttpClient) { }
 
+
+AddFunctionMst(response: FunctionMst) {    
+  return this.httpClient.post(this.baseUrl +`FunctionMst/AddFunctionMst`,response);
+}
+DeleteFunctionMst(functionId: number) { 
+  return this.httpClient.delete(`${this.baseUrl}FunctionMst/DeleteFunctionMst?id=${functionId}`);    
+}
+GetFunctionMstById(id:any) {    
+ return this.httpClient.get<FunctionMst[]>(this.baseUrl +`FunctionMst/GetFunctionMstByIdAsync/${id}`).pipe(
+    map(functionMst => {
+      this.functionMst = functionMst;
+      return functionMst;
+    })
+  )
+}
 getAllFunctionMst() {  
   //if (this.functionMst.length > 0) return of(this.functionMst);
-  return this.httpClient.get<FunctionMst[]>(`https://kupfapi.erp53.com/api/FunctionMst/GetFunctionMst`).pipe(
+  return this.httpClient.get<FunctionMst[]>(this.baseUrl +`FunctionMst/GetFunctionMst`).pipe(
     map(functionMst => {
       this.functionMst = functionMst;
       return functionMst;

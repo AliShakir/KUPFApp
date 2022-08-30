@@ -1,4 +1,5 @@
-﻿using API.DTOs.EmployeeDto;
+﻿using API.DTOs;
+using API.DTOs.EmployeeDto;
 using API.Models;
 using API.Servivces.Interfaces;
 using API.Servivces.Interfaces.DetailedEmployee;
@@ -72,6 +73,36 @@ namespace API.Controllers
                 result = await _detailedEmployeeService.DeleteEmployeeAsync(employeeId);
             }
             
+            return result;
+        }
+
+        [HttpPost]
+        [Route("AddTestUser")]
+        public async Task<ActionResult<int>> AddTestUser(TestTableDto testTable)
+        {
+            int val = await _detailedEmployeeService.AddTestUser(testTable);
+            await _context.SaveChangesAsync();
+            return val;
+        }
+        [HttpGet]
+        [Route("GetTestUsers")]
+        public async Task<IEnumerable<TestTableDto>> GetTestUsers()
+        {
+            var result = await _detailedEmployeeService.GetUsers();
+            return result;
+        }
+        [HttpGet]
+        [Route("GetTestUserById")]
+        public async Task<TestTableDto> GetTestUserById(int id)
+        {
+            var result = await _detailedEmployeeService.GetTestUserById(id);
+            return result;
+        }
+        [HttpPut]
+        [Route("UpdateTestUserById")]
+        public async Task<int> UpdateTestUserById(TestTableDto testTableDto)
+        {
+            int result = await _detailedEmployeeService.GetUpdateTestUserById(testTableDto);
             return result;
         }
     }

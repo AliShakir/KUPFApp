@@ -50,7 +50,9 @@
                   <span class="input-group-text" id="basic-addon1">
                       <i class="fas fa-calendar"></i>
                   </span>
-                  <input type="text" class="form-control" bsDatepicker [bsConfig]="datePickerConfig"
+                  <input type="text" class="form-control" 
+                  bsDatepicker 
+                  [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }"
                 [formControl]='addEmployeeForm.controls["empBirthday"]' />
               </div>
             </div>
@@ -75,8 +77,7 @@
               <div class="input-group mb-5">
                   <span class="input-group-text" id="basic-addon1">
                       <i class="fas fa-mobile-alt"></i>
-                  </span>
-                
+                  </span>                
                   <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" name="nameInArabic"
                   [formControl]='addEmployeeForm.controls["mobileNumber"]' />
               </div>
@@ -85,10 +86,8 @@
               <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"
                 lang="AR-SA">{{bodyLabel[10].title}}</label>
                 <div class="input-group mb-5">
-                  <span class="input-group-text" id="basic-addon1">
-                      
-                      <i class="fas fa-phone"></i>
-                      
+                  <span class="input-group-text" id="basic-addon1">                      
+                      <i class="fas fa-phone"></i>                      
                   </span>                
                   <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" name="nameInArabic"
                   [formControl]='addEmployeeForm.controls["empWorkTelephone"]' />
@@ -98,10 +97,8 @@
               <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"
                 lang="AR-SA">{{bodyLabel[11].title}}</label>
                 <div class="input-group mb-5">
-                  <span class="input-group-text" id="basic-addon1">
-                     
-                      <i class="fas fa-envelope"></i>
-                    
+                  <span class="input-group-text" id="basic-addon1">                     
+                      <i class="fas fa-envelope"></i>                    
                   </span>                
                   <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" name="nameInArabic"
                   [formControl]='addEmployeeForm.controls["empWorkEmail"]' />
@@ -113,15 +110,18 @@
               <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"
                 lang="AR-SA">{{bodyLabel[12].title}}</label>
                 <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" name="next2KinName"
-                  [formControl]='addEmployeeForm.controls["next2KinName"]' />
-              
+                  [formControl]='addEmployeeForm.controls["next2KinName"]' />              
             </div>
             <div class="col-lg-6 fv-row">
               <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"
                 lang="AR-SA">{{bodyLabel[13].title}}</label>
-                <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" name="next2KinMobNumber"
+                <div class="input-group mb-5">
+                  <span class="input-group-text" id="basic-addon1">
+                      <i class="fas fa-mobile-alt"></i>
+                  </span>                
+                  <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" name="next2KinMobNumber"
                   [formControl]='addEmployeeForm.controls["next2KinMobNumber"]' />
-              
+              </div>      
             </div>
           </div>
         </form> 

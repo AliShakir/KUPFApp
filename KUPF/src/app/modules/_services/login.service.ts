@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Login } from '../models/login';
 import { SelectOccupationsDto } from '../models/SelectOccupationsDto';
@@ -18,7 +18,7 @@ export class LoginService {
  baseUrl = environment.KUPFApiUrl;
 
  // 
- loginDto: Login[]=[];
+ loginDto: Login[];
  
  occupationsDto$: Observable<SelectOccupationsDto[]>;
  occupationsDto: SelectOccupationsDto[]=[];
@@ -31,20 +31,20 @@ export class LoginService {
     }
   
   Login(model : Array<string>) {
-    return this.httpClient.post<any>(this.baseUrl + `Login/EmployeeLogin`,{
+    console.log(this.baseUrl);
+    return this.httpClient.post<Login[]>(this.baseUrl + `Login/EmployeeLogin`,{
       username:model[0],
       password:model[1]
-    }).subscribe(data=>{
-      if(data.length > 0){
-        localStorage.setItem('user',JSON.stringify(data));
-        this.toastr.success("Please select location","Success")     
-       // this.router.navigateByUrl('/dashboard')      
-      }else{
-        this.toastr.error("Invalid username or password");
-      }
-    })
+    }).pipe(
+        map((loginDto: Login[]) => {
+        this.loginDto = loginDto;
+        return loginDto;
+        })
+    )
+   
 }
-  
+
+
   logout(){
     this.router.navigateByUrl('/login')
     localStorage.removeItem('user');

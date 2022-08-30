@@ -8,6 +8,7 @@ import { ContactDetailsComponent } from './contact-details/contact-details.compo
 import { SharedModule } from '../../_sharedModule/SharedModule';
 import { SortPipe } from '../Pipes/sort.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EditFinancialDetailsComponent } from './edit-financial-details/edit-financial-details.component';
 
 
 
@@ -17,7 +18,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FinancialDetialsComponent,
     ApprovalDetialsComponent,
     ContactDetailsComponent,
-    SortPipe
+    SortPipe,
+    EditFinancialDetailsComponent
   ],
   imports: [
     CommonModule,
@@ -31,6 +33,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FinancialDetialsComponent,
     ApprovalDetialsComponent,
     ContactDetailsComponent,
+    EditFinancialDetailsComponent,
     SortPipe
   ]
 })

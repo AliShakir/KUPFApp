@@ -125,5 +125,18 @@ namespace API.Servivces.Implementation
             var data = _mapper.Map<IEnumerable<CoaDto>>(result);
             return data;
         }
+
+        public async Task<IEnumerable<SelectUserDto>> GetUsers()
+        {
+            var result = await _context.UserMsts.ToListAsync();
+            var data = _mapper.Map<IEnumerable<SelectUserDto>>(result);
+            return data;
+        }
+        public async Task<IEnumerable<SelectMasterIdDto>> GetMasterId()
+        {
+            var result = await _context.FUNCTION_USER.ToListAsync();
+            var data = _mapper.Map<IEnumerable<SelectMasterIdDto>>(result);
+            return data;
+        }
     }
 }

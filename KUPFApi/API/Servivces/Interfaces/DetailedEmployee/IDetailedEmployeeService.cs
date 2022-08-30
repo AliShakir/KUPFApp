@@ -1,4 +1,5 @@
-﻿using API.DTOs.EmployeeDto;
+﻿using API.DTOs;
+using API.DTOs.EmployeeDto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,10 @@ namespace API.Servivces.Interfaces.DetailedEmployee
         Task<IEnumerable<DetailedEmployeeDto>> GetEmployeesAsync();
         Task<int> DeleteEmployeeAsync(string id);
 
+        // This api will be deleted latter.
+        Task<int> AddTestUser(TestTableDto testTableDto);
+        Task<IEnumerable<TestTableDto>> GetUsers();
+        Task<TestTableDto> GetTestUserById(int id);
+        Task<int> GetUpdateTestUserById(TestTableDto testTableDto);
     }
 }

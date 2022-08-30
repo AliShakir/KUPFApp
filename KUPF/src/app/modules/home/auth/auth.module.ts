@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserMstComponent } from './users/user-mst/user-mst.component';
 import { FunctionMstComponent } from './users/function-mst/function-mst.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 
 @NgModule({
@@ -25,12 +26,17 @@ import { NgSelectModule } from '@ng-select/ng-select';
   imports: [
     CommonModule,
     AuthRoutingModule,
-    SharedModule,
-    NgbModule,
+    SharedModule,    
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    
+    NgbModule,
+    BsDatepickerModule.forRoot(),
+    NgSelectModule,
+  ],
+  exports:[
+    BsDatepickerModule,
+    NgSelectModule,
   ]
 })
 export class AuthModule { }

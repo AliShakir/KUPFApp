@@ -45,7 +45,7 @@
             ],
             "scripts": []
           },
-          "configurations": {
+          "configurations": { 
             "production": {
               "budgets": [
                 {

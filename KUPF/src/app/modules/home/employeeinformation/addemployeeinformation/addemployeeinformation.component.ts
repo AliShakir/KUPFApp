@@ -14,7 +14,8 @@ import { EmployeeService } from 'src/app/modules/_services/employee.service';
 @Component({
   selector: 'app-addemployeeinformation',
   templateUrl: './addemployeeinformation.component.html',
-  styleUrls: ['./addemployeeinformation.component.scss']
+  styleUrls: ['./addemployeeinformation.component.scss'],
+  
 })
 export class AddemployeeinformationComponent implements OnInit {
   isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -148,8 +149,7 @@ export class AddemployeeinformationComponent implements OnInit {
 
  
 //Save employee data...
-  submitForm(){
-     
+  submitForm(){     
     this.employeeService.AddEmployee(this.addEmployeeForm.value).subscribe(()=>{
       this.toastrService.success('Saved successfully','Success');   
       this.addEmployeeForm.reset();

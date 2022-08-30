@@ -111,5 +111,19 @@ namespace API.Controllers
             return result;
         }
 
+        [HttpGet]
+        [Route("GetUsers")]
+        public async Task<IEnumerable<SelectUserDto>> GetUsers()
+        {
+            var result = await _commonServiceService.GetUsers();
+            return result;
+        }
+        [HttpGet]
+        [Route("GetMasterId")]
+        public async Task<IEnumerable<SelectMasterIdDto>> GetMasterId()
+        {
+            var result = await _commonServiceService.GetMasterId();
+            return result;
+        }
     }
 }

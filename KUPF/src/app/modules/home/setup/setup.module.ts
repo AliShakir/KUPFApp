@@ -19,6 +19,7 @@ import { UpdateFormLabelsComponent } from './manage-form-labels/update-form-labe
 import { MaterialModule } from '../../material/material.module';
 import { ToastrModule } from 'ngx-toastr';
 import { UserFunctionsComponent } from '../auth/users/user-functions/user-functions.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -44,7 +45,7 @@ import { UserFunctionsComponent } from '../auth/users/user-functions/user-functi
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-   
+    NgbModule,
   ]
 })
 export class SetupModule { }

@@ -58,9 +58,9 @@ namespace API.Controllers
         }
         [HttpGet]
         [Route("GetFunctionUserByIdAsync/{id}")]
-        public async Task<ActionResult<IEnumerable<FunctionUserDto>>> GetFunctionUserByIdAsync(int id)
+        public async Task<ActionResult<IEnumerable<FunctionUserDto>>> GetFunctionUserByIdAsync(int masterId)
         {
-            var result = await _functionUserService.GetFunctionUserByIdAsync(id);
+            var result = await _functionUserService.GetFunctionUserByIdAsync(masterId);
             return Ok(result);
         }
         [HttpGet]

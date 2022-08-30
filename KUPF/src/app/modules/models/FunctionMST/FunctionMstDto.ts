@@ -7,6 +7,7 @@ export interface FunctionMstDto {
     menU_NAME1: string;
     menU_NAME2: string;
     menU_NAME3: string;
+    
     link: string;
     urloption: string;
     urlrewrite: string;

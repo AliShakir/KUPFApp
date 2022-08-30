@@ -23,7 +23,12 @@ export class EmployeeService {
     return this.httpClient.put(this.baseUrl +`Employee/UpdateEmployee`,response);
   }
   GetEmployeeById(id:any) {    
-    return this.httpClient.get(this.baseUrl +`Employee/GetEmployeeById?employeeId=`+id);
+    return this.httpClient.get<DetailedEmployee[]>(this.baseUrl +`Employee/GetEmployeeById?employeeId=`+id).pipe(
+      map(employeeDetails => {
+        this.employeeDetails = employeeDetails;
+        return employeeDetails;
+      })
+    )
   }
   DeleteEmployee(employeeId: number) { 
     return this.httpClient.delete(`${this.baseUrl}Employee/DeleteEmployee?employeeId=${employeeId}`);    

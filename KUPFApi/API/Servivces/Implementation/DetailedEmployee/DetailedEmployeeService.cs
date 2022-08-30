@@ -1,4 +1,5 @@
 ﻿using API.Common;
+using API.DTOs;
 using API.DTOs.EmployeeDto;
 using API.Models;
 using API.Servivces.Interfaces.DetailedEmployee;
@@ -31,10 +32,10 @@ namespace API.Servivces.Implementation.DetailedEmployee
 
         public async Task<IEnumerable<DetailedEmployeeDto>> GetEmployeesAsync()
         {           
-           var detailsList = await _context.DetailedEmployees.ToListAsync();
-           var refTableList = await _context.Reftables.ToListAsync();
-            var data = (from e in detailsList
-                        join r in refTableList
+           //var detailsList = await _context.DetailedEmployees.ToListAsync();
+           //var refTableList = await _context.Reftables.ToListAsync();
+            var data = (from e in _context.DetailedEmployees
+                        join r in _context.Reftables
                      on e.Department equals r.Refid
                      where r.Reftype == "KUPF" && r.Refsubtype == "Department"
                         select new DetailedEmployeeDto
@@ -100,5 +101,43 @@ namespace API.Servivces.Implementation.DetailedEmployee
             return result;
         }
 
+        public async Task<int> AddTestUser(TestTableDto testTableDto)
+        {
+            if (_context != null)
+            {
+                var newRec = _mapper.Map<TestTable>(testTableDto);
+                await _context.TestTables.AddAsync(newRec);
+                await _context.SaveChangesAsync();
+                return newRec.Id;
+            }
+            return 0;
+        }
+
+        public async Task<IEnumerable<TestTableDto>> GetUsers()
+        {
+            var data = await _context.TestTables.ToListAsync();
+            var result = _mapper.Map<IEnumerable<TestTableDto>>(data);
+            return result;
+        }
+
+        public async Task<TestTableDto> GetTestUserById(int id)
+        {
+            var data = await _context.TestTables.Where(c => c.Id == id).FirstOrDefaultAsync();
+            var result = _mapper.Map<TestTableDto>(data);
+            return result;
+        }
+
+        public async Task<int> GetUpdateTestUserById(TestTableDto testTableDto)
+        {
+            if (_context != null)
+            {
+                var existingUser = _mapper.Map<TestTable>(testTableDto);
+                _context.TestTables.Update(existingUser);
+
+                await _context.SaveChangesAsync();
+                return testTableDto.Id;
+            };
+            return testTableDto.Id;
+        }
     }
 }

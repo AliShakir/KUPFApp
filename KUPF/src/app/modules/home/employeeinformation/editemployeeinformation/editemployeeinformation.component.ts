@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { Observable } from 'rxjs';
+import { DetailedEmployee } from 'src/app/modules/models/DetailedEmployee';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
 import { SelectDepartmentsDto } from 'src/app/modules/models/SelectDepartmentsDto';
 import { SelectOccupationsDto } from 'src/app/modules/models/SelectOccupationsDto';
@@ -19,6 +20,9 @@ export class EditemployeeinformationComponent implements OnInit {
   occupations$: Observable<SelectOccupationsDto[]>;
   departments$: Observable<SelectDepartmentsDto[]>;
   terminations$: Observable<SelectTerminationsDto[]>;
+  employeeData$:Observable<DetailedEmployee[]>;
+  //
+  employeeData:DetailedEmployee[]=[];
   //#region 
     /*----------------------------------------------------*/
 
@@ -48,8 +52,7 @@ export class EditemployeeinformationComponent implements OnInit {
   showChildComponent = false;
   //
   employeeId:any;
-  //
-  employeeData:any;
+  
   selectedStatus: number | undefined;
   maritalStatusArray = [
       { id: 1, name: 'Married' },
@@ -72,7 +75,7 @@ export class EditemployeeinformationComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    //this.initializeForm();
+    this.initializeForm();
     //#region TO SETUP THE FORM LOCALIZATION    
     // TO GET THE LANGUAGE ID e.g. 1 = ENGLISH and 2 =  ARABIC
     this.languageType = localStorage.getItem('langType');
@@ -110,7 +113,12 @@ export class EditemployeeinformationComponent implements OnInit {
     // To FillUp terminations
     this.terminations$ = this.commonDbService.GetTerminations();    
     //#endregion
-    this.GetEmployeeById(this.employeeId);
+   this.employeeData$ =  this.employeeService.GetEmployeeById(this.employeeId);
+   this.employeeData$.subscribe((response)=>{
+    this.employeeData = response;
+   },error=>{
+    console.log(error);
+   })
   }
  initializeForm(){
     this.addEmployeeForm = this.fb.group({
@@ -134,39 +142,12 @@ export class EditemployeeinformationComponent implements OnInit {
       membershipJoiningDate: new FormControl('',Validators.required),
       termination: new FormControl('',Validators.required),
       terminationDate: new FormControl('',Validators.required),
+      loanAct: new FormControl('',Validators.required),
                        
     })    
   }
 
-  GetEmployeeById(id:any){
-    this.employeeService.GetEmployeeById(id).subscribe((response)=>{
-      this.employeeData = response;
-      this.addEmployeeForm = this.fb.group({
-        englishName: new FormControl(this.employeeData.englishName,Validators.required),
-        arabicName: new FormControl(this.employeeData.arabicName,Validators.required),
-        empBirthday: new FormControl(this.employeeData.empBirthday,Validators.required),
-        empGender: new FormControl(this.employeeData.empGender,Validators.required),
-        empMaritalStatus: new FormControl(this.employeeData.empMaritalStatus,Validators.required),
-        mobileNumber: new FormControl(this.employeeData.mobileNumber,Validators.required),
-        empWorkTelephone: new FormControl(this.employeeData.empWorkTelephone,Validators.required),
-        empWorkEmail: new FormControl(this.employeeData.empWorkEmail,Validators.required),
-        next2KinName: new FormControl(this.employeeData.next2KinName,Validators.required),
-        next2KinMobNumber: new FormControl(this.employeeData.next2KinMobNumber,Validators.required),
-        department: new FormControl(this.employeeData.department,Validators.required),
-        departmentName: new FormControl(this.employeeData.departmentName,Validators.required),
-        salary: new FormControl(this.employeeData.salary,Validators.required),      
-        empCidNum: new FormControl(this.employeeData.empCidNum,Validators.required),
-        empPaciNum: new FormControl(this.employeeData.empOtherId,Validators.required),
-        empOtherId: new FormControl(this.employeeData.empOtherId,Validators.required),
-        membership: new FormControl(this.employeeData.membership,Validators.required),
-        membershipJoiningDate: new FormControl(this.employeeData.membershipJoiningDate,Validators.required),
-        termination: new FormControl(this.employeeData.termination,Validators.required),
-        terminationDate: new FormControl(this.employeeData.terminationDate,Validators.required)                         
-      }) 
-    },error=>{
-      console.log(error);
-    })
-  }
+  
 
   onChange(form: FormGroup<any>) {
     // reset the form value to the newly emitted form group value.

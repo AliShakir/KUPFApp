@@ -8,6 +8,7 @@ import { SelectConsumerLoanAcDto } from '../models/SelectConsumerLoanActDto';
 import { SelectDepartmentsDto } from '../models/SelectDepartmentsDto';
 import { SelectHajjAcDto } from '../models/SelectHajjAcDto';
 import { SelectLoanAcDto } from '../models/SelectLoanAcDto';
+import { SelectMasterIdDto } from '../models/SelectMasterIdDto';
 import { SelectOccupationsDto } from '../models/SelectOccupationsDto';
 import { SelectOtherAct1Dto } from '../models/SelectOtherAct1Dto';
 import { SelectOtherAct2Dto } from '../models/SelectOtherAct2Dto';
@@ -15,6 +16,7 @@ import { SelectOtherAct3Dto } from '../models/SelectOtherAct3Dto';
 import { SelectOtherAct4Dto } from '../models/SelectOtherAct4Dto';
 import { SelectPerLoanActDto } from '../models/SelectPerLoanActDto';
 import { SelectTerminationsDto } from '../models/SelectTerminationsDto';
+import { SelectUsersDto } from '../models/SelectUsersDto';
 
 @Injectable({
   providedIn: 'root'
@@ -47,6 +49,10 @@ export class DbCommonService {
   otherAct4: SelectOtherAct4Dto[]=[];
   //
   coaDto : CoaDto[]=[];
+  //
+  users: SelectUsersDto[]=[];
+  //
+  masterIds: SelectMasterIdDto[]=[];
   //loanAct: number;
   
   constructor(private httpClient: HttpClient,private toastr: ToastrService) { }
@@ -152,7 +158,7 @@ export class DbCommonService {
     )
   }
 
-
+//#region
 // To verify the Loan account number.
 VerifyLoanAct(accountNo: string | number){ 
   return this.httpClient.get<CoaDto[]>(this.baseUrl + `Common/VerifyAccount/`+ accountNo);  
@@ -184,6 +190,26 @@ VerifyOtherAct3(accountNo: string | number){
 // To verify Other account 4 number.
 VerifyOtherAct4(accountNo: string | number){ 
   return this.httpClient.get<CoaDto[]>(this.baseUrl + `Common/VerifyAccount/`+ accountNo);  
+}
+//#endregion
+
+// Get all users form USER_MST table
+GetUsers() {    
+  return this.httpClient.get<SelectUsersDto[]>(this.baseUrl + `Common/GetUsers`).pipe(
+    map(users => {
+      this.users = users;
+      return users;
+    })
+  )
+}
+// Get Master Id from FUNCTION_USERS TABLE
+GetMasterId() {    
+  return this.httpClient.get<SelectMasterIdDto[]>(this.baseUrl + `Common/GetMasterId`).pipe(
+    map(masterIds => {
+      this.masterIds = masterIds; 
+      return masterIds;
+    })
+  )
 }
 
 }
