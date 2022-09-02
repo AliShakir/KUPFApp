@@ -17,7 +17,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './user-functions.component.html',
   styleUrls: ['./user-functions.component.scss']
 })
-export class UserFunctionsComponent implements OnInit  {
+export class UserFunctionsComponent implements OnInit {
   //
   checkBox = true;
   //
@@ -30,14 +30,16 @@ export class UserFunctionsComponent implements OnInit  {
   lang: any = '';
   //
   checkData: any;
-  
+
+  // To get and put selected user info e.g. location Id, user id, role id etc.
+  selectedUserInfo: SelectUsersDto;
   //
   userId: any;
-  constructor(private dbCommonService: DbCommonService, 
+  constructor(private dbCommonService: DbCommonService,
     private userFunctionService: UserFunctionsService,
     private toastr: ToastrService,
-    private activatedRout:ActivatedRoute) {
-      this.userId = this.activatedRout.snapshot.paramMap.get('id');
+    private activatedRout: ActivatedRoute) {
+    this.userId = this.activatedRout.snapshot.paramMap.get('id');
   }
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang');
@@ -47,12 +49,25 @@ export class UserFunctionsComponent implements OnInit  {
     this.masterIds$ = this.dbCommonService.GetMasterId();
     //
     this.userFunctions$ = this.userFunctionService.GetFunctionUserByUserIdAsync(this.userId);
-    console.log(this.userFunctions$);
+    
+    
     this.userFunctionService.GetFunctionUserByUserIdAsync(this.userId).subscribe((data) => {
+      this.dbCommonService.GetUsers().subscribe((res) => {        
+        // TO filter user information based on userId...  
+        this.selectedUserInfo = res.find(x => x.userId == this.userId)!;
+        // Append user's extra information...
+        for (let user of data) {
+          user.locatioN_ID = this.selectedUserInfo?.locationId;
+          user.useR_ID = this.selectedUserInfo?.userId!;
+          user.rolE_ID = 0;
+          user.logiN_ID = this.selectedUserInfo?.loginId!;
+          user.password = this.selectedUserInfo?.password!;
+        }
+      })
       console.log('data', data);
       this.checkData = data;
     });
-    
+
   }
 
   displayedColumns: string[] = ['menuItem', 'admin', 'add', 'edit', 'delete', 'print', 'label', 'sp1', 'sp2', 'sp3', 'sp4', 'sp5', 'activeMenu'];
@@ -61,9 +76,10 @@ export class UserFunctionsComponent implements OnInit  {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  
+
 
   savedata() {
+    
     this.userFunctionService.AddFunctionForUser(this.checkData).subscribe(()=>{
       this.toastr.success('Saved Successfully')
     })
@@ -76,7 +92,7 @@ export class UserFunctionsComponent implements OnInit  {
         : e;
     });
   }
-  
+
 }
 export interface PeriodicElement {
   menuItem: string;
@@ -105,3 +121,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   { menuItem: 'Menu Item', admin: true, add: 'Carbon', edit: 12.0107, delete: 'C', print: 'Test', label: 'test', sp1: 'test', sp2: 'test', sp3: 'test', sp4: 'test', sp5: 'test', activeMenu: 'test' },
   { menuItem: 'Menu Item', admin: true, add: 'Nitrogen', edit: 14.0067, delete: 'N', print: 'Test', label: 'test', sp1: 'test', sp2: 'test', sp3: 'test', sp4: 'test', sp5: 'test', activeMenu: 'test' }
 ];
+
+function ngAfterViewInit() {
+  throw new Error('Function not implemented.');
+}

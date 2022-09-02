@@ -1,12 +1,15 @@
 export interface FunctionMstDto {
     tenentID: number;
+    locatioN_ID: number;
+    useR_ID: number;
+    rolE_ID: number;
     menU_ID: number;
     masteR_ID: number;
     modulE_ID: number;
     menU_TYPE: string;    
     menU_NAMEEnglish: string;
     menU_NAMEArabic: string;
-    menU_NAME3: string;    
+    fulL_NAME: string;    
     link: string;
     urloption: string;
     urlrewrite: string;

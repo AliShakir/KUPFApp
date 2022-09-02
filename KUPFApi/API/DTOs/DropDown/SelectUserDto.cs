@@ -10,5 +10,9 @@ namespace API.DTOs.DropDown
         public int UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public int locationId { get; set; }
+        public int roleId { get; set; }
+        public string LoginId { get; set; }
+        public string Password { get; set; }
     }
 }

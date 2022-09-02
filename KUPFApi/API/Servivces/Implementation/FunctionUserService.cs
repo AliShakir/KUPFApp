@@ -2,9 +2,12 @@
 using API.Models;
 using API.Servivces.Interfaces;
 using AutoMapper;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -96,6 +99,17 @@ namespace API.Servivces.Implementation
             var result = await _context.FUNCTION_USER.Where(c => c.USER_ID == id).ToListAsync();           
             var data = _mapper.Map<IEnumerable<FunctionUserDto>>(result);
             return data;
+        }
+
+        public async Task<int> DeleteFunctionUserByUserIdAsync(int id)
+        {            
+            int result = 0;
+
+            if (_context != null)
+            {
+                _context.Database.ExecuteSqlRaw("Delete From FUNCTION_USER WHERE [USER_ID]={0}",id);                                
+            }
+            return result;
         }
     }
 }

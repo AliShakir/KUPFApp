@@ -51,15 +51,19 @@
         <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
             <ngb-panel title="Module Wise Menu">
                 <ng-template ngbPanelContent>
-                    <div class="row mb-4">
-                        <div class="col-lg-6 fv-row">
-                                      
-                        </div>
-                        <div class="col-lg-6 fv-row">
-                            <div class="text-left">
+                    <div class="row mb-4">                        
+                            <div class="col-lg-4 fv-row">                                
+                                <select class="form-control bg-light" aria-label="Select example">  
+                                    <option>-Module Wise Menu-</option>
+                                    <option value="1">Location 1</option>
+                                    <option value="2">Location 2</option>
+                                    <option value="3">Location 3</option>
+                                </select>
+                            </div>        
+                       
+                        <div class="col-lg-6 fv-row text-left">                            
                                 <button mat-raised-button color="primary" class="float-left" (click)="savedata()">Submit Menu Module Wise</button> |       
-                                <button mat-raised-button color="accent" class="mt-4">Add</button>  
-                            </div>                               
+                                <button mat-raised-button color="accent" class="mt-4">Add</button>                                                        
                         </div>
                     </div>
                    <!--Mat Table Below here-->

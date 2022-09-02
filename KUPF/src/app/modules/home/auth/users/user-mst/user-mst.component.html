@@ -143,10 +143,7 @@
                     <table mat-table class="w-100" [dataSource]="userMst" matSort>
                         <ng-container matColumnDef="action" class="w-30">
                             <th mat-header-cell *matHeaderCellDef class="ArFontStyle">Action</th>
-                            <td mat-cell *matCellDef="let item" class="text-right">
-                                <!-- <button mat-raised-button color="warn" (click)="open(content,item.employeeId)">Delete</button> | 
-                                <button mat-raised-button color="accent" routerLink="/employee/edit-employee/">Edit</button> |
-                                <button mat-raised-button color="primary" >Change Password</button> -->
+                            <td mat-cell *matCellDef="let item" class="text-right">                               
                                 <select class="form-control" (change)="onChange($event)">
                                     <option selected disabled>--Select--</option>
                                     <option value="{{item.userId}}">Edit</option>

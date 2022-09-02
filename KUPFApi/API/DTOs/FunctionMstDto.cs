@@ -14,7 +14,7 @@ namespace API.DTOs
         public string? MENU_TYPE { get; set; }
         public string? MENU_NAMEEnglish { get; set; }
         public string? MENU_NAMEArabic { get; set; }
-        public string? MENU_NAME3 { get; set; }
+        public string? FULL_NAME { get; set; }
         public string? LINK { get; set; }
         public string? Urloption { get; set; }
         public string? URLREWRITE { get; set; }

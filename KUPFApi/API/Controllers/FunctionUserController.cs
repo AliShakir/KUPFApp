@@ -4,6 +4,7 @@ using API.Servivces.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace API.Controllers
             _functionUserService = functionUserService;
             _context = context;
         }
-        
+
         [HttpPost]
         [Route("AddFunctionUser")]
         public async Task<ActionResult<int>> AddFunctionUser(FunctionUserDto functionUserDto)
@@ -74,11 +75,21 @@ namespace API.Controllers
         [Route("AddFunctionForUser")]
         public async Task<ActionResult<int>> AddFunctionForUser([FromBody] FunctionForUserDto[] functionForUserDto)
         {
+
+            var userExistingUserRights = _context.FUNCTION_USER
+                .Where(c => c.USER_ID == functionForUserDto.FirstOrDefault().USER_ID).ToList();
+            
+            if (userExistingUserRights.Count > 0)
+            {
+                await _functionUserService.DeleteFunctionUserByUserIdAsync(functionForUserDto.FirstOrDefault().USER_ID);
+            }           
+
             for (int i = 0; i < functionForUserDto.Length; i++)
             {
+                _context.ChangeTracker.Clear();
                 await _functionUserService.AddFunctionsForUserAsync(functionForUserDto[i]);
                 await _context.SaveChangesAsync();
-            }           
+            }
             return Ok();
         }
         [HttpGet]
@@ -86,7 +97,7 @@ namespace API.Controllers
         public async Task<ActionResult<IEnumerable<FunctionUserDto>>> GetFunctionUserByUserIdAsync(int id)
         {
             var result = await _functionUserService.GetFunctionUserByUserIdAsync(id);
-            if(!result.Any())
+            if (!result.Any())
             {
                 return RedirectToAction("GetFunctionMst", "FunctionMst");
             }

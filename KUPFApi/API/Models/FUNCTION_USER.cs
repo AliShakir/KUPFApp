@@ -21,8 +21,8 @@ namespace API.Models
         public string? MENU_NAMEArabic { get; set; }
         public string? SMALLTEXT { get; set; }
         public string FULL_NAME { get; set; }
-        public string LOGIN_ID { get; set; }
-        public string PASSWORD { get; set; }
+        public string? LOGIN_ID { get; set; }
+        public string? PASSWORD { get; set; }
         public int? USER_TYPE { get; set; }
         public int? ACTIVE_FLAG { get; set; }
         public DateTime? ACTIVETILLDATE { get; set; }

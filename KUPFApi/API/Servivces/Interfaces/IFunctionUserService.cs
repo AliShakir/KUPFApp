@@ -17,5 +17,7 @@ namespace API.Servivces.Interfaces
         Task<int> AddFunctionsForUserAsync(FunctionForUserDto functionUserDto);
 
         Task<IEnumerable<FunctionUserDto>> GetFunctionUserByUserIdAsync(int id);
+
+        Task<int> DeleteFunctionUserByUserIdAsync(int id);
     }
 }
