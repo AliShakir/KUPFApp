@@ -3,11 +3,10 @@ export interface FunctionMstDto {
     menU_ID: number;
     masteR_ID: number;
     modulE_ID: number;
-    menU_TYPE: string;
-    menU_NAME1: string;
-    menU_NAME2: string;
-    menU_NAME3: string;
-    
+    menU_TYPE: string;    
+    menU_NAMEEnglish: string;
+    menU_NAMEArabic: string;
+    menU_NAME3: string;    
     link: string;
     urloption: string;
     urlrewrite: string;

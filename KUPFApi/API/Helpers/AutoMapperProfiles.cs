@@ -83,6 +83,9 @@ namespace API.Helpers
             //
             CreateMap<UserMst, SelectUserDto>();
             CreateMap<FUNCTION_USER, SelectMasterIdDto>();
+
+            //
+            CreateMap<FunctionForUserDto,FUNCTION_USER>();
         }
     }
 }

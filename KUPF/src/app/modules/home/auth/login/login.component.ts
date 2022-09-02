@@ -100,16 +100,13 @@ login() {
       }
       this.router.navigateByUrl('/dashboard')      
     }
-    else if(this.loginDto.length > 1){
+    else if(this.loginDto.length > 1){      
       this.toastr.success('Please select location','Success'); 
       this.locations = this.loginDto;
-      this.toggleShow(); 
+      this.isSuccess = true;
+      
     }
   })
 }
-toggleShow() {
-  
-  this.isSuccess = true;
-  console.log(this.isSuccess);
-  }
+
 }

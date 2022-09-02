@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable } from 'rxjs';
@@ -7,13 +7,17 @@ import { SelectUsersDto } from 'src/app/modules/models/SelectUsersDto';
 import { UserFunctionDto } from 'src/app/modules/models/UserFunctions/UserFunctionDto';
 import { DbCommonService } from 'src/app/modules/_services/db-common.service';
 import { UserFunctionsService } from 'src/app/modules/_services/user-functions.service';
-
+import * as $ from 'jquery';
+import { ToastrService } from 'ngx-toastr';
+import { UserMstComponent } from '../user-mst/user-mst.component';
+import { CommonService } from 'src/app/modules/_services/common.service';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-user-functions',
   templateUrl: './user-functions.component.html',
   styleUrls: ['./user-functions.component.scss']
 })
-export class UserFunctionsComponent implements OnInit {
+export class UserFunctionsComponent implements OnInit  {
   //
   checkBox = true;
   //
@@ -24,7 +28,16 @@ export class UserFunctionsComponent implements OnInit {
   userFunctions$: Observable<UserFunctionDto[]>;
   //
   lang: any = '';
-  constructor(private dbCommonService: DbCommonService, private userFunctionService: UserFunctionsService) {
+  //
+  checkData: any;
+  
+  //
+  userId: any;
+  constructor(private dbCommonService: DbCommonService, 
+    private userFunctionService: UserFunctionsService,
+    private toastr: ToastrService,
+    private activatedRout:ActivatedRoute) {
+      this.userId = this.activatedRout.snapshot.paramMap.get('id');
   }
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang');
@@ -33,9 +46,13 @@ export class UserFunctionsComponent implements OnInit {
     //
     this.masterIds$ = this.dbCommonService.GetMasterId();
     //
-    this.userFunctions$ = this.userFunctionService.GetAllUserFunctions();
+    this.userFunctions$ = this.userFunctionService.GetFunctionUserByUserIdAsync(this.userId);
+    console.log(this.userFunctions$);
+    this.userFunctionService.GetFunctionUserByUserIdAsync(this.userId).subscribe((data) => {
+      console.log('data', data);
+      this.checkData = data;
+    });
     
-   
   }
 
   displayedColumns: string[] = ['menuItem', 'admin', 'add', 'edit', 'delete', 'print', 'label', 'sp1', 'sp2', 'sp3', 'sp4', 'sp5', 'activeMenu'];
@@ -44,10 +61,22 @@ export class UserFunctionsComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-  }
+  
 
+  savedata() {
+    this.userFunctionService.AddFunctionForUser(this.checkData).subscribe(()=>{
+      this.toastr.success('Saved Successfully')
+    })
+  }
+  async checkCheckBoxvalue(event: any, item: any) {
+    let name = event.source.name;
+    this.checkData = this.checkData.map((e: any) => {
+      return e.fulL_NAME === item.fulL_NAME
+        ? { ...e, [name]: event.checked == true ? 1 : 0 }
+        : e;
+    });
+  }
+  
 }
 export interface PeriodicElement {
   menuItem: string;

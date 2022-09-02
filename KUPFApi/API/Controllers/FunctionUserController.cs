@@ -57,10 +57,10 @@ namespace API.Controllers
             return result;
         }
         [HttpGet]
-        [Route("GetFunctionUserByIdAsync/{id}")]
-        public async Task<ActionResult<IEnumerable<FunctionUserDto>>> GetFunctionUserByIdAsync(int masterId)
+        [Route("GetFunctionUserByMasterIdAsync")]
+        public async Task<ActionResult<IEnumerable<FunctionUserDto>>> GetFunctionUserByMasterIdAsync(int masterId)
         {
-            var result = await _functionUserService.GetFunctionUserByIdAsync(masterId);
+            var result = await _functionUserService.GetFunctionUserByMasterIdAsync(masterId);
             return Ok(result);
         }
         [HttpGet]
@@ -70,6 +70,27 @@ namespace API.Controllers
             var result = await _functionUserService.GetFunctionUserAsync();
             return Ok(result);
         }
-
+        [HttpPost]
+        [Route("AddFunctionForUser")]
+        public async Task<ActionResult<int>> AddFunctionForUser([FromBody] FunctionForUserDto[] functionForUserDto)
+        {
+            for (int i = 0; i < functionForUserDto.Length; i++)
+            {
+                await _functionUserService.AddFunctionsForUserAsync(functionForUserDto[i]);
+                await _context.SaveChangesAsync();
+            }           
+            return Ok();
+        }
+        [HttpGet]
+        [Route("GetFunctionUserByUserIdAsync")]
+        public async Task<ActionResult<IEnumerable<FunctionUserDto>>> GetFunctionUserByUserIdAsync(int id)
+        {
+            var result = await _functionUserService.GetFunctionUserByUserIdAsync(id);
+            if(!result.Any())
+            {
+                return RedirectToAction("GetFunctionMst", "FunctionMst");
+            }
+            return Ok(result);
+        }
     }
 }

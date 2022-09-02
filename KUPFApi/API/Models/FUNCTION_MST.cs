@@ -14,8 +14,8 @@ namespace API.Models
         public int? MASTER_ID { get; set; }
         public int? MODULE_ID { get; set; }
         public string? MENU_TYPE { get; set; }
-        public string? MENU_NAME1 { get; set; }
-        public string? MENU_NAME2 { get; set; }
+        public string? MENU_NAMEEnglish { get; set; }
+        public string? MENU_NAMEArabic { get; set; }
         public string? MENU_NAME3 { get; set; }
         public string? LINK { get; set; }
         public string? Urloption { get; set; }

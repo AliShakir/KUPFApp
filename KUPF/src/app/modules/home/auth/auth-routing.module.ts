@@ -14,6 +14,7 @@ const routes: Routes = [
   { path: 'user-functions', component: UserFunctionsComponent },
   { path: 'user-mst', component: UserMstComponent },
   { path: 'function-mst', component: FunctionMstComponent },
+  { path: 'user-functions/:id', component: UserFunctionsComponent },
 ];
 
 @NgModule({
