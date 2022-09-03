@@ -14,13 +14,16 @@ export class UserFunctionsService {
 baseUrl = environment.KUPFApiUrl;
 //
 userFunctions: UserFunctionDto[]=[];
+//
+moduleWiseMenuItems: UserFunctionDto[]=[];
+
   constructor(private httpClient: HttpClient) { }
 
   // To add functions for user....
   AddFunctionForUser(response: FunctionForUserDto) {    
     return this.httpClient.post(this.baseUrl +`FunctionUser/AddFunctionForUser`,response);
   }
-
+  
   // Get all user functions
   GetFunctionUserByUserIdAsync(id:any) {     
     return this.httpClient.get<UserFunctionDto[]>(this.baseUrl +`FunctionUser/GetFunctionUserByUserIdAsync?id=${id}`).pipe(
@@ -30,5 +33,15 @@ userFunctions: UserFunctionDto[]=[];
       })
     )
   }
-  
+  // To get module wise menu items....
+  // To fill dropdown...
+  GetModuleWiseMenuItems() {     
+    return this.httpClient.get<UserFunctionDto[]>(this.baseUrl +`FunctionUser/GetModuleWiseMenuItems`).pipe(
+      map(userFunctions => {
+        this.userFunctions = userFunctions;
+        return userFunctions;
+      })
+    )
+  }
+ 
 }

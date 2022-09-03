@@ -165,7 +165,7 @@ export class AddemployeeinformationComponent implements OnInit {
     this.addEmployeeForm = form;
   }
 saveSettings() {
-    this.isLoading$.next(true);
+    this.isLoading$.next(true); 
     setTimeout(() => {
       this.isLoading$.next(false);
       this.cdr.detectChanges();

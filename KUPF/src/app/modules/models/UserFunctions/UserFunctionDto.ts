@@ -47,6 +47,7 @@
         syncby: string;
         synID: number;
         cruP_ID: number;
+        checked?: boolean;
     }
 
 

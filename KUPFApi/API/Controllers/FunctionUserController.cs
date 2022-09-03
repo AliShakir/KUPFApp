@@ -103,5 +103,13 @@ namespace API.Controllers
             }
             return Ok(result);
         }
+        [HttpGet]
+        [Route("GetModuleWiseMenuItems")]
+        public async Task<ActionResult<IEnumerable<FunctionUserDto>>> GetModuleWiseMenuItems()
+        {
+            var result = await _functionUserService.GetModuleWiseMenuItems();
+            return Ok(result);
+        }
+        
     }
 }
