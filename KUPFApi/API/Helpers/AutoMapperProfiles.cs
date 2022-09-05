@@ -86,6 +86,9 @@ namespace API.Helpers
 
             //
             CreateMap<FunctionForUserDto,FUNCTION_USER>();
+            //
+
+            CreateMap<UpdatePasswordDto,UserMst>();
         }
     }
 }

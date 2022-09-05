@@ -1,27 +1,24 @@
 <ngb-accordion #ngbSearchUser="ngbAccordion" activeIds="ngb-panel-0">
-    <ngb-panel title="Search User">        
+    <ngb-panel title="Search User">
         <ng-template ngbPanelContent>
+
             <div class="row mb-4">
                 <div class="col-lg-4 fv-row">
                     <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">Tenant Id</label>
                     <select class="form-control bg-light" aria-label="Select example">
-                        <option>-Select-</option>
-                        <option value="1">Tenant 1</option>
-                        <option value="2">Tenant 2</option>
-                        <option value="3">Tenant 3</option>
+                        <option selected disabled>--Select Tenant--</option>
+                        <option value="21">21</option>
                     </select>
                 </div>
                 <div class="col-lg-4 fv-row">
                     <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">Location</label>
                     <select class="form-control bg-light" aria-label="Select example">
-                        <option>-Select-</option>
-                        <option value="1">Location 1</option>
-                        <option value="2">Location 2</option>
-                        <option value="3">Location 3</option>
+                        <option selected disabled>--Select Location--</option>
+                        <option value="1">1</option>
                     </select>
                 </div>
                 <div class="col-lg-4 fv-row">
-                    <button mat-raised-button color="accent" style="margin-top: 45px">Go</button>                    
+                    <button mat-raised-button color="accent" style="margin-top: 45px">Go</button>
                 </div>
             </div>
         </ng-template>
@@ -34,69 +31,94 @@
             <form autocomplete="off">
                 <div class="row mb-4">
                     <div class="col-lg-6 fv-row">
-                                  
+
                     </div>
                     <div class="col-lg-6 fv-row">
                         <div class="text-left">
-                            <button mat-raised-button color="primary" class="float-left">Add</button> |       
-                            <button mat-raised-button color="accent" class="float-left">Cancel</button>        
-                        </div>                               
+                            <button mat-raised-button color="primary" class="float-left">Add</button> |
+                            <button mat-raised-button color="accent" class="float-left">Cancel</button>
+                        </div>
                     </div>
                 </div>
                 <div class="row mb-4">
                     <div class="col-lg-6 fv-row">
                         <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">First Name</label>
-                        <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" disabled />
+                        <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
                     </div>
                     <div class="col-lg-6 fv-row">
                         <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Last Name</label>
-                        <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" disabled />
+                        <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
                     </div>
                 </div>
                 <div class="row mb-4">
                     <div class="col-lg-6 fv-row">
                         <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Address Line 1</label>
-                        <textarea class="form-control form-control-lg  mb-3 mb-lg-0" disabled></textarea>
+                        <textarea class="form-control form-control-lg  mb-3 mb-lg-0"></textarea>
                     </div>
                     <div class="col-lg-6 fv-row">
                         <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Address Line 2</label>
-                        <textarea class="form-control form-control-lg  mb-3 mb-lg-0" disabled></textarea>
+                        <textarea class="form-control form-control-lg  mb-3 mb-lg-0"></textarea>
                     </div>
                 </div>
                 <div class="row mb-4">
                     <div class="col-lg-6 fv-row">
                         <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Phone Number</label>
-                        <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" disabled />
+                        <div class="input-group mb-5">
+                            <span class="input-group-text" id="basic-addon1">
+                                <i class="fas fa-phone"></i>
+                            </span>
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" name="nameInArabic" />
+                        </div>
                     </div>
                     <div class="col-lg-6 fv-row">
                         <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Pin Code</label>
-                        <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" disabled />
+                        <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
                     </div>
                 </div>
                 <div class="row mb-4">
                     <div class="col-lg-6 fv-row">
                         <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Email</label>
-                        <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" disabled />
+                        <div class="input-group mb-5">
+                            <span class="input-group-text" id="basic-addon1">
+                                <i class="fas fa-envelope"></i>
+                            </span>
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" name="nameInArabic" />
+                        </div>
                     </div>
                     <div class="col-lg-6 fv-row">
                         <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Mobile Number</label>
-                        <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" disabled />
+                        <div class="input-group mb-5">
+                            <span class="input-group-text" id="basic-addon1">
+                                <i class="fas fa-mobile-alt"></i>
+                            </span>
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" name="nameInArabic" />
+                        </div>
                     </div>
                 </div>
                 <div class="row mb-4">
                     <div class="col-lg-6 fv-row">
                         <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Login Id</label>
-                        <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" disabled />
+                        <div class="input-group mb-5">
+                            <span class="input-group-text" id="basic-addon1">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" name="nameInArabic" />
+                        </div>
                     </div>
                     <div class="col-lg-6 fv-row">
-                        <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Pass</label>
-                        <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" disabled />
+                        <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Password</label>
+                        <div class="input-group mb-5">
+                            <span class="input-group-text" id="basic-addon1">
+                                <i class="fas fa-key"></i>
+                            </span>
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" name="nameInArabic" />
+                        </div>
                     </div>
                 </div>
                 <div class="row mb-4">
                     <div class="col-lg-6 fv-row">
                         <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">User Type</label>
-                        <select class="form-control bg-light" aria-label="Select example" disabled>
+                        <select class="form-control bg-light" aria-label="Select example">
                             <option>-Select-</option>
                             <option value="1">User Type 1</option>
                             <option value="1">User Type 2</option>
@@ -105,46 +127,61 @@
                     </div>
                     <div class="col-lg-6 fv-row">
                         <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Title</label>
-                        <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" disabled />
+                        <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
                     </div>
                 </div>
                 <div class="row mb-4">
                     <div class="col-lg-6 fv-row">
                         <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Active Date</label>
-                        <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" disabled />
+                        <div class="input-group mb-5">
+                            <span class="input-group-text" id="basic-addon1">
+                                <i class="fas fa-calendar"></i>
+                            </span>
+                            <input type="text" class="form-control" bsDatepicker
+                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }" />
+                        </div>
                         <span class="text-danger">(Active Start Date)</span>
                     </div>
                     <div class="col-lg-6 fv-row">
                         <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Till Date</label>
-                        <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" disabled />
+                        <div class="input-group mb-5">
+                            <span class="input-group-text" id="basic-addon1">
+                                <i class="fas fa-calendar"></i>
+                            </span>
+                            <input type="text" class="form-control" bsDatepicker
+                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }" />
+                        </div>
                         <span class="text-danger">(Active End Date)</span>
                     </div>
                 </div>
                 <div class="col-lg-12 fv-row">
                     <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Remarks</label>
-                    <textarea class="form-control form-control-lg  mb-3 mb-lg-0" disabled></textarea>
+                    <textarea class="form-control form-control-lg  mb-3 mb-lg-0"></textarea>
                 </div>
             </form>
         </ng-template>
     </ngb-panel>
 </ngb-accordion>
 <br />
+
 <ngb-accordion #ngbListUsers="ngbAccordion" activeIds="ngb-panel-0">
     <ngb-panel title="List">
         <ng-template ngbPanelContent>
+
             <form [formGroup]="formGroup">
-                <mat-form-field appearance="fill" class="w-100" floatLabel="never" >
+                <mat-form-field appearance="fill" class="w-100" floatLabel="never">
                     <mat-label>Search</mat-label>
-                    <input type="search" matInput formControlName="searchTerm" (keyup)="filterRecords()" class="ArFontStyle"/>
-                    <mat-icon matPrefix class="material-icons">search</mat-icon>                        
+                    <input type="search" matInput formControlName="searchTerm" (keyup)="filterRecords()"
+                        class="ArFontStyle" />
+                    <mat-icon matPrefix class="material-icons">search</mat-icon>
                     <mat-icon matSuffix (click)="clearFilter()" class="material-icons">close</mat-icon>
                 </mat-form-field>
                 <div class="table-container">
                     <table mat-table class="w-100" [dataSource]="userMst" matSort>
-                        <ng-container matColumnDef="action" class="w-30">
+                        <ng-container matColumnDef="action">
                             <th mat-header-cell *matHeaderCellDef class="ArFontStyle">Action</th>
-                            <td mat-cell *matCellDef="let item" class="text-right">                               
-                                <select class="form-control" (change)="onChange($event)">
+                            <td mat-cell *matCellDef="let item" class="text-right">
+                                <select class="form-select border-start" (change)="onChange($event)">
                                     <option selected disabled>--Select--</option>
                                     <option value="{{item.userId}}">Edit</option>
                                     <option value="{{item.userId}}">Delete</option>
@@ -156,18 +193,19 @@
                         <ng-container matColumnDef="firstName">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header class="ArFontStyle">First Name</th>
                             <td mat-cell *matCellDef="let item" class="ArFontStyle">{{item.firstName }}</td>
-                        </ng-container>                       
+                        </ng-container>
                         <ng-container matColumnDef="lastName">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header class="ArFontStyle">Last Name</th>
                             <td mat-cell *matCellDef="let item" class="ArFontStyle">{{item.lastName}}</td>
-                        </ng-container>                                                
+                        </ng-container>
                         <ng-container matColumnDef="loginId">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header class="ArFontStyle">Login Id</th>
                             <td mat-cell *matCellDef="let item" class="ArFontStyle">{{item.loginId}}</td>
                         </ng-container>
                         <ng-container matColumnDef="isActive">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header class="ArFontStyle">Is Active</th>
-                            <td mat-cell *matCellDef="let item" class="ArFontStyle">{{item.activeuser ? 'Active':'Inactive'}}</td>
+                            <td mat-cell *matCellDef="let item" class="ArFontStyle">{{item.activeuser ?
+                                'Active':'Inactive'}}</td>
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky:true"
                             [ngClass]="{'hidden':!isLoadingCompleted}"></tr>
@@ -182,3 +220,57 @@
         </ng-template>
     </ngb-panel>
 </ngb-accordion>
+
+<!--Change Passowrd Modal-->
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Update Password</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <form name="form" [formGroup]="changePasswordForm" id="changePasswordForm">
+            <div class="row">
+                <input type="hidden" formControlName="UserId" />
+                <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Old Password</label>
+                <div class="input-group mb-5">
+                    <span class="input-group-text" id="basic-addon1">
+                        <i class="fas fa-key"></i>
+                    </span>
+                    <input type="password" class="form-control form-control-lg  mb-3 mb-lg-0"
+                        formControlName="oldPassword" name="oldPassword" id="oldPassword" />
+                </div>
+                <span class="text-danger" *ngIf="isFormSubmitted && f.oldPassword.errors?.required">Old password is
+                    required</span>
+            </div>
+            <div class="row">
+                <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">New Password</label>
+                <div class="input-group mb-5">
+                    <span class="input-group-text" id="basic-addon1">
+                        <i class="fas fa-key"></i>
+                    </span>
+                    <input type="password" class="form-control form-control-lg  mb-3 mb-lg-0"
+                        formControlName="newPassword" name="newPassword" id="newPassword" />
+                </div>
+                <span class="text-danger" *ngIf="isFormSubmitted && f.newPassword.errors?.required">New password is
+                    required</span>
+            </div>
+            <div class="row">
+                <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Confirm Password</label>
+                <div class="input-group mb-5">
+                    <span class="input-group-text" id="basic-addon1">
+                        <i class="fas fa-key"></i>
+                    </span>
+                    <input type="password" class="form-control form-control-lg  mb-3 mb-lg-0"
+                        formControlName="confirmPassword" name="confirmPassword" id=confirmPassword />
+                </div>
+                <span class="text-danger" *ngIf="isFormSubmitted && f.confirmPassword.errors?.required">Confirm password is
+                    required</span>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer text-right">
+        <button mat-raised-button color="warn" (click)="onFormSubmit()" form="changePasswordForm">Update</button>
+        &nbsp;&nbsp;
+        <button mat-raised-button color="accent" (click)="modal.close('cancel')">Cancel</button>
+    </div>
+</ng-template>

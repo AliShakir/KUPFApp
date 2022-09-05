@@ -13,5 +13,7 @@ namespace API.Servivces.Interfaces
         Task<int> DeleteUserMstAsync(int id);
         Task<UserMstDto> GetUserMstByIdAsync(int userId);        
         Task<IEnumerable<UserMstDto>> GetUserMstAsync();
+
+        Task<int> UpatePasswordAsync(UpdatePasswordDto userMstDto);
     }
 }

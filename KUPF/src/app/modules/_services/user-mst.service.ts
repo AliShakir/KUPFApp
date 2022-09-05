@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { catchError, map, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { UserFunctionDto } from '../models/UserFunctions/UserFunctionDto';
 import { UserMstDto } from '../models/UserMst.ts/UserMstDto';
@@ -14,7 +15,24 @@ export class UserMstService {
 baseUrl = environment.KUPFApiUrl;
 //
 userMst: UserMstDto[]=[];
-constructor(private httpClient: HttpClient) { }
+  he: any;
+constructor(private httpClient: HttpClient,private toastr: ToastrService) { }
+
+
+UpdateUserPassword(data: UserMstDto){
+  return this.httpClient
+    .put(this.baseUrl + "UserMst/UpatePassword", data)
+    .pipe(map(res =>{  
+      console.log(res); 
+      if(res === 0){
+        this.toastr.error('Password not found','Error');
+      }else{
+        this.toastr.success('Password updated successfully','Error');
+      }
+      return res;
+    }))
+    .toPromise();
+}
 
   // Get all user User Mst
   GetUsersFromUserMst() {     

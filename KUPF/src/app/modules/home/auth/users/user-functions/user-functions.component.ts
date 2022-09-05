@@ -78,15 +78,6 @@ export class UserFunctionsComponent implements OnInit {
 
 
 
-
-
-
-
-
-
-
-
-
   savedata() {    
     this.userFunctionService.AddFunctionForUser(this.checkData).subscribe(()=>{
       this.toastr.success('Saved Successfully')
@@ -100,6 +91,7 @@ export class UserFunctionsComponent implements OnInit {
         : e;
     });
   }
+  
   onMenuItemSelect(e:any){      
     //selectedMenuItem etLocale.
     let filtereData = this.userFunctions$.pipe(map(item=>{

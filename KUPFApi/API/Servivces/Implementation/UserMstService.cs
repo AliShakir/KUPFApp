@@ -1,4 +1,5 @@
-﻿using API.DTOs;
+﻿using API.Common;
+using API.DTOs;
 using API.Models;
 using API.Servivces.Interfaces;
 using AutoMapper;
@@ -76,6 +77,23 @@ namespace API.Servivces.Implementation
             var data = _mapper.Map<IEnumerable<UserMstDto>>(result);
             return data;
         }
-        
+
+        public async Task<int> UpatePasswordAsync(UpdatePasswordDto userMstDto)
+        {
+            int result = 0;
+            if (_context != null)
+            {
+                string decodedPass = CommonMethods.EncodePass(userMstDto.oldPassword);
+                var user = _context.UserMsts.Where(c=>c.UserId == userMstDto.UserId && c.Password == decodedPass).FirstOrDefault();
+                if (user != null)
+                {
+                    string encodedPass = CommonMethods.EncodePass(userMstDto.newPassword);
+                    user.Password = encodedPass;
+                    _context.UserMsts.Update(user);                    
+                    result = await _context.SaveChangesAsync();
+                }                
+            }
+            return result;
+        }
     }
 }

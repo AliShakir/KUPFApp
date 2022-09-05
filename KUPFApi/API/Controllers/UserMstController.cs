@@ -69,5 +69,12 @@ namespace API.Controllers
             var result = await _userMstServiceService.GetUserMstAsync();
             return Ok(result);
         }
+        [HttpPut]
+        [Route("UpatePassword")]
+        public async Task<ActionResult<UserMstDto>> UpatePassword(UpdatePasswordDto userMstDto)
+        {
+            var result = await _userMstServiceService.UpatePasswordAsync(userMstDto);
+            return Ok(result);
+        }  
     }
 }
