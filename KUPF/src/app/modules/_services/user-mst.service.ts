@@ -27,7 +27,7 @@ AddUserMST(response: UserMstDto) {
 // Update user mst
 UpdateUserMST(data: UserMstDto){
   return this.httpClient
-    .put(this.baseUrl + "UpdateUserMst", data)
+    .put(this.baseUrl + "UserMst/UpdateUserMst", data)
     .pipe(map(res =>{
       return res;
     }))

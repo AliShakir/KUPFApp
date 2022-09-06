@@ -67,175 +67,145 @@
                     <!--Mat Table Below here-->
                     <div class="table-responsive mt-3">
                         <!--begin::Table-->
-                        <table class="table table-row-bordered table-hover">
-                            <!--begin::Table head-->
-                            <thead class="headingBgColor">
-                                <tr class="text-center">
-                                    <th class="min-w-240px text-center ArFontStyle" lang="AR-SA">Menu and Sub Menu</th>
-                                    <th class="min-w-20px ArFontStyle" lang="AR-SA">
-                                        <mat-checkbox class="example-margin" (change)="checkCheckBoxvalue($event,item)">
-                                        </mat-checkbox>
-                                    </th>
-                                    <th class="min-w-20px ArFontStyle" lang="AR-SA">
-                                        <mat-checkbox class="example-margin" (change)="checkCheckBoxvalue($event,item)">
-                                        </mat-checkbox>
-                                    </th>
-                                    <th class="min-w-20px ArFontStyle" lang="AR-SA">
-                                        <mat-checkbox class="example-margin" (change)="checkCheckBoxvalue($event,item)">
-                                        </mat-checkbox>
-                                    </th>
-                                    <th class="min-w-20px ArFontStyle" lang="AR-SA">
-                                        <mat-checkbox class="example-margin" (change)="checkCheckBoxvalue($event,item)">
-                                        </mat-checkbox>
-                                    </th>
-                                    <th class="min-w-20px ArFontStyle" lang="AR-SA">
-                                        <mat-checkbox class="example-margin" (change)="checkCheckBoxvalue($event,item)">
-                                        </mat-checkbox>
-                                    </th>
-                                    <th class="min-w-20px ArFontStyle" lang="AR-SA">
-                                        <mat-checkbox class="example-margin" (change)="checkCheckBoxvalue($event,item)">
-                                        </mat-checkbox>
-                                    </th>
-                                    <th class="min-w-20px text-center ArFontStyle" lang="AR-SA">
-                                        <mat-checkbox class="example-margin" (change)="checkCheckBoxvalue($event,item)">
-                                        </mat-checkbox>
-                                    </th>
-                                    <th class="min-w-20px ArFontStyle" lang="AR-SA">
-                                        <mat-checkbox class="example-margin" (change)="checkCheckBoxvalue($event,item)">
-                                        </mat-checkbox>
-                                    </th>
-                                    <th class="min-w-20px ArFontStyle" lang="AR-SA">
-                                        <mat-checkbox class="example-margin" (change)="checkCheckBoxvalue($event,item)">
-                                        </mat-checkbox>
-                                    </th>
-                                    <th class="min-w-20px ArFontStyle" lang="AR-SA">
-                                        <mat-checkbox class="example-margin" (change)="checkCheckBoxvalue($event,item)">
-                                        </mat-checkbox>
-                                    </th>
-                                    <th class="min-w-20px ArFontStyle" lang="AR-SA">
-                                        <mat-checkbox class="example-margin" (change)="checkCheckBoxvalue($event,item)">
-                                        </mat-checkbox>
-                                    </th>
-                                    <th class="min-w-20px ArFontStyle" lang="AR-SA">
-                                        <mat-checkbox class="example-margin" (change)="checkCheckBoxvalue($event,item)">
-                                        </mat-checkbox>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <thead class="subHeadingBgColor">
-                                <tr class="text-center">
-                                    <th class="min-w-240px text-right ArFontStyle" lang="AR-SA">Menu Items</th>
-                                    <th class="min-w-20px ArFontStyle" lang="AR-SA">
-                                        Admin
-                                    </th>
-                                    <th class="min-w-20px ArFontStyle" lang="AR-SA">
-                                        Add
-                                    </th>
-                                    <th class="min-w-20px ArFontStyle" lang="AR-SA">
-                                        Edit
-                                    </th>
-                                    <th class="min-w-20px ArFontStyle" lang="AR-SA">
-                                        Delete
-                                    </th>
-                                    <th class="min-w-20px ArFontStyle" lang="AR-SA">
-                                        Print
-                                    </th>
-                                    <th class="min-w-20px ArFontStyle" lang="AR-SA">
-                                        Label
-                                    </th>
-                                    <th class="min-w-20px text-center ArFontStyle" lang="AR-SA">
-                                        SP1
-                                    </th>
-                                    <th class="min-w-20px ArFontStyle" lang="AR-SA">
-                                        SP2
-                                    </th>
-                                    <th class="min-w-20px ArFontStyle" lang="AR-SA">
-                                        SP3
-                                    </th>
-                                    <th class="min-w-20px ArFontStyle" lang="AR-SA">
-                                        SP4
-                                    </th>
-                                    <th class="min-w-20px ArFontStyle" lang="AR-SA">
-                                        SP5
-                                    </th>
-                                    <th class="min-w-40px ArFontStyle" lang="AR-SA">
-                                        Active Menu
-                                    </th>
-                                </tr>
-                            </thead>
-                            <!--end::Table head-->
-                            <!--begin::Table body-->
-                            <tbody id="functionsTable">
-                                <tr *ngFor="let item of userFunctions$ | async">
-                                    <div *ngIf="lang == 'ar'">
-                                        <td class="text-right ArFontStyle" lang="AR-SA">
-                                            {{item.menU_NAMEArabic}}
-                                        </td>
-                                    </div>
-                                    <div *ngIf="lang == 'en'">
-                                        <td class="text-right">
-                                            {{item.menU_NAMEEnglish}}
-                                        </td>
-                                    </div>
-                                    <td>
-                                        <mat-checkbox class="example-margin" name="useR_TYPE"
-                                            [checked]="item.useR_TYPE === 1"
-                                            (change)="checkCheckBoxvalue($event,item,'useR_TYPE')"></mat-checkbox>
-                                    </td>
-                                    <td>
-                                        <mat-checkbox class="example-margin" name="addflage"
-                                            [checked]="item.addflage === 1" (change)="checkCheckBoxvalue($event,item)">
-                                        </mat-checkbox>
-                                    </td>
-                                    <td>
-                                        <mat-checkbox class="example-margin" name="editflage"
-                                            [checked]="item.editflage === 1" (change)="checkCheckBoxvalue($event,item)">
-                                        </mat-checkbox>
-                                    </td>
-                                    <td>
-                                        <mat-checkbox class="example-margin" name="delflage"
-                                            [checked]="item.delflage === 1" (change)="checkCheckBoxvalue($event,item)">
-                                        </mat-checkbox>
-                                    </td>
-                                    <td>
-                                        <mat-checkbox class="example-margin" name="printflage"
-                                            [checked]="item.printflage === 1"
-                                            (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
-                                    </td>
-                                    <td>
-                                        <mat-checkbox class="example-margin" name="emty"
-                                            (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
-                                    </td>
-                                    <td>
-                                        <mat-checkbox class="example-margin" name="sP1" [checked]="item.sP1 === 1"
-                                            (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
-                                    </td>
-                                    <td>
-                                        <mat-checkbox class="example-margin" name="sP2" [checked]="item.sP2 === 1"
-                                            (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
-                                    </td>
-                                    <td>
-                                        <mat-checkbox class="example-margin" name="sP3" [checked]="item.sP3 === 1"
-                                            (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
-                                    </td>
-                                    <td>
-                                        <mat-checkbox class="example-margin" name="sP4" [checked]="item.sP4 === 1"
-                                            (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
-                                    </td>
-                                    <td>
-                                        <mat-checkbox class="example-margin" name="sP5" [checked]="item.sP5 === 1"
-                                            (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
-                                    </td>
-                                    <td>
-                                        <mat-checkbox class="example-margin" name="activE_FLAG"
-                                            [checked]="item.activE_FLAG === 1"
-                                            (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
-                                    </td>
-                                </tr>
-
-                            </tbody>
-                            <!--end::Table body-->
-                        </table>
+                        <table class="table table-row-bordered table-hover" >
+                        <!--begin::Table head-->
+                        <thead class="headingBgColor">
+                            <tr class="text-center">
+                                <th class="min-w-240px text-center ArFontStyle" lang="AR-SA" >Menu and Sub Menu</th>
+                                <th class="min-w-20px ArFontStyle" lang="AR-SA" >
+                                    <mat-checkbox class="example-margin" (change)="checkAllCheckBoxvalue($event,'useR_TYPE')"></mat-checkbox>
+                                </th>
+                                <th class="min-w-20px ArFontStyle" lang="AR-SA" >
+                                    <mat-checkbox class="example-margin"(change)="checkAllCheckBoxvalue($event,'addflage')"></mat-checkbox>
+                                </th>
+                                <th class="min-w-20px ArFontStyle" lang="AR-SA" >
+                                    <mat-checkbox class="example-margin"(change)="checkAllCheckBoxvalue($event,'editflage')"></mat-checkbox>
+                                </th>
+                                <th class="min-w-20px ArFontStyle" lang="AR-SA" >
+                                    <mat-checkbox class="example-margin"(change)="checkAllCheckBoxvalue($event,'delflage')"></mat-checkbox>
+                                </th>
+                                <th class="min-w-20px ArFontStyle" lang="AR-SA" >
+                                    <mat-checkbox class="example-margin"(change)="checkAllCheckBoxvalue($event,'printflage')"></mat-checkbox>
+                                </th>
+                                <th class="min-w-20px ArFontStyle" lang="AR-SA">
+                                    <mat-checkbox class="example-margin"(change)="checkAllCheckBoxvalue($event,'emty')"></mat-checkbox>
+                                </th>   
+                                <th class="min-w-20px text-center ArFontStyle" lang="AR-SA" >
+                                    <mat-checkbox class="example-margin"(change)="checkAllCheckBoxvalue($event,'sP1')"></mat-checkbox>
+                                </th>
+                                <th class="min-w-20px ArFontStyle" lang="AR-SA" >
+                                    <mat-checkbox class="example-margin"(change)="checkAllCheckBoxvalue($event,'sP2')"></mat-checkbox>
+                                </th>
+                                <th class="min-w-20px ArFontStyle" lang="AR-SA" >
+                                    <mat-checkbox class="example-margin"(change)="checkAllCheckBoxvalue($event,'sP3')"></mat-checkbox>
+                                </th>
+                                <th class="min-w-20px ArFontStyle" lang="AR-SA" >
+                                    <mat-checkbox class="example-margin"(change)="checkAllCheckBoxvalue($event,'sP4')"></mat-checkbox>
+                                </th>
+                                <th class="min-w-20px ArFontStyle" lang="AR-SA" >
+                                    <mat-checkbox class="example-margin"(change)="checkAllCheckBoxvalue($event,'sP5')"></mat-checkbox>
+                                </th>
+                                <th class="min-w-20px ArFontStyle" lang="AR-SA" >
+                                    <mat-checkbox class="example-margin"(change)="checkAllCheckBoxvalue($event,'activE_FLAG')"></mat-checkbox>
+                                </th>                      
+                            </tr>
+                        </thead>
+                        <thead class="subHeadingBgColor">
+                            <tr class="text-center">
+                                <th class="min-w-240px text-right ArFontStyle" lang="AR-SA" >Menu Items</th>
+                                <th class="min-w-20px ArFontStyle" lang="AR-SA" >
+                                    Admin
+                                </th>
+                                <th class="min-w-20px ArFontStyle" lang="AR-SA" >
+                                    Add
+                                </th>
+                                <th class="min-w-20px ArFontStyle" lang="AR-SA" >
+                                    Edit
+                                </th>
+                                <th class="min-w-20px ArFontStyle" lang="AR-SA" >
+                                    Delete
+                                </th>
+                                <th class="min-w-20px ArFontStyle" lang="AR-SA" >
+                                    Print
+                                </th>
+                                <th class="min-w-20px ArFontStyle" lang="AR-SA">
+                                    Label
+                                </th>   
+                                <th class="min-w-20px text-center ArFontStyle" lang="AR-SA" >
+                                    SP1
+                                </th>
+                                <th class="min-w-20px ArFontStyle" lang="AR-SA" >
+                                    SP2
+                                </th>
+                                <th class="min-w-20px ArFontStyle" lang="AR-SA" >
+                                    SP3
+                                </th>
+                                <th class="min-w-20px ArFontStyle" lang="AR-SA" >
+                                    SP4
+                                </th>
+                                <th class="min-w-20px ArFontStyle" lang="AR-SA" >
+                                    SP5
+                                </th>
+                                <th class="min-w-40px ArFontStyle" lang="AR-SA" >
+                                    Active Menu
+                                </th>                      
+                            </tr>
+                        </thead>
+                        <!--end::Table head-->
+                        <!--begin::Table body-->
+                        <tbody id="functionsTable">
+                            <tr *ngFor="let item of checkData">
+                               <div *ngIf="lang == 'ar'">
+                                <td class="text-right ArFontStyle" lang="AR-SA">
+                                    {{item.menU_NAMEArabic}}
+                                  </td>
+                               </div>
+                               <div *ngIf="lang == 'en'">
+                                <td class="text-right">
+                                    {{item.menU_NAMEEnglish}}
+                                  </td> 
+                               </div>
+                                <td>
+                                    <mat-checkbox class="example-margin" name="useR_TYPE" [checked]="item.useR_TYPE === 1" (change)="checkCheckBoxvalue($event,item,'useR_TYPE')"></mat-checkbox>
+                                </td>
+                                <td>
+                                    <mat-checkbox class="example-margin" name="addflage"  [checked]="item.addflage === 1" (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
+                                </td>
+                                <td>
+                                    <mat-checkbox class="example-margin" name="editflage"  [checked]="item.editflage === 1" (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
+                                </td>
+                                <td>
+                                    <mat-checkbox class="example-margin" name="delflage"   [checked]="item.delflage === 1" (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
+                                </td>
+                                <td>
+                                    <mat-checkbox class="example-margin" name="printflage"  [checked]="item.printflage === 1"   (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
+                                </td>
+                                <td>
+                                    <mat-checkbox class="example-margin" name="emty"  (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
+                                </td>
+                                <td>
+                                    <mat-checkbox class="example-margin"  name="sP1"  [checked]="item.sP1 === 1"(change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
+                                </td>
+                                <td>
+                                    <mat-checkbox class="example-margin"  name="sP2"  [checked]="item.sP2 === 1" (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
+                                </td>
+                                <td>
+                                    <mat-checkbox class="example-margin" name="sP3" [checked]="item.sP3 === 1" (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
+                                </td>
+                                <td>
+                                    <mat-checkbox class="example-margin" name="sP4" [checked]="item.sP4 === 1" (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
+                                </td>
+                                <td>
+                                    <mat-checkbox class="example-margin" name="sP5" [checked]="item.sP5 === 1" (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
+                                </td>
+                                <td>
+                                    <mat-checkbox class="example-margin" name="activE_FLAG" [checked]="item.activE_FLAG === 1" (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
+                                </td>
+                            </tr>                           
+                            
+                        </tbody>
+                        <!--end::Table body-->
+                    </table>
                         <!--end::Table-->
                     </div>
 

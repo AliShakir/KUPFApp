@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { Login } from 'src/app/modules/models/login';
 import { DbCommonService } from 'src/app/modules/_services/db-common.service';
 import { LoginService } from 'src/app/modules/_services/login.service';
@@ -30,6 +30,8 @@ closeResult = '';
 model: any = {}
 isSuccess:boolean=false;
 locations:any[];
+
+
 constructor(
   private fb: FormBuilder,
   private router: Router,
@@ -47,14 +49,15 @@ selectedCar: number;
         { id: 3, name: 'Opel' },
         { id: 4, name: 'Audi' },
     ];
+    
 ngOnInit(): void {  
   this.initForm();
 }
 
 initForm() {
   this.loginForm = this.fb.group({
-       username: new FormControl('',Validators.required),
-       password: ['', Validators.required],
+       username: new FormControl('prog1',Validators.required),
+       password: ['Shakir', Validators.required],
        locations:['']
   });
 }
@@ -101,10 +104,10 @@ login() {
       this.router.navigateByUrl('/dashboard')      
     }
     else if(this.loginDto.length > 1){      
-      this.toastr.success('Please select location','Success'); 
+      this.toastr.success('Login Success','Success'); 
+      this.router.navigateByUrl('/dashboard')   
       this.locations = this.loginDto;
       this.isSuccess = true;
-      
     }
   })
 }

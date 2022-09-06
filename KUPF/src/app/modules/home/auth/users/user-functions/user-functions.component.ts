@@ -91,14 +91,24 @@ export class UserFunctionsComponent implements OnInit {
         : e;
     });
   }
-  
+  //
+  async checkAllCheckBoxvalue(event: any, colunmName: any){
+    let name = event.checked;        
+    this.checkData = this.checkData.map((e: any) => {
+      return true ? { ...e, [colunmName]: event.checked == true ? 1 : 0 } : e;
+    }); 
+    console.log("this.checkData=>",this.checkData);
+  }
+  //
   onMenuItemSelect(e:any){      
+    
     //selectedMenuItem etLocale.
     let filtereData = this.userFunctions$.pipe(map(item=>{
       return item.filter(c=>c.masteR_ID == e.target.value);
     }))
     // Refill the existing Observable...
-    this.userFunctions$ = filtereData;    
+    this.userFunctions$ = filtereData;   
+     
     filtereData.subscribe((d)=>{
       this.dbCommonService.GetUsers().subscribe((res) => {        
         // TO filter user information based on userId...  
@@ -114,6 +124,7 @@ export class UserFunctionsComponent implements OnInit {
       })
       this.checkData = d;
     })
+    //this.checkData = filtereData;   
   }
 }
 

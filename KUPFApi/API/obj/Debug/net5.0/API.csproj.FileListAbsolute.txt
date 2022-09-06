@@ -146,3 +146,8 @@ E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\KUPFApi\API\obj\Debug\net5.0\API.Razo
 E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\KUPFApi\API\obj\Debug\net5.0\API.csproj.CopyComplete
 E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\KUPFApi\API\obj\Debug\net5.0\ref\API.dll
 E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\KUPFApi\API\obj\Debug\net5.0\API.genruntimeconfig.cache
+E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\web.config
+E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\API.deps.json
+E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\API.runtimeconfig.json
+E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\appsettings.Development.json
+E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\appsettings.json

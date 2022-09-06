@@ -31,6 +31,7 @@ namespace API.Servivces.Implementation
                 newUserMst.UserId = CommonMethods.CreateUserId();
                 newUserMst.ActiveFlag = "Y";
                 newUserMst.AccLock = "N";
+                newUserMst.FirstTime="N";
                 newUserMst.LocationId = 1;
                 newUserMst.TenentId = 21;
                 await _context.UserMsts.AddAsync(newUserMst);
@@ -45,6 +46,11 @@ namespace API.Servivces.Implementation
             if (_context != null)
             {
                 var existingUserMst = _mapper.Map<Models.UserMst>(userMstDto);
+                existingUserMst.ActiveFlag = "Y";
+                existingUserMst.AccLock = "N";
+                existingUserMst.FirstTime="N";
+                existingUserMst.LocationId = 1;
+                existingUserMst.TenentId = 21;
                 _context.UserMsts.Update(existingUserMst);
 
                 result = await _context.SaveChangesAsync();

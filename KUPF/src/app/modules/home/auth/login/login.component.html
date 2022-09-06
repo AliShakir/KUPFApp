@@ -22,11 +22,11 @@
             <label class="form-label fs-6 fw-bolder text-dark ArFontStyle" lang="AR-SA">هوية المستأجر</label>
           </div>
           <div class="col-md-6 text-left">
-            <label class="form-label fs-6 fw-bolder text-dark ">Tenant Id</label>
+            <label class="form-label fs-6 fw-bolder text-dark">Tenant Id</label>
           </div>          
         </div>
         <div class="fv-row mb-10">
-          <input type="number" class="form-control form-control-lg form-control-solid" value="12"/>
+          <input type="number" class="form-control form-control-lg form-control-solid" value="21"/>
         </div>
         <!-- end::Alert info-->
         <div class="row">
@@ -39,7 +39,7 @@
         </div>
         <div class="fv-row mb-10">
           <input type="text" class="form-control form-control-lg form-control-solid" formControlName="username"
-            required />
+            required value="prog1"/>
           <div *ngIf="(username?.invalid && username?.touched) || username?.dirty">
             <span *ngIf="username.errors?.required" class="text-danger">Please enter username</span>
           </div>
@@ -57,7 +57,7 @@
         </div>
         <div class="fv-row mb-10">
           <input type="password" class="form-control form-control-lg form-control-solid" formControlName="password"
-            required />
+            required value="Shakir"/>
           <span class="text-danger" *ngIf="loginForm.controls['password'].invalid && (loginForm.controls['password'].dirty 
             || loginForm.controls['password'].touched)">
             Please enter password
@@ -71,13 +71,18 @@
             </div>
             <div class="col-md-6 text-left">
               <label class="form-label fs-6 fw-bolder text-dark ">Location Id</label>
-            </div>          
-              <select  id="locations" (change)="onLocationChange($event)" class="form-control form-control-lg form-control-solid">            
+            </div>   
+            <select  id="locations" class="form-control form-control-lg form-control-solid">            
+              <option selected>-Select-</option>
+              <option value="1" selected>1</option>   
+              <option value="2">2</option>          
+            </select>        
+              <!-- <select  id="locations" (change)="onLocationChange($event)" class="form-control form-control-lg form-control-solid">            
                 <option selected>-Select-</option>
                 <option *ngFor="let location of locations; let i = index" [value]="location.locationId">              
                   {{location.locationId}}              
                 </option>            
-              </select>  
+              </select>   -->
           </div>
       
         
