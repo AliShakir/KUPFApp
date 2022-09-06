@@ -11,6 +11,12 @@ namespace API.Common
 		    Int64 employeeId  = rnd.Next(1, 1000000); 
             return employeeId;
         }
+        public static Int32 CreateUserId()
+        {
+            Random rnd = new Random();
+            Int32 userId = rnd.Next(1, 10000);
+            return userId;
+        }
         public static string DecodePass(string base64EncodedData)
         {
             var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);

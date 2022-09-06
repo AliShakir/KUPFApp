@@ -14,21 +14,48 @@ export class UserMstService {
   // Getting base URL of Api from enviroment.
 baseUrl = environment.KUPFApiUrl;
 //
+
 userMst: UserMstDto[]=[];
   he: any;
-constructor(private httpClient: HttpClient,private toastr: ToastrService) { }
+constructor(private httpClient: HttpClient) { }
+
+// add user mst
+AddUserMST(response: UserMstDto) {    
+  return this.httpClient.post(this.baseUrl +`UserMst/AddUserMst`,response);
+}
+
+// Update user mst
+UpdateUserMST(data: UserMstDto){
+  return this.httpClient
+    .put(this.baseUrl + "UpdateUserMst", data)
+    .pipe(map(res =>{
+      return res;
+    }))
+    .toPromise();
+}
+
+//
+DeleteUserMST(userId: number) { 
+  return this.httpClient.delete(`${this.baseUrl}UserMst/DeleteUserMst?userId=${userId}`);    
+}
+
+//
+GetUserMstById(id:any) {    
+  return this.httpClient.get<UserMstDto[]>(this.baseUrl +`UserMst/GetUserMstById/${id}`).pipe(
+    map(userMst => {
+      this.userMst = userMst;
+      return userMst;
+    })
+  )
+}
 
 
+
+// Update user password
 UpdateUserPassword(data: UserMstDto){
   return this.httpClient
     .put(this.baseUrl + "UserMst/UpatePassword", data)
-    .pipe(map(res =>{  
-      console.log(res); 
-      if(res === 0){
-        this.toastr.error('Password not found','Error');
-      }else{
-        this.toastr.success('Password updated successfully','Error');
-      }
+    .pipe(map(res =>{
       return res;
     }))
     .toPromise();

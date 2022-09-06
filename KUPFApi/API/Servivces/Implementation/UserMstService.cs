@@ -28,6 +28,11 @@ namespace API.Servivces.Implementation
             if (_context != null)
             {
                 var newUserMst = _mapper.Map<UserMst>(userMstDto);
+                newUserMst.UserId = CommonMethods.CreateUserId();
+                newUserMst.ActiveFlag = "Y";
+                newUserMst.AccLock = "N";
+                newUserMst.LocationId = 1;
+                newUserMst.TenentId = 21;
                 await _context.UserMsts.AddAsync(newUserMst);
                 result = await _context.SaveChangesAsync();
                 return result;
@@ -84,14 +89,14 @@ namespace API.Servivces.Implementation
             if (_context != null)
             {
                 string decodedPass = CommonMethods.EncodePass(userMstDto.oldPassword);
-                var user = _context.UserMsts.Where(c=>c.UserId == userMstDto.UserId && c.Password == decodedPass).FirstOrDefault();
+                var user = _context.UserMsts.Where(c => c.UserId == userMstDto.UserId && c.Password == decodedPass).FirstOrDefault();
                 if (user != null)
                 {
                     string encodedPass = CommonMethods.EncodePass(userMstDto.newPassword);
                     user.Password = encodedPass;
-                    _context.UserMsts.Update(user);                    
+                    _context.UserMsts.Update(user);
                     result = await _context.SaveChangesAsync();
-                }                
+                }
             }
             return result;
         }

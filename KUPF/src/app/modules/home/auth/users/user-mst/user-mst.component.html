@@ -28,51 +28,32 @@
 <ngb-accordion #ngbAddUser="ngbAccordion" activeIds="ngb-panel-0" opened="true">
     <ngb-panel title="Add User">
         <ng-template ngbPanelContent>
-            <form autocomplete="off">
-                <div class="row mb-4">
-                    <div class="col-lg-6 fv-row">
+            <div class="row mb-4">
+                <div class="col-lg-6 fv-row">
 
-                    </div>
-                    <div class="col-lg-6 fv-row">
-                        <div class="text-left">
-                            <button mat-raised-button color="primary" class="float-left">Add</button> |
-                            <button mat-raised-button color="accent" class="float-left">Cancel</button>
-                        </div>
+                </div>
+                <div class="col-lg-6 fv-row">
+                    <div class="text-left">
+                        <button mat-raised-button color="primary" [disabled]="!userForm.valid" class="float-left" (click)="onUserFormSubmit()" form="userForm">Add</button> |
+                        <button mat-raised-button color="accent" class="float-left" (click)="resetForm()">Cancel</button>
                     </div>
                 </div>
+            </div>
+            <form autocomplete="off" [formGroup]="userForm" id="userForm">                
                 <div class="row mb-4">
                     <div class="col-lg-6 fv-row">
                         <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">First Name</label>
-                        <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
+                        <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" 
+                        formControlName="firstName" name="firstName" id="firstName"/>
+                        <span class="text-danger" *ngIf="isFormSubmitted && u.firstName.errors?.required">First name is
+                            required</span>
                     </div>
                     <div class="col-lg-6 fv-row">
                         <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Last Name</label>
-                        <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
-                    </div>
-                </div>
-                <div class="row mb-4">
-                    <div class="col-lg-6 fv-row">
-                        <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Address Line 1</label>
-                        <textarea class="form-control form-control-lg  mb-3 mb-lg-0"></textarea>
-                    </div>
-                    <div class="col-lg-6 fv-row">
-                        <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Address Line 2</label>
-                        <textarea class="form-control form-control-lg  mb-3 mb-lg-0"></textarea>
-                    </div>
-                </div>
-                <div class="row mb-4">
-                    <div class="col-lg-6 fv-row">
-                        <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Phone Number</label>
-                        <div class="input-group mb-5">
-                            <span class="input-group-text" id="basic-addon1">
-                                <i class="fas fa-phone"></i>
-                            </span>
-                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" name="nameInArabic" />
-                        </div>
-                    </div>
-                    <div class="col-lg-6 fv-row">
-                        <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Pin Code</label>
-                        <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
+                        <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" 
+                        formControlName="lastName" name="lastName" id="lastName"/>
+                        <span class="text-danger" *ngIf="isFormSubmitted && u.lastName.errors?.required">Last name is
+                            required</span>
                     </div>
                 </div>
                 <div class="row mb-4">
@@ -82,8 +63,11 @@
                             <span class="input-group-text" id="basic-addon1">
                                 <i class="fas fa-envelope"></i>
                             </span>
-                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" name="nameInArabic" />
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" 
+                            formControlName="email" name="email" id="email" />
                         </div>
+                        <span class="text-danger" *ngIf="isFormSubmitted && u.email.errors?.required">Email is
+                            required</span>
                     </div>
                     <div class="col-lg-6 fv-row">
                         <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Mobile Number</label>
@@ -91,73 +75,65 @@
                             <span class="input-group-text" id="basic-addon1">
                                 <i class="fas fa-mobile-alt"></i>
                             </span>
-                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" name="nameInArabic" />
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" 
+                            formControlName="mobile" name="mobile" id="mobile" />
                         </div>
+                        <span class="text-danger" *ngIf="isFormSubmitted && u.mobile.errors?.required">Mobile is
+                            required</span>
                     </div>
                 </div>
                 <div class="row mb-4">
+                    <div class="col-lg-6 fv-row">
+                        <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">User Type</label>
+                        <select class="form-control bg-light" aria-label="Select example" 
+                        formControlName="userType" name="userType" id="userType">
+                            <option>-Select-</option>
+                            <option value="1">User Type 1</option>
+                            <option value="1">User Type 2</option>
+                            <option value="1">User Type 3</option>
+                        </select>
+                        <span class="text-danger" *ngIf="isFormSubmitted && u.userType.errors?.required">
+                            Please select user type</span>
+                    </div>
                     <div class="col-lg-6 fv-row">
                         <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Login Id</label>
                         <div class="input-group mb-5">
                             <span class="input-group-text" id="basic-addon1">
                                 <i class="fas fa-user"></i>
                             </span>
-                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" name="nameInArabic" />
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" 
+                            formControlName="loginId" name="loginId" id="loginId"/>
                         </div>
+                        <span class="text-danger" *ngIf="isFormSubmitted && u.loginId.errors?.required">
+                            Please enter login Id</span>
                     </div>
+                </div>
+                <div class="row mb-4">
                     <div class="col-lg-6 fv-row">
                         <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Password</label>
                         <div class="input-group mb-5">
                             <span class="input-group-text" id="basic-addon1">
                                 <i class="fas fa-key"></i>
                             </span>
-                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" name="nameInArabic" />
+                            <input type="password" class="form-control form-control-lg  mb-3 mb-lg-0" 
+                            formControlName="password" name="password" id="password" />                                                      
                         </div>
-                    </div>
-                </div>
-                <div class="row mb-4">
-                    <div class="col-lg-6 fv-row">
-                        <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">User Type</label>
-                        <select class="form-control bg-light" aria-label="Select example">
-                            <option>-Select-</option>
-                            <option value="1">User Type 1</option>
-                            <option value="1">User Type 2</option>
-                            <option value="1">User Type 3</option>
-                        </select>
+                        <span class="text-danger" *ngIf="isFormSubmitted && u.password.errors?.required">
+                            Please enter password</span> 
                     </div>
                     <div class="col-lg-6 fv-row">
-                        <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Title</label>
-                        <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
-                    </div>
-                </div>
-                <div class="row mb-4">
-                    <div class="col-lg-6 fv-row">
-                        <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Active Date</label>
+                        <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Confirm Password</label>
                         <div class="input-group mb-5">
                             <span class="input-group-text" id="basic-addon1">
-                                <i class="fas fa-calendar"></i>
+                                <i class="fas fa-key"></i>
                             </span>
-                            <input type="text" class="form-control" bsDatepicker
-                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }" />
+                            <input type="password" class="form-control form-control-lg  mb-3 mb-lg-0" 
+                            formControlName="cpassword" name="cpassword" id="cpassword" />                            
                         </div>
-                        <span class="text-danger">(Active Start Date)</span>
+                        <span class="text-danger" *ngIf="isFormSubmitted && u.cpassword.errors?.required">
+                            Please enter confirm password</span>
                     </div>
-                    <div class="col-lg-6 fv-row">
-                        <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Till Date</label>
-                        <div class="input-group mb-5">
-                            <span class="input-group-text" id="basic-addon1">
-                                <i class="fas fa-calendar"></i>
-                            </span>
-                            <input type="text" class="form-control" bsDatepicker
-                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }" />
-                        </div>
-                        <span class="text-danger">(Active End Date)</span>
-                    </div>
-                </div>
-                <div class="col-lg-12 fv-row">
-                    <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Remarks</label>
-                    <textarea class="form-control form-control-lg  mb-3 mb-lg-0"></textarea>
-                </div>
+                </div>                
             </form>
         </ng-template>
     </ngb-panel>
@@ -167,7 +143,6 @@
 <ngb-accordion #ngbListUsers="ngbAccordion" activeIds="ngb-panel-0">
     <ngb-panel title="List">
         <ng-template ngbPanelContent>
-
             <form [formGroup]="formGroup">
                 <mat-form-field appearance="fill" class="w-100" floatLabel="never">
                     <mat-label>Search</mat-label>
@@ -272,5 +247,24 @@
         <button mat-raised-button color="warn" (click)="onFormSubmit()" form="changePasswordForm">Update</button>
         &nbsp;&nbsp;
         <button mat-raised-button color="accent" (click)="modal.close('cancel')">Cancel</button>
+    </div>
+</ng-template>
+
+<!--Delete Modal-->
+<ng-template #deleteModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Delete User</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="mb-3">
+            <span>Do you want to delete this record</span> 
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer text-right">
+      <button mat-raised-button color="warn" (click)="modal.close('yes')">Yes</button> &nbsp;&nbsp; 
+      <button mat-raised-button color="accent" (click)="modal.close('Save click')">No</button>
     </div>
 </ng-template>

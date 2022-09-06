@@ -48,5 +48,7 @@ namespace API.Models
         public string EmployeePosition { get; set; }
         public string Salary { get; set; }
         public DateTime? DateOfJoining { get; set; }
+        public string Mobile { get; set; }
+        public string Email { get; set; }
     }
 }
