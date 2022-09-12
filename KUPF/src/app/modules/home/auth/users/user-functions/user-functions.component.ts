@@ -102,6 +102,7 @@ export class UserFunctionsComponent implements OnInit {
   //
   onMenuItemSelect(e:any){      
     
+    console.log(e.target.value);
     //selectedMenuItem etLocale.
     let filtereData = this.userFunctions$.pipe(map(item=>{
       return item.filter(c=>c.masteR_ID == e.target.value);

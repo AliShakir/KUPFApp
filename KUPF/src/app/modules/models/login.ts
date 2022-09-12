@@ -3,4 +3,5 @@ export interface Login {
     password: string;
     locationId:number;
     tenantId:number
+    userId:number;
 }

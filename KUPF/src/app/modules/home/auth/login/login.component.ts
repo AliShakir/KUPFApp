@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { Login } from 'src/app/modules/models/login';
+import { MenuHeading } from 'src/app/modules/models/MenuHeading';
+import { UserFunctionDto } from 'src/app/modules/models/UserFunctions/UserFunctionDto';
 import { DbCommonService } from 'src/app/modules/_services/db-common.service';
 import { LoginService } from 'src/app/modules/_services/login.service';
 
@@ -30,7 +32,8 @@ closeResult = '';
 model: any = {}
 isSuccess:boolean=false;
 locations:any[];
-
+//
+menuHeading: MenuHeading[]=[];
 
 constructor(
   private fb: FormBuilder,
@@ -38,7 +41,8 @@ constructor(
   private loginService: LoginService,
   private toastr: ToastrService,
   private OccupationService: DbCommonService,
-  private modalService: NgbModal
+  private modalService: NgbModal,
+  private cd: ChangeDetectorRef
 ) {
   
 }
@@ -86,21 +90,36 @@ ngOnDestroy() {
 }
 
 // User Login
-login() {    
-  this.loginService.Login([this.loginForm.value.username,this.loginForm.value.password])
+async login() {    
+  await this.loginService.Login([this.loginForm.value.username,this.loginForm.value.password])
     .subscribe((response: Login[])=>{
     this.loginDto = response
     if(this.loginDto.length == 0){
       this.toastr.error('Invalid username or password','Error');
       this.isSuccess = false;
     }
-    else if(this.loginDto.length == 1){
+    else if(this.loginDto.length == 1){ 
       this.toastr.success('Login Success','Success');       
       this.isSuccess = false;
       if(localStorage.getItem('user') != null){
         localStorage.removeItem("user");
         localStorage.setItem("user",JSON.stringify(this.loginDto));
+      }else{
+        localStorage.setItem("user",JSON.stringify(this.loginDto));
       }
+      // TO get UserMenu Options by UserId...
+      this.loginService.GetUserFunctionsByUserId(this.loginDto[0].userId).subscribe((response:any[])=>{
+        this.menuHeading = response;   
+        console.log('Login',this.menuHeading);  
+        if(localStorage.getItem('userMenu') != null){
+          localStorage.removeItem("userMenu");
+          localStorage.setItem('userMenu',JSON.stringify(this.menuHeading));
+        }else{
+          console.log('Test');
+          localStorage.setItem('userMenu',JSON.stringify(this.menuHeading));
+        }
+        
+      });
       this.router.navigateByUrl('/dashboard')      
     }
     else if(this.loginDto.length > 1){      
@@ -108,6 +127,7 @@ login() {
       this.router.navigateByUrl('/dashboard')   
       this.locations = this.loginDto;
       this.isSuccess = true;
+      //this.cd.detectChanges();
     }
   })
 }

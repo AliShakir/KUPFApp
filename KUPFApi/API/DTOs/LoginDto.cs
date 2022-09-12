@@ -11,5 +11,6 @@ namespace API.DTOs
         public string password { get; set; }
         public int TenantId { get; set; }
         public int LocationId { get; set; }
+        public int UserId { get; set; }
     }
 }

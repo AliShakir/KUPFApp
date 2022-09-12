@@ -14,7 +14,8 @@ export class DashboardComponent implements OnInit {
   AppFormLabels: FormTitleHd[] = [];
   lang: any;
   /*********************/
-
+  menuHeading: any[]=[];
+  
   constructor(private localizationService: LocalizationService) { }
 
   ngOnInit(): void {
@@ -42,6 +43,10 @@ export class DashboardComponent implements OnInit {
         }
       })
     }
+    
+    //
+    // this.menuHeading= JSON.parse(localStorage.getItem('userMenu')!);
+    // console.log('dasboard',this.menuHeading);
    }
 
 }
