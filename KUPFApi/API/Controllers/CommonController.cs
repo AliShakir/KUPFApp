@@ -125,5 +125,62 @@ namespace API.Controllers
             var result = await _commonServiceService.GetMasterId();
             return result;
         }
+
+        [HttpGet]
+        [Route("GetRefType")]
+        public async Task<IEnumerable<SelectRefTypeDto>> GetRefType()
+        {
+            var result = await _commonServiceService.GetRefType();
+            return result;
+        }
+        [HttpGet]
+        [Route("GetRefSubType")]
+        public async Task<IEnumerable<SelectRefSubTypeDto>> GetRefSubType()
+        {
+            var result = await _commonServiceService.GetRefSubType();
+            return result;
+        }
+        [HttpGet]
+        [Route("GetRefSubTypeByRefType/{refType}")]
+        public async Task<IEnumerable<SelectRefSubTypeDto>> GetRefSubTypeByRefType(string refType)
+        {
+            var result = await _commonServiceService.GetRefSubTypeByRefType(refType);
+            return result;
+        }
+        [HttpGet]
+        [Route("GetServiceType")]
+        public async Task<IEnumerable<SelectServiceTypeDto>> GetServiceType()
+        {
+            var result = await _commonServiceService.GetServiceType();
+            return result;
+        }
+        [HttpGet]
+        [Route("GetMinMonthOfServices")]
+        public async Task<IEnumerable<SelectMinMonthOfServicesDto>> GetMinMonthOfServices()
+        {
+            var result = await _commonServiceService.GetMinMonthOfServices();
+            return result;
+        }
+        [HttpGet]
+        [Route("GetMinInstallments")]
+        public async Task<IEnumerable<SelectMinInstallmentDto>> GetMinInstallments()
+        {
+            var result = await _commonServiceService.GetMinInstallments();
+            return result;
+        }
+        [HttpGet]
+        [Route("GetMaxInstallments")]
+        public async Task<IEnumerable<SelectMaxInstallmentDto>> GetMaxInstallments()
+        {
+            var result = await _commonServiceService.GetMaxInstallments();
+            return result;
+        }
+        [HttpGet]
+        [Route("GetApprovalRoles")]
+        public async Task<IEnumerable<SelectApprovalRoleDto>> GetApprovalRoles()
+        {
+            var result = await _commonServiceService.GetApprovalRoles();
+            return result;
+        }
     }
 }

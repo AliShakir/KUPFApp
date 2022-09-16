@@ -1,7 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { FormTitleDt } from 'src/app/modules/models/formTitleDt';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
+import { SelectApprovalRoleDto } from 'src/app/modules/models/ServiceSetup/SelectApprovalRoleDto';
+import { DbCommonService } from 'src/app/modules/_services/db-common.service';
 import { LocalizationService } from 'src/app/modules/_services/localization.service';
 
 @Component({
@@ -11,14 +14,7 @@ import { LocalizationService } from 'src/app/modules/_services/localization.serv
 })
 export class ApprovalDetialsComponent implements OnInit {
 
-// /*********************/
-// formHeaderLabels$ :Observable<FormTitleHd[]>; 
-// formBodyLabels$ :Observable<FormTitleDt[]>; 
-// formBodyLabels :FormTitleDt[]=[]; 
-// id:string = '';
-// languageId:any;
-// // FormId to get form/App language
-// @ViewChild('ApprovalDetailsInformation') hidden:ElementRef;
+
 //#region 
     /*----------------------------------------------------*/
 
@@ -43,7 +39,13 @@ export class ApprovalDetialsComponent implements OnInit {
     /*----------------------------------------------------*/  
   //#endregion
 
-  constructor(){ }
+  @Input() parentFormGroup: FormGroup;
+  approvalDetailsForm: FormGroup;
+
+  //
+  approvalRoles$: Observable<SelectApprovalRoleDto[]>;
+  
+  constructor(private commonDbService: DbCommonService){ }
 
   ngOnInit(): void {
     //#region TO SETUP THE FORM LOCALIZATION    
@@ -74,26 +76,37 @@ export class ApprovalDetialsComponent implements OnInit {
       }
     }
     //#endregion
+    this.initializeForm();
+    if (this.parentFormGroup) {
+      this.parentFormGroup.setControl('approvalDetailsForm', this.approvalDetailsForm);
+    }
+    //
+    this.approvalRoles$ = this.commonDbService.GetApprovalRoles();
   }
-  // ngAfterViewInit() {
-    
-  //   // TO get the form id...
-  //   this.id = this.hidden.nativeElement.value;
-    
-  //   // TO GET THE LANGUAGE ID
-  //   this.languageId = localStorage.getItem('langType');
-    
-  //   // Get form header labels
-  //   this.formHeaderLabels$ = this.localizationService.getFormHeaderLabels(this.id,this.languageId);
-    
-  //   // Get form body labels 
-  //   this.formBodyLabels$= this.localizationService.getFormBodyLabels(this.id,this.languageId)
-    
-  //   // Get observable as normal array of items
-  //   this.formBodyLabels$.subscribe((data)=>{
-  //     this.formBodyLabels = data   
-  //   },error=>{
-  //     console.log(error);
-  //   })
-  // }
+
+  initializeForm() {
+    this.approvalDetailsForm = new FormGroup({
+      serApproval1: new FormControl('', Validators.required),
+      approvalBy1: new FormControl('', Validators.required),
+      approvedDate1: new FormControl('', Validators.required),
+      
+      serApproval2: new FormControl('', Validators.required),
+      approvalBy2: new FormControl('', Validators.required),
+      approvedDate2: new FormControl('', Validators.required),
+
+
+      serApproval3: new FormControl('', Validators.required),
+      approvalBy3: new FormControl('', Validators.required),
+      approvedDate3: new FormControl('', Validators.required),
+
+      serApproval4: new FormControl('', Validators.required),
+      approvalBy4: new FormControl('', Validators.required),
+      approvedDate4: new FormControl('', Validators.required),
+
+      serApproval5: new FormControl('', Validators.required),
+      approvalBy5: new FormControl('', Validators.required),
+      approvedDate5: new FormControl('', Validators.required),
+    })
+  }
+  
 }

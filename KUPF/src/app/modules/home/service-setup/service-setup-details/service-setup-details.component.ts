@@ -1,9 +1,16 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
-import { FormTitleDt } from 'src/app/modules/models/formTitleDt';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
+import { ServiceSetupDto } from 'src/app/modules/models/ServiceSetup/ServiceSetupDto';
 import { CommonService } from 'src/app/modules/_services/common.service';
 import { LocalizationService } from 'src/app/modules/_services/localization.service';
+import { ServiceSetupService } from 'src/app/modules/_services/service-setup.service';
 
 @Component({
   selector: 'app-service-setup-details',
@@ -11,15 +18,7 @@ import { LocalizationService } from 'src/app/modules/_services/localization.serv
   styleUrls: ['./service-setup-details.component.scss']
 })
 export class ServiceSetupDetailsComponent implements OnInit {
-// /*********************/
-// formHeaderLabels$ :Observable<FormTitleHd[]>; 
-// formBodyLabels$ :Observable<FormTitleDt[]>; 
-// formBodyLabels :FormTitleDt[]=[]; 
-// id:string = '';
-// languageId:any;
-// // FormId to get form/App language
-// @ViewChild('ServiceSetupDetail') hidden:ElementRef;
-// /*********************/
+
 //#region 
     /*----------------------------------------------------*/
 
@@ -44,10 +43,56 @@ export class ServiceSetupDetailsComponent implements OnInit {
     /*----------------------------------------------------*/  
   //#endregion
 
+  //#region
+  // To display table column headers
+  columnsToDisplay: string[] = ['action', 'services', 'serviceType', 'minMax', 'discountAllow','forEmployee'];
+
+  // Getting data as abservable.
+  serviceSetupDto$: Observable<ServiceSetupDto[]>;
+
+  // We need a normal array of data so we will subscribe to the observable and will get data
+  serviceSetupDto: MatTableDataSource<ServiceSetupDto> = new MatTableDataSource<any>([]);
+
+  // Paginator
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  // Sorting
+  @ViewChild(MatSort) sort!: MatSort;
+
+  // Hide footer while loading.
+  isLoadingCompleted: boolean = false;
+
+  // Incase of any error will display error message.
+  dataLoadingStatus: string = '';
+
+  // True of any error
+  isError: boolean = false;
+
+  // formGroup
+  formGroup: FormGroup;
+
+  // Search Term
+  searchTerm: string = '';
+
+  //#endregion
+  //
+  lang: any = '';
+  //
+  closeResult: string = '';
+  // 
   formTitle:string;
-  constructor(private common: CommonService,private localizationService: LocalizationService) { }
+  constructor(
+    private common: CommonService,
+    private serviceSetup: ServiceSetupService,
+    private modalService: NgbModal,
+    private toastrService: ToastrService) {       
+      this.formGroup = new FormGroup({
+        searchTerm: new FormControl(null)
+      })
+    }
 
   ngOnInit(): void {
+    this.lang = localStorage.getItem('lang');
     this.formTitle = this.common.getFormTitle();
     this.formTitle = '';
     //#region TO SETUP THE FORM LOCALIZATION    
@@ -78,6 +123,65 @@ export class ServiceSetupDetailsComponent implements OnInit {
       }
     }
     //#endregion
+    this.loadData();
+    
   }
+loadData()
+{
+  this.serviceSetupDto$ = this.serviceSetup.GetAllServiceSetupRecords();
+    this.serviceSetupDto$.subscribe((response: ServiceSetupDto[]) => {
+      this.serviceSetupDto = new MatTableDataSource<ServiceSetupDto>(response);
+      this.serviceSetupDto.paginator = this.paginator;
+      this.serviceSetupDto.sort = this.sort;
+      this.isLoadingCompleted = true;
+      console.log(this.serviceSetupDto);    
+    }, error => {
+      console.log(error);
+      this.dataLoadingStatus = 'Error fetching the data';
+      this.isError = true;
+    })
+}
+  // Delete recored...
+  openDeleteModal(content: any, id: number) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+      if (result === 'yes') {
+        this.serviceSetup.DeleteServiceSetup(id).subscribe(response => {
+          if (response === 1) {
+            this.toastrService.success('Record deleted successfully', 'Success');
+            // Refresh Grid
+            this.loadData();
+          } else {
+            this.toastrService.error('Something went wrong', 'Errro');
+          }
+        });
+      }
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
   
+  }
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+
+  //#region Material Search and Clear Filter
+  filterRecords() {
+    
+    if (this.formGroup.value.searchTerm != null && this.serviceSetupDto) {
+      this.serviceSetupDto.filter = this.formGroup.value.searchTerm.trim();
+    }
+  }
+  clearFilter() {
+    this.formGroup?.patchValue({ searchTerm: "" });
+    this.filterRecords();
+  }
+  //#endregion
 }

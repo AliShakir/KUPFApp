@@ -138,5 +138,81 @@ namespace API.Servivces.Implementation
             var data = _mapper.Map<IEnumerable<SelectMasterIdDto>>(result);
             return data;
         }
+
+        public async Task<IEnumerable<SelectRefTypeDto>> GetRefType()
+        {
+            var result = (from d in _context.Reftables
+                          where d.TenentId == 21
+                          select new SelectRefTypeDto
+                          {
+                              RefType = d.Reftype
+                          })
+                          .Distinct()
+                          .OrderBy(x=>1);
+            return result;
+        }
+
+        public async Task<IEnumerable<SelectRefSubTypeDto>> GetRefSubType()
+        {
+            var result = (from d in _context.Reftables
+                          where d.TenentId == 21
+                          select new SelectRefSubTypeDto
+                          {
+                              RefSubType = d.Refsubtype
+                          })
+                          .Distinct()
+                          .OrderBy(x => 1);
+            return result;
+        }
+
+        public async Task<IEnumerable<SelectRefSubTypeDto>> GetRefSubTypeByRefType(string refType)
+        {
+            var result = (from d in _context.Reftables
+                          where d.TenentId == 21 && d.Reftype == refType
+                          select new SelectRefSubTypeDto
+                          {
+                              RefSubType = d.Refsubtype
+                          })
+                          .Distinct()
+                          .OrderBy(x => 1);
+            return result;
+        }
+
+        public async Task<IEnumerable<SelectServiceTypeDto>> GetServiceType()
+        {
+            var result = await _context.ServiceSetups.ToListAsync();
+            var data = _mapper.Map<IEnumerable<SelectServiceTypeDto>>(result);
+            return data;
+        }
+
+        public async Task<IEnumerable<SelectMinMonthOfServicesDto>> GetMinMonthOfServices()
+        {
+            var result = await _context.ServiceSetups.ToListAsync();
+            var data = _mapper.Map<IEnumerable<SelectMinMonthOfServicesDto>>(result);
+            return data;
+        }
+
+        public async Task<IEnumerable<SelectMinInstallmentDto>> GetMinInstallments()
+        {
+            var result = await _context.ServiceSetups.ToListAsync();
+            var data = _mapper.Map<IEnumerable<SelectMinInstallmentDto>>(result);
+            return data;
+        }
+
+        public async Task<IEnumerable<SelectMaxInstallmentDto>> GetMaxInstallments()
+        {
+            var result = await _context.ServiceSetups.ToListAsync();
+            var data = _mapper.Map<IEnumerable<SelectMaxInstallmentDto>>(result);
+            return data;
+        }
+
+        public async Task<IEnumerable<SelectApprovalRoleDto>> GetApprovalRoles()
+        {
+            var result = await _context.Reftables
+                            .Where(c=>c.Refsubtype == "Role" && c.TenentId == 21).ToListAsync();
+            
+            var data = _mapper.Map<IEnumerable<SelectApprovalRoleDto>>(result);
+            return data;
+        }
     }
 }

@@ -91,7 +91,6 @@ namespace API.Models
         public DbSet<FormTitleDTLanguage> FormTitleDTLanguage { get; set; }
         public DbSet<FUNCTION_MST> FUNCTION_MST { get; set; }
         public DbSet<FUNCTION_USER> FUNCTION_USER { get; set; }
-        public DbSet<TempUserMenu> TempUserMenu { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

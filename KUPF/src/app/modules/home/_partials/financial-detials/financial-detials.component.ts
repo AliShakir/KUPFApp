@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
@@ -12,6 +12,7 @@ import { DbCommonService } from 'src/app/modules/_services/db-common.service';
   styleUrls: ['./financial-detials.component.scss']
 })
 export class FinancialDetialsComponent implements OnInit {
+  @Input() parentFormGroup:FormGroup;
   financialForm: FormGroup | undefined;
 
   @Input() formData: FormGroup | undefined;
@@ -82,7 +83,11 @@ export class FinancialDetialsComponent implements OnInit {
     //#endregion
     this.initializeForm();
     this.addGroupToParent();
+    if (this.parentFormGroup) {
+      this.parentFormGroup.setControl('financialForm', this.financialForm);
+    }
   }
+
 
   initializeForm() {
     this.financialForm = new FormGroup({

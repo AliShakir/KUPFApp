@@ -16,6 +16,8 @@ import { SearchTabModule } from '../_partials/search-tab.module';
 import { SharedModule } from '../../_sharedModule/SharedModule';
 import { NgxTranslateModule } from '../../i18n';
 import { ManageFormLabelsComponent } from '../setup/manage-form-labels/manage-form-labels.component';
+import { MaterialModule } from '../../material/material.module';
+import { NgSelectModule } from '@ng-select/ng-select';
 @NgModule({
   declarations: [
     ServiceSetupDetailsComponent,
@@ -37,7 +39,11 @@ import { ManageFormLabelsComponent } from '../setup/manage-form-labels/manage-fo
     SearchTabModule,
     SharedModule,
     NgxTranslateModule,
-    
+    MaterialModule,
+    NgSelectModule,
+  ],
+  exports:[
+    NgSelectModule,
   ]
 })
 export class ServiceSetupModule { }

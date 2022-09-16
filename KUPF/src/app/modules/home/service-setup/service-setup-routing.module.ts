@@ -16,6 +16,7 @@ import { ServiceSetupDetailsComponent } from './service-setup-details/service-se
 const routes: Routes = [
   { path: 'service-setup-details', component: ServiceSetupDetailsComponent },
   { path: 'add-service-setup', component: AddServiceSetupComponent },
+  { path: 'add-service-setup/:serviceId', component: AddServiceSetupComponent },
   { path: 'add-service', component: AddServiceComponent },
   { path: 'service-details', component: ServiceDetailsComponent },
   { path: 'add-documents', component: AddDocumentsComponent },

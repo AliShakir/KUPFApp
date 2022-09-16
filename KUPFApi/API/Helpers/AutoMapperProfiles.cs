@@ -89,6 +89,21 @@ namespace API.Helpers
             //
 
             CreateMap<UpdatePasswordDto,UserMst>();
+
+            CreateMap<ServiceSetupDto, ServiceSetup>();
+            //
+            CreateMap<ServiceSetup, ServiceSetupDto>();
+
+            //
+            CreateMap<ServiceSetup, SelectServiceTypeDto>();
+            //
+            CreateMap<ServiceSetup, SelectMinMonthOfServicesDto>();
+            //
+            CreateMap<ServiceSetup, SelectMinInstallmentDto>();
+            //
+            CreateMap<ServiceSetup, SelectMaxInstallmentDto>();
+            //
+            CreateMap<Reftable, SelectApprovalRoleDto>();
         }
     }
 }

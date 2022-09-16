@@ -55,91 +55,7 @@ namespace API.Controllers
         [Route("GetUserFunctionsByUserId")]
         public async Task<ActionResult<IEnumerable<MenuHeadingDto>>> GetUserFunctionsByUserId(int id)
         {
-            #region MyRegion
-            //List<MenuHeadingDto> menuHeader = new List<MenuHeadingDto>();
-            //var result = await _functionUserService.GetFunctionUserByUserIdAsync(id);
-            //if (result.Count() > 0)
-            //{
-            //    var menuHeading = result.Where(c => c.MASTER_ID == 0).ToArray();
-
-            //    for (int x = 0; x <= menuHeading.Count() - 1; x++)
-            //    {
-            //        menuHeader.Add(new MenuHeadingDto
-            //        {
-            //            HeadingNameEnglish = menuHeading[x].MENU_NAMEEnglish,
-            //            HeadingNameArabic = menuHeading[x].MENU_NAMEArabic,
-            //            HeadingIconPath = menuHeading[x].ICONPATH,
-            //            HeadingSmallText = menuHeading[x].SMALLTEXT,
-            //            HeadingFullName = menuHeading[x].FULL_NAME,
-            //            HeadingLink = menuHeading[x].LINK,
-            //            HeadingURLOption = menuHeading[x].Urloption,
-            //            HeadingURLRewrite = menuHeading[x].URLREWRITE,
-            //            HeadingMenuLocation = menuHeading[x].MENU_LOCATION,
-            //            HeadingMenuOrder = menuHeading[x].MENU_ORDER,
-            //            HeadingDocParent = menuHeading[x].DOC_PARENT,
-            //            HeadingAddFlage = menuHeading[x].ADDFLAGE,
-            //            HeadingEditFlage = menuHeading[x].EDITFLAGE,
-            //            HeadingDelFlage = menuHeading[x].DELFLAGE,
-            //            HeadingPrintFlage = menuHeading[x].PRINTFLAGE,
-            //            HeadingAmIGlobale = menuHeading[x].AMIGLOBALE,
-            //            HeadingMyPersonal = menuHeading[x].MYPERSONAL,
-            //            HeadingSp1 = menuHeading[x].SP1,
-            //            HeadingSp2 = menuHeading[x].SP2,
-            //            HeadingSp3 = menuHeading[x].SP3,
-            //            HeadingSp4 = menuHeading[x].SP4,
-            //            HeadingSp5 = menuHeading[x].SP5,
-            //            HeadingSpName1 = menuHeading[x].SP1Name,
-            //            HeadingSpName2 = menuHeading[x].SP2Name,
-            //            HeadingSpName3 = menuHeading[x].SP3Name,
-            //            HeadingSpName4 = menuHeading[x].SP4Name,
-            //            HeadingSpName5 = menuHeading[x].SP5Name
-
-            //        });
-            //        var menuItems = result.Where(c => c.MASTER_ID == menuHeading[x].MENU_ID).ToArray();
-
-            //        for (int i = 0; i <= menuItems.Count() - 1; i++)
-            //        {
-            //            menuHeader[x].MenuItems.Add(new MenuItemsDto()
-            //            {
-            //                MenuItemNameEnglish = menuItems[i].MENU_NAMEEnglish,
-            //                MenuItemNameArabic = menuItems[i].MENU_NAMEArabic,
-            //                MenuItemIconPath = menuItems[i].ICONPATH,
-            //                MenuItemSmallText = menuItems[i].SMALLTEXT,
-            //                MenuItemFullName = menuItems[i].FULL_NAME,
-            //                MenuItemLink = menuItems[i].LINK,
-            //                MenuItemURLOption = menuItems[i].Urloption,
-            //                MenuItemURLRewrite = menuItems[i].URLREWRITE,
-            //                MenuItemMenuLocation = menuItems[i].MENU_LOCATION,
-            //                MenuItemMenuOrder = menuItems[i].MENU_ORDER,
-            //                MenuItemDocParent = menuItems[i].DOC_PARENT,
-            //                MenuItemAddFlage = menuItems[i].ADDFLAGE,
-            //                MenuItemEditFlage = menuItems[i].EDITFLAGE,
-            //                MenuItemDelFlage = menuItems[i].DELFLAGE,
-            //                MenuItemPrintFlage = menuItems[i].PRINTFLAGE,
-            //                MenuItemAmIGlobale = menuItems[i].AMIGLOBALE,
-            //                MenuItemMyPersonal = menuItems[i].MYPERSONAL,
-            //                MenuItemSp1 = menuItems[i].SP1,
-            //                MenuItemSp2 = menuItems[i].SP2,
-            //                MenuItemSp3 = menuItems[i].SP3,
-            //                MenuItemSp4 = menuItems[i].SP4,
-            //                MenuItemSp5 = menuItems[i].SP5,
-            //                MenuItemSpName1 = menuItems[i].SP1Name,
-            //                MenuItemSpName2 = menuItems[i].SP2Name,
-            //                MenuItemSpName3 = menuItems[i].SP3Name,
-            //                MenuItemSpName4 = menuItems[i].SP4Name,
-            //                MenuItemSpName5 = menuItems[i].SP5Name
-            //            });
-            //        }
-            //    }
-
-            //}
-            //// var d = JsonConvert.SerializeObject(menuHeader);
-            //return Ok(menuHeader);
-
-
-            #endregion
-
-            List<MenuHeadingDto> menuHeader = new List<MenuHeadingDto>();
+           List<MenuHeadingDto> menuHeader = new List<MenuHeadingDto>();
             // Get menu data by UserId...
             var result = await _functionUserService.GetFunctionUserByUserIdAsync(id);
             
@@ -332,8 +248,6 @@ namespace API.Controllers
                     }
                 }
                 
-                
-
             }
             
             return Ok(menuHeader);

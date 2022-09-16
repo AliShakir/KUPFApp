@@ -15,8 +15,15 @@ import { SelectOtherAct2Dto } from '../models/SelectOtherAct2Dto';
 import { SelectOtherAct3Dto } from '../models/SelectOtherAct3Dto';
 import { SelectOtherAct4Dto } from '../models/SelectOtherAct4Dto';
 import { SelectPerLoanActDto } from '../models/SelectPerLoanActDto';
+import { SelectRefSubTypeDto } from '../models/SelectRefSubTypeDto';
+import { SelectRefTypeDto } from '../models/ReferenceDetails/SelectRefTypeDto';
 import { SelectTerminationsDto } from '../models/SelectTerminationsDto';
 import { SelectUsersDto } from '../models/SelectUsersDto';
+import { SelectServiceTypeDto } from '../models/ServiceSetup/SelectServiceTypeDto';
+import { SelectMaxInstallmentDto } from '../models/ServiceSetup/SelectMaxInstallmentDto';
+import { SelectMinInstallmentDto } from '../models/ServiceSetup/SelectMinInstallmentDto';
+import { SelectMinMonthOfServicesDto } from '../models/ServiceSetup/SelectMinMonthOfServicesDto';
+import { SelectApprovalRoleDto } from '../models/ServiceSetup/SelectApprovalRoleDto';
 
 @Injectable({
   providedIn: 'root'
@@ -53,9 +60,72 @@ export class DbCommonService {
   users: SelectUsersDto[]=[];
   //
   masterIds: SelectMasterIdDto[]=[];
+  //
+  refSubType:SelectRefSubTypeDto[]=[];
+  //
+  refType:SelectRefTypeDto[]=[];
+  //
+  serviceType:SelectServiceTypeDto[]=[];
+  //
+  minMonthOfServices:SelectMinMonthOfServicesDto[]=[];
+  //
+  minInstallment:SelectMinInstallmentDto[]=[];
+  //
+  maxInstallment:SelectMaxInstallmentDto[]=[];
+  //
+  approvalRoles: SelectApprovalRoleDto[]=[];
+
   //loanAct: number;
   
   constructor(private httpClient: HttpClient,private toastr: ToastrService) { }
+
+//#region Service Setup 
+// Get GetServiceTypes...
+  GetServiceTypes() {    
+    return this.httpClient.get<SelectServiceTypeDto[]>(this.baseUrl + `Common/GetServiceType`).pipe(
+      map(serviceType => {
+        this.serviceType = serviceType; 
+        return serviceType;
+      })
+    )
+  }
+  // Get MonthOfServices...
+  GetMinMonthOfServices() {    
+    return this.httpClient.get<SelectMinMonthOfServicesDto[]>(this.baseUrl + `Common/GetMinMonthOfServices`).pipe(
+      map(minMonthOfServices => {
+        this.minMonthOfServices = minMonthOfServices;
+        return minMonthOfServices;
+      })
+    )
+  }
+  // Get MinInstallment...
+  GetMinInstallment() {    
+    return this.httpClient.get<SelectMinInstallmentDto[]>(this.baseUrl + `Common/GetMinInstallments`).pipe(
+      map(minInstallment => {
+        this.minInstallment = minInstallment; 
+        return minInstallment;
+      })
+    )
+  }
+  // Get MaxInstallment...
+  GetMaxInstallment() {    
+    return this.httpClient.get<SelectMaxInstallmentDto[]>(this.baseUrl + `Common/GetMaxInstallments`).pipe(
+      map(maxInstallment => {
+        this.maxInstallment = maxInstallment;         
+        return maxInstallment;
+      })
+    )
+  }
+  // Get MaxInstallment...
+  GetApprovalRoles() {    
+    return this.httpClient.get<SelectApprovalRoleDto[]>(this.baseUrl + `Common/GetApprovalRoles`).pipe(
+      map(approvalRoles => {
+        this.approvalRoles = approvalRoles;         
+        return approvalRoles;
+      })
+    )
+  }
+//#endregion
 
   // Get all Occupations.
   GetOccupations() {    
@@ -211,5 +281,35 @@ GetMasterId() {
     })
   )
 }
+
+// Get RefType from RefTable
+GetRefTypes() {    
+  return this.httpClient.get<SelectRefTypeDto[]>(this.baseUrl + `Common/GetRefType`).pipe(
+    map(refType => {
+      this.refType = refType; 
+      return refType;
+    })
+  )
+}
+// Get SubRefType from RefTable
+GetRefSubTypes() {    
+  return this.httpClient.get<SelectRefSubTypeDto[]>(this.baseUrl + `Common/GetRefSubType`).pipe(
+    map(refSubType => {
+      this.refSubType = refSubType; 
+      return refSubType;
+    })
+  )
+}
+
+GetRefSubTypeByRefType(refType:string) {    
+  return this.httpClient.get<SelectRefSubTypeDto[]>(this.baseUrl + `Common/GetRefSubTypeByRefType/${refType}`).pipe(
+    map(refSubType => {
+      this.refSubType = refSubType; 
+      return refSubType;
+    })
+  )
+}
+
+
 
 }

@@ -83,13 +83,17 @@ export class UserFunctionsComponent implements OnInit {
       this.toastr.success('Saved Successfully')
     })
   }
+  
   async checkCheckBoxvalue(event: any, item: any) {
     let name = event.source.name;
-    this.checkData = this.checkData.map((e: any) => {
-      return e.fulL_NAME === item.fulL_NAME
-        ? { ...e, [name]: event.checked == true ? 1 : 0 }
-        : e;
+    this.checkData.forEach((val: any) => {
+      if (val.menU_NAMEEnglish === item.menU_NAMEEnglish) {
+        return val[name] = event.checked == true ? 1 : 0
+      } else {
+        return val
+      }
     });
+
   }
   //
   async checkAllCheckBoxvalue(event: any, colunmName: any){

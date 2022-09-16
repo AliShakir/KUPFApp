@@ -9,6 +9,8 @@ import { SharedModule } from '../../_sharedModule/SharedModule';
 import { SortPipe } from '../Pipes/sort.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditFinancialDetailsComponent } from './edit-financial-details/edit-financial-details.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 
@@ -26,7 +28,9 @@ import { EditFinancialDetailsComponent } from './edit-financial-details/edit-fin
     NgbModule,
     SharedModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BsDatepickerModule.forRoot(),
+    NgSelectModule
   ],
   exports: [
     SearchTabComponent,
@@ -34,7 +38,9 @@ import { EditFinancialDetailsComponent } from './edit-financial-details/edit-fin
     ApprovalDetialsComponent,
     ContactDetailsComponent,
     EditFinancialDetailsComponent,
-    SortPipe
+    SortPipe,
+    BsDatepickerModule,
+    NgSelectModule,
   ]
 })
 export class SearchTabModule { }

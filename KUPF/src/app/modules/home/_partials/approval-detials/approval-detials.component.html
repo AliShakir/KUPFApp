@@ -7,110 +7,125 @@
           </ng-template>
       <ng-template ngbPanelContent>
         <div class="row gx-9 gy-6" *ngFor="let bodyLabel of formBodyLabels; let i = index">
-            <form autocomplete="off">  
+            <form autocomplete="off" [formGroup]="approvalDetailsForm">  
                 <div class="row mb-4">
                     <div class="col-lg-4 fv-row">
                         <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[0].title}}</label>
-                        <select class="form-control bg-light" aria-label="Select example">
-                            <option>-Select-</option>
-                            <option value="1">Role 1</option>
-                            <option value="2">Role 2</option>
-                            <option value="3">Role 3</option>
-                        </select>
+                        <ng-select [items]="approvalRoles$ | async" bindLabel="refSubType" bindValue="refId" 
+                            formControlName="serApproval1" id="serApproval1" name="serApproval1">                            
+                        </ng-select>
                     </div>
                     <div class="col-lg-4 fv-row">
                         <label class="col-lg-6 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[1].title}}</label>
                         <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0"
-                            name="nameInArabic" />
+                        formControlName="approvalBy1" id="approvalBy1" name="approvalBy1"  />
                     </div>
                     <div class="col-lg-4 fv-row">
                         <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[2].title}}</label>
-                        <input type="date" class="form-control form-control-lg  mb-3 mb-lg-0"
-                            name="nameInArabic" />
+                        <div class="input-group mb-5">
+                            <span class="input-group-text" id="basic-addon1">
+                                <i class="fas fa-calendar"></i>                     
+                            </span>
+                            <input type="text" class="form-control" bsDatepicker 
+                            [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }"
+                            formControlName="approvedDate1" id="approvedDate1" name="approvedDate1"/>
+                        </div>
                     </div>
                 </div>
                 <div class="row mb-4">
                     <div class="col-lg-4 fv-row">
                         <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" lang="AR-SA">{{bodyLabel[3].title}}</label>
-                        <select class="form-control bg-light" aria-label="Select example">
-                            <option>-Select-</option>
-                            <option value="1">Role 1</option>
-                            <option value="2">Role 2</option>
-                            <option value="3">Role 3</option>
-                        </select>
+                        <ng-select [items]="approvalRoles$ | async" bindLabel="refSubType" bindValue="refId" 
+                            formControlName="serApproval2" id="serApproval2" name="serApproval2">                            
+                        </ng-select>
                     </div>
                     <div class="col-lg-4 fv-row">
                         <label class="col-lg-6 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[4].title}}</label>
                         <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0"
-                            name="nameInArabic" />
+                        formControlName="approvalBy2" id="approvalBy2" name="approvalBy2" />
                     </div>
                     <div class="col-lg-4 fv-row">
                         <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[5].title}}</label>
-                        <input type="date" class="form-control form-control-lg  mb-3 mb-lg-0"
-                            name="nameInArabic" />
+                        <div class="input-group mb-5">
+                            <span class="input-group-text" id="basic-addon1">
+                                <i class="fas fa-calendar"></i>                     
+                            </span>
+                            <input type="text" class="form-control" bsDatepicker 
+                            [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }"
+                            formControlName="approvedDate2" id="approvedDate2" name="approvedDate2"/>
+                        </div>
                     </div>
                 </div>
                 <div class="row mb-4">
                     <div class="col-lg-4 fv-row">
                         <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" lang="AR-SA">{{bodyLabel[6].title}}</label>
-                        <select class="form-control bg-light" aria-label="Select example">
-                            <option>-Select-</option>
-                            <option value="1">Role 1</option>
-                            <option value="2">Role 2</option>
-                            <option value="3">Role 3</option>
-                        </select>
+                        <ng-select [items]="approvalRoles$ | async" bindLabel="refSubType" bindValue="refId" 
+                            formControlName="serApproval3" id="serApproval3" name="serApproval3">                            
+                        </ng-select>
                     </div>
                     <div class="col-lg-4 fv-row">
                         <label class="col-lg-6 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[7].title}}</label>
                         <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0"
-                            name="nameInArabic" />
+                            formControlName="approvalBy3" id="approvalBy3" name="approvalBy3" />
                     </div>
                     <div class="col-lg-4 fv-row">
                         <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[8].title}}</label>
-                        <input type="date" class="form-control form-control-lg  mb-3 mb-lg-0"
-                            name="nameInArabic" />
+                        <div class="input-group mb-5">
+                            <span class="input-group-text" id="basic-addon1">
+                                <i class="fas fa-calendar"></i>                     
+                            </span>
+                            <input type="text" class="form-control" bsDatepicker 
+                            [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }"
+                                formControlName="approvedDate3" id="approvedDate3" name="approvedDate3"/>
+                        </div>
                     </div>
                 </div>
                 <div class="row mb-4">
                     <div class="col-lg-4 fv-row">
                         <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" lang="AR-SA">{{bodyLabel[9].title}}</label>
-                        <select class="form-control bg-light" aria-label="Select example">
-                            <option>-Select-</option>
-                            <option value="1">Role 1</option>
-                            <option value="2">Role 2</option>
-                            <option value="3">Role 3</option>
-                        </select>
+                        <ng-select [items]="approvalRoles$ | async" bindLabel="refSubType" bindValue="refId" 
+                            formControlName="serApproval4" id="serApproval4" name="serApproval4">                            
+                        </ng-select>
                     </div>
                     <div class="col-lg-4 fv-row">
                         <label class="col-lg-6 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[10].title}}</label>
                         <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0"
-                            name="nameInArabic" />
+                        formControlName="approvalBy4" id="approvalBy4" name="approvalBy4" />
                     </div>
                     <div class="col-lg-4 fv-row">
                         <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[11].title}}</label>
-                        <input type="date" class="form-control form-control-lg  mb-3 mb-lg-0"
-                            name="nameInArabic" />
+                        <div class="input-group mb-5">
+                            <span class="input-group-text" id="basic-addon1">
+                                <i class="fas fa-calendar"></i>                     
+                            </span>
+                            <input type="text" class="form-control" bsDatepicker 
+                            [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }"
+                            formControlName="approvedDate4" id="approvedDate4" name="approvedDate4"/>
+                        </div>
                     </div>
                 </div>
                 <div class="row mb-4">
                     <div class="col-lg-4 fv-row">
                         <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" lang="AR-SA">{{bodyLabel[12].title}}</label>
-                        <select class="form-control bg-light" aria-label="Select example">
-                            <option>-Select-</option>
-                            <option value="1">Role 1</option>
-                            <option value="2">Role 2</option>
-                            <option value="3">Role 3</option>
-                        </select>
+                        <ng-select [items]="approvalRoles$ | async" bindLabel="refSubType" bindValue="refId" 
+                            formControlName="serApproval5" id="serApproval5" name="serApproval5">                            
+                        </ng-select>
                     </div>
                     <div class="col-lg-4 fv-row">
                         <label class="col-lg-6 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[13].title}}</label>
                         <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0"
-                            name="nameInArabic" />
+                        formControlName="approvalBy5" id="approvalBy5" name="approvalBy5">
                     </div>
                     <div class="col-lg-4 fv-row">
                         <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[14].title}}</label>
-                        <input type="date" class="form-control form-control-lg  mb-3 mb-lg-0"
-                            name="nameInArabic" />
+                        <div class="input-group mb-5">
+                            <span class="input-group-text" id="basic-addon1">
+                                <i class="fas fa-calendar"></i>                     
+                            </span>
+                            <input type="text" class="form-control" bsDatepicker 
+                            [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }"
+                            formControlName="approvedDate5" id="approvedDate5" name="approvedDate5"/>
+                        </div> 
                     </div>
                 </div>
 

@@ -103,249 +103,89 @@
             <!--end::Menu-->
         </div>
         <!--begin::Table container-->
-        <div class="table-responsive mt-3">
-            <!--begin::Table-->
-            <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
-                <!--begin::Table head-->
-                <thead class="bg-danger">
-                    <tr class="fw-bolder text-white" *ngFor="let bodyLabel of formBodyLabels; let i = index">
-                        <th class="min-w-80px text-center ArFontStyle" lang="AR-SA">{{bodyLabel[0].title}}</th>
-                        <th class="min-w-100px ArFontStyle" lang="AR-SA">{{bodyLabel[2].title}}</th>
-                        <th class="min-w-100px ArFontStyle" lang="AR-SA" >{{bodyLabel[4].title}}</th>
-                        <th class="min-w-140px ArFontStyle" lang="AR-SA">{{bodyLabel[5].title}}</th>
-                        <th class="min-w-120px ArFontStyle" lang="AR-SA">{{bodyLabel[6].title}}</th>
-                        <th class="min-w-120px ArFontStyle" lang="AR-SA">{{bodyLabel[7].title}}</th>
-                    </tr>
-                </thead>
-                <!--end::Table head-->
-                <!--begin::Table body-->
-                <tbody>
-                    <tr>
-                        <td class="text-center">
-                            <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
-                            </a>
-                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
-                            </a>
-                        </td>
-                        <td>
-                            <a href="javascript:void(0)"
-                                class="text-dark fw-bolder text-hover-primary  fs-6 ArFontStyle" lang="AR-SA">Hajj Loan			
-                            </a>
-                        </td>
-                        <td>
-                            <a href="javascript:void(0)"
-                                class="text-dark fw-bolder text-hover-primary  fs-6 ArFontStyle" lang="AR-SA">Regular			
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">3-6
-
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">Yes
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">Yes</a>
+        <div class="table-responsive mt-3" *ngFor="let bodyLabel of formBodyLabels; let i = index"> 
+            <form [formGroup]="formGroup">
+                  <mat-form-field appearance="fill" class="w-100" floatLabel="never">
+                  <mat-label>Search</mat-label>
+                  <input type="search" matInput formControlName="searchTerm" (keyup)="filterRecords()" class="ArFontStyle" />
+                  <mat-icon matPrefix class="material-icons">search</mat-icon>
+                  <mat-icon matSuffix (click)="clearFilter()" class="material-icons">close</mat-icon>
+                </mat-form-field>
+                <div class="table-container">
+                  <table mat-table class="w-100" [dataSource]="serviceSetupDto" matSort>
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef class="ArFontStyle w-10">{{bodyLabel[0].title}}</th>
+                        <td mat-cell *matCellDef="let item" class="w-10 text-right">                                                
+                            <button mat-raised-button color="warn" (click)="openDeleteModal(deleteModal,item.serviceId)">Delete</button>
+                            &nbsp; <button mat-raised-button color="accent" routerLink="/service-setup/add-service-setup/{{item.serviceId}}" id={{item.serviceId}}>Edit</button>
                         </td>                       
-
-                    </tr>
-                    <tr>
-                        <td class="text-center">
-                            <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
-                            </a>
-                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
-                            </a>
-                        </td>
-                        <td>
-                            <a href="javascript:void(0)"
-                                class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">Personal Commodity Loan - Internet		
-                            </a>
-                        </td>
-                        <td>
-                            <a href="javascript:void(0)"
-                                class="text-dark fw-bolder text-hover-primary  fs-6 ArFontStyle" lang="AR-SA">Regular			
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">1
-
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">No
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">Yes</a>
-                        </td>                       
-
-                    </tr>
-                    <tr>
-                        <td class="text-center">
-                            <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
-                            </a>
-                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
-                            </a>
-                        </td>
-                        <td>
-                            <a href="javascript:void(0)"
-                                class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">Masjid Donation – Nazha		
-                            </a>
-                        </td>
-                        <td>
-                            <a href="javascript:void(0)"
-                                class="text-dark fw-bolder text-hover-primary  fs-6 ArFontStyle" lang="AR-SA">Regular			
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">0
-
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">Yes
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">No</a>
-                        </td>                       
-
-                    </tr>
-                    <tr>
-                        <td class="text-center">
-                            <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
-                            </a>
-                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
-                            </a>
-                        </td>
-                        <td>
-                            <a href="javascript:void(0)"
-                                class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">Discount-Hajj Loan	
-                            </a>
-                        </td>
-                        <td>
-                            <a href="javascript:void(0)"
-                                class="text-dark fw-bolder text-hover-primary  fs-6 ArFontStyle" lang="AR-SA">Regular			
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">3-6
-
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">No
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">Yes</a>
-                        </td>                       
-
-                    </tr>
-                    <tr>
-                        <td class="text-center">
-                            <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
-                            </a>
-                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
-                            </a>
-                        </td>
-                        <td>
-                            <a href="javascript:void(0)"
-                                class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">Withdrawal Membership	
-                            </a>
-                        </td>
-                        <td>
-                            <a href="javascript:void(0)"
-                                class="text-dark fw-bolder text-hover-primary  fs-6 ArFontStyle" lang="AR-SA">Termination - الفصل من العمل			
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">10-15
-
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">No
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">Yes</a>
-                        </td>                       
-
-                    </tr>
-                    <tr>
-                        <td class="text-center">
-                            <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
-                            </a>
-                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
-                            </a>
-                        </td>
-                        <td>
-                            <a href="javascript:void(0)"
-                                class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">Termination Membership
-                            </a>
-                        </td>
-                        <td>
-                            <a href="javascript:void(0)"
-                                class="text-dark fw-bolder text-hover-primary  fs-6 ArFontStyle" lang="AR-SA">Termination - الفصل من العمل			
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">10-15
-
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">No
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">Yes</a>
-                        </td>                       
-
-                    </tr>
-                    <tr>
-                        <td class="text-center">
-                            <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
-                            </a>
-                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
-                            </a>
-                        </td>
-                        <td>
-                            <a href="javascript:void(0)"
-                                class="text-dark fw-bolder text-hover-primary fs-6 ArFontStyle" lang="AR-SA">Discount On Loan
-                            </a>
-                        </td>
-                        <td>
-                            <a href="javascript:void(0)"
-                                class="text-dark fw-bolder text-hover-primary  fs-6 ArFontStyle" lang="AR-SA">Reimbursement - السداد			
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">1-15
-
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">No
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ArFontStyle" lang="AR-SA">Yes</a>
-                        </td>                       
-
-                    </tr>
-                </tbody>
-                <!--end::Table body-->
-            </table>
-            <!--end::Table-->
+                    </ng-container>
+                    <div *ngIf="lang == 'en'">
+                        <ng-container matColumnDef="services">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="w-10 ArFontStyle">{{bodyLabel[2].title}}
+                            </th>
+                            <td mat-cell *matCellDef="let item" class="w-10 ArFontStyle">{{item.serviceName1 }}</td>
+                          </ng-container>
+                    </div>
+                    <div *ngIf="lang == 'ar'">
+                        <ng-container matColumnDef="services">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="w-10 ArFontStyle">{{bodyLabel[2].title}}
+                            </th>
+                            <td mat-cell *matCellDef="let item" class="w-10 ArFontStyle">{{item.serviceName2 }}</td>
+                          </ng-container>
+                    </div>
+                    <ng-container matColumnDef="serviceType">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header class="w-5 ArFontStyle">{{bodyLabel[4].title}}</th>
+                      <td mat-cell *matCellDef="let item" class="w-5 ArFontStyle">{{item.serviceType}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="minMax">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header class="ArFontStyle">{{bodyLabel[5].title}}</th>
+                      <td mat-cell *matCellDef="let item" class="w-5 ArFontStyle">
+                        {{item.minInstallment}}-{{item.maxInstallment}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="discountAllow">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header class="ArFontStyle">{{bodyLabel[6].title}}</th>
+                      <td mat-cell *matCellDef="let item" class="w-10 ArFontStyle">
+                        {{item.allowDiscountAmount}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="forEmployee">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="ArFontStyle">{{bodyLabel[7].title}}</th>
+                        <td mat-cell *matCellDef="let item" class="w-10 ArFontStyle">
+                          {{item.serviceName1}}</td>
+                      </ng-container>          
+                    <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky:true"
+                      [ngClass]="{'hidden':!isLoadingCompleted}"></tr>
+                    <tr mat-row *matRowDef="let refTableDto; columns: columnsToDisplay"></tr>
+                  </table>
+                </div>
+                <div [ngClass]="{'hidden':!isLoadingCompleted}">
+                  <mat-paginator [pageSize]="10" [pageSizeOptions]="[10,20,30]" showFirstLastButtons>
+                  </mat-paginator>
+                </div>
+              </form>
         </div>
-        <!--end::Table container-->
+        
     </div>
     <!--begin::Body-->
     <div class="card-footer">
         
     </div>
 </div>
+<!--Delete Modal-->
+<ng-template #deleteModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Delete</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="mb-3">
+                <span>Do you want to delete this record</span>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer text-right">
+        <button mat-raised-button color="warn" (click)="modal.close('yes')">Yes</button> &nbsp;&nbsp;
+        <button mat-raised-button color="accent" (click)="modal.close('Save click')">No</button>
+    </div>
+  </ng-template>

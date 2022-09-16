@@ -7,7 +7,7 @@
         </div>
         <h3 class="card-title align-items-start flex-column">
             <div class="btn-group" role="group" aria-label="Basic example" *ngFor="let bodyLabel of formBodyLabels; let i = index">
-                <button type="button" class="btn btn-primary ArFontStyle">{{bodyLabel[0].title}}</button>
+                <button type="button" class="btn btn-primary ArFontStyle" (click)="addServiceSetup()">{{bodyLabel[0].title}}</button>
                 <button type="button" class="btn btn-warning ArFontStyle ">{{bodyLabel[1].title}}</button>
                 <button type="button" class="btn btn-light-dark ArFontStyle" routerLink="/service-setup/service-setup-details" routerLinkActive="active" >{{bodyLabel[2].title}}</button>
               </div>              
@@ -24,32 +24,33 @@
             <!--end::Title-->
             <!--begin::Row-->
             <div class="row gx-9 gy-6" *ngFor="let bodyLabel of formBodyLabels; let i = index">
-                <form  (ngSubmit)="addServiceSetup()" autocomplete="off">
+                <form [formGroup]="addServiceSetupForm" id="addServiceSetupForm" autocomplete="off">
                     <div class="row mb-6">
                         <div class="col-lg-6 fv-row">
                             <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"><span class="">{{bodyLabel[3].title}}
                                 </span></label>
-                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0 readonly">
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0 readonly" formControlName="serviceId">
                         </div>
                     </div>
                     <div class="row mb-6">
                         <div class="col-lg-6 fv-row">
                             <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"><span class="">{{bodyLabel[4].title}}
                                 </span></label>
-                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" />
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" 
+                            formControlName="serviceName1"/>
                         </div>
                         <div class="col-lg-6 fv-row">
                             <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"><span class="">{{bodyLabel[5].title}}</span></label>
-                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" readonly
-                                name="nameInArabic" />
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0"
+                                formControlName="serviceName2" />
                         </div>
                     </div>
                     <div class="row mb-0">
                         <!--begin::Label-->
                         <div class="col-lg-1 d-flex align-items-center">
                             <div class="form-check form-check-solid form-switch fv-row">
-                                <input class="form-check-input w-45px h-30px" type="checkbox" id="allowmarketing"
-                                    checked="checked">
+                                <input class="form-check-input w-45px h-30px" type="checkbox" id="allowedNonEmployes"
+                                    checked="checked" formControlName="allowedNonEmployes">
                                 <label class="form-check-label" for="allowmarketing"></label>
                             </div>
                         </div>
@@ -62,53 +63,31 @@
                     <div class="row mb-6">
                         <div class="col-lg-3 fv-row">
                             <label class="col-form-label fw-bold fs-6 ArFontStyle"><span class="">{{bodyLabel[7].title}}</span></label>
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Service Type 1</option>
-                                <option value="2">Service Type 2</option>
-                                <option value="3">Service Type 3</option>
-                            </select>
+                            <ng-select [items]="serviceType$ | async" bindLabel="serviceId" bindValue="serviceType" formControlName="serviceType">                            
+                            </ng-select>
                         </div>
                         <div class="col-lg-3 fv-row">
                             <label class="col-form-label fw-bold fs-6 ArFontStyle"><span class="">{{bodyLabel[8].title}}</span></label>
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="3">4</option>
-                                <option value="3">5</option>
-                            </select>
+                            <ng-select [items]="minMonthOfServices$ | async" bindLabel="serviceId" bindValue="minMonthsService" formControlName="minMonthsService">                            
+                            </ng-select>
                         </div>
                         <div class="col-lg-3 fv-row">
                             <label class="col-form-label fw-bold fs-6 ArFontStyle"><span class="">{{bodyLabel[9].title}}</span></label>
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">0</option>
-                                <option value="2">2</option>
-                            </select>
+                            <ng-select [items]="minInstallment$ | async" bindLabel="serviceId" bindValue="minInstallment" formControlName="minInstallment">                            
+                            </ng-select>
                         </div>
                         <div class="col-lg-3 fv-row">
-                            <label class="col-form-label fw-bold fs-6 ArFontStyle"><span class="">{{bodyLabel[10].title}}</span></label>
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="3">4</option>
-                                <option value="3">5</option>
-                                <option value="3">6</option>
-                                <option value="3">7</option>
-                                <option value="3">8</option>
-                            </select>
+                            <label class="col-form-label fw-bold fs-6 ArFontStyle"><span class="">{{bodyLabel[10].title}}</span></label>                            
+                             <ng-select [items]="maxInstallment$ | async" bindLabel="serviceId" bindValue="maxInstallment" formControlName="maxInstallment">                            
+                            </ng-select>
                         </div>
                     </div>
                     <div class="row mb-6">
                         <!--begin::Label-->
                         <div class="col-lg-1 d-flex align-items-center ArFontStyle">
                             <div class="form-check form-check-solid form-switch fv-row">
-                                <input class="form-check-input w-45px h-30px" type="checkbox" id="allowmarketing"
-                                    checked="checked">
+                                <input class="form-check-input w-45px h-30px" type="checkbox" id="frozen"
+                                    checked="checked" formControlName="frozen">
                                 <label class="form-check-label" for="allowmarketing"></label>
                             </div>
                         </div>
@@ -119,8 +98,8 @@
                         <!--begin::Label-->
                         <div class="col-lg-1 d-flex align-items-center">
                             <div class="form-check form-check-solid form-switch fv-row">
-                                <input class="form-check-input w-45px h-30px" type="checkbox" id="allowmarketing"
-                                    checked="checked">
+                                <input class="form-check-input w-45px h-30px" type="checkbox" id="previousEmployees"
+                                    checked="checked" formControlName="previousEmployees">
                                 <label class="form-check-label" for="allowmarketing"></label>
                             </div>
                         </div>
@@ -133,9 +112,9 @@
                         <!--begin::Label-->
                         <div class="col-lg-1 d-flex align-items-center">
                             <div class="form-check form-check-solid form-switch fv-row">
-                                <input class="form-check-input w-45px h-30px" type="checkbox" id="allowmarketing"
-                                    checked="checked">
-                                <label class="form-check-label" for="allowmarketing"></label>
+                                <input class="form-check-input w-45px h-30px" type="checkbox" id="allowDiscountDefault"
+                                    checked="checked" >
+                                <label class="form-check-label" for="allowDiscountDefault"></label>
                             </div>
                         </div>
                         <!--begin::Label-->
@@ -164,11 +143,11 @@
     </div>
     <!--end::Tab content-->
 </div>
-<app-approval-detials>
+<app-approval-detials [parentFormGroup]="parentForm">
 
 </app-approval-detials>
 <br>
-<app-financial-detials>
+<app-financial-detials [parentFormGroup]="parentForm">
 
 </app-financial-detials>
 

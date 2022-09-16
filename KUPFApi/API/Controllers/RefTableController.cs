@@ -59,10 +59,10 @@ namespace API.Controllers
         }
         
         [HttpGet]
-        [Route("GetRefTableById/{refId}")]
-        public async Task<ActionResult<IEnumerable<RefTableDto>>> GetRefTableByIdAsync(int refId)
+        [Route("GetRefTableByIdRefTypeAndSubType/{refId}/{refType}/{refSubType}")]
+        public async Task<ActionResult<IEnumerable<RefTableDto>>> GetRefTableByIdRefTypeAndSubType(int refId, string refType, string refSubType)
         {
-            var result = await _refTableService.GetRefTableByIdAsync(refId);
+            var result = await _refTableService.GetRefTableByIdAsync(refId,refType, refSubType);
             return Ok(result);
         }
 
@@ -71,6 +71,13 @@ namespace API.Controllers
         public async Task<ActionResult<IEnumerable<RefTableDto>>> GetRefTableData()
         {
             var result = await _refTableService.GetRefTableAsync();
+            return Ok(result);
+        }
+        [HttpGet]
+        [Route("GetRefTableByRefTypeAndSubType/{refType}/{refSubType}")]
+        public async Task<ActionResult<IEnumerable<RefTableDto>>> GetRefTableByRefTypeAndSubType(string refType, string refSubType)
+        {
+            var result = await _refTableService.GetRefTableByRefTypeAndSubTypeAsync(refType, refSubType);
             return Ok(result);
         }
     }

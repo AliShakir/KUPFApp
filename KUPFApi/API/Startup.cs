@@ -51,6 +51,8 @@ namespace API
             //
             services.AddScoped<ICommonService, CommonService>();
             //
+            services.AddScoped<IServiceSetupService, ServiceSetupService>();
+            //
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
             services.AddDbContext<KUPFDbContext>(options =>

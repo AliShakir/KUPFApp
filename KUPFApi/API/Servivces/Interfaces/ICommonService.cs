@@ -27,5 +27,45 @@ namespace API.Servivces.Interfaces
 
         Task<IEnumerable<SelectMasterIdDto>> GetMasterId();
 
+        /// <summary>
+        /// Get All RefTypes
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<SelectRefTypeDto>> GetRefType();
+        /// <summary>
+        /// Get All RefSubTypes
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<SelectRefSubTypeDto>> GetRefSubType();
+        /// <summary>
+        /// Get RefSubType by RefType....
+        /// </summary>
+        /// <param name="refType"></param>
+        /// <returns></returns>
+        Task<IEnumerable<SelectRefSubTypeDto>> GetRefSubTypeByRefType(string refType);
+
+        /// <summary>
+        /// Get Service Type
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<SelectServiceTypeDto>> GetServiceType();
+        /// <summary>
+        /// GetMinMonthOfServices
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<SelectMinMonthOfServicesDto>> GetMinMonthOfServices();
+        /// <summary>
+        /// GetMinInstallments
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<SelectMinInstallmentDto>> GetMinInstallments();
+        /// <summary>
+        /// GetMaxInstallments
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<SelectMaxInstallmentDto>> GetMaxInstallments();
+
+        Task<IEnumerable<SelectApprovalRoleDto>> GetApprovalRoles();
+
     }
 }
