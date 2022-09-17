@@ -120,8 +120,7 @@ export class AddServiceSetupComponent implements OnInit {
     // Fillout all controls to update record.
     if (this.serviceId != null) {      
       this.editServiceSetup$ = this.setupService.GetServiceSetupById(this.serviceId);
-      this.editServiceSetup$.subscribe((response: any) => {
-        console.log(response);
+      this.editServiceSetup$.subscribe((response: any) => {        
         this.parentForm.patchValue({
           addServiceSetupForm:
           {

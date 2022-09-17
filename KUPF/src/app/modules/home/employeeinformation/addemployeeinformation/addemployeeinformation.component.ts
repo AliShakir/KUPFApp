@@ -1,9 +1,11 @@
 
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { DetailedEmployee } from 'src/app/modules/models/DetailedEmployee';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
 import { SelectDepartmentsDto } from 'src/app/modules/models/SelectDepartmentsDto';
 import { SelectOccupationsDto } from 'src/app/modules/models/SelectOccupationsDto';
@@ -15,14 +17,21 @@ import { EmployeeService } from 'src/app/modules/_services/employee.service';
   selector: 'app-addemployeeinformation',
   templateUrl: './addemployeeinformation.component.html',
   styleUrls: ['./addemployeeinformation.component.scss'],
-  
+
 })
 export class AddemployeeinformationComponent implements OnInit {
   isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   isLoading: boolean;
   private unsubscribe: Subscription[] = [];
-  
-  addEmployeeForm : FormGroup;
+
+  //
+  parentForm: FormGroup;
+  addEmployeeForm: FormGroup;
+  //
+  jobDetailsForm: FormGroup;
+  //
+  membershipForm: FormGroup;
+  //
   isChildFormSet = false;
   showChildComponent = false;
   //
@@ -31,56 +40,68 @@ export class AddemployeeinformationComponent implements OnInit {
   occupations$: Observable<SelectOccupationsDto[]>;
   departments$: Observable<SelectDepartmentsDto[]>;
   terminations$: Observable<SelectTerminationsDto[]>;
-  
+  //
+  editEmployeeInformation$: Observable<DetailedEmployee[]>;
+  employeeId: any;
   //#region 
-    /*----------------------------------------------------*/
+  /*----------------------------------------------------*/
 
-    // Language Type e.g. 1 = ENGLISH and 2 =  ARABIC
-    languageType: any;
+  // Language Type e.g. 1 = ENGLISH and 2 =  ARABIC
+  languageType: any;
 
-    // Selected Language
-    language: any;
+  // Selected Language
+  language: any;
 
-    // We will get form lables from lcale storage and will put into array.
-    AppFormLabels: FormTitleHd[] = [];
+  // We will get form lables from lcale storage and will put into array.
+  AppFormLabels: FormTitleHd[] = [];
 
-    // We will filter form header labels array
-    formHeaderLabels: any[] = [];
+  // We will filter form header labels array
+  formHeaderLabels: any[] = [];
 
-    // We will filter form body labels array
-    formBodyLabels: any[] = [];
+  // We will filter form body labels array
+  formBodyLabels: any[] = [];
 
-    // FormId
-    formId: string;
+  // FormId
+  formId: string;
 
-    /*----------------------------------------------------*/  
+  /*----------------------------------------------------*/
   //#endregion
   datePickerConfig: Partial<BsDatepickerConfig> | undefined;
   constructor(
     private cdr: ChangeDetectorRef,
     private employeeService: EmployeeService,
     private toastrService: ToastrService,
-    private commonDbService: DbCommonService,private fb: FormBuilder) {
-    this.datePickerConfig = Object.assign({},{containerClass:'theme-dark-blue'})
+    private commonDbService: DbCommonService,
+    private fb: FormBuilder,
+    private activatedRout: ActivatedRoute) {
+
+    this.datePickerConfig = Object.assign({}, { containerClass: 'theme-dark-blue' })
     const loadingSubscr = this.isLoading$
       .asObservable()
       .subscribe((res) => (this.isLoading = res));
     this.unsubscribe.push(loadingSubscr);
+    this.setUpParentForm();
+    //
+    this.employeeId = this.activatedRout.snapshot.paramMap.get('employeeId');
+
   }
   selectedStatus: number | undefined;
   maritalStatusArray = [
-      { id: 1, name: 'Married' },
-      { id: 2, name: 'Single' }
+    { id: 1, name: 'Married' },
+    { id: 2, name: 'Single' }
   ];
   selectedGender: number | undefined;
   genderArray = [
-      { id: 1, name: 'Male' },
-      { id: 2, name: 'Female' }
+    { id: 1, name: 'Male' },
+    { id: 2, name: 'Female' }
   ];
 
   ngOnInit(): void {
     this.initializeForm();
-
+    //
+    this.initializeJobDetailsForm();
+    //
+    this.initializeMembershipForm();
     //#region TO SETUP THE FORM LOCALIZATION    
     // TO GET THE LANGUAGE ID e.g. 1 = ENGLISH and 2 =  ARABIC
     this.languageType = localStorage.getItem('langType');
@@ -109,58 +130,133 @@ export class AddemployeeinformationComponent implements OnInit {
       }
     }
     //#endregion
- 
+
     //#region Filling All dropDown from db    
     // To FillUp Occupations
     this.occupations$ = this.commonDbService.GetOccupations();
     // To FillUp Departments
     this.departments$ = this.commonDbService.GetDepartments();
     // To FillUp terminations
-    this.terminations$ = this.commonDbService.GetTerminations();    
+    this.terminations$ = this.commonDbService.GetTerminations();
     //#endregion
-   
+    // Get and fill data in Edit Mode...
+    if (this.employeeId != null) {
+      console.log(this.employeeId);
+      this.editEmployeeInformation$ = this.employeeService.GetEmployeeById(this.employeeId);
+      this.editEmployeeInformation$.subscribe((response: any) => {
+        console.log(response);
+        this.parentForm.patchValue({
+          addEmployeeForm: {
+            englishName: response.englishName,
+            arabicName: response.arabicName,
+            empBirthday: response.empBirthday,
+            empGender: response.empGender,
+            empMaritalStatus: response.empMaritalStatus,
+            mobileNumber: response.mobileNumber,
+            empWorkTelephone: response.empWorkTelephone,
+            empWorkEmail: response.empWorkEmail,
+            next2KinName: response.next2KinName,
+            next2KinMobNumber: response.next2KinMobNumber
+          },
+          jobDetailsForm: {
+            department: response.department,
+            departmentName: response.departmentName,
+            salary: response.salary,
+            empCidNum: response.empCidNum,
+            empPaciNum: response.empPaciNum,
+            empOtherId: response.empOtherId
+          },
+          membershipForm: {
+            membership: response.membership,
+            membershipJoiningDate: response.membershipJoiningDate,
+            termination: response.termination,
+            terminationDate: response.terminationDate,
+          },
+          financialForm: {
+            loanAct: response.loanAct,
+            hajjAct: response.hajjAct,
+            persLoanAct: response.persLoanAct,
+            consumerLoanAct: response.consumerLoanAct,
+            otherAct1: response.otherAct1,
+            otherAct2: response.otherAct2,
+            otherAct3: response.otherAct3,
+            otherAct4: response.otherAct4,
+            otherAct5: response.otherAct5
+          }
+        })
+      })
+
+    }
+
   }
 
-  initializeForm(){
+  initializeForm() {
     this.addEmployeeForm = this.fb.group({
-      englishName: new FormControl('',Validators.required),
-      arabicName: new FormControl('',Validators.required),
-      empBirthday: new FormControl('',Validators.required),
-      empGender: new FormControl('',Validators.required),
-      empMaritalStatus: new FormControl('',Validators.required),
-      mobileNumber: new FormControl('',Validators.required),
-      empWorkTelephone: new FormControl('',Validators.required),
-      empWorkEmail: new FormControl('',Validators.required),
-      next2KinName: new FormControl('',Validators.required),
-      next2KinMobNumber: new FormControl('',Validators.required),
-      department: new FormControl('',Validators.required),
-      departmentName: new FormControl('',Validators.required),
-      salary: new FormControl('',Validators.required),      
-      empCidNum: new FormControl('',Validators.required),
-      empPaciNum: new FormControl('',Validators.required),
-      empOtherId: new FormControl('',Validators.required),
-      membership: new FormControl('',Validators.required),
-      membershipJoiningDate: new FormControl('',Validators.required),
-      termination: new FormControl('',Validators.required),
-      terminationDate: new FormControl('',Validators.required),
-                       
-    })    
+      englishName: new FormControl('', Validators.required),
+      arabicName: new FormControl('', Validators.required),
+      empBirthday: new FormControl('', Validators.required),
+      empGender: new FormControl('', Validators.required),
+      empMaritalStatus: new FormControl('', Validators.required),
+      mobileNumber: new FormControl('', Validators.required),
+      empWorkTelephone: new FormControl('', Validators.required),
+      empWorkEmail: new FormControl('', Validators.required),
+      next2KinName: new FormControl('', Validators.required),
+      next2KinMobNumber: new FormControl('', Validators.required)
+    })
+    this.parentForm.setControl('addEmployeeForm', this.addEmployeeForm);
   }
-  
+  initializeJobDetailsForm() {
+    this.jobDetailsForm = this.fb.group({
+      department: new FormControl('', Validators.required),
+      departmentName: new FormControl('', Validators.required),
+      salary: new FormControl('', Validators.required),
+      empCidNum: new FormControl('', Validators.required),
+      empPaciNum: new FormControl('', Validators.required),
+      empOtherId: new FormControl('', Validators.required),
+    })
+    this.parentForm.setControl('jobDetailsForm', this.jobDetailsForm);
+  }
+  initializeMembershipForm() {
+    this.membershipForm = this.fb.group({
+      membership: new FormControl('', Validators.required),
+      membershipJoiningDate: new FormControl('', Validators.required),
+      termination: new FormControl('', Validators.required),
+      terminationDate: new FormControl('', Validators.required),
+    })
+    this.parentForm.setControl('membershipForm', this.membershipForm);
+  }
+  setUpParentForm() {
+    this.parentForm = this.fb.group({});
+  }
   //get gender(){return this.addEmployeeForm.get('gender')}
 
- 
-//Save employee data...
-  submitForm(){ 
+
+  //Save employee data...
+  submitForm() {
+    // Get Tenant Id
+    var data = JSON.parse(localStorage.getItem("user")!);
+    const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
+    //  TO CONVER OBJECT ARRAY AS SIMPLE ARRAY. 
+    let formData = {
+      ...this.parentForm.value.addEmployeeForm,
+      ...this.parentForm.value.jobDetailsForm,
+      ...this.parentForm.value.membershipForm,
+      ...this.parentForm.value.financialForm,
+      tenentID: tenantId[0], cruP_ID: 0
+    }
     //
-    this.isFormSubmitted = true;   
+    this.isFormSubmitted = true;
     //
-    if(this.addEmployeeForm.valid){
-      this.employeeService.AddEmployee(this.addEmployeeForm.value).subscribe(()=>{
-        this.toastrService.success('Saved successfully','Success');   
-        this.addEmployeeForm.reset();
-      })
-    } 
+    if (this.addEmployeeForm.valid) {
+      if(this.employeeId != null){
+        console.log(this.parentForm.value);
+      }else{
+        // this.employeeService.AddEmployee(formData).subscribe(() => {
+        //   this.toastrService.success('Saved successfully', 'Success');
+        //   this.parentForm.reset();
+        // })
+      }
+    }
   }
   //
   get empForm() { return this.addEmployeeForm.controls; }
@@ -173,8 +269,8 @@ export class AddemployeeinformationComponent implements OnInit {
     // reset the form value to the newly emitted form group value.
     this.addEmployeeForm = form;
   }
-saveSettings() {
-    this.isLoading$.next(true); 
+  saveSettings() {
+    this.isLoading$.next(true);
     setTimeout(() => {
       this.isLoading$.next(false);
       this.cdr.detectChanges();
@@ -185,5 +281,5 @@ saveSettings() {
     this.unsubscribe.forEach((sb) => sb.unsubscribe());
   }
 
-  
+
 }

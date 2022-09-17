@@ -57,8 +57,7 @@ namespace API.Servivces.Implementation.DetailedEmployee
         {
             if (_context != null)
             {
-                var newEmployee = _mapper.Map<Models.DetailedEmployee>(detailedEmployeeDto);
-                newEmployee.TenentId = 21;
+                var newEmployee = _mapper.Map<Models.DetailedEmployee>(detailedEmployeeDto);                
                 newEmployee.LocationId = 1;
                 newEmployee.EmployeeId = CommonMethods.CreateEmployeeId().ToString();                
                 await _context.DetailedEmployees.AddAsync(newEmployee);

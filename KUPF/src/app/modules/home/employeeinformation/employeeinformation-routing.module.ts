@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'view-employee', component: ViewemployeeinformationComponent },
   { path: 'view-contact', component: ViewContactComponent },
   { path: 'import-employee-master', component: ImportEmployeeMasterComponent },
-  { path: 'edit-employee/:id', component: EditemployeeinformationComponent }
+  { path: 'add-employee/:employeeId', component: AddemployeeinformationComponent }
 
 ];
 
