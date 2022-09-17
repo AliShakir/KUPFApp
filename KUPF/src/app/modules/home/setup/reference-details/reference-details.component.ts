@@ -154,15 +154,25 @@ export class ReferenceDetailsComponent implements OnInit {
   }
 
 
-  onUserFormSubmit() {    
+  onUserFormSubmit() { 
+    // Get Tenant Id
+    var data = JSON.parse(localStorage.getItem("user")!);
+    const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId); 
+     
+    //  TO CONVER OBJECT ARRAY AS SIMPLE ARRAY. 
+     let formData = {
+      ...this.userForm.value,
+      tenentID: tenantId[0], cruP_ID: 0
+    }  
+    
     //Add New record
-    this.refTableService.AddRefTable(this.userForm.value).subscribe(response => {
+    this.refTableService.AddRefTable(formData).subscribe(response => {
       if (response === 500) {
         this.toastrService.error('Something went wrong. please again latter', 'Error');
       } else {
         this.toastrService.success('Saved successfully', 'Success');
         this.isFormSubmitted = false;
-        //this.userForm.reset();
+        this.userForm.reset();
         // Refresh Grid
         //this.LoadData();
       }

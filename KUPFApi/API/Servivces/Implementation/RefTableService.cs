@@ -28,7 +28,7 @@ namespace API.Servivces.Implementation
             if (_context != null)
             {
                 var refId = (from d in _context.Reftables
-                            where d.TenentId == 21
+                            where d.TenentId == refTableDto.TenentId
                             && d.Reftype == refTableDto.Reftype
                             && d.Refsubtype == refTableDto.Refsubtype
                             select new
@@ -57,6 +57,7 @@ namespace API.Servivces.Implementation
                     newRefTable.Infrastructure = "N";
                 }
                 newRefTable.Refname1 = refTableDto.Refname3;
+                newRefTable.TenentId = refTableDto.TenentId;
                 await _context.Reftables.AddAsync(newRefTable);
                 
                 result = await _context.SaveChangesAsync();
