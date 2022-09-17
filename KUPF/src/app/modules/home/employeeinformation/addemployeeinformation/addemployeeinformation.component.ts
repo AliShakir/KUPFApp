@@ -26,6 +26,8 @@ export class AddemployeeinformationComponent implements OnInit {
   isChildFormSet = false;
   showChildComponent = false;
   //
+  //
+  isFormSubmitted = false;
   occupations$: Observable<SelectOccupationsDto[]>;
   departments$: Observable<SelectDepartmentsDto[]>;
   terminations$: Observable<SelectTerminationsDto[]>;
@@ -149,13 +151,20 @@ export class AddemployeeinformationComponent implements OnInit {
 
  
 //Save employee data...
-  submitForm(){     
-    this.employeeService.AddEmployee(this.addEmployeeForm.value).subscribe(()=>{
-      this.toastrService.success('Saved successfully','Success');   
-      this.addEmployeeForm.reset();
-    })
-    
+  submitForm(){ 
+    //
+    this.isFormSubmitted = true;   
+    //
+    if(this.addEmployeeForm.valid){
+      this.employeeService.AddEmployee(this.addEmployeeForm.value).subscribe(()=>{
+        this.toastrService.success('Saved successfully','Success');   
+        this.addEmployeeForm.reset();
+      })
+    } 
   }
+  //
+  get empForm() { return this.addEmployeeForm.controls; }
+  //
   addChildComponent(): void {
     this.showChildComponent = true;
   }
