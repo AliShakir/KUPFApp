@@ -64,6 +64,10 @@ namespace API.DTOs
         public decimal? AllowDiscountPer { get; set; }
         public decimal? AllowDiscountAmount { get; set; }
         public decimal? AllowDiscountDefault { get; set; }
+        public string? EnglishHTML { get; set; }
+        public string? ArabicHTML { get; set; }
+        public string? EnglishForm { get; set; }
+        public string? ArabicForm { get; set; }
 
     }
 }

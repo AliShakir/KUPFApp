@@ -53,5 +53,6 @@ namespace API.DTOs
         public string? Syncby { get; set; }
         public int? SynID { get; set; }
         public int CRUP_ID { get; set; }
+        public int? Menu_Level { get; set; }
     }
 }

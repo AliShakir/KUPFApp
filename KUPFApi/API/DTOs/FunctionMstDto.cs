@@ -55,5 +55,6 @@ namespace API.DTOs
         public string? SP5Name { get; set; }
         public bool? ACTIVEMENU { get; set; }
         public DateTime? MENUDATE { get; set; }
+        public int? Menu_Level { get; set; }
     }
 }

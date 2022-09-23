@@ -1,7 +1,7 @@
 
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
@@ -67,13 +67,24 @@ export class AddemployeeinformationComponent implements OnInit {
   /*----------------------------------------------------*/
   //#endregion
   datePickerConfig: Partial<BsDatepickerConfig> | undefined;
+  selectedStatus: number | undefined;
+  maritalStatusArray = [
+    { id: "1", name: 'Married' },
+    { id: "2", name: 'Single' }
+  ];
+  selectedGender: number | undefined;
+  genderArray: any = [
+    { id: "1", name: 'Male' },
+    { id: "2", name: 'Female' }
+  ];
   constructor(
     private cdr: ChangeDetectorRef,
     private employeeService: EmployeeService,
     private toastrService: ToastrService,
     private commonDbService: DbCommonService,
     private fb: FormBuilder,
-    private activatedRout: ActivatedRoute) {
+    private activatedRout: ActivatedRoute,
+    private router:Router) {
 
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-dark-blue' })
     const loadingSubscr = this.isLoading$
@@ -85,17 +96,8 @@ export class AddemployeeinformationComponent implements OnInit {
     this.employeeId = this.activatedRout.snapshot.paramMap.get('employeeId');
 
   }
-  selectedStatus: number | undefined;
-  maritalStatusArray = [
-    { id: 1, name: 'Married' },
-    { id: 2, name: 'Single' }
-  ];
-  selectedGender: number | undefined;
-  genderArray = [
-    { id: 1, name: 'Male' },
-    { id: 2, name: 'Female' }
-  ];
-
+  
+  selectedOccupation: number | undefined;
   ngOnInit(): void {
     this.initializeForm();
     //
@@ -141,26 +143,27 @@ export class AddemployeeinformationComponent implements OnInit {
     //#endregion
     // Get and fill data in Edit Mode...
     if (this.employeeId != null) {
-      console.log(this.employeeId);
+      
       this.editEmployeeInformation$ = this.employeeService.GetEmployeeById(this.employeeId);
       this.editEmployeeInformation$.subscribe((response: any) => {
-        console.log(response);
+        console.log(response);        
         this.parentForm.patchValue({
           addEmployeeForm: {
+            employeeId: this.employeeId,
             englishName: response.englishName,
             arabicName: response.arabicName,
             empBirthday: response.empBirthday,
-            empGender: response.empGender,
-            empMaritalStatus: response.empMaritalStatus,
+            empGender: response.empGender.toString(),
+            empMaritalStatus: response.empMaritalStatus.toString(),
             mobileNumber: response.mobileNumber,
             empWorkTelephone: response.empWorkTelephone,
             empWorkEmail: response.empWorkEmail,
             next2KinName: response.next2KinName,
             next2KinMobNumber: response.next2KinMobNumber
           },
-          jobDetailsForm: {
+          jobDetailsForm: {            
             department: response.department,
-            departmentName: response.departmentName,
+            departmentName: +response.departmentName,
             salary: response.salary,
             empCidNum: response.empCidNum,
             empPaciNum: response.empPaciNum,
@@ -169,7 +172,7 @@ export class AddemployeeinformationComponent implements OnInit {
           membershipForm: {
             membership: response.membership,
             membershipJoiningDate: response.membershipJoiningDate,
-            termination: response.termination,
+            termination: +response.termination,
             terminationDate: response.terminationDate,
           },
           financialForm: {
@@ -192,6 +195,7 @@ export class AddemployeeinformationComponent implements OnInit {
 
   initializeForm() {
     this.addEmployeeForm = this.fb.group({
+      employeeId: new FormControl(''),
       englishName: new FormControl('', Validators.required),
       arabicName: new FormControl('', Validators.required),
       empBirthday: new FormControl('', Validators.required),
@@ -236,7 +240,11 @@ export class AddemployeeinformationComponent implements OnInit {
     // Get Tenant Id
     var data = JSON.parse(localStorage.getItem("user")!);
     const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
-    //  TO CONVER OBJECT ARRAY AS SIMPLE ARRAY. 
+    //  TO CONVER OBJECT ARRAY AS SIMPLE ARRAY.
+    this.parentForm.controls.addEmployeeForm.patchValue({
+      empGender: +this.parentForm.value.addEmployeeForm.empGender,
+      empMaritalStatus: +this.parentForm.value.empMaritalStatus,
+    });
     let formData = {
       ...this.parentForm.value.addEmployeeForm,
       ...this.parentForm.value.jobDetailsForm,
@@ -247,10 +255,20 @@ export class AddemployeeinformationComponent implements OnInit {
     //
     this.isFormSubmitted = true;
     //
-    if (this.addEmployeeForm.valid) {
-      if(this.employeeId != null){
-        console.log(this.parentForm.value);
+    if (this.addEmployeeForm.valid) {      
+      if(this.employeeId != null){  
+        console.log(formData);        
+        // this.employeeService.UpdateEmployee(formData).subscribe(() => {
+        //   this.toastrService.success('Saved successfully', 'Success');
+        //   this.parentForm.reset();
+        //   this.router.navigateByUrl('/employee/view-employee') 
+        // }, error => {
+        //     if (error.status === 500) {
+        //       this.toastrService.error('Something went wrong', 'Error');
+        //     }
+        //   })
       }else{
+        console.log(formData); 
         // this.employeeService.AddEmployee(formData).subscribe(() => {
         //   this.toastrService.success('Saved successfully', 'Success');
         //   this.parentForm.reset();

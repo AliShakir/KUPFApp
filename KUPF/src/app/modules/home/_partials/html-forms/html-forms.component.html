@@ -1,0 +1,31 @@
+<ngb-accordion #acc="ngbAccordion" class="mb-2" activeIds="ngb-panel-0">
+    <ngb-panel>
+        <ng-template ngbPanelTitle>            
+            <h3 class="m-0 ArFontStyle" lang="AR-SA">HTML Forms</h3>  
+          </ng-template>
+      <ng-template ngbPanelContent >    
+        <form [formGroup]="editorForm" id="editorForm" autocomplete="off">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <h3 class="mt-2"><strong> English HTML</strong></h3>
+                </div>
+                <div class="col-md-6">
+                    <input type="file" class="form-control" formControlName="englishForm"/>
+                </div>
+            </div>
+            <ckeditor [editor]="Editor" data="English" class="ArFontStyle" formControlName="englishHtml"></ckeditor>        
+            <br/>        
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <h3><strong>Arabic HTML</strong></h3>
+                </div>
+                <div class="col-md-6">
+                    <input type="file" class="form-control" formControlName="arabicForm"/>
+                </div>
+            </div>
+            <ckeditor [editor]="Editor" data="عربى" class="ArFontStyle" formControlName="arabicHtml"></ckeditor>
+        </form>    
+       
+      </ng-template>
+    </ngb-panel>
+</ngb-accordion>

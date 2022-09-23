@@ -11,6 +11,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditFinancialDetailsComponent } from './edit-financial-details/edit-financial-details.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { HtmlFormsComponent } from './html-forms/html-forms.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 
 
@@ -21,7 +23,10 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ApprovalDetialsComponent,
     ContactDetailsComponent,
     SortPipe,
-    EditFinancialDetailsComponent
+    EditFinancialDetailsComponent,
+    HtmlFormsComponent,
+    
+
   ],
   imports: [
     CommonModule,
@@ -30,7 +35,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
     FormsModule,
     ReactiveFormsModule,
     BsDatepickerModule.forRoot(),
-    NgSelectModule
+    NgSelectModule,
+    CKEditorModule,
+
   ],
   exports: [
     SearchTabComponent,
@@ -41,6 +48,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     SortPipe,
     BsDatepickerModule,
     NgSelectModule,
+    HtmlFormsComponent
   ]
 })
 export class SearchTabModule { }

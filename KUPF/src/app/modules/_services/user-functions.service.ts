@@ -33,6 +33,17 @@ moduleWiseMenuItems: UserFunctionDto[]=[];
       })
     )
   }
+
+  // Get all user functions
+  GetAllFunctionUsers() {     
+    return this.httpClient.get<UserFunctionDto[]>(this.baseUrl +`FunctionMst/GetFunctionMst`).pipe(
+      map(userFunctions => {
+        this.userFunctions = userFunctions;
+        return userFunctions;
+      })
+    )
+  }
+
   // To get module wise menu items....
   // To fill dropdown...
   GetModuleWiseMenuItems() {     

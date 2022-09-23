@@ -48,6 +48,7 @@
         synID: number;
         cruP_ID: number;
         checked?: boolean;
+        menu_Level: number;
     }
 
 

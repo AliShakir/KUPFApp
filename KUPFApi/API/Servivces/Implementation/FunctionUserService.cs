@@ -102,13 +102,29 @@ namespace API.Servivces.Implementation
             return data;
         }
 
-        public async Task<int> DeleteFunctionUserByUserIdAsync(int id)
+        public async Task<int> DeleteFunctionUserByUserIdAsync(int userId, int moduleId)
         {
             int result = 0;
-
-            if (_context != null)
+                        
+            if (userId != 0 && moduleId != 0 )
             {
-                _context.Database.ExecuteSqlRaw("Delete From FUNCTION_USER WHERE [USER_ID]={0}", id);
+                var dbconfig = new ConfigurationBuilder()
+                  .SetBasePath(Directory.GetCurrentDirectory())
+                  .AddJsonFile("appsettings.json").Build();
+                var dbconnectionStr = dbconfig["ConnectionStrings:MsSqlConnection"];
+                using (SqlConnection connection = new SqlConnection(dbconnectionStr))
+                {
+                    string sql = "spDeleteFunctionUserByUserId";
+                    using (SqlCommand cmd = new SqlCommand(sql, connection))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@userId", userId);
+                        cmd.Parameters.AddWithValue("@moduleId", moduleId);
+                        connection.Open();
+                        result = cmd.ExecuteNonQuery();
+                        connection.Close();
+                    }
+                }
             }
             return result;
         }
@@ -123,7 +139,7 @@ namespace API.Servivces.Implementation
             List<FunctionUserDto> listFunctionUserDto = new List<FunctionUserDto>();
             using (SqlConnection connection = new SqlConnection(dbconnectionStr))
             {
-                string sql = "select Distinct MASTER_ID,MENU_ID,MENU_NAMEEnglish,MENU_NAMEArabic,ACTIVETILLDATE from FUNCTION_MST where MENU_ID in (select MASTER_ID from FUNCTION_MST) ORDER BY MENU_ID";
+                string sql = "select Distinct MASTER_ID,MENU_ID,MODULE_ID,MENU_LEVEL,MENU_NAMEEnglish,MENU_NAMEArabic,ACTIVETILLDATE from FUNCTION_MST Where MASTER_ID = 1 OR MASTER_ID = 0 ORder by MENU_ID ASC";
                 using (SqlCommand cmd = new SqlCommand(sql, connection))
                 {
                     
@@ -137,6 +153,8 @@ namespace API.Servivces.Implementation
                             FunctionUserDto functionUserDto = new FunctionUserDto();
                             functionUserDto.MASTER_ID = Convert.ToInt32(dataReader["MASTER_ID"]);
                             functionUserDto.MENU_ID = Convert.ToInt32(dataReader["MENU_ID"]);
+                            functionUserDto.MODULE_ID = Convert.ToInt32(dataReader["MODULE_ID"]);
+                            functionUserDto.Menu_Level = Convert.ToInt32(dataReader["Menu_Level"]);
                             functionUserDto.MENU_NAMEEnglish = dataReader["MENU_NAMEEnglish"].ToString();
                             functionUserDto.MENU_NAMEArabic = dataReader["MENU_NAMEArabic"].ToString();
                             listFunctionUserDto.Add(functionUserDto);

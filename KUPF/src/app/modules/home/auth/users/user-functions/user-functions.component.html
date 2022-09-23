@@ -28,9 +28,7 @@
             </div>
             <div class="col-lg-3 fv-row">
                 <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">Users</label>
-                <!-- <ng-select [items]="users$ | async" bindLabel="firstName" bindValue="userId">                            
-                </ng-select> -->
-                <select class="form-control" [(ngModel)]="userId">
+                <select class="form-control" [(ngModel)]="userId" disabled>
                     <option disabled selected>--Select User--</option>
                     <option *ngFor="let user of users$ | async" value="{{user.userId}}">{{user.firstName}}</option>
                 </select>
@@ -39,14 +37,14 @@
         </div>
         <hr />
 
-        <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+        <ngb-accordion #acc="ngbAccordion">
             <ngb-panel title="Module Wise Menu">
                 <ng-template ngbPanelContent>
                     <div class="row mb-4">
                         <div class="col-lg-4 fv-row">
-                            <select class="form-control bg-light" (change)="onMenuItemSelect($event)">
+                            <select class="form-control bg-light" (change)="onMenuItemSelect($event)" [(ngModel)]="SelectedMenuId">
                                 <option disabled selected>--Module Wise Menu--</option>
-                                <option *ngFor="let item of moduleWiseMenuItems$ | async" [value]="item.menU_ID">
+                                <option *ngFor="let item of moduleWiseMenuItems$ | async" [value]="item.modulE_ID">
                                     {{item.menU_NAMEEnglish}}</option>
                             </select>
                         </div>
@@ -59,58 +57,60 @@
                             </select>
                         </div>
                         <div class="col-lg-4 text-left">
-                            <button mat-raised-button color="primary" (click)="savedata()">Submit Menu Module
-                                Wise</button> |
-                            <button mat-raised-button color="accent" class="mt-4">Add</button>
+                            <button mat-raised-button color="primary" class="m-2" (click)="savedata()">Submit Menu Module
+                                Wise</button>
+                            <!-- <button mat-raised-button color="accent" class="mt-4">Add</button> -->
                         </div>
                     </div>
                     <!--Mat Table Below here-->
+                    <form action="" [formGroup]="headerCheckboxForm">
                     <div class="table-responsive mt-3">
                         <!--begin::Table-->
                         <table class="table table-row-bordered table-hover" >
                         <!--begin::Table head-->
-                        <thead class="headingBgColor">
-                            <tr class="text-center">
-                                <th class="min-w-240px text-center ArFontStyle" lang="AR-SA" >Menu and Sub Menu</th>
-                                <th class="min-w-20px ArFontStyle" lang="AR-SA" >
-                                    <mat-checkbox class="example-margin" (change)="checkAllCheckBoxvalue($event,'useR_TYPE')"></mat-checkbox>
-                                </th>
-                                <th class="min-w-20px ArFontStyle" lang="AR-SA" >
-                                    <mat-checkbox class="example-margin"(change)="checkAllCheckBoxvalue($event,'addflage')"></mat-checkbox>
-                                </th>
-                                <th class="min-w-20px ArFontStyle" lang="AR-SA" >
-                                    <mat-checkbox class="example-margin"(change)="checkAllCheckBoxvalue($event,'editflage')"></mat-checkbox>
-                                </th>
-                                <th class="min-w-20px ArFontStyle" lang="AR-SA" >
-                                    <mat-checkbox class="example-margin"(change)="checkAllCheckBoxvalue($event,'delflage')"></mat-checkbox>
-                                </th>
-                                <th class="min-w-20px ArFontStyle" lang="AR-SA" >
-                                    <mat-checkbox class="example-margin"(change)="checkAllCheckBoxvalue($event,'printflage')"></mat-checkbox>
-                                </th>
-                                <th class="min-w-20px ArFontStyle" lang="AR-SA">
-                                    <mat-checkbox class="example-margin"(change)="checkAllCheckBoxvalue($event,'emty')"></mat-checkbox>
-                                </th>   
-                                <th class="min-w-20px text-center ArFontStyle" lang="AR-SA" >
-                                    <mat-checkbox class="example-margin"(change)="checkAllCheckBoxvalue($event,'sP1')"></mat-checkbox>
-                                </th>
-                                <th class="min-w-20px ArFontStyle" lang="AR-SA" >
-                                    <mat-checkbox class="example-margin"(change)="checkAllCheckBoxvalue($event,'sP2')"></mat-checkbox>
-                                </th>
-                                <th class="min-w-20px ArFontStyle" lang="AR-SA" >
-                                    <mat-checkbox class="example-margin"(change)="checkAllCheckBoxvalue($event,'sP3')"></mat-checkbox>
-                                </th>
-                                <th class="min-w-20px ArFontStyle" lang="AR-SA" >
-                                    <mat-checkbox class="example-margin"(change)="checkAllCheckBoxvalue($event,'sP4')"></mat-checkbox>
-                                </th>
-                                <th class="min-w-20px ArFontStyle" lang="AR-SA" >
-                                    <mat-checkbox class="example-margin"(change)="checkAllCheckBoxvalue($event,'sP5')"></mat-checkbox>
-                                </th>
-                                <th class="min-w-20px ArFontStyle" lang="AR-SA" >
-                                    <mat-checkbox class="example-margin"(change)="checkAllCheckBoxvalue($event,'activE_FLAG')"></mat-checkbox>
-                                </th>                      
-                            </tr>
+                        <thead class="headingBgColor">                            
+                                <tr class="text-center">
+                                    <th class="min-w-240px text-center ArFontStyle" lang="AR-SA" >Menu and Sub Menu</th>
+                                    <th class="min-w-20px ArFontStyle" lang="AR-SA" >
+                                        <mat-checkbox class="example-margin" (change)="checkAllCheckBoxvalue($event,'useR_TYPE')" formControlName="AdminFlg" name="AdminFlg"></mat-checkbox>
+                                    </th>
+                                    <th class="min-w-20px ArFontStyle" lang="AR-SA" >
+                                        <mat-checkbox class="example-margin"(change)="checkAllCheckBoxvalue($event,'addflage')" formControlName="AddFlg" name="AddFlg"></mat-checkbox>
+                                    </th>
+                                    <th class="min-w-20px ArFontStyle" lang="AR-SA" >
+                                        <mat-checkbox class="example-margin"(change)="checkAllCheckBoxvalue($event,'editflage')" formControlName="EditFlg" name="EditFlg"></mat-checkbox>
+                                    </th>
+                                    <th class="min-w-20px ArFontStyle" lang="AR-SA" >
+                                        <mat-checkbox class="example-margin"(change)="checkAllCheckBoxvalue($event,'delflage')" formControlName="DelFlg" name="DelFlg"></mat-checkbox>
+                                    </th>
+                                    <th class="min-w-20px ArFontStyle" lang="AR-SA" >
+                                        <mat-checkbox class="example-margin"(change)="checkAllCheckBoxvalue($event,'printflage')" formControlName="PrintFlg" name="PrintFlg"></mat-checkbox>
+                                    </th>
+                                    <th class="min-w-20px ArFontStyle" lang="AR-SA">
+                                        <mat-checkbox class="example-margin"(change)="checkAllCheckBoxvalue($event,'emty')" formControlName="EmptyFlg" name="EmptyFlg"></mat-checkbox>
+                                    </th>   
+                                    <th class="min-w-20px text-center ArFontStyle" lang="AR-SA" >
+                                        <mat-checkbox class="example-margin"(change)="checkAllCheckBoxvalue($event,'sP1')" formControlName="Sp1Flg" name="Sp1Flg"></mat-checkbox>
+                                    </th>
+                                    <th class="min-w-20px ArFontStyle" lang="AR-SA" >
+                                        <mat-checkbox class="example-margin"(change)="checkAllCheckBoxvalue($event,'sP2')" formControlName="Sp2Flg" name="Sp2Flg"></mat-checkbox>
+                                    </th>
+                                    <th class="min-w-20px ArFontStyle" lang="AR-SA" >
+                                        <mat-checkbox class="example-margin"(change)="checkAllCheckBoxvalue($event,'sP3')" formControlName="Sp3Flg" name="Sp3Flg"></mat-checkbox>
+                                    </th>
+                                    <th class="min-w-20px ArFontStyle" lang="AR-SA" >
+                                        <mat-checkbox class="example-margin"(change)="checkAllCheckBoxvalue($event,'sP4')" formControlName="Sp4Flg" name="Sp4Flg"></mat-checkbox>
+                                    </th>
+                                    <th class="min-w-20px ArFontStyle" lang="AR-SA" >
+                                        <mat-checkbox class="example-margin"(change)="checkAllCheckBoxvalue($event,'sP5')" formControlName="Sp5Flg" name="Sp5Flg"></mat-checkbox>
+                                    </th>
+                                    <th class="min-w-20px ArFontStyle" lang="AR-SA" >
+                                        <mat-checkbox class="example-margin"(change)="checkAllCheckBoxvalue($event,'activE_FLAG')" formControlName="ActiveFlg" name="ActiveFlg"></mat-checkbox>
+                                    </th>                      
+                                </tr>
+                            
                         </thead>
-                        <thead class="subHeadingBgColor">
+                        <thead class="subHeadingBgColor">                            
                             <tr class="text-center">
                                 <th class="min-w-240px text-right ArFontStyle" lang="AR-SA" >Menu Items</th>
                                 <th class="min-w-20px ArFontStyle" lang="AR-SA" >
@@ -169,46 +169,45 @@
                                     <mat-checkbox class="example-margin" name="useR_TYPE" [checked]="item.useR_TYPE === 1" (change)="checkCheckBoxvalue($event,item,'useR_TYPE')"></mat-checkbox>
                                 </td>
                                 <td>
-                                    <mat-checkbox class="example-margin" name="addflage"  [checked]="item.addflage === 1" (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
+                                    <mat-checkbox class="example-margin" name="addflage"  [(ngModel)]="item.addflage" [ngModelOptions]="{standalone: true}" (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
                                 </td>
                                 <td>
-                                    <mat-checkbox class="example-margin" name="editflage"  [checked]="item.editflage === 1" (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
+                                    <mat-checkbox class="example-margin" name="editflage"  [(ngModel)]="item.editflage" [ngModelOptions]="{standalone: true}" (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
                                 </td>
                                 <td>
-                                    <mat-checkbox class="example-margin" name="delflage"   [checked]="item.delflage === 1" (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
+                                    <mat-checkbox class="example-margin" name="delflage"   [(ngModel)]="item.delflage" [ngModelOptions]="{standalone: true}" (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
                                 </td>
                                 <td>
-                                    <mat-checkbox class="example-margin" name="printflage"  [checked]="item.printflage === 1"   (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
+                                    <mat-checkbox class="example-margin" name="printflage"  [(ngModel)]="item.printflage" [ngModelOptions]="{standalone: true}"  (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
                                 </td>
                                 <td>
                                     <mat-checkbox class="example-margin" name="emty"  (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
                                 </td>
                                 <td>
-                                    <mat-checkbox class="example-margin"  name="sP1"  [checked]="item.sP1 === 1"(change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
+                                    <mat-checkbox class="example-margin"  name="sP1"  [(ngModel)]="item.sP1" [ngModelOptions]="{standalone: true}"  (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
                                 </td>
                                 <td>
-                                    <mat-checkbox class="example-margin"  name="sP2"  [checked]="item.sP2 === 1" (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
+                                    <mat-checkbox class="example-margin"  name="sP2"  [(ngModel)]="item.sP2" [ngModelOptions]="{standalone: true}"  (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
                                 </td>
                                 <td>
-                                    <mat-checkbox class="example-margin" name="sP3" [checked]="item.sP3 === 1" (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
+                                    <mat-checkbox class="example-margin" name="sP3" [(ngModel)]="item.sP3" [ngModelOptions]="{standalone: true}"  (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
                                 </td>
                                 <td>
-                                    <mat-checkbox class="example-margin" name="sP4" [checked]="item.sP4 === 1" (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
+                                    <mat-checkbox class="example-margin" name="sP4" [(ngModel)]="item.sP4" [ngModelOptions]="{standalone: true}"  (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
                                 </td>
                                 <td>
-                                    <mat-checkbox class="example-margin" name="sP5" [checked]="item.sP5 === 1" (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
+                                    <mat-checkbox class="example-margin" name="sP5" [(ngModel)]="item.sP5" [ngModelOptions]="{standalone: true}"  (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
                                 </td>
                                 <td>
-                                    <mat-checkbox class="example-margin" name="activE_FLAG" [checked]="item.activE_FLAG === 1" (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
+                                    <mat-checkbox class="example-margin" name="activE_FLAG" [(ngModel)]="item.activE_FLAG" [ngModelOptions]="{standalone: true}"  (change)="checkCheckBoxvalue($event,item)"></mat-checkbox>
                                 </td>
-                            </tr>                           
-                            
+                            </tr>
                         </tbody>
                         <!--end::Table body-->
-                    </table>
+                        </table>
                         <!--end::Table-->
                     </div>
-
+                    </form>
                 </ng-template>
 
             </ngb-panel>

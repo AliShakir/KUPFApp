@@ -50,4 +50,5 @@ export interface FunctionMstDto {
     sP5Name: string;
     activemenu: boolean;
     menudate: Date;
+    menu_Level:number;
 }

@@ -17,13 +17,12 @@ export class AsideMenuComponent implements OnInit {
   @Output() dataEvent = new EventEmitter<string>();
   //
   menuHeading: any[] = [];
+  color:any;
+  lang:any;
   constructor(private common: CommonService, private router: Router) { }
 
   ngOnInit(): void {
-    //
-    console.log('hello from aside menu');
-    //if(localStorage.getItem('userMenu') == null){ 
-    //localStorage.removeItem('userMenu');     
+    this.lang = localStorage.getItem('lang');
     this.menuHeading = JSON.parse(localStorage.getItem('userMenu') || '{}');
     console.log('aside-menu', this.menuHeading);
     

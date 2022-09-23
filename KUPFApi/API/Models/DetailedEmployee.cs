@@ -24,7 +24,7 @@ namespace API.Models
         public string DepartmentName { get; set; }
         public short? EmpGender { get; set; }
         public DateTime? EmpBirthday { get; set; }
-        public string EmpMaritalStatus { get; set; }
+        public short? EmpMaritalStatus { get; set; }
         public decimal? Salary { get; set; }
         public string EmpWorkTelephone { get; set; }
         public string EmpWorkEmail { get; set; }

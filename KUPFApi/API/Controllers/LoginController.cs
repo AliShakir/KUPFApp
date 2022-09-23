@@ -55,15 +55,15 @@ namespace API.Controllers
         [Route("GetUserFunctionsByUserId")]
         public async Task<ActionResult<IEnumerable<MenuHeadingDto>>> GetUserFunctionsByUserId(int id)
         {
-           List<MenuHeadingDto> menuHeader = new List<MenuHeadingDto>();
+            List<MenuHeadingDto> menuHeader = new List<MenuHeadingDto>();
             // Get menu data by UserId...
             var result = await _functionUserService.GetFunctionUserByUserIdAsync(id);
-            
+
             if (result.Count() > 0)
             {
                 // If has dashboard access...
                 var dasboard = result.FirstOrDefault(o => o.MENU_ID == 1);
-                if(dasboard !=null)
+                if (dasboard != null)
                 {
                     menuHeader.Add(new MenuHeadingDto
                     {
@@ -97,162 +97,283 @@ namespace API.Controllers
 
                     });
                 }
+                #region
+
                 // If employeeManagement...
-                var employeeManagementHeading = result.Where(c =>c.MASTER_ID == 0).ToArray();
-                if (employeeManagementHeading.Length > 0)
+                //var employeeManagementHeading = result.Where(c =>c.MASTER_ID == 0).ToArray();
+                //if (employeeManagementHeading.Length > 0)
+                //{
+                //    for (int x = 0; x <= employeeManagementHeading.Count() - 1; x++)
+                //    {
+                //        menuHeader.Add(new MenuHeadingDto
+                //        {
+                //            HeadingNameEnglish = employeeManagementHeading[x].MENU_NAMEEnglish,
+                //            HeadingNameArabic = employeeManagementHeading[x].MENU_NAMEArabic,
+                //            HeadingMenuId = employeeManagementHeading[x].MENU_ID,
+                //            HeadingIconPath = employeeManagementHeading[x].ICONPATH,
+                //            HeadingSmallText = employeeManagementHeading[x].SMALLTEXT,
+                //            HeadingFullName = employeeManagementHeading[x].FULL_NAME,
+                //            HeadingLink = employeeManagementHeading[x].LINK,
+                //            HeadingURLOption = employeeManagementHeading[x].Urloption,
+                //            HeadingURLRewrite = employeeManagementHeading[x].URLREWRITE,
+                //            HeadingMenuLocation = employeeManagementHeading[x].MENU_LOCATION,
+                //            HeadingMenuOrder = employeeManagementHeading[x].MENU_ORDER,
+                //            HeadingDocParent = employeeManagementHeading[x].DOC_PARENT,
+                //            HeadingAddFlage = employeeManagementHeading[x].ADDFLAGE,
+                //            HeadingEditFlage = employeeManagementHeading[x].EDITFLAGE,
+                //            HeadingDelFlage = employeeManagementHeading[x].DELFLAGE,
+                //            HeadingPrintFlage = employeeManagementHeading[x].PRINTFLAGE,
+                //            HeadingAmIGlobale = employeeManagementHeading[x].AMIGLOBALE,
+                //            HeadingMyPersonal = employeeManagementHeading[x].MYPERSONAL,
+                //            HeadingSp1 = employeeManagementHeading[x].SP1,
+                //            HeadingSp2 = employeeManagementHeading[x].SP2,
+                //            HeadingSp3 = employeeManagementHeading[x].SP3,
+                //            HeadingSp4 = employeeManagementHeading[x].SP4,
+                //            HeadingSp5 = employeeManagementHeading[x].SP5,
+                //            HeadingSpName1 = employeeManagementHeading[x].SP1Name,
+                //            HeadingSpName2 = employeeManagementHeading[x].SP2Name,
+                //            HeadingSpName3 = employeeManagementHeading[x].SP3Name,
+                //            HeadingSpName4 = employeeManagementHeading[x].SP4Name,
+                //            HeadingSpName5 = employeeManagementHeading[x].SP5Name
+
+                //        });
+                //        var menuItems = result.Where(c => c.MENU_TYPE =="9").ToArray();
+
+                //        for (int i = 0; i <= menuItems.Count() - 1; i++)
+                //        {
+                //            menuHeader[x].MenuItems.Add(new MenuItemsDto()
+                //            {
+                //                MenuItemNameEnglish = menuItems[i].MENU_NAMEEnglish,
+                //                MenuItemNameArabic = menuItems[i].MENU_NAMEArabic,
+                //                MenuItemIconPath = menuItems[i].ICONPATH,
+                //                MenuItemSmallText = menuItems[i].SMALLTEXT,
+                //                MenuItemFullName = menuItems[i].FULL_NAME,
+                //                MenuItemLink = menuItems[i].LINK,
+                //                MenuItemURLOption = menuItems[i].Urloption,
+                //                MenuItemURLRewrite = menuItems[i].URLREWRITE,
+                //                MenuItemMenuLocation = menuItems[i].MENU_LOCATION,
+                //                MenuItemMenuOrder = menuItems[i].MENU_ORDER,
+                //                MenuItemDocParent = menuItems[i].DOC_PARENT,
+                //                MenuItemAddFlage = menuItems[i].ADDFLAGE,
+                //                MenuItemEditFlage = menuItems[i].EDITFLAGE,
+                //                MenuItemDelFlage = menuItems[i].DELFLAGE,
+                //                MenuItemPrintFlage = menuItems[i].PRINTFLAGE,
+                //                MenuItemAmIGlobale = menuItems[i].AMIGLOBALE,
+                //                MenuItemMyPersonal = menuItems[i].MYPERSONAL,
+                //                MenuItemSp1 = menuItems[i].SP1,
+                //                MenuItemSp2 = menuItems[i].SP2,
+                //                MenuItemSp3 = menuItems[i].SP3,
+                //                MenuItemSp4 = menuItems[i].SP4,
+                //                MenuItemSp5 = menuItems[i].SP5,
+                //                MenuItemSpName1 = menuItems[i].SP1Name,
+                //                MenuItemSpName2 = menuItems[i].SP2Name,
+                //                MenuItemSpName3 = menuItems[i].SP3Name,
+                //                MenuItemSpName4 = menuItems[i].SP4Name,
+                //                MenuItemSpName5 = menuItems[i].SP5Name
+                //            });
+                //        }
+                //        // To filterout service management...
+                //        var serviceManagement = result.Where(c => c.MASTER_ID == employeeManagementHeading[x].MENU_ID && c.MENU_TYPE == "3").ToArray();
+                //        if (serviceManagement.Count() > 0)
+                //        {
+                //            for (int i = 0; i < serviceManagement.Length; i++)
+                //            {
+                //                menuHeader[x].ListMenuHeadingDto.Add(new MenuHeadingDto
+                //                {
+                //                    HeadingNameEnglish = serviceManagement[i].MENU_NAMEEnglish,
+                //                    HeadingNameArabic = serviceManagement[i].MENU_NAMEArabic,
+                //                    HeadingMenuId = serviceManagement[i].MENU_ID,
+                //                    HeadingIconPath = serviceManagement[i].ICONPATH,
+                //                    HeadingSmallText = serviceManagement[i].SMALLTEXT,
+                //                    HeadingFullName = serviceManagement[i].FULL_NAME,
+                //                    HeadingLink = serviceManagement[i].LINK,
+                //                    HeadingURLOption = serviceManagement[i].Urloption,
+                //                    HeadingURLRewrite = serviceManagement[i].URLREWRITE,
+                //                    HeadingMenuLocation = serviceManagement[i].MENU_LOCATION,
+                //                    HeadingMenuOrder = serviceManagement[i].MENU_ORDER,
+                //                    HeadingDocParent = serviceManagement[i].DOC_PARENT,
+                //                    HeadingAddFlage = serviceManagement[i].ADDFLAGE,
+                //                    HeadingEditFlage = serviceManagement[i].EDITFLAGE,
+                //                    HeadingDelFlage = serviceManagement[i].DELFLAGE,
+                //                    HeadingPrintFlage = serviceManagement[i].PRINTFLAGE,
+                //                    HeadingAmIGlobale = serviceManagement[i].AMIGLOBALE,
+                //                    HeadingMyPersonal = serviceManagement[i].MYPERSONAL,
+                //                    HeadingSp1 = serviceManagement[i].SP1,
+                //                    HeadingSp2 = serviceManagement[i].SP2,
+                //                    HeadingSp3 = serviceManagement[i].SP3,
+                //                    HeadingSp4 = serviceManagement[i].SP4,
+                //                    HeadingSp5 = serviceManagement[i].SP5,
+                //                    HeadingSpName1 = serviceManagement[i].SP1Name,
+                //                    HeadingSpName2 = serviceManagement[i].SP2Name,
+                //                    HeadingSpName3 = serviceManagement[i].SP3Name,
+                //                    HeadingSpName4 = serviceManagement[i].SP4Name,
+                //                    HeadingSpName5 = serviceManagement[i].SP5Name
+
+                //                });
+                //                var serviceMenuItem = result.Where(c => c.MASTER_ID == serviceManagement[i].MENU_ID && c.MENU_TYPE == "9").ToArray();
+                //                for (int b = 0; b < serviceMenuItem.Length; b++)
+                //                {
+                //                    menuHeader[x].ListMenuHeadingDto[i].MenuItems.Add(new MenuItemsDto()
+                //                    {
+                //                        MenuItemNameEnglish = serviceMenuItem[b].MENU_NAMEEnglish,
+                //                        MenuItemNameArabic = serviceMenuItem[b].MENU_NAMEArabic,
+                //                        MenuItemIconPath = serviceMenuItem[b].ICONPATH,
+                //                        MenuItemSmallText = serviceMenuItem[b].SMALLTEXT,
+                //                        MenuItemFullName = serviceMenuItem[b].FULL_NAME,
+                //                        MenuItemLink = serviceMenuItem[b].LINK,
+                //                        MenuItemURLOption = serviceMenuItem[b].Urloption,
+                //                        MenuItemURLRewrite = serviceMenuItem[b].URLREWRITE,
+                //                        MenuItemMenuLocation = serviceMenuItem[b].MENU_LOCATION,
+                //                        MenuItemMenuOrder = serviceMenuItem[b].MENU_ORDER,
+                //                        MenuItemDocParent = serviceMenuItem[b].DOC_PARENT,
+                //                        MenuItemAddFlage = serviceMenuItem[b].ADDFLAGE,
+                //                        MenuItemEditFlage = serviceMenuItem[b].EDITFLAGE,
+                //                        MenuItemDelFlage = serviceMenuItem[b].DELFLAGE,
+                //                        MenuItemPrintFlage = serviceMenuItem[b].PRINTFLAGE,
+                //                        MenuItemAmIGlobale = serviceMenuItem[b].AMIGLOBALE,
+                //                        MenuItemMyPersonal = serviceMenuItem[b].MYPERSONAL,
+                //                        MenuItemSp1 = serviceMenuItem[b].SP1,
+                //                        MenuItemSp2 = serviceMenuItem[b].SP2,
+                //                        MenuItemSp3 = serviceMenuItem[b].SP3,
+                //                        MenuItemSp4 = serviceMenuItem[b].SP4,
+                //                        MenuItemSp5 = serviceMenuItem[b].SP5,
+                //                        MenuItemSpName1 = serviceMenuItem[b].SP1Name,
+                //                        MenuItemSpName2 = serviceMenuItem[b].SP2Name,
+                //                        MenuItemSpName3 = serviceMenuItem[b].SP3Name,
+                //                        MenuItemSpName4 = serviceMenuItem[b].SP4Name,
+                //                        MenuItemSpName5 = serviceMenuItem[b].SP5Name
+                //                    });
+                //                }
+                //            }
+                //        }
+
+                //    }
+                //}
+                #endregion
+
+                // Get menu items
+                var menuItems = result.Where(c => c.MENU_TYPE == "1").ToArray();
+                if (menuItems.Length > 0)
                 {
-                    for (int x = 0; x <= employeeManagementHeading.Count() - 1; x++)
+                    for (int x = 0; x <= menuItems.Count() - 1; x++)
                     {
                         menuHeader.Add(new MenuHeadingDto
                         {
-                            HeadingNameEnglish = employeeManagementHeading[x].MENU_NAMEEnglish,
-                            HeadingNameArabic = employeeManagementHeading[x].MENU_NAMEArabic,
-                            HeadingMenuId = employeeManagementHeading[x].MENU_ID,
-                            HeadingIconPath = employeeManagementHeading[x].ICONPATH,
-                            HeadingSmallText = employeeManagementHeading[x].SMALLTEXT,
-                            HeadingFullName = employeeManagementHeading[x].FULL_NAME,
-                            HeadingLink = employeeManagementHeading[x].LINK,
-                            HeadingURLOption = employeeManagementHeading[x].Urloption,
-                            HeadingURLRewrite = employeeManagementHeading[x].URLREWRITE,
-                            HeadingMenuLocation = employeeManagementHeading[x].MENU_LOCATION,
-                            HeadingMenuOrder = employeeManagementHeading[x].MENU_ORDER,
-                            HeadingDocParent = employeeManagementHeading[x].DOC_PARENT,
-                            HeadingAddFlage = employeeManagementHeading[x].ADDFLAGE,
-                            HeadingEditFlage = employeeManagementHeading[x].EDITFLAGE,
-                            HeadingDelFlage = employeeManagementHeading[x].DELFLAGE,
-                            HeadingPrintFlage = employeeManagementHeading[x].PRINTFLAGE,
-                            HeadingAmIGlobale = employeeManagementHeading[x].AMIGLOBALE,
-                            HeadingMyPersonal = employeeManagementHeading[x].MYPERSONAL,
-                            HeadingSp1 = employeeManagementHeading[x].SP1,
-                            HeadingSp2 = employeeManagementHeading[x].SP2,
-                            HeadingSp3 = employeeManagementHeading[x].SP3,
-                            HeadingSp4 = employeeManagementHeading[x].SP4,
-                            HeadingSp5 = employeeManagementHeading[x].SP5,
-                            HeadingSpName1 = employeeManagementHeading[x].SP1Name,
-                            HeadingSpName2 = employeeManagementHeading[x].SP2Name,
-                            HeadingSpName3 = employeeManagementHeading[x].SP3Name,
-                            HeadingSpName4 = employeeManagementHeading[x].SP4Name,
-                            HeadingSpName5 = employeeManagementHeading[x].SP5Name
+                            HeadingNameEnglish = menuItems[x].MENU_NAMEEnglish,
+                            HeadingNameArabic = menuItems[x].MENU_NAMEArabic,
+                            HeadingMenuId = menuItems[x].MENU_ID,
+                            HeadingIconPath = menuItems[x].ICONPATH,
+                            HeadingSmallText = menuItems[x].SMALLTEXT,
+                            HeadingFullName = menuItems[x].FULL_NAME,
+                            HeadingLink = menuItems[x].LINK,
+                            HeadingURLOption = menuItems[x].Urloption,
+                            HeadingURLRewrite = menuItems[x].URLREWRITE,
+                            HeadingMenuLocation = menuItems[x].MENU_LOCATION,
+                            HeadingMenuOrder = menuItems[x].MENU_ORDER,
+                            HeadingDocParent = menuItems[x].DOC_PARENT,
+                            HeadingAddFlage = menuItems[x].ADDFLAGE,
+                            HeadingEditFlage = menuItems[x].EDITFLAGE,
+                            HeadingDelFlage = menuItems[x].DELFLAGE,
+                            HeadingPrintFlage = menuItems[x].PRINTFLAGE,
+                            HeadingAmIGlobale = menuItems[x].AMIGLOBALE,
+                            HeadingMyPersonal = menuItems[x].MYPERSONAL,
+                            HeadingSp1 = menuItems[x].SP1,
+                            HeadingSp2 = menuItems[x].SP2,
+                            HeadingSp3 = menuItems[x].SP3,
+                            HeadingSp4 = menuItems[x].SP4,
+                            HeadingSp5 = menuItems[x].SP5,
+                            HeadingSpName1 = menuItems[x].SP1Name,
+                            HeadingSpName2 = menuItems[x].SP2Name,
+                            HeadingSpName3 = menuItems[x].SP3Name,
+                            HeadingSpName4 = menuItems[x].SP4Name,
+                            HeadingSpName5 = menuItems[x].SP5Name
 
                         });
-                        var menuItems = result.Where(c => c.MASTER_ID == employeeManagementHeading[x].MENU_ID && c.MENU_TYPE =="9").ToArray();
+                        
+                        // To Get Childres of Menu Items...
+                        var menuItemsChildrens = result.Where(c =>c.MODULE_ID == menuItems[x].MODULE_ID && c.MASTER_ID == menuItems[x].MASTER_ID && c.MENU_NAMEEnglish != menuItems[x].MENU_NAMEEnglish).ToArray();
 
-                        for (int i = 0; i <= menuItems.Count() - 1; i++)
+                        for (int i = 0; i <= menuItemsChildrens.Count() - 1; i++)
                         {
                             menuHeader[x].MenuItems.Add(new MenuItemsDto()
                             {
-                                MenuItemNameEnglish = menuItems[i].MENU_NAMEEnglish,
-                                MenuItemNameArabic = menuItems[i].MENU_NAMEArabic,
-                                MenuItemIconPath = menuItems[i].ICONPATH,
-                                MenuItemSmallText = menuItems[i].SMALLTEXT,
-                                MenuItemFullName = menuItems[i].FULL_NAME,
-                                MenuItemLink = menuItems[i].LINK,
-                                MenuItemURLOption = menuItems[i].Urloption,
-                                MenuItemURLRewrite = menuItems[i].URLREWRITE,
-                                MenuItemMenuLocation = menuItems[i].MENU_LOCATION,
-                                MenuItemMenuOrder = menuItems[i].MENU_ORDER,
-                                MenuItemDocParent = menuItems[i].DOC_PARENT,
-                                MenuItemAddFlage = menuItems[i].ADDFLAGE,
-                                MenuItemEditFlage = menuItems[i].EDITFLAGE,
-                                MenuItemDelFlage = menuItems[i].DELFLAGE,
-                                MenuItemPrintFlage = menuItems[i].PRINTFLAGE,
-                                MenuItemAmIGlobale = menuItems[i].AMIGLOBALE,
-                                MenuItemMyPersonal = menuItems[i].MYPERSONAL,
-                                MenuItemSp1 = menuItems[i].SP1,
-                                MenuItemSp2 = menuItems[i].SP2,
-                                MenuItemSp3 = menuItems[i].SP3,
-                                MenuItemSp4 = menuItems[i].SP4,
-                                MenuItemSp5 = menuItems[i].SP5,
-                                MenuItemSpName1 = menuItems[i].SP1Name,
-                                MenuItemSpName2 = menuItems[i].SP2Name,
-                                MenuItemSpName3 = menuItems[i].SP3Name,
-                                MenuItemSpName4 = menuItems[i].SP4Name,
-                                MenuItemSpName5 = menuItems[i].SP5Name
+                                MenuItemNameEnglish = menuItemsChildrens[i].MENU_NAMEEnglish,
+                                MenuItemNameArabic = menuItemsChildrens[i].MENU_NAMEArabic,
+                                MenuItemIconPath = menuItemsChildrens[i].ICONPATH,
+                                MenuItemSmallText = menuItemsChildrens[i].SMALLTEXT, 
+                                MenuItemFullName = menuItemsChildrens[i].FULL_NAME,
+                                MenuItemLink = menuItemsChildrens[i].LINK,
+                                MenuItemURLOption = menuItemsChildrens[i].Urloption,
+                                MenuItemURLRewrite = menuItemsChildrens[i].URLREWRITE,
+                                MenuItemMenuLocation = menuItemsChildrens[i].MENU_LOCATION,
+                                MenuItemMenuOrder = menuItemsChildrens[i].MENU_ORDER,
+                                MenuItemDocParent = menuItemsChildrens[i].DOC_PARENT,
+                                MenuItemAddFlage = menuItemsChildrens[i].ADDFLAGE,
+                                MenuItemEditFlage = menuItemsChildrens[i].EDITFLAGE,
+                                MenuItemDelFlage = menuItemsChildrens[i].DELFLAGE,
+                                MenuItemPrintFlage = menuItemsChildrens[i].PRINTFLAGE,
+                                MenuItemAmIGlobale = menuItemsChildrens[i].AMIGLOBALE,
+                                MenuItemMyPersonal = menuItemsChildrens[i].MYPERSONAL,
+                                MenuItemSp1 = menuItemsChildrens[i].SP1,
+                                MenuItemSp2 = menuItemsChildrens[i].SP2,
+                                MenuItemSp3 = menuItemsChildrens[i].SP3,
+                                MenuItemSp4 = menuItemsChildrens[i].SP4,
+                                MenuItemSp5 = menuItemsChildrens[i].SP5,
+                                MenuItemSpName1 = menuItemsChildrens[i].SP1Name,
+                                MenuItemSpName2 = menuItemsChildrens[i].SP2Name,
+                                MenuItemSpName3 = menuItemsChildrens[i].SP3Name,
+                                MenuItemSpName4 = menuItemsChildrens[i].SP4Name,
+                                MenuItemSpName5 = menuItemsChildrens[i].SP5Name
                             });
-                        }
-                        // To filterout service management...
-                        var serviceManagement = result.Where(c => c.MASTER_ID == employeeManagementHeading[x].MENU_ID && c.MENU_TYPE == "3").ToArray();
-                        if (serviceManagement.Count() > 0)
-                        {
-                            for (int i = 0; i < serviceManagement.Length; i++)
-                            {
-                                menuHeader[x].ListMenuHeadingDto.Add(new MenuHeadingDto
-                                {
-                                    HeadingNameEnglish = serviceManagement[i].MENU_NAMEEnglish,
-                                    HeadingNameArabic = serviceManagement[i].MENU_NAMEArabic,
-                                    HeadingMenuId = serviceManagement[i].MENU_ID,
-                                    HeadingIconPath = serviceManagement[i].ICONPATH,
-                                    HeadingSmallText = serviceManagement[i].SMALLTEXT,
-                                    HeadingFullName = serviceManagement[i].FULL_NAME,
-                                    HeadingLink = serviceManagement[i].LINK,
-                                    HeadingURLOption = serviceManagement[i].Urloption,
-                                    HeadingURLRewrite = serviceManagement[i].URLREWRITE,
-                                    HeadingMenuLocation = serviceManagement[i].MENU_LOCATION,
-                                    HeadingMenuOrder = serviceManagement[i].MENU_ORDER,
-                                    HeadingDocParent = serviceManagement[i].DOC_PARENT,
-                                    HeadingAddFlage = serviceManagement[i].ADDFLAGE,
-                                    HeadingEditFlage = serviceManagement[i].EDITFLAGE,
-                                    HeadingDelFlage = serviceManagement[i].DELFLAGE,
-                                    HeadingPrintFlage = serviceManagement[i].PRINTFLAGE,
-                                    HeadingAmIGlobale = serviceManagement[i].AMIGLOBALE,
-                                    HeadingMyPersonal = serviceManagement[i].MYPERSONAL,
-                                    HeadingSp1 = serviceManagement[i].SP1,
-                                    HeadingSp2 = serviceManagement[i].SP2,
-                                    HeadingSp3 = serviceManagement[i].SP3,
-                                    HeadingSp4 = serviceManagement[i].SP4,
-                                    HeadingSp5 = serviceManagement[i].SP5,
-                                    HeadingSpName1 = serviceManagement[i].SP1Name,
-                                    HeadingSpName2 = serviceManagement[i].SP2Name,
-                                    HeadingSpName3 = serviceManagement[i].SP3Name,
-                                    HeadingSpName4 = serviceManagement[i].SP4Name,
-                                    HeadingSpName5 = serviceManagement[i].SP5Name
 
-                                });
-                                var serviceMenuItem = result.Where(c => c.MASTER_ID == serviceManagement[i].MENU_ID && c.MENU_TYPE == "9").ToArray();
-                                for (int b = 0; b < serviceMenuItem.Length; b++)
+                           // var menuItemsGrandChildrens = result.Where(c => c.MODULE_ID == menuItemsChildrens[i].MODULE_ID && c.MENU_TYPE == "3" ).ToArray();
+
+                            if (menuItemsChildrens[i].MENU_TYPE == "3")
+                            {
+                                var menuItemsGrandChildrens = result.Where(c => c.MODULE_ID == menuItemsChildrens[i].MODULE_ID && c.MASTER_ID == menuItemsChildrens[i].MENU_ID).ToArray();
+                                for (int z = 0; z < menuItemsGrandChildrens.Count(); z++)
                                 {
-                                    menuHeader[x].ListMenuHeadingDto[i].MenuItems.Add(new MenuItemsDto()
+                                    menuHeader[x].MenuItems[i].MenuItems.Add(new MenuItemsDto()
                                     {
-                                        MenuItemNameEnglish = serviceMenuItem[b].MENU_NAMEEnglish,
-                                        MenuItemNameArabic = serviceMenuItem[b].MENU_NAMEArabic,
-                                        MenuItemIconPath = serviceMenuItem[b].ICONPATH,
-                                        MenuItemSmallText = serviceMenuItem[b].SMALLTEXT,
-                                        MenuItemFullName = serviceMenuItem[b].FULL_NAME,
-                                        MenuItemLink = serviceMenuItem[b].LINK,
-                                        MenuItemURLOption = serviceMenuItem[b].Urloption,
-                                        MenuItemURLRewrite = serviceMenuItem[b].URLREWRITE,
-                                        MenuItemMenuLocation = serviceMenuItem[b].MENU_LOCATION,
-                                        MenuItemMenuOrder = serviceMenuItem[b].MENU_ORDER,
-                                        MenuItemDocParent = serviceMenuItem[b].DOC_PARENT,
-                                        MenuItemAddFlage = serviceMenuItem[b].ADDFLAGE,
-                                        MenuItemEditFlage = serviceMenuItem[b].EDITFLAGE,
-                                        MenuItemDelFlage = serviceMenuItem[b].DELFLAGE,
-                                        MenuItemPrintFlage = serviceMenuItem[b].PRINTFLAGE,
-                                        MenuItemAmIGlobale = serviceMenuItem[b].AMIGLOBALE,
-                                        MenuItemMyPersonal = serviceMenuItem[b].MYPERSONAL,
-                                        MenuItemSp1 = serviceMenuItem[b].SP1,
-                                        MenuItemSp2 = serviceMenuItem[b].SP2,
-                                        MenuItemSp3 = serviceMenuItem[b].SP3,
-                                        MenuItemSp4 = serviceMenuItem[b].SP4,
-                                        MenuItemSp5 = serviceMenuItem[b].SP5,
-                                        MenuItemSpName1 = serviceMenuItem[b].SP1Name,
-                                        MenuItemSpName2 = serviceMenuItem[b].SP2Name,
-                                        MenuItemSpName3 = serviceMenuItem[b].SP3Name,
-                                        MenuItemSpName4 = serviceMenuItem[b].SP4Name,
-                                        MenuItemSpName5 = serviceMenuItem[b].SP5Name
+                                        MenuItemNameEnglish = menuItemsGrandChildrens[z].MENU_NAMEEnglish,
+                                        MenuItemNameArabic = menuItemsGrandChildrens[z].MENU_NAMEArabic,
+                                        MenuItemIconPath = menuItemsGrandChildrens[z].ICONPATH,
+                                        MenuItemSmallText = menuItemsGrandChildrens[z].SMALLTEXT,
+                                        MenuItemFullName = menuItemsGrandChildrens[z].FULL_NAME,
+                                        MenuItemLink = menuItemsGrandChildrens[z].LINK,
+                                        MenuItemURLOption = menuItemsGrandChildrens[z].Urloption,
+                                        MenuItemURLRewrite = menuItemsGrandChildrens[z].URLREWRITE,
+                                        MenuItemMenuLocation = menuItemsGrandChildrens[z].MENU_LOCATION,
+                                        MenuItemMenuOrder = menuItemsGrandChildrens[z].MENU_ORDER,
+                                        MenuItemDocParent = menuItemsGrandChildrens[z].DOC_PARENT,
+                                        MenuItemAddFlage = menuItemsGrandChildrens[z].ADDFLAGE,
+                                        MenuItemEditFlage = menuItemsGrandChildrens[z].EDITFLAGE,
+                                        MenuItemDelFlage = menuItemsGrandChildrens[z].DELFLAGE,
+                                        MenuItemPrintFlage = menuItemsGrandChildrens[z].PRINTFLAGE,
+                                        MenuItemAmIGlobale = menuItemsGrandChildrens[z].AMIGLOBALE,
+                                        MenuItemMyPersonal = menuItemsGrandChildrens[z].MYPERSONAL,
+                                        MenuItemSp1 = menuItemsGrandChildrens[z].SP1,
+                                        MenuItemSp2 = menuItemsGrandChildrens[z].SP2,
+                                        MenuItemSp3 = menuItemsGrandChildrens[z].SP3,
+                                        MenuItemSp4 = menuItemsGrandChildrens[z].SP4,
+                                        MenuItemSp5 = menuItemsGrandChildrens[z].SP5,
+                                        MenuItemSpName1 = menuItemsGrandChildrens[z].SP1Name,
+                                        MenuItemSpName2 = menuItemsGrandChildrens[z].SP2Name,
+                                        MenuItemSpName3 = menuItemsGrandChildrens[z].SP3Name,
+                                        MenuItemSpName4 = menuItemsGrandChildrens[z].SP4Name,
+                                        MenuItemSpName5 = menuItemsGrandChildrens[z].SP5Name
                                     });
                                 }
                             }
                         }
-
                     }
                 }
-                
+
+               
             }
-            
             return Ok(menuHeader);
+
         }
-
-
     }
 }
+

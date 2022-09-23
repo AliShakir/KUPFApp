@@ -77,12 +77,13 @@ namespace API.Controllers
         {
 
             var userExistingUserRights = _context.FUNCTION_USER
-                .Where(c => c.USER_ID == functionForUserDto.FirstOrDefault().USER_ID).ToList();
-            
+                .Where(c => c.USER_ID == functionForUserDto.FirstOrDefault().USER_ID && c.MODULE_ID ==
+                functionForUserDto.FirstOrDefault().MODULE_ID).ToList();
+
             if (userExistingUserRights.Count > 0)
             {
-                await _functionUserService.DeleteFunctionUserByUserIdAsync(functionForUserDto.FirstOrDefault().USER_ID);
-            }           
+                await _functionUserService.DeleteFunctionUserByUserIdAsync(functionForUserDto.FirstOrDefault().USER_ID, functionForUserDto.FirstOrDefault().MODULE_ID);
+            }
 
             for (int i = 0; i < functionForUserDto.Length; i++)
             {
@@ -97,10 +98,10 @@ namespace API.Controllers
         public async Task<ActionResult<IEnumerable<FunctionUserDto>>> GetFunctionUserByUserIdAsync(int id)
         {
             var result = await _functionUserService.GetFunctionUserByUserIdAsync(id);
-            if (!result.Any())
-            {
-                return RedirectToAction("GetFunctionMst", "FunctionMst");
-            }
+            //if (!result.Any())
+            //{
+            //    return RedirectToAction("GetFunctionMst", "FunctionMst");
+            //}
             return Ok(result);
         }
         [HttpGet]

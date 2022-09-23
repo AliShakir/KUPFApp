@@ -28,6 +28,8 @@
       <div class="row gx-9 gy-6" *ngFor="let bodyLabel of formBodyLabels; let i = index">
         <form autocomplete="off" [formGroup]="addEmployeeForm" (ngSubmit)="onSubmit()" id="employeeForm">
           <div class="row mb-6">
+            <input type="hidden" formControlName="employeeId" name="empployeeId" />
+
             <div class="col-lg-6 fv-row">
               <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"
                 lang="AR-SA">{{bodyLabel[4].title}}</label>
@@ -42,8 +44,8 @@
               <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"
                 lang="AR-SA">{{bodyLabel[5].title}}</label>
               <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" name="arabicName"
-              formControlName="arabicName" />
-                <!-- <span class="text-danger"
+                formControlName="arabicName" />
+              <!-- <span class="text-danger"
                 *ngIf="(empForm.arabicName.touched || submitted) && empForm.arabicName.errors?.required">
                 Arabic Name is required
               </span> -->
@@ -58,8 +60,8 @@
                   <i class="fas fa-calendar"></i>
                 </span>
                 <input type="text" class="form-control" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }"
-                formControlName="empBirthday"/>
-                  
+                  formControlName="empBirthday" />
+
               </div>
               <!-- <span class="text-danger"
                   *ngIf="(empForm.empBirthday.touched || submitted) && empForm.empBirthday.errors?.required">
@@ -68,7 +70,7 @@
             </div>
             <div class="col-lg-4 fv-row">
               <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[7].title}}</label>
-              <ng-select [(ngModel)]="selectedGender" formControlName="empGender">
+              <ng-select formControlName="empGender">
                 <ng-option *ngFor="let item of genderArray" [value]="item.id">{{item.name}}</ng-option>
               </ng-select>
               <!-- <span class="text-danger"
@@ -78,7 +80,7 @@
             </div>
             <div class="col-lg-4 fv-row">
               <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[8].title}}</label>
-              <ng-select [(ngModel)]="selectedStatus" formControlName="empMaritalStatus">
+              <ng-select  formControlName="empMaritalStatus">
                 <ng-option *ngFor="let item of maritalStatusArray" [value]="item.id">{{item.name}}</ng-option>
               </ng-select>
               <!-- <span class="text-danger"
@@ -96,7 +98,7 @@
                   <i class="fas fa-mobile-alt"></i>
                 </span>
                 <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" name="nameInArabic"
-                formControlName="mobileNumber"/>                  
+                  formControlName="mobileNumber" />
               </div>
               <!-- <span class="text-danger"
                   *ngIf="(empForm.mobileNumber.touched || submitted) && empForm.mobileNumber.errors?.required">
@@ -111,7 +113,7 @@
                   <i class="fas fa-phone"></i>
                 </span>
                 <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" name="nameInArabic"
-                formControlName="empWorkTelephone"/>
+                  formControlName="empWorkTelephone" />
               </div>
             </div>
             <div class="col-lg-4 fv-row">
@@ -122,7 +124,7 @@
                   <i class="fas fa-envelope"></i>
                 </span>
                 <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" name="nameInArabic"
-                formControlName="empWorkEmail"/>                  
+                  formControlName="empWorkEmail" />
               </div>
               <!-- <span class="text-danger"
                   *ngIf="(empForm.empWorkEmail.touched || submitted) && empForm.empWorkEmail.errors?.required">
@@ -135,7 +137,7 @@
               <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"
                 lang="AR-SA">{{bodyLabel[12].title}}</label>
               <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" name="next2KinName"
-              formControlName="next2KinName" />
+                formControlName="next2KinName" />
             </div>
             <div class="col-lg-6 fv-row">
               <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"
@@ -145,7 +147,7 @@
                   <i class="fas fa-mobile-alt"></i>
                 </span>
                 <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" name="next2KinMobNumber"
-                formControlName="next2KinMobNumber" />
+                  formControlName="next2KinMobNumber" />
               </div>
             </div>
           </div>
@@ -165,16 +167,15 @@
       <div class="row gx-9 gy-6" *ngFor="let bodyLabel of formBodyLabels; let i = index">
         <form autocomplete="off" [formGroup]="jobDetailsForm">
           <div class="row mb-6">
-            <div class="col-lg-6 fv-row">
+            <div class="col-lg-6 fv-row">              
               <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[15].title}}</label>
-              <ng-select [items]="departments$ | async" bindLabel="shortname" bindValue="refid"
-              formControlName="department">
+              <ng-select [items]="departments$ | async" bindLabel="shortname" bindValue="refid" formControlName="department">
               </ng-select>
             </div>
             <div class="col-lg-6 fv-row">
               <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[16].title}}</label>
               <ng-select [items]="occupations$ | async" bindLabel="shortname" bindValue="refid"
-              formControlName="departmentName">
+                formControlName="departmentName">
               </ng-select>
             </div>
           </div>
@@ -182,26 +183,24 @@
             <div class="col-lg-3 fv-row">
               <label class="col-lg-6 col-form-label fw-bold fs-6 ArFontStyle"
                 lang="AR-SA">{{bodyLabel[17].title}}</label>
-              <input type="number" class="form-control form-control-lg  mb-3 mb-lg-0"
-              formControlName="salary" />
+              <input type="number" class="form-control form-control-lg  mb-3 mb-lg-0" formControlName="salary" />
             </div>
             <div class="col-lg-3 fv-row">
               <label class="col-lg-6 col-form-label fw-bold fs-6 ArFontStyle"
                 lang="AR-SA">{{bodyLabel[18].title}}</label>
-              <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0"
-              formControlName="empCidNum" />
+              <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" formControlName="empCidNum" />
             </div>
             <div class="col-lg-3 fv-row">
               <label class="col-lg-6 col-form-label fw-bold fs-6 ArFontStyle"
                 lang="AR-SA">{{bodyLabel[19].title}}</label>
               <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" name="nameInArabic"
-              formControlName="empPaciNum" />
+                formControlName="empPaciNum" />
             </div>
             <div class="col-lg-3 fv-row">
               <label class="col-lg-6 col-form-label fw-bold fs-6 ArFontStyle"
                 lang="AR-SA">{{bodyLabel[20].title}}</label>
               <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" name="nameInArabic"
-              formControlName="empOtherId" />
+                formControlName="empOtherId" />
             </div>
           </div>
         </form>
@@ -222,8 +221,7 @@
           <div class="row">
             <div class="col-lg-6 fv-row">
               <label class="col-lg-4 col-form-label fw-bold fs-6">{{bodyLabel[22].title}}</label>
-              <input type="text" class="form-control" name="nameInArabic"
-              formControlName="membership"/>
+              <input type="text" class="form-control" name="nameInArabic" formControlName="membership" />
             </div>
             <div class="col-lg-6 fv-row">
               <label class="col-lg-4 col-form-label fw-bold fs-6">{{bodyLabel[23].title}}</label>
@@ -232,7 +230,7 @@
                   <i class="fas fa-calendar"></i>
                 </span>
                 <input type="text" class="form-control" bsDatepicker [bsConfig]="datePickerConfig"
-                formControlName="membershipJoiningDate" />
+                  formControlName="membershipJoiningDate" />
               </div>
             </div>
           </div>
@@ -240,7 +238,7 @@
             <div class="col-lg-6 fv-row">
               <label class="col-lg-4 col-form-label fw-bold fs-6">{{bodyLabel[24].title}}</label>
               <ng-select [items]="terminations$ | async" bindLabel="shortname" bindValue="refid"
-              formControlName="termination">
+                formControlName="termination">
               </ng-select>
             </div>
             <div class="col-lg-6 fv-row">
@@ -250,7 +248,7 @@
                   <i class="fas fa-calendar"></i>
                 </span>
                 <input type="text" class="form-control" bsDatepicker [bsConfig]="datePickerConfig"
-                formControlName="terminationDate" />
+                  formControlName="terminationDate" />
               </div>
             </div>
           </div>

@@ -18,7 +18,7 @@
         departmentName: string;
         empGender: number;
         empBirthday: Date;
-        empMaritalStatus: string;
+        empMaritalStatus: number;
         salary: number;
         empWorkTelephone: string;
         empWorkEmail: string;

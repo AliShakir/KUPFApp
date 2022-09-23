@@ -23,6 +23,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from './modules/_interceptors/loading.interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { NgxEditorModule } from 'ngx-editor';
 
 // #fake-end#
 
@@ -79,7 +80,7 @@ function appInitializer(authService: AuthService) {
     //   }),
       
       NgxSpinnerModule, 
-      NgSelectModule, 
+      NgSelectModule 
   ],
   
   exports:[

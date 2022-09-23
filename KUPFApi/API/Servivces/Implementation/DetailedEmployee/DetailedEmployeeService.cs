@@ -72,10 +72,17 @@ namespace API.Servivces.Implementation.DetailedEmployee
         {
             if (_context != null)
             {
-                var existingEmployee = _mapper.Map<Models.DetailedEmployee>(detailedEmployeeDto);
-                _context.DetailedEmployees.Update(existingEmployee);
+                var existingEmployee = _context.DetailedEmployees
+                    .Where(c => c.EmployeeId == detailedEmployeeDto.EmployeeId).FirstOrDefault();
 
-                await _context.SaveChangesAsync();
+                if(existingEmployee != null)
+                {
+                    _mapper.Map(detailedEmployeeDto, existingEmployee);
+                    existingEmployee.LocationId = 1;
+                    _context.DetailedEmployees.Update(existingEmployee);
+                    await _context.SaveChangesAsync();
+                }
+                
                 return detailedEmployeeDto.EmployeeId;
             };
             return string.Empty;

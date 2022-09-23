@@ -1,4 +1,4 @@
-export interface ServiceSetupDto{
+export interface ServiceSetupDto {
     tenentId: number;
     serviceId: number;
     masterServiceId: string;
@@ -56,4 +56,8 @@ export interface ServiceSetupDto{
     allowDiscountPer?: any;
     allowDiscountAmount?: any;
     allowDiscountDefault?: any;
+    englishHTML?: any;
+    arabicHTML?: any;
+    englishForm?: any;
+    arabicForm?: any;
 }

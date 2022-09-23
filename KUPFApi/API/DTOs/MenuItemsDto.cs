@@ -7,6 +7,11 @@ namespace API.DTOs
 {
     public class MenuItemsDto
     {
+        public MenuItemsDto()
+        {
+            MenuItems = new List<MenuItemsDto>();
+            
+        }
         public string MenuItemNameEnglish { get; set; }
         public string MenuItemNameArabic { get; set; }
         public string MenuItemIconPath { get; set; }
@@ -38,5 +43,6 @@ namespace API.DTOs
         public string MenuItemSpName5 { get; set; }
         public bool ActiveMenu { get; set; }
         public DateTime MenuDate { get; set; }
+        public List<MenuItemsDto> MenuItems { get; set; }
     }
 }

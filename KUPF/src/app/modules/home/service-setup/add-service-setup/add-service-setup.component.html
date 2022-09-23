@@ -68,7 +68,7 @@
                         </div>
                         <div class="col-lg-3 fv-row">
                             <label class="col-form-label fw-bold fs-6 ArFontStyle"><span class="">{{bodyLabel[8].title}}</span></label>
-                            <ng-select [items]="minMonthOfServices$ | async" bindLabel="serviceId" bindValue="minMonthsService" formControlName="minMonthsService">                            
+                            <ng-select [items]="minimumMonthOfServices" bindLabel="id" bindValue="name" formControlName="minMonthsService">                            
                             </ng-select>
                         </div>
                         <div class="col-lg-3 fv-row">
@@ -146,10 +146,15 @@
 <app-approval-detials [parentFormGroup]="parentForm">
 
 </app-approval-detials>
-<br>
+<br/>
 <app-financial-detials [parentFormGroup]="parentForm">
 
 </app-financial-detials>
+
+<br/>
+<app-html-forms [parentFormGroup]="parentForm"> 
+
+</app-html-forms>
 
 
 
