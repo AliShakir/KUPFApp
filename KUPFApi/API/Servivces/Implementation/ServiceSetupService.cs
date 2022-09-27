@@ -26,15 +26,17 @@ namespace API.Servivces.Implementation
 
             if (_context != null)
             {
+                var maxIdServiceId = (from d in _context.ServiceSetups
+                                      where d.TenentId == serviceSetupDto.TenentId
+                                      select new
+                                      {
+                                          ServiceId = d.ServiceId + 1
+                                      })
+                         .Distinct()
+                         .OrderBy(x => 1).Max(c => c.ServiceId);
                 var newService = _mapper.Map<ServiceSetup>(serviceSetupDto);
-                if (newService.AllowedNonEmployes=="true")
-                {
-                    newService.AllowedNonEmployes = "1";
-                }
-                else
-                {
-                    newService.AllowedNonEmployes = "0";
-                }
+                newService.ServiceId = maxIdServiceId;
+                
                 await _context.ServiceSetups.AddAsync(newService);
                 result = await _context.SaveChangesAsync();
                 return result;
@@ -48,18 +50,18 @@ namespace API.Servivces.Implementation
             int result = 0;
             if (_context != null)
             {
-                if(serviceSetupDto != null)
+                if (serviceSetupDto != null)
                 {
-                    var existingService = _context.ServiceSetups.Where(c=>c.ServiceId == serviceSetupDto.ServiceId).FirstOrDefault();
-                    if(existingService != null)
+                    var existingService = _context.ServiceSetups.Where(c => c.ServiceId == serviceSetupDto.ServiceId).FirstOrDefault();
+                    if (existingService != null)
                     {
-                        _mapper.Map(serviceSetupDto,existingService);
+                        _mapper.Map(serviceSetupDto, existingService);
                         _context.ServiceSetups.Update(existingService);
                         result = await _context.SaveChangesAsync();
                         return result;
                     }
                 }
-                
+
             };
             return result;
         }
@@ -87,11 +89,25 @@ namespace API.Servivces.Implementation
             var data = _mapper.Map<ServiceSetupDto>(result);
             return data;
         }
-        public async Task<IEnumerable<ServiceSetupDto>> GetServiceSetupAsync()
+        public Task<List<ServiceSetupDto>> GetServiceSetupAsync()
         {
-            var result = await _context.ServiceSetups.ToListAsync();
-            var data = _mapper.Map<IEnumerable<ServiceSetupDto>>(result);
-            return data;
+            var result = (from r in _context.Reftables
+                        join s in _context.ServiceSetups
+                        on r.Refid equals s.ServiceType
+                        where r.Refsubtype == "ServiceType"
+                        select new ServiceSetupDto
+                        {
+                            TenentId = s.TenentId,
+                            ServiceId = s.ServiceId,
+                            ServiceName1 = s.ServiceName1,
+                            ServiceName2 = s.ServiceName2,
+                            ServiceType = s.ServiceType,
+                            ServiceTypeName = r.Shortname,
+                            MinInstallment = s.MinInstallment,
+                            MaxInstallment = s.MaxInstallment,
+                            AllowDiscountAmount = s.AllowDiscountAmount
+                        }).ToListAsync();
+            return result;
         }
 
     }

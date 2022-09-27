@@ -29,7 +29,7 @@
                         <div class="col-lg-6 fv-row">
                             <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"><span class="">{{bodyLabel[3].title}}
                                 </span></label>
-                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0 readonly" formControlName="serviceId">
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0 readonly" formControlName="serviceId" readonly>
                         </div>
                     </div>
                     <div class="row mb-6">
@@ -63,22 +63,26 @@
                     <div class="row mb-6">
                         <div class="col-lg-3 fv-row">
                             <label class="col-form-label fw-bold fs-6 ArFontStyle"><span class="">{{bodyLabel[7].title}}</span></label>
-                            <ng-select [items]="serviceType$ | async" bindLabel="serviceId" bindValue="serviceType" formControlName="serviceType">                            
+                            <ng-select [items]="serviceType$ | async" bindValue="refId" bindLabel="shortName" formControlName="serviceType">                            
                             </ng-select>
                         </div>
                         <div class="col-lg-3 fv-row">
-                            <label class="col-form-label fw-bold fs-6 ArFontStyle"><span class="">{{bodyLabel[8].title}}</span></label>
-                            <ng-select [items]="minimumMonthOfServices" bindLabel="id" bindValue="name" formControlName="minMonthsService">                            
+                            <label class="col-form-label fw-bold fs-6 ArFontStyle"><span class="">{{bodyLabel[8].title}}</span></label>                           
+                            <ng-select formControlName="minMonthsService">     
+                                <ng-option *ngFor="let item of minimumMonthOfServices" [value]="item.id">{{item.name}}</ng-option>                       
                             </ng-select>
                         </div>
                         <div class="col-lg-3 fv-row">
-                            <label class="col-form-label fw-bold fs-6 ArFontStyle"><span class="">{{bodyLabel[9].title}}</span></label>
-                            <ng-select [items]="minInstallment$ | async" bindLabel="serviceId" bindValue="minInstallment" formControlName="minInstallment">                            
+                            <label class="col-form-label fw-bold fs-6 ArFontStyle"><span class="">{{bodyLabel[9].title}}</span></label>                            
+                            <ng-select formControlName="minInstallment">     
+                                <ng-option *ngFor="let item of minInstallment" [value]="item.id">{{item.name}}</ng-option>                       
                             </ng-select>
                         </div>
                         <div class="col-lg-3 fv-row">
                             <label class="col-form-label fw-bold fs-6 ArFontStyle"><span class="">{{bodyLabel[10].title}}</span></label>                            
-                             <ng-select [items]="maxInstallment$ | async" bindLabel="serviceId" bindValue="maxInstallment" formControlName="maxInstallment">                            
+                             
+                            <ng-select formControlName="maxInstallment">     
+                                <ng-option *ngFor="let item of maxInstallment" [value]="item.id">{{item.name}}</ng-option>                       
                             </ng-select>
                         </div>
                     </div>
@@ -128,12 +132,42 @@
                                     checked="checked">
                                 <label class="form-check-label" for="allowmarketing"></label>
                             </div>
-                        </div>
-                        
+                        </div>                        
                         <!--begin::Label-->
                         <!--begin::Label-->
                         <label class="col-lg-5 col-form-label fw-bold fs-6 ArFontStyle">{{bodyLabel[14].title}} </label>
                         <!--begin::Label-->
+                    </div>
+                    <div class="row mb-6">
+                        <!--begin::Label-->
+                        <div class="col-lg-1 d-flex align-items-center">
+                            <div class="form-check form-check-solid form-switch fv-row">
+                                <input class="form-check-input w-45px h-30px" type="checkbox" id="allowDiscountDefault" formControlName="allowDiscountDefault" 
+                                    checked="checked" >
+                                <label class="form-check-label" for="allowDiscountDefault"></label>
+                            </div>
+                        </div>
+                        <!--begin::Label-->
+                        <!--begin::Label-->
+                        <label class="col-lg-5 col-form-label fw-bold fs-6 ArFontStyle"> Allow Discount Default </label>
+                        <!--begin::Label-->
+                        <!--begin::Label-->
+                        <div class="col-lg-1 d-flex align-items-center">
+                            <div class="form-check form-check-solid form-switch fv-row">
+                                <input class="form-check-input w-45px h-30px" type="checkbox" formControlName="allowDiscountPer" id="allowDiscountPer"
+                                    checked="checked">
+                                <label class="form-check-label" for="allowDiscountPer"></label>
+                            </div>
+                        </div>                        
+                        <!--begin::Label-->
+                        <!--begin::Label-->
+                        <label class="col-lg-5 col-form-label fw-bold fs-6 ArFontStyle">Allow Discount Per % </label>                        
+                    </div>
+                    <div class="row mb-6">
+                        <div class="col-lg-6 fv-row">
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"><span class="">Allow Discount Amount</span></label>
+                            <input type="number" class="form-control form-control-lg  mb-3 mb-lg-0" formControlName="allowDiscountAmount">
+                        </div>
                     </div>
                 </form>
             </div>
@@ -143,18 +177,24 @@
     </div>
     <!--end::Tab content-->
 </div>
-<app-approval-detials [parentFormGroup]="parentForm">
+<app-html-forms [parentFormGroup]="parentForm"> 
 
-</app-approval-detials>
+</app-html-forms>
+
+<br/>
+<app-electronic-forms [parentFormGroup]="parentForm">
+
+</app-electronic-forms>
+
 <br/>
 <app-financial-detials [parentFormGroup]="parentForm">
 
 </app-financial-detials>
 
 <br/>
-<app-html-forms [parentFormGroup]="parentForm"> 
+<app-approval-detials [parentFormGroup]="parentForm">
 
-</app-html-forms>
+</app-approval-detials>
 
 
 

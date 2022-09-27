@@ -12,6 +12,8 @@ import { SelectServiceTypeDto } from 'src/app/modules/models/ServiceSetup/Select
 import { ServiceSetupDto } from 'src/app/modules/models/ServiceSetup/ServiceSetupDto';
 import { DbCommonService } from 'src/app/modules/_services/db-common.service';
 import { ServiceSetupService } from 'src/app/modules/_services/service-setup.service';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-add-service-setup',
@@ -48,32 +50,15 @@ export class AddServiceSetupComponent implements OnInit {
   //
   serviceType$: Observable<SelectServiceTypeDto[]>;
   //
-  minMonthOfServices$: Observable<SelectMinMonthOfServicesDto[]>;
-  //
-  minInstallment$: Observable<SelectMinInstallmentDto[]>;
-  //
-  maxInstallment$: Observable<SelectMaxInstallmentDto[]>;
-  //
   editServiceSetup$: Observable<ServiceSetupDto[]>;
   //
   editServiceSetup: ServiceSetupDto[];
-  
+
   //
   parentForm: FormGroup;
   addServiceSetupForm: FormGroup;
   ///
   serviceId: any;
-  constructor(private fb: FormBuilder,
-    private commonDbService: DbCommonService,
-    private setupService: ServiceSetupService,
-    private toastr: ToastrService,
-    private activatedRout: ActivatedRoute,
-    private router:Router) {
-    this.setUpParentForm();
-    // Getting record by from URL
-    this.serviceId = this.activatedRout.snapshot.paramMap.get('serviceId');
-  }
-
   // Array for Minimum Month Of Service
   minimumMonthOfServices = [
     { id: "1", name: '1' },
@@ -113,6 +98,45 @@ export class AddServiceSetupComponent implements OnInit {
     { id: "35", name: '35' },
     { id: "36", name: '36' },
   ];
+  minInstallment = [
+    { id: "1", name: "1" },
+    { id: "2", name: "2" },
+    { id: "3", name: "3" },
+    { id: "4", name: "4" },
+    { id: "5", name: "5" },
+    { id: "6", name: "6" },
+    { id: "7", name: "7" },
+    { id: "8", name: "8" },
+    { id: "9", name: "9" },
+    { id: "10", name: "10" },
+    { id: "11", name: "11" },
+    { id: "12", name: "12" }
+  ]
+  maxInstallment = [
+    { id: "1", name: "12" },
+    { id: "2", name: "11" },
+    { id: "3", name: "10" },
+    { id: "4", name: "9" },
+    { id: "5", name: "8" },
+    { id: "6", name: "7" },
+    { id: "7", name: "6" },
+    { id: "8", name: "5" },
+    { id: "9", name: "4" },
+    { id: "10", name: "3" },
+    { id: "11", name: "2" },
+    { id: "12", name: "1" }
+  ]
+  constructor(private fb: FormBuilder,
+    private commonDbService: DbCommonService,
+    private setupService: ServiceSetupService,
+    private toastr: ToastrService,
+    private activatedRout: ActivatedRoute,
+    private router: Router) {
+    this.setUpParentForm();
+    // Getting record by from URL
+    this.serviceId = this.activatedRout.snapshot.paramMap.get('serviceId');
+  }
+
   
   ngOnInit(): void {
     this.initializeForm();
@@ -145,17 +169,13 @@ export class AddServiceSetupComponent implements OnInit {
 
     //
     this.serviceType$ = this.commonDbService.GetServiceTypes();
-    //
-    this.minMonthOfServices$ = this.commonDbService.GetMinMonthOfServices();
-    //
-    this.minInstallment$ = this.commonDbService.GetMinInstallment();
-    //
-    this.maxInstallment$ = this.commonDbService.GetMaxInstallment();
-    
+
+
     // Fillout all controls to update record.
-    if (this.serviceId != null) {      
+    if (this.serviceId != null) {
       this.editServiceSetup$ = this.setupService.GetServiceSetupById(this.serviceId);
-      this.editServiceSetup$.subscribe((response: any) => {        
+      this.editServiceSetup$.subscribe((response: any) => {
+        console.log(response);        
         this.parentForm.patchValue({
           addServiceSetupForm:
           {
@@ -170,27 +190,30 @@ export class AddServiceSetupComponent implements OnInit {
             frozen: response.frozen,
             previousEmployees: response.previousEmployees,
             masterServiceId: response.masterServiceId,
+            allowDiscountDefault: response.allowDiscountDefault,
+            allowDiscountPer: response.allowDiscountPer,
+            allowDiscountAmount: response.allowDiscountAmount,
           },
           approvalDetailsForm: {
-            serApproval1: response.serApproval1,
+            serApproval1: +response.serApproval1,
             approvalBy1: response.approvalBy1,
-            approvedDate1: response.approvedDate1,
+            approvedDate1: response.approvedDate1? new Date(response.approvedDate1) : '',
 
-            serApproval2: response.serApproval2,
+            serApproval2: +response.serApproval2,
             approvalBy2: response.approvalBy2,
-            approvedDate2: response.approvedDate2,
+            approvedDate2: response.approvedDate2? new Date(response.approvedDate2) : '',
 
-            serApproval3: response.serApproval3,
+            serApproval3: +response.serApproval3,
             approvalBy3: response.approvalBy3,
-            approvedDate3: response.approvedDate3,
+            approvedDate3: response.approvedDate3? new Date(response.approvedDate3) : '',
 
-            serApproval4: response.serApproval4,
+            serApproval4: +response.serApproval4,
             approvalBy4: response.approvalBy4,
-            approvedDate4: response.approvedDate4,
+            approvedDate4: response.approvedDate4? new Date(response.approvedDate4) : '',
 
-            serApproval5: response.serApproval5,
+            serApproval5: +response.serApproval5,
             approvalBy5: response.approvalBy5,
-            approvedDate5: response.approvedDate5,
+            approvedDate5: response.approvedDate5? new Date(response.approvedDate5) : '',
           },
           financialForm: {
             loanAct: response.loanAct,
@@ -202,12 +225,22 @@ export class AddServiceSetupComponent implements OnInit {
             otherAct3: response.otherAct3,
             otherAct4: response.otherAct4,
             otherAct5: response.otherAct5
+          },
+          editorForm: {
+            englishHtml: response.englishHTML || {},
+            arabicHtml: response.arabicHTML || {}
+          },
+          electronicForm: {
+            electronicForm1: response.electronicForm1,
+            electronicForm1URL: response.electronicForm1URL,
+            electronicForm2: response.electronicForm2,
+            electronicForm2URL: response.electronicForm2URL,
           }
         });
+        console.log('Parent Form', this.parentForm.value);
       }, error => {
         console.log(error);
       })
-
     }
   }
 
@@ -227,7 +260,10 @@ export class AddServiceSetupComponent implements OnInit {
       maxInstallment: new FormControl('', Validators.required),
       frozen: new FormControl('', Validators.required),
       previousEmployees: new FormControl('', Validators.required),
-      masterServiceId: new FormControl('1,2', Validators.required)
+      masterServiceId: new FormControl('1,2', Validators.required),
+      allowDiscountDefault: new FormControl('', Validators.required),
+      allowDiscountPer: new FormControl('', Validators.required),
+      allowDiscountAmount: new FormControl('', Validators.required),
     })
     this.parentForm.setControl('addServiceSetupForm', this.addServiceSetupForm);
   }
@@ -236,21 +272,22 @@ export class AddServiceSetupComponent implements OnInit {
     // Get Tenant Id
     var data = JSON.parse(localStorage.getItem("user")!);
     const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
-    
+
     //  TO CONVER OBJECT ARRAY AS SIMPLE ARRAY. 
     let formData = {
       ...this.parentForm.value.addServiceSetupForm,
       ...this.parentForm.value.approvalDetailsForm,
       ...this.parentForm.value.financialForm,
       ...this.parentForm.value.editorForm,
+      ...this.parentForm.value.electronicForm,
       tenentID: tenantId[0], cruP_ID: 0
     }
 
-    if (this.serviceId == null) {      
+    if (this.serviceId == null) {
       // Add new record
       this.setupService.AddServiceSetup(formData).subscribe(() => {
         this.toastr.success('Saved successfully', 'Success');
-        this.parentForm.reset();
+        //this.parentForm.reset();
       }, error => {
         if (error.status === 500) {
           this.toastr.error('Duplicate value found', 'Error');
@@ -261,7 +298,7 @@ export class AddServiceSetupComponent implements OnInit {
       this.setupService.UpdateServiceSetup(formData).subscribe(() => {
         this.toastr.success('Updated successfully', 'Success');
         this.parentForm.reset();
-        this.router.navigateByUrl('/service-setup/service-setup-details')   
+        this.router.navigateByUrl('/service-setup/service-setup-details')
       }, error => {
         if (error.status === 500) {
           this.toastr.error('Something went wrong', 'Error');

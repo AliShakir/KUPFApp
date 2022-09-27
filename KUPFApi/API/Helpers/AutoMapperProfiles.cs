@@ -95,7 +95,7 @@ namespace API.Helpers
             CreateMap<ServiceSetup, ServiceSetupDto>();
 
             //
-            CreateMap<ServiceSetup, SelectServiceTypeDto>();
+            CreateMap<Reftable, SelectServiceTypeDto>();
             //
             CreateMap<ServiceSetup, SelectMinMonthOfServicesDto>();
             //

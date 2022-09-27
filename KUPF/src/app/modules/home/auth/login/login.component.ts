@@ -7,6 +7,7 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { Login } from 'src/app/modules/models/login';
 import { MenuHeading } from 'src/app/modules/models/MenuHeading';
 import { UserFunctionDto } from 'src/app/modules/models/UserFunctions/UserFunctionDto';
+import { CommonService } from 'src/app/modules/_services/common.service';
 import { DbCommonService } from 'src/app/modules/_services/db-common.service';
 import { LoginService } from 'src/app/modules/_services/login.service';
 
@@ -42,7 +43,8 @@ constructor(
   private toastr: ToastrService,
   private OccupationService: DbCommonService,
   private modalService: NgbModal,
-  private cd: ChangeDetectorRef
+  private cd: ChangeDetectorRef,
+  private commonService: CommonService
 ) {
   
 }
@@ -114,9 +116,11 @@ async login() {
         if(localStorage.getItem('userMenu') != null){
           localStorage.removeItem("userMenu");
           localStorage.setItem('userMenu',JSON.stringify(this.menuHeading));
+          this.commonService.menuSessionUdpated.next({});
         }else{
-          console.log('Test');
+         
           localStorage.setItem('userMenu',JSON.stringify(this.menuHeading));
+          this.commonService.menuSessionUdpated.next({});
         }
         
       });

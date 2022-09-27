@@ -8,7 +8,7 @@ namespace API.Models
     public partial class ServiceSetup
     {
         public int TenentId { get; set; }
-        public int ServiceId { get; set; }
+        public int? ServiceId { get; set; }
         public string MasterServiceId { get; set; }
         public int SerIdbyUser { get; set; }
         public string ServiceName1 { get; set; }
@@ -16,12 +16,12 @@ namespace API.Models
         public int? ServiceType { get; set; }
         public int? ServiceSubType { get; set; }
         public int? AllowSponser { get; set; }
-        public string AllowedNonEmployes { get; set; }
+        public bool? AllowedNonEmployes { get; set; }
         public int? MinMonthsService { get; set; }
         public int? MinInstallment { get; set; }
         public int? MaxInstallment { get; set; }
-        public string Frozen { get; set; }
-        public string PreviousEmployees { get; set; }
+        public bool? Frozen { get; set; }
+        public bool? PreviousEmployees { get; set; }
         public string? SerApproval1 { get; set; }
         public string? ApprovalBy1 { get; set; }
         public DateTime? ApprovedDate1 { get; set; }
@@ -61,12 +61,14 @@ namespace API.Models
         public DateTime? SyncDate { get; set; }
         public string Syncby { get; set; }
         public int? SynId { get; set; }
-        public decimal? AllowDiscountPer { get; set; }
+        public bool? AllowDiscountPer { get; set; }
         public decimal? AllowDiscountAmount { get; set; }
-        public decimal? AllowDiscountDefault { get; set; }
+        public bool? AllowDiscountDefault { get; set; }
         public string? EnglishHTML { get; set; }
         public string? ArabicHTML { get; set; }
-        public string? EnglishForm { get; set; }
-        public string? ArabicForm { get; set; }
+        public string? ElectronicForm1 { get; set; }
+        public string? ElectronicForm1URL { get; set; }
+        public string? ElectronicForm2 { get; set; }
+        public string? ElectronicForm2URL { get; set; }
     }
 }

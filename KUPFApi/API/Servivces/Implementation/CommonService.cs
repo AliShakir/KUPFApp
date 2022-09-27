@@ -180,7 +180,7 @@ namespace API.Servivces.Implementation
 
         public async Task<IEnumerable<SelectServiceTypeDto>> GetServiceType()
         {
-            var result = await _context.ServiceSetups.ToListAsync();
+            var result = await _context.Reftables.Where(c=>c.Refsubtype == "ServiceType").ToListAsync();
             var data = _mapper.Map<IEnumerable<SelectServiceTypeDto>>(result);
             return data;
         }

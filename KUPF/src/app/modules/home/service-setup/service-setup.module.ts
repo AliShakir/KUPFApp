@@ -18,6 +18,7 @@ import { NgxTranslateModule } from '../../i18n';
 import { ManageFormLabelsComponent } from '../setup/manage-form-labels/manage-form-labels.component';
 import { MaterialModule } from '../../material/material.module';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     ServiceSetupDetailsComponent,
@@ -41,6 +42,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     NgxTranslateModule,
     MaterialModule,
     NgSelectModule,
+    NgbModule,
   ],
   exports:[
     NgSelectModule,

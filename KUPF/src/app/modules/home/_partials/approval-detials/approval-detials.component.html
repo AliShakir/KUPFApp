@@ -3,7 +3,7 @@
 <ngb-accordion #acc="ngbAccordion" class="mb-2" opened="false"><!--activeIds="ngb-panel-0"-->
     <ngb-panel>
         <ng-template ngbPanelTitle *ngFor="let label of formHeaderLabels; let i = index">
-            <h3 class="m-0 ArFontStyle" lang="AR-SA" id="ApprovalDetailsInformation">{{label.headerName}}</h3>
+            <h3 class="m-0 ArFontStyle" lang="AR-SA" id="ApprovalDetailsInformation">Management Approval - موافقة الإدارة</h3>
           </ng-template>
       <ng-template ngbPanelContent>
         <div class="row gx-9 gy-6" *ngFor="let bodyLabel of formBodyLabels; let i = index">
@@ -12,7 +12,7 @@
                     <div class="col-lg-4 fv-row">
                         <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[0].title}}</label>
                         <ng-select [items]="approvalRoles$ | async" bindLabel="refSubType" bindValue="refId" 
-                            formControlName="serApproval1" id="serApproval1" name="serApproval1">                            
+                            formControlName="serApproval1">                            
                         </ng-select>
                     </div>
                     <div class="col-lg-4 fv-row">
@@ -36,7 +36,7 @@
                     <div class="col-lg-4 fv-row">
                         <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" lang="AR-SA">{{bodyLabel[3].title}}</label>
                         <ng-select [items]="approvalRoles$ | async" bindLabel="refSubType" bindValue="refId" 
-                            formControlName="serApproval2" id="serApproval2" name="serApproval2">                            
+                            formControlName="serApproval2">                            
                         </ng-select>
                     </div>
                     <div class="col-lg-4 fv-row">

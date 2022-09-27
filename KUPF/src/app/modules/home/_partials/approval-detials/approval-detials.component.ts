@@ -1,5 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { Observable } from 'rxjs';
 import { FormTitleDt } from 'src/app/modules/models/formTitleDt';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
@@ -82,6 +83,7 @@ export class ApprovalDetialsComponent implements OnInit {
     }
     //
     this.approvalRoles$ = this.commonDbService.GetApprovalRoles();
+    
   }
 
   initializeForm() {

@@ -13,6 +13,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { HtmlFormsComponent } from './html-forms/html-forms.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { ElectronicFormsComponent } from './electronic-forms/electronic-forms.component';
 
 
 
@@ -25,6 +26,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     SortPipe,
     EditFinancialDetailsComponent,
     HtmlFormsComponent,
+    ElectronicFormsComponent,
     
 
   ],
@@ -48,7 +50,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     SortPipe,
     BsDatepickerModule,
     NgSelectModule,
-    HtmlFormsComponent
+    HtmlFormsComponent,
+    ElectronicFormsComponent,
   ]
 })
 export class SearchTabModule { }

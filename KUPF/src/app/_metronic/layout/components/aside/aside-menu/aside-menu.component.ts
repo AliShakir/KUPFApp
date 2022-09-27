@@ -19,33 +19,22 @@ export class AsideMenuComponent implements OnInit {
   menuHeading: any[] = [];
   color:any;
   lang:any;
-  constructor(private common: CommonService, private router: Router) { }
+  constructor(private common: CommonService, private router: Router) { 
+    this.common.menuSessionUdpated.subscribe((result: any) => {
+      this.setMenuFromSession();
+    })
+  }
 
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang');
-    this.menuHeading = JSON.parse(localStorage.getItem('userMenu') || '{}');
-    console.log('aside-menu', this.menuHeading);
+    this.setMenuFromSession();
+    console.log('aside-menu', this.menuHeading); 
     
-    
-    // for (let i = 0; i < this.menuHeading.length; i++) {
-
-    //   for (let x = 0; x < this.menuHeading[i].listMenuHeadingDto.length; x++) {
-
-    //     console.log(x,this.menuHeading[i].listMenuHeadingDto[x].headingNameEnglish);
-        
-    //     for(let y = 0; y < this.menuHeading[i].listMenuHeadingDto[i].menuItems.length; y++){
-
-    //       //console.log(y);
-    //       console.log(y,this.menuHeading[i].listMenuHeadingDto[x].menuItems[y].menuItemNameEnglish);
-    //     }
-    //   }
-    // }
-    // }else{
-
-
-    // }
   }
 
+  setMenuFromSession() {
+    this.menuHeading = JSON.parse(localStorage.getItem('userMenu') || '{}');
+  }
 
   openRequestForDiscountForm(title: string) {
     this.common.sendFormTitle(title);

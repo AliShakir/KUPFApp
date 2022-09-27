@@ -12,6 +12,6 @@ namespace API.Servivces.Interfaces
         Task<int> EditServiceSetupAsync(ServiceSetupDto serviceSetupDto);
         Task<int> DeleteServiceSetupAsync(int id);
         Task<ServiceSetupDto> GetServiceSetupByIdAsync(int id);
-        Task<IEnumerable<ServiceSetupDto>> GetServiceSetupAsync();
+        Task<List<ServiceSetupDto>> GetServiceSetupAsync();
     }
 }

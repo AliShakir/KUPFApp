@@ -24,9 +24,7 @@ export class HtmlFormsComponent implements OnInit {
   initializeEditorForm() {
     this.editorForm = new FormGroup({
       englishHtml: new FormControl('', Validators.required),
-      arabicHtml: new FormControl('', Validators.required),
-      englishForm: new FormControl('', Validators.required),
-      arabicForm: new FormControl('', Validators.required),
+      arabicHtml: new FormControl('', Validators.required)
     })
   }
   

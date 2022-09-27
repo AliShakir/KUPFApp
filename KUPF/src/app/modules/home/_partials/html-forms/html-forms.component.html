@@ -1,26 +1,26 @@
-<ngb-accordion #acc="ngbAccordion" class="mb-2" activeIds="ngb-panel-0">
+<ngb-accordion #acc="ngbAccordion" class="mb-2" opened="false">
     <ngb-panel>
         <ng-template ngbPanelTitle>            
-            <h3 class="m-0 ArFontStyle" lang="AR-SA">HTML Forms</h3>  
+            <h3 class="m-0 ArFontStyle" lang="AR-SA">Website Display Content - محتوى عرض الموقع</h3>  
           </ng-template>
       <ng-template ngbPanelContent >    
         <form [formGroup]="editorForm" id="editorForm" autocomplete="off">
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <h3 class="mt-2"><strong> English HTML</strong></h3>
+                    <h3 class="mt-2"><strong class="ArFontStyle"> English Website Content - محتوى الموقع باللغة الإنجليزية</strong></h3>
                 </div>
                 <div class="col-md-6">
-                    <input type="file" class="form-control" formControlName="englishForm"/>
+                    
                 </div>
             </div>
             <ckeditor [editor]="Editor" data="English" class="ArFontStyle" formControlName="englishHtml"></ckeditor>        
             <br/>        
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <h3><strong>Arabic HTML</strong></h3>
+                    <h3><strong class="ArFontStyle">Arabic Website Content - محتوى الموقع العربي</strong></h3>
                 </div>
                 <div class="col-md-6">
-                    <input type="file" class="form-control" formControlName="arabicForm"/>
+                   
                 </div>
             </div>
             <ckeditor [editor]="Editor" data="عربى" class="ArFontStyle" formControlName="arabicHtml"></ckeditor>

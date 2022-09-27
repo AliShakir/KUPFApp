@@ -7,7 +7,7 @@ namespace API.DTOs.DropDown
 {
     public class SelectServiceTypeDto
     {
-        public int ServiceId { get; set; }
-        public int ServiceType { get; set; }
+        public int RefId { get; set; }
+        public string? ShortName { get; set; }
     }
 }
