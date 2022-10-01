@@ -1,7 +1,7 @@
 export interface ServiceSetupDto {
     tenentId: number;
     serviceId: number;
-    masterServiceId: string;
+    masterServiceId: string[];
     serIdbyUser: number;
     serviceName1: string;
     serviceName2: string;

@@ -1,5 +1,6 @@
 ﻿using API.DTOs;
 using API.DTOs.DropDown;
+using API.DTOs.EmployeeDto;
 using API.Models;
 using API.Servivces.Interfaces;
 using AutoMapper;
@@ -21,11 +22,11 @@ namespace API.Servivces.Implementation
     {
         private readonly KUPFDbContext _context;
         private readonly IMapper _mapper;
-        public CommonService(KUPFDbContext context,IMapper mapper)
+        public CommonService(KUPFDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
-        }      
+        }
 
         /// <summary>
         /// To Get Occupations
@@ -35,8 +36,8 @@ namespace API.Servivces.Implementation
         public async Task<IEnumerable<SelectOccupationDto>> GetOccupationsAsync()
         {
             var result = await _context.Reftables
-                .Where(c=>c.Refsubtype== "Occupation" && c.Reftype =="KUPF" && c.TenentId == 21)
-                .OrderBy(x=>x.Refsubtype).ToListAsync();
+                .Where(c => c.Refsubtype == "Occupation" && c.Reftype == "KUPF" && c.TenentId == 21)
+                .OrderBy(x => x.Refsubtype).ToListAsync();
             var data = _mapper.Map<IEnumerable<SelectOccupationDto>>(result);
             return data;
         }
@@ -120,8 +121,8 @@ namespace API.Servivces.Implementation
         }
 
         public async Task<IEnumerable<CoaDto>> VerifyAccount(Int64 accountNo)
-        {            
-            var result = await _context.Coas.Where(c =>c.AccountNumber == accountNo && c.HeadId == 5).ToListAsync();
+        {
+            var result = await _context.Coas.Where(c => c.AccountNumber == accountNo && c.HeadId == 5).ToListAsync();
             var data = _mapper.Map<IEnumerable<CoaDto>>(result);
             return data;
         }
@@ -148,7 +149,7 @@ namespace API.Servivces.Implementation
                               RefType = d.Reftype
                           })
                           .Distinct()
-                          .OrderBy(x=>1);
+                          .OrderBy(x => 1);
             return result;
         }
 
@@ -178,13 +179,30 @@ namespace API.Servivces.Implementation
             return result;
         }
 
-        public async Task<IEnumerable<SelectServiceTypeDto>> GetServiceType()
+        public async Task<IEnumerable<SelectServiceTypeDto>> GetServiceType(int[] masterIds)
         {
-            var result = await _context.Reftables.Where(c=>c.Refsubtype == "ServiceType").ToListAsync();
-            var data = _mapper.Map<IEnumerable<SelectServiceTypeDto>>(result);
+            List<Reftable> list = new List<Reftable>();
+            for (int i = 0; i < masterIds.Length; i++)
+            {
+                Reftable retTable = new Reftable();
+                retTable = await _context.Reftables.Where(c => c.Refsubtype == "ServicesSubType" && c.Refid == masterIds[i]).FirstOrDefaultAsync();
+                list.Add(retTable);
+            }
+            var data = _mapper.Map<IEnumerable<SelectServiceTypeDto>>(list);
             return data;
         }
-
+        public async Task<IEnumerable<SelectServiceSubTypeDto>> GetServiceSubType(string switchNo)
+        {
+            var result = await _context.Reftables.Where(c => c.Refsubtype == "ServicesSubType" && c.Switch3 == switchNo).ToListAsync();
+            var data = _mapper.Map<IEnumerable<SelectServiceSubTypeDto>>(result);
+            return data;
+        }
+        public async Task<IEnumerable<SelectMasterServiceTypeDto>> GetMasterGetServiceType()
+        {
+            var result = await _context.Reftables.Where(c => c.Refsubtype == "ServiceType").ToListAsync();
+            var data = _mapper.Map<IEnumerable<SelectMasterServiceTypeDto>>(result);
+            return data;
+        }
         public async Task<IEnumerable<SelectMinMonthOfServicesDto>> GetMinMonthOfServices()
         {
             var result = await _context.ServiceSetups.ToListAsync();
@@ -209,9 +227,52 @@ namespace API.Servivces.Implementation
         public async Task<IEnumerable<SelectApprovalRoleDto>> GetApprovalRoles()
         {
             var result = await _context.Reftables
-                            .Where(c=>c.Refsubtype == "Role" && c.TenentId == 21).ToListAsync();
-            
+                            .Where(c => c.Refsubtype == "Role" && c.TenentId == 21).ToListAsync();
+
             var data = _mapper.Map<IEnumerable<SelectApprovalRoleDto>>(result);
+            return data;
+        }
+
+        public async Task<DetailedEmployeeDto> SearchEmployee(SearchEmployeeDto searchEmployeeDto)
+        {
+            if ((string.IsNullOrWhiteSpace(searchEmployeeDto.EmployeeId)
+                && string.IsNullOrWhiteSpace(searchEmployeeDto.PFId)
+                && string.IsNullOrWhiteSpace(searchEmployeeDto.CID)))
+            {
+                throw new Exception("Invalid Input");
+            }
+
+            var result = await _context.DetailedEmployees.Where(c => c.EmployeeId == searchEmployeeDto.EmployeeId ||
+                        c.Pfid == searchEmployeeDto.PFId || c.EmpCidNum == searchEmployeeDto.CID).FirstOrDefaultAsync();
+
+            var data = _mapper.Map<DetailedEmployeeDto>(result);
+
+            return data;
+        }
+
+        public async Task<IEnumerable<SelectServiceTypeDto>> GetSelectedServiceType(int[] refIds)
+        {
+            List<Reftable> list = new List<Reftable>();
+            for (int i = 0; i < refIds.Length; i++)
+            {
+                Reftable retTable = new Reftable();
+                retTable = await _context.Reftables.Where(c => c.Refsubtype == "ServicesSubType" && c.Refid == refIds[i]).FirstOrDefaultAsync();
+                list.Add(retTable);
+            }
+            var data = _mapper.Map<IEnumerable<SelectServiceTypeDto>>(list);
+            return data;
+        }
+
+        public async Task<IEnumerable<SelectServiceSubTypeDto>> GetSelectedServiceSubType(int[] refIds)
+        {
+            List<Reftable> list = new List<Reftable>();
+            for (int i = 0; i < refIds.Length; i++)
+            {
+                Reftable retTable = new Reftable();
+                retTable = await _context.Reftables.Where(c => c.Refsubtype == "ServicesSubType" && c.Refid == refIds[i]).FirstOrDefaultAsync();
+                list.Add(retTable);
+            }
+            var data = _mapper.Map<IEnumerable<SelectServiceSubTypeDto>>(list);
             return data;
         }
     }

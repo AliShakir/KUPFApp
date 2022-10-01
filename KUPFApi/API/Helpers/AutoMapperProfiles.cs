@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using API.DTOs;
 using API.DTOs.DropDown;
 using API.DTOs.EmployeeDto;
+using API.DTOs.FinancialServicesDto;
 using API.DTOs.GetEntityDto;
 using API.DTOs.LocalizationDto;
 using API.DTOs.RefTable;
@@ -104,6 +105,14 @@ namespace API.Helpers
             CreateMap<ServiceSetup, SelectMaxInstallmentDto>();
             //
             CreateMap<Reftable, SelectApprovalRoleDto>();
+
+            //
+            CreateMap<Reftable, SelectServiceSubTypeDto>();
+            
+            //
+            CreateMap<Reftable, SelectMasterServiceTypeDto>();
+            //
+            CreateMap<ServiceSetup, ServiceTypeAndSubTypeIdsDto>();
         }
     }
 }

@@ -173,8 +173,7 @@ export class ReferenceDetailsComponent implements OnInit {
         this.toastrService.success('Saved successfully', 'Success');
         this.isFormSubmitted = false;
         this.userForm.reset();
-        // Refresh Grid
-        //this.LoadData();
+        
       }
     });
   }
@@ -204,14 +203,15 @@ export class ReferenceDetailsComponent implements OnInit {
       refname1: new FormControl('', Validators.required),
       refname2: new FormControl('', Validators.required),
       refname3: new FormControl('', Validators.required),
-      remarks: new FormControl('', Validators.required)
+      remarks: new FormControl('', Validators.required),
+      active: new FormControl('', Validators.required),
+      refImage: new FormControl('', Validators.required),
     })
   }
  
   onRefSubTypeChange($event: any) {    
     this.userForm.value.refSubType = $event
     this.selectedItemsSub = $event;    
-    console.log("subbbbb=>",$event)
     this.refTableDto$ = this.refTableService.GetAllRefTableRecordsByRefTypeAndSubType(this.selectedItems.refType, $event?.refSubType);
     this.refTableDto$.subscribe((response: RefTableDto[]) => {
       this.refTableDto = new MatTableDataSource<RefTableDto>(response);
@@ -229,7 +229,6 @@ export class ReferenceDetailsComponent implements OnInit {
   }
 
   onRefTypeChange($event: any) {
-    console.log("selecrd=>",$event)
     this.selectedItems = $event;
     this.commonService.GetRefSubTypeByRefType($event.refType).subscribe((response) => {
       this.refSubType$ = response
@@ -329,7 +328,6 @@ openDeleteModal(content: any, id: number) {
     });
   }
   onEditFormSubmit(){
-    console.log(this.userEditForm.value);
     this.refTableService.UpdateRefTable(this.userEditForm.value).subscribe(response=>{
       if (response === 500) {
         this.toastrService.error('Something went wrong. please again latter', 'Error');

@@ -17,7 +17,6 @@ serviceSetupDto: ServiceSetupDto[]=[]
 
 // add service setup
 AddServiceSetup(response: ServiceSetupDto) {
-  console.log(response);    
   return this.httpClient.post(this.baseUrl +`ServiceSetup/AddServiceSetup`,response);
 }
 

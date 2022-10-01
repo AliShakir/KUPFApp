@@ -4,9 +4,11 @@ using API.Models;
 using API.Servivces;
 using API.Servivces.Implementation;
 using API.Servivces.Implementation.DetailedEmployee;
+using API.Servivces.Implementation.FinancialServices;
 using API.Servivces.Implementation.Localization;
 using API.Servivces.Interfaces;
 using API.Servivces.Interfaces.DetailedEmployee;
+using API.Servivces.Interfaces.FinancialServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -52,6 +54,8 @@ namespace API
             services.AddScoped<ICommonService, CommonService>();
             //
             services.AddScoped<IServiceSetupService, ServiceSetupService>();
+            //
+            services.AddScoped<IFinancialService, FincancialService>();
             //
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 

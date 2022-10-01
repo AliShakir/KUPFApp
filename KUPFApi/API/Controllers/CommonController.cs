@@ -1,5 +1,6 @@
 ﻿using API.DTOs;
 using API.DTOs.DropDown;
+using API.DTOs.EmployeeDto;
 using API.Models;
 using API.Servivces.Interfaces;
 using AutoMapper;
@@ -25,6 +26,7 @@ namespace API.Controllers
             _mapper = mapper;
             _commonServiceService = commonServiceService;
         }
+        
         [HttpGet]
         [Route("GetOccupations")]
         public async Task<IEnumerable<SelectOccupationDto>> GetOccupations()
@@ -147,11 +149,25 @@ namespace API.Controllers
             var result = await _commonServiceService.GetRefSubTypeByRefType(refType);
             return result;
         }
-        [HttpGet]
+        [HttpPost]
         [Route("GetServiceType")]
-        public async Task<IEnumerable<SelectServiceTypeDto>> GetServiceType()
+        public async Task<IEnumerable<SelectServiceTypeDto>> GetServiceType(int[] masterIds)
         {
-            var result = await _commonServiceService.GetServiceType();
+            var result = await _commonServiceService.GetServiceType(masterIds);
+            return result;
+        }
+        [HttpGet]
+        [Route("GetServiceSubType/{switchNo}")]
+        public async Task<IEnumerable<SelectServiceSubTypeDto>> GetServiceSubType(string switchNo)
+        {
+            var result = await _commonServiceService.GetServiceSubType(switchNo);
+            return result;
+        }
+        [HttpGet]
+        [Route("GetMasterServiceType")]
+        public async Task<IEnumerable<SelectMasterServiceTypeDto>> GetMasterServiceType()
+        {
+            var result = await _commonServiceService.GetMasterGetServiceType();
             return result;
         }
         [HttpGet]
@@ -180,6 +196,29 @@ namespace API.Controllers
         public async Task<IEnumerable<SelectApprovalRoleDto>> GetApprovalRoles()
         {
             var result = await _commonServiceService.GetApprovalRoles();
+            return result;
+        }
+
+        [HttpPost]
+        [Route("SearchEmployee")]
+        public async Task<DetailedEmployeeDto> SearchEmployee(SearchEmployeeDto searchEmployeeDto)
+        {
+            var result = await _commonServiceService.SearchEmployee(searchEmployeeDto);
+            return result;
+        }
+
+        [HttpPost]
+        [Route("GetSelectedServiceType")]
+        public async Task<IEnumerable<SelectServiceTypeDto>> GetSelectedServiceType(int[] refIds)
+        {
+            var result = await _commonServiceService.GetSelectedServiceType(refIds);
+            return result;
+        }
+        [HttpPost]
+        [Route("GetSelectedServiceSubType")]
+        public async Task<IEnumerable<SelectServiceSubTypeDto>> GetSelectedServiceSubType(int[] refIds)
+        {
+            var result = await _commonServiceService.GetSelectedServiceSubType(refIds);
             return result;
         }
     }

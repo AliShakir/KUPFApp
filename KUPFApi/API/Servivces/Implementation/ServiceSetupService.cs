@@ -36,7 +36,10 @@ namespace API.Servivces.Implementation
                          .OrderBy(x => 1).Max(c => c.ServiceId);
                 var newService = _mapper.Map<ServiceSetup>(serviceSetupDto);
                 newService.ServiceId = maxIdServiceId;
+                string masterIds = String.Join(",", serviceSetupDto.MasterServiceId);
+                newService.MasterServiceId = masterIds;
                 
+
                 await _context.ServiceSetups.AddAsync(newService);
                 result = await _context.SaveChangesAsync();
                 return result;
@@ -105,7 +108,8 @@ namespace API.Servivces.Implementation
                             ServiceTypeName = r.Shortname,
                             MinInstallment = s.MinInstallment,
                             MaxInstallment = s.MaxInstallment,
-                            AllowDiscountAmount = s.AllowDiscountAmount
+                            AllowDiscountAmount = s.AllowDiscountAmount,
+                            AllowedNonEmployes = s.AllowedNonEmployes
                         }).ToListAsync();
             return result;
         }

@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace API.DTOs.DropDown
 {
-    public class SelectServiceTypeDto
+    public class SelectServiceSubTypeDto
     {
         public int RefId { get; set; }
-        public string? Shortname { get; set; }
+        public string? ShortName { get; set; }
     }
 }

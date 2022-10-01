@@ -1,4 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { FormTitleDt } from 'src/app/modules/models/formTitleDt';
@@ -13,42 +17,71 @@ import { LocalizationService } from 'src/app/modules/_services/localization.serv
 })
 export class ServiceDetailsComponent implements OnInit {
 
-//     /*********************/
-// formHeaderLabels$ :Observable<FormTitleHd[]>; 
-// formBodyLabels$ :Observable<FormTitleDt[]>; 
-// formBodyLabels :FormTitleDt[]=[]; 
-// id:string = '';
-// languageId:any;
-// // FormId to get form/App language
-// @ViewChild('ServiceDetails') hidden:ElementRef;
-// /*********************/
-//#region 
-    /*----------------------------------------------------*/
+  //#region  Form Language Setting
+  /*----------------------------------------------------*/
 
-    // Language Type e.g. 1 = ENGLISH and 2 =  ARABIC
-    languageType: any;
+  // Language Type e.g. 1 = ENGLISH and 2 =  ARABIC
+  languageType: any;
 
-    // Selected Language
-    language: any;
+  // Selected Language
+  language: any;
 
-    // We will get form lables from lcale storage and will put into array.
-    AppFormLabels: FormTitleHd[] = [];
+  // We will get form lables from lcale storage and will put into array.
+  AppFormLabels: FormTitleHd[] = [];
 
-    // We will filter form header labels array
-    formHeaderLabels: any[] = [];
+  // We will filter form header labels array
+  formHeaderLabels: any[] = [];
 
-    // We will filter form body labels array
-    formBodyLabels: any[] = [];
+  // We will filter form body labels array
+  formBodyLabels: any[] = [];
 
-    // FormId
-    formId: string;
+  // FormId
+  formId: string;
 
-    /*----------------------------------------------------*/  
+  /*----------------------------------------------------*/
+  //#endregion
+
+  //#region
+  // To display table column headers
+  columnsToDisplay: string[] = ['action', 'employeeName', 'services', 'installments', 'amount','dated','paid','payDate','discounted'];
+
+  // Getting data as abservable.
+  formTitleHd$: Observable<FormTitleHd[]>;
+
+  // We need a normal array of data so we will subscribe to the observable and will get data
+  formTitleHd: MatTableDataSource<FormTitleHd> = new MatTableDataSource<any>([]);
+
+  // Paginator
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  // Sorting
+  @ViewChild(MatSort) sort!: MatSort;
+
+  // Hide footer while loading.
+  isLoadingCompleted: boolean = false;
+
+  // Incase of any error will display error message.
+  dataLoadingStatus: string = '';
+
+  // True of any error
+  isError: boolean = false;
+
+  // formGroup
+  formGroup: FormGroup;
+
+  // Search Term
+  searchTerm: string = '';
   //#endregion
   
-  formTitle:string;
+  formTitle: string;
   selectedOpt: string = '';
-  constructor(private common: CommonService,private router: Router,private localizationService: LocalizationService) { }
+  constructor(private common: CommonService, 
+    private router: Router, 
+    private localizationService: LocalizationService) {
+      this.formGroup = new FormGroup({
+        searchTerm: new FormControl(null)
+      })
+     }
 
   ngOnInit(): void {
     this.formTitle = this.common.getFormTitle();
@@ -80,39 +113,35 @@ export class ServiceDetailsComponent implements OnInit {
       }
     }
     //#endregion
+  
+  
   }
-  openLoanForm(){    
-    this.redirectTo('/service-setup/add-service');
+ //#region Material Search and Clear Filter
+ filterRecords() {
+  if (this.formGroup.value.searchTerm != null && this.formTitleHd) {
+    this.formTitleHd.filter = this.formGroup.value.searchTerm.trim();
+  }
 }
-  // Selec dropdown value on Change
-  getSelectedService(event :any){
+clearFilter() {
+  this.formGroup?.patchValue({ searchTerm: "" });
+  this.filterRecords();
+}
+//#endregion
+
+  //#region
+  openLoanForm() {
+    this.redirectTo('/service-setup/add-service');
+  }
+  getSelectedService(event: any) {
     this.selectedOpt = event.target.value;
-    this.common.sendFormTitle(this.selectedOpt); 
+    this.common.sendFormTitle(this.selectedOpt);
   }
   // Manually redirect to URL to dynamicall change title of form
-redirectTo(uri:string){
-  this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
-  this.router.navigate([uri]));
-}
-// ngAfterViewInit() {
-    
-//   // TO get the form id...
-//   this.id = this.hidden.nativeElement.value;
-  
-//   // TO GET THE LANGUAGE ID
-//   this.languageId = localStorage.getItem('langType');
-  
-//   // Get form header labels
-//   this.formHeaderLabels$ = this.localizationService.getFormHeaderLabels(this.id,this.languageId);
-  
-//   // Get form body labels 
-//   this.formBodyLabels$= this.localizationService.getFormBodyLabels(this.id,this.languageId)
-  
-//   // Get observable as normal array of items
-//   this.formBodyLabels$.subscribe((data)=>{
-//     this.formBodyLabels = data   
-//   },error=>{
-//     console.log(error);
-//   })
-// }
+  redirectTo(uri: string) {
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+      this.router.navigate([uri]));
+  }
+  //#endregion
+   
+
 }

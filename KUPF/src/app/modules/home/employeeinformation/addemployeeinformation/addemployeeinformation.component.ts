@@ -258,21 +258,21 @@ export class AddemployeeinformationComponent implements OnInit {
     if (this.addEmployeeForm.valid) {      
       if(this.employeeId != null){  
         console.log(formData);        
-        // this.employeeService.UpdateEmployee(formData).subscribe(() => {
-        //   this.toastrService.success('Saved successfully', 'Success');
-        //   this.parentForm.reset();
-        //   this.router.navigateByUrl('/employee/view-employee') 
-        // }, error => {
-        //     if (error.status === 500) {
-        //       this.toastrService.error('Something went wrong', 'Error');
-        //     }
-        //   })
+        this.employeeService.UpdateEmployee(formData).subscribe(() => {
+          this.toastrService.success('Saved successfully', 'Success');
+          this.parentForm.reset();
+          this.router.navigateByUrl('/employee/view-employee') 
+        }, error => {
+            if (error.status === 500) {
+              this.toastrService.error('Something went wrong', 'Error');
+            }
+          })
       }else{
         console.log(formData); 
-        // this.employeeService.AddEmployee(formData).subscribe(() => {
-        //   this.toastrService.success('Saved successfully', 'Success');
-        //   this.parentForm.reset();
-        // })
+        this.employeeService.AddEmployee(formData).subscribe(() => {
+          this.toastrService.success('Saved successfully', 'Success');
+          this.parentForm.reset();
+        })
       }
     }
   }

@@ -212,7 +212,7 @@
 <ng-template #editModal let-modal>
   <div class="modal-header bg-light">
     <button type="button" class="close" data-dismiss="modal" (click)="modal.dismiss('Cross click')">&times;</button>
-    <h4 class="modal-title" id="modal-basic-title">Ref Table Entry </h4>
+    <h4 class="modal-title" id="modal-basic-title">Edit Ref Table </h4>
   </div>
   <div class="modal-body">
     <form autocomplete="off" [formGroup]="userEditForm" id="userEditForm">
@@ -222,25 +222,45 @@
             <input type="hidden" value="{{selectedItems?.refType}}" formControlName="refType"/>
             <input type="hidden" value="{{selectedItemsSub?.refSubType}}" formControlName="refSubType"/>
             <input type="hidden" value="{{refid}}" formControlName="refid"/>
-            <label class="form-label" for="form3Example2">Ref Name 1</label>
+            <label class="form-label" for="form3Example2">Short Name</label>
             <input type="text" class="form-control" formControlName="refname1" id="refname1" name="refname1" />
           </div>
         </div>
         <div class="col">
           <div class="form-outline">
-            <label class="form-label" for="form3Example1">Ref Name 2</label>
-            <input type="text" class="form-control" formControlName="refname2" id="refname2"
+            <label class="form-label" for="form3Example1">Arabic Name</label>
+            <input type="text" class="form-control ArFontStyle" formControlName="refname2" id="refname2"
               name="refname2" />
           </div>
         </div>
         <div class="col">
           <div class="form-outline">
-            <label class="form-label" for="form3Example2">Ref Name 3</label>
+            <label class="form-label" for="form3Example2">English Name</label>
             <input type="text" class="form-control" formControlName="refname3" id="refname3" name="refname3" />
           </div>
         </div>
       </div> 
       <div class="row mb-4">
+        <div class="col">
+          <div class="form-outline">
+            <label class="form-label" for="form3Example1">Ref Image</label>
+            <input type="file" class="form-control" formControlName="refImage" id="refImage" name="refImage" />
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-outline">
+            <label class="col-lg-11 col-form-label fw-bold ArFontStyle">Active</label>
+            <div class="col-lg-1 d-flex align-items-center">
+              <div class="form-check form-check-solid form-switch fv-row">
+                <input class="form-check-input w-45px h-30px" type="checkbox" formControlName="active" id="active"
+                  name="active" checked="checked">
+                <label class="form-check-label" for="allowmarketing"></label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-4">        
         <div class="col">
           <div class="form-outline">
             <label class="form-label" for="form3Example1">Remarks</label>

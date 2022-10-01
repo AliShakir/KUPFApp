@@ -2,7 +2,7 @@
 <div class="card mb-5 mb-xl-8">
     <!--begin::Header-->
     <div class="card-header border-0 pt-5 panelBgColor1">
-        ٗ<!-- TO GET FORM ID AND SETTINGUP LANGAUGE. -->
+       <!-- TO GET FORM ID AND SETTINGUP LANGAUGE. -->
         <div class="card-toolbar" *ngFor="let label of formHeaderLabels; let i = index">
             <h3 class="text-dark ArFontStyle" lang="AR-SA" id="ServiceSetupDetail">{{label.headerName}}</h3>
         </div>
@@ -16,7 +16,7 @@
         </h3>
     </div>
     <!--end::Header-->
-    <!--begin::Body-->ٗ
+    <!--begin::Body-->
     <div class="card-body py-3">
         <div class="card-toolbar">
             <!--begin::Menu-->
@@ -156,24 +156,15 @@
                         <ng-container matColumnDef="discountAllow">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header class="ArFontStyle">
                                 {{bodyLabel[6].title}}</th>
-                            <td mat-cell *matCellDef="let item" class="w-10 ArFontStyle">
+                            <td mat-cell *matCellDef="let item" class="w-5 ArFontStyle">
                                 {{item.allowDiscountAmount}}</td>
                         </ng-container>
                         <ng-container matColumnDef="forEmployee">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header class="ArFontStyle">
                                 {{bodyLabel[7].title}}</th>
-                            <td mat-cell *matCellDef="let item" class="w-10 ArFontStyle">"
-                               {{item.allowedNonEmployees?  'Yes':'No'}}</td>"
+                            <td mat-cell *matCellDef="let item" class="w-5 ArFontStyle">
+                               {{item.allowedNonEmployes?  'Yes':'No'}}</td>
                         </ng-container>
-
-                        <!-- <div *ngIf="allowedNonEmployes == false">
-                            <ng-container matColumnDef="forEmployee">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="ArFontStyle">
-                                    {{bodyLabel[7].title}}</th>
-                                <td mat-cell *matCellDef="let item" class="w-10 ArFontStyle">"
-                                    No</td>"
-                            </ng-container>
-                        </div> -->
                         <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky:true"
                             [ngClass]="{'hidden':!isLoadingCompleted}"></tr>
                         <tr mat-row *matRowDef="let refTableDto; columns: columnsToDisplay"></tr>

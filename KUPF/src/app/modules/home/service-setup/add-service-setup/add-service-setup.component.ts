@@ -14,6 +14,8 @@ import { DbCommonService } from 'src/app/modules/_services/db-common.service';
 import { ServiceSetupService } from 'src/app/modules/_services/service-setup.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import * as moment from 'moment';
+import { SelectServiceSubTypeDto } from 'src/app/modules/models/ServiceSetup/SelectServiceSubTypeDto';
+import { SelectMasterServiceTypeDto } from 'src/app/modules/models/ServiceSetup/SelectMasterServiceTypeDto';
 
 @Component({
   selector: 'app-add-service-setup',
@@ -48,17 +50,24 @@ export class AddServiceSetupComponent implements OnInit {
   //#endregion
 
   //
-  serviceType$: Observable<SelectServiceTypeDto[]>;
+  serviceType$: any;
+  //
+  serviceSubType$: Observable<SelectServiceSubTypeDto[]>;
   //
   editServiceSetup$: Observable<ServiceSetupDto[]>;
   //
+  masterServiceType$: Observable<SelectMasterServiceTypeDto[]>;
+  //
   editServiceSetup: ServiceSetupDto[];
+
 
   //
   parentForm: FormGroup;
   addServiceSetupForm: FormGroup;
   ///
   serviceId: any;
+  //
+  masterIds: any[] = [];
   // Array for Minimum Month Of Service
   minimumMonthOfServices = [
     { id: "1", name: '1' },
@@ -126,6 +135,7 @@ export class AddServiceSetupComponent implements OnInit {
     { id: "11", name: "2" },
     { id: "12", name: "1" }
   ]
+  showHide: boolean;
   constructor(private fb: FormBuilder,
     private commonDbService: DbCommonService,
     private setupService: ServiceSetupService,
@@ -137,7 +147,7 @@ export class AddServiceSetupComponent implements OnInit {
     this.serviceId = this.activatedRout.snapshot.paramMap.get('serviceId');
   }
 
-  
+
   ngOnInit(): void {
     this.initializeForm();
 
@@ -168,14 +178,13 @@ export class AddServiceSetupComponent implements OnInit {
     //#endregion
 
     //
-    this.serviceType$ = this.commonDbService.GetServiceTypes();
-
+    this.masterServiceType$ = this.commonDbService.GetMaterServiceTypes();
 
     // Fillout all controls to update record.
     if (this.serviceId != null) {
       this.editServiceSetup$ = this.setupService.GetServiceSetupById(this.serviceId);
       this.editServiceSetup$.subscribe((response: any) => {
-        console.log(response);        
+        
         this.parentForm.patchValue({
           addServiceSetupForm:
           {
@@ -183,7 +192,8 @@ export class AddServiceSetupComponent implements OnInit {
             serviceName1: response.serviceName1,
             serviceName2: response.serviceName2,
             allowedNonEmployes: response.allowedNonEmployes,
-            serviceType: response.serviceType,
+            serviceType: +response.serviceType,
+            serviceSubType: +response.serviceSubType,
             minMonthsService: response.minMonthsService,
             minInstallment: response.minInstallment,
             maxInstallment: response.maxInstallment,
@@ -197,23 +207,23 @@ export class AddServiceSetupComponent implements OnInit {
           approvalDetailsForm: {
             serApproval1: +response.serApproval1,
             approvalBy1: response.approvalBy1,
-            approvedDate1: response.approvedDate1? new Date(response.approvedDate1) : '',
+            approvedDate1: response.approvedDate1 ? new Date(response.approvedDate1) : '',
 
             serApproval2: +response.serApproval2,
             approvalBy2: response.approvalBy2,
-            approvedDate2: response.approvedDate2? new Date(response.approvedDate2) : '',
+            approvedDate2: response.approvedDate2 ? new Date(response.approvedDate2) : '',
 
             serApproval3: +response.serApproval3,
             approvalBy3: response.approvalBy3,
-            approvedDate3: response.approvedDate3? new Date(response.approvedDate3) : '',
+            approvedDate3: response.approvedDate3 ? new Date(response.approvedDate3) : '',
 
             serApproval4: +response.serApproval4,
             approvalBy4: response.approvalBy4,
-            approvedDate4: response.approvedDate4? new Date(response.approvedDate4) : '',
+            approvedDate4: response.approvedDate4 ? new Date(response.approvedDate4) : '',
 
             serApproval5: +response.serApproval5,
             approvalBy5: response.approvalBy5,
-            approvedDate5: response.approvedDate5? new Date(response.approvedDate5) : '',
+            approvedDate5: response.approvedDate5 ? new Date(response.approvedDate5) : '',
           },
           financialForm: {
             loanAct: response.loanAct,
@@ -237,7 +247,26 @@ export class AddServiceSetupComponent implements OnInit {
             electronicForm2URL: response.electronicForm2URL,
           }
         });
-        console.log('Parent Form', this.parentForm.value);
+        
+        //
+        this.masterServiceType$ = this.commonDbService.GetMaterServiceTypes();
+        
+        // Filling service Types
+        var arr = response.masterServiceId.split(',');
+        this.masterIds = [];
+        
+        for (let i = 0; i < arr.length; i++) {
+          this.masterIds.push(arr[i])
+        }
+        this.commonDbService.GetServiceTypes(this.masterIds).subscribe((resp: any) => {
+          this.serviceType$ = resp
+        });
+
+        // Filling service Sub Types
+        this.commonDbService.GetServiceSubTypes(response.serviceType).subscribe((res: any) => {          
+          this.serviceSubType$ = res
+        });
+
       }, error => {
         console.log(error);
       })
@@ -254,21 +283,28 @@ export class AddServiceSetupComponent implements OnInit {
       serviceName1: new FormControl('', Validators.required),
       serviceName2: new FormControl('', Validators.required),
       allowedNonEmployes: new FormControl('', Validators.required),
+      masterServiceId: new FormControl('', Validators.required),
+      serviceSubType: new FormControl('', Validators.required),
       serviceType: new FormControl('', Validators.required),
       minMonthsService: new FormControl('', Validators.required),
       minInstallment: new FormControl('', Validators.required),
       maxInstallment: new FormControl('', Validators.required),
       frozen: new FormControl('', Validators.required),
       previousEmployees: new FormControl('', Validators.required),
-      masterServiceId: new FormControl('1,2', Validators.required),
       allowDiscountDefault: new FormControl('', Validators.required),
       allowDiscountPer: new FormControl('', Validators.required),
-      allowDiscountAmount: new FormControl('', Validators.required),
+      allowDiscountAmount: new FormControl('0.0', Validators.required),
     })
     this.parentForm.setControl('addServiceSetupForm', this.addServiceSetupForm);
   }
 
   addServiceSetup() {
+    let arr = this.addServiceSetupForm?.controls['masterServiceId'];
+
+    this.addServiceSetupForm.patchValue({
+      masterServiceId: arr.value.toString()
+    });
+
     // Get Tenant Id
     var data = JSON.parse(localStorage.getItem("user")!);
     const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
@@ -282,12 +318,12 @@ export class AddServiceSetupComponent implements OnInit {
       ...this.parentForm.value.electronicForm,
       tenentID: tenantId[0], cruP_ID: 0
     }
-
+    
     if (this.serviceId == null) {
       // Add new record
       this.setupService.AddServiceSetup(formData).subscribe(() => {
         this.toastr.success('Saved successfully', 'Success');
-        //this.parentForm.reset();
+        this.parentForm.reset();
       }, error => {
         if (error.status === 500) {
           this.toastr.error('Duplicate value found', 'Error');
@@ -305,5 +341,26 @@ export class AddServiceSetupComponent implements OnInit {
         }
       })
     }
+  }
+
+  allowDiscountPerChangeStatus(event: Event) {
+    const isChecked = (<HTMLInputElement>event.target).checked;
+    this.showHide = !this.showHide;
+  }
+  onServiceTypeChange(switchNo: any) {
+    //
+    this.commonDbService.GetServiceSubTypes(switchNo).subscribe((response: any) => {
+      this.serviceSubType$ = response
+    });
+  }
+  onMasterServiceChange(e: any[]) {
+    this.masterIds = [];
+    for (let i = 0; i < e.length; i++) {
+      this.masterIds.push(e[i].refId)
+    }
+    // Filling ServiceTypes against MasterIds.
+    this.commonDbService.GetServiceTypes(this.masterIds).subscribe((response: any) => {
+      this.serviceType$ = response
+    });
   }
 }

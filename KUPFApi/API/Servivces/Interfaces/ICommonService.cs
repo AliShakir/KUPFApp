@@ -1,5 +1,6 @@
 ﻿using API.DTOs;
 using API.DTOs.DropDown;
+using API.DTOs.EmployeeDto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,7 +49,17 @@ namespace API.Servivces.Interfaces
         /// Get Service Type
         /// </summary>
         /// <returns></returns>
-        Task<IEnumerable<SelectServiceTypeDto>> GetServiceType();
+        Task<IEnumerable<SelectServiceTypeDto>> GetServiceType(int[] masterIds);
+        /// <summary>
+        /// Get Service Type
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<SelectServiceSubTypeDto>> GetServiceSubType(string switchNo);
+        /// <summary>
+        /// Get Master Service Type
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<SelectMasterServiceTypeDto>> GetMasterGetServiceType();
         /// <summary>
         /// GetMinMonthOfServices
         /// </summary>
@@ -67,5 +78,21 @@ namespace API.Servivces.Interfaces
 
         Task<IEnumerable<SelectApprovalRoleDto>> GetApprovalRoles();
 
+        /// <summary>
+        /// Search employee by EmployeeId,PF Id and C Id
+        /// </summary>
+        /// <returns></returns>
+        Task<DetailedEmployeeDto> SearchEmployee(SearchEmployeeDto searchEmployeeDto);
+
+        /// <summary>
+        /// Get Selected Service Types to display services on add service page
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<SelectServiceTypeDto>> GetSelectedServiceType(int[] refIds);
+        /// <summary>
+        /// Get Selected Service Sub Types to display services on add service page
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<SelectServiceSubTypeDto>> GetSelectedServiceSubType(int[] refIds);
     }
 }

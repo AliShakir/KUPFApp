@@ -1,9 +1,9 @@
-import { ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { FormTitleDt } from 'src/app/modules/models/formTitleDt';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { DetailedEmployee } from 'src/app/modules/models/DetailedEmployee';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
-import { LocalizationService } from 'src/app/modules/_services/localization.service';
+import { DbCommonService } from 'src/app/modules/_services/db-common.service';
 
 @Component({
   selector: 'app-search-tab',
@@ -11,58 +11,44 @@ import { LocalizationService } from 'src/app/modules/_services/localization.serv
   styleUrls: ['./search-tab.component.scss']
 })
 export class SearchTabComponent implements OnInit {
-//   /*********************/
-// formHeaderLabels$ :Observable<FormTitleHd[]>; 
-// formBodyLabels$ :Observable<FormTitleDt[]>; 
-// formBodyLabels :FormTitleDt[]=[]; 
-// id:string = '';
-// languageId:any;
-// // FormId to get form/App language
-// @ViewChild('SearchForm') hidden:ElementRef;
-// /*********************/
 
-//#region 
-    /*----------------------------------------------------*/
+  //#region 
+  /*----------------------------------------------------*/
 
-    // Language Type e.g. 1 = ENGLISH and 2 =  ARABIC
-    languageType: any;
+  // Language Type e.g. 1 = ENGLISH and 2 =  ARABIC
+  languageType: any;
 
-    // Selected Language
-    language: any;
+  // Selected Language
+  language: any;
 
-    // We will get form lables from lcale storage and will put into array.
-    AppFormLabels: FormTitleHd[] = [];
+  // We will get form lables from lcale storage and will put into array.
+  AppFormLabels: FormTitleHd[] = [];
 
-    // We will filter form header labels array
-    formHeaderLabels: any[] = [];
+  // We will filter form header labels array
+  formHeaderLabels: any[] = [];
 
-    // We will filter form body labels array
-    formBodyLabels: any[] = [];
+  // We will filter form body labels array
+  formBodyLabels: any[] = [];
 
-    // FormId
-    formId: string;
+  // FormId
+  formId: string;
 
-    //
-    @Input() arabicFont: string = 'font-family:"Tahoma","sans-serif"'
-    /*----------------------------------------------------*/  
+  //
+  @Input() arabicFont: string = 'font-family:"Tahoma","sans-serif"'
+  /*----------------------------------------------------*/
   //#endregion
 
-
-  isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  isLoading: boolean;
-  private unsubscribe: Subscription[] = [];
-  formTitle:string;
+  formTitle: string;
   closeResult: string = '';
+  searchForm: FormGroup;
+  employeeForm: FormGroup;
+  constructor(private commonDbService: DbCommonService,
+    private toastr: ToastrService) {
 
-  constructor(private cdr: ChangeDetectorRef,private modalService: NgbModal,private localizationService: LocalizationService) {
-    const loadingSubscr = this.isLoading$
-      .asObservable()
-      .subscribe((res) => (this.isLoading = res));
-    this.unsubscribe.push(loadingSubscr);
   }
 
   ngOnInit(): void {
-//#region TO SETUP THE FORM LOCALIZATION    
+    //#region TO SETUP THE FORM LOCALIZATION    
 
     // TO GET THE LANGUAGE ID e.g. 1 = ENGLISH and 2 =  ARABIC
     this.languageType = localStorage.getItem('langType');
@@ -91,53 +77,64 @@ export class SearchTabComponent implements OnInit {
       }
     }
     //#endregion
+    //
+    this.initializeSearchForm();
+    //
+    this.initializeEmployeeForm();
   }
 
-  saveSettings() {
-    this.isLoading$.next(true);
-    setTimeout(() => {
-      this.isLoading$.next(false);
-      this.cdr.detectChanges();
-    }, 1500);
+  initializeSearchForm() {
+    this.searchForm = new FormGroup({
+      employeeId: new FormControl('', Validators.required),
+      pfId: new FormControl('', Validators.required),
+      cId: new FormControl('', Validators.required),
+    })
   }
+  initializeEmployeeForm() {
+    this.employeeForm = new FormGroup({
+      employeeId: new FormControl(''),
+      englishName: new FormControl('', Validators.required),
+      arabicName: new FormControl('', Validators.required),
+      empBirthday: new FormControl('', Validators.required),
+      membershipJoiningDate: new FormControl('', Validators.required),
+      membership: new FormControl('', Validators.required),
+      empGender: new FormControl('', Validators.required),
+      empMaritalStatus: new FormControl('', Validators.required),
+      mobileNumber: new FormControl('', Validators.required),
+      empWorkTelephone: new FormControl('', Validators.required),
+      contractType: new FormControl('', Validators.required),
+      nationName: new FormControl('', Validators.required),
+      departmentName: new FormControl('', Validators.required),
+      occupation: new FormControl('', Validators.required),
+      salary: new FormControl('', Validators.required),
+      remarks: new FormControl('', Validators.required),
+    })
+  }
+  SearchEmployee() {
+    this.commonDbService.SearchEmployee(this.searchForm.value).subscribe((response: any) => {
 
-  ngOnDestroy() {
-    this.unsubscribe.forEach((sb) => sb.unsubscribe());
-  }
-  open(content:any) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title',modalDialogClass:'modal-xl'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      this.employeeForm.patchValue({
+        englishName: response.englishName,
+        arabicName: response.arabicName,
+        empBirthday: new Date(response.empBirthday),
+        empGender: response.empGender,
+        membershipJoiningDate: response.membershipJoiningDate ? new Date(response.membershipJoiningDate) : '',
+        membership: response.membership,
+        empMaritalStatus: response.empMaritalStatus,
+        mobileNumber: response.mobileNumber,
+        empWorkTelephone: response.empWorkTelephone,
+        contractType: response.contractType,
+        nationName: response.nationName,
+        departmentName: response.departmentName,
+        occupation: response.departmentName,
+        salary: response.salary,
+        remarks: response.remarks
+      })
+    }, error => {
+      if (error.status === 500) {
+        this.toastr.error('Please enter Employee Id or CID or PFId', 'Error');
+      }
     });
-  } 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return  `with: ${reason}`;
-    }
   }
-  ngAfterViewInit() {
-    // // TO get the form id...
-    // this.id = this.hidden.nativeElement.value;
-    
-    // // TO GET THE LANGUAGE ID
-    // this.languageId = localStorage.getItem('langType');
-    
-    // //Get form header labels
-    // this.formHeaderLabels$ = this.localizationService.getFormHeaderLabels(this.id,this.languageId);
-    
-    // //Get form body labels 
-    // this.formBodyLabels$= this.localizationService.getFormBodyLabels(this.id,this.languageId)
-    
-    // //Get observable as normal array of items
-    // this.formBodyLabels$.subscribe((data)=>{
-    //   this.formBodyLabels = data      
-    // },error=>{
-    //   console.log(error);
-    // })
- }
+
 }
