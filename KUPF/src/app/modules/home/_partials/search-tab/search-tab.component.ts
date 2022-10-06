@@ -108,6 +108,7 @@ export class SearchTabComponent implements OnInit {
       occupation: new FormControl('', Validators.required),
       salary: new FormControl('', Validators.required),
       remarks: new FormControl('', Validators.required),
+      joinedDate: new FormControl('', Validators.required),
     })
   }
   SearchEmployee() {

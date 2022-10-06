@@ -62,7 +62,8 @@
                     <div class="row mb-6">
                         <div class="col-lg-6 fv-row">
                             <label class="col-form-label fw-bold fs-6 ArFontStyle"><span class="">Master Service</span></label>                           
-                            <ng-select [items]="masterServiceType$ | async" bindValue="refId" bindLabel="refname3" formControlName="masterServiceId" lang="AR-SA" multiple="true" (change)="onMasterServiceChange($event)">                            
+                            <ng-select [items]="masterServiceType$ | async" bindValue="refId" bindLabel="refname3" 
+                            formControlName="masterServiceId" lang="AR-SA" multiple="true" (change)="onMasterServiceChange($event)">                            
                             </ng-select>
                         </div>
                     </div>

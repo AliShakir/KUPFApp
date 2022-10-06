@@ -55,7 +55,7 @@ namespace API
             //
             services.AddScoped<IServiceSetupService, ServiceSetupService>();
             //
-            services.AddScoped<IFinancialService, FincancialService>();
+            services.AddScoped<IFinancialService, FinancialService>();
             //
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 

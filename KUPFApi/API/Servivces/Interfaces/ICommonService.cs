@@ -88,11 +88,11 @@ namespace API.Servivces.Interfaces
         /// Get Selected Service Types to display services on add service page
         /// </summary>
         /// <returns></returns>
-        Task<IEnumerable<SelectServiceTypeDto>> GetSelectedServiceType(int[] refIds);
+        Task<IEnumerable<SelectedServiceTypeDto>> GetSelectedServiceType(int tenentId);
         /// <summary>
         /// Get Selected Service Sub Types to display services on add service page
         /// </summary>
         /// <returns></returns>
-        Task<IEnumerable<SelectServiceSubTypeDto>> GetSelectedServiceSubType(int[] refIds);
+        Task<IEnumerable<SelectedServiceSubTypeDto>> GetSelectedServiceSubType(int tenentId);
     }
 }

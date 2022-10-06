@@ -113,6 +113,10 @@ namespace API.Helpers
             CreateMap<Reftable, SelectMasterServiceTypeDto>();
             //
             CreateMap<ServiceSetup, ServiceTypeAndSubTypeIdsDto>();
+            //
+            CreateMap<ServiceSetup, SelectedServiceTypeDto>();
+            //
+            CreateMap<ServiceSetup, SelectedServiceSubTypeDto>();
         }
     }
 }

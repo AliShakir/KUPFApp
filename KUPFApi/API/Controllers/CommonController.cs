@@ -207,18 +207,18 @@ namespace API.Controllers
             return result;
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("GetSelectedServiceType")]
-        public async Task<IEnumerable<SelectServiceTypeDto>> GetSelectedServiceType(int[] refIds)
+        public async Task<IEnumerable<SelectedServiceTypeDto>> GetSelectedServiceType(int tenentId)
         {
-            var result = await _commonServiceService.GetSelectedServiceType(refIds);
+            var result = await _commonServiceService.GetSelectedServiceType(tenentId);
             return result;
         }
-        [HttpPost]
+        [HttpGet]
         [Route("GetSelectedServiceSubType")]
-        public async Task<IEnumerable<SelectServiceSubTypeDto>> GetSelectedServiceSubType(int[] refIds)
+        public async Task<IEnumerable<SelectedServiceSubTypeDto>> GetSelectedServiceSubType(int tenentId)
         {
-            var result = await _commonServiceService.GetSelectedServiceSubType(refIds);
+            var result = await _commonServiceService.GetSelectedServiceSubType(tenentId);
             return result;
         }
     }

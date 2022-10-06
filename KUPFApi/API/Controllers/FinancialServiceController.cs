@@ -1,4 +1,5 @@
-﻿using API.DTOs.FinancialServicesDto;
+﻿using API.DTOs;
+using API.DTOs.FinancialServicesDto;
 using API.Models;
 using API.Servivces.Interfaces.FinancialServices;
 using AutoMapper;
@@ -25,10 +26,10 @@ namespace API.Controllers
             _financialService = financialService;
         }
         [HttpGet]
-        [Route("GetServiceTypeAndSubType")]
-        public async Task<IEnumerable<ServiceTypeAndSubTypeIdsDto>> GetServiceTypeAndSubType()
+        [Route("GetServiceByServiceTypeAndSubType/{serviceType}/{serviceSubType}/{tenentId}")]
+        public async Task<ServiceSetupDto> GetServiceTypeAndSubType(int serviceType, int serviceSubType, int tenentId)
         {
-            var result = await _financialService.GetServiceTypeAndSubType();
+            var result = await _financialService.GetServiceByServiceTypeAndSubType(serviceType, serviceSubType, tenentId);
             return result;
         }
     }

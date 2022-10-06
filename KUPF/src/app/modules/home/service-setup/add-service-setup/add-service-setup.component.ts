@@ -259,6 +259,7 @@ export class AddServiceSetupComponent implements OnInit {
           this.masterIds.push(arr[i])
         }
         this.commonDbService.GetServiceTypes(this.masterIds).subscribe((resp: any) => {
+          
           this.serviceType$ = resp
         });
 
@@ -360,6 +361,7 @@ export class AddServiceSetupComponent implements OnInit {
     }
     // Filling ServiceTypes against MasterIds.
     this.commonDbService.GetServiceTypes(this.masterIds).subscribe((response: any) => {
+      console.log(response);
       this.serviceType$ = response
     });
   }

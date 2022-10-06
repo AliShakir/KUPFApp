@@ -8,7 +8,7 @@
                 <button type="button" class="btn btn-primary float-left ArFontStyle"
                     lang="AR-SA">{{bodyLabel[0].title}}</button>
                 <button type="button" class="btn btn-warning float-left ArFontStyle"
-                    lang="AR-SA">{{bodyLabel[1].title}}</button>
+                    lang="AR-SA" (click)="getFormValues()">{{bodyLabel[1].title}}</button>
                 <button type="button" class="btn btn-danger float-left ArFontStyle" lang="AR-SA"
                     routerLink="/service-setup/service-details">{{bodyLabel[2].title}}</button>
             </div>
@@ -44,41 +44,43 @@
             <!--end::Title-->
             <!--begin::Row-->
             <div class="row gx-9 gy-6">
-                <form autocomplete="off">
+                <form autocomplete="off" [formGroup]="addServiceForm">
                     <div class="row mb-6">
                         <div class="col-lg-4 fv-row">
                             <label class="col-form-label fw-bold fs-6 ArFontStyle"
                                 lang="AR-SA">{{bodyLabel[3].title}}</label>
-                            <ng-select [items]="selectServiceType$" bindLabel="shortname" lang="AR-SA">
+                            <ng-select [items]="selectServiceType$ | async" bindLabel="serviceName1" formControlName="serviceType" 
+                                bindValue="serviceType" lang="AR-SA" (change)="onServiceTypeChange($event)">
                             </ng-select>
                         </div>
                         <div class="col-lg-4 fv-row">
                             <label class="col-form-label fw-bold fs-6 ArFontStyle"
                                 lang="AR-SA">{{bodyLabel[4].title}}</label>
-                            <ng-select [items]="selectServiceSubType$ | async" bindLabel="shortName" lang="AR-SA">
+                            <ng-select [items]="selectServiceSubType$ | async" bindLabel="serviceName1"  formControlName="serviceSubType" 
+                                bindValue="serviceSubType" lang="AR-SA" (change)="onServiceSubTypeChange($event)">
                             </ng-select>
                         </div>
                         <div class="col-lg-4 fv-row">
-                            <label class="col-form-label fw-bold fs-6 ArFontStyle"
+                            <label class="col-form-label fw-bold fs-6 ArFontStyle" 
                                 lang="AR-SA">{{bodyLabel[5].title}}</label>
-                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" readonly />
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" readonly formControlName="searialNo"/>
                         </div>
                     </div>
                     <div class="row mb-6">
                         <div class="col-lg-4 fv-row">
                             <label class="col-form-label fw-bold fs-6 ArFontStyle"
                                 lang="AR-SA">{{bodyLabel[6].title}}</label>
-                            <input type="number" class="form-control form-control-lg  mb-3 mb-lg-0" />
+                            <input type="number" class="form-control form-control-lg  mb-3 mb-lg-0" formControlName="amount" readonly/>
                         </div>
                         <div class="col-lg-4 fv-row">
                             <label class="col-form-label fw-bold fs-6 ArFontStyle"
                                 lang="AR-SA">{{bodyLabel[7].title}}</label>
-                            <input type="number" class="form-control form-control-lg  mb-3 mb-lg-0" />
+                            <input type="number" class="form-control form-control-lg  mb-3 mb-lg-0" formControlName="noOfInstallments" readonly/>
                         </div>
                         <div class="col-lg-4 fv-row">
                             <label class="col-form-label fw-bold fs-6 ArFontStyle"
                                 lang="AR-SA">{{bodyLabel[8].title}}</label>
-                            <input type="number" class="form-control form-control-lg  mb-3 mb-lg-0" />
+                            <input type="number" class="form-control form-control-lg  mb-3 mb-lg-0" formControlName="noOfInstallments" readonly/>
                         </div>
                     </div>
                     <div class="row mb-6">
@@ -86,7 +88,7 @@
                             <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA"><small
                                     class="text-danger">Incase of Gift By Default=Y </small> {{bodyLabel[9].title}}
                             </label>
-                            <input type="number" class="form-control form-control-lg  mb-3 mb-lg-0" />
+                            <input type="number" class="form-control form-control-lg  mb-3 mb-lg-0" formControlName="allowDiscount" readonly/>
                         </div>
                         <div class="col-lg-4 fv-row">
                             <label class="col-form-label fw-bold fs-6 ArFontStyle"
@@ -96,7 +98,7 @@
                                     <i class="fas fa-calendar"></i>
                                 </span>
                                 <input type="text" class="form-control" bsDatepicker
-                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }" lang="AR-SA" />
+                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }" lang="AR-SA" formControlName="startingDeductionMonth"/>
                             </div>
                         </div>
                         <div class="col-lg-4 fv-row">
@@ -107,7 +109,7 @@
                                     <i class="fas fa-calendar"></i>
                                 </span>
                                 <input type="text" class="form-control" bsDatepicker
-                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }" lang="AR-SA" />
+                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }" lang="AR-SA" formControlName="untilMonth"/>
                             </div>
                         </div>
                     </div>
@@ -211,8 +213,8 @@
 </div>
 
 <!--Financial Details-->
-<app-financial-detials></app-financial-detials>
+<app-financial-detials [parentFormGroup]="parentForm"></app-financial-detials>
 <br />
 
 <!--Approval Details-->
-<app-approval-detials></app-approval-detials>
+<app-approval-detials [parentFormGroup]="parentForm"></app-approval-detials>

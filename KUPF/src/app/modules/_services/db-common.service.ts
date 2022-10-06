@@ -28,6 +28,8 @@ import { DetailedEmployee } from '../models/DetailedEmployee';
 import { SearchEmployeeDto } from '../models/SearchEmployeeDto';
 import { SelectServiceSubTypeDto } from '../models/ServiceSetup/SelectServiceSubTypeDto';
 import { SelectMasterServiceTypeDto } from '../models/ServiceSetup/SelectMasterServiceTypeDto';
+import { SelectedServiceTypeDto } from '../models/ServiceSetup/SelectedServiceTypeDto';
+import { SelectedServiceSubTypeDto } from '../models/ServiceSetup/SelectedServiceSubTypeDto';
 
 @Injectable({
   providedIn: 'root'
@@ -73,6 +75,10 @@ export class DbCommonService {
   //
   serviceSubType: SelectServiceSubTypeDto[] = [];
   //
+  selectedServiceType: SelectedServiceTypeDto[] = [];
+  //
+  selectedServiceSubType: SelectedServiceSubTypeDto[] = [];
+  //
   masterServiceType: SelectMasterServiceTypeDto[] = [];
   //
   minMonthOfServices: SelectMinMonthOfServicesDto[] = [];
@@ -98,15 +104,20 @@ export class DbCommonService {
     return this.httpClient.post<DetailedEmployee[]>(this.baseUrl + `Common/SearchEmployee`,searchEmployeeDto);
   }
     //#region Add Service
-    GetSelectedServiceType(refId:number[]) {   
-      console.log('RefIds',refId);   
-        return this.httpClient.post<SelectServiceTypeDto[]>(this.baseUrl + `Common/GetSelectedServiceType`,refId);  
+    GetSelectedServiceType(tenentId:number) {  
+        return this.httpClient.get<SelectedServiceTypeDto[]>(this.baseUrl + `Common/GetSelectedServiceType?tenentId=${tenentId}`).pipe(
+          map(selectedServiceType => {
+            this.selectedServiceType = selectedServiceType;
+            return selectedServiceType;
+          })
+        )
     }
-    GetSelectedServiceSubType(refId:any) {
-      return this.httpClient.get<SelectServiceSubTypeDto[]>(this.baseUrl + `Common/GetSelectedServiceSubType/${refId}`).pipe(
-        map(serviceSubType => {
-          this.serviceSubType = serviceSubType;
-          return serviceSubType;
+    GetSelectedServiceSubType(tenentId:number) {
+      
+      return this.httpClient.get<SelectedServiceSubTypeDto[]>(this.baseUrl + `Common/GetSelectedServiceSubType?tenentId=${tenentId}`).pipe(
+        map(selectedServiceSubType => {
+          this.selectedServiceSubType = selectedServiceSubType;
+          return selectedServiceSubType;
         })
       )
     }
