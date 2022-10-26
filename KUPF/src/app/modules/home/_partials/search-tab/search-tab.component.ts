@@ -11,6 +11,8 @@ import { DbCommonService } from 'src/app/modules/_services/db-common.service';
   styleUrls: ['./search-tab.component.scss']
 })
 export class SearchTabComponent implements OnInit {
+  @Input() parentFormGroup:FormGroup;
+  employeeForm: FormGroup | undefined;
 
   //#region 
   /*----------------------------------------------------*/
@@ -41,7 +43,6 @@ export class SearchTabComponent implements OnInit {
   formTitle: string;
   closeResult: string = '';
   searchForm: FormGroup;
-  employeeForm: FormGroup;
   constructor(private commonDbService: DbCommonService,
     private toastr: ToastrService) {
 
@@ -81,6 +82,9 @@ export class SearchTabComponent implements OnInit {
     this.initializeSearchForm();
     //
     this.initializeEmployeeForm();
+    if (this.parentFormGroup) {
+      this.parentFormGroup.setControl('employeeForm', this.employeeForm);
+    }
   }
 
   initializeSearchForm() {
@@ -113,24 +117,29 @@ export class SearchTabComponent implements OnInit {
   }
   SearchEmployee() {
     this.commonDbService.SearchEmployee(this.searchForm.value).subscribe((response: any) => {
-
-      this.employeeForm.patchValue({
-        englishName: response.englishName,
-        arabicName: response.arabicName,
-        empBirthday: new Date(response.empBirthday),
-        empGender: response.empGender,
-        membershipJoiningDate: response.membershipJoiningDate ? new Date(response.membershipJoiningDate) : '',
-        membership: response.membership,
-        empMaritalStatus: response.empMaritalStatus,
-        mobileNumber: response.mobileNumber,
-        empWorkTelephone: response.empWorkTelephone,
-        contractType: response.contractType,
-        nationName: response.nationName,
-        departmentName: response.departmentName,
-        occupation: response.departmentName,
-        salary: response.salary,
-        remarks: response.remarks
-      })
+      if(response === null){
+        this.toastr.error('Sorry, record not found','Error');
+        this.employeeForm?.reset();
+      }else{
+        this.employeeForm?.patchValue({
+          employeeId:response.employeeId,
+          englishName: response.englishName,
+          arabicName: response.arabicName,
+          empBirthday: new Date(response.empBirthday),
+          empGender: response.empGender,
+          membershipJoiningDate: response.membershipJoiningDate ? new Date(response.membershipJoiningDate) : '',
+          membership: response.membership,
+          empMaritalStatus: response.empMaritalStatus,
+          mobileNumber: response.mobileNumber,
+          empWorkTelephone: response.empWorkTelephone,
+          contractType: response.contractType,
+          nationName: response.nationName,
+          departmentName: response.departmentName,
+          occupation: response.departmentName,
+          salary: response.salary,
+          remarks: response.remarks
+        })
+      }
     }, error => {
       if (error.status === 500) {
         this.toastr.error('Please enter Employee Id or CID or PFId', 'Error');

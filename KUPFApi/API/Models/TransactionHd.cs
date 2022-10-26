@@ -33,6 +33,23 @@ namespace API.Models
         public string OtherAct2 { get; set; }
         public string OtherAct3 { get; set; }
         public string OtherAct4 { get; set; }
+        public string OtherAct5 { get; set; }
+
+        public string? SerApproval1 { get; set; }
+        public string? ApprovalBy1 { get; set; }
+        public DateTime? ApprovedDate1 { get; set; }
+        public string? SerApproval2 { get; set; }
+        public string? ApprovalBy2 { get; set; }
+        public DateTime? ApprovedDate2 { get; set; }
+        public string? SerApproval3 { get; set; }
+        public string? ApprovalBy3 { get; set; }
+        public DateTime? ApprovedDate3 { get; set; }
+        public string? SerApproval4 { get; set; }
+        public string? ApprovalBy4 { get; set; }
+        public DateTime? ApprovedDate4 { get; set; }
+        public string? SerApproval5 { get; set; }
+        public string? ApprovalBy5 { get; set; }
+        public DateTime? ApprovedDate5 { get; set; }
         public string Activitycode { get; set; }
         public decimal? Mydocno { get; set; }
         public string Userbatchno { get; set; }
@@ -56,5 +73,6 @@ namespace API.Models
         public DateTime? Entrydate { get; set; }
         public DateTime? Entrytime { get; set; }
         public DateTime? Updttime { get; set; }
+        public decimal? InstallmentAmount { get; set; }
     }
 }

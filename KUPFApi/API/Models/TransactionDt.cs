@@ -8,7 +8,7 @@ namespace API.Models
     public partial class TransactionDt
     {
         public int TenentId { get; set; }
-        public int LocationId { get; set; }
+        public int? LocationId { get; set; }
         public long Mytransid { get; set; }
         public int Myid { get; set; }
         public int? EmployeeId { get; set; }

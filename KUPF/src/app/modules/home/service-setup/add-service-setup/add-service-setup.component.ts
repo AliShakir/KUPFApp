@@ -2,20 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Observable } from 'rxjs';
+import { find, Observable } from 'rxjs';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
-import { SelectApprovalRoleDto } from 'src/app/modules/models/ServiceSetup/SelectApprovalRoleDto';
-import { SelectMaxInstallmentDto } from 'src/app/modules/models/ServiceSetup/SelectMaxInstallmentDto';
-import { SelectMinInstallmentDto } from 'src/app/modules/models/ServiceSetup/SelectMinInstallmentDto';
-import { SelectMinMonthOfServicesDto } from 'src/app/modules/models/ServiceSetup/SelectMinMonthOfServicesDto';
-import { SelectServiceTypeDto } from 'src/app/modules/models/ServiceSetup/SelectServiceTypeDto';
 import { ServiceSetupDto } from 'src/app/modules/models/ServiceSetup/ServiceSetupDto';
 import { DbCommonService } from 'src/app/modules/_services/db-common.service';
 import { ServiceSetupService } from 'src/app/modules/_services/service-setup.service';
-import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
-import * as moment from 'moment';
 import { SelectServiceSubTypeDto } from 'src/app/modules/models/ServiceSetup/SelectServiceSubTypeDto';
 import { SelectMasterServiceTypeDto } from 'src/app/modules/models/ServiceSetup/SelectMasterServiceTypeDto';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { filter } from 'lodash';
 
 @Component({
   selector: 'app-add-service-setup',
@@ -46,6 +42,8 @@ export class AddServiceSetupComponent implements OnInit {
   // FormId
   formId: string;
 
+  electronicFile1: File;
+  electronicFile2: File;
   /*----------------------------------------------------*/
   //#endregion
 
@@ -55,11 +53,12 @@ export class AddServiceSetupComponent implements OnInit {
   serviceSubType$: Observable<SelectServiceSubTypeDto[]>;
   //
   editServiceSetup$: Observable<ServiceSetupDto[]>;
-  //
-  masterServiceType$: Observable<SelectMasterServiceTypeDto[]>;
+  //SelectMasterServiceTypeDto
+  masterServiceType$: any[] = [];
   //
   editServiceSetup: ServiceSetupDto[];
 
+  masterServices:any;
 
   //
   parentForm: FormGroup;
@@ -68,6 +67,7 @@ export class AddServiceSetupComponent implements OnInit {
   serviceId: any;
   //
   masterIds: any[] = [];
+  selected : any;
   // Array for Minimum Month Of Service
   minimumMonthOfServices = [
     { id: "1", name: '1' },
@@ -136,12 +136,15 @@ export class AddServiceSetupComponent implements OnInit {
     { id: "12", name: "1" }
   ]
   showHide: boolean;
+  // Getting base URL of Api from enviroment.
+  baseUrl = environment.KUPFApiUrl;
   constructor(private fb: FormBuilder,
     private commonDbService: DbCommonService,
     private setupService: ServiceSetupService,
     private toastr: ToastrService,
     private activatedRout: ActivatedRoute,
-    private router: Router) {
+    private router: Router,
+    private http: HttpClient) {
     this.setUpParentForm();
     // Getting record by from URL
     this.serviceId = this.activatedRout.snapshot.paramMap.get('serviceId');
@@ -178,13 +181,14 @@ export class AddServiceSetupComponent implements OnInit {
     //#endregion
 
     //
-    this.masterServiceType$ = this.commonDbService.GetMaterServiceTypes();
+    this.commonDbService.GetMaterServiceTypes().subscribe((result) => {
+      this.masterServiceType$ = result;
+    });
 
     // Fillout all controls to update record.
     if (this.serviceId != null) {
       this.editServiceSetup$ = this.setupService.GetServiceSetupById(this.serviceId);
       this.editServiceSetup$.subscribe((response: any) => {
-        
         this.parentForm.patchValue({
           addServiceSetupForm:
           {
@@ -238,7 +242,9 @@ export class AddServiceSetupComponent implements OnInit {
           },
           editorForm: {
             englishHtml: response.englishHTML || {},
-            arabicHtml: response.arabicHTML || {}
+            arabicHtml: response.arabicHTML || {},
+            englishWebPageName: response.englishWebPageName,
+            arabicWebPageName: response.arabicWebPageName
           },
           electronicForm: {
             electronicForm1: response.electronicForm1,
@@ -247,24 +253,42 @@ export class AddServiceSetupComponent implements OnInit {
             electronicForm2URL: response.electronicForm2URL,
           }
         });
+
         
-        //
-        this.masterServiceType$ = this.commonDbService.GetMaterServiceTypes();
         
-        // Filling service Types
-        var arr = response.masterServiceId.split(',');
-        this.masterIds = [];
+       // this.masterServiceType$ = this.commonDbService.GetMaterServiceTypes();
+
+        //Filling service Types
+        this.masterIds = response.masterServiceId.split(',');
+        let masterServiceNumberArray = this.masterIds.map(Number);
+        this.parentForm.get('addServiceSetupForm')?.patchValue({
+          masterServiceId: masterServiceNumberArray
+        })
+        // this.masterIds = [];
         
-        for (let i = 0; i < arr.length; i++) {
-          this.masterIds.push(arr[i])
-        }
-        this.commonDbService.GetServiceTypes(this.masterIds).subscribe((resp: any) => {
+        // for (let i = 0; i < arr.length; i++) {
+        //   this.masterIds.push(arr[i])
+        // }    
+      //   this.offers$.pipe(find((item: any) => item === offer)).subscribe(items => {
+      //     console.log("Offer is in the list")
+      // });
+        // this.masterServiceType$.subscribe(items=>{
+        //   items.filter(x=>x.refId === 1).map((data:any)=>{
+        //     this.masterIds = data;
+        //     console.log(data);
+        //   })
           
+        // })
+
+
+
+
+        this.commonDbService.GetServiceTypes(this.masterIds).subscribe((resp: any) => {
           this.serviceType$ = resp
         });
 
         // Filling service Sub Types
-        this.commonDbService.GetServiceSubTypes(response.serviceType).subscribe((res: any) => {          
+        this.commonDbService.GetServiceSubTypes(response.serviceType).subscribe((res: any) => {
           this.serviceSubType$ = res
         });
 
@@ -292,13 +316,18 @@ export class AddServiceSetupComponent implements OnInit {
       maxInstallment: new FormControl('', Validators.required),
       frozen: new FormControl('', Validators.required),
       previousEmployees: new FormControl('', Validators.required),
-      allowDiscountDefault: new FormControl('', Validators.required),
-      allowDiscountPer: new FormControl('', Validators.required),
-      allowDiscountAmount: new FormControl('0.0', Validators.required),
+      allowDiscountDefault: new FormControl(''),
+      allowDiscountPer: new FormControl(''),
+      allowDiscountAmount: new FormControl('0.0'),
     })
     this.parentForm.setControl('addServiceSetupForm', this.addServiceSetupForm);
   }
-
+  onfileSelect1Event(val: any) {
+    this.electronicFile1 = val;
+  }
+  onfileSelect2Event(val: any) {
+    this.electronicFile2 = val;
+  }
   addServiceSetup() {
     let arr = this.addServiceSetupForm?.controls['masterServiceId'];
 
@@ -307,8 +336,8 @@ export class AddServiceSetupComponent implements OnInit {
     });
 
     // Get Tenant Id
-    var data = JSON.parse(localStorage.getItem("user")!);
-    const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
+    // var data = JSON.parse(localStorage.getItem("user")!);
+    // const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
 
     //  TO CONVER OBJECT ARRAY AS SIMPLE ARRAY. 
     let formData = {
@@ -317,30 +346,52 @@ export class AddServiceSetupComponent implements OnInit {
       ...this.parentForm.value.financialForm,
       ...this.parentForm.value.editorForm,
       ...this.parentForm.value.electronicForm,
-      tenentID: tenantId[0], cruP_ID: 0
+      tenentID: 21, cruP_ID: 0
     }
-    
-    if (this.serviceId == null) {
-      // Add new record
-      this.setupService.AddServiceSetup(formData).subscribe(() => {
-        this.toastr.success('Saved successfully', 'Success');
-        this.parentForm.reset();
-      }, error => {
-        if (error.status === 500) {
-          this.toastr.error('Duplicate value found', 'Error');
+    const finalformData = new FormData();
+
+    finalformData.append('File1', this.electronicFile1);
+    finalformData.append('File2', this.electronicFile2);
+    Object.keys(formData).forEach(key => finalformData.append(key, formData[key]));
+
+    if (!this.serviceId) {
+      this.http.post(this.baseUrl + `ServiceSetup/AddServiceSetup`, finalformData).subscribe({
+        next: () => {
+          this.toastr.success('Saved successfully', 'Success');
+          this.parentForm.reset();
+          this.parentForm.get('addServiceSetupForm')?.patchValue({
+            allowDiscountDefault: '',
+            allowDiscountPer: '',
+            allowDiscountAmount: '0.0',
+            serviceId: ''
+          });
+          this.parentForm.get('approvalDetailsForm')?.patchValue({
+            approvedDate1: '',
+            approvedDate2: '',
+            approvedDate3: '',
+            approvedDate4: '',
+            approvedDate5: ''
+          });
+        },
+        error: (error) => {
+          if (error.status === 500) {
+            this.toastr.error('Duplicate value found', 'Error');
+          }
         }
-      })
+      });
     } else {
-      // Add update record
-      this.setupService.UpdateServiceSetup(formData).subscribe(() => {
-        this.toastr.success('Updated successfully', 'Success');
-        this.parentForm.reset();
-        this.router.navigateByUrl('/service-setup/service-setup-details')
-      }, error => {
-        if (error.status === 500) {
-          this.toastr.error('Something went wrong', 'Error');
+      this.http.put(this.baseUrl + `ServiceSetup/EditServiceSetup`, finalformData).subscribe({
+        next: () => {
+          this.toastr.success('Updated successfully', 'Success');
+          //this.parentForm.reset();
+          this.router.navigateByUrl('/service-setup/service-setup-details')
+        },
+        error: (error) => {
+          if (error.status === 500) {
+            this.toastr.error('Something went wrong', 'Error');
+          }
         }
-      })
+      });
     }
   }
 

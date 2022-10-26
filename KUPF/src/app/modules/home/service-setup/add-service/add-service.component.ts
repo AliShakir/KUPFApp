@@ -1,6 +1,9 @@
+import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { map, Observable } from 'rxjs';
 import { ServiceTypeAndSubTypeIdsDto } from 'src/app/modules/models/FinancialService/ServiceTypeAndSubTypeIdsDto';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
@@ -56,11 +59,13 @@ export class AddServiceComponent implements OnInit {
   //
   parentForm: FormGroup;
   addServiceForm: FormGroup;
-
+  isFormSubmitted = false;
   constructor(
     private financialService: FinancialService,
     private commonService: DbCommonService,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private toastrService: ToastrService,
+    public datepipe: DatePipe) {
     this.setUpParentForm();
   }
 
@@ -102,6 +107,7 @@ export class AddServiceComponent implements OnInit {
     this.selectServiceType$ = this.commonService.GetSelectedServiceType(21);
     //
     this.selectServiceSubType$ = this.commonService.GetSelectedServiceSubType(21);
+    
   }
   setUpParentForm() {
     this.parentForm = this.fb.group({});
@@ -111,16 +117,60 @@ export class AddServiceComponent implements OnInit {
       serviceSubType: new FormControl('', Validators.required),
       serviceType: new FormControl('', Validators.required),
       searialNo: new FormControl('', Validators.required),
-      amount: new FormControl('', Validators.required),
-      noOfInstallments: new FormControl('', Validators.required),
+      totamt: new FormControl('', Validators.required),
+      totinstallments: new FormControl('', Validators.required),
       allowDiscount: new FormControl('', Validators.required),
+      installmentAmount: new FormControl('', Validators.required),
       startingDeductionMonth: new FormControl('', Validators.required),
       untilMonth: new FormControl('', Validators.required)
     })
     this.parentForm.setControl('addServiceForm', this.addServiceForm);
   }
+  saveFinancialService(){
+    // Get Tenant Id
+    // var data = JSON.parse(localStorage.getItem("user")!);
+    // const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
+
+    let formData = {
+      ...this.parentForm.value.addServiceForm,
+      ...this.parentForm.value.approvalDetailsForm,
+      ...this.parentForm.value.employeeForm,
+      ...this.parentForm.value.financialForm,
+      tenentID: 21, cruP_ID: 0
+    }
+    
+    this.isFormSubmitted = true;
+    //if(this.parentForm.valid){
+      console.log(this.parentForm.value);
+      this.financialService.AddFinacialService(formData).subscribe(()=>{
+        this.toastrService.success('Saved successfully', 'Success');
+          this.parentForm.reset();
+      })
+    //}
+  }
   getFormValues() {
-    console.log(this.addServiceForm.value);
+    console.log(this.parentForm.value);
+  }
+  calculateUntilMonth(selectedDate:Date){
+    if(selectedDate !== undefined){
+      const date = new Date();
+      let noOfinstallments = this.addServiceForm.get('totinstallments')?.value;
+      date.setMonth(selectedDate.getMonth() + noOfinstallments) 
+      this.addServiceForm.patchValue({
+        untilMonth: this.datepipe.transform(date,'MMM-YYYY')
+      });     
+    }
+    
+  }
+  
+  // Calculate Installments based on Installment Months...
+  calculateInstallments(){
+    let amount = this.addServiceForm.get('totamt')?.value;
+    let noOfinstallments = this.addServiceForm.get('totinstallments')?.value;
+    let calculatedAmount = (amount / noOfinstallments);
+    this.addServiceForm.patchValue({
+      installmentAmount: calculatedAmount
+    })
   }
   onServiceTypeChange($event: any) {
     this.selectedServiceType = $event.serviceType;
@@ -128,14 +178,13 @@ export class AddServiceComponent implements OnInit {
   onServiceSubTypeChange($event: any) {
     this.selectedServiceSubType = $event.serviceSubType;
     this.financialService.GetSelectedServiceSubType(this.selectedServiceType, this.selectedServiceSubType, 21).subscribe((response: any) => {
-      console.log(response);
       this.parentForm.patchValue({
         addServiceForm: {
           serviceSubType: response.serviceSubType,
           serviceType: response.serviceType,
           searialNo: '',
           amount: '',
-          noOfInstallments: response.maxInstallment,
+          totinstallments: response.maxInstallment,
           allowDiscount: response.allowDiscountAmount
         },
         approvalDetailsForm: {

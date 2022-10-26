@@ -38,8 +38,7 @@ import { ElectronicFormsComponent } from './electronic-forms/electronic-forms.co
     ReactiveFormsModule,
     BsDatepickerModule.forRoot(),
     NgSelectModule,
-    CKEditorModule,
-
+    CKEditorModule
   ],
   exports: [
     SearchTabComponent,

@@ -243,8 +243,8 @@ namespace API.Servivces.Implementation
             }
 
             var result = await _context.DetailedEmployees.Where(c => c.EmployeeId == searchEmployeeDto.EmployeeId ||
-                        c.Pfid == searchEmployeeDto.PFId || c.EmpCidNum == searchEmployeeDto.CID).FirstOrDefaultAsync();
-
+                        c.Pfid == searchEmployeeDto.PFId || c.EmpCidNum == searchEmployeeDto.CID).Where(x=>x.Pfid != null) .FirstOrDefaultAsync();
+           
             var data = _mapper.Map<DetailedEmployeeDto>(result);
 
             return data;

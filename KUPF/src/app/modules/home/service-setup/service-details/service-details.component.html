@@ -18,7 +18,7 @@
     <!--end::Header-->
     <!--begin::Body-->
     <div class="card-body py-3" *ngFor="let bodyLabel of formBodyLabels; let i = index">       
-        <div class="table-responsive mt-3">
+        <!-- <div class="table-responsive mt-3">
             <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
                 <thead class="bg-secondary">
                     <tr class="fw-bolder">
@@ -86,8 +86,8 @@
                     </tr>                    
                 </tbody>
             </table>
-        </div>
-        <!-- <div class="row gx-9 gy-6">
+        </div> -->
+        <div class="row gx-9 gy-6">
             <form [formGroup]="formGroup">
                 <mat-form-field appearance="fill" class="w-100" floatLabel="never" >
                     <mat-label>Search</mat-label>
@@ -96,47 +96,48 @@
                     <mat-icon matSuffix (click)="clearFilter()" class="material-icons">close</mat-icon>
                 </mat-form-field>
                 <div class="table-container">
-                    <table mat-table class="w-100" [dataSource]="formTitleHd" matSort>
+                    <table mat-table class="w-100" [dataSource]="returnTransactionHdDto" matSort>
                         <ng-container matColumnDef="action">
                             <th mat-header-cell *matHeaderCellDef>Action</th>
-                            <td mat-cell *matCellDef="let item">
-                                <button mat-raised-button color="accent" routerLink="/references/update-labels/{{item.formID}}" id={{item.formID}}>Select</button>
+                            <td mat-cell *matCellDef="let item" class="w-20 text-right">
+                                <button mat-raised-button color="warn" (click)="openDeleteModal(deleteModal,item.mytransid)">Delete</button> |                                
+                                <button mat-raised-button color="accent">Edit</button>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="employeeName">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Form Id</th>
-                            <td mat-cell *matCellDef="let item" class="w-25 ArFontStyle">{{item.formID}}</td>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee Name </th>
+                            <td mat-cell *matCellDef="let item" class="w-70 ArFontStyle" >{{item.englishName}} {{item.employeeId}} {{item.pfId}} {{item.cid}}</td>
                         </ng-container>
 
                         <ng-container matColumnDef="services">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Form Name</th>
-                            <td mat-cell *matCellDef="let item" class="w-25 ArFontStyle">{{item.formName}}</td>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Service</th>
+                            <td mat-cell *matCellDef="let item" class="ArFontStyle">{{item.serviceType}}</td>
                         </ng-container>
 
                         <ng-container matColumnDef="installments">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Header Name</th>
-                            <td mat-cell *matCellDef="let item" class="w-25 ArFontStyle">{{item.headerName}}</td>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Installment</th>
+                            <td mat-cell *matCellDef="let item" class="ArFontStyle">{{item.installment}}</td>
                         </ng-container>
 
                         <ng-container matColumnDef="amount">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Sub Header</th>
-                            <td mat-cell *matCellDef="let item" class="w-25 ArFontStyle">{{item.subHeaderName}}</td>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
+                            <td mat-cell *matCellDef="let item" class="ArFontStyle">{{item.amount}}</td>
                         </ng-container>
                         <ng-container matColumnDef="dated">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Sub Header</th>
-                            <td mat-cell *matCellDef="let item" class="w-25 ArFontStyle">{{item.subHeaderName}}</td>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Dated</th>
+                            <td mat-cell *matCellDef="let item" class="ArFontStyle">{{item.payDate}}</td>
                         </ng-container>
                         <ng-container matColumnDef="paid">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Sub Header</th>
-                            <td mat-cell *matCellDef="let item" class="w-25 ArFontStyle">{{item.subHeaderName}}</td>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Paid</th>
+                            <td mat-cell *matCellDef="let item" class="ArFontStyle">{{item.paid}}</td>
                         </ng-container>
                         <ng-container matColumnDef="payDate">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Sub Header</th>
-                            <td mat-cell *matCellDef="let item" class="w-25 ArFontStyle">{{item.subHeaderName}}</td>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>PayDate</th>
+                            <td mat-cell *matCellDef="let item" class="ArFontStyle">{{item.payDate}}</td>
                         </ng-container>
-                        <ng-container matColumnDef="discount">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Sub Header</th>
-                            <td mat-cell *matCellDef="let item" class="w-25 ArFontStyle">{{item.subHeaderName}}</td>
+                        <ng-container matColumnDef="discounted">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Discount</th>
+                            <td mat-cell *matCellDef="let item" class="ArFontStyle">{{item.discounted}}</td>
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky:true"
                             [ngClass]="{'hidden':!isLoadingCompleted}"></tr>
@@ -148,10 +149,28 @@
                     </mat-paginator>
                 </div>
             </form>
-        </div> -->
+        </div>
     </div>
     <!--begin::Body-->
     <div class="card-footer">
 
     </div>
 </div>
+<!--Delete Modal-->
+<ng-template #deleteModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Delete</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="mb-3">
+                <span>Do you want to delete this record</span>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer text-right">
+        <button mat-raised-button color="warn" (click)="modal.close('yes')">Yes</button> &nbsp;&nbsp;
+        <button mat-raised-button color="accent" (click)="modal.close('Save click')">No</button>
+    </div>
+</ng-template>

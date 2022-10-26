@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -16,8 +16,8 @@ serviceSetupDto: ServiceSetupDto[]=[]
   constructor(private httpClient: HttpClient) { }
 
 // add service setup
-AddServiceSetup(response: ServiceSetupDto) {
-  return this.httpClient.post(this.baseUrl +`ServiceSetup/AddServiceSetup`,response);
+AddServiceSetup(data: ServiceSetupDto) {
+    return this.httpClient.post(this.baseUrl +`ServiceSetup/AddServiceSetup`,data);
 }
 
 //update service setup

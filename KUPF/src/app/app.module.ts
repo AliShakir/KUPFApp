@@ -17,13 +17,12 @@ import { ViewContactComponent } from './modules/home/employeeinformation/view-co
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddReferenceComponent } from './modules/home/setup/add-reference/add-reference.component';
 import { LoginComponent } from './modules/home/auth/login/login.component';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgxTranslateModule } from './modules/i18n';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from './modules/_interceptors/loading.interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { NgxEditorModule } from 'ngx-editor';
+import { DatePipe } from '@angular/common';
 
 // #fake-end#
 
@@ -96,8 +95,8 @@ function appInitializer(authService: AuthService) {
       multi: true,
       deps: [AuthService]      
     },
-    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
-    
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
+    DatePipe
   
     
   ],

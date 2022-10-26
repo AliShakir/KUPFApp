@@ -64,11 +64,13 @@ namespace API.Models
         public DateTime? SyncDate { get; set; }
         public string Syncby { get; set; }
         public int? SynId { get; set; }
-        public bool? AllowDiscountPer { get; set; }
+        public decimal? AllowDiscountPer { get; set; }
         public decimal? AllowDiscountAmount { get; set; }
         public bool? AllowDiscountDefault { get; set; }
         public string? EnglishHTML { get; set; }
+        public string? EnglishWebPageName { get; set; }
         public string? ArabicHTML { get; set; }
+        public string? ArabicWebPageName { get; set; }
         public string? ElectronicForm1 { get; set; }
         public string? ElectronicForm1URL { get; set; }
         public string? ElectronicForm2 { get; set; }

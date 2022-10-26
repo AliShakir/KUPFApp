@@ -55,6 +55,7 @@
                 <form [formGroup]="employeeForm">
                     <div class="row mb-4">
                         <div class="col-lg-4 fv-row">
+                            <input type="hidden" class="form-control" formControlName="employeeId" name="employeeId"/>
                             <label class="form-label" for="form3Example1 " lang="AR-SA" [style]='arabicFont'>{{bodyLabel[6].title}}</label>
                             <input type="text" class="form-control" formControlName="englishName" name="englishName" lang="AR-SA" readonly />
                         </div>

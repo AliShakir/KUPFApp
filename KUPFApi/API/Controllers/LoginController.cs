@@ -19,10 +19,12 @@ namespace API.Controllers
     {
         private readonly KUPFDbContext _context;
         private readonly IFunctionUserService _functionUserService;
+        //private readonly ITokenService _tokenService;
         public LoginController(KUPFDbContext context, IFunctionUserService functionUserService)
         {
             _context = context;
             _functionUserService = functionUserService;
+            //_tokenService = tokenService;
         }
         [HttpPost]
         [Route("EmployeeLogin")]
@@ -32,6 +34,7 @@ namespace API.Controllers
             var user = await _context.UserMsts.
                 Where(c => c.LoginId == loginDto.username && c.Password == decodedPass)
                 .ToListAsync();
+            
             List<LoginDto> userList = new List<LoginDto>();
             if (user.Count() >= 1)
             {
@@ -42,7 +45,8 @@ namespace API.Controllers
                         username = user[i].LoginId,
                         LocationId = user[i].LocationId,
                         TenantId = user[i].TenentId,
-                        UserId = user[i].UserId
+                        UserId = user[i].UserId,
+                        //Token = _tokenService.CreateToken(user[i].LoginId)                        
                     };
                     userList.Add(dto);
                 }

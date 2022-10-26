@@ -117,6 +117,17 @@ namespace API.Helpers
             CreateMap<ServiceSetup, SelectedServiceTypeDto>();
             //
             CreateMap<ServiceSetup, SelectedServiceSubTypeDto>();
+
+            //
+            CreateMap<TransactionHdDto,TransactionHd>();
+
+            //
+            CreateMap<TransactionDtDto, TransactionDt>();
+
+            //
+            CreateMap<ServiceSetup,ReturnWebContent>();
+            //
+            CreateMap<ServiceSubscriptionDto, ServiceSubscription>();
         }
     }
 }

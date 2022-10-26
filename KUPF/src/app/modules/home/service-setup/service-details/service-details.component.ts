@@ -4,10 +4,14 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
+import { ReturnTransactionHdDto } from 'src/app/modules/models/FinancialService/ReturnTransactionHdDto';
 import { FormTitleDt } from 'src/app/modules/models/formTitleDt';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
 import { CommonService } from 'src/app/modules/_services/common.service';
+import { FinancialService } from 'src/app/modules/_services/financial.service';
 import { LocalizationService } from 'src/app/modules/_services/localization.service';
 
 @Component({
@@ -46,10 +50,10 @@ export class ServiceDetailsComponent implements OnInit {
   columnsToDisplay: string[] = ['action', 'employeeName', 'services', 'installments', 'amount','dated','paid','payDate','discounted'];
 
   // Getting data as abservable.
-  formTitleHd$: Observable<FormTitleHd[]>;
+  returnTransactionHdDto$: Observable<ReturnTransactionHdDto[]>;
 
   // We need a normal array of data so we will subscribe to the observable and will get data
-  formTitleHd: MatTableDataSource<FormTitleHd> = new MatTableDataSource<any>([]);
+  returnTransactionHdDto: MatTableDataSource<ReturnTransactionHdDto> = new MatTableDataSource<any>([]);
 
   // Paginator
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -75,9 +79,15 @@ export class ServiceDetailsComponent implements OnInit {
   
   formTitle: string;
   selectedOpt: string = '';
+  lang: any = '';
+  // Modal close result...
+  closeResult = '';
   constructor(private common: CommonService, 
     private router: Router, 
-    private localizationService: LocalizationService) {
+    private localizationService: LocalizationService,
+    private financialService:FinancialService,
+    private modalService: NgbModal,
+    private toastrService:ToastrService) {
       this.formGroup = new FormGroup({
         searchTerm: new FormControl(null)
       })
@@ -114,17 +124,65 @@ export class ServiceDetailsComponent implements OnInit {
     }
     //#endregion
   
-  
+  //
+  this.financialService.GetFinancialServices().subscribe(()=>{
+
+  })
+  this.returnTransactionHdDto$ = this.financialService.GetFinancialServices();
+  //
+  this.returnTransactionHdDto$.subscribe((response: ReturnTransactionHdDto[]) => {
+    this.returnTransactionHdDto = new MatTableDataSource<ReturnTransactionHdDto>(response);
+    this.returnTransactionHdDto.paginator = this.paginator;
+    this.returnTransactionHdDto.sort = this.sort;
+    this.isLoadingCompleted = true;
+    console.log(this.returnTransactionHdDto);
+  }, error => {
+    console.log(error);
+    this.dataLoadingStatus = 'Error fetching the data';
+    this.isError = true;
+  })
   }
  //#region Material Search and Clear Filter
  filterRecords() {
-  if (this.formGroup.value.searchTerm != null && this.formTitleHd) {
-    this.formTitleHd.filter = this.formGroup.value.searchTerm.trim();
+  if (this.formGroup.value.searchTerm != null && this.returnTransactionHdDto) {
+    this.returnTransactionHdDto.filter = this.formGroup.value.searchTerm.trim();
   }
 }
 clearFilter() {
   this.formGroup?.patchValue({ searchTerm: "" });
   this.filterRecords();
+}
+//#endregion
+
+//#region Delete operation and Modal Config
+openDeleteModal(content: any, id: number) {
+  this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+    this.closeResult = `Closed with: ${result}`;
+    if (result === 'yes') {
+      console.log(id);
+      this.financialService.DeleteFinancialService(id).subscribe(response => {
+        if (response === 11) {
+          this.toastrService.success('Record deleted successfully', 'Success');
+          // Refresh Grid
+          //this.loadData();
+        } else {
+          this.toastrService.error('Something went wrong', 'Errro');
+        }
+      });
+    }
+  }, (reason) => {
+    this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+  });
+
+}
+private getDismissReason(reason: any): string {
+  if (reason === ModalDismissReasons.ESC) {
+    return 'by pressing ESC';
+  } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+    return 'by clicking on a backdrop';
+  } else {
+    return `with: ${reason}`;
+  }
 }
 //#endregion
 

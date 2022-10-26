@@ -88,26 +88,26 @@ export class ApprovalDetialsComponent implements OnInit {
 
   initializeForm() {
     this.approvalDetailsForm = new FormGroup({
-      serApproval1: new FormControl('', Validators.required),
-      approvalBy1: new FormControl('', Validators.required),
-      approvedDate1: new FormControl('', Validators.required),
+      serApproval1: new FormControl(''),
+      approvalBy1: new FormControl(''),
+      approvedDate1: new FormControl(''),
       
-      serApproval2: new FormControl('', Validators.required),
-      approvalBy2: new FormControl('', Validators.required),
-      approvedDate2: new FormControl('', Validators.required),
+      serApproval2: new FormControl(''),
+      approvalBy2: new FormControl(''),
+      approvedDate2: new FormControl(''),
 
 
-      serApproval3: new FormControl('', Validators.required),
-      approvalBy3: new FormControl('', Validators.required),
-      approvedDate3: new FormControl('', Validators.required),
+      serApproval3: new FormControl(''),
+      approvalBy3: new FormControl(''),
+      approvedDate3: new FormControl(''),
 
-      serApproval4: new FormControl('', Validators.required),
-      approvalBy4: new FormControl('', Validators.required),
-      approvedDate4: new FormControl('', Validators.required),
+      serApproval4: new FormControl(''),
+      approvalBy4: new FormControl(''),
+      approvedDate4: new FormControl(''),
 
-      serApproval5: new FormControl('', Validators.required),
-      approvalBy5: new FormControl('', Validators.required),
-      approvedDate5: new FormControl('', Validators.required),
+      serApproval5: new FormControl(''),
+      approvalBy5: new FormControl(''),
+      approvedDate5: new FormControl(''),
     })
   }
   

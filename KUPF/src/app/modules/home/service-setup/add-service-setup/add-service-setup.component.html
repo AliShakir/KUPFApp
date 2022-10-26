@@ -62,15 +62,15 @@
                     <div class="row mb-6">
                         <div class="col-lg-6 fv-row">
                             <label class="col-form-label fw-bold fs-6 ArFontStyle"><span class="">Master Service</span></label>                           
-                            <ng-select [items]="masterServiceType$ | async" bindValue="refId" bindLabel="refname3" 
-                            formControlName="masterServiceId" lang="AR-SA" multiple="true" (change)="onMasterServiceChange($event)">                            
+                            <ng-select [items]="masterServiceType$" bindValue="refId" bindLabel="refname3"
+                                formControlName="masterServiceId" lang="AR-SA" multiple="true" (change)="onMasterServiceChange($event)">                            
                             </ng-select>
                         </div>
                     </div>
                     <div class="row mb-6">
                         <div class="col-lg-6 fv-row">
                             <label class="col-form-label fw-bold fs-6 ArFontStyle"><span class="">{{bodyLabel[7].title}}</span></label>
-                            <ng-select [items]="serviceType$" bindValue="refId" bindLabel="shortname" formControlName="serviceType" lang="AR-SA" (change)="onServiceTypeChange(selection)" [(ngModel)]="selection">                            
+                            <ng-select [items]="serviceType$ " bindValue="refId" bindLabel="shortname" formControlName="serviceType" lang="AR-SA" (change)="onServiceTypeChange(selection)" [(ngModel)]="selection">                            
                             </ng-select>
                         </div>
                         <div class="col-lg-6 fv-row">
@@ -195,7 +195,9 @@
 </app-html-forms>
 
 <br/>
-<app-electronic-forms [parentFormGroup]="parentForm">
+<app-electronic-forms [parentFormGroup]="parentForm" 
+(fileSelect1Event)="onfileSelect1Event($event)"
+(fileSelect2Event)="onfileSelect2Event($event)">
 
 </app-electronic-forms>
 

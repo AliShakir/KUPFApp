@@ -1,4 +1,5 @@
 ﻿using API.DTOs;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,8 @@ namespace API.Servivces.Interfaces
         Task<int> DeleteServiceSetupAsync(int id);
         Task<ServiceSetupDto> GetServiceSetupByIdAsync(int id);
         Task<List<ServiceSetupDto>> GetServiceSetupAsync();
+        Task<ReturnWebContent> GetWebContentByPageNameAsync(string pageName);
+
+        Task<int> AddServiceSubscriptionAsync(ServiceSubscriptionDto serviceSubscriptionDto);
     }
 }

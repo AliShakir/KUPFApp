@@ -69,13 +69,13 @@ export class AddemployeeinformationComponent implements OnInit {
   datePickerConfig: Partial<BsDatepickerConfig> | undefined;
   selectedStatus: number | undefined;
   maritalStatusArray = [
-    { id: "1", name: 'Married' },
-    { id: "2", name: 'Single' }
+    { id: 1, name: 'Married' },
+    { id: 2, name: 'Single' }
   ];
   selectedGender: number | undefined;
   genderArray: any = [
-    { id: "1", name: 'Male' },
-    { id: "2", name: 'Female' }
+    { id: 1, name: 'Male' },
+    { id: 2, name: 'Female' }
   ];
   constructor(
     private cdr: ChangeDetectorRef,
@@ -152,9 +152,9 @@ export class AddemployeeinformationComponent implements OnInit {
             employeeId: this.employeeId,
             englishName: response.englishName,
             arabicName: response.arabicName,
-            empBirthday: response.empBirthday,
-            empGender: response.empGender.toString(),
-            empMaritalStatus: response.empMaritalStatus.toString(),
+            empBirthday: response.empBirthday ? new Date(response.empBirthday) : '',
+            empGender: response.empGender,
+            empMaritalStatus: response.empMaritalStatus,
             mobileNumber: response.mobileNumber,
             empWorkTelephone: response.empWorkTelephone,
             empWorkEmail: response.empWorkEmail,
@@ -171,9 +171,9 @@ export class AddemployeeinformationComponent implements OnInit {
           },
           membershipForm: {
             membership: response.membership,
-            membershipJoiningDate: response.membershipJoiningDate,
+            membershipJoiningDate: response.membershipJoiningDate ? new Date(response.membershipJoiningDate) : '',
             termination: +response.termination,
-            terminationDate: response.terminationDate,
+            terminationDate: response.terminationDate ? new Date(response.terminationDate) : '',
           },
           financialForm: {
             loanAct: response.loanAct,
@@ -273,7 +273,7 @@ export class AddemployeeinformationComponent implements OnInit {
           this.toastrService.success('Saved successfully', 'Success');
           this.parentForm.reset();
         })
-      }
+      } 
     }
   }
   //

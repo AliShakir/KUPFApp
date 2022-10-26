@@ -9,7 +9,7 @@
                 <div class="col-lg-6 fv-row">
                     <label class="col-lg-8 col-form-label fw-bold fs-6 ArFontStyle"><span class="">Electronic Form 1 - نموذج إلكتروني
                         </span></label>
-                    <input type="file" class="form-control form-control-lg  mb-3 mb-lg-0" formControlName="electronicForm1"
+                    <input type="file" class="form-control form-control-lg  mb-3 mb-lg-0"  (change)="onFile1Select($event)"
                    />
                 </div>
                 <div class="col-lg-6 fv-row">
@@ -22,8 +22,7 @@
                 <div class="col-lg-6 fv-row">
                     <label class="col-lg-8 col-form-label fw-bold fs-6 ArFontStyle"><span class="">Electronic Form 2 - نموذج إلكتروني
                         </span></label>
-                    <input type="file" class="form-control form-control-lg  mb-3 mb-lg-0" formControlName="electronicForm2"
-                   />
+                    <input type="file" class="form-control form-control-lg  mb-3 mb-lg-0" (change)="onFile2Select($event)"/>
                 </div>
                 <div class="col-lg-6 fv-row">
                     <label class="col-lg-8 col-form-label fw-bold fs-6 ArFontStyle"><span class="">Electronic Form URL 2  - عنوان URL للنموذج الإلكتروني</span></label>

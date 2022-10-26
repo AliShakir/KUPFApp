@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from './modules/auth/services/auth.guard';
 import { LoginComponent } from './modules/home/auth/login/login.component';
 
 export const routes: Routes = [
@@ -30,7 +29,7 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes,{ useHash: true })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

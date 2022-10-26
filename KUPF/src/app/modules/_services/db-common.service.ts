@@ -134,12 +134,7 @@ export class DbCommonService {
   }
   // Get GetMasterServiceTypes...
   GetMaterServiceTypes() {
-    return this.httpClient.get<SelectMasterServiceTypeDto[]>(this.baseUrl + `Common/GetMasterServiceType`).pipe(
-      map(masterServiceType => {
-        this.masterServiceType = masterServiceType;
-        return masterServiceType;
-      })
-    )
+    return this.httpClient.get<any[]>(this.baseUrl + `Common/GetMasterServiceType`);
   }
   // Get MonthOfServices...
   GetMinMonthOfServices() {
