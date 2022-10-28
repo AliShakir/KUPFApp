@@ -14,6 +14,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { HtmlFormsComponent } from './html-forms/html-forms.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { ElectronicFormsComponent } from './electronic-forms/electronic-forms.component';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 
 
@@ -38,7 +39,8 @@ import { ElectronicFormsComponent } from './electronic-forms/electronic-forms.co
     ReactiveFormsModule,
     BsDatepickerModule.forRoot(),
     NgSelectModule,
-    CKEditorModule
+    CKEditorModule,
+    AngularEditorModule
   ],
   exports: [
     SearchTabComponent,

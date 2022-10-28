@@ -13,7 +13,8 @@
                     <input type="text" class="form-control" placeholder="Web URL English Page" formControlName="englishWebPageName" />
                 </div>
             </div>
-            <ckeditor [editor]="Editor" debounce="300" data="English" class="ArFontStyle" formControlName="englishHtml" (ready)="onReady($event)" id="editor"></ckeditor>        
+            <!-- <ckeditor [editor]="Editor" debounce="300" data="English" class="ArFontStyle" formControlName="englishHtml" (ready)="onReady($event)" id="editor"></ckeditor>         -->
+            <angular-editor id="editor1" [config]="config" formControlName="englishHtml"></angular-editor>
             <br/>   
                  
             <div class="row mb-3">
@@ -24,7 +25,8 @@
                     <input type="text" class="form-control" placeholder="Web URL Arabic Page" [(ngModel)]="arabicHTML" [ngModelOptions]="{standalone: true}"/>
                 </div>
             </div>
-            <ckeditor [editor]="Editor" data="عربى" class="ArFontStyle" formControlName="arabicHtml"></ckeditor>
+            <angular-editor id="editor2" [config]="config" formControlName="arabicHtml"></angular-editor>
+            <!-- <ckeditor [editor]="Editor" data="عربى" class="ArFontStyle" formControlName="arabicHtml"></ckeditor> -->
         </form>    
        
       </ng-template>
