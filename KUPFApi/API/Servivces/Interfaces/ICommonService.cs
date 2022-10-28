@@ -49,7 +49,7 @@ namespace API.Servivces.Interfaces
         /// Get Service Type
         /// </summary>
         /// <returns></returns>
-        Task<IEnumerable<SelectServiceTypeDto>> GetServiceType(int[] masterIds);
+        Task<IEnumerable<SelectServiceTypeDto>> GetServiceTypeByMasterIds(int[] masterIds);
         /// <summary>
         /// Get Service Type
         /// </summary>
@@ -94,5 +94,10 @@ namespace API.Servivces.Interfaces
         /// </summary>
         /// <returns></returns>
         Task<IEnumerable<SelectedServiceSubTypeDto>> GetSelectedServiceSubType(int tenentId);
+
+        Task<IEnumerable<SelectServiceTypeDto>> GetServiceType(int tenentId);
+        Task<SelectServiceTypeDto> GetSubServiceTypeByServiceType(int tenentId,int refId);
+
+
     }
 }

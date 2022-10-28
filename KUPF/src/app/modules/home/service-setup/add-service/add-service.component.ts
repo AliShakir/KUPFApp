@@ -52,14 +52,15 @@ export class AddServiceComponent implements OnInit {
   formTitle: string;
   closeResult: string = '';
 
-  selectServiceType$: Observable<SelectedServiceTypeDto[]>;
-  selectServiceSubType$: Observable<SelectedServiceSubTypeDto[]>;
+  selectServiceType$: Observable<SelectServiceTypeDto[]>;
+  selectServiceSubType$: Observable<SelectServiceTypeDto[]>;
   selectedServiceType: any;
   selectedServiceSubType: any;
   //
   parentForm: FormGroup;
   addServiceForm: FormGroup;
   isFormSubmitted = false;
+  minDate: Date;
   constructor(
     private financialService: FinancialService,
     private commonService: DbCommonService,
@@ -67,9 +68,13 @@ export class AddServiceComponent implements OnInit {
     private toastrService: ToastrService,
     public datepipe: DatePipe) {
     this.setUpParentForm();
+   
+    this.minDate = new Date();
+    this.minDate.setDate(this.minDate.getDate());
   }
 
   ngOnInit(): void {
+    
     //#region TO SETUP THE FORM LOCALIZATION    
     // TO GET THE LANGUAGE ID e.g. 1 = ENGLISH and 2 =  ARABIC
     this.languageType = localStorage.getItem('langType');
@@ -104,9 +109,11 @@ export class AddServiceComponent implements OnInit {
     // var data = JSON.parse(localStorage.getItem("user")!);
     // const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
     //
-    this.selectServiceType$ = this.commonService.GetSelectedServiceType(21);
+    this.selectServiceType$ = this.commonService.GetServiceType(21);
+   
     //
-    this.selectServiceSubType$ = this.commonService.GetSelectedServiceSubType(21);
+    //this.selectServiceSubType$ = this.commonService.GetSubServiceTypeByServiceType(21);
+    this.selectServiceSubType$ = this.commonService.GetSubServiceTypeByServiceType(21,1);
     
   }
   setUpParentForm() {
@@ -172,8 +179,8 @@ export class AddServiceComponent implements OnInit {
       installmentAmount: calculatedAmount
     })
   }
-  onServiceTypeChange($event: any) {
-    this.selectedServiceType = $event.serviceType;
+  onServiceTypeChange(selected: any) {    
+    //this.selectServiceSubType$ = this.commonService.GetSubServiceTypeByServiceType(21,selected);
   }
   onServiceSubTypeChange($event: any) {
     this.selectedServiceSubType = $event.serviceSubType;

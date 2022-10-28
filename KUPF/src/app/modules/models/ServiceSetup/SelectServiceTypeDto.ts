@@ -1,4 +1,4 @@
 export interface SelectServiceTypeDto{
     refId: number;
-    shortName: string;
+    shortname: string;
 }

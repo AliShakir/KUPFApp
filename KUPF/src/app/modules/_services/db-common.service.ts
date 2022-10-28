@@ -112,8 +112,7 @@ export class DbCommonService {
           })
         )
     }
-    GetSelectedServiceSubType(tenentId:number) {
-      
+    GetSelectedServiceSubType(tenentId:number) {      
       return this.httpClient.get<SelectedServiceSubTypeDto[]>(this.baseUrl + `Common/GetSelectedServiceSubType?tenentId=${tenentId}`).pipe(
         map(selectedServiceSubType => {
           this.selectedServiceSubType = selectedServiceSubType;
@@ -121,12 +120,25 @@ export class DbCommonService {
         })
       )
     }
+    GetServiceType(tenentId:number) { 
+      return this.httpClient.get<SelectServiceTypeDto[]>(this.baseUrl + `Common/GetServiceType?tenentId=${tenentId}`);    
+    }
+    GetSubServiceTypeByServiceType(tenentId:number,refId:number) {       
+      //return this.httpClient.get<SelectServiceTypeDto[]>(this.baseUrl + `Common/GetSubServiceTypeByServiceType?tenentId=${tenentId}&refId=${refId}`);    
+      return this.httpClient.get<SelectServiceTypeDto[]>(this.baseUrl + `Common/GetSubServiceTypeByServiceType?tenentId=${tenentId}&refId=${refId}`).pipe(
+        map(serviceType => {
+          this.serviceType = serviceType;
+          console.log(this.serviceType);          
+          return serviceType;
+        })
+      )
+    }
     //#endregion
 
   //#region Service Setup 
   // Get GetServiceTypes...
-  GetServiceTypes(selectedMasterIds:any[]) {
-    return this.httpClient.post<SelectServiceTypeDto[]>(this.baseUrl + `Common/GetServiceType`,selectedMasterIds);    
+  GetServiceTypeByMasterIds(selectedMasterIds:any[]) { 
+    return this.httpClient.post<SelectServiceTypeDto[]>(this.baseUrl + `Common/GetServiceTypeByMasterIds`,selectedMasterIds);    
   }
   // Get GetServiceTypes...
   GetServiceSubTypes(switchNo:any) {

@@ -150,10 +150,10 @@ namespace API.Controllers
             return result;
         }
         [HttpPost]
-        [Route("GetServiceType")]
-        public async Task<IEnumerable<SelectServiceTypeDto>> GetServiceType(int[] masterIds)
+        [Route("GetServiceTypeByMasterIds")]
+        public async Task<IEnumerable<SelectServiceTypeDto>> GetServiceTypeByMasterIds(int[] masterIds)
         {
-            var result = await _commonServiceService.GetServiceType(masterIds);
+            var result = await _commonServiceService.GetServiceTypeByMasterIds(masterIds);
             return result;
         }
         [HttpGet]
@@ -219,6 +219,21 @@ namespace API.Controllers
         public async Task<IEnumerable<SelectedServiceSubTypeDto>> GetSelectedServiceSubType(int tenentId)
         {
             var result = await _commonServiceService.GetSelectedServiceSubType(tenentId);
+            return result;
+        }
+
+        [HttpGet]
+        [Route("GetServiceType")]
+        public async Task<IEnumerable<SelectServiceTypeDto>> GetServiceType(int tenentId)
+        {
+            var result = await _commonServiceService.GetServiceType(tenentId);
+            return result;
+        }
+        [HttpGet]
+        [Route("GetSubServiceTypeByServiceType")]
+        public async Task<SelectServiceTypeDto> GetSubServiceTypeByServiceType(int tenentId, int refId)
+        {
+            var result = await _commonServiceService.GetSubServiceTypeByServiceType(tenentId, refId);
             return result;
         }
     }
