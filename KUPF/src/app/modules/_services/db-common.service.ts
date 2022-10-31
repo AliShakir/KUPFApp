@@ -126,9 +126,8 @@ export class DbCommonService {
     GetSubServiceTypeByServiceType(tenentId:number,refId:number) {       
       //return this.httpClient.get<SelectServiceTypeDto[]>(this.baseUrl + `Common/GetSubServiceTypeByServiceType?tenentId=${tenentId}&refId=${refId}`);    
       return this.httpClient.get<SelectServiceTypeDto[]>(this.baseUrl + `Common/GetSubServiceTypeByServiceType?tenentId=${tenentId}&refId=${refId}`).pipe(
-        map(serviceType => {
-          this.serviceType = serviceType;
-          console.log(this.serviceType);          
+        map(serviceType => {          
+          this.serviceType = serviceType;        
           return serviceType;
         })
       )

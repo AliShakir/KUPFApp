@@ -1,16 +1,9 @@
 import { DatePipe } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { map, Observable } from 'rxjs';
-import { ServiceTypeAndSubTypeIdsDto } from 'src/app/modules/models/FinancialService/ServiceTypeAndSubTypeIdsDto';
+import { Observable } from 'rxjs';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
-import { SelectRefTypeDto } from 'src/app/modules/models/ReferenceDetails/SelectRefTypeDto';
-import { SelectedServiceSubTypeDto } from 'src/app/modules/models/ServiceSetup/SelectedServiceSubTypeDto';
-import { SelectedServiceTypeDto } from 'src/app/modules/models/ServiceSetup/SelectedServiceTypeDto';
-import { SelectServiceSubTypeDto } from 'src/app/modules/models/ServiceSetup/SelectServiceSubTypeDto';
 import { SelectServiceTypeDto } from 'src/app/modules/models/ServiceSetup/SelectServiceTypeDto';
 import { DbCommonService } from 'src/app/modules/_services/db-common.service';
 import { FinancialService } from 'src/app/modules/_services/financial.service';
@@ -113,7 +106,8 @@ export class AddServiceComponent implements OnInit {
    
     //
     //this.selectServiceSubType$ = this.commonService.GetSubServiceTypeByServiceType(21);
-    this.selectServiceSubType$ = this.commonService.GetSubServiceTypeByServiceType(21,1);
+    //this.selectServiceSubType$ = this.commonService.GetSubServiceTypeByServiceType(21,1);
+    
     
   }
   setUpParentForm() {
@@ -180,7 +174,7 @@ export class AddServiceComponent implements OnInit {
     })
   }
   onServiceTypeChange(selected: any) {    
-    //this.selectServiceSubType$ = this.commonService.GetSubServiceTypeByServiceType(21,selected);
+    this.selectServiceSubType$ = this.commonService.GetSubServiceTypeByServiceType(21,1);
   }
   onServiceSubTypeChange($event: any) {
     this.selectedServiceSubType = $event.serviceSubType;
