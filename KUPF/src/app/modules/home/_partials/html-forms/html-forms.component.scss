@@ -3,4 +3,8 @@
 }
 .ArFontStyle{
     font-family:"Tahoma","sans-serif"
-} 
+}
+:host ::ng-deep .fa {
+    font: var(--fa-font-solid) !important;
+    content: "\f007";
+}
