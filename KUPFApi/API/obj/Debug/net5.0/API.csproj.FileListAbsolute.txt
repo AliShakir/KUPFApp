@@ -240,3 +240,8 @@ E:\MyWork\KUPF-28-10\KUPFApp\kupfapi\api\obj\Debug\net5.0\API.dll
 E:\MyWork\KUPF-28-10\KUPFApp\kupfapi\api\obj\Debug\net5.0\ref\API.dll
 E:\MyWork\KUPF-28-10\KUPFApp\kupfapi\api\obj\Debug\net5.0\API.pdb
 E:\MyWork\KUPF-28-10\KUPFApp\kupfapi\api\obj\Debug\net5.0\API.genruntimeconfig.cache
+E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\web.config
+E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\API.deps.json
+E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\API.runtimeconfig.json
+E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\appsettings.Development.json
+E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\appsettings.json

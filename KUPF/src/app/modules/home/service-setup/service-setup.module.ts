@@ -46,6 +46,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   ],
   exports:[
     NgSelectModule,
+    
   ]
 })
 export class ServiceSetupModule { }

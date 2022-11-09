@@ -125,22 +125,21 @@ export class ServiceDetailsComponent implements OnInit {
     //#endregion
   
   //
-  this.financialService.GetFinancialServices().subscribe(()=>{
-
-  })
-  this.returnTransactionHdDto$ = this.financialService.GetFinancialServices();
+  this.loadData();
   //
-  this.returnTransactionHdDto$.subscribe((response: ReturnTransactionHdDto[]) => {
-    this.returnTransactionHdDto = new MatTableDataSource<ReturnTransactionHdDto>(response);
-    this.returnTransactionHdDto.paginator = this.paginator;
-    this.returnTransactionHdDto.sort = this.sort;
-    this.isLoadingCompleted = true;
-    console.log(this.returnTransactionHdDto);
-  }, error => {
-    console.log(error);
-    this.dataLoadingStatus = 'Error fetching the data';
-    this.isError = true;
-  })
+  
+  }
+  loadData(){
+    this.financialService.GetFinancialServices().subscribe((response: ReturnTransactionHdDto[]) => {
+      this.returnTransactionHdDto = new MatTableDataSource<ReturnTransactionHdDto>(response);
+      this.returnTransactionHdDto.paginator = this.paginator;
+      this.returnTransactionHdDto.sort = this.sort;
+      this.isLoadingCompleted = true;
+    }, error => {
+      console.log(error);
+      this.dataLoadingStatus = 'Error fetching the data';
+      this.isError = true;
+    })
   }
  //#region Material Search and Clear Filter
  filterRecords() {
@@ -164,9 +163,9 @@ openDeleteModal(content: any, id: number) {
         if (response === 11) {
           this.toastrService.success('Record deleted successfully', 'Success');
           // Refresh Grid
-          //this.loadData();
+          this.loadData();
         } else {
-          this.toastrService.error('Something went wrong', 'Errro');
+          this.toastrService.error('Something went wrong', 'Error');
         }
       });
     }

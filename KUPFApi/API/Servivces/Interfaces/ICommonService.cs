@@ -96,7 +96,7 @@ namespace API.Servivces.Interfaces
         Task<IEnumerable<SelectedServiceSubTypeDto>> GetSelectedServiceSubType(int tenentId);
 
         Task<IEnumerable<SelectServiceTypeDto>> GetServiceType(int tenentId);
-        Task<SelectServiceTypeDto> GetSubServiceTypeByServiceType(int tenentId,int refId);
+        Task<IEnumerable<SelectServiceTypeDto>> GetSubServiceTypeByServiceType(int tenentId,int refId);
 
 
     }

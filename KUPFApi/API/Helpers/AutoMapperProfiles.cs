@@ -128,6 +128,9 @@ namespace API.Helpers
             CreateMap<ServiceSetup,ReturnWebContent>();
             //
             CreateMap<ServiceSubscriptionDto, ServiceSubscription>();
+            CreateMap<TransactionHd, TransactionHdDto>();
+
+            CreateMap<TransactionHddapprovalDetailDto, TransactionHddapprovalDetail>();
         }
     }
 }

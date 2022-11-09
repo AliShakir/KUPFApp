@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-#nullable disable
-
-namespace API.Models
+namespace API.DTOs
 {
-    public partial class TransactionHddapprovalDetail
+    public class TransactionHddapprovalDetailDto
     {
         public int TenentId { get; set; }
         public long Mytransid { get; set; }
@@ -16,7 +16,7 @@ namespace API.Models
         public int? ServiceId { get; set; }
         public int? MasterServiceId { get; set; }
         public DateTime? ApprovalDate { get; set; }
-        public int? RejectionType { get; set; }
+        public decimal? RejectionType { get; set; }
         public string RejectionRemarks { get; set; }
         public int? AttachId { get; set; }
         public string Status { get; set; }
@@ -26,6 +26,5 @@ namespace API.Models
         public DateTime? Entrydate { get; set; }
         public DateTime? Entrytime { get; set; }
         public DateTime? Updttime { get; set; }
-        public string ApprovalRemarks { get; set; }
     }
 }

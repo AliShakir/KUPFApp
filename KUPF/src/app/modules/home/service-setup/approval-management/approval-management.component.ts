@@ -1,54 +1,111 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
-import { FormTitleDt } from 'src/app/modules/models/formTitleDt';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
-import { LocalizationService } from 'src/app/modules/_services/localization.service';
-
+import { RefTableDto } from 'src/app/modules/models/ReferenceDetails/RefTableDto';
+import { ReturnServiceApprovals } from 'src/app/modules/models/ReturnServiceApprovals';
+import { CommonService } from 'src/app/modules/_services/common.service';
+import { EmployeeService } from 'src/app/modules/_services/employee.service';
+import { FinancialService } from 'src/app/modules/_services/financial.service';
 @Component({
   selector: 'app-approval-management',
   templateUrl: './approval-management.component.html',
   styleUrls: ['./approval-management.component.scss']
 })
 export class ApprovalManagementComponent implements OnInit {
-// /*********************/
-// formHeaderLabels$ :Observable<FormTitleHd[]>; 
-// formBodyLabels$ :Observable<FormTitleDt[]>; 
-// formBodyLabels :FormTitleDt[]=[]; 
-// id:string = '';
-// languageId:any;
-// // FormId to get form/App language
-// @ViewChild('ManageApprovals') hidden:ElementRef;
-// /*********************/
 
-//#region 
-    /*----------------------------------------------------*/
+  //#region 
+  /*----------------------------------------------------*/
 
-    // Language Type e.g. 1 = ENGLISH and 2 =  ARABIC
-    languageType: any;
+  // Language Type e.g. 1 = ENGLISH and 2 =  ARABIC
+  languageType: any;
 
-    // Selected Language
-    language: any;
+  // Selected Language
+  language: any;
 
-    // We will get form lables from lcale storage and will put into array.
-    AppFormLabels: FormTitleHd[] = [];
+  // We will get form lables from lcale storage and will put into array.
+  AppFormLabels: FormTitleHd[] = [];
 
-    // We will filter form header labels array
-    formHeaderLabels: any[] = [];
+  // We will filter form header labels array
+  formHeaderLabels: any[] = [];
 
-    // We will filter form body labels array
-    formBodyLabels: any[] = [];
+  // We will filter form body labels array
+  formBodyLabels: any[] = [];
 
-    // FormId
-    formId: string;
+  // FormId
+  formId: string;
 
-    /*----------------------------------------------------*/  
+  /*----------------------------------------------------*/
   //#endregion
 
+  //#region
+  // To display table column headers
+  columnsToDisplay: string[] = ['action', 'employeeId', 'employeeName', 'services', 'source', 'totalInstallment', 'amount', 'discounted'];
+
+  // Getting data as abservable.
+  returnServiceApprovals$: Observable<ReturnServiceApprovals[]>;
+
+  // We need a normal array of data so we will subscribe to the observable and will get data
+  returnServiceApprovals: MatTableDataSource<ReturnServiceApprovals> = new MatTableDataSource<any>([]);
+
+  // Paginator
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  // Sorting
+  @ViewChild(MatSort) sort!: MatSort;
+
+  // Hide footer while loading.
+  isLoadingCompleted: boolean = false;
+
+  // Incase of any error will display error message.
+  dataLoadingStatus: string = '';
+
+  // True of any error
+  isError: boolean = false;
+
+  // formGroup
+  formGroup: FormGroup;
+
+  // Search Term
+  searchTerm: string = '';
+  //#endregion
+
+  // 
+  approveServiceForm: FormGroup;
+
+  //
+  rejectServiceForm: FormGroup;
+
+  lang: any = '';
   closeResult: string = '';
-  constructor(private modalService: NgbModal, private localizationService: LocalizationService) {}
+  currentUserId: any;
+  //
+  isFormSubmitted = false;
+  rejectionType$: Observable<RefTableDto[]>;
+  employeeId:any;
+  constructor(
+    private modalService: NgbModal,
+    private financialService: FinancialService,
+    private fb: FormBuilder,
+    private datepipe: DatePipe,
+    private toastrService: ToastrService,
+    private employeeService: EmployeeService,
+    private commonService: CommonService) {
+    this.formGroup = new FormGroup({
+      searchTerm: new FormControl(null)
+    })
+  }
 
   ngOnInit(): void {
+    this.lang = localStorage.getItem('lang');
+    this.currentUserId = localStorage.getItem('user');
+    
     //#region TO SETUP THE FORM LOCALIZATION    
     // TO GET THE LANGUAGE ID e.g. 1 = ENGLISH and 2 =  ARABIC
     this.languageType = localStorage.getItem('langType');
@@ -77,43 +134,148 @@ export class ApprovalManagementComponent implements OnInit {
       }
     }
     //#endregion
+
+    // Get Data...
+    this.loadData();
+
+    //
+    this.initApproveServiceForm();
+    //
+    this.initRejectionServiceForm();
+    //
+    this.rejectionType$ = this.financialService.GetRejectionType();
+    
   }
-  open(content:any) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title',modalDialogClass:'modal-lg'}).result.then((result) => {
+ 
+  initApproveServiceForm() {
+    this.approveServiceForm = this.fb.group({
+      mytransId: new FormControl(''),
+      userId: new FormControl(''),
+      approvalDate: new FormControl(''),
+      entryDate: new FormControl(''),
+      entryTime: new FormControl(''),
+      approvalRemarks: new FormControl('', Validators.required),
+      currentDateTime: new FormControl(this.datepipe.transform((new Date), 'h:mm:ss dd/MM/yyyy'))
+    })
+  }
+
+  initRejectionServiceForm() {
+    this.rejectServiceForm = this.fb.group({
+      mytransId: new FormControl(''),
+      userId: new FormControl(''),
+      approvalDate: new FormControl(''),
+      entryDate: new FormControl(''),
+      entryTime: new FormControl(''),
+      rejectionRemarks: new FormControl('', Validators.required),
+      currentDateTime: new FormControl(this.datepipe.transform((new Date), 'h:mm:ss dd/MM/yyyy')),
+      rejectionType: new FormControl('', Validators.required)
+    })
+  }
+
+  // Get Data...
+  loadData() {
+    this.financialService.GetServiceApprovals().subscribe((response: ReturnServiceApprovals[]) => {
+      this.returnServiceApprovals = new MatTableDataSource<ReturnServiceApprovals>(response);
+      this.returnServiceApprovals.paginator = this.paginator;
+      this.returnServiceApprovals.sort = this.sort;
+      this.isLoadingCompleted = true;
+    }, error => {
+      console.log(error);
+      this.dataLoadingStatus = 'Error fetching the data';
+      this.isError = true;
+    })
+  }
+  get approvalForm() { return this.approveServiceForm.controls; }
+  get rejectionForm() { return this.rejectServiceForm.controls; }
+
+  openContactModal(content: any, event: any) {     
+    this.commonService.employeeId = event.target.id
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', modalDialogClass: 'modal-lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
-  } 
+  }
+  // Approve service...
+  openApproveServiceModal(content: any, event: any) {
+    this.isFormSubmitted = true;
+    //
+    this.approveServiceForm.patchValue({
+      mytransId: event.target.id
+    })
+    //
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', modalDialogClass: 'modal-md' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+      if (result === 'yes') {
+
+        let currentDate = this.datepipe.transform((new Date), 'dd/MM/yyyy');
+        let currentTime = this.datepipe.transform((new Date), 'h:mm:ss');
+        this.approveServiceForm.controls['approvalDate']?.setValue(currentDate);
+        this.approveServiceForm.controls['entryDate']?.setValue(currentDate);
+        this.approveServiceForm.controls['entryTime']?.setValue(currentTime);
+        this.approveServiceForm.controls['userId']?.setValue(1);
+
+        this.financialService.ApproveService(this.approveServiceForm.value).subscribe(response => {
+          if (response == 0) {
+            this.toastrService.info('.This service is already approved', 'Success');
+            this.isFormSubmitted = false;
+            this.approveServiceForm.reset();
+          } else {
+            this.toastrService.success('.Service approved successfully', 'Success');
+            this.isFormSubmitted = false;
+            this.approveServiceForm.reset();
+          }
+        })
+      }
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+  // Reject service...
+  openRejectServiceModal(content: any, event: any) {
+    this.isFormSubmitted = true;
+    //
+    this.rejectServiceForm.patchValue({
+      mytransId: event.target.id
+    })
+    //
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', modalDialogClass: 'modal-md' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+      if (result === 'yes') {
+
+        let currentDate = this.datepipe.transform((new Date), 'dd/MM/yyyy');
+        let currentTime = this.datepipe.transform((new Date), 'h:mm:ss');
+        this.rejectServiceForm.controls['approvalDate']?.setValue(currentDate);
+        this.rejectServiceForm.controls['entryDate']?.setValue(currentDate);
+        this.rejectServiceForm.controls['entryTime']?.setValue(currentTime);
+        this.rejectServiceForm.controls['userId']?.setValue(1);
+
+        this.financialService.RejectService(this.rejectServiceForm.value).subscribe(response => {
+          if (response == 0) {
+            this.toastrService.info('.This service is already rejected', 'Success');
+            this.isFormSubmitted = false;
+            this.rejectServiceForm.reset();
+          } else {
+            this.toastrService.success('.Service rejected successfully', 'Success');
+            this.isFormSubmitted = false;
+            this.rejectServiceForm.reset();
+          }
+        })
+      }
+
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
       return 'by clicking on a backdrop';
     } else {
-      return  `with: ${reason}`;
+      return `with: ${reason}`;
     }
   }
-  ngAfterViewInit() {
-    // // TO get the form id...
-    // this.id = this.hidden.nativeElement.value;
-    
-    // // TO GET THE LANGUAGE ID
-    // this.languageId = localStorage.getItem('langType');
-    
-    // // Get form header labels
-    // this.formHeaderLabels$ = this.localizationService.getFormHeaderLabels(this.id,this.languageId);
-    
-    // // Get form body labels 
-    // this.formBodyLabels$= this.localizationService.getFormBodyLabels(this.id,this.languageId)
-    
-    // // Get observable as normal array of items
-    // this.formBodyLabels$.subscribe((data)=>{
-    //   this.formBodyLabels = data 
-    //   console.log(this.formBodyLabels);     
-    // },error=>{
-    //   console.log(error);
-    // })  
-    
-  }
+
 }

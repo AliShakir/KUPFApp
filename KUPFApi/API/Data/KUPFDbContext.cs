@@ -4262,7 +4262,7 @@ namespace API.Models
                 entity.Property(e => e.LocationId).HasColumnName("locationID");
 
                 entity.Property(e => e.SerApprovalId)
-                    .HasColumnType("numeric(18, 0)")
+                    .HasColumnType("int")
                     .HasColumnName("SerApprovalID")
                     .HasComment("REFID Coming from RefTable RefSubType='Role' and\r\n Which AprovalEmployeeRole will be allowed to be approved else it is to be left NULL");
 

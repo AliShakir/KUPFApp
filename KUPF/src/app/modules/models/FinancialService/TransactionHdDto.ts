@@ -65,4 +65,6 @@ export interface TransactionHdDto{
     entrytime: Date;
     updttime: Date;
     installmentAmount:number;
+    installmentsBegDate: Date;
+    untilMonth: string;
 }

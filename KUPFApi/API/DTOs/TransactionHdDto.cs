@@ -75,6 +75,8 @@ namespace API.DTOs
         public DateTime? Entrytime { get; set; }
         public DateTime? Updttime { get; set; }
         public decimal? InstallmentAmount { get; set; }
+        public DateTime InstallmentsBegDate { get; set; }
+        public string UntilMonth { get; set; }
 
     }
 }

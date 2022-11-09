@@ -15,6 +15,7 @@ import { HtmlFormsComponent } from './html-forms/html-forms.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { ElectronicFormsComponent } from './electronic-forms/electronic-forms.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
 
 
@@ -40,7 +41,8 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     BsDatepickerModule.forRoot(),
     NgSelectModule,
     CKEditorModule,
-    AngularEditorModule
+    AngularEditorModule,
+    TabsModule.forRoot(),
   ],
   exports: [
     SearchTabComponent,
@@ -53,6 +55,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     NgSelectModule,
     HtmlFormsComponent,
     ElectronicFormsComponent,
+    TabsModule
   ]
 })
 export class SearchTabModule { }

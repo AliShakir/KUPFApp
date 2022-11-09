@@ -18,6 +18,7 @@ const routes: Routes = [
   { path: 'add-service-setup', component: AddServiceSetupComponent },
   { path: 'add-service-setup/:serviceId', component: AddServiceSetupComponent },
   { path: 'add-service', component: AddServiceComponent },
+  { path: 'add-service/:mytransid', component: AddServiceComponent },
   { path: 'service-details', component: ServiceDetailsComponent },
   { path: 'add-documents', component: AddDocumentsComponent },
   { path: 'manage-approvals', component: ApprovalManagementComponent },

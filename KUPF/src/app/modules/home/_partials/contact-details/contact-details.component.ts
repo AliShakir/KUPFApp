@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CommonService } from 'src/app/modules/_services/common.service';
+import { EmployeeService } from 'src/app/modules/_services/employee.service';
+import { FinancialService } from 'src/app/modules/_services/financial.service';
 
 @Component({
   selector: 'app-contact-details',
@@ -9,10 +13,44 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class ContactDetailsComponent implements OnInit {
 
   closeResult: string = '';
-  constructor(private modalService: NgbModal) {}
+  //
+  contactDetials:FormGroup;
+  employeeData:any;
+  financialData:any
+  lang:any;
+  constructor(
+    private modalService: NgbModal,
+    private fb: FormBuilder,
+    private employeeService:EmployeeService,
+    public commonService: CommonService,
+    private financialService:FinancialService) {}
 
   ngOnInit(): void {
+    this.lang = localStorage.getItem('lang');
+    // this.initContactForm();
+   
+     this.employeeService.GetEmployeeById(this.commonService.employeeId).subscribe((response: any) => {
+      if(response){
+        this.employeeData = response;
+      }
+    });
+    this.financialService.GetServiceApprovalsByEmployeeId(this.commonService.employeeId).subscribe((resp:any)=>{
+      if(resp){
+        this.financialData = resp;
+        console.log('Financial Data',this.financialData);
+      }
+    })
   }
+  initContactForm(){
+    this.contactDetials = this.fb.group({
+      employeeId:new FormControl(''),
+      englishName:new FormControl(''),
+      arabicName:new FormControl(''),
+      email:new FormControl(''),
+      mobile:new FormControl('')
+    })
+  }
+
   open(content:any) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title',modalDialogClass:'modal-lg'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;

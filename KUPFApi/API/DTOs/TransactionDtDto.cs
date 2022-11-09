@@ -33,5 +33,8 @@ namespace API.DTOs
         public bool? Active { get; set; }
         public string Switch1 { get; set; }
         public int? DelFlag { get; set; }
+        public DateTime InstallmentsBegDate { get; set; }
+        public string UntilMonth { get; set; }
+
     }
 }

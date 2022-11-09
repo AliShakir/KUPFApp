@@ -1,8 +1,10 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
+import { TransactionHdDto } from 'src/app/modules/models/FinancialService/TransactionHdDto';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
 import { SelectServiceTypeDto } from 'src/app/modules/models/ServiceSetup/SelectServiceTypeDto';
 import { DbCommonService } from 'src/app/modules/_services/db-common.service';
@@ -54,16 +56,21 @@ export class AddServiceComponent implements OnInit {
   addServiceForm: FormGroup;
   isFormSubmitted = false;
   minDate: Date;
+  editService$: Observable<TransactionHdDto[]>;
+  mytransid: any;
   constructor(
     private financialService: FinancialService,
     private commonService: DbCommonService,
     private fb: FormBuilder,
     private toastrService: ToastrService,
+    private activatedRout: ActivatedRoute,
     public datepipe: DatePipe) {
     this.setUpParentForm();
    
     this.minDate = new Date();
     this.minDate.setDate(this.minDate.getDate());
+    //
+    this.mytransid = this.activatedRout.snapshot.paramMap.get('mytransid');
   }
 
   ngOnInit(): void {
@@ -103,18 +110,75 @@ export class AddServiceComponent implements OnInit {
     // const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
     //
     this.selectServiceType$ = this.commonService.GetServiceType(21);
-   
-    //
-    //this.selectServiceSubType$ = this.commonService.GetSubServiceTypeByServiceType(21);
-    //this.selectServiceSubType$ = this.commonService.GetSubServiceTypeByServiceType(21,1);
-    
-    
+        
+    if (this.mytransid) {
+      
+      this.financialService.GetFinancialServiceById(this.mytransid).subscribe((response:any)=>{
+        
+        this.selectServiceSubType$ = this.commonService.GetSubServiceTypeByServiceType(21,response.serviceType);
+        this.parentForm.patchValue({
+          employeeForm: {
+            employeeId: response.employeeId,
+            englishName: response.englishName,
+            arabicName: response.arabicName,
+            empBirthday: response.empBirthday ? new Date(response.empBirthday) : '',
+            empGender: response.empGender,
+            empMaritalStatus: response.empMaritalStatus,
+            mobileNumber: response.mobileNumber,
+            empWorkTelephone: response.empWorkTelephone,
+            empWorkEmail: response.empWorkEmail,
+            next2KinName: response.next2KinName,
+            next2KinMobNumber: response.next2KinMobNumber
+          },
+          addServiceForm:{
+            mytransid:response.mytransid,
+            serviceType:response.serviceType,
+            serviceSubType:response.serviceSubType,
+            totinstallments:response.totinstallments,
+            totamt:response.totamt,
+            installmentAmount:response.installmentAmount,
+            installmentsBegDate:response.installmentsBegDate ? new Date(response.installmentsBegDate) : '',
+            untilMonth:response.untilMonth                  
+          },
+          financialForm:{
+            hajjAct:response.hajjAct,
+            loanAct:response.loanAct,
+            persLoanAct:response.persLoanAct,
+            otherAct1:response.otherAct1,
+            otherAct2:response.otherAct2,
+            otherAct3:response.otherAct3,
+            otherAct4:response.otherAct4,
+            otherAct5:response.otherAct5,
+          },
+          approvalDetailsForm:{
+            serApproval1:response.serApproval1,
+            approvalBy1:response.approvalBy1,
+            approvedDate1:response.approvedDate1,
+            serApproval2:response.serApproval2,
+            approvalBy2:response.approvalBy2,
+            approvedDate2:response.approvedDate2,
+            serApproval3:response.serApproval3,
+            approvalBy3:response.approvalBy3,
+            approvedDate3:response.approvedDate3,
+            serApproval4:response.serApproval4,
+            approvalBy4:response.approvalBy4,
+            approvedDate4:response.approvedDate4,
+            serApproval5:response.serApproval5,
+            approvalBy5:response.approvalBy5,
+            approvedDate5:response.approvedDate5,
+          }
+        })
+        console.log(this.addServiceForm.value);
+      })
+    }
+
   }
   setUpParentForm() {
     this.parentForm = this.fb.group({});
   }
   initializeAddServiceForm() {
     this.addServiceForm = this.fb.group({
+      mytransid: new FormControl('0'),
       serviceSubType: new FormControl('', Validators.required),
       serviceType: new FormControl('', Validators.required),
       searialNo: new FormControl('', Validators.required),
@@ -122,7 +186,7 @@ export class AddServiceComponent implements OnInit {
       totinstallments: new FormControl('', Validators.required),
       allowDiscount: new FormControl('', Validators.required),
       installmentAmount: new FormControl('', Validators.required),
-      startingDeductionMonth: new FormControl('', Validators.required),
+      installmentsBegDate: new FormControl('', Validators.required),
       untilMonth: new FormControl('', Validators.required)
     })
     this.parentForm.setControl('addServiceForm', this.addServiceForm);
@@ -142,11 +206,20 @@ export class AddServiceComponent implements OnInit {
     
     this.isFormSubmitted = true;
     //if(this.parentForm.valid){
-      console.log(this.parentForm.value);
+      
+    if(this.mytransid){
+      
+      this.financialService.UpdateFinancialService(formData).subscribe(()=>{
+        this.toastrService.success('Updated successfully', 'Success');
+          this.parentForm.reset();
+      })
+    }else{
+      console.log(formData);
       this.financialService.AddFinacialService(formData).subscribe(()=>{
         this.toastrService.success('Saved successfully', 'Success');
           this.parentForm.reset();
       })
+    }
     //}
   }
   getFormValues() {
@@ -174,10 +247,11 @@ export class AddServiceComponent implements OnInit {
     })
   }
   onServiceTypeChange(selected: any) {    
-    this.selectServiceSubType$ = this.commonService.GetSubServiceTypeByServiceType(21,1);
+    this.selectServiceSubType$ = this.commonService.GetSubServiceTypeByServiceType(21,selected);
+    this.selectedServiceType = selected;
   }
   onServiceSubTypeChange($event: any) {
-    this.selectedServiceSubType = $event.serviceSubType;
+    this.selectedServiceSubType = $event.refId;
     this.financialService.GetSelectedServiceSubType(this.selectedServiceType, this.selectedServiceSubType, 21).subscribe((response: any) => {
       this.parentForm.patchValue({
         addServiceForm: {

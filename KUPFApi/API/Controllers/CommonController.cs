@@ -231,7 +231,7 @@ namespace API.Controllers
         }
         [HttpGet]
         [Route("GetSubServiceTypeByServiceType")]
-        public async Task<SelectServiceTypeDto> GetSubServiceTypeByServiceType(int tenentId, int refId)
+        public async Task<IEnumerable<SelectServiceTypeDto>> GetSubServiceTypeByServiceType(int tenentId, int refId)
         {
             var result = await _commonServiceService.GetSubServiceTypeByServiceType(tenentId, refId);
             return result;

@@ -6,6 +6,8 @@ import { Subject } from 'rxjs';
 })
 export class CommonService {
 
+  //
+  employeeId: any;
   formTitle: string;
   public menuSessionUdpated = new Subject<any>();
   constructor() { }

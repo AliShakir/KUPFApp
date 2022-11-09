@@ -285,10 +285,10 @@ namespace API.Servivces.Implementation
             var data = _mapper.Map<IEnumerable<SelectServiceTypeDto>>(list);
             return data;
         }
-        public async Task<SelectServiceTypeDto> GetSubServiceTypeByServiceType(int tenentId, int refId)
+        public async Task<IEnumerable<SelectServiceTypeDto>> GetSubServiceTypeByServiceType(int tenentId, int refId)
         {
-            var result = await _context.Reftables.Where(c => c.Refsubtype == "ServicesSubType" && c.Refid == refId && c.TenentId == tenentId).FirstOrDefaultAsync();
-            var data = _mapper.Map<SelectServiceTypeDto>(result);
+            var result = await _context.Reftables.Where(c => c.Refsubtype == "ServicesSubType" && c.Refid == refId && c.TenentId == tenentId).ToListAsync();
+            var data = _mapper.Map<IEnumerable<SelectServiceTypeDto>>(result);
             return data;
         }
     }

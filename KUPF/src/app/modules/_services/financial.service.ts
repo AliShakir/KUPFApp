@@ -2,8 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { ApproveRejectServiceDto } from '../models/ApproveRejectServiceDto';
+import { DetailedEmployee } from '../models/DetailedEmployee';
 import { ReturnTransactionHdDto } from '../models/FinancialService/ReturnTransactionHdDto';
 import { TransactionHdDto } from '../models/FinancialService/TransactionHdDto';
+import { RefTableDto } from '../models/ReferenceDetails/RefTableDto';
+import { ReturnServiceApprovals } from '../models/ReturnServiceApprovals';
 import { ServiceSetupDto } from '../models/ServiceSetup/ServiceSetupDto';
 
 @Injectable({
@@ -19,6 +23,13 @@ export class FinancialService {
  returnTransactionHdDto :ReturnTransactionHdDto[]=[];
    //
    transactionHdDto: TransactionHdDto[]=[]
+   //
+   returnServiceApprovals : ReturnServiceApprovals[]=[];
+
+   returnRefTableDto : RefTableDto[]=[];
+  //
+  employeeDetails: DetailedEmployee[]=[]
+
   constructor(private httpClient: HttpClient) { }
 
   AddFinacialService(response: TransactionHdDto) {    
@@ -57,4 +68,44 @@ export class FinancialService {
     )
   }
   
+  GetServiceApprovals() {      
+    return this.httpClient.get<ReturnServiceApprovals[]>(this.baseUrl + `FinancialService/GetServiceApprovalsAsync`).pipe(
+      map(returnServiceApprovals => {
+        this.returnServiceApprovals = returnServiceApprovals;
+        return returnServiceApprovals;
+      })
+    )
+  }
+  GetServiceApprovalsByEmployeeId(employeeId:any) {      
+    return this.httpClient.get<ReturnServiceApprovals[]>(this.baseUrl + `FinancialService/GetServiceApprovalsAsync?employeeId=${employeeId}`).pipe(
+      map(returnServiceApprovals => {
+        this.returnServiceApprovals = returnServiceApprovals;
+        return returnServiceApprovals;
+      })
+    )
+  }
+
+  ApproveService(response: ApproveRejectServiceDto) {    
+    return this.httpClient.put(this.baseUrl +`FinancialService/ApproveServiceAsync`,response);
+  }
+  RejectService(response: ApproveRejectServiceDto) {    
+    return this.httpClient.put(this.baseUrl +`FinancialService/RejectServiceAsync`,response);
+  }
+  GetRejectionType() {      
+    return this.httpClient.get<RefTableDto[]>(this.baseUrl + `FinancialService/GetRejectionType`).pipe(
+      map(returnRefTableDto => {
+        this.returnRefTableDto = returnRefTableDto;
+        return returnRefTableDto;
+      })
+    )
+  }
+  //
+  GetEmployeeById(id:any) {    
+    return this.httpClient.get<DetailedEmployee[]>(this.baseUrl +`Employee/GetEmployeeById?employeeId=`+id).pipe(
+      map(employeeDetails => {
+        this.employeeDetails = employeeDetails;
+        return employeeDetails;
+      })
+    )
+  }
 }

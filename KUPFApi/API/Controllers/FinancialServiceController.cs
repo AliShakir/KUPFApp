@@ -1,5 +1,6 @@
 ﻿using API.DTOs;
 using API.DTOs.FinancialServicesDto;
+using API.DTOs.RefTable;
 using API.Models;
 using API.Servivces.Interfaces.FinancialServices;
 using AutoMapper;
@@ -48,7 +49,7 @@ namespace API.Controllers
         
         [HttpGet]
         [Route("GetFinancialServiceById")]
-        public async Task<TransactionHdDto> GetFinancialServiceById(long transId)
+        public async Task<ReturnSingleFinancialServiceById> GetFinancialServiceById(long transId)
         {
             if (transId != 0)
             {
@@ -86,6 +87,41 @@ namespace API.Controllers
         public async Task<ServiceSetupDto> GetServiceTypeAndSubType(int serviceType, int serviceSubType, int tenentId)
         {
             var result = await _financialService.GetServiceByServiceTypeAndSubType(serviceType, serviceSubType, tenentId);
+            return result;
+        }
+        [HttpGet]
+        [Route("GetServiceApprovalsAsync")]
+        public async Task<IEnumerable<ReturnServiceApprovals>> GetServiceApprovalsAsync()
+        {
+            var result = await _financialService.GetServiceApprovalsAsync();
+            return result;
+        }
+        [HttpPut]
+        [Route("ApproveServiceAsync")]
+        public async Task<ActionResult<string>> ApproveServiceAsync(ApproveRejectServiceDto approveRejectServiceDto)
+        {
+            var result = await _financialService.ApproveServiceAsync(approveRejectServiceDto);
+            return result;
+        }
+        [HttpGet]
+        [Route("GetRejectionType")]
+        public async Task<IEnumerable<RefTableDto>> GetRejectionType()
+        {
+            var result = await _financialService.GetRejectionType();
+            return result;
+        }
+        [HttpPut]
+        [Route("RejectServiceAsync")]
+        public async Task<ActionResult<string>> RejectServiceAsync(ApproveRejectServiceDto approveRejectServiceDto)
+        {
+            var result = await _financialService.RejectServiceAsync(approveRejectServiceDto);
+            return result;
+        }
+        [HttpGet]
+        [Route("GetServiceApprovalsByEmployeeId")]
+        public async Task<IEnumerable<ReturnServiceApprovals>> GetServiceApprovalsByEmployeeId(string employeeId)
+        {
+            var result = await _financialService.GetServiceApprovalsByEmployeeId(employeeId);
             return result;
         }
     }
