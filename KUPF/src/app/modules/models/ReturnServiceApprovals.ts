@@ -10,4 +10,5 @@ export interface ReturnServiceApprovals {
     discounted?: any;
     installmentBeginDate: Date;
     untilMonth: string;
+    totalAmount: number;
 }

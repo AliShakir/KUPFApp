@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { TransactionHdDto } from 'src/app/modules/models/FinancialService/TransactionHdDto';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
 import { SelectServiceTypeDto } from 'src/app/modules/models/ServiceSetup/SelectServiceTypeDto';
+import { CommonService } from 'src/app/modules/_services/common.service';
 import { DbCommonService } from 'src/app/modules/_services/db-common.service';
 import { FinancialService } from 'src/app/modules/_services/financial.service';
 import { environment } from 'src/environments/environment';
@@ -64,6 +65,7 @@ export class AddServiceComponent implements OnInit {
     private fb: FormBuilder,
     private toastrService: ToastrService,
     private activatedRout: ActivatedRoute,
+    public common: CommonService,
     public datepipe: DatePipe) {
     this.setUpParentForm();
    
@@ -109,7 +111,7 @@ export class AddServiceComponent implements OnInit {
     // var data = JSON.parse(localStorage.getItem("user")!);
     // const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
     //
-    this.selectServiceType$ = this.commonService.GetServiceType(21);
+    this.selectServiceType$ = this.financialService.GetServiceType(21);
         
     if (this.mytransid) {
       
@@ -195,7 +197,7 @@ export class AddServiceComponent implements OnInit {
     // Get Tenant Id
     // var data = JSON.parse(localStorage.getItem("user")!);
     // const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
-
+    //console.log(this.common.ifEmployeeExists);
     let formData = {
       ...this.parentForm.value.addServiceForm,
       ...this.parentForm.value.approvalDetailsForm,
@@ -205,8 +207,7 @@ export class AddServiceComponent implements OnInit {
     }
     
     this.isFormSubmitted = true;
-    //if(this.parentForm.valid){
-      
+          
     if(this.mytransid){
       
       this.financialService.UpdateFinancialService(formData).subscribe(()=>{
@@ -220,7 +221,7 @@ export class AddServiceComponent implements OnInit {
           this.parentForm.reset();
       })
     }
-    //}
+    
   }
   getFormValues() {
     console.log(this.parentForm.value);

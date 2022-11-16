@@ -1,4 +1,5 @@
 ﻿using API.DTOs;
+using API.DTOs.DropDown;
 using API.DTOs.FinancialServicesDto;
 using API.DTOs.RefTable;
 using System;
@@ -23,5 +24,8 @@ namespace API.Servivces.Interfaces.FinancialServices
         Task<IEnumerable<RefTableDto>> GetRejectionType();
         Task<string> RejectServiceAsync(ApproveRejectServiceDto approveRejectServiceDto);
         Task<IEnumerable<ReturnServiceApprovals>> GetServiceApprovalsByEmployeeId(string employeeId);
+        Task<IEnumerable<ReturnServiceApprovalDetails>> GetServiceApprovalDetailByTransId(int transId);
+        Task<IEnumerable<SelectServiceTypeDto>> GetServiceType(int tenentId);
+
     }
 }

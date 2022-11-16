@@ -1,5 +1,6 @@
 ﻿using API.DTOs;
 using API.DTOs.EmployeeDto;
+using API.Helpers;
 using API.Models;
 using API.Servivces.Interfaces;
 using API.Servivces.Interfaces.DetailedEmployee;
@@ -7,6 +8,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,9 +61,10 @@ namespace API.Controllers
         }
         [HttpGet]
         [Route("GetEmployees")]
-        public async Task<IEnumerable<DetailedEmployeeDto>> GetEmployees()
+        public async Task<PagedList<DetailedEmployeeDto>> GetEmployees([FromQuery] PaginationParams paginationParams)
         {
-            var result = await _detailedEmployeeService.GetEmployeesAsync();
+            var result = await _detailedEmployeeService.GetEmployeesAsync(paginationParams);            
+            Response.AddPaginationHeader(result.CurrentPage, result.PageSize, result.TotalCount, result.TotalPages);
             return result;
         }
         [HttpDelete]

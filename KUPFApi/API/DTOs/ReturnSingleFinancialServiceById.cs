@@ -51,8 +51,8 @@ namespace API.DTOs
         public string? ApprovalBy5 { get; set; }
         public DateTime? ApprovedDate5 { get; set; }
         public DateTime? JoinedDate { get; set; }
-        public decimal? ServiceType { get; set; }
-        public decimal? ServiceSubType { get; set; }
+        public string? ServiceType { get; set; }
+        public string? ServiceSubType { get; set; }
         public decimal? Totinstallments { get; set; }
         public decimal? Totamt { get; set; }
         public decimal? AmtPaid { get; set; }

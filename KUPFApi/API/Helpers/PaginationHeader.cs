@@ -12,7 +12,7 @@ namespace API.Helpers
             CurrentPage = currentPage;
             ItemsPerPage = itemsPerPage;
             TotalItems = totalItems;
-            TotalPages = TotalPages;
+            TotalPages = totalPages;
         }
         public int CurrentPage { get; set; }
         public int ItemsPerPage { get; set; }

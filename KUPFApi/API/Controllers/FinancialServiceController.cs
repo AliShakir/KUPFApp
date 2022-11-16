@@ -1,4 +1,5 @@
 ﻿using API.DTOs;
+using API.DTOs.DropDown;
 using API.DTOs.FinancialServicesDto;
 using API.DTOs.RefTable;
 using API.Models;
@@ -122,6 +123,20 @@ namespace API.Controllers
         public async Task<IEnumerable<ReturnServiceApprovals>> GetServiceApprovalsByEmployeeId(string employeeId)
         {
             var result = await _financialService.GetServiceApprovalsByEmployeeId(employeeId);
+            return result;
+        }
+        [HttpGet]
+        [Route("GetServiceApprovalDetailByTransId")]
+        public async Task<IEnumerable<ReturnServiceApprovalDetails>> GetServiceApprovalDetailByTransId(int transId)
+        {
+            var result = await _financialService.GetServiceApprovalDetailByTransId(transId);
+            return result;
+        }
+        [HttpGet]
+        [Route("GetServiceType")]
+        public async Task<IEnumerable<SelectServiceTypeDto>> GetServiceType(int transId)
+        {
+            var result = await _financialService.GetServiceType(transId);
             return result;
         }
     }

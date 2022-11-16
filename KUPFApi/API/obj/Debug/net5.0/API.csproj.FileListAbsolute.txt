@@ -165,7 +165,6 @@ E:\MyWork\KUPF-28-10\KUPFApp\kupfapi\api\bin\Debug\net5.0\API.deps.json
 E:\MyWork\KUPF-28-10\KUPFApp\kupfapi\api\bin\Debug\net5.0\API.runtimeconfig.json
 E:\MyWork\KUPF-28-10\KUPFApp\kupfapi\api\bin\Debug\net5.0\API.runtimeconfig.dev.json
 E:\MyWork\KUPF-28-10\KUPFApp\kupfapi\api\bin\Debug\net5.0\API.dll
-E:\MyWork\KUPF-28-10\KUPFApp\kupfapi\api\bin\Debug\net5.0\ref\API.dll
 E:\MyWork\KUPF-28-10\KUPFApp\kupfapi\api\bin\Debug\net5.0\API.pdb
 E:\MyWork\KUPF-28-10\KUPFApp\kupfapi\api\bin\Debug\net5.0\AutoMapper.dll
 E:\MyWork\KUPF-28-10\KUPFApp\kupfapi\api\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
@@ -232,7 +231,6 @@ E:\MyWork\KUPF-28-10\KUPFApp\kupfapi\api\obj\Debug\net5.0\API.csproj.CoreCompile
 E:\MyWork\KUPF-28-10\KUPFApp\kupfapi\api\obj\Debug\net5.0\API.MvcApplicationPartsAssemblyInfo.cs
 E:\MyWork\KUPF-28-10\KUPFApp\kupfapi\api\obj\Debug\net5.0\API.MvcApplicationPartsAssemblyInfo.cache
 E:\MyWork\KUPF-28-10\KUPFApp\kupfapi\api\obj\Debug\net5.0\staticwebassets\API.StaticWebAssets.Manifest.cache
-E:\MyWork\KUPF-28-10\KUPFApp\kupfapi\api\obj\Debug\net5.0\staticwebassets\API.StaticWebAssets.xml
 E:\MyWork\KUPF-28-10\KUPFApp\kupfapi\api\obj\Debug\net5.0\scopedcss\bundle\API.styles.css
 E:\MyWork\KUPF-28-10\KUPFApp\kupfapi\api\obj\Debug\net5.0\API.RazorTargetAssemblyInfo.cache
 E:\MyWork\KUPF-28-10\KUPFApp\kupfapi\api\obj\Debug\net5.0\API.csproj.CopyComplete
@@ -245,3 +243,4 @@ E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\API.deps.json
 E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\API.runtimeconfig.json
 E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\appsettings.Development.json
 E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\appsettings.json
+E:\MyWork\KUPF-28-10\KUPFApp\kupfapi\api\obj\Debug\net5.0\refint\API.dll

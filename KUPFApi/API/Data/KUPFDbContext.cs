@@ -4195,11 +4195,11 @@ namespace API.Models
                 entity.Property(e => e.ServiceId).HasColumnName("ServiceID");
 
                 entity.Property(e => e.ServiceSubType)
-                    .HasColumnType("numeric(18, 0)")
+                    .HasColumnType("nvarchar(100)")
                     .HasComment("Coming from RefTable RefType='KUPF' and RefSubtype='ConsumerLoanType' and Switch3=ServiceSetup.ServiceID");
 
                 entity.Property(e => e.ServiceType)
-                    .HasColumnType("numeric(18, 0)")
+                    .HasColumnType("nvarchar(100)")
                     .HasComment("Coming from RefTable RefType='KUPF' and RefSubtype='ServiceType'");
 
                 entity.Property(e => e.Signatures)

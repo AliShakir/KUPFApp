@@ -17,6 +17,9 @@ export class ContactDetailsComponent implements OnInit {
   contactDetials:FormGroup;
   employeeData:any;
   financialData:any
+  financialDetails:any;
+  serviceType:any;
+  subServiceType:any;
   lang:any;
   constructor(
     private modalService: NgbModal,
@@ -36,10 +39,11 @@ export class ContactDetailsComponent implements OnInit {
     });
     this.financialService.GetServiceApprovalsByEmployeeId(this.commonService.employeeId).subscribe((resp:any)=>{
       if(resp){
+        console.log(resp);
         this.financialData = resp;
-        console.log('Financial Data',this.financialData);
       }
-    })
+    }) 
+    
   }
   initContactForm(){
     this.contactDetials = this.fb.group({
@@ -49,6 +53,13 @@ export class ContactDetailsComponent implements OnInit {
       email:new FormControl(''),
       mobile:new FormControl('')
     })
+  }
+  openServiceDetailsModal(event: any){
+    this.financialService.GetServiceApprovalDetailByTransId(event.target.id).subscribe((response:any) =>{
+      if(response){
+        this.financialDetails = response;
+      }
+    })    
   }
 
   open(content:any) {

@@ -7,7 +7,9 @@ import { DetailedEmployee } from '../models/DetailedEmployee';
 import { ReturnTransactionHdDto } from '../models/FinancialService/ReturnTransactionHdDto';
 import { TransactionHdDto } from '../models/FinancialService/TransactionHdDto';
 import { RefTableDto } from '../models/ReferenceDetails/RefTableDto';
+import { ReturnServiceApprovalDetails } from '../models/ReturnServiceApprovalDetails';
 import { ReturnServiceApprovals } from '../models/ReturnServiceApprovals';
+import { SelectServiceTypeDto } from '../models/ServiceSetup/SelectServiceTypeDto';
 import { ServiceSetupDto } from '../models/ServiceSetup/ServiceSetupDto';
 
 @Injectable({
@@ -25,6 +27,8 @@ export class FinancialService {
    transactionHdDto: TransactionHdDto[]=[]
    //
    returnServiceApprovals : ReturnServiceApprovals[]=[];
+   //
+   returnServiceApprovalDetails: ReturnServiceApprovalDetails[]=[];
 
    returnRefTableDto : RefTableDto[]=[];
   //
@@ -77,10 +81,18 @@ export class FinancialService {
     )
   }
   GetServiceApprovalsByEmployeeId(employeeId:any) {      
-    return this.httpClient.get<ReturnServiceApprovals[]>(this.baseUrl + `FinancialService/GetServiceApprovalsAsync?employeeId=${employeeId}`).pipe(
+    return this.httpClient.get<ReturnServiceApprovals[]>(this.baseUrl + `FinancialService/GetServiceApprovalsByEmployeeId?employeeId=${employeeId}`).pipe(
       map(returnServiceApprovals => {
         this.returnServiceApprovals = returnServiceApprovals;
         return returnServiceApprovals;
+      })
+    )
+  }
+  GetServiceApprovalDetailByTransId(transId:any) {      
+    return this.httpClient.get<ReturnServiceApprovalDetails[]>(this.baseUrl + `FinancialService/GetServiceApprovalDetailByTransId?transId=${transId}`).pipe(
+      map(returnServiceApprovalDetails => {
+        this.returnServiceApprovalDetails = returnServiceApprovalDetails;        
+        return returnServiceApprovalDetails;
       })
     )
   }
@@ -107,5 +119,8 @@ export class FinancialService {
         return employeeDetails;
       })
     )
+  }
+  GetServiceType(tenentId:number) { 
+    return this.httpClient.get<SelectServiceTypeDto[]>(this.baseUrl + `FinancialService/GetServiceType?tenentId=${tenentId}`);    
   }
 }

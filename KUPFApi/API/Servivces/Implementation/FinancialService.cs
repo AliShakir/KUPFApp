@@ -1,5 +1,6 @@
 ﻿using API.Common;
 using API.DTOs;
+using API.DTOs.DropDown;
 using API.DTOs.RefTable;
 using API.Models;
 using API.Servivces.Interfaces;
@@ -323,8 +324,37 @@ namespace API.Servivces.Implementation
                             Amount = (decimal)hd.InstallmentAmount,
                             Discounted = hd.Discount.ToString(),
                             InstallmentBeginDate = hd.InstallmentsBegDate,
-                            UntilMonth = hd.UntilMonth
+                            UntilMonth = hd.UntilMonth,
+                            ServiceType = hd.ServiceType,
+                            ServiceSubType = hd.ServiceSubType,
+                            TotalAmount = hd.Totamt
+
                         }).ToList();
+            return data;
+        }
+
+        public async Task<IEnumerable<ReturnServiceApprovalDetails>> GetServiceApprovalDetailByTransId(int transId)
+        {
+            var data = (from hd in _context.TransactionHds
+                        join dt in _context.TransactionDts
+                        on hd.Mytransid equals dt.Mytransid
+                        where hd.Mytransid == transId
+                        select new ReturnServiceApprovalDetails
+                        {
+                            MyTransId = (int)hd.Mytransid,
+                            MyId = dt.Myid,
+                            InstallmentAmount = dt.InstallmentAmount,
+                            PendingAmount = dt.PendingAmount,
+                            ReceivedAmount = dt.ReceivedAmount,
+                            DiscountedAmount = dt.DiscountAmount
+                        }).ToList();
+            return data;
+        }
+
+        public async Task<IEnumerable<SelectServiceTypeDto>> GetServiceType(int tenentId)
+        {
+            var result = await _context.Reftables.Where(c => c.Refsubtype == "ServiceType").ToListAsync();
+            var data = _mapper.Map<IEnumerable<SelectServiceTypeDto>>(result);
             return data;
         }
     }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace API.Helpers
 {
-    public class PagingParams
+    public class PaginationParams
     {
         private const int MaxPageSize = 50;
         

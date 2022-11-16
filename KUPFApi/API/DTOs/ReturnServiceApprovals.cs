@@ -18,5 +18,9 @@ namespace API.DTOs
         public string? Discounted { get; set; }
         public DateTime? InstallmentBeginDate { get; set; }
         public string UntilMonth { get; set; }
+        public string? ServiceType { get; set; }
+        public string? ServiceSubType { get; set; }
+        public decimal? TotalAmount { get; set; }
+
     }
 }

@@ -9,6 +9,7 @@ export class CommonService {
   //
   employeeId: any;
   formTitle: string;
+  ifEmployeeExists: Boolean;
   public menuSessionUdpated = new Subject<any>();
   constructor() { }
   sendFormTitle(title :string){

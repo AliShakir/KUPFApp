@@ -13,8 +13,8 @@ namespace API.Models
         public int? EmployeeId { get; set; }
         public int? ServiceId { get; set; }
         public int? MasterServiceId { get; set; }
-        public decimal? ServiceType { get; set; }
-        public decimal? ServiceSubType { get; set; }
+        public string? ServiceType { get; set; }
+        public string? ServiceSubType { get; set; }
         public string Source { get; set; }
         public int? AttachId { get; set; }
         public string TransDocNo { get; set; }

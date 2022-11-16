@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { DetailedEmployee } from 'src/app/modules/models/DetailedEmployee';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
+import { CommonService } from 'src/app/modules/_services/common.service';
 import { DbCommonService } from 'src/app/modules/_services/db-common.service';
 
 @Component({
@@ -43,7 +44,9 @@ export class SearchTabComponent implements OnInit {
   formTitle: string;
   closeResult: string = '';
   searchForm: FormGroup;
+  
   constructor(private commonDbService: DbCommonService,
+    private commonService:CommonService,
     private toastr: ToastrService) {
 
   }
@@ -116,11 +119,14 @@ export class SearchTabComponent implements OnInit {
     })
   }
   SearchEmployee() {
+    
     this.commonDbService.SearchEmployee(this.searchForm.value).subscribe((response: any) => {
       if(response === null){
+        this.commonService.ifEmployeeExists = false;
         this.toastr.error('Sorry, record not found','Error');
         this.employeeForm?.reset();
       }else{
+        this.commonService.ifEmployeeExists = true;
         this.employeeForm?.patchValue({
           employeeId:response.employeeId,
           englishName: response.englishName,

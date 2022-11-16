@@ -1,10 +1,12 @@
 ﻿using API.Common;
 using API.DTOs;
 using API.DTOs.EmployeeDto;
+using API.Helpers;
 using API.Models;
 using API.Servivces.Interfaces.DetailedEmployee;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -30,27 +32,26 @@ namespace API.Servivces.Implementation.DetailedEmployee
             return data;
         }
 
-        public async Task<IEnumerable<DetailedEmployeeDto>> GetEmployeesAsync()
-        {           
-           //var detailsList = await _context.DetailedEmployees.ToListAsync();
-           //var refTableList = await _context.Reftables.ToListAsync();
+        public async Task<PagedList<DetailedEmployeeDto>> GetEmployeesAsync(PaginationParams paginationParams)
+        {
             var data = (from e in _context.DetailedEmployees
                         join r in _context.Reftables
                      on e.Department equals r.Refid
-                     where r.Reftype == "KUPF" && r.Refsubtype == "Department"
+                        where r.Reftype == "KUPF" && r.Refsubtype == "Department"
                         select new DetailedEmployeeDto
-                     {
-                         EmpCidNum = e.EmpCidNum,
-                         Pfid = e.Pfid,
-                         EmployeeId = e.EmployeeId,
-                         MobileNumber = e.MobileNumber,
-                         EnglishName = e.EnglishName,
-                         ArabicName = e.ArabicName,
-                         RefName1 = r.Refname1,
-                         RefName2 = r.Refname2
-                     }).ToList();
-           
-           return data;
+                        {
+                            EmpCidNum = e.EmpCidNum,
+                            Pfid = e.Pfid,
+                            EmployeeId = e.EmployeeId,
+                            MobileNumber = e.MobileNumber,
+                            EnglishName = e.EnglishName,
+                            ArabicName = e.ArabicName,
+                            RefName1 = r.Refname1,
+                            RefName2 = r.Refname2
+                        })
+                     .AsQueryable();
+
+            return await PagedList<DetailedEmployeeDto>.CreateAsync(data,paginationParams.PageNumber, paginationParams.PageSize);
         }
 
         public async Task<string> AddEmployeeAsync(DetailedEmployeeDto detailedEmployeeDto)

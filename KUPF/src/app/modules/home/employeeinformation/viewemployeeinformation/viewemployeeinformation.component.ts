@@ -10,6 +10,8 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { DetailedEmployee } from 'src/app/modules/models/DetailedEmployee';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
+import { Pagination } from 'src/app/modules/models/pagination';
+import { UserParams } from 'src/app/modules/models/UserParams';
 import { EmployeeService } from 'src/app/modules/_services/employee.service';
 
 @Component({
@@ -18,6 +20,10 @@ import { EmployeeService } from 'src/app/modules/_services/employee.service';
   styleUrls: ['./viewemployeeinformation.component.scss']
 })
 export class ViewemployeeinformationComponent implements OnInit {
+  
+
+  
+  
   //  
   //#region 
   /*----------------------------------------------------*/
@@ -81,7 +87,13 @@ export class ViewemployeeinformationComponent implements OnInit {
   lang: any = '';
   // Modal close result...
   closeResult = '';
-
+  userParams: UserParams;
+  pagination: Pagination;
+  //
+  currentPage = 0;
+  totalRows = 0;
+  pageSizeOptions: number[] = [10, 20, 50, 100];
+  employeeHeaders: any = {};
   constructor(
     private employeeService: EmployeeService,
     private modalService: NgbModal,
@@ -91,6 +103,7 @@ export class ViewemployeeinformationComponent implements OnInit {
     this.formGroup = new FormGroup({
       searchTerm: new FormControl(null)
     })
+    this.userParams = this.employeeService.getUserParams();
   }
 
   ngOnInit(): void {
@@ -125,29 +138,62 @@ export class ViewemployeeinformationComponent implements OnInit {
     }
     //#endregion
     
-    
-    this.detailedEmployee$ = this.employeeService.GetAllEmployees();
     //
-    this.detailedEmployee$.subscribe((response: DetailedEmployee[]) => {
-      this.detailedEmployee = new MatTableDataSource<DetailedEmployee>(response);
+    this.loadData(0);
+  }
+  loadData(pageIndex: any){
+     //
+     this.employeeService.setUserParams(this.userParams);
+     //this.detailedEmployee = [];
+     this.employeeService.GetAllEmployees(this.userParams).subscribe((response: any) => {
+      this.employeeHeaders = JSON.parse(response.headers.get('pagination'));
+
+      this.detailedEmployee = new MatTableDataSource<DetailedEmployee>(response.body);
       this.detailedEmployee.paginator = this.paginator;
       this.detailedEmployee.sort = this.sort;
       this.isLoadingCompleted = true;
+      setTimeout(() => {
+        this.paginator.pageIndex = pageIndex;
+        this.paginator.length = this.employeeHeaders.totalItems;
+      });
     }, error => {
       console.log(error);
       this.dataLoadingStatus = 'Error fetching the data';
       this.isError = true;
     })
-
   }
+  pageChanged(event: any) {   
+    if (event.pageIndex == 0) {
+      this.userParams.pageNumber = event.pageIndex + 1
+    } else if (event.length <= (event.pageIndex * event.pageSize + event.pageSize)) {
+      this.userParams.pageNumber = event.pageIndex + 1;
+    }
+    else if (event.previousPageIndex > event.pageIndex) {
+      this.userParams.pageNumber = event.pageIndex;
+    } else {
+      this.userParams.pageNumber = event.pageIndex + 1
+    } 
+    //this.userParams.pageNumber = event.previousPageIndex > event.pageIndex ? event.pageIndex : event.pageIndex + 1;
+    this.userParams.pageSize = event.pageSize;
+    this.employeeService.setUserParams(this.userParams);
+    this.loadData(event.pageIndex);
+  } 
   //#region Material Search and Clear Filter
   filterRecords() {
     if (this.formGroup.value.searchTerm != null && this.detailedEmployee) {
         this.detailedEmployee.filter = this.formGroup.value.searchTerm.trim();
+        this.detailedEmployee.paginator = this.paginator;
+        setTimeout(() => {
+          this.paginator.pageIndex = this.userParams.pageNumber - 1;
+          this.paginator.length = this.employeeHeaders.totalItems;
+        });
+        
+        //this.paginator.length = employeeHeaders.totalItems;
     }
   }
   clearFilter() {
     this.formGroup?.patchValue({ searchTerm: "" });
+    //this.loadData(0);
     this.filterRecords();
   }
   //#endregion
@@ -165,17 +211,7 @@ export class ViewemployeeinformationComponent implements OnInit {
             console.log(error);
           },()=>{
             // TO REFRESH / RELOAD THE PAGE WITHOUT REFRESH THE WHOLE PAGE.
-            this.detailedEmployee$.subscribe((response: DetailedEmployee[]) => {
-              this.detailedEmployee = new MatTableDataSource<DetailedEmployee>(response);
-              this.detailedEmployee.paginator = this.paginator;
-              this.detailedEmployee.sort = this.sort;
-              this.isLoadingCompleted = true;
-        
-            }, error => {
-              console.log(error);
-              this.dataLoadingStatus = 'Error fetching the data';
-              this.isError = true;
-            })
+            this.loadData(0);
           })
       }  
     }, (reason) => {  

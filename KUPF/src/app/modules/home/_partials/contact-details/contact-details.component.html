@@ -72,9 +72,37 @@
                         <!--end::Svg Icon-->
                         <a href="#" class="text-muted text-hover-primary">{{employeeData.mobileNumber}}</a>
                     </div>
-                    <!--end::Phone-->
+                    <!--end::Phone-->  
                 </div>
                 <!--end::Contact details-->
+            </div>
+            <div class="d-flex flex-column gap-1 mt-4">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col"><strong>Service Type</strong></th>
+                            <th scope="col"><strong>SubService Type</strong></th>
+                            <th scope="col"><strong>Amount</strong></th>
+                            <th scope="col"><strong>Installment Begin Date</strong></th>
+                            <th scope="col"><strong>End Date</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let d of financialData; let i = index">
+                            <td><a href="javascript:void(0)" class="text-primary" 
+                                (click)="openServiceDetailsModal($event)" [id]="d.myTransId">
+                                    View
+                                </a>
+                            </td>
+                            <td class="ArFontStyle">{{d.serviceType}}</td>
+                            <td class="ArFontStyle">{{d.serviceSubType}}</td>
+                            <td>{{d.totalAmount}}</td>
+                            <td>{{d.installmentBeginDate | date :'mediumDate'}}</td>
+                            <td>{{d.untilMonth}}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             <br />
             <tabset>
@@ -92,7 +120,6 @@
                             </span>
                             <!--end::Svg Icon-->General
                         </a>
-
                     </ng-template>
                     <div class="d-flex flex-column gap-1">
                         <div class="fw-bold text-muted">Gender</div>
@@ -136,29 +163,44 @@
                         <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th scope="col"></th>
-                                    <th scope="col"><strong>Amount</strong></th>
-                                    <th scope="col"><strong>Installment</strong></th>
-                                    <th scope="col"><strong>Installments</strong></th>
-                                    <th scope="col"><strong>Installment Begin Date</strong></th>
-                                    <th scope="col"><strong>End Date</strong></th>
+                                    <th scope="col"><strong>Trans Id</strong></th>
+                                    <th scope="col"><strong>My Id</strong></th>
+                                    <th scope="col"><strong>Installment Amount</strong></th>
+                                    <th scope="col"><strong>Received Amount</strong></th>
+                                    <th scope="col"><strong>Pending Amount</strong></th>
+                                    <th scope="col"><strong>Discounted Amount</strong></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let d of financialData; let i = index">
-                                    <th><a href="javascript:void(0)" class="text-primary" [id]="d.myTransId">
-                                            View
-                                        </a>
-                                    </th>
-                                    <td>{{d.amount}}</td>
-                                    <td>{{d.totalInstallments}}</td>
-                                    <td>{{d.totalInstallments }}</td>
-                                    <td>{{d.installmentBeginDate | date :'mediumDate'}}</td>
-                                    <td>{{d.untilMonth}}</td>
+                                <tr *ngFor="let data of financialDetails; let i = index">
+                                    <th>{{data.myTransId}}</th>
+                                    <td>{{data.myId}}</td>
+                                    <td class="text-center">{{data.installmentAmount}}</td>
+                                    <td class="text-center">{{data.receivedAmount}}</td>
+                                    <td class="text-center">{{data.pendingAmount}}</td>
+                                    <td class="text-center">{{data.discountedAmount}}</td>
                                 </tr>
-
                             </tbody>
                         </table>
+                    </div>
+                </tab>
+                <tab>
+                    <ng-template tabHeading>
+                        <a class="text-dark pb-4" data-bs-toggle="tab" href="#kt_contact_view_activity">
+                            <!--begin::Svg Icon | path: icons/duotune/general/gen056.svg-->
+                            <span class="svg-icon svg-icon-4 me-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none">
+                                    <path
+                                        d="M16.0077 19.2901L12.9293 17.5311C12.3487 17.1993 11.6407 17.1796 11.0426 17.4787L6.89443 19.5528C5.56462 20.2177 4 19.2507 4 17.7639V5C4 3.89543 4.89543 3 6 3H17C18.1046 3 19 3.89543 19 5V17.5536C19 19.0893 17.341 20.052 16.0077 19.2901Z"
+                                        fill="currentColor"></path>
+                                </svg>
+                            </span>
+                            <!--end::Svg Icon-->Approved
+                        </a>
+                    </ng-template>
+                    <div class="d-flex flex-column gap-1">
+                        <div class="fw-bold fs-5">Approved services goes here...</div>
                     </div>
                 </tab>
                 <tab>
@@ -177,14 +219,12 @@
                         </a>
                     </ng-template>
                     <div class="d-flex flex-column gap-1">
-                        <div class="fw-bold text-muted">Company Name 222</div>
-                        <div class="fw-bold fs-5">Keenthemes Inc 333</div>
+                        <div class="fw-bold fs-5">Activity Log Goes Here....</div>
                     </div>
                 </tab>
+                
             </tabset>
-
         </div>
     </form>
-
     <!--end::Card body-->
 </div>

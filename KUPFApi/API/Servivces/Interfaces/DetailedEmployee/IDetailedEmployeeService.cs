@@ -1,5 +1,6 @@
 ﻿using API.DTOs;
 using API.DTOs.EmployeeDto;
+using API.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace API.Servivces.Interfaces.DetailedEmployee
         Task<string> AddEmployeeAsync(DetailedEmployeeDto detailedEmployeeDto);
         Task<string> UpdateEmployeeAsync(DetailedEmployeeDto user);
         Task<DetailedEmployeeDto> GetEmployeeByIdAsync(string id);
-        Task<IEnumerable<DetailedEmployeeDto>> GetEmployeesAsync();
+        Task<PagedList<DetailedEmployeeDto>> GetEmployeesAsync(PaginationParams paginationParams);
         Task<int> DeleteEmployeeAsync(string id);
 
         // This api will be deleted latter.

@@ -13,7 +13,7 @@ namespace API.DTOs
         public string CID { get; set; }
         public string EnglishName { get; set; }
         public string ArabicName { get; set; }
-        public decimal? ServiceType { get; set; }
+        public string? ServiceType { get; set; }
         public decimal? Installment { get; set; }
         public decimal? Amount { get; set; }
         public decimal? Paid { get; set; }
