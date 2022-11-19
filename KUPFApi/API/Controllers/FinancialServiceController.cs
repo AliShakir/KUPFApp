@@ -90,6 +90,7 @@ namespace API.Controllers
             var result = await _financialService.GetServiceByServiceTypeAndSubType(serviceType, serviceSubType, tenentId);
             return result;
         }
+        
         [HttpGet]
         [Route("GetServiceApprovalsAsync")]
         public async Task<IEnumerable<ReturnServiceApprovals>> GetServiceApprovalsAsync()
@@ -97,6 +98,7 @@ namespace API.Controllers
             var result = await _financialService.GetServiceApprovalsAsync();
             return result;
         }
+        
         [HttpPut]
         [Route("ApproveServiceAsync")]
         public async Task<ActionResult<string>> ApproveServiceAsync(ApproveRejectServiceDto approveRejectServiceDto)
@@ -104,6 +106,7 @@ namespace API.Controllers
             var result = await _financialService.ApproveServiceAsync(approveRejectServiceDto);
             return result;
         }
+        
         [HttpGet]
         [Route("GetRejectionType")]
         public async Task<IEnumerable<RefTableDto>> GetRejectionType()
@@ -111,6 +114,7 @@ namespace API.Controllers
             var result = await _financialService.GetRejectionType();
             return result;
         }
+        
         [HttpPut]
         [Route("RejectServiceAsync")]
         public async Task<ActionResult<string>> RejectServiceAsync(ApproveRejectServiceDto approveRejectServiceDto)
@@ -118,6 +122,7 @@ namespace API.Controllers
             var result = await _financialService.RejectServiceAsync(approveRejectServiceDto);
             return result;
         }
+        
         [HttpGet]
         [Route("GetServiceApprovalsByEmployeeId")]
         public async Task<IEnumerable<ReturnServiceApprovals>> GetServiceApprovalsByEmployeeId(string employeeId)
@@ -125,6 +130,7 @@ namespace API.Controllers
             var result = await _financialService.GetServiceApprovalsByEmployeeId(employeeId);
             return result;
         }
+        
         [HttpGet]
         [Route("GetServiceApprovalDetailByTransId")]
         public async Task<IEnumerable<ReturnServiceApprovalDetails>> GetServiceApprovalDetailByTransId(int transId)
@@ -132,12 +138,20 @@ namespace API.Controllers
             var result = await _financialService.GetServiceApprovalDetailByTransId(transId);
             return result;
         }
+        
         [HttpGet]
         [Route("GetServiceType")]
         public async Task<IEnumerable<SelectServiceTypeDto>> GetServiceType(int transId)
         {
             var result = await _financialService.GetServiceType(transId);
             return result;
+        }
+
+        [HttpPost]
+        [Route("MakeFinancialTransactionAsync")]
+        public async Task<ActionResult<int>> MakeFinancialTransactionAsync(CostCenterDto costCenterDto)
+        {
+            return await _financialService.MakeFinancialTransactionAsync(costCenterDto);            
         }
     }
 }

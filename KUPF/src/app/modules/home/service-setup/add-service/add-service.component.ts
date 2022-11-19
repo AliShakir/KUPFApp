@@ -114,7 +114,7 @@ export class AddServiceComponent implements OnInit {
     this.selectServiceType$ = this.financialService.GetServiceType(21);
         
     if (this.mytransid) {
-      
+      this.common.ifEmployeeExists = true;
       this.financialService.GetFinancialServiceById(this.mytransid).subscribe((response:any)=>{
         
         this.selectServiceSubType$ = this.commonService.GetSubServiceTypeByServiceType(21,response.serviceType);

@@ -357,5 +357,18 @@ namespace API.Servivces.Implementation
             var data = _mapper.Map<IEnumerable<SelectServiceTypeDto>>(result);
             return data;
         }
+
+        public async Task<int> MakeFinancialTransactionAsync(CostCenterDto costCenterDto)
+        {
+            int result = 0;
+            if (_context != null)
+            {                
+                var newTransaction = _mapper.Map<CostCenter>(costCenterDto);
+                await _context.CostCenters.AddAsync(newTransaction);
+                result = await _context.SaveChangesAsync();
+                
+            }
+            return result;
+        }
     }
 }
