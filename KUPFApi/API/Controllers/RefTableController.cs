@@ -24,7 +24,10 @@ namespace API.Controllers
             _refTableService = refTableService;
             _context = context;
         }
-        
+        /// <summary>
+        /// Api to Add RefTable
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("AddRefTable")]
         public async Task<ActionResult<int>> AddRefTable(RefTableDto refTableDto)
@@ -33,7 +36,10 @@ namespace API.Controllers
             await _context.SaveChangesAsync();
             return refTableDto.Refid;
         }
-        
+        /// <summary>
+        /// Api to Update RefTable
+        /// </summary>
+        /// <returns></returns>
         [HttpPut]
         [Route("UpdateRefTable")]
         public async Task<ActionResult<int>> UpdateRefTable(RefTableDto refTableDto)
@@ -45,7 +51,10 @@ namespace API.Controllers
             }
             return null;
         }
-        
+        /// <summary>
+        /// Api to Delete RefTable
+        /// </summary>
+        /// <returns></returns>
         [HttpDelete]
         [Route("DeleteRefTable")]
         public async Task<int> DeleteRefTable(int refId)
@@ -57,7 +66,10 @@ namespace API.Controllers
             }
             return result;
         }
-        
+        /// <summary>
+        /// Api to Get RefTable By Id RefType AndSubType
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetRefTableByIdRefTypeAndSubType/{refId}/{refType}/{refSubType}")]
         public async Task<ActionResult<IEnumerable<RefTableDto>>> GetRefTableByIdRefTypeAndSubType(int refId, string refType, string refSubType)
@@ -65,7 +77,10 @@ namespace API.Controllers
             var result = await _refTableService.GetRefTableByIdAsync(refId,refType, refSubType);
             return Ok(result);
         }
-
+        /// <summary>
+        /// Api to Get RefTable Data
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetRefTableData")]
         public async Task<ActionResult<IEnumerable<RefTableDto>>> GetRefTableData()
@@ -73,6 +88,10 @@ namespace API.Controllers
             var result = await _refTableService.GetRefTableAsync();
             return Ok(result);
         }
+        /// <summary>
+        /// Api to Get RefTable By RefType And SubType
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetRefTableByRefTypeAndSubType/{refType}/{refSubType}")]
         public async Task<ActionResult<IEnumerable<RefTableDto>>> GetRefTableByRefTypeAndSubType(string refType, string refSubType)

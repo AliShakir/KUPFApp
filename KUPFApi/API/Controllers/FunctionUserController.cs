@@ -25,7 +25,10 @@ namespace API.Controllers
             _functionUserService = functionUserService;
             _context = context;
         }
-
+        /// <summary>
+        /// Api to Add Function User
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("AddFunctionUser")]
         public async Task<ActionResult<int>> AddFunctionUser(FunctionUserDto functionUserDto)
@@ -34,6 +37,10 @@ namespace API.Controllers
             await _context.SaveChangesAsync();
             return functionUserDto.MODULE_ID;
         }
+        /// <summary>
+        /// Api to Update Function User
+        /// </summary>
+        /// <returns></returns>
         [HttpPut]
         [Route("UpdateFunctionUser")]
         public async Task<ActionResult<int>> UpdateFunctionUser(FunctionUserDto functionUserDto)
@@ -45,6 +52,10 @@ namespace API.Controllers
             }
             return null;
         }
+        /// <summary>
+        /// Api to Delete Function User
+        /// </summary>
+        /// <returns></returns>
         [HttpDelete]
         [Route("DeleteFunctionUser")]
         public async Task<int> DeleteFunctionUser(int id)
@@ -57,6 +68,10 @@ namespace API.Controllers
 
             return result;
         }
+        /// <summary>
+        /// Api to Get Function User By Master Id
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetFunctionUserByMasterIdAsync")]
         public async Task<ActionResult<IEnumerable<FunctionUserDto>>> GetFunctionUserByMasterIdAsync(int masterId)
@@ -64,6 +79,10 @@ namespace API.Controllers
             var result = await _functionUserService.GetFunctionUserByMasterIdAsync(masterId);
             return Ok(result);
         }
+        /// <summary>
+        /// Api to Get Function User
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetFunctionUser")]
         public async Task<ActionResult<FunctionUserDto>> GetFunctionUser()
@@ -71,6 +90,10 @@ namespace API.Controllers
             var result = await _functionUserService.GetFunctionUserAsync();
             return Ok(result);
         }
+        /// <summary>
+        /// Api to Add Function For User
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("AddFunctionForUser")]
         public async Task<ActionResult<int>> AddFunctionForUser([FromBody] FunctionForUserDto[] functionForUserDto)
@@ -93,6 +116,10 @@ namespace API.Controllers
             }
             return Ok();
         }
+        /// <summary>
+        /// Api to Get Function User By User Id
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetFunctionUserByUserIdAsync")]
         public async Task<ActionResult<IEnumerable<FunctionUserDto>>> GetFunctionUserByUserIdAsync(int id)
@@ -104,6 +131,10 @@ namespace API.Controllers
             //}
             return Ok(result);
         }
+        /// <summary>
+        /// Api to Get Module Wise Menu Items
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetModuleWiseMenuItems")]
         public async Task<ActionResult<IEnumerable<FunctionUserDto>>> GetModuleWiseMenuItems()

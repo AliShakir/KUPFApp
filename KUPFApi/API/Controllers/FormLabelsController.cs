@@ -24,7 +24,10 @@ namespace API.Controllers
             _mapper = mapper;
            _localizationService = localizationService;
         }
-        //Done...
+        /// <summary>
+        /// Api to Get Form Header Labels
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetFormHeaderLabels/{formId}/{languageId}")]
         public async Task<ActionResult<IEnumerable<FormTitleHDLanguageViewModel>>> GetFormHeaderLabels(string formId,int languageId)
@@ -33,7 +36,10 @@ namespace API.Controllers
 
             return Ok(result);
         }
-        //Done...
+        /// <summary>
+        /// Api to Get Form Body Labels
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetFormBodyLabels/{formId}/{languageId}")]
         public async Task<ActionResult<IEnumerable<FormTitleDTLanguageViewModel>>> GetFormBodyLabels(string formId,int languageId)
@@ -42,6 +48,10 @@ namespace API.Controllers
 
             return Ok(result);
         }
+        /// <summary>
+        /// Api to Get All Form Body Labels
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetAllFormBodyLabels/{formId}/{langId}")]
         public async Task<ActionResult<IEnumerable<FormTitleDTLanguageViewModel>>> GetAllFormBodyLabels(string formId, int langId)
@@ -49,6 +59,10 @@ namespace API.Controllers
             var result = await _localizationService.GetAll(formId, langId);           
             return Ok(result);
         }
+        /// <summary>
+        /// Api to Get Company And Employees
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("GetCompanyAndEmployees")]
         public async Task<ActionResult<IEnumerable<FormTitleDTLanguageViewModel>>> GetCompanyAndEmployees()
         {
@@ -56,7 +70,10 @@ namespace API.Controllers
             
             return Ok(result);
         }
-        //Done...
+        /// <summary>
+        /// Api to Get All App Labels
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetAllAppLabels")]
         public async Task<ActionResult<IEnumerable<FormTitleDTLanguageViewModel>>> GetAllAppLabels()
@@ -64,7 +81,10 @@ namespace API.Controllers
             var result = await _localizationService.GetAllAppLabels();
             return Ok(result);
         }
-        //Done...
+        /// <summary>
+        /// Api to Get All Form Header Labels
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetAllFormHeaderLabels")]
         public async Task<ActionResult<IEnumerable<GetDistinctHDFormNameViewModel>>> GetAllFormHeaderLabels()
@@ -72,7 +92,10 @@ namespace API.Controllers
             var result = await _localizationService.GetAllFormHeaderLabels();
             return Ok(result);
         }
-        
+        /// <summary>
+        /// Api to Get Form Header Labels By Form Id
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetFormHeaderLabelsByFormId")]
         public async Task<ActionResult<IEnumerable<FormTitleHDLanguageViewModel>>> GetFormHeaderLabelsByFormId(string formId)
@@ -80,6 +103,10 @@ namespace API.Controllers
             var result = await _localizationService.GetFormHeaderLabelsByFormId(formId);
             return Ok(result);
         }
+        /// <summary>
+        /// Api to Get Form Body Labels By FormId
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetFormBodyLabelsByFormId")]
         public async Task<ActionResult<IEnumerable<FormTitleHDLanguageViewModel>>> GetFormBodyLabelsByFormId(string formId)
@@ -87,6 +114,10 @@ namespace API.Controllers
             var result = await _localizationService.GetFormBodyLabelsByFormId(formId);
             return Ok(result);
         }
+        /// <summary>
+        /// Api to Edit Form Header Labels
+        /// </summary>
+        /// <returns></returns>
         [HttpPut]
         [Route("EditFormHeaderLabels")]
         public async Task<ActionResult> EditFormHeaderLabels(FormTitleHDLanguageDto formTitleHDLanguageDto)
@@ -108,6 +139,10 @@ namespace API.Controllers
 
             return BadRequest("Faild to update record");
         }
+        /// <summary>
+        /// Api to Edit Form Body Labels
+        /// </summary>
+        /// <returns></returns>
         [HttpPut]
         [Route("EditFormBodyLabels")]
         public async Task<ActionResult> EditFormBodyLabels(FormTitleDTLanguageDto formTitleDTLanguageDto)

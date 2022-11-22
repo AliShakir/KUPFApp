@@ -14,12 +14,18 @@ namespace API.Controllers
     public class CrupAuditController : ControllerBase
     {
         private readonly ICrupAuditService _crupAuditService;
-        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="crupAuditService"></param>
         public CrupAuditController(ICrupAuditService crupAuditService)
         {
             _crupAuditService = crupAuditService;
         }
-
+        /// <summary>
+        /// Api to Add new CrupAudit  
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("AddCrupAudit")]
         public ActionResult<int> AddCrupAudit(CrupAuditDto crupAuditDto)
@@ -27,6 +33,10 @@ namespace API.Controllers
             int result = _crupAuditService.InsertCrupAudit(crupAuditDto);
             return result;
         }
+        /// <summary>
+        /// Api to UPdate existing CrupAudit   
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("UpdateCrupAudit")]
         public ActionResult<int> UpdateCrupAudit(CrupAuditDto crupAuditDto)
@@ -34,6 +44,10 @@ namespace API.Controllers
             int result = _crupAuditService.UpdatCrupAudit(crupAuditDto);
             return result;
         }
+        /// <summary>
+        /// Api to Delete CrupAudit  
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("DeleteCrupAudit")]
         public ActionResult<int> DeleteCrupAudit(int tenantId, int locationId, Int64 crupId, int mySerial,int auditNo)
@@ -41,6 +55,10 @@ namespace API.Controllers
             int result = _crupAuditService.DeleteCrupMst(tenantId, locationId, crupId,mySerial,auditNo);
             return result;
         }
+        /// <summary>
+        /// Api to select CrupAudit  
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("SelectCrupAudit")]
         public async Task<ActionResult<CrupAuditDto>> SelectCrupAudit(int tenantId, int locationId, long crupId, int mySerial, int auditNo)
@@ -48,7 +66,10 @@ namespace API.Controllers
             var result = _crupAuditService.GetCrupAudit(tenantId, locationId, crupId,mySerial,auditNo);
             return result;
         }
-
+        /// <summary>
+        /// Api to Crup Set Cell Max Audit 
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("CrupSetCellMaxAudit")]
         public ActionResult<Int64> CrupSetCellMaxAudit(Int64 tenantId, int locationId, Int64 crupId, int mySerial)
@@ -56,6 +77,10 @@ namespace API.Controllers
             Int64 result = _crupAuditService.CrupSetCellMaxAudit(tenantId, locationId,crupId,mySerial);
             return result;
         }
+        /// <summary>
+        /// Api to Crup Set Cell Max Serial
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("CrupSetCellMaxSerial")]
         public ActionResult<ReturnCrupCellMaxSerial> CrupSetCellMaxSerial(Int64 tenantId, int locationId, Int64 crupId)

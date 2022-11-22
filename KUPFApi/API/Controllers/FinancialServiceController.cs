@@ -27,6 +27,10 @@ namespace API.Controllers
             _mapper = mapper;
             _financialService = financialService;
         }
+        /// <summary>
+        /// Api to add new record(s) in TransactionHd and TransactionDt
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("AddFinancialService")]
         public async Task<ActionResult<string>> AddFinancialService(TransactionHdDto transactionHdDto)
@@ -35,7 +39,10 @@ namespace API.Controllers
             await _context.SaveChangesAsync();
             return transactionHdDto.Mytransid.ToString();
         }
-        
+        /// <summary>
+        /// Api to update existing record(s) in TransactionHd and TransactionDt
+        /// </summary>
+        /// <returns></returns>
         [HttpPut]
         [Route("UpdateFinancialService")]
         public async Task<ActionResult<string>> UpdateFinancialService(TransactionHdDto transactionHdDto)
@@ -47,7 +54,10 @@ namespace API.Controllers
             }
             return null;
         }
-        
+        /// <summary>
+        /// Api to get existing record(s) in TransactionHd
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetFinancialServiceById")]
         public async Task<ReturnSingleFinancialServiceById> GetFinancialServiceById(long transId)
@@ -59,7 +69,10 @@ namespace API.Controllers
             }
             return null;
         }
-        
+        /// <summary>
+        /// Api to Get All Financial Services.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetFinancialServices")]
         public async Task<IEnumerable<ReturnTransactionHdDto>> GetEmployees()
@@ -67,7 +80,10 @@ namespace API.Controllers
             var result = await _financialService.GetFinancialServiceAsync();
             return result;
         }
-        
+        /// <summary>
+        /// Api to Delete Financial Service by Tranaction Id.
+        /// </summary>
+        /// <returns></returns>
         [HttpDelete]
         [Route("DeleteFinancialService")]
         public async Task<int> DeleteFinancialService(long transId)
@@ -81,7 +97,10 @@ namespace API.Controllers
             return result;
         }
 
-
+        /// <summary>
+        /// Api to Get service type and service sub types for Transactions.
+        /// </summary>
+        /// <returns></returns>
 
         [HttpGet]
         [Route("GetServiceByServiceTypeAndSubType/{serviceType}/{serviceSubType}/{tenentId}")]
@@ -90,7 +109,10 @@ namespace API.Controllers
             var result = await _financialService.GetServiceByServiceTypeAndSubType(serviceType, serviceSubType, tenentId);
             return result;
         }
-        
+        /// <summary>
+        /// Api to Get service approvals
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetServiceApprovalsAsync")]
         public async Task<IEnumerable<ReturnServiceApprovals>> GetServiceApprovalsAsync()
@@ -98,7 +120,10 @@ namespace API.Controllers
             var result = await _financialService.GetServiceApprovalsAsync();
             return result;
         }
-        
+        /// <summary>
+        /// Api to approve service
+        /// </summary>
+        /// <returns></returns>
         [HttpPut]
         [Route("ApproveServiceAsync")]
         public async Task<ActionResult<string>> ApproveServiceAsync(ApproveRejectServiceDto approveRejectServiceDto)
@@ -106,7 +131,10 @@ namespace API.Controllers
             var result = await _financialService.ApproveServiceAsync(approveRejectServiceDto);
             return result;
         }
-        
+        /// <summary>
+        /// Api to get rejection type
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetRejectionType")]
         public async Task<IEnumerable<RefTableDto>> GetRejectionType()
@@ -114,7 +142,10 @@ namespace API.Controllers
             var result = await _financialService.GetRejectionType();
             return result;
         }
-        
+        /// <summary>
+        /// Api to reject service.
+        /// </summary>
+        /// <returns></returns>
         [HttpPut]
         [Route("RejectServiceAsync")]
         public async Task<ActionResult<string>> RejectServiceAsync(ApproveRejectServiceDto approveRejectServiceDto)
@@ -122,7 +153,10 @@ namespace API.Controllers
             var result = await _financialService.RejectServiceAsync(approveRejectServiceDto);
             return result;
         }
-        
+        /// <summary>
+        /// Api to Get service approvals by employee Id
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetServiceApprovalsByEmployeeId")]
         public async Task<IEnumerable<ReturnServiceApprovals>> GetServiceApprovalsByEmployeeId(string employeeId)
@@ -130,7 +164,10 @@ namespace API.Controllers
             var result = await _financialService.GetServiceApprovalsByEmployeeId(employeeId);
             return result;
         }
-        
+        /// <summary>
+        /// Api to get service approval details by transaction Id...
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetServiceApprovalDetailByTransId")]
         public async Task<IEnumerable<ReturnServiceApprovalDetails>> GetServiceApprovalDetailByTransId(int transId)
@@ -138,7 +175,10 @@ namespace API.Controllers
             var result = await _financialService.GetServiceApprovalDetailByTransId(transId);
             return result;
         }
-        
+        /// <summary>
+        /// Api to Get service type.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetServiceType")]
         public async Task<IEnumerable<SelectServiceTypeDto>> GetServiceType(int transId)
@@ -146,7 +186,10 @@ namespace API.Controllers
             var result = await _financialService.GetServiceType(transId);
             return result;
         }
-
+        /// <summary>
+        /// Api to make final tranaction...
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("MakeFinancialTransactionAsync")]
         public async Task<ActionResult<int>> MakeFinancialTransactionAsync(CostCenterDto costCenterDto)

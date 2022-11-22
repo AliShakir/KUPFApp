@@ -26,7 +26,10 @@ namespace API.Controllers
             _serviceSetupService = serviceSetupService;
             _context = context;
         }
-
+        /// <summary>
+        /// Api to Add Service Setup
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("AddServiceSetup")]
         public async Task<ActionResult<int>> AddServiceSetup([FromForm]ServiceSetupDto serviceSetupDto)
@@ -35,7 +38,10 @@ namespace API.Controllers
             await _context.SaveChangesAsync();
             return serviceSetupDto.ServiceId;
         }
-
+        /// <summary>
+        /// Api to Update Service Setup
+        /// </summary>
+        /// <returns></returns>
         [HttpPut]
         [Route("EditServiceSetup")]
         public async Task<ActionResult<int>> EditServiceSetup([FromForm]ServiceSetupDto serviceSetupDto)
@@ -47,7 +53,10 @@ namespace API.Controllers
             }
             return null;
         }
-
+        /// <summary>
+        /// Api to delete Service Setup
+        /// </summary>
+        /// <returns></returns>
         [HttpDelete]
         [Route("DeleteServiceSetup")]
         public async Task<int> DeleteRefTable(int id)
@@ -59,7 +68,10 @@ namespace API.Controllers
             }
             return result;
         }
-
+        /// <summary>
+        /// Api to Get Service Setup By Id
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetServiceSetupById/{id}")]
         public async Task<ActionResult<ServiceSetupDto>> GetServiceSetupById(int id)
@@ -67,7 +79,10 @@ namespace API.Controllers
             var result = await _serviceSetupService.GetServiceSetupByIdAsync(id);
             return Ok(result);
         }
-
+        /// <summary>
+        /// Api to Get Service Setup
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetServiceSetup")]
         public async Task<ActionResult<IEnumerable<ServiceSetupDto>>> GetServiceSetup()
@@ -75,7 +90,10 @@ namespace API.Controllers
             var result = await _serviceSetupService.GetServiceSetupAsync();
             return Ok(result);
         }
-
+        /// <summary>
+        /// Api to Get Web Conten tByPageName for website.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetWebContentByPageNameAsync/{pageName}")]
         public async Task<ActionResult<ReturnWebContent>> GetWebContentByPageNameAsync(string pageName)
@@ -83,6 +101,10 @@ namespace API.Controllers
             var result = await _serviceSetupService.GetWebContentByPageNameAsync(pageName);
             return Ok(result);
         }
+        /// <summary>
+        /// Api to Add Subscription
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("AddSubscription")]
         public async Task<ActionResult<int>> AddSubscription(ServiceSubscriptionDto serviceSubscriptionDto)

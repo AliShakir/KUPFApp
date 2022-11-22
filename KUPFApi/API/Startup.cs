@@ -17,6 +17,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System;
+using System.IO;
+using System.Reflection;
 using System.Text;
 
 namespace API
@@ -107,7 +110,10 @@ namespace API
                     Description = "An API to perform KUPF operations",             
                     
                 });
-
+                // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
             services.AddCors();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

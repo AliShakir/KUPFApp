@@ -29,6 +29,10 @@ namespace API.Controllers
             _mapper = mapper;
             _detailedEmployeeService = detailedEmployeeService;
         }
+        /// <summary>
+        /// Api to add new employee
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("AddEmployee")]
         public async Task<ActionResult<string>> AddEmployee(DetailedEmployeeDto detailedEmployeeDto)
@@ -37,6 +41,10 @@ namespace API.Controllers
             await _context.SaveChangesAsync();
             return detailedEmployeeDto.EmployeeId;
         }
+        /// <summary>
+        /// Api to update existing employee
+        /// </summary>
+        /// <returns></returns>
         [HttpPut]
         [Route("UpdateEmployee")]
         public async Task<ActionResult<string>> UpdateEmployee(DetailedEmployeeDto detailedEmployeeDto)
@@ -48,6 +56,10 @@ namespace API.Controllers
             }            
             return null;
         }
+        /// <summary>
+        /// Api to Get existing employee By Id
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetEmployeeById")]
         public async Task<DetailedEmployeeDto> GetEmployeeById(string employeeId)
@@ -59,6 +71,10 @@ namespace API.Controllers
             }              
             return null;
         }
+        /// <summary>
+        /// Api to Get existing employees
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetEmployees")]
         public async Task<PagedList<DetailedEmployeeDto>> GetEmployees([FromQuery] PaginationParams paginationParams)
@@ -67,6 +83,10 @@ namespace API.Controllers
             Response.AddPaginationHeader(result.CurrentPage, result.PageSize, result.TotalCount, result.TotalPages);
             return result;
         }
+        /// <summary>
+        /// Api to deleted employee By Id
+        /// </summary>
+        /// <returns></returns>
         [HttpDelete]
         [Route("DeleteEmployee")]
         public async Task<int> DeleteEmployee(string employeeId)
@@ -79,37 +99,6 @@ namespace API.Controllers
             
             return result;
         }
-        //[Authorize]
-        //[HttpPost]
-        //[Route("AddTestUser")]
-        //public async Task<ActionResult<int>> AddTestUser(TestTableDto testTable)
-        //{
-        //    int val = await _detailedEmployeeService.AddTestUser(testTable);
-        //    await _context.SaveChangesAsync();
-        //    return val;
-        //}
-        //[Authorize]
-        //[HttpGet]
-        //[Route("GetTestUsers")]
-        //public async Task<IEnumerable<TestTableDto>> GetTestUsers()
-        //{
-        //    var result = await _detailedEmployeeService.GetUsers();
-        //    return result;
-        //}
-        //[Authorize]
-        //[HttpGet]
-        //[Route("GetTestUserById")]
-        //public async Task<TestTableDto> GetTestUserById(int id)
-        //{
-        //    var result = await _detailedEmployeeService.GetTestUserById(id);
-        //    return result;
-        //}
-        //[HttpPut]
-        //[Route("UpdateTestUserById")]
-        //public async Task<int> UpdateTestUserById(TestTableDto testTableDto)
-        //{
-        //    int result = await _detailedEmployeeService.GetUpdateTestUserById(testTableDto);
-        //    return result;
-        //}
+        
     }
 }

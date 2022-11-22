@@ -248,5 +248,11 @@ E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\publish\API.de
 E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\publish\API.runtimeconfig.json
 E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\publish\appsettings.Development.json
 E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\publish\appsettings.json
-E:\MyWork\KUPF-28-10\KUPFApp\kupfapi\api\bin\Debug\net5.0\API.StaticWebAssets.xml
-E:\MyWork\KUPF-28-10\KUPFApp\kupfapi\api\obj\Debug\net5.0\refint\API.dll
+E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\API.xml
+E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\publish\publish\web.config
+E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\publish\publish\API.deps.json
+E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\publish\publish\API.runtimeconfig.json
+E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\publish\publish\appsettings.Development.json
+E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\publish\publish\appsettings.json
+E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\ref\API.dll
+E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\obj\Debug\net5.0\staticwebassets\API.StaticWebAssets.xml

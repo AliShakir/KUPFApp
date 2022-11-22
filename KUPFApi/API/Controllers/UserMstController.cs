@@ -24,6 +24,10 @@ namespace API.Controllers
             _userMstServiceService = userMstServiceService;
             _context = context;
         }
+        /// <summary>
+        /// Api to add new user master
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("AddUserMst")]
         public async Task<ActionResult<int>> AddUserMst(UserMstDto userMstDto)
@@ -32,6 +36,10 @@ namespace API.Controllers
             await _context.SaveChangesAsync();
             return userMstDto.UserId;
         }
+        /// <summary>
+        /// Api to update user master by Id
+        /// </summary>
+        /// <returns></returns>
         [HttpPut]
         [Route("UpdateUserMst")]
         public async Task<ActionResult<int>> UpdateUserMst(UserMstDto userMstDto)
@@ -43,6 +51,10 @@ namespace API.Controllers
             }
             return null;
         }
+        /// <summary>
+        /// Api to delete user master by UserId
+        /// </summary>
+        /// <returns></returns>
         [HttpDelete]
         [Route("DeleteUserMst")]
         public async Task<int> DeleteUserMst(int userId)
@@ -55,6 +67,10 @@ namespace API.Controllers
 
             return result;
         }
+        /// <summary>
+        /// Api to Get User Master By Id
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetUserMstById/{userId}")]
         public async Task<ActionResult<IEnumerable<UserMstDto>>> GetUserMstByIdAsync(int userId)        
@@ -62,6 +78,10 @@ namespace API.Controllers
             var result = await _userMstServiceService.GetUserMstByIdAsync(userId);
             return Ok(result);
         }
+        /// <summary>
+        /// Api to Get All Users 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetUserMst")]
         public async Task<ActionResult<IEnumerable<UserMstDto>>> GetUserMst()
@@ -69,6 +89,10 @@ namespace API.Controllers
             var result = await _userMstServiceService.GetUserMstAsync();
             return Ok(result);
         }
+        /// <summary>
+        /// Api to Update user password...
+        /// </summary>
+        /// <returns></returns>
         [HttpPut]
         [Route("UpatePassword")]
         public async Task<ActionResult<UserMstDto>> UpatePassword(UpdatePasswordDto userMstDto)

@@ -24,7 +24,10 @@ namespace API.Controllers
             _crupMstService = crupMstService;
             _context = context;
         }
-
+        /// <summary>
+        /// Api to add Crup master
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("AddCrupMst")]
         public ActionResult<int> AddCrupMst(CrupMstDto crupMstDto)
@@ -32,6 +35,10 @@ namespace API.Controllers
             int result = _crupMstService.InsertCrupMst(crupMstDto);           
             return result;
         }
+        /// <summary>
+        /// Api to update existing Crup master
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("UpdateCrupMst")]
         public ActionResult<int> UpdateCrupMst(CrupMstDto crupMstDto)
@@ -39,6 +46,10 @@ namespace API.Controllers
             int result = _crupMstService.UpdatCrupMst(crupMstDto);
             return result;
         }
+        /// <summary>
+        /// Api to delete existing Crup master
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("DeleteCrupMst")]
         public ActionResult<int> DeleteCrupMst(int tenantId, int locationId, Int64 crupId)
@@ -46,6 +57,10 @@ namespace API.Controllers
             int result = _crupMstService.DeleteCrupMst(tenantId, locationId, crupId);
             return result;
         }
+        /// <summary>
+        /// Api to Select Crup Mst
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("SelectCrupMst")]
         public async Task<ActionResult<CrupMstDto>> SelectCrupMst(int tenantId, int locationId, Int64 crupId)
@@ -53,6 +68,10 @@ namespace API.Controllers
             var result = _crupMstService.GetCrupMst(tenantId, locationId, crupId);
             return result;
         }
+        /// <summary>
+        /// Api to Mst Set Cell Max
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("MstSetCellMax")]
         public ActionResult<Int64> MstSetCellMax(int tenantId, int locationId)

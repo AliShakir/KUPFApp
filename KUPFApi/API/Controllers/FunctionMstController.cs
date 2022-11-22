@@ -24,7 +24,10 @@ namespace API.Controllers
             _functionMstService = functionMstService;
             _context = context;
         }
-
+        /// <summary>
+        /// Api to Add Function Mst
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("AddFunctionMst")]
         public async Task<ActionResult<int>> AddFunctionMst(FunctionMstDto functionMstDto)
@@ -33,7 +36,10 @@ namespace API.Controllers
             await _context.SaveChangesAsync();
             return functionMstDto.MENU_ID;
         }
-
+        /// <summary>
+        /// Api to Update Function Mst
+        /// </summary>
+        /// <returns></returns>
         [HttpPut]
         [Route("UpdateFunctionMst")]
         public async Task<ActionResult<int>> UpdateFunctionMst(FunctionMstDto functionMstDto)
@@ -45,7 +51,10 @@ namespace API.Controllers
             }
             return null;
         }
-
+        /// <summary>
+        /// Api to Delete Function Mst
+        /// </summary>
+        /// <returns></returns>
         [HttpDelete]
         [Route("DeleteFunctionMst")]
         public async Task<int> DeleteFunctionMst(int id)
@@ -57,7 +66,10 @@ namespace API.Controllers
             }
             return result;
         }
-
+        /// <summary>
+        /// Api to Get Function Mst By Id Async
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetFunctionMstByIdAsync/{id}")]
         public async Task<ActionResult<IEnumerable<FunctionMstDto>>> GetFunctionMstByIdAsync(int id)
@@ -65,8 +77,10 @@ namespace API.Controllers
             var result = await _functionMstService.GetFunctionMstByIdAsync(id);
             return Ok(result);
         }
-
-
+        /// <summary>
+        /// Api to Get Function Mst
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetFunctionMst")]
         public async Task<ActionResult<IEnumerable<FunctionMstDto>>> GetFunctionMst()

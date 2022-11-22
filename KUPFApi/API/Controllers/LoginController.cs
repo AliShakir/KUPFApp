@@ -26,6 +26,10 @@ namespace API.Controllers
             _functionUserService = functionUserService;
             //_tokenService = tokenService;
         }
+        /// <summary>
+        /// Api to Employee Login
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("EmployeeLogin")]
         public async Task<ActionResult<IEnumerable<LoginDto>>> EmployeeLogin(LoginDto loginDto)
@@ -55,6 +59,10 @@ namespace API.Controllers
 
             return userList;
         }
+        /// <summary>
+        /// Api to Get User Functions By User Id
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetUserFunctionsByUserId")]
         public async Task<ActionResult<IEnumerable<MenuHeadingDto>>> GetUserFunctionsByUserId(int id)
