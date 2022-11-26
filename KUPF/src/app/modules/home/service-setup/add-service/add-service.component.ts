@@ -208,18 +208,17 @@ export class AddServiceComponent implements OnInit {
     
     this.isFormSubmitted = true;
           
-    if(this.mytransid){
-      
+    if(this.mytransid){      
       this.financialService.UpdateFinancialService(formData).subscribe(()=>{
         this.toastrService.success('Updated successfully', 'Success');
           this.parentForm.reset();
       })
-    }else{
-      console.log(formData);
-      this.financialService.AddFinacialService(formData).subscribe(()=>{
-        this.toastrService.success('Saved successfully', 'Success');
-          this.parentForm.reset();
-      })
+    }else{  
+      console.log(formData);    
+      // this.financialService.AddFinacialService(formData).subscribe(()=>{
+      //   this.toastrService.success('Saved successfully', 'Success');
+      //     this.parentForm.reset();
+      // })
     }
     
   }

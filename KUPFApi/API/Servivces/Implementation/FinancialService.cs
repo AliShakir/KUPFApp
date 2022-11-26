@@ -1,6 +1,7 @@
 ﻿using API.Common;
 using API.DTOs;
 using API.DTOs.DropDown;
+using API.DTOs.FinancialTransaction;
 using API.DTOs.RefTable;
 using API.Models;
 using API.Servivces.Interfaces;
@@ -18,10 +19,12 @@ namespace API.Servivces.Implementation
     {
         private readonly KUPFDbContext _context;
         private readonly IMapper _mapper;
+        //private readonly IFinancialTransactionService _IFinancialTransactionService;
         public FinancialService(KUPFDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
+            //_IFinancialTransactionService = IFinancialTransactionService;
         }
         public async Task<string> AddFinancialServiceAsync(TransactionHdDto transactionHdDto)
         {
@@ -72,6 +75,18 @@ namespace API.Servivces.Implementation
                     myId++;
                 }
                 await _context.SaveChangesAsync();
+                //var request = new AccountRequest() { 
+                //    TenantID = newTransaction.TenentId,
+                //    LocationID =(int)newTransaction.LocationId,
+                //    AccountID = 121212,
+                //    AccountName = "english",
+                //    ArabicAccountName = "arabic",
+                //    AccountTypeID = 1,
+                //    UserID = 1,
+                //    ActivityDateTime = DateTime.Now
+
+                //};
+                //_IFinancialTransactionService.SaveCOA(request);
                 return newTransaction.Mytransid.ToString();
             }
             return string.Empty;
