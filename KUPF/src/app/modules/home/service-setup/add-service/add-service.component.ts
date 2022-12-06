@@ -203,7 +203,8 @@ export class AddServiceComponent implements OnInit {
       ...this.parentForm.value.approvalDetailsForm,
       ...this.parentForm.value.employeeForm,
       ...this.parentForm.value.financialForm,
-      tenentID: 21, cruP_ID: 0
+      //...this.parentForm.value.financialFormArray,
+      tenentID: 21, cruP_ID: 0,locationID:1
     }
     
     this.isFormSubmitted = true;
@@ -214,13 +215,20 @@ export class AddServiceComponent implements OnInit {
           this.parentForm.reset();
       })
     }else{  
-      console.log(formData);    
-      // this.financialService.AddFinacialService(formData).subscribe(()=>{
-      //   this.toastrService.success('Saved successfully', 'Success');
-      //     this.parentForm.reset();
-      // })
+      console.log(this.parentForm.value.financialFormArray);    
+      this.financialService.AddFinacialService(formData).subscribe(()=>{
+        // this.toastrService.success('Saved successfully', 'Success');
+        //   this.parentForm.reset();
+        this.saveFinancialArray();
+      })
     }
     
+  }
+  saveFinancialArray() {
+    this.financialService.saveCOA(this.parentForm.value.financialFormArray, {}).subscribe(()=>{
+      this.toastrService.success('Saved successfully', 'Success');
+      this.parentForm.reset();
+    })
   }
   getFormValues() {
     console.log(this.parentForm.value);

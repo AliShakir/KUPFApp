@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace API.DTOs.FinancialTransaction
 {
-    public class AccountRequest : RequestParamters
+    public class AccountRequest  
     {
         public int AccountID { get; set; }
         public string AccountName { get; set; }
@@ -13,5 +13,7 @@ namespace API.DTOs.FinancialTransaction
         public int AccountTypeID { get; set; }
         public int UserID { get; set; }
         public DateTime ActivityDateTime { get; set; }
+        public int TenantID { get; set; }
+        public int LocationID { get; set; }
     }
 }

@@ -13,9 +13,9 @@ using System.Threading.Tasks;
 namespace API.Servivces.Implementation
 {
     public class FinancialTransactionService : IFinancialTransactionService
-    {      
+    {
 
-        public Response SaveCOA(AccountRequest Req)
+        public Response SaveCOA(List<AccountRequest> accounts)
         {
             Response obj = new Response();
 
@@ -29,20 +29,28 @@ namespace API.Servivces.Implementation
             try
             {
                 connection.Open();
-                
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@AccountID", Req.AccountID);
-                cmd.Parameters.AddWithValue("@AccountName", Req.AccountName);
-                cmd.Parameters.AddWithValue("@ArabicAccountName", Req.ArabicAccountName);
-                cmd.Parameters.AddWithValue("@AccountTypeID", Req.AccountTypeID);
-                cmd.Parameters.AddWithValue("@UserID", Req.UserID);
-                cmd.Parameters.AddWithValue("@ActivityDateTime", DateTime.Now);
-                cmd.Parameters.AddWithValue("@TenantID", Req.TenantID);
-                cmd.Parameters.AddWithValue("@LocationID", Req.LocationID);
-                cmd.Parameters.Add("@InsertedID", SqlDbType.Int).Direction = ParameterDirection.Output;
-                
-                obj.Status = cmd.ExecuteNonQuery();
-                obj.ID = (int)cmd.Parameters["@InsertedID"].Value;
+                foreach (var item in accounts)
+                {
+                    int result = IfAccountExists(item.TenantID, item.LocationID, 5,item.AccountID);
+                    //if (result != 1)
+                    //{
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@AccountID", item.AccountID);
+                        cmd.Parameters.AddWithValue("@AccountName", item.AccountName);
+                        cmd.Parameters.AddWithValue("@ArabicAccountName", item.ArabicAccountName);
+                        cmd.Parameters.AddWithValue("@AccountTypeID", item.AccountTypeID);
+                        cmd.Parameters.AddWithValue("@UserID", item.UserID);
+                        cmd.Parameters.AddWithValue("@ActivityDateTime", DateTime.Now);
+                        cmd.Parameters.AddWithValue("@TenantID", item.TenantID);
+                        cmd.Parameters.AddWithValue("@LocationID", item.LocationID);
+                        //cmd.Parameters.Add("@InsertedID", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                        obj.Status = cmd.ExecuteNonQuery();
+                   // }
+                    
+                }
+
+                //obj.ID = (int)cmd.Parameters["@InsertedID"].Value;
                 connection.Close();
 
                 if (obj.Status != 0)
@@ -57,7 +65,7 @@ namespace API.Servivces.Implementation
             catch (Exception ex)
             {
                 obj.Message = ex.Message;
-                obj.ID = (int)cmd.Parameters["@InsertedID"].Value;
+                //obj.ID = (int)cmd.Parameters["@InsertedID"].Value;
                 obj.Status = 0;
             }
             finally
@@ -255,7 +263,7 @@ namespace API.Servivces.Implementation
                 obj.Status = (int)cmd.ExecuteNonQuery();
                 obj.ID = 0;
                 connection.Close();
-                if (obj.Status != 0 )
+                if (obj.Status != 0)
                 {
                     obj.Message = "Voucher added successfully";
                 }
@@ -275,6 +283,29 @@ namespace API.Servivces.Implementation
                 connection.Dispose();
             }
             return obj;
+        }
+
+        public int IfAccountExists(int tenantId, int locationId, int headId, int accountNo)
+        {
+            var dbconfig = new ConfigurationBuilder()
+                   .SetBasePath(Directory.GetCurrentDirectory())
+                   .AddJsonFile("appsettings.json").Build();
+            var dbconnectionStr = dbconfig["ConnectionStrings:MsSqlConnection"];
+
+            int result = 0;
+            SqlConnection connection = new SqlConnection(dbconnectionStr);
+            SqlCommand cmd = new SqlCommand("Accounts.IfAccountExists", connection);
+
+            connection.Open();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@TenantId", tenantId);
+            cmd.Parameters.AddWithValue("@LocationId", locationId);
+            cmd.Parameters.AddWithValue("@HeadId", headId);
+            cmd.Parameters.AddWithValue("@AccountNo", accountNo);
+            result = (int)cmd.ExecuteScalar();
+            connection.Close();
+
+            return result;
         }
     }
 }

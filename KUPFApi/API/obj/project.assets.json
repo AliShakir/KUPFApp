@@ -6543,11 +6543,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\MyWork\\KUPF-28-10\\KUPFApp\\kupfapi\\api\\API.csproj",
+      "projectUniqueName": "E:\\MyWork\\KUPF-28-10\\KUPFApp\\KUPFApi\\API\\API.csproj",
       "projectName": "API",
-      "projectPath": "E:\\MyWork\\KUPF-28-10\\KUPFApp\\kupfapi\\api\\API.csproj",
+      "projectPath": "E:\\MyWork\\KUPF-28-10\\KUPFApp\\KUPFApi\\API\\API.csproj",
       "packagesPath": "C:\\Users\\Shakir\\.nuget\\packages\\",
-      "outputPath": "E:\\MyWork\\KUPF-28-10\\KUPFApp\\kupfapi\\api\\obj\\",
+      "outputPath": "E:\\MyWork\\KUPF-28-10\\KUPFApp\\KUPFApi\\API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -6643,7 +6643,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.403\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

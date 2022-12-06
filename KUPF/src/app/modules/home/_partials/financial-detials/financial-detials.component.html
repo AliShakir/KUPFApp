@@ -17,19 +17,19 @@
                             <th class="ArFontStyle" lang="AR-SA" >Account Name in Arabic - اسم الحساب بالعربية</th>              
                         </tr>
                     </thead>
-                    <tbody [formGroup]="financialForm">
+                    <tbody>
                         <tr>                        
                             <td>
-                                <input type="number" class="form-control" formControlName="loanAct" id="loanAct" name="loanAct" />
+                                <input type="number" class="form-control" [formControl]="accountsArray.controls[0].controls['loanAct']" id="loanAct" name="loanAct" />
                             </td>
                             <td>
                                 <button type="button" class="btn btn-sm btn-primary mt-1" (click)="verifyLoanAccount()">Verify</button>
                             </td>
                             <td class="mt-2">
-                                <input type="text" class="form-control" formControlName="lblloanActNameInEnglish" id="lblloanActNameInEnglish" name="lblloanActNameInEnglish" readonly/>                           
+                                <input type="text" class="form-control" [formControl]="accountsArray.controls[0].controls['lblloanActNameInEnglish']" id="lblloanActNameInEnglish" name="lblloanActNameInEnglish" readonly/>                           
                             </td>
                             <td class="mt-2">
-                                <input type="text" class="form-control ArFontStyle" lang="AR-SA" formControlName="lblloanActNameInArabic" id="lblloanActNameInArabic" name="lblloanActNameInArabic" readonly/>
+                                <input type="text" class="form-control ArFontStyle" lang="AR-SA" [formControl]="accountsArray.controls[0].controls['lblloanActNameInArabic']" id="lblloanActNameInArabic" name="lblloanActNameInArabic" readonly/>
                             </td> 
                         </tr>
                         <tr>                        
@@ -39,16 +39,16 @@
                         </tr>
                         <tr>                        
                             <td>
-                                <input type="number" class="form-control" formControlName="hajjAct"  id="hajjAct" name="hajjAct"/>
+                                <input type="number" class="form-control" [formControl]="accountsArray.controls[1].controls['hajjAct']"  id="hajjAct" name="hajjAct"/>
                             </td>
                             <td>
                                 <button type="button" class="btn btn-sm btn-primary mt-1" (click)="verifyHajjAccount()">Verify</button>
                             </td>   
                             <td class="mt-2">
-                                <input type="text" class="form-control" formControlName="lblHajjActNameInEnglish" id="lblHajjActNameInEnglish" name="lblHajjActNameInEnglish" readonly/>                           
+                                <input type="text" class="form-control" [formControl]="accountsArray.controls[1].controls['lblHajjActNameInEnglish']" id="lblHajjActNameInEnglish" name="lblHajjActNameInEnglish" readonly/>                           
                             </td>
                             <td class="mt-2">
-                                <input type="text" class="form-control ArFontStyle" lang="AR-SA" formControlName="lblHajjActNameInArabic" id="lblHajjActNameInArabic" name="lblHajjActNameInArabic" readonly/>
+                                <input type="text" class="form-control ArFontStyle" lang="AR-SA" [formControl]="accountsArray.controls[1].controls['lblHajjActNameInArabic']" id="lblHajjActNameInArabic" name="lblHajjActNameInArabic" readonly/>
                             </td>
                         </tr>
                         <tr>                        
@@ -58,16 +58,16 @@
                         </tr>
                         <tr>                        
                             <td>
-                                <input type="number" class="form-control" formControlName="persLoanAct"  id="persLoanAct" name="persLoanAct"/>
+                                <input type="number" class="form-control" [formControl]="accountsArray.controls[2].controls['persLoanAct']"  id="persLoanAct" name="persLoanAct"/>
                             </td>
                             <td>
                                 <button type="button" class="btn btn-sm btn-primary mt-1" (click)="verifyPerLoanAct()">Verify</button>
                             </td>   
                             <td class="mt-2">
-                                <input type="text" class="form-control" formControlName="lblPersLoanActNameInEnglish" id="lblPersLoanActNameInEnglish" name="lblPersLoanActNameInEnglish" readonly/>                           
+                                <input type="text" class="form-control" [formControl]="accountsArray.controls[2].controls['lblPersLoanActNameInEnglish']" id="lblPersLoanActNameInEnglish" name="lblPersLoanActNameInEnglish" readonly/>                           
                             </td>
                             <td class="mt-2">
-                                <input type="text" class="form-control ArFontStyle" lang="AR-SA" formControlName="lblPersLoanNameInArabic" id="lblPersLoanNameInArabic" name="lblPersLoanNameInArabic" readonly/>
+                                <input type="text" class="form-control ArFontStyle" lang="AR-SA" [formControl]="accountsArray.controls[2].controls['lblPersLoanNameInArabic']" id="lblPersLoanNameInArabic" name="lblPersLoanNameInArabic" readonly/>
                             </td>
                         </tr>
                         <tr>                        
@@ -77,16 +77,16 @@
                         </tr>
                         <tr>                        
                             <td>
-                                <input type="number" class="form-control" formControlName="consumerLoanAct" id="consumerLoanAct" name="consumerLoanAct"/>
+                                <input type="number" class="form-control" [formControl]="accountsArray.controls[3].controls['consumerLoanAct']" id="consumerLoanAct" name="consumerLoanAct"/>
                             </td>
                             <td>
                                 <button type="button" class="btn btn-sm btn-primary mt-1" (click)="verifyConsumerLoanAct()">Verify</button>
                             </td> 
                             <td class="mt-2">
-                                <input type="text" class="form-control" formControlName="lblConsumerLoanActNameInEnglish" id="lblConsumerLoanActNameInEnglish" name="lblConsumerLoanActNameInEnglish" readonly/>                           
+                                <input type="text" class="form-control" [formControl]="accountsArray.controls[3].controls['lblConsumerLoanActNameInEnglish']" id="lblConsumerLoanActNameInEnglish" name="lblConsumerLoanActNameInEnglish" readonly/>                           
                             </td>
                             <td class="mt-2">
-                                <input type="text" class="form-control ArFontStyle" lang="AR-SA" formControlName="lblConsumerLoanNameInArabic" id="lblConsumerLoanNameInArabic" name="lblConsumerLoanNameInArabic" readonly/>
+                                <input type="text" class="form-control ArFontStyle" lang="AR-SA" [formControl]="accountsArray.controls[3].controls['lblConsumerLoanNameInArabic']" id="lblConsumerLoanNameInArabic" name="lblConsumerLoanNameInArabic" readonly/>
                             </td> 
                         </tr>
                         <tr>                        
@@ -96,16 +96,16 @@
                         </tr>
                         <tr>                        
                             <td>
-                                <input type="number" class="form-control" formControlName="otherAct1"  id="otherAct1" name="otherAct1"/>
+                                <input type="number" class="form-control" [formControl]="accountsArray.controls[4].controls['otherAct1']"  id="otherAct1" name="otherAct1"/>
                             </td>
                             <td>
                                 <button type="button" class="btn btn-sm btn-primary mt-1" (click)="verifyOtherAct1()">Verify</button>
                             </td> 
                             <td class="mt-2">
-                                <input type="text" class="form-control" formControlName="lblOtherAct1NameInEnglish" id="lblOtherAct1NameInEnglish" name="lblOtherAct1NameInEnglish" readonly/>                           
+                                <input type="text" class="form-control" [formControl]="accountsArray.controls[4].controls['lblOtherAct1NameInEnglish']" id="lblOtherAct1NameInEnglish" name="lblOtherAct1NameInEnglish" readonly/>                           
                             </td>
                             <td class="mt-2">
-                                <input type="text" class="form-control ArFontStyle" lang="AR-SA" formControlName="lblOtherAct1NameInArabic" id="lblOtherAct1NameInArabic" name="lblOtherAct1NameInArabic" readonly/>
+                                <input type="text" class="form-control ArFontStyle" lang="AR-SA" [formControl]="accountsArray.controls[4].controls['lblOtherAct1NameInArabic']" id="lblOtherAct1NameInArabic" name="lblOtherAct1NameInArabic" readonly/>
                             </td>    
                         </tr>
                         <tr>                        
@@ -115,16 +115,16 @@
                         </tr>
                         <tr>                        
                             <td>
-                                <input type="number" class="form-control" formControlName="otherAct2" id="otherAct2" name="otherAct2"/>
+                                <input type="number" class="form-control" [formControl]="accountsArray.controls[5].controls['otherAct2']" id="otherAct2" name="otherAct2"/>
                             </td>
                             <td>
                                 <button type="button" class="btn btn-sm btn-primary mt-1" (click)="verifyOtherAct2()">Verify</button>
                             </td>  
                             <td class="mt-2">
-                                <input type="text" class="form-control" formControlName="lblOtherAct2NameInEnglish" id="lblOtherAct2NameInEnglish" name="lblOtherAct2NameInEnglish" readonly/>                           
+                                <input type="text" class="form-control" [formControl]="accountsArray.controls[5].controls['lblOtherAct2NameInEnglish']" id="lblOtherAct2NameInEnglish" name="lblOtherAct2NameInEnglish" readonly/>                           
                             </td>
                             <td class="mt-2">
-                                <input type="text" class="form-control ArFontStyle" lang="AR-SA" formControlName="lblOtherAct2NameInArabic" id="lblOtherAct2NameInArabic" name="lblOtherAct2NameInArabic" readonly/>
+                                <input type="text" class="form-control ArFontStyle" lang="AR-SA" [formControl]="accountsArray.controls[5].controls['lblOtherAct2NameInArabic']" id="lblOtherAct2NameInArabic" name="lblOtherAct2NameInArabic" readonly/>
                             </td>  
                         </tr>
                         <tr>                        
@@ -134,16 +134,16 @@
                         </tr>
                         <tr>                        
                             <td>
-                                <input type="number" class="form-control" formControlName="otherAct3"  id="otherAct3" name="otherAct3"/>
+                                <input type="number" class="form-control" [formControl]="accountsArray.controls[6].controls['otherAct3']"  id="otherAct3" name="otherAct3"/>
                             </td>
                             <td>
                                 <button type="button" class="btn btn-sm btn-primary mt-1" (click)="verifyOtherAct3()">Verify</button>
                             </td>  
                             <td class="mt-2">
-                                <input type="text" class="form-control" formControlName="lblOtherAct3NameInEnglish" id="lblOtherAct3NameInEnglish" name="lblOtherAct3NameInEnglish" readonly/>                           
+                                <input type="text" class="form-control" [formControl]="accountsArray.controls[6].controls['lblOtherAct3NameInEnglish']" id="lblOtherAct3NameInEnglish" name="lblOtherAct3NameInEnglish" readonly/>                           
                             </td>
                             <td class="mt-2">
-                                <input type="text" class="form-control ArFontStyle" lang="AR-SA" formControlName="lblOtherAct3NameInArabic" id="lblOtherAct3NameInArabic" name="lblOtherAct3NameInArabic" readonly/>
+                                <input type="text" class="form-control ArFontStyle" lang="AR-SA" [formControl]="accountsArray.controls[6].controls['lblOtherAct3NameInArabic']" id="lblOtherAct3NameInArabic" name="lblOtherAct3NameInArabic" readonly/>
                             </td>  
                         </tr>
                         <tr>                        
@@ -153,16 +153,16 @@
                         </tr>
                         <tr>                        
                             <td>
-                                <input type="number" class="form-control" formControlName="otherAct4" id="otherAct4" name="otherAct4"/>
+                                <input type="number" class="form-control" [formControl]="accountsArray.controls[7].controls['otherAct4']" id="otherAct4" name="otherAct4"/>
                             </td>
                             <td>
                                 <button type="button" class="btn btn-sm btn-primary mt-1" (click)="verifyOtherAct4()">Verify</button>
                             </td> 
                             <td class="mt-2">
-                                <input type="text" class="form-control" formControlName="lblOtherAct4NameInEnglish" id="lblOtherAct4NameInEnglish" name="lblOtherAct4NameInEnglish" readonly/>                           
+                                <input type="text" class="form-control" [formControl]="accountsArray.controls[7].controls['lblOtherAct4NameInEnglish']" id="lblOtherAct4NameInEnglish" name="lblOtherAct4NameInEnglish" readonly/>                           
                             </td>
                             <td class="mt-2">
-                                <input type="text" class="form-control ArFontStyle" lang="AR-SA" formControlName="lblOtherAct4NameInArabic" id="lblOtherAct4NameInArabic" name="lblOtherAct4NameInArabic" readonly/>
+                                <input type="text" class="form-control ArFontStyle" lang="AR-SA" [formControl]="accountsArray.controls[7].controls['lblOtherAct4NameInArabic']" id="lblOtherAct4NameInArabic" name="lblOtherAct4NameInArabic" readonly/>
                             </td>  
                         </tr>
                         <tr>                        
@@ -172,16 +172,16 @@
                         </tr>
                         <tr>                        
                             <td>
-                                <input type="number" class="form-control" formControlName="otherAct5" id="otherAct5" name="otherAct5"/>
+                                <input type="number" class="form-control" [formControl]="accountsArray.controls[8].controls['otherAct5']" id="otherAct5" name="otherAct5"/>
                             </td>
                             <td>
                                 <button type="button" class="btn btn-sm btn-primary mt-1" (click)="verifyOtherAct5()">Verify</button>
                             </td>
                             <td class="mt-2">
-                                <input type="text" class="form-control" formControlName="lblOtherAct5NameInEnglish" id="lblOtherAct5NameInEnglish" name="lblOtherAct5NameInEnglish" readonly/>                           
+                                <input type="text" class="form-control" [formControl]="accountsArray.controls[8].controls['lblOtherAct5NameInEnglish']" id="lblOtherAct5NameInEnglish" name="lblOtherAct5NameInEnglish" readonly/>                           
                             </td>
                             <td class="mt-2">
-                                <input type="text" class="form-control ArFontStyle" lang="AR-SA" formControlName="lblOtherAct5NameInArabic" id="lblOtherAct5NameInArabic" name="lblOtherAct5NameInArabic" readonly/>
+                                <input type="text" class="form-control ArFontStyle" lang="AR-SA" [formControl]="accountsArray.controls[8].controls['lblOtherAct5NameInArabic']" id="lblOtherAct5NameInArabic" name="lblOtherAct5NameInArabic" readonly/>
                             </td> 
                         </tr>
                     </tbody>

@@ -19,12 +19,12 @@ namespace API.Servivces.Implementation
     {
         private readonly KUPFDbContext _context;
         private readonly IMapper _mapper;
-        //private readonly IFinancialTransactionService _IFinancialTransactionService;
-        public FinancialService(KUPFDbContext context, IMapper mapper)
+        private readonly IFinancialTransactionService _IFinancialTransactionService;
+        public FinancialService(KUPFDbContext context, IMapper mapper, IFinancialTransactionService IFinancialTransactionService)
         {
             _context = context;
             _mapper = mapper;
-            //_IFinancialTransactionService = IFinancialTransactionService;
+            _IFinancialTransactionService = IFinancialTransactionService;
         }
         public async Task<string> AddFinancialServiceAsync(TransactionHdDto transactionHdDto)
         {
@@ -66,7 +66,6 @@ namespace API.Servivces.Implementation
                         ReceivedDate = DateTime.Now,
                         InstallmentsBegDate = transactionHdDto.InstallmentsBegDate,
                         UntilMonth = transactionHdDto.UntilMonth
-
                     };
                     var transactionDt = _mapper.Map<TransactionDt>(data);
                     await _context.TransactionDts.AddAsync(transactionDt);
@@ -385,5 +384,7 @@ namespace API.Servivces.Implementation
             }
             return result;
         }
+
+        
     }
 }

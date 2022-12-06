@@ -9,10 +9,13 @@ namespace API.Servivces.Interfaces
 {
     public interface IFinancialTransactionService
     {
-        Response SaveCOA(AccountRequest Req);
+        Response SaveCOA(List<AccountRequest> accounts);
         Response SaveVoucher(VoucherRequest Re);
         Response GetAccountByType(COARequest Req);
         Response GetCostCenters(RequestParamters Req);
         Response CashVoucher(CashRequest Req);
+
+        int IfAccountExists(int tenantId, int locationId, int headId, int accountNo);
+
     }
 }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
+import { catchError, forkJoin, map, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ApproveRejectServiceDto } from '../models/ApproveRejectServiceDto';
 import { DetailedEmployee } from '../models/DetailedEmployee';
@@ -41,6 +41,71 @@ export class FinancialService {
   }
   UpdateFinancialService(response: TransactionHdDto) {    
     return this.httpClient.put(this.baseUrl +`FinancialService/UpdateFinancialService`,response);
+  }
+  saveCOA(reqData: any, userInfo: any) {
+    let data = {
+        "accountID": 0,
+        "accountName": "string",
+        "arabicAccountName": "string",
+        "accountTypeID": 1,
+        "userID": 1,
+        "activityDateTime": "2022-11-29T15:23:32.336Z",
+        "tenantID": 21,
+        "locationID": 1,
+        "InsertedID": 0
+      }
+    let postData: any = [];
+    postData.push(data);
+    return forkJoin(      
+      reqData.map((d: any) => {        
+        
+        if (d.hasOwnProperty('loanAct')) {
+          postData[0].accountID = d.loanAct;
+          postData[0].accountName = d.lblloanActNameInEnglish;
+          postData[0].arabicAccountName = d.lblloanActNameInArabic;
+        } 
+        // else if (d.hasOwnProperty('hajjAct')) {
+        //   postData[0].accountID = d.hajjAct;
+        //   postData[0].accountName = d.lblHajjActNameInEnglish;
+        //   postData[0].arabicAccountName = d.lblHajjActNameInArabic;
+        // } else if (d.hasOwnProperty('persLoanAct')) {
+        //   postData[0].accountID = d.persLoanAct;
+        //   postData[0].accountName = d.lblPersLoanActNameInEnglish;
+        //   postData[0].arabicAccountName = d.lblPersLoanNameInArabic;
+        // } else if (d.hasOwnProperty('consumerLoanAct')) {
+        //   postData[0].accountID = d.consumerLoanAct;
+        //   postData[0].accountName = d.lblConsumerLoanActNameInEnglish;
+        //   postData[0].arabicAccountName = d.lblConsumerLoanNameInArabic;
+        // } else if (d.hasOwnProperty('otherAct1')) {
+        //   postData[0].accountID = d.otherAct1;
+        //   postData[0].accountName = d.lblOtherAct1NameInEnglish;
+        //   postData[0].arabicAccountName = d.lblOtherAct1NameInArabic;
+        // } else if (d.hasOwnProperty('otherAct2')) {
+        //   postData[0].accountID = d.otherAct2;
+        //   postData[0].accountName = d.lblOtherAct2NameInEnglish;
+        //   postData[0].arabicAccountName = d.lblOtherAct2NameInArabic;
+        // } else if (d.hasOwnProperty('otherAct3')) {
+        //   postData[0].accountID = d.otherAct3;
+        //   postData[0].accountName = d.lblOtherAct3NameInEnglish;
+        //   postData[0].arabicAccountName = d.lblOtherAct3NameInArabic;
+        // } else if (d.hasOwnProperty('otherAct4')) {
+        //   postData[0].accountID = d.otherAct4;
+        //   postData[0].accountName = d.lblOtherAct4NameInEnglish;
+        //   postData[0].arabicAccountName = d.lblOtherAct4NameInArabic;
+        // } else if (d.hasOwnProperty('otherAct5')) {
+        //   postData[0].accountID = d.otherAct5;
+        //   postData[0].accountName = d.lblOtherAct5NameInEnglish;
+        //   postData[0].arabicAccountName = d.lblOtherAct5NameInArabic;
+        // }
+        
+        return this.httpClient.post(this.baseUrl +`FinancialService/SaveCOA`, postData);
+        // .pipe(
+        //   map((resp) => {
+        //     return resp;
+        //   })
+        // )
+      })
+    )
   }
   GetFinancialServiceById(id:any) {    
     return this.httpClient.get<TransactionHdDto[]>(this.baseUrl +`FinancialService/GetFinancialServiceById?transId=`+id).pipe(

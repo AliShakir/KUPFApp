@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { CoaDto } from 'src/app/modules/models/CoaDto';
@@ -14,7 +14,7 @@ import { DbCommonService } from 'src/app/modules/_services/db-common.service';
 export class FinancialDetialsComponent implements OnInit {
   @Input() parentFormGroup:FormGroup;
   financialForm: FormGroup | undefined;
-
+  accountsArray: FormArray<any>;
   @Input() formData: FormGroup | undefined;
   @Output() onFormGroupChange: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
 
@@ -85,11 +85,77 @@ export class FinancialDetialsComponent implements OnInit {
     this.addGroupToParent();
     if (this.parentFormGroup) {
       this.parentFormGroup.setControl('financialForm', this.financialForm);
+      this.parentFormGroup.setControl('financialFormArray', this.accountsArray);
     }
   }
 
 
   initializeForm() {
+    this.accountsArray = new FormArray<any>([]);
+    //this.accountsArray.controls[0]['loanAct']
+    this.accountsArray.push(
+      new FormGroup({
+          loanAct: new FormControl('', Validators.required),
+          lblloanActNameInEnglish: new FormControl(''),
+          lblloanActNameInArabic: new FormControl('')
+        })
+    );
+    this.accountsArray.push(
+      new FormGroup({
+        hajjAct: new FormControl('', Validators.required),
+        lblHajjActNameInEnglish: new FormControl(''),
+        lblHajjActNameInArabic: new FormControl('')
+      })
+    );
+    this.accountsArray.push(
+      new FormGroup({
+        persLoanAct: new FormControl('', Validators.required),
+        lblPersLoanActNameInEnglish: new FormControl(''),
+        lblPersLoanNameInArabic: new FormControl('')
+      })
+    );
+    this.accountsArray.push(
+      new FormGroup({
+        consumerLoanAct: new FormControl('', Validators.required),
+        lblConsumerLoanActNameInEnglish: new FormControl(''),
+        lblConsumerLoanNameInArabic: new FormControl('')
+      })
+    );
+    this.accountsArray.push(
+      new FormGroup({
+        otherAct1: new FormControl('', Validators.required),
+        lblOtherAct1NameInEnglish: new FormControl(''),
+        lblOtherAct1NameInArabic: new FormControl('')
+      })
+    );
+    this.accountsArray.push(
+      new FormGroup({
+        otherAct2: new FormControl('', Validators.required),
+        lblOtherAct2NameInEnglish: new FormControl(''),
+        lblOtherAct2NameInArabic: new FormControl('')
+      })
+    );
+    this.accountsArray.push(
+      new FormGroup({
+        otherAct3: new FormControl('', Validators.required),
+        lblOtherAct3NameInEnglish: new FormControl(''),
+        lblOtherAct3NameInArabic: new FormControl('')
+      })
+    );
+    this.accountsArray.push(
+      new FormGroup({
+        otherAct4: new FormControl('', Validators.required),
+        lblOtherAct4NameInEnglish: new FormControl(''),
+        lblOtherAct4NameInArabic: new FormControl('')
+      })
+    );
+    this.accountsArray.push(
+      new FormGroup({
+        otherAct5: new FormControl('', Validators.required),
+        lblOtherAct5NameInEnglish: new FormControl(''),
+        lblOtherAct5NameInArabic: new FormControl('')
+      })
+    );
     this.financialForm = new FormGroup({
       loanAct: new FormControl('', Validators.required),
       lblloanActNameInEnglish: new FormControl(''),
@@ -159,6 +225,8 @@ export class FinancialDetialsComponent implements OnInit {
         if(this.coaDto.length != 0){
           this.financialForm?.controls.lblloanActNameInEnglish.setValue(this.coaDto[0].accountName);
           this.financialForm?.controls.lblloanActNameInArabic.setValue(this.coaDto[0].arabicAccountName);
+          this.accountsArray?.controls[0]?.get('lblloanActNameInEnglish')?.setValue(this.coaDto[0].accountName);
+          this.accountsArray?.controls[0]?.get('lblloanActNameInArabic')?.setValue(this.coaDto[0].arabicAccountName);
         }else{
           this.toastr.error('Account number not found');
         }
@@ -177,6 +245,8 @@ export class FinancialDetialsComponent implements OnInit {
         if(this.coaDto.length != 0){
           this.financialForm?.controls.lblHajjActNameInEnglish.setValue(this.coaDto[0].accountName);
           this.financialForm?.controls.lblHajjActNameInArabic.setValue(this.coaDto[0].arabicAccountName);      
+          this.accountsArray?.controls[1]?.get('lblHajjActNameInEnglish')?.setValue(this.coaDto[0].accountName);
+          this.accountsArray?.controls[1]?.get('lblHajjActNameInArabic')?.setValue(this.coaDto[0].arabicAccountName);      
         }else{
           this.toastr.error('Account number not found');
         }       
@@ -196,6 +266,8 @@ export class FinancialDetialsComponent implements OnInit {
         if(this.coaDto.length != 0){
           this.financialForm?.controls.lblPersLoanActNameInEnglish.setValue(this.coaDto[0].accountName);
           this.financialForm?.controls.lblPersLoanNameInArabic.setValue(this.coaDto[0].arabicAccountName);    
+          this.accountsArray?.controls[2]?.get('lblPersLoanActNameInEnglish')?.setValue(this.coaDto[0].accountName);
+          this.accountsArray?.controls[2]?.get('lblPersLoanNameInArabic')?.setValue(this.coaDto[0].arabicAccountName);    
         }else{
           this.toastr.error('Account number not found');
         }         
@@ -214,6 +286,8 @@ export class FinancialDetialsComponent implements OnInit {
         if(this.coaDto.length != 0){
           this.financialForm?.controls.lblConsumerLoanActNameInEnglish.setValue(this.coaDto[0].accountName);
           this.financialForm?.controls.lblConsumerLoanNameInArabic.setValue(this.coaDto[0].arabicAccountName);  
+          this.accountsArray?.controls[3]?.get('lblConsumerLoanActNameInEnglish')?.setValue(this.coaDto[0].accountName);
+          this.accountsArray?.controls[3]?.get('lblConsumerLoanNameInArabic')?.setValue(this.coaDto[0].arabicAccountName);    
         }else{
           this.toastr.error('Account number not found');
         } 
@@ -232,6 +306,8 @@ export class FinancialDetialsComponent implements OnInit {
         if(this.coaDto.length != 0){
           this.financialForm?.controls.lblOtherAct1NameInEnglish.setValue(this.coaDto[0].accountName);
           this.financialForm?.controls.lblOtherAct1NameInArabic.setValue(this.coaDto[0].arabicAccountName);    
+          this.accountsArray?.controls[4]?.get('lblOtherAct1NameInEnglish')?.setValue(this.coaDto[0].accountName);
+          this.accountsArray?.controls[4]?.get('lblOtherAct1NameInArabic')?.setValue(this.coaDto[0].arabicAccountName);    
         }else{
           this.toastr.error('Account number not found');
         }  
@@ -250,6 +326,8 @@ export class FinancialDetialsComponent implements OnInit {
         if(this.coaDto.length != 0){
           this.financialForm?.controls.lblOtherAct2NameInEnglish.setValue(this.coaDto[0].accountName);
           this.financialForm?.controls.lblOtherAct2NameInArabic.setValue(this.coaDto[0].arabicAccountName);    
+          this.accountsArray?.controls[5]?.get('lblOtherAct2NameInEnglish')?.setValue(this.coaDto[0].accountName);
+          this.accountsArray?.controls[5]?.get('lblOtherAct2NameInArabic')?.setValue(this.coaDto[0].arabicAccountName);    
         }else{
           this.toastr.error('Account number not found');
         }          
@@ -269,6 +347,8 @@ export class FinancialDetialsComponent implements OnInit {
         if(this.coaDto.length != 0){
           this.financialForm?.controls.lblOtherAct3NameInEnglish.setValue(this.coaDto[0].accountName);
           this.financialForm?.controls.lblOtherAct3NameInArabic.setValue(this.coaDto[0].arabicAccountName);    
+          this.accountsArray?.controls[6]?.get('lblOtherAct3NameInEnglish')?.setValue(this.coaDto[0].accountName);
+          this.accountsArray?.controls[6]?.get('lblOtherAct3NameInArabic')?.setValue(this.coaDto[0].arabicAccountName);    
         }else{
           this.toastr.error('Account number not found');
         }    
@@ -288,6 +368,8 @@ export class FinancialDetialsComponent implements OnInit {
         if(this.coaDto.length != 0){
           this.financialForm?.controls.lblOtherAct4NameInEnglish.setValue(this.coaDto[0].accountName);
           this.financialForm?.controls.lblOtherAct4NameInArabic.setValue(this.coaDto[0].arabicAccountName);    
+          this.accountsArray?.controls[7]?.get('lblOtherAct4NameInEnglish')?.setValue(this.coaDto[0].accountName);
+          this.accountsArray?.controls[7]?.get('lblOtherAct4NameInArabic')?.setValue(this.coaDto[0].arabicAccountName);    
         }else{
           this.toastr.error('Account number not found');
         }        
@@ -307,6 +389,8 @@ export class FinancialDetialsComponent implements OnInit {
         if(this.coaDto.length != 0){
           this.financialForm?.controls.lblOtherAct5NameInEnglish.setValue(this.coaDto[0].accountName);
           this.financialForm?.controls.lblOtherAct5NameInArabic.setValue(this.coaDto[0].arabicAccountName);     
+          this.accountsArray?.controls[8]?.get('lblOtherAct5NameInEnglish')?.setValue(this.coaDto[0].accountName);
+          this.accountsArray?.controls[8]?.get('lblOtherAct5NameInArabic')?.setValue(this.coaDto[0].arabicAccountName);    
         }else{
           this.toastr.error('Account number not found');
         }        

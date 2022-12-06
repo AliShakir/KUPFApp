@@ -1,8 +1,10 @@
 ﻿using API.DTOs;
 using API.DTOs.DropDown;
 using API.DTOs.FinancialServicesDto;
+using API.DTOs.FinancialTransaction;
 using API.DTOs.RefTable;
 using API.Models;
+using API.Servivces.Interfaces;
 using API.Servivces.Interfaces.FinancialServices;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -21,11 +23,15 @@ namespace API.Controllers
         private readonly KUPFDbContext _context;
         private readonly IFinancialService _financialService;
         public IMapper _mapper;
-        public FinancialServiceController(KUPFDbContext context, IFinancialService financialService, IMapper mapper)
+        private readonly IFinancialTransactionService _IFinancialTransactionService;
+        public FinancialServiceController(KUPFDbContext context, 
+            IFinancialService financialService, IMapper mapper, 
+            IFinancialTransactionService IFinancialTransactionService)
         {
             _context = context;
             _mapper = mapper;
             _financialService = financialService;
+            _IFinancialTransactionService = IFinancialTransactionService;
         }
         /// <summary>
         /// Api to add new record(s) in TransactionHd and TransactionDt
@@ -195,6 +201,14 @@ namespace API.Controllers
         public async Task<ActionResult<int>> MakeFinancialTransactionAsync(CostCenterDto costCenterDto)
         {
             return await _financialService.MakeFinancialTransactionAsync(costCenterDto);            
+        }
+
+        [HttpPost]
+        [Route("SaveCOA")]
+        public async Task<Response> SaveCOA(List<AccountRequest> accounts)
+        {
+            var result = _IFinancialTransactionService.SaveCOA(accounts);
+            return result;
         }
     }
 }
