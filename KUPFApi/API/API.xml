@@ -514,6 +514,40 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:API.Controllers.OffersController.AddOffer(API.DTOs.OffersDto)">
+            <summary>
+            Add new offer
+            </summary>
+            <param name="serviceSetupDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.OffersController.EditOffer(API.DTOs.OffersDto)">
+            <summary>
+            Update existing offers
+            </summary>
+            <param name="serviceSetupDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.OffersController.DeleteOffer(System.Int32)">
+            <summary>
+            Delete offer
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.OffersController.GetOfferById(System.Int32)">
+            <summary>
+            Get offer by Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.OffersController.GetOffers">
+            <summary>
+            Get all offers
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:API.Controllers.RefTableController.AddRefTable(API.DTOs.RefTable.RefTableDto)">
             <summary>
             Api to Add RefTable

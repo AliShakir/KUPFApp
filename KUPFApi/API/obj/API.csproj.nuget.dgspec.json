@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\MyWork\\KUPF-28-10\\KUPFApp\\KUPFApi\\API\\API.csproj": {}
+    "E:\\MyWork\\KUPF-28-10\\KUPFApp\\kupfapi\\api\\API.csproj": {}
   },
   "projects": {
-    "E:\\MyWork\\KUPF-28-10\\KUPFApp\\KUPFApi\\API\\API.csproj": {
+    "E:\\MyWork\\KUPF-28-10\\KUPFApp\\kupfapi\\api\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\MyWork\\KUPF-28-10\\KUPFApp\\KUPFApi\\API\\API.csproj",
+        "projectUniqueName": "E:\\MyWork\\KUPF-28-10\\KUPFApp\\kupfapi\\api\\API.csproj",
         "projectName": "API",
-        "projectPath": "E:\\MyWork\\KUPF-28-10\\KUPFApp\\KUPFApi\\API\\API.csproj",
+        "projectPath": "E:\\MyWork\\KUPF-28-10\\KUPFApp\\kupfapi\\api\\API.csproj",
         "packagesPath": "C:\\Users\\Shakir\\.nuget\\packages\\",
-        "outputPath": "E:\\MyWork\\KUPF-28-10\\KUPFApp\\KUPFApi\\API\\obj\\",
+        "outputPath": "E:\\MyWork\\KUPF-28-10\\KUPFApp\\kupfapi\\api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

@@ -73,7 +73,7 @@ namespace API.Helpers
             CreateMap<ServiceSetup, SelectOtherAct2Dto>();
             CreateMap<ServiceSetup, SelectOtherAct3Dto>();
             CreateMap<ServiceSetup, SelectOtherAct4Dto>();
-
+            
             //
             CreateMap<Coa, CoaDto>();
             // These can be deleted latter
@@ -131,6 +131,8 @@ namespace API.Helpers
             CreateMap<TransactionHd, TransactionHdDto>();
 
             CreateMap<TransactionHddapprovalDetailDto, TransactionHddapprovalDetail>();
+            //
+
         }
     }
 }

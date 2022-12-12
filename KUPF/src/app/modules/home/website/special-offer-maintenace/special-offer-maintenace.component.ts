@@ -1,8 +1,12 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Observable } from 'rxjs';
-import { FormTitleDt } from 'src/app/modules/models/formTitleDt';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
-import { LocalizationService } from 'src/app/modules/_services/localization.service';
+import { OffersDto } from 'src/app/modules/models/OffersDto';
+import { OffersService } from 'src/app/modules/_services/offers.service';
 
 @Component({
   selector: 'app-special-offer-maintenace',
@@ -10,15 +14,37 @@ import { LocalizationService } from 'src/app/modules/_services/localization.serv
   styleUrls: ['./special-offer-maintenace.component.scss']
 })
 export class SpecialOfferMaintenaceComponent implements OnInit {
-// /*********************/
-// formHeaderLabels$ :Observable<FormTitleHd[]>; 
-// formBodyLabels$ :Observable<FormTitleDt[]>; 
-// formBodyLabels :FormTitleDt[]=[]; 
-// id:string = '';
-// languageId:any;
-// // FormId to get form/App language
-// @ViewChild('OfferDetails') hidden:ElementRef;
-// /*********************/
+//#region
+  // 
+  columnsToDisplay: string[] = ['action', 'offerType', 'offerStart', 'offerEnd', 'offerAmount'];
+  //
+  offers$: Observable<OffersDto[]>;
+
+  // We need a normal array of data so we will subscribe to the observable and will get data
+  offers: MatTableDataSource<OffersDto> = new MatTableDataSource<any>([]);
+
+  // Paginator
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  // Sorting
+  @ViewChild(MatSort) sort!: MatSort;
+
+  // Hide footer while loading.
+  isLoadingCompleted: boolean = false;
+
+  // Incase of any error will display error message.
+  dataLoadingStatus: string = '';
+
+  // True of any error
+  isError: boolean = false;
+
+  // formGroup
+  formGroup: FormGroup;
+
+  // Search Term
+  searchTerm: string = '';
+  //#endregion
+
 //#region 
     /*----------------------------------------------------*/
 
@@ -42,11 +68,24 @@ export class SpecialOfferMaintenaceComponent implements OnInit {
 
     /*----------------------------------------------------*/  
   //#endregion
+//
+offerForm: FormGroup;
+offersArray = [
+  { id: 1, name: 'ConsumerLoanType' },
+  { id: 2, name: 'Department' },
+  { id: 3, name: 'DocType' },
+  { id: 4, name: 'EmplContract' },
+  { id: 5, name: 'FilingPlace' },
+  { id: 6, name: 'FilingTag' },
+  { id: 7, name: 'Occupation' },
+];
+  constructor(private fb: FormBuilder,private offersService: OffersService) {
+    this.formGroup = new FormGroup({
+      searchTerm: new FormControl(null)
+    })
+   }
 
-  constructor() { }
-
-  ngOnInit(): void {
-    
+  ngOnInit(): void {    
     //#region TO SETUP THE FORM LOCALIZATION    
     // TO GET THE LANGUAGE ID e.g. 1 = ENGLISH and 2 =  ARABIC
     this.languageType = localStorage.getItem('langType');
@@ -75,6 +114,49 @@ export class SpecialOfferMaintenaceComponent implements OnInit {
       }
     }
     //#endregion
+    //
+    this.initOfferForm();
+    //
+    this.LoadData();
   }
-  
+  onOfferFormSubmit(){
+    //this.isFormSubmitted = true;
+    console.log(this.offerForm.value);
+  }
+  resetForm(){
+    this.offerForm.reset();
+  }
+  initOfferForm(){
+    this.offerForm = this.fb.group({
+      offerImage: new FormControl(''),
+      offerType: new FormControl('', Validators.required),
+      offerStart: new FormControl('', Validators.required),
+      offerEnd: new FormControl('', Validators.required),
+      offerAmount: new FormControl('', Validators.required)
+    })
+  }
+  LoadData() {
+    this.offers$ = this.offersService.GetOffers();
+    this.offers$.subscribe((response: OffersDto[]) => {
+      this.offers = new MatTableDataSource<OffersDto>(response);
+      this.offers.paginator = this.paginator;
+      this.offers.sort = this.sort;
+      this.isLoadingCompleted = true;
+    }, error => {
+      console.log(error);
+      this.dataLoadingStatus = 'Error fetching the data';
+      this.isError = true;
+    })
+  }
+  //#region Material Search and Clear Filter
+  filterRecords() {
+    if (this.formGroup.value.searchTerm != null && this.offers) {
+      this.offers.filter = this.formGroup.value.searchTerm.trim();
+    }
+  }
+  clearFilter() {
+    this.formGroup?.patchValue({ searchTerm: "" });
+    this.filterRecords();
+  }
+  //#endregion
 }

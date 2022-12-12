@@ -75,5 +75,11 @@ namespace API.Models
         public string? ElectronicForm1URL { get; set; }
         public string? ElectronicForm2 { get; set; }
         public string? ElectronicForm2URL { get; set; }
+        public string? OfferImage { get; set; }
+        public string? OfferType { get; set; }
+        public string? Offer { get; set; }
+        public DateTime? OfferStartDate { get; set; }
+        public DateTime? OfferEndDate { get; set; }
+        public decimal? OfferAmount { get; set; }
     }
 }

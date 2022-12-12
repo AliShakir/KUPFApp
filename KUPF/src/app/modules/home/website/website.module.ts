@@ -7,6 +7,11 @@ import { OfferReceivedMaintenaceComponent } from './offer-received-maintenace/of
 import { AddCarousalComponent } from './add-carousal/add-carousal.component';
 import { CarousalDetailsComponent } from './carousal-details/carousal-details.component';
 import { SharedModule } from '../../_sharedModule/SharedModule';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from '../../material/material.module';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -19,7 +24,17 @@ import { SharedModule } from '../../_sharedModule/SharedModule';
   imports: [
     CommonModule,
     WebsiteRoutingModule,
-    SharedModule
+    SharedModule,
+    BsDatepickerModule.forRoot(),
+    NgbModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MaterialModule,
+    NgSelectModule,
+  ],
+  exports:[
+    BsDatepickerModule,
+    NgSelectModule,
   ]
 })
 export class WebsiteModule { }

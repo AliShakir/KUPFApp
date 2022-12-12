@@ -76,5 +76,11 @@ namespace API.DTOs
         public string? ElectronicForm2URL { get; set; }
         public IFormFile? File1 { get; set; }
         public IFormFile? File2 { get; set; }
+        public string? OfferImage { get; set; }
+        public string? OfferType { get; set; }
+        public string? Offer { get; set; }
+        public string? OfferStartDate { get; set; }
+        public string? OfferEndDate { get; set; }
+        public decimal? OfferAmount { get; set; }
     }
 }

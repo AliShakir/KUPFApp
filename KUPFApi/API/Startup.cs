@@ -67,6 +67,8 @@ namespace API
             //
             services.AddScoped<IFinancialTransactionService, FinancialTransactionService>();
             //
+            services.AddScoped<IOfferService, OfferService>();
+            //
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
             services.AddDbContext<KUPFDbContext>(options =>

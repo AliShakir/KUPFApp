@@ -93,7 +93,6 @@ export class UserMstComponent implements OnInit {
   // On Submit User Form
   onUserFormSubmit() {
     this.isFormSubmitted = true;
-
     if (this.userForm.controls['userId'].value === '' || this.userForm.controls['userId'].value === 0) {
       // Add New record
       this.userMstService.AddUserMST(this.userForm.value).subscribe(response => {
