@@ -1,12 +1,16 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
 import { OffersDto } from 'src/app/modules/models/OffersDto';
 import { OffersService } from 'src/app/modules/_services/offers.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-special-offer-maintenace',
@@ -79,7 +83,15 @@ offersArray = [
   { id: 6, name: 'FilingTag' },
   { id: 7, name: 'Occupation' },
 ];
-  constructor(private fb: FormBuilder,private offersService: OffersService) {
+offerImage: File;
+// Modal close result...
+closeResult = '';
+// Getting base URL of Api from enviroment.
+baseUrl = environment.KUPFApiUrl;
+  constructor(private fb: FormBuilder,
+    private offersService: OffersService,
+    private toastrService: ToastrService,
+    private modalService: NgbModal) {
     this.formGroup = new FormGroup({
       searchTerm: new FormControl(null)
     })
@@ -119,20 +131,80 @@ offersArray = [
     //
     this.LoadData();
   }
-  onOfferFormSubmit(){
-    //this.isFormSubmitted = true;
-    console.log(this.offerForm.value);
+  onOfferFormSubmit(){    
+    const finalformData = new FormData();
+    finalformData.append('File1', this.offerImage);
+
+    var startDate = this.offerForm.controls['offerStartDate'].value;
+    var offerStartDate = (new Date(startDate)).toISOString();
+    finalformData.append("offerStartDate", offerStartDate);
+
+    var endDate = this.offerForm.controls['offerEndDate'].value;
+    var offerEndDate = (new Date(endDate)).toISOString();
+    finalformData.append("offerEndDate", offerEndDate);
+
+    finalformData.set("tenentId",'21');
+
+    Object.keys(this.offerForm.value).forEach(key => finalformData.append(key, this.offerForm.value[key]));
+    
+    if(this.offerForm.controls['serviceId'].value === '' || this.offerForm.controls['serviceId'].value === 0){
+      this.offersService.AddOffer(finalformData).subscribe({
+        next: () => {
+              this.toastrService.success('Saved successfully', 'Success');
+              this.offerForm.reset();        
+            },
+            error: (error) => {
+              if (error.status === 500) {
+                this.toastrService.error('Duplicate value found', 'Error');
+              }
+            }
+      })
+    }
+    else{
+      this.offersService.UpdateOffer(finalformData).subscribe({
+        next: () => {
+          this.toastrService.success('Updated successfully', 'Success');
+          this.offerForm.reset();        
+        },
+        error: (error) => {
+          if (error.status === 500) {
+            this.toastrService.error('Duplicate value found', 'Error');
+          }
+        }
+      })      
+    }
+    
+  }
+  editData(serviceId:any){    
+    this.offersService.GetOfferById(serviceId).subscribe((response:any)=>{
+      this.offerForm.patchValue({
+        offerType: +response.offerType,
+        offerStartDate:response.offerStartDate,
+        offerEndDate:response.offerEndDate,
+        offerAmount: response.offerAmount,
+        offerImage:response.offerImage,
+        serviceId:response.serviceId
+      })
+    })
   }
   resetForm(){
     this.offerForm.reset();
   }
+  // On file Select
+  
+  onFileSelectChange(event: any) {
+    if (event.target.files.length > 0) {
+        const file = event.target.files[0];
+        this.offerImage= file; 
+      }
+}
   initOfferForm(){
-    this.offerForm = this.fb.group({
-      offerImage: new FormControl(''),
+    this.offerForm = this.fb.group({     
       offerType: new FormControl('', Validators.required),
-      offerStart: new FormControl('', Validators.required),
-      offerEnd: new FormControl('', Validators.required),
-      offerAmount: new FormControl('', Validators.required)
+      offerStartDate: new FormControl(''),
+      offerEndDate: new FormControl(''),
+      offerAmount: new FormControl('', Validators.required),
+      serviceId: new FormControl(0)
     })
   }
   LoadData() {
@@ -148,6 +220,44 @@ offersArray = [
       this.isError = true;
     })
   }
+
+
+
+
+
+  //#region 
+  // Delete recored...
+  open(content:any, id:number) {  
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {  
+      this.closeResult = `Closed with: ${result}`;        
+      if (result === 'yes') {  
+        this.offersService.DeleteOffer(id).subscribe(
+          res => {
+            this.toastrService.success('Deleted Successfully', 'Deleted')            
+          },
+          error => {
+            console.log(error);
+          },()=>{
+            // TO REFRESH / RELOAD THE PAGE WITHOUT REFRESH THE WHOLE PAGE.
+            this.LoadData();
+          })
+      }  
+    }, (reason) => {  
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;  
+    });  
+          
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+//#endregion
   //#region Material Search and Clear Filter
   filterRecords() {
     if (this.formGroup.value.searchTerm != null && this.offers) {

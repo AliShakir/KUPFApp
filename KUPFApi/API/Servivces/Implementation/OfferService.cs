@@ -51,8 +51,8 @@ namespace API.Servivces.Implementation
                 if (offersDto.File1 != null && offersDto.File1.Length != 0)
                 {
                     
-                    var path = @"/HostingSpaces/kupf1/kupfapi.erp53.com/new/OfferImages";
-                    //var path = @"E:\\";
+                    //var path = @"/HostingSpaces/kupf1/kupfapi.erp53.com/new/OfferImages";
+                    var path = @"E:\\";
                     var fileExtenstion = Path.GetExtension(offersDto.File1.FileName);
                     var filePath = Path.Combine(path, Guid.NewGuid() + fileExtenstion);
                     using (var stream = new FileStream(filePath, FileMode.Create))
@@ -109,8 +109,8 @@ namespace API.Servivces.Implementation
                     if (offersDto.File1 != null && offersDto.File1.Length != 0)
                     {
                         
-                        var path = @"/HostingSpaces/kupf1/kupfapi.erp53.com/new/OfferImages";
-                        //var path = @"E:\\";
+                        //var path = @"/HostingSpaces/kupf1/kupfapi.erp53.com/new/OfferImages";
+                        var path = @"E:\\";
                         var fileExtenstion = Path.GetExtension(offersDto.File1.FileName);
                         var filePath = Path.Combine(path, Guid.NewGuid() + fileExtenstion);
                         using (var stream = new FileStream(filePath, FileMode.Create))

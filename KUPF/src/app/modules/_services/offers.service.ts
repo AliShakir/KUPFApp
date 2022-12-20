@@ -14,14 +14,14 @@ export class OffersService {
   offersDto: OffersDto[]=[]
   constructor(private httpClient: HttpClient) { }
 
-  AddOffer(response: OffersDto) {    
-    return this.httpClient.post(this.baseUrl +`Offers/AddOffer`,response);
+  AddOffer(data: FormData) {    
+    return this.httpClient.post(this.baseUrl +`Offers/AddOffer`,data);
   }
-  UpdateOffer(response: OffersDto) {    
-    return this.httpClient.put(this.baseUrl +`Offers/EditOffer`,response);
+  UpdateOffer(data: FormData) {    
+    return this.httpClient.put(this.baseUrl +`Offers/EditOffer`,data);
   }
   GetOfferById(id:any) {    
-    return this.httpClient.get<OffersDto[]>(this.baseUrl +`Offers/GetOfferById/id=`+id).pipe(
+    return this.httpClient.get<OffersDto[]>(this.baseUrl +`Offers/GetOfferById/${id}`).pipe(
       map(offersDto => {
         this.offersDto = offersDto;
         return offersDto;
@@ -29,7 +29,8 @@ export class OffersService {
     )
   }
   DeleteOffer(id: number) { 
-    return this.httpClient.delete(`${this.baseUrl}Offers/DeleteOffer/${id}`);    
+    console.log(id);
+    return this.httpClient.delete(`${this.baseUrl}Offers/DeleteOffer?id=${id}`);    
   }
   GetOffers() {    
     return this.httpClient.get<OffersDto[]>(this.baseUrl +`Offers/GetOffers`).pipe(

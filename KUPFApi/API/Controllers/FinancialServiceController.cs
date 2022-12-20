@@ -210,5 +210,19 @@ namespace API.Controllers
             var result = _IFinancialTransactionService.SaveCOA(accounts);
             return result;
         }
+        [HttpPost]
+        [Route("SaveVoucher")]
+        public async Task<Response> SaveVoucher(VoucherRequest voucherRequest)
+        {
+            var result = _IFinancialTransactionService.SaveVoucher(voucherRequest);
+            return result;
+        }
+        [HttpPost]
+        [Route("CashVoucher")]
+        public async Task<Response> CashVoucher(CashRequest Req)
+        {
+            var result = _IFinancialTransactionService.CashVoucher(Req);
+            return result;
+        }
     }
 }

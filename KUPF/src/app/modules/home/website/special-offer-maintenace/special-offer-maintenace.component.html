@@ -23,9 +23,10 @@
                             <div class="row">
                                 <div class="col-lg-6 fv-row">
                                     <div class="mt-4">
+                                        <input type="hidden" formControlName="serviceId" />
                                         <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">{{bodyLabel[2].title}}</label>
                                         <input type="file" class="form-control form-control-lg  mb-3 mb-lg-0"
-                                            formControlName="offerImage" name="offerImage"/>
+                                             (change)="onFileSelectChange($event)" />
                                       </div>
                                 </div> 
                                 <div class="col-lg-6 fv-row">
@@ -43,8 +44,8 @@
                                           <i class="fas fa-calendar"></i>
                                         </span>
                                         <input type="text" class="form-control" bsDatepicker 
-                                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }"
-                                        formControlName="offerStart" />                 
+                                            [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }"
+                                            formControlName="offerStartDate" />                 
                                       </div>
                                 </div>
                                 <div class="col-lg-4 fv-row">
@@ -54,8 +55,8 @@
                                           <i class="fas fa-calendar"></i>
                                         </span>
                                         <input type="text" class="form-control" bsDatepicker 
-                                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }"
-                                        formControlName="offerEnd" />                 
+                                            [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }"
+                                            formControlName="offerEndDate" />                 
                                       </div>
                                 </div>
                                 <div class="col-lg-4 fv-row">
@@ -88,8 +89,8 @@
                         <ng-container matColumnDef="action">
                             <th mat-header-cell *matHeaderCellDef class="ArFontStyle"></th>
                             <td mat-cell *matCellDef="let item" class="w-20 text-right">
-                                <button mat-raised-button color="warn" >Delete</button> | 
-                                <button mat-raised-button color="accent">Edit</button>
+                                <button mat-raised-button color="warn" (click)="open(deleteModal,item.serviceId)">Delete</button> | 
+                                <button mat-raised-button color="accent" (click)="editData(item.serviceId)">Edit</button>
                             </td>
                         </ng-container>                       
                         <ng-container matColumnDef="offerType">
@@ -98,15 +99,16 @@
                         </ng-container>
                         <ng-container matColumnDef="offerStart">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header class="ArFontStyle">Offer Start</th>
-                            <td mat-cell *matCellDef="let item" class="ArFontStyle w-10">{{item.offerStartDate}}</td>
+                            <td mat-cell *matCellDef="let item" class="ArFontStyle w-10">{{item.offerStartDate | date: 'dd/MM/yyyy'}}</td>
                         </ng-container>
+
                         <ng-container matColumnDef="offerEnd" class="w-30">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header class="ArFontStyle">Offer End</th>
-                            <td mat-cell *matCellDef="let item" class="ArFontStyle w-10">{{item.offerEndDate}}</td>
+                            <td mat-cell *matCellDef="let item" class="ArFontStyle w-10">{{item.offerEndDate | date: 'dd/MM/yyyy'}}</td>
                         </ng-container> 
                         <ng-container matColumnDef="offerAmount" class="w-20">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header class="ArFontStyle">Offer Amount</th>
-                            <td mat-cell *matCellDef="let item" class="ArFontStyle w-10">{{item.offerAmount}}</td>
+                            <td mat-cell *matCellDef="let item" class="ArFontStyle w-10">{{item.offerAmount }}</td>
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky:true"
                             [ngClass]="{'hidden':!isLoadingCompleted}"></tr>
@@ -117,54 +119,27 @@
                     <mat-paginator [pageSize]="10" [pageSizeOptions]="[10,20,30]" showFirstLastButtons>
                     </mat-paginator>
                 </div>
-            </form>
-            
+            </form>            
         </ng-template>
     </ngb-panel>
 </ngb-accordion>
-<!-- <div class="card mb-5 mb-xl-8">
-    <div class="card-header border-0 pt-5 bg-light-dark" *ngFor="let bodyLabel of formBodyLabels; let i = index">       
-        <h3 class="m-0 ArFontStyle" lang="AR-SA"> {{bodyLabel[8].title}}</h3>
+
+<!--Delete Modal-->
+<ng-template #deleteModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Delete Offer</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
-    <div class="card-body py-3">
-        <div class="table-responsive mt-3">
-            <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
-                <thead class="bg-dark">
-                    <tr class="fw-bolder text-white" *ngFor="let bodyLabel of formBodyLabels; let i = index">
-                        <th class="min-w-80px text-center ArFontStyle" lang="AR-SA">{{bodyLabel[7].title}}</th>
-                        <th class="min-w-100px ArFontStyle" lang="AR-SA">{{bodyLabel[3].title}}</th>
-                        <th class="min-w-120px ArFontStyle" lang="AR-SA">{{bodyLabel[4].title}}</th>
-                        <th class="min-w-120px ArFontStyle" lang="AR-SA">{{bodyLabel[5].title}}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="text-center">
-                            <a href="javascript:void(0)" class="bi bi-trash3-fill fs-2 text-danger">
-                            </a>
-                            | <a href="javascript:void(0)" class="bi bi-pencil-square fs-2">
-                            </a>
-                        </td>                        
-                        <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 ">
-                            Internet Router
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">
-                                01-01-2021
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#" class="fw-bolder text-hover-primary d-block mb-1 fs-6 text-dark">
-                                31-12-2021
-                            </a>
-                        </td>
-                    </tr>
-                    
-                </tbody>
-            </table>
-        </div>
+    <div class="modal-body">
+        <form>
+            <div class="mb-3">
+                <span>Do you want to delete this record</span>
+            </div>
+        </form>
     </div>
-   
-</div> -->
+    <div class="modal-footer text-right">
+        <button mat-raised-button color="warn" (click)="modal.close('yes')">Yes</button> &nbsp;&nbsp;
+        <button mat-raised-button color="accent" (click)="modal.close('Save click')">No</button>
+    </div>
+</ng-template>
+
