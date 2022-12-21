@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, takeUntil, takeWhile } from 'rxjs';
 import { TransactionHdDto } from 'src/app/modules/models/FinancialService/TransactionHdDto';
@@ -253,14 +254,11 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     console.log(this.parentForm.value);
   }
   calculateUntilMonth(selectedDate:Date){
-    //var newDate = new Date(date.setMonth(date.getMonth()+8))
     if(selectedDate !== undefined){
-      const date = new Date();
       let noOfinstallments = this.addServiceForm.get('totinstallments')?.value;
-      var newDate = new Date(date.setMonth(date.getMonth() + noOfinstallments))
-      //var d = date.setMonth(selectedDate.getMonth() + noOfinstallments) 
+      var newDate = moment(selectedDate).add(noOfinstallments - 1, 'M').format('MMM-YYYY');
       this.addServiceForm.patchValue({
-        untilMonth: this.datepipe.transform(newDate,'MMM-YYYY')
+        untilMonth: newDate
       });     
     }
     
