@@ -52,7 +52,7 @@
                         <div class="col-lg-4 fv-row">
                             <label class="col-form-label fw-bold fs-6 ArFontStyle"
                                 lang="AR-SA">{{bodyLabel[3].title}}</label>
-                            <ng-select [items]="selectServiceType$ | async" bindLabel="shortname" formControlName="serviceType" 
+                            <ng-select [items]="selectServiceType" bindLabel="shortname" formControlName="serviceType" 
                                 bindValue="refId" lang="AR-SA" (change)="onServiceTypeChange(selected)" [(ngModel)]="selected">
                             </ng-select>
                         </div>

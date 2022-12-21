@@ -364,6 +364,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:API.Controllers.FinancialServiceController.GetSubServiceTypeByServiceType(System.Int32,System.Int32)">
+            <summary>
+            Api to get sub service type by service type 
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:API.Controllers.FormLabelsController.GetFormHeaderLabels(System.String,System.Int32)">
             <summary>
             Api to Get Form Header Labels

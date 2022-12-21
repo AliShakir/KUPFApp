@@ -1,9 +1,9 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Observable } from 'rxjs';
+import { Observable, takeUntil, takeWhile } from 'rxjs';
 import { TransactionHdDto } from 'src/app/modules/models/FinancialService/TransactionHdDto';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
 import { SelectServiceTypeDto } from 'src/app/modules/models/ServiceSetup/SelectServiceTypeDto';
@@ -17,7 +17,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './add-service.component.html',
   styleUrls: ['./add-service.component.scss']
 })
-export class AddServiceComponent implements OnInit {
+export class AddServiceComponent implements OnInit, OnDestroy {
   // Getting base URL of Api from enviroment.
   baseUrl = environment.KUPFApiUrl;
 
@@ -49,6 +49,7 @@ export class AddServiceComponent implements OnInit {
   closeResult: string = '';
 
   selectServiceType$: Observable<SelectServiceTypeDto[]>;
+  selectServiceType: SelectServiceTypeDto[]=[];
   selectServiceSubType$: Observable<SelectServiceTypeDto[]>;
   selectedServiceType: any;
   selectedServiceSubType: any;
@@ -59,6 +60,7 @@ export class AddServiceComponent implements OnInit {
   minDate: Date;
   editService$: Observable<TransactionHdDto[]>;
   mytransid: any;
+  isObservableActive = true;
   constructor(
     private financialService: FinancialService,
     private commonService: DbCommonService,
@@ -111,8 +113,9 @@ export class AddServiceComponent implements OnInit {
     // var data = JSON.parse(localStorage.getItem("user")!);
     // const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
     //
-    this.selectServiceType$ = this.financialService.GetServiceType(21);
-        
+    
+    
+    
     if (this.mytransid) {
       this.common.ifEmployeeExists = true;
       this.financialService.GetFinancialServiceById(this.mytransid).subscribe((response:any)=>{
@@ -174,7 +177,23 @@ export class AddServiceComponent implements OnInit {
       })
     }
 
+    this.common.empSearchClickEvent.pipe(takeWhile(() => this.isObservableActive)).subscribe(result => {
+      this.financialService.GetServiceType(21).subscribe((response:any) =>{  
+        this.selectServiceType = response;
+        if (result.trim()) {
+          let index = this.selectServiceType.findIndex(x => x.refId == 1);
+          if (index >= 0) {
+            this.selectServiceType.splice(index,1);
+          }
+        }
+      });
+    })
   }
+
+  ngOnDestroy(): void {
+    this.isObservableActive = false;
+  }
+
   setUpParentForm() {
     this.parentForm = this.fb.group({});
   }
@@ -234,12 +253,14 @@ export class AddServiceComponent implements OnInit {
     console.log(this.parentForm.value);
   }
   calculateUntilMonth(selectedDate:Date){
+    //var newDate = new Date(date.setMonth(date.getMonth()+8))
     if(selectedDate !== undefined){
       const date = new Date();
       let noOfinstallments = this.addServiceForm.get('totinstallments')?.value;
-      date.setMonth(selectedDate.getMonth() + noOfinstallments) 
+      var newDate = new Date(date.setMonth(date.getMonth() + noOfinstallments))
+      //var d = date.setMonth(selectedDate.getMonth() + noOfinstallments) 
       this.addServiceForm.patchValue({
-        untilMonth: this.datepipe.transform(date,'MMM-YYYY')
+        untilMonth: this.datepipe.transform(newDate,'MMM-YYYY')
       });     
     }
     

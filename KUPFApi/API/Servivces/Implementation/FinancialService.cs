@@ -385,6 +385,11 @@ namespace API.Servivces.Implementation
             return result;
         }
 
-        
+        public async Task<IEnumerable<SelectServiceTypeDto>> GetSubServiceTypeByServiceType(int tenentId, int refId)
+        {
+            var result = await _context.Reftables.Where(c => c.Refsubtype == "ServicesSubType" && c.SynId == refId && c.TenentId == tenentId).ToListAsync();
+            var data = _mapper.Map<IEnumerable<SelectServiceTypeDto>>(result);
+            return data;
+        }
     }
 }

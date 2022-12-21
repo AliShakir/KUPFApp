@@ -28,6 +28,7 @@ namespace API.Servivces.Interfaces.FinancialServices
         Task<IEnumerable<SelectServiceTypeDto>> GetServiceType(int tenentId);
 
         Task<int> MakeFinancialTransactionAsync(CostCenterDto costCenterDto);
+        Task<IEnumerable<SelectServiceTypeDto>> GetSubServiceTypeByServiceType(int tenentId, int refId);
 
     }
 }

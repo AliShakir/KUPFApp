@@ -224,5 +224,16 @@ namespace API.Controllers
             var result = _IFinancialTransactionService.CashVoucher(Req);
             return result;
         }
+        /// <summary>
+        /// Api to get sub service type by service type 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetSubServiceTypeByServiceType")]
+        public async Task<IEnumerable<SelectServiceTypeDto>> GetSubServiceTypeByServiceType(int tenentId, int refId)
+        {
+            var result = await _financialService.GetSubServiceTypeByServiceType(tenentId, refId);
+            return result;
+        }
     }
 }

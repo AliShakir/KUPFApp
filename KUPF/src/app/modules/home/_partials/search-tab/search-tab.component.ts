@@ -88,6 +88,8 @@ export class SearchTabComponent implements OnInit {
     if (this.parentFormGroup) {
       this.parentFormGroup.setControl('employeeForm', this.employeeForm);
     }
+
+    
   }
 
   initializeSearchForm() {
@@ -118,9 +120,9 @@ export class SearchTabComponent implements OnInit {
       joinedDate: new FormControl('', Validators.required),
     })
   }
-  SearchEmployee() {
-    
+  SearchEmployee() {    
     this.commonDbService.SearchEmployee(this.searchForm.value).subscribe((response: any) => {
+      
       if(response === null){
         this.commonService.ifEmployeeExists = false;
         this.toastr.error('Sorry, record not found','Error');
@@ -143,8 +145,11 @@ export class SearchTabComponent implements OnInit {
           departmentName: response.departmentName,
           occupation: response.departmentName,
           salary: response.salary,
-          remarks: response.remarks
+          remarks: response.remarks          
         })
+        this.commonService.PFId = response.pfid;        
+        this.commonService.empSearchClickEvent.next(response.pfid);
+        
       }
     }, error => {
       if (error.status === 500) {
