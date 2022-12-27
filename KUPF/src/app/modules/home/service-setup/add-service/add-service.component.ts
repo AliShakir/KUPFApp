@@ -50,10 +50,13 @@ export class AddServiceComponent implements OnInit, OnDestroy {
   closeResult: string = '';
 
   selectServiceType$: Observable<SelectServiceTypeDto[]>;
-  selectServiceType: SelectServiceTypeDto[]=[];
+  selectServiceType: SelectServiceTypeDto[] = [];
   selectServiceSubType$: Observable<SelectServiceTypeDto[]>;
+  selectServiceSubType: SelectServiceTypeDto[] = [];
   selectedServiceType: any;
+  selectedServiceTypeText: any;
   selectedServiceSubType: any;
+  selectedServiceSubTypeText: any;
   //
   parentForm: FormGroup;
   addServiceForm: FormGroup;
@@ -62,6 +65,11 @@ export class AddServiceComponent implements OnInit, OnDestroy {
   editService$: Observable<TransactionHdDto[]>;
   mytransid: any;
   isObservableActive = true;
+  pfId: any;
+  isSubscriber = false;
+  // If PF Id is Not Null - SubscribeDate = Null and TerminationDate = Null
+  notSubscriber:boolean = false;
+  
   constructor(
     private financialService: FinancialService,
     private commonService: DbCommonService,
@@ -71,7 +79,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     public common: CommonService,
     public datepipe: DatePipe) {
     this.setUpParentForm();
-   
+
     this.minDate = new Date();
     this.minDate.setDate(this.minDate.getDate());
     //
@@ -79,7 +87,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    
+
     //#region TO SETUP THE FORM LOCALIZATION    
     // TO GET THE LANGUAGE ID e.g. 1 = ENGLISH and 2 =  ARABIC
     this.languageType = localStorage.getItem('langType');
@@ -110,18 +118,19 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     //#endregion
 
     this.initializeAddServiceForm();
+    this.setValidators(this.notSubscriber);
     // Get Tenant Id
     // var data = JSON.parse(localStorage.getItem("user")!);
     // const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
     //
-    
-    
-    
+
+
+
     if (this.mytransid) {
       this.common.ifEmployeeExists = true;
-      this.financialService.GetFinancialServiceById(this.mytransid).subscribe((response:any)=>{
-        
-        this.selectServiceSubType$ = this.commonService.GetSubServiceTypeByServiceType(21,response.serviceType);
+      this.financialService.GetFinancialServiceById(this.mytransid).subscribe((response: any) => {
+
+        this.selectServiceSubType$ = this.commonService.GetSubServiceTypeByServiceType(21, response.serviceType);
         this.parentForm.patchValue({
           employeeForm: {
             employeeId: response.employeeId,
@@ -136,42 +145,42 @@ export class AddServiceComponent implements OnInit, OnDestroy {
             next2KinName: response.next2KinName,
             next2KinMobNumber: response.next2KinMobNumber
           },
-          addServiceForm:{
-            mytransid:response.mytransid,
-            serviceType:response.serviceType,
-            serviceSubType:response.serviceSubType,
-            totinstallments:response.totinstallments,
-            totamt:response.totamt,
-            installmentAmount:response.installmentAmount,
-            installmentsBegDate:response.installmentsBegDate ? new Date(response.installmentsBegDate) : '',
-            untilMonth:response.untilMonth                  
+          addServiceForm: {
+            mytransid: response.mytransid,
+            serviceType: response.serviceType,
+            serviceSubType: response.serviceSubType,
+            totinstallments: response.totinstallments,
+            totamt: response.totamt,
+            installmentAmount: response.installmentAmount,
+            installmentsBegDate: response.installmentsBegDate ? new Date(response.installmentsBegDate) : '',
+            untilMonth: response.untilMonth
           },
-          financialForm:{
-            hajjAct:response.hajjAct,
-            loanAct:response.loanAct,
-            persLoanAct:response.persLoanAct,
-            otherAct1:response.otherAct1,
-            otherAct2:response.otherAct2,
-            otherAct3:response.otherAct3,
-            otherAct4:response.otherAct4,
-            otherAct5:response.otherAct5,
+          financialForm: {
+            hajjAct: response.hajjAct,
+            loanAct: response.loanAct,
+            persLoanAct: response.persLoanAct,
+            otherAct1: response.otherAct1,
+            otherAct2: response.otherAct2,
+            otherAct3: response.otherAct3,
+            otherAct4: response.otherAct4,
+            otherAct5: response.otherAct5,
           },
-          approvalDetailsForm:{
-            serApproval1:response.serApproval1,
-            approvalBy1:response.approvalBy1,
-            approvedDate1:response.approvedDate1,
-            serApproval2:response.serApproval2,
-            approvalBy2:response.approvalBy2,
-            approvedDate2:response.approvedDate2,
-            serApproval3:response.serApproval3,
-            approvalBy3:response.approvalBy3,
-            approvedDate3:response.approvedDate3,
-            serApproval4:response.serApproval4,
-            approvalBy4:response.approvalBy4,
-            approvedDate4:response.approvedDate4,
-            serApproval5:response.serApproval5,
-            approvalBy5:response.approvalBy5,
-            approvedDate5:response.approvedDate5,
+          approvalDetailsForm: {
+            serApproval1: response.serApproval1,
+            approvalBy1: response.approvalBy1,
+            approvedDate1: response.approvedDate1,
+            serApproval2: response.serApproval2,
+            approvalBy2: response.approvalBy2,
+            approvedDate2: response.approvedDate2,
+            serApproval3: response.serApproval3,
+            approvalBy3: response.approvalBy3,
+            approvedDate3: response.approvedDate3,
+            serApproval4: response.serApproval4,
+            approvalBy4: response.approvalBy4,
+            approvedDate4: response.approvedDate4,
+            serApproval5: response.serApproval5,
+            approvalBy5: response.approvalBy5,
+            approvedDate5: response.approvedDate5,
           }
         })
         console.log(this.addServiceForm.value);
@@ -179,13 +188,30 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     }
 
     this.common.empSearchClickEvent.pipe(takeWhile(() => this.isObservableActive)).subscribe(result => {
-      this.financialService.GetServiceType(21).subscribe((response:any) =>{  
+      //
+      this.notSubscriber = false;
+      this.financialService.GetServiceType(21).subscribe((response: any) => {
+        this.pfId = this.common.PFId;
         this.selectServiceType = response;
-        if (result.trim()) {
-          let index = this.selectServiceType.findIndex(x => x.refId == 1);
-          if (index >= 0) {
-            this.selectServiceType.splice(index,1);
+        if (this.common.PFId != null
+          && this.common.subscribedDate == null
+          && this.common.terminationDate == null) {
+          // remove subscribe from servicetype & Subtype
+          if (result.trim()) {
+            let index = this.selectServiceType.findIndex(x => x.refId == 1);
+            if (index >= 0) {
+              this.selectServiceType.splice(index, 1);
+            }
           }
+          this.notSubscriber = true;
+        } else if (this.common.PFId == null
+          && this.common.subscribedDate == null
+          && this.common.terminationDate == null) {
+          this.selectServiceType = response;
+          let arr = this.selectServiceType.filter(x => x.refId == 1)
+          this.selectServiceType = arr;
+          this.isSubscriber = true;
+          
         }
       });
     })
@@ -193,6 +219,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.isObservableActive = false;
+    this.isSubscriber = false;
   }
 
   setUpParentForm() {
@@ -213,59 +240,67 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     })
     this.parentForm.setControl('addServiceForm', this.addServiceForm);
   }
-  saveFinancialService(){
+  saveFinancialService() {
+    this.setValidators(this.notSubscriber);
     // Get Tenant Id
     // var data = JSON.parse(localStorage.getItem("user")!);
     // const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
     //console.log(this.common.ifEmployeeExists);
+    this.addServiceForm.patchValue({
+      serviceType:this.selectedServiceTypeText,
+      serviceSubType:this.selectedServiceSubTypeText
+    })
     let formData = {
       ...this.parentForm.value.addServiceForm,
       ...this.parentForm.value.approvalDetailsForm,
       ...this.parentForm.value.employeeForm,
       ...this.parentForm.value.financialForm,
       //...this.parentForm.value.financialFormArray,
-      tenentID: 21, cruP_ID: 0,locationID:1
+      tenentID: 21, cruP_ID: 0, locationID: 1
     }
-    
+
     this.isFormSubmitted = true;
-          
-    if(this.mytransid){      
-      this.financialService.UpdateFinancialService(formData).subscribe(()=>{
+    if (this.mytransid) {
+      this.financialService.UpdateFinancialService(formData).subscribe(() => {
         this.toastrService.success('Updated successfully', 'Success');
-          this.parentForm.reset();
+        this.parentForm.reset();
       })
-    }else{  
-      console.log(this.parentForm.value.financialFormArray);    
-      this.financialService.AddFinacialService(formData).subscribe(()=>{
+    } else {
+      //console.log(this.addServiceForm.value);
+      this.financialService.AddFinacialService(formData).subscribe(() => {
         // this.toastrService.success('Saved successfully', 'Success');
         //   this.parentForm.reset();
-        this.saveFinancialArray();
+        this.saveFinancialArray();  
       })
     }
-    
+
   }
-  saveFinancialArray() {
-    this.financialService.saveCOA(this.parentForm.value.financialFormArray, {}).subscribe(()=>{
+  saveFinancialArray() {    
+    this.financialService.saveCOA(this.parentForm.value.financialFormArray, {}).subscribe(() => {
       this.toastrService.success('Saved successfully', 'Success');
       this.parentForm.reset();
     })
   }
   getFormValues() {
-    console.log(this.parentForm.value);
+    if(this.notSubscriber){
+      console.log('True');
+    }else {
+      console.log('False');
+    }
   }
-  calculateUntilMonth(selectedDate:Date){
-    if(selectedDate !== undefined){
+  calculateUntilMonth(selectedDate: Date) {
+    if (selectedDate !== undefined) {
       let noOfinstallments = this.addServiceForm.get('totinstallments')?.value;
       var newDate = moment(selectedDate).add(noOfinstallments - 1, 'M').format('MMM-YYYY');
       this.addServiceForm.patchValue({
         untilMonth: newDate
-      });     
+      });
     }
-    
+
   }
-  
+
   // Calculate Installments based on Installment Months...
-  calculateInstallments(){
+  calculateInstallments() {
     let amount = this.addServiceForm.get('totamt')?.value;
     let noOfinstallments = this.addServiceForm.get('totinstallments')?.value;
     let calculatedAmount = (amount / noOfinstallments);
@@ -273,17 +308,45 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       installmentAmount: calculatedAmount
     })
   }
-  onServiceTypeChange(selected: any) {    
-    this.selectServiceSubType$ = this.commonService.GetSubServiceTypeByServiceType(21,selected);
-    this.selectedServiceType = selected;
+  onServiceTypeChange(event: any) {
+    this.commonService.GetSubServiceTypeByServiceType(21, event.refId).subscribe((response: any) => {
+      this.selectServiceSubType = response
+      if (this.common.PFId != null
+        && this.common.subscribedDate != null
+        && this.common.terminationDate != null) {
+        // This is Resubscribe Case
+        if (response) {
+          let index = this.selectServiceSubType.findIndex(x => x.refId == 1);
+          if (index >= 0) {
+            this.selectServiceSubType.splice(index, 1);
+          }
+        }
+        //
+        this.notSubscriber = false;
+      }
+      if (this.isSubscriber) {
+        let index = this.selectServiceSubType.findIndex(x => x.refId == 2);
+        if (index >= 0) {
+          this.selectServiceSubType.splice(index, 2);
+        }
+        //
+        this.notSubscriber = false;
+      }
+    });
+    
+    
+    this.selectedServiceType = event.refId;
+    this.selectedServiceTypeText = event.shortname;
   }
   onServiceSubTypeChange($event: any) {
     this.selectedServiceSubType = $event.refId;
+    this.selectedServiceSubTypeText = $event.shortname;
     this.financialService.GetSelectedServiceSubType(this.selectedServiceType, this.selectedServiceSubType, 21).subscribe((response: any) => {
+      
       this.parentForm.patchValue({
         addServiceForm: {
           serviceSubType: response.serviceSubType,
-          serviceType: response.serviceType,
+          serviceType: this.selectedServiceTypeText,
           searialNo: '',
           amount: '',
           totinstallments: response.maxInstallment,
@@ -322,6 +385,48 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           otherAct5: response.otherAct5
         },
       });
+
     })
+    console.log(this.addServiceForm.value);
   }
+
+  // To access form controls...
+  get addServiceFrm() { return this.addServiceForm.controls; }
+  // Conditionally set validations.
+  setValidators(isNotSubscriber:boolean) {
+    const totamt = this.addServiceForm.get('totamt');
+    const totinstallments = this.addServiceForm.get('totinstallments');    
+    const installmentAmount = this.addServiceForm.get('installmentAmount');
+    const allowDiscount = this.addServiceForm.get('allowDiscount');
+    const installmentsBegDate = this.addServiceForm.get('installmentsBegDate');
+
+    const serviceType = this.addServiceForm.get('serviceType');
+    const serviceSubType = this.addServiceForm.get('serviceSubType');
+        if (isNotSubscriber) {
+          totamt?.setValidators([Validators.required]);
+          totinstallments?.setValidators([Validators.required]);
+          installmentAmount?.setValidators([Validators.required]);
+          allowDiscount?.setValidators([Validators.required]);
+          installmentsBegDate?.setValidators([Validators.required]);
+          serviceType?.setValidators([Validators.required]);
+          serviceSubType?.setValidators([Validators.required]);
+        }
+        if (!isNotSubscriber) {
+          totamt?.setValidators(null);
+          totinstallments?.setValidators(null);
+          installmentAmount?.setValidators(null);
+          allowDiscount?.setValidators(null);
+          installmentsBegDate?.setValidators(null);
+          serviceType?.setValidators(null);
+          serviceSubType?.setValidators(null);
+        }
+        totamt?.updateValueAndValidity();
+        totinstallments?.updateValueAndValidity();
+        installmentAmount?.updateValueAndValidity();  
+        allowDiscount?.updateValueAndValidity();  
+        installmentsBegDate?.updateValueAndValidity();   
+        serviceType?.updateValueAndValidity();
+        serviceSubType?.updateValueAndValidity();   
+    }
+
 }

@@ -26,5 +26,6 @@ namespace API.DTOs
         public DateTime? Entrydate { get; set; }
         public DateTime? Entrytime { get; set; }
         public DateTime? Updttime { get; set; }
+        public string ApprovalRemarks { get; set; }
     }
 }

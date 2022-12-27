@@ -7,6 +7,7 @@ using API.Models;
 using API.Servivces.Interfaces;
 using API.Servivces.Interfaces.FinancialServices;
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc.TagHelpers;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -30,49 +31,162 @@ namespace API.Servivces.Implementation
         {
             if (_context != null)
             {
+                //
+                //int maxSwitch1 = _context.Reftables.Where(c => c.Reftype == "KUPF" && c.Refsubtype == "ServicesSubType"
+                //&& c.Switch4 == transactionHdDto.ServiceType && c.Refid == transactionHdDto.ServiceSubType).Max(x => Convert.ToInt32(x.Switch1));
+                int maxSwitch = 1;
+                //
                 var newTransaction = _mapper.Map<TransactionHd>(transactionHdDto);
                 newTransaction.Mytransid = CommonMethods.CreateEmployeeId();
+                newTransaction.MasterServiceId = maxSwitch;
                 await _context.TransactionHds.AddAsync(newTransaction);
+                await _context.SaveChangesAsync();
 
-                var transactionHddApprovalsDto = new TransactionHddapprovalDetailDto()
+                var serviceApprovals = _context.ServiceSetups.Where(p => p.ServiceType == 2 && p.ServiceSubType == 5).FirstOrDefault();
+                List<string> myService = new List<string>
                 {
-                    TenentId = newTransaction.TenentId,
-                    Mytransid = newTransaction.Mytransid,
-                    LocationId = (int)newTransaction.LocationId,
-                    ServiceId = newTransaction.ServiceId,
-                    EmployeeId = newTransaction.EmployeeId
+                    serviceApprovals.SerApproval1,
+                    serviceApprovals.SerApproval2,
+                    serviceApprovals.SerApproval3,
+                    serviceApprovals.SerApproval4,
+                    serviceApprovals.SerApproval5
                 };
-                var transactionHddApprovals = _mapper.Map<TransactionHddapprovalDetail>(transactionHddApprovalsDto);
-                await _context.TransactionHddapprovalDetails.AddAsync(transactionHddApprovals);
-
-                int myId = 1;
-                for (int i = 0; i < transactionHdDto.Totinstallments; i++)
+                if (serviceApprovals != null)
                 {
-                    decimal eachInstallmentAmount = (decimal)(transactionHdDto.InstallmentAmount / transactionHdDto.Totinstallments);
-                    var data = new TransactionDtDto
+                    int srId = 0;
+                    for (int i = 0; i < myService.Count; i++) // myservice is one active  = true else false.
                     {
-                        TenentId = transactionHdDto.TenentId,
-                        LocationId = 1,
-                        Mytransid = newTransaction.Mytransid,
-                        Myid = myId,
-                        EmployeeId = transactionHdDto.EmployeeId,
-                        InstallmentNumber = 1,
-                        InstallmentAmount = eachInstallmentAmount,
-                        ReceivedAmount = 0,
-                        PendingAmount = 0,
-                        DiscountAmount = 0,
-                        DiscountReference = string.Empty,
-                        UniversityBatchNo = string.Empty,
-                        ReceivedDate = DateTime.Now,
-                        InstallmentsBegDate = transactionHdDto.InstallmentsBegDate,
-                        UntilMonth = transactionHdDto.UntilMonth
-                    };
-                    var transactionDt = _mapper.Map<TransactionDt>(data);
-                    await _context.TransactionDts.AddAsync(transactionDt);
-                    await _context.SaveChangesAsync();
-                    _context.ChangeTracker.Clear();
-                    myId++;
+                        if (myService[i] != "" && myService[i] != "0") // 
+                        {                            
+                            var transactionHddApprovalsDto = new TransactionHddapprovalDetailDto()
+                            {                                
+                                TenentId = newTransaction.TenentId,
+                                Mytransid = newTransaction.Mytransid,
+                                LocationId = (int)newTransaction.LocationId,
+                                SerApprovalId = srId + 1,
+                                SerApproval = myService[i].ToString(),
+                                EmployeeId = newTransaction.EmployeeId,
+                                ServiceId = srId + 1,
+                                MasterServiceId = maxSwitch,
+                                ApprovalDate = null,
+                                RejectionType = null,
+                                RejectionRemarks = null,
+                                AttachId = null,
+                                Status = "ManagerApproval",
+                                CrupId = 1,
+                                Userid = newTransaction.Userid,                                
+                                Active = true,
+                                Entrydate = DateTime.Now,
+                                Entrytime = DateTime.Now,
+                                Updttime = DateTime.Now,
+                                ApprovalRemarks = "BySystem" 
+                            };
+                            //
+                            var transactionHddApprovals = _mapper.Map<TransactionHddapprovalDetail>(transactionHddApprovalsDto);
+                            transactionHddApprovals.MasterServiceId = maxSwitch;
+                            await _context.TransactionHddapprovalDetails.AddAsync(transactionHddApprovals);
+                        }
+                        await _context.SaveChangesAsync();
+                        _context.ChangeTracker.Clear();
+                        srId++;
+                    }
                 }
+                int myId = 1;
+                if (transactionHdDto.ServiceType == "Subscriber  - مشترك")
+                {
+                   
+                    int installments = CommonMethods.CreateSubscriberInstallments(transactionHdDto.InstallmentsBegDate);
+                    for (int i = 0; i < installments; i++)
+                    {
+                        //decimal eachInstallmentAmount = (decimal)(transactionHdDto.InstallmentAmount / transactionHdDto.Totinstallments);
+                        var data = new TransactionDtDto
+                        {
+                            TenentId = transactionHdDto.TenentId,
+                            LocationId = transactionHdDto.LocationId,
+                            Mytransid = newTransaction.Mytransid,
+                            Myid = myId,
+                            EmployeeId = transactionHdDto.EmployeeId,
+                            InstallmentNumber = 1,//Create a method to create subscription and this should be starts from currnet month + next year....
+                            AttachId = 0,
+                            PeriodCode = GetPeriodCode(),// comes from TBLPeriods table.
+                            InstallmentAmount = transactionHdDto.InstallmentAmount,
+                            ReceivedAmount = 0,
+                            PendingAmount = transactionHdDto.InstallmentAmount,
+                            DiscountAmount = 0,
+                            DiscountReference = string.Empty,
+                            UniversityBatchNo = string.Empty,
+                            ReceivedDate = null,
+                            EffectedAccount = null,
+                            OtherReference = null,
+                            Activityid = null,
+                            CrupId = 1,
+                            Glpost = "1",
+                            Glpost1 = null,
+                            Glpostref = "1",
+                            Glpostref1 = "1",
+                            Active = true,
+                            Switch1 = null,
+                            DelFlag = null,
+                            InstallmentsBegDate = transactionHdDto.InstallmentsBegDate,
+                            UntilMonth = transactionHdDto.UntilMonth
+                        };
+                        var transactionDt = _mapper.Map<TransactionDt>(data);
+                        await _context.TransactionDts.AddAsync(transactionDt);
+                        await _context.SaveChangesAsync();
+                        _context.ChangeTracker.Clear();
+                        myId++;
+                    }
+                }
+                else
+                {
+                   // int myId = 1;
+                    for (int i = 0; i < transactionHdDto.Totinstallments; i++)
+                    {
+                        decimal eachInstallmentAmount = (decimal)(transactionHdDto.InstallmentAmount / transactionHdDto.Totinstallments);
+                        var data = new TransactionDtDto
+                        {
+                            TenentId = transactionHdDto.TenentId,
+                            LocationId = transactionHdDto.LocationId,
+                            Mytransid = newTransaction.Mytransid,
+                            Myid = myId,
+                            EmployeeId = transactionHdDto.EmployeeId,
+                            InstallmentNumber = 1,//Create a method to create subscription and this should be starts from currnet month + next year....
+                            AttachId = 0,
+                            PeriodCode = GetPeriodCode(),// comes from TBLPeriods table.
+                            InstallmentAmount = eachInstallmentAmount,
+                            ReceivedAmount = 0,
+                            PendingAmount = transactionHdDto.InstallmentAmount,
+                            DiscountAmount = 0,
+                            DiscountReference = string.Empty,
+                            UniversityBatchNo = string.Empty,
+                            ReceivedDate = null,
+                            EffectedAccount = null,
+                            OtherReference = null,
+                            Activityid = null,
+                            CrupId = 1,
+                            Glpost = "1",
+                            Glpost1 = null,
+                            Glpostref = "1",
+                            Glpostref1 = "1",
+                            Active = true,
+                            Switch1 = null,
+                            DelFlag = null,
+                            InstallmentsBegDate = transactionHdDto.InstallmentsBegDate,
+                            UntilMonth = transactionHdDto.UntilMonth
+                        };
+                        var transactionDt = _mapper.Map<TransactionDt>(data);
+                        await _context.TransactionDts.AddAsync(transactionDt);
+                        await _context.SaveChangesAsync();
+                        _context.ChangeTracker.Clear();
+                        myId++;
+                    }
+                }
+                
+
+                //var updateSwitch1 = _context.Reftables.Where(c => c.Reftype == "KUPF" && c.Refsubtype == "ServicesSubType"
+                //&& c.Switch4 == transactionHdDto.ServiceType && c.Refid == transactionHdDto.ServiceSubType).FirstOrDefault();
+                //updateSwitch1.Switch1 = maxSwitch.ToString();
+
                 await _context.SaveChangesAsync();
                 //var request = new AccountRequest() { 
                 //    TenantID = newTransaction.TenentId,
@@ -145,6 +259,7 @@ namespace API.Servivces.Implementation
                             EnglishName = e.EnglishName,
                             ArabicName = e.ArabicName,
                             ServiceType = t.ServiceType,
+                            ServiceSubType = t.ServiceSubType,
                             Installment = t.InstallmentAmount,
                             Amount = t.AmtPaid,
                             Discounted = t.Discount,
@@ -229,19 +344,24 @@ namespace API.Servivces.Implementation
 
         public async Task<IEnumerable<ReturnServiceApprovals>> GetServiceApprovalsAsync()
         {
-            var data = (from e in _context.DetailedEmployees
+
+            var data = (from approvals in _context.TransactionHddapprovalDetails
+                        join emp in _context.DetailedEmployees
+                        on approvals.EmployeeId equals Convert.ToInt32(emp.EmployeeId)
+
                         join hd in _context.TransactionHds
-                        on Convert.ToInt32(e.EmployeeId) equals hd.EmployeeId
-                        join app in _context.TransactionHddapprovalDetails
-                        on hd.Mytransid equals app.Mytransid
+                        on approvals.Mytransid equals hd.Mytransid
+                        where approvals.Active == true
                         select new ReturnServiceApprovals
                         {
                             MyTransId = (int)hd.Mytransid,
-                            EmployeeId = Convert.ToInt32(e.EmployeeId),
-                            EnglishName = e.EnglishName,
-                            ArabicName = e.ArabicName,
+                            EmployeeId = Convert.ToInt32(emp.EmployeeId),
+                            EnglishName = emp.EnglishName,
+                            ArabicName = emp.ArabicName,
                             Services = hd.ServiceId.ToString(),
-                            Source = "Online",
+                            ServiceType = hd.ServiceType,
+                            ServiceSubType = hd.ServiceSubType,
+                            Source = "Online",//this should be dynamic and comes from table..
                             TotalInstallments = (int)hd.Totinstallments,
                             Amount = (decimal)hd.InstallmentAmount,
                             Discounted = hd.Discount.ToString(),
@@ -271,8 +391,8 @@ namespace API.Servivces.Implementation
                         existingtransactionHd.Mytransid = approveRejectServiceDto.Mytransid;
                         existingtransactionHd.Userid = approveRejectServiceDto.Userid;
                         existingtransactionHd.ApprovalDate = approveRejectServiceDto.ApprovalDate;
-                        existingtransactionHd.Entrydate = approveRejectServiceDto.Entrydate;
-                        existingtransactionHd.Entrytime = approveRejectServiceDto.Entrytime;
+                        existingtransactionHd.Entrydate =(DateTime) approveRejectServiceDto.Entrydate;
+                        existingtransactionHd.Entrytime = (DateTime)approveRejectServiceDto.Entrytime;
                         existingtransactionHd.Status = "Approved";
                         existingtransactionHd.ApprovalRemarks = approveRejectServiceDto.ApprovalRemarks;
                         _context.TransactionHddapprovalDetails.Update(existingtransactionHd);
@@ -376,20 +496,43 @@ namespace API.Servivces.Implementation
         {
             int result = 0;
             if (_context != null)
-            {                
+            {
                 var newTransaction = _mapper.Map<CostCenter>(costCenterDto);
                 await _context.CostCenters.AddAsync(newTransaction);
                 result = await _context.SaveChangesAsync();
-                
+
             }
             return result;
         }
 
         public async Task<IEnumerable<SelectServiceTypeDto>> GetSubServiceTypeByServiceType(int tenentId, int refId)
         {
-            var result = await _context.Reftables.Where(c => c.Refsubtype == "ServicesSubType" && c.SynId == refId && c.TenentId == tenentId).ToListAsync();
+            var result = await _context.Reftables.Where(c => c.Refsubtype == "ServicesSubType" && c.Switch4 == refId && c.TenentId == tenentId).ToListAsync();
             var data = _mapper.Map<IEnumerable<SelectServiceTypeDto>>(result);
             return data;
+        }
+
+        public async Task<ReturnApprovalDetailsDto> GetServiceApprovalsByTransIdAsync(int tenentId, int locationId, int transId)
+        {
+            var result = _context.TransactionHds.Where(c => c.TenentId == tenentId && 
+            c.LocationId == locationId && c.Mytransid == transId).FirstOrDefault();
+            var data = _mapper.Map<ReturnApprovalDetailsDto>(result);
+            return data;
+        }
+
+        public long GetPeriodCode()
+        {
+            long periodCode = _context.Tblperiods.Where(c => c.PrdStartDate >= DateTime.Now && c.PrdEndDate <= DateTime.Now).Select(p=>p.PeriodCode).FirstOrDefault();
+            return periodCode;
+        }
+
+        public void CreateSubscriptionInstallments(string subscriptionType)
+        {
+            if(subscriptionType == "Subscription")
+            {
+
+            }
+            throw new NotImplementedException();
         }
     }
 }

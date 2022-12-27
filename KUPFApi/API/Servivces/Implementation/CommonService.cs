@@ -241,9 +241,20 @@ namespace API.Servivces.Implementation
             {
                 throw new Exception("Invalid Input");
             }
-
-            var result = await _context.DetailedEmployees.Where(c => c.EmployeeId == searchEmployeeDto.EmployeeId ||
-                        c.Pfid == searchEmployeeDto.PFId || c.EmpCidNum == searchEmployeeDto.CID).Where(x => x.Pfid != null).FirstOrDefaultAsync();
+            
+            var result = new Models.DetailedEmployee();
+            if (searchEmployeeDto.EmployeeId != string.Empty || !string.IsNullOrWhiteSpace(searchEmployeeDto.EmployeeId))
+            {
+                result = await _context.DetailedEmployees.Where(c => c.EmployeeId == searchEmployeeDto.EmployeeId).FirstOrDefaultAsync();
+            }
+            else if (searchEmployeeDto.PFId != string.Empty || !string.IsNullOrWhiteSpace(searchEmployeeDto.PFId))
+            {
+                result = await _context.DetailedEmployees.Where(c => c.Pfid == searchEmployeeDto.PFId).FirstOrDefaultAsync();
+            }
+            else if (searchEmployeeDto.CID != string.Empty || !string.IsNullOrWhiteSpace(searchEmployeeDto.CID))
+            {
+                result = await _context.DetailedEmployees.Where(c => c.Pfid == searchEmployeeDto.PFId).FirstOrDefaultAsync();
+            }           
 
             var data = _mapper.Map<DetailedEmployeeDto>(result);
 

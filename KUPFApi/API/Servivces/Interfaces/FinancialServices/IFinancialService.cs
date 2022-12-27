@@ -30,5 +30,9 @@ namespace API.Servivces.Interfaces.FinancialServices
         Task<int> MakeFinancialTransactionAsync(CostCenterDto costCenterDto);
         Task<IEnumerable<SelectServiceTypeDto>> GetSubServiceTypeByServiceType(int tenentId, int refId);
 
+        Task<ReturnApprovalDetailsDto> GetServiceApprovalsByTransIdAsync(int tenentId, int locationId,int transId);
+
+        long GetPeriodCode();
+        void CreateSubscriptionInstallments(string subscriptionType);
     }
 }

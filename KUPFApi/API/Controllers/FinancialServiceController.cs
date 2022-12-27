@@ -235,5 +235,16 @@ namespace API.Controllers
             var result = await _financialService.GetSubServiceTypeByServiceType(tenentId, refId);
             return result;
         }
+        /// <summary>
+        /// Api to get Get Service Approvals By Transation Id 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetServiceApprovalsByTransIdAsync")]
+        public async Task<ReturnApprovalDetailsDto> GetServiceApprovalsByTransIdAsync(int tenentId, int locationId,int transId)
+        {
+            var result = await _financialService.GetServiceApprovalsByTransIdAsync(tenentId, locationId, transId);
+            return result;
+        }
     }
 }

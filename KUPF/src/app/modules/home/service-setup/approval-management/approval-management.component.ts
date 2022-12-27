@@ -46,7 +46,7 @@ export class ApprovalManagementComponent implements OnInit {
 
   //#region
   // To display table column headers
-  columnsToDisplay: string[] = ['action', 'employeeId', 'employeeName', 'services', 'source', 'totalInstallment', 'amount', 'discounted'];
+  columnsToDisplay: string[] = ['action','transId', 'employeeId', 'employeeName', 'serviceType', 'source', 'totalInstallment', 'amount', 'status'];
 
   // Getting data as abservable.
   returnServiceApprovals$: Observable<ReturnServiceApprovals[]>;
@@ -155,7 +155,10 @@ export class ApprovalManagementComponent implements OnInit {
       entryDate: new FormControl(''),
       entryTime: new FormControl(''),
       approvalRemarks: new FormControl('', Validators.required),
-      currentDateTime: new FormControl(this.datepipe.transform((new Date), 'h:mm:ss dd/MM/yyyy'))
+      currentDateTime: new FormControl(this.datepipe.transform((new Date), 'h:mm:ss dd/MM/yyyy')),
+      serviceType:new FormControl(''),
+      serviceSubType:new FormControl(''),
+      totamt:new FormControl('')
     })
   }
 
@@ -199,33 +202,38 @@ export class ApprovalManagementComponent implements OnInit {
   // Approve service...
   openApproveServiceModal(content: any, event: any) {
     this.isFormSubmitted = true;
-    //
-    this.approveServiceForm.patchValue({
-      mytransId: event.target.id
-    })
+    this.financialService.GetServiceApprovalsByTransIdAsync(21,1,event.target.id).subscribe((response:any)=>{
+      if(response){
+        this.approveServiceForm.patchValue({
+          mytransId: event.target.id,
+          serviceType:response.serviceType,
+          serviceSubType:response.serviceSubType,
+          totamt:response.totamt
+        })
+      }      
+    });
     //
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', modalDialogClass: 'modal-md' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
       if (result === 'yes') {
-
-        let currentDate = this.datepipe.transform((new Date), 'dd/MM/yyyy');
+        let currentDate = this.datepipe.transform((new Date));
         let currentTime = this.datepipe.transform((new Date), 'h:mm:ss');
         this.approveServiceForm.controls['approvalDate']?.setValue(currentDate);
         this.approveServiceForm.controls['entryDate']?.setValue(currentDate);
         this.approveServiceForm.controls['entryTime']?.setValue(currentTime);
         this.approveServiceForm.controls['userId']?.setValue(1);
 
-        this.financialService.ApproveService(this.approveServiceForm.value).subscribe(response => {
-          if (response == 0) {
-            this.toastrService.info('.This service is already approved', 'Success');
-            this.isFormSubmitted = false;
-            this.approveServiceForm.reset();
-          } else {
-            this.toastrService.success('.Service approved successfully', 'Success');
-            this.isFormSubmitted = false;
-            this.approveServiceForm.reset();
-          }
-        })
+        // this.financialService.ApproveService(this.approveServiceForm.value).subscribe(response => {
+        //   if (response == 0) {
+        //     this.toastrService.info('.This service is already approved', 'Success');
+        //     this.isFormSubmitted = false;
+        //     this.approveServiceForm.reset();
+        //   } else {
+        //     this.toastrService.success('.Service approved successfully', 'Success');
+        //     this.isFormSubmitted = false;
+        //     this.approveServiceForm.reset();
+        //   }
+        // })
       }
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -243,7 +251,7 @@ export class ApprovalManagementComponent implements OnInit {
       this.closeResult = `Closed with: ${result}`;
       if (result === 'yes') {
 
-        let currentDate = this.datepipe.transform((new Date), 'dd/MM/yyyy');
+        let currentDate = this.datepipe.transform((new Date));
         let currentTime = this.datepipe.transform((new Date), 'h:mm:ss');
         this.rejectServiceForm.controls['approvalDate']?.setValue(currentDate);
         this.rejectServiceForm.controls['entryDate']?.setValue(currentDate);
@@ -255,10 +263,12 @@ export class ApprovalManagementComponent implements OnInit {
             this.toastrService.info('.This service is already rejected', 'Success');
             this.isFormSubmitted = false;
             this.rejectServiceForm.reset();
+            this.rejectServiceForm.controls['approvalDate']?.setValue(currentDate);
           } else {
             this.toastrService.success('.Service rejected successfully', 'Success');
             this.isFormSubmitted = false;
             this.rejectServiceForm.reset();
+            this.rejectServiceForm.controls['approvalDate']?.setValue(currentDate);
           }
         })
       }

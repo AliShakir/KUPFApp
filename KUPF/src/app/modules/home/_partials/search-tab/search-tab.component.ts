@@ -44,7 +44,10 @@ export class SearchTabComponent implements OnInit {
   formTitle: string;
   closeResult: string = '';
   searchForm: FormGroup;
-  
+  genderArray: any = [
+    { id: 1, name: 'Male' },
+    { id: 2, name: 'Female' }
+  ];
   constructor(private commonDbService: DbCommonService,
     private commonService:CommonService,
     private toastr: ToastrService) {
@@ -122,7 +125,7 @@ export class SearchTabComponent implements OnInit {
   }
   SearchEmployee() {    
     this.commonDbService.SearchEmployee(this.searchForm.value).subscribe((response: any) => {
-      
+     console.log(response);
       if(response === null){
         this.commonService.ifEmployeeExists = false;
         this.toastr.error('Sorry, record not found','Error');
@@ -147,7 +150,9 @@ export class SearchTabComponent implements OnInit {
           salary: response.salary,
           remarks: response.remarks          
         })
-        this.commonService.PFId = response.pfid;        
+        this.commonService.PFId = response.pfid;    
+        this.commonService.subscribedDate = response.subscribedDate;
+        this.commonService.terminationDate = response.terminationDate;
         this.commonService.empSearchClickEvent.next(response.pfid);
         
       }

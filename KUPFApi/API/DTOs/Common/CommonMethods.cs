@@ -27,5 +27,14 @@ namespace API.Common
         var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
         return System.Convert.ToBase64String(plainTextBytes);
         }
+
+        public static int CreateSubscriberInstallments(DateTime installmentBeginDate)
+        {
+            int currentMonth = installmentBeginDate.Month;
+            int months = currentMonth - 12;
+            int remainingMonths = Math.Abs(months);
+            int installments = remainingMonths + 12;
+            return installments;
+        }
     }
 }

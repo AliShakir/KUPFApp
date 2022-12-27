@@ -370,6 +370,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:API.Controllers.FinancialServiceController.GetServiceApprovalsByTransIdAsync(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Api to get Get Service Approvals By Transation Id 
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:API.Controllers.FormLabelsController.GetFormHeaderLabels(System.String,System.Int32)">
             <summary>
             Api to Get Form Header Labels

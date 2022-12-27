@@ -7,6 +7,7 @@ import { DetailedEmployee } from '../models/DetailedEmployee';
 import { ReturnTransactionHdDto } from '../models/FinancialService/ReturnTransactionHdDto';
 import { TransactionHdDto } from '../models/FinancialService/TransactionHdDto';
 import { RefTableDto } from '../models/ReferenceDetails/RefTableDto';
+import { ReturnApprovalDetailsDto } from '../models/ReturnApprovalDetailsDto';
 import { ReturnServiceApprovalDetails } from '../models/ReturnServiceApprovalDetails';
 import { ReturnServiceApprovals } from '../models/ReturnServiceApprovals';
 import { SelectServiceTypeDto } from '../models/ServiceSetup/SelectServiceTypeDto';
@@ -187,5 +188,9 @@ export class FinancialService {
   }
   GetServiceType(tenentId:number) { 
     return this.httpClient.get<SelectServiceTypeDto[]>(this.baseUrl + `FinancialService/GetServiceType?tenentId=${tenentId}`);    
+  }
+
+  GetServiceApprovalsByTransIdAsync(tenentId:number,locationId:number,transId:number) { 
+    return this.httpClient.get<ReturnApprovalDetailsDto[]>(this.baseUrl + `FinancialService/GetServiceApprovalsByTransIdAsync?tenentId=${tenentId}&locationId=${locationId}&transId=${transId}`);    
   }
 }

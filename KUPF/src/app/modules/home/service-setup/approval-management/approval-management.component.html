@@ -55,6 +55,11 @@
                                 </a>
                             </td>
                         </ng-container>
+                        <ng-container matColumnDef="transId">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="ArFontStyle">
+                                Trans# </th>
+                            <td mat-cell *matCellDef="let item" class="w-70 ArFontStyle">{{item.myTransId}}</td>
+                        </ng-container>
                         <ng-container matColumnDef="employeeId">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header class="ArFontStyle">
                                 {{bodyLabel[2].title}} </th>
@@ -75,12 +80,11 @@
                             </ng-container>
                         </div>
 
-                        <ng-container matColumnDef="services">
+                        <ng-container matColumnDef="serviceType">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header class="ArFontStyle">
-                                {{bodyLabel[4].title}}</th>
-                            <td mat-cell *matCellDef="let item" class="ArFontStyle">{{item.services}}</td>
-                        </ng-container>
-
+                                Services</th>
+                            <td mat-cell *matCellDef="let item" class="ArFontStyle">{{item.serviceType}} - {{item.serviceSubType}}</td>
+                        </ng-container> 
                         <ng-container matColumnDef="source">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header class="ArFontStyle">
                                 {{bodyLabel[8].title}}</th>
@@ -89,16 +93,16 @@
                         <ng-container matColumnDef="totalInstallment">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header class="ArFontStyle">
                                 {{bodyLabel[5].title}}</th>
-                            <td mat-cell *matCellDef="let item" class="ArFontStyle">{{item.totalInstallments}}</td>
+                            <td mat-cell *matCellDef="let item" class="ArFontStyle text-center" >{{item.totalInstallments}}</td>
                         </ng-container>
                         <ng-container matColumnDef="amount">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header class="ArFontStyle">
                                 {{bodyLabel[6].title}}</th>
                             <td mat-cell *matCellDef="let item" class="ArFontStyle">{{item.amount}}</td>
                         </ng-container>
-                        <ng-container matColumnDef="discounted">
+                        <ng-container matColumnDef="status">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header class="ArFontStyle">
-                                {{bodyLabel[7].title}}</th>
+                                Status</th>
                             <td mat-cell *matCellDef="let item" class="ArFontStyle">{{item.discounted}}</td>
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky:true"
@@ -143,11 +147,19 @@
     </div>
     <div class="modal-body">
         <form autocomplete="off" [formGroup]="approveServiceForm" id="approveServiceForm">
-            <input type="hidden" formControlName="mytransId" />
+            <input type="hidden" formControlName="mytransId" />            
+            <div class="mb-3">
+                <span class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">
+                   <strong> {{approveServiceForm.controls.totamt.value}} </strong> -
+                    {{approveServiceForm.controls.serviceType.value}} 
+                    {{approveServiceForm.controls.serviceSubType.value}}
+                </span>
+                
+            </div>
             <div class="mb-3">
                 <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Date & Time</label>
                 <input type="datetime" class="form-control" formControlName="currentDateTime" readonly/>
-            </div>
+            </div>            
             <div class="mb-3">
                 <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Remarks</label>
                 <textarea type="text" class="form-control form-control-lg mb-lg-0" formControlName="approvalRemarks"
