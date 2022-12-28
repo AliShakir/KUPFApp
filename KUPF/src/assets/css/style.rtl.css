@@ -55,6 +55,17 @@
   --bs-body-line-height: 1.5;
   --bs-body-color: #181C32;
   --bs-body-bg: #ffffff;
+
+  --bs-orangeshade1: #ffa500;
+  --bs-orangeshade2: #ffae19;
+  --bs-orangeshade3: #ffb732;
+  --bs-orangeshade4: #ffc04c;
+  --bs-orangeshade5: #ffc966;
+  --bs-orangeshade6: #ffd27f;
+  --bs-orangeshade7: #ffdb99;
+  --bs-orangeshade8: #ffe4b2;
+  --bs-orangeshade9: #ffedcc;
+  --bs-orangeshade10: #fff6e5;
 }
 
 *,
@@ -47927,4 +47938,12 @@ body {
 .card.card-docs {
   background-color: #ffffff;
   border: 0;
+}
+
+.financedetails .accordion-button{
+  background-color: #ffc966;
+} 
+
+.approvaldetails .accordion-button {
+  background-color: #ffd27f;
 }

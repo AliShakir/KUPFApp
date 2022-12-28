@@ -1,6 +1,20 @@
 .panel1bgColor{
-    background-color: #989898;
+    background-color: #FFA500;
 }
 .ArFontStyle{
-    font-family:"Tahoma","sans-serif"
+    font-family:"Tahoma","sans-serif";
+    color: #000 !important;
 }
+
+.bg-light-primary-orange-shade3{
+    background-color: #ffc04c;
+}
+
+.shadesOfOrange5{
+    background: #ffe4b2;
+
+    &.sdmargin{
+        margin-left: 10px;
+    }
+}
+
