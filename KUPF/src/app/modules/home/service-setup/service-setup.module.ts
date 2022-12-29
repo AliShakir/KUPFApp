@@ -19,6 +19,7 @@ import { ManageFormLabelsComponent } from '../setup/manage-form-labels/manage-fo
 import { MaterialModule } from '../../material/material.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DocumentAttachmentComponent } from '../_partials/document-attachment/document-attachment.component';
 @NgModule({
   declarations: [
     ServiceSetupDetailsComponent,
@@ -29,20 +30,20 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ApprovalManagementComponent,
     ImportEmployeeMonthlyPaymentComponent,
     EmployeeMovementDetailsComponent,
-    AddEmployeeMovementComponent
-    
+    AddEmployeeMovementComponent,
   ],
   imports: [
     CommonModule,
     ServiceSetupRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    SearchTabModule,
+    SearchTabModule,    
     SharedModule,
     NgxTranslateModule,
     MaterialModule,
     NgSelectModule,
     NgbModule,
+
   ],
   exports:[
     NgSelectModule,

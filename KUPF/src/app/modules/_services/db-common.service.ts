@@ -127,7 +127,9 @@ export class DbCommonService {
       return this.httpClient.get<SelectServiceTypeDto[]>(this.baseUrl + `FinancialService/GetSubServiceTypeByServiceType?tenentId=${tenentId}&refId=${refId}`);   
     }
     //#endregion
-
+    GetDocTypes(tenentId:number) {       
+      return this.httpClient.get<SelectServiceTypeDto[]>(this.baseUrl + `Common/GetDocTypes?tenentId=${tenentId}`);   
+    }
   //#region Service Setup 
   // Get GetServiceTypes...
   GetServiceTypeByMasterIds(selectedMasterIds:any[]) { 

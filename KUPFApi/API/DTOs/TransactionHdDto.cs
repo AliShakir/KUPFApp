@@ -1,4 +1,5 @@
 ﻿using API.Models;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -77,6 +78,25 @@ namespace API.DTOs
         public decimal? InstallmentAmount { get; set; }
         public DateTime InstallmentsBegDate { get; set; }
         public string UntilMonth { get; set; }
+        public bool? IsKUEmployee { get; set; }
+        public bool? IsOnSickLeave { get; set; }
+        public bool? IsMemberOfFund { get; set; }
+        public int? TerminationId { get; set; }
 
+        public int personalPhotoDocType { get; set; }
+        public IFormFile personalPhotoDocument { get; set; }
+
+        public int appplicationFileDocType { get; set; }
+        public IFormFile appplicationFileDocument { get; set; }
+
+        public int workIdDocType { get; set; }
+        public IFormFile workIdDocument { get; set; }
+
+        public int civilIdDocType { get; set; }
+        public IFormFile civilIdDocument { get; set; }
+
+        public int salaryDataDocType { get; set; }
+        public IFormFile salaryDataDocument { get; set; }
     }
+   
 }

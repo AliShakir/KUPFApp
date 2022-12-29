@@ -76,5 +76,9 @@ namespace API.DTOs.EmployeeDto
         public DateTime? MembershipJoiningDate { get; set; }
         public string? Termination { get; set; }
         public DateTime? TerminationDate { get; set; }
+
+        public bool? IsKUEmployee { get; set; }
+        public bool? IsOnSickLeave { get; set; }
+        public bool? IsMemberOfFund { get; set; }
     }
 }

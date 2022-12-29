@@ -68,8 +68,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
   pfId: any;
   isSubscriber = false;
   // If PF Id is Not Null - SubscribeDate = Null and TerminationDate = Null
-  notSubscriber:boolean = false;
-  
+  notSubscriber: boolean = false;
   constructor(
     private financialService: FinancialService,
     private commonService: DbCommonService,
@@ -211,7 +210,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           let arr = this.selectServiceType.filter(x => x.refId == 1)
           this.selectServiceType = arr;
           this.isSubscriber = true;
-          
+
         }
       });
     })
@@ -247,8 +246,8 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     // const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
     //console.log(this.common.ifEmployeeExists);
     this.addServiceForm.patchValue({
-      serviceType:this.selectedServiceTypeText,
-      serviceSubType:this.selectedServiceSubTypeText
+      serviceType: this.selectedServiceTypeText,
+      serviceSubType: this.selectedServiceSubTypeText
     })
     let formData = {
       ...this.parentForm.value.addServiceForm,
@@ -258,33 +257,59 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       //...this.parentForm.value.financialFormArray,
       tenentID: 21, cruP_ID: 0, locationID: 1
     }
-
+    formData['installmentsBegDate'] = moment(formData['installmentsBegDate']).format("yyyy-MM-DD");
+    let finalformData = new FormData();
+    Object.keys(formData).forEach(key => finalformData.append(key, formData[key]));
+    finalformData.append('personalPhotoDocType',  this.parentForm.value.documentAttachmentForm[0].docType);
+    finalformData.append('personalPhotoDocument',  this.parentForm.value.documentAttachmentForm[0].Document);
+    finalformData.append('appplicationFileDocType',  this.parentForm.value.documentAttachmentForm[1].docType);
+    finalformData.append('appplicationFileDocument',  this.parentForm.value.documentAttachmentForm[1].Document);    
+    finalformData.append('workIdDocType',  this.parentForm.value.documentAttachmentForm[2].docType);
+    finalformData.append('workIdDocument',  this.parentForm.value.documentAttachmentForm[2].Document);
+    finalformData.append('civilIdDocType',  this.parentForm.value.documentAttachmentForm[3].docType);
+    finalformData.append('civilIdDocument',  this.parentForm.value.documentAttachmentForm[3].Document);
+    finalformData.append('salaryDataDocType',  this.parentForm.value.documentAttachmentForm[4].docType);
+    finalformData.append('salaryDataDocument',  this.parentForm.value.documentAttachmentForm[4].Document);
     this.isFormSubmitted = true;
     if (this.mytransid) {
-      this.financialService.UpdateFinancialService(formData).subscribe(() => {
+      this.financialService.UpdateFinancialService(finalformData).subscribe(() => {
         this.toastrService.success('Updated successfully', 'Success');
-        this.parentForm.reset();
+        this.parentForm.reset();   
       })
     } else {
-      //console.log(this.addServiceForm.value);
-      this.financialService.AddFinacialService(formData).subscribe(() => {
-        // this.toastrService.success('Saved successfully', 'Success');
-        //   this.parentForm.reset();
-        this.saveFinancialArray();  
+      this.financialService.AddFinacialService(finalformData).subscribe((response) => {
+        if (response == 1) {
+          this.toastrService.error('Subscription apply only to the KU Employees ', 'Error');
+        }
+        else if (response == 2) {
+          this.toastrService.error('A KU Employee on the Sick Leave Cannot apply for the Membership', 'Error');
+        } 
+        else if (response == 3) {
+          this.toastrService.error('Employee is Member of a KUPF Fund Committe', 'Error');
+        }
+        else if (response == 4) {
+          this.toastrService.error('Employee Was Terminated Earlier', 'Error');
+        }
+        else {
+          this.toastrService.success('Saved successfully', 'Success');
+          this.parentForm.reset();
+        }
+
+        //this.saveFinancialArray();  
       })
     }
 
   }
-  saveFinancialArray() {    
+  saveFinancialArray() {
     this.financialService.saveCOA(this.parentForm.value.financialFormArray, {}).subscribe(() => {
       this.toastrService.success('Saved successfully', 'Success');
       this.parentForm.reset();
     })
   }
   getFormValues() {
-    if(this.notSubscriber){
+    if (this.notSubscriber) {
       console.log('True');
-    }else {
+    } else {
       console.log('False');
     }
   }
@@ -333,8 +358,8 @@ export class AddServiceComponent implements OnInit, OnDestroy {
         this.notSubscriber = false;
       }
     });
-    
-    
+
+
     this.selectedServiceType = event.refId;
     this.selectedServiceTypeText = event.shortname;
   }
@@ -342,7 +367,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     this.selectedServiceSubType = $event.refId;
     this.selectedServiceSubTypeText = $event.shortname;
     this.financialService.GetSelectedServiceSubType(this.selectedServiceType, this.selectedServiceSubType, 21).subscribe((response: any) => {
-      
+
       this.parentForm.patchValue({
         addServiceForm: {
           serviceSubType: response.serviceSubType,
@@ -393,40 +418,40 @@ export class AddServiceComponent implements OnInit, OnDestroy {
   // To access form controls...
   get addServiceFrm() { return this.addServiceForm.controls; }
   // Conditionally set validations.
-  setValidators(isNotSubscriber:boolean) {
+  setValidators(isNotSubscriber: boolean) {
     const totamt = this.addServiceForm.get('totamt');
-    const totinstallments = this.addServiceForm.get('totinstallments');    
+    const totinstallments = this.addServiceForm.get('totinstallments');
     const installmentAmount = this.addServiceForm.get('installmentAmount');
     const allowDiscount = this.addServiceForm.get('allowDiscount');
     const installmentsBegDate = this.addServiceForm.get('installmentsBegDate');
 
     const serviceType = this.addServiceForm.get('serviceType');
     const serviceSubType = this.addServiceForm.get('serviceSubType');
-        if (isNotSubscriber) {
-          totamt?.setValidators([Validators.required]);
-          totinstallments?.setValidators([Validators.required]);
-          installmentAmount?.setValidators([Validators.required]);
-          allowDiscount?.setValidators([Validators.required]);
-          installmentsBegDate?.setValidators([Validators.required]);
-          serviceType?.setValidators([Validators.required]);
-          serviceSubType?.setValidators([Validators.required]);
-        }
-        if (!isNotSubscriber) {
-          totamt?.setValidators(null);
-          totinstallments?.setValidators(null);
-          installmentAmount?.setValidators(null);
-          allowDiscount?.setValidators(null);
-          installmentsBegDate?.setValidators(null);
-          serviceType?.setValidators(null);
-          serviceSubType?.setValidators(null);
-        }
-        totamt?.updateValueAndValidity();
-        totinstallments?.updateValueAndValidity();
-        installmentAmount?.updateValueAndValidity();  
-        allowDiscount?.updateValueAndValidity();  
-        installmentsBegDate?.updateValueAndValidity();   
-        serviceType?.updateValueAndValidity();
-        serviceSubType?.updateValueAndValidity();   
+    if (isNotSubscriber) {
+      totamt?.setValidators([Validators.required]);
+      totinstallments?.setValidators([Validators.required]);
+      installmentAmount?.setValidators([Validators.required]);
+      allowDiscount?.setValidators([Validators.required]);
+      installmentsBegDate?.setValidators([Validators.required]);
+      serviceType?.setValidators([Validators.required]);
+      serviceSubType?.setValidators([Validators.required]);
     }
+    if (!isNotSubscriber) {
+      totamt?.setValidators(null);
+      totinstallments?.setValidators(null);
+      installmentAmount?.setValidators(null);
+      allowDiscount?.setValidators(null);
+      installmentsBegDate?.setValidators(null);
+      serviceType?.setValidators(null);
+      serviceSubType?.setValidators(null);
+    }
+    totamt?.updateValueAndValidity();
+    totinstallments?.updateValueAndValidity();
+    installmentAmount?.updateValueAndValidity();
+    allowDiscount?.updateValueAndValidity();
+    installmentsBegDate?.updateValueAndValidity();
+    serviceType?.updateValueAndValidity();
+    serviceSubType?.updateValueAndValidity();
+  }
 
 }

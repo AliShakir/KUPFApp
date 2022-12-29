@@ -12,7 +12,7 @@ import { DbCommonService } from 'src/app/modules/_services/db-common.service';
   styleUrls: ['./search-tab.component.scss']
 })
 export class SearchTabComponent implements OnInit {
-  @Input() parentFormGroup:FormGroup;
+  @Input() parentFormGroup: FormGroup;
   employeeForm: FormGroup | undefined;
 
   //#region 
@@ -49,7 +49,7 @@ export class SearchTabComponent implements OnInit {
     { id: 2, name: 'Female' }
   ];
   constructor(private commonDbService: DbCommonService,
-    private commonService:CommonService,
+    private commonService: CommonService,
     private toastr: ToastrService) {
 
   }
@@ -92,7 +92,7 @@ export class SearchTabComponent implements OnInit {
       this.parentFormGroup.setControl('employeeForm', this.employeeForm);
     }
 
-    
+
   }
 
   initializeSearchForm() {
@@ -121,19 +121,23 @@ export class SearchTabComponent implements OnInit {
       salary: new FormControl('', Validators.required),
       remarks: new FormControl('', Validators.required),
       joinedDate: new FormControl('', Validators.required),
+      isKUEmployee: new FormControl(''),
+      isOnSickLeave: new FormControl(''),
+      isMemberOfFund: new FormControl(''),
+      terminationId:new FormControl('')
     })
   }
-  SearchEmployee() {    
+  SearchEmployee() {
     this.commonDbService.SearchEmployee(this.searchForm.value).subscribe((response: any) => {
-     console.log(response);
-      if(response === null){
+      console.log(response);
+      if (response === null) {
         this.commonService.ifEmployeeExists = false;
-        this.toastr.error('Sorry, record not found','Error');
+        this.toastr.error('Sorry, record not found', 'Error');
         this.employeeForm?.reset();
-      }else{
+      } else {
         this.commonService.ifEmployeeExists = true;
         this.employeeForm?.patchValue({
-          employeeId:response.employeeId,
+          employeeId: response.employeeId,
           englishName: response.englishName,
           arabicName: response.arabicName,
           empBirthday: new Date(response.empBirthday),
@@ -148,13 +152,17 @@ export class SearchTabComponent implements OnInit {
           departmentName: response.departmentName,
           occupation: response.departmentName,
           salary: response.salary,
-          remarks: response.remarks          
+          remarks: response.remarks,
+          isKUEmployee: response.isKUEmployee,
+          isOnSickLeave: response.isOnSickLeave,
+          isMemberOfFund: response.isMemberOfFund,
+          terminationId:response.terminationId
+
         })
-        this.commonService.PFId = response.pfid;    
+        this.commonService.PFId = response.pfid;
         this.commonService.subscribedDate = response.subscribedDate;
         this.commonService.terminationDate = response.terminationDate;
         this.commonService.empSearchClickEvent.next(response.pfid);
-        
       }
     }, error => {
       if (error.status === 500) {

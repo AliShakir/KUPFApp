@@ -37,10 +37,10 @@ export class FinancialService {
 
   constructor(private httpClient: HttpClient) { }
 
-  AddFinacialService(response: TransactionHdDto) {    
+  AddFinacialService(response: FormData) {    
     return this.httpClient.post(this.baseUrl +`FinancialService/AddFinancialService`,response);
   }
-  UpdateFinancialService(response: TransactionHdDto) {    
+  UpdateFinancialService(response: FormData) {    
     return this.httpClient.put(this.baseUrl +`FinancialService/UpdateFinancialService`,response);
   }
   saveCOA(reqData: any, userInfo: any) {

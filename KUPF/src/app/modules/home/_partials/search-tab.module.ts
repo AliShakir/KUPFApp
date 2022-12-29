@@ -16,6 +16,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { ElectronicFormsComponent } from './electronic-forms/electronic-forms.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { DocumentAttachmentComponent } from './document-attachment/document-attachment.component';
 
 
 
@@ -29,6 +30,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
     EditFinancialDetailsComponent,
     HtmlFormsComponent,
     ElectronicFormsComponent,
+    DocumentAttachmentComponent,
     
 
   ],
@@ -55,7 +57,8 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
     NgSelectModule,
     HtmlFormsComponent,
     ElectronicFormsComponent,
-    TabsModule
+    TabsModule,
+    DocumentAttachmentComponent
   ]
 })
 export class SearchTabModule { }

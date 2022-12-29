@@ -16,12 +16,12 @@
     </div>
 </div>
 
-<!--Parital View For Search -->
+<!--Parital View For Search [hidden]="!this.common.ifEmployeeExists"-->
 <app-search-tab [parentFormGroup]="parentForm">
 
 </app-search-tab>
 
-<div [hidden]="!this.common.ifEmployeeExists">
+<div >
     <!--Service Information-->
     <div class="card mb-5 mb-xl-10">
         <!--begin::Card header-->
@@ -169,8 +169,9 @@
         </div>
         <!--end::Tab content-->
     </div>
-    <!--Payment Information-->
-
+    <!--Document Information-->
+    <app-document-attachment [parentFormGroup]="parentForm"></app-document-attachment>
+    <br />
     <!--Financial Details-->
     <app-financial-detials [parentFormGroup]="parentForm"></app-financial-detials>
     <br />
