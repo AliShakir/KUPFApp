@@ -1,6 +1,31 @@
 .panelBgColor{
-    background-color: #989898;;
+    background-color: #ffc04c;
 }
 .ArFontStyle{
-    font-family:"Tahoma","sans-serif"
+    font-family:"Tahoma","sans-serif";
+    color: black !important;
+}
+
+.shadesOfOrange11{
+    background: #ffdb99;
+    color: #000;
+}
+
+.shadesOfOrange10{
+    background: #ffe4b2;
+    color: #000;
+}
+
+.shadesOfOrange9{
+    background: #ffedcc;
+    color: #000;
+}
+
+.shadesOfOrange8{
+    background: #fff6e5;
+    color: #000;
+}
+
+.btn-group{
+    column-gap: 20px;
 }
