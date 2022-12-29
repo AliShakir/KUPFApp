@@ -56,16 +56,22 @@
   --bs-body-color: #181C32;
   --bs-body-bg: #ffffff;
 
-  --bs-orangeshade1: #ffa500;
-  --bs-orangeshade2: #ffae19;
-  --bs-orangeshade3: #ffb732;
-  --bs-orangeshade4: #ffc04c;
-  --bs-orangeshade5: #ffc966;
-  --bs-orangeshade6: #ffd27f;
-  --bs-orangeshade7: #ffdb99;
-  --bs-orangeshade8: #ffe4b2;
-  --bs-orangeshade9: #ffedcc;
-  --bs-orangeshade10: #fff6e5;
+  --webOrange: #ffa500;
+  --mySin: #ffae19;
+  --sunglow: #ffb732;
+  --texasRose: #ffc04c;
+  --goldenTinoi: #ffc966;
+  --grandis: #ffd27f;
+  --creamBrulee: #ffdb99;
+  --peach: #ffe4b2;
+  --sandyBeach: #ffedcc;
+  --sazerac: #fff6e5;
+  --merino: #f7f1e7;
+  --grannysmithapple: #a2e296;
+  --fringy_flower: #C2E9BF;
+  --reef: #b2ffb2;	
+  --surf_crest: #c8e1c6;
+  --wheat: #f5daaa;
 }
 
 *,
@@ -73,6 +79,7 @@
 *::after {
   box-sizing: border-box;
 }
+
 
 body {
   margin: 0;
@@ -47947,5 +47954,4 @@ body {
 .approvaldetails .accordion-button {
   background-color: #ffd27f;
 }
-
 

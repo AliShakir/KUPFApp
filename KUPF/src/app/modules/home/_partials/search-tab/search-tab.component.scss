@@ -1,29 +1,40 @@
+
 .panelBgColor3{
-    background-color: #ffae19 
+    background-color: var(--mySin) 
 }
 .ArFontStyle{
     font-family:"Tahoma","sans-serif";
     color: white;
+
 }
 input:focus {
     background-color: #E9E9E9;
   }
 
-.bg-light-primary-orange-shade1{
-    background-color: #a2e296;
+.search_green_apple{
+    background-color: var(--grannysmithapple);
 }
 
-.shadesOfOrange5{
-    background: #ffb732;
+.search_sunglow{
+    background-color: var(--sunglow);
     color: #000;
+    &.btn {
+        &.btn-success:hover, .btn-success:focus, .btn-success:active {
+            background-color: var(--goldenTinoi) !important; 
+            color: #000 !important;
+
+        }
+    }
 }
 
-.shadesOfOrange6{
-    background: #C2E9BF;
+.fringy_flower{
+    background: var(--fringy_flower);
     color: #000;
-}
 
-
-._title{
-    color: #000;
+    &.btn {
+        &.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+            background-color: var(--surf_crest) !important; 
+            color: #000 !important;
+        }
+    }
 }
