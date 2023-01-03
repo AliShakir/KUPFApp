@@ -618,5 +618,35 @@ th.mat-header-cell:first-of-type,td.mat-cell:first-of-type,td.mat-footer-cell:fi
       }
   }
 }
+
+.btn_green-pool-tb {
+  background-color: var(--pool-table) !important;
+  margin-left: 10px;
+
+  &.btn {
+      &.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+          background-color: var(--grass) !important; 
+      }
+  }
+}
+
+.service-details-table{
+  .mat-table {
+    thead{
+        .mat-header-row{
+          .mat-header-cell{
+            color: #fff !important;
+          }
+            .mat-sort-header-container{
+                .mat-sort-header-content{
+                    color: #fff !important;
+                }
+            }
+        }
+    }
+ 
+  }
+}
+
 /*************************End of style for material***************************/
 

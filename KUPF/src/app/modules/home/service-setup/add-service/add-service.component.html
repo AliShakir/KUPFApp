@@ -5,11 +5,11 @@
         <div class="row">
             <div class="btn-group " role="group" aria-label="Basic example"
                 *ngFor="let bodyLabel of formBodyLabels; let i = index">
-                <button type="button" class="btn btn-primary float-left ArFontStyle" lang="AR-SA"
+                <button type="button" class="btn btn-primary float-left ArFontStyle dark-sea-green" lang="AR-SA"
                     (click)="saveFinancialService()">{{bodyLabel[0].title}}</button>
-                <button type="button" class="btn btn-warning float-left ArFontStyle" lang="AR-SA"
+                <button type="button" class="btn btn-primary float-left ArFontStyle caledon" lang="AR-SA"
                     (click)="getFormValues()">{{bodyLabel[1].title}}</button>
-                <button type="button" class="btn btn-danger float-left ArFontStyle" lang="AR-SA"
+                <button type="button" class="btn btn-primary float-left ArFontStyle tea-green" lang="AR-SA"
                     routerLink="/service-setup/service-details">{{bodyLabel[2].title}}</button>
             </div>
         </div>
@@ -17,7 +17,7 @@
 </div>
 
 <!--Parital View For Search -->
-<app-search-tab [parentFormGroup]="parentForm">
+<app-search-tab [parentFormGroup]="parentForm" [pageName]="'AddService'">
 
 </app-search-tab>
 
@@ -172,9 +172,9 @@
     <!--Payment Information-->
 
     <!--Financial Details-->
-    <app-financial-detials [parentFormGroup]="parentForm"></app-financial-detials>
+    <app-financial-detials [parentFormGroup]="parentForm" [accordialDetails]="'ServiceFinanceAccordian'"></app-financial-detials>
     <br />
 
     <!--Approval Details-->
-    <app-approval-detials [parentFormGroup]="parentForm"></app-approval-detials>
+    <app-approval-detials [parentFormGroup]="parentForm" [accordialApprovalDetails]="'ServiceApprovalAccordian'"></app-approval-detials>
 </div>

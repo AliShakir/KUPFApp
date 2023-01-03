@@ -69,9 +69,30 @@
   --merino: #f7f1e7;
   --grannysmithapple: #a2e296;
   --fringy_flower: #C2E9BF;
-  --reef: #b2ffb2;	
   --surf_crest: #c8e1c6;
   --wheat: #f5daaa;
+
+  --green: #008000;
+  --dark-sea-green: #8fbc8f;
+  --waves: #4AC948;
+  --leaf: #55AE3A;
+  --grass: #4DBD33;
+  --pool-table: #31B94D;	
+
+  --dark-sea-green: #8fbc8f;
+  --caledon: #ace1af;
+  --tea-green: #d0f0c0;
+  --light-moss-green: #addfad;
+
+  --celtic-blue: #296ACC;
+  --picton-blue: #47ABFF;
+  --maya-blue: #5BC8FF;
+  --winter-wizard: #97E8FF;
+  --blueberry: #489BF2;
+  --cyan-azure: #528AAE;
+  --moonstone-blue: #73A5C6;
+  --dark-sky-blue: #91BAD6;
+  --beau-blue: #BCD2E8;
 }
 
 *,
@@ -47951,7 +47972,15 @@ body {
   background-color: #ffc966;
 } 
 
+.panelBgColor_addService .accordion-button {
+  background-color: var(--caledon);
+}
+
+
 .approvaldetails .accordion-button {
   background-color: #ffd27f;
 }
 
+.panelBgColor_approval .accordion-button {
+  background-color: var(--tea-green);
+}

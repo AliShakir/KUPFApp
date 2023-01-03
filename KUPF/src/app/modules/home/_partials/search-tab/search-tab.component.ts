@@ -37,7 +37,9 @@ export class SearchTabComponent implements OnInit {
   formId: string;
 
   //
-  @Input() arabicFont: string = 'font-family:"Tahoma","sans-serif"'
+  @Input() arabicFont: string = 'font-family:"Tahoma","sans-serif"';
+  @Input() pageName: string;
+
   /*----------------------------------------------------*/
   //#endregion
 
@@ -48,10 +50,11 @@ export class SearchTabComponent implements OnInit {
     { id: 1, name: 'Male' },
     { id: 2, name: 'Female' }
   ];
+
   constructor(private commonDbService: DbCommonService,
     private commonService:CommonService,
     private toastr: ToastrService) {
-
+ 
   }
 
   ngOnInit(): void {

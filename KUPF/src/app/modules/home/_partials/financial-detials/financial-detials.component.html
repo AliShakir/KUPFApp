@@ -1,6 +1,8 @@
 <!-- TO GET FORM ID AND SETTINGUP LANGAUGE. -->
 <input type="hidden" #FinancialDetails name="FinancialDetails" value="FinancialDetails">
-<ngb-accordion #acc="ngbAccordion" class="mb-2 financedetails" activeIds="ngb-panel-0">
+<ngb-accordion #acc="ngbAccordion" class="mb-2 financedetails" activeIds="ngb-panel-0"
+[ngClass]="{'panelBgColor_addService': accordialDetails === 'ServiceFinanceAccordian'}">
+
     <ngb-panel>
         <ng-template ngbPanelTitle *ngFor="let label of formHeaderLabels; let i = index">
             <h3 class="m-0 ArFontStyle" lang="AR-SA" id="FinancialDetails">Financial Details - التفاصيل المالية</h3>  

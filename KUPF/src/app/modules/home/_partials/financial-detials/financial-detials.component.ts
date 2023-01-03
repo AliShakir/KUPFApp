@@ -13,6 +13,8 @@ import { DbCommonService } from 'src/app/modules/_services/db-common.service';
 })
 export class FinancialDetialsComponent implements OnInit {
   @Input() parentFormGroup:FormGroup;
+  @Input() accordialDetails: string;
+
   financialForm: FormGroup | undefined;
   accountsArray: FormArray<any>;
   @Input() formData: FormGroup | undefined;

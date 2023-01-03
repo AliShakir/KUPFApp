@@ -2,15 +2,15 @@
 <input type="hidden" #EmployeeDiscountDetails name="EmployeeDiscountDetails" value="EmployeeDiscountDetails">
 <div class="card mb-5 mb-xl-8 ">
     <!--begin::Header-->
-    <div class="card-header border-0 pt-5 panel1bgColor">
+    <div class="card-header border-0 pt-5 header_waves">
         <div class="card-toolbar" *ngFor="let label of formHeaderLabels; let i = index">
-            <h3 class="text-white ArFontStyle" lang="AR-SA" id="EmployeeDiscountDetails">{{label.headerName}}</h3>
+            <h3 class="text-white ArFontStyle header_color" lang="AR-SA" id="EmployeeDiscountDetails">{{label.headerName}}</h3>
         </div>       
         <div class="card-toolbar"> 
             <h3 class="card-title align-items-start flex-column">
                 <div class="btn-group" role="group" aria-label="Basic example" *ngFor="let bodyLabel of formBodyLabels; let i = index">
-                    <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA" routerLink="/references/add-employee-discount">{{bodyLabel[0].title}}</button>
-                    <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA" >{{bodyLabel[1].title}}</button>
+                    <button type="button" class="btn btn-primary ArFontStyle btn_green-pool-tb" lang="AR-SA" routerLink="/references/add-employee-discount">{{bodyLabel[0].title}}</button>
+                    <button type="button" class="btn btn-primary ArFontStyle btn_green-pool-tb" lang="AR-SA" >{{bodyLabel[1].title}}</button>
                   </div>
             </h3>
         </div>        
