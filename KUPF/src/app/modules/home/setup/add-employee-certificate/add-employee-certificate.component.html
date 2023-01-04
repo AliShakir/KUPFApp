@@ -5,15 +5,15 @@
     <div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
         <div class="row">
             <div class="btn-group " role="group" aria-label="Basic example" *ngFor="let bodyLabel of formBodyLabels; let i = index">
-                <button type="button" class="btn btn-primary float-left ArFontStyle" lang="AR-SA">{{bodyLabel[0].title}}</button>
-                <button type="button" class="btn btn-warning float-left ArFontStyle" lang="AR-SA">{{bodyLabel[1].title}}</button>
-                <button type="button" class="btn btn-danger float-left ArFontStyle" lang="AR-SA"  routerLink="/references/employee-certificate-details">{{bodyLabel[2].title}}</button>
+                <button type="button" class="btn btn-primary float-left ArFontStyle dark-sea-green" lang="AR-SA">{{bodyLabel[0].title}}</button>
+                <button type="button" class="btn btn-primary float-left ArFontStyle caledon" lang="AR-SA">{{bodyLabel[1].title}}</button>
+                <button type="button" class="btn btn-primary float-left ArFontStyle tea-green" lang="AR-SA"  routerLink="/references/employee-certificate-details">{{bodyLabel[2].title}}</button>
             </div>
         </div>
     </div>
 </div>
 
-<app-search-tab></app-search-tab>
+<app-search-tab [pageName]="'AddEmployeeCertificate'"></app-search-tab>
 <div class="card mb-5 mb-xl-10">
     <!--begin::Card header-->
     <div class="card-header card-header-stretch pb-0 panelBgColor">

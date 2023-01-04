@@ -2,14 +2,14 @@
 <input type="hidden" #SubscriptionDetails name="SubscriptionDetails" value="SubscriptionDetails">
 <div class="card mb-5 mb-xl-8 ">
     <!--begin::Header-->
-    <div class="card-header border-0 pt-5 panel1bgColor">     
+    <div class="card-header border-0 pt-5 headerWebOrange">     
         <div class="card-toolbar" *ngFor="let label of formHeaderLabels; let i = index">
             <h3 class="text-white ArFontStyle" lang="AR-SA" id="SubscriptionDetails">{{label.headerName}}</h3>
         </div>  
         <h3 class="card-title align-items-start flex-column" *ngFor="let bodyLabel of formBodyLabels; let i = index">
             <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-primary ArFontStyle shadesOfOrange5 sdmargin" lang="AR-SA" routerLink="/references/add-subscription">{{bodyLabel[0].title}}</button>
-                <button type="button" class="btn btn-primary ArFontStyle shadesOfOrange5" lang="AR-SA" (click)="reloadPage()">{{bodyLabel[1].title}}</button>
+                <button type="button" class="btn btn-primary ArFontStyle btn_orange_peach" lang="AR-SA" routerLink="/references/add-subscription">{{bodyLabel[0].title}}</button>
+                <button type="button" class="btn btn-primary ArFontStyle btn_orange_peach" lang="AR-SA" (click)="reloadPage()">{{bodyLabel[1].title}}</button>
             </div> 
         </h3>
     </div>
@@ -108,7 +108,7 @@
             <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
                 <!--begin::Table head-->
                 <thead class="bg-light-primary">
-                    <tr class="fw-bolder bg-light-primary-orange-shade3">
+                    <tr class="fw-bolder t_header_orangeTexasRose">
                         <th class="min-w-80px text-center ArFontStyle" lang="AR-SA" >{{bodyLabel[2].title}}</th>
                         <th class="min-w-100px ArFontStyle" lang="AR-SA" >{{bodyLabel[3].title}}</th>
                         <th class="min-w-100px ArFontStyle" lang="AR-SA" >{{bodyLabel[4].title}}</th>

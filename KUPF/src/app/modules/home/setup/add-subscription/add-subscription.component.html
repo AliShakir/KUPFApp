@@ -1,7 +1,7 @@
 <!-- TO GET FORM ID AND SETTINGUP LANGAUGE. -->
 <input type="hidden" #AddSubscription name="AddSubscription" value="AddSubscription">
 <!--Parital View For Search-->
-<app-search-tab></app-search-tab>
+<app-search-tab [pageName]="'AddSubscription'"></app-search-tab>
 <div class="card mb-5 mb-xl-10">
     <!--begin::Card header-->
     <div class="card-header card-header-stretch pb-0 panelBgColor">
@@ -11,10 +11,10 @@
         </div>
         <h3 class="card-title align-items-start flex-column">
             <div class="btn-group" role="group" aria-label="Basic example" *ngFor="let bodyLabel of formBodyLabels; let i = index">
-                <button type="button" class="btn btn-primary ArFontStyle shadesOfOrange8" lang="AR-SA">{{bodyLabel[0].title}}</button>
-                <button type="button" class="btn btn-warning ArFontStyle shadesOfOrange9" lang="AR-SA">{{bodyLabel[1].title}}</button>
-                <button type="button" class="btn btn-success ArFontStyle shadesOfOrange10" lang="AR-SA" (click)="open(employeePerformanceModal)">{{bodyLabel[2].title}}</button>
-                <button type="button" class="btn btn-light-dark ArFontStyle shadesOfOrange11" lang="AR-SA"
+                <button type="button" class="btn btn-primary ArFontStyle sazerac" lang="AR-SA">{{bodyLabel[0].title}}</button>
+                <button type="button" class="btn btn-primary ArFontStyle sandyBeach" lang="AR-SA">{{bodyLabel[1].title}}</button>
+                <button type="button" class="btn btn-primary ArFontStyle peach" lang="AR-SA" (click)="open(employeePerformanceModal)">{{bodyLabel[2].title}}</button>
+                <button type="button" class="btn btn-primary ArFontStyle creamBrulee" lang="AR-SA"
                     routerLink="/references/subscription-details">{{bodyLabel[3].title}}</button>
             </div>
         </h3>

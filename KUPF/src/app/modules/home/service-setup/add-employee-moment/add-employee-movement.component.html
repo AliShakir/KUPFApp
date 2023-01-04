@@ -4,18 +4,18 @@
         <div class="row">
             <div class="btn-group " role="group" aria-label="Basic example"
                 *ngFor="let bodyLabel of formBodyLabels; let i = index">
-                <button type="button" class="btn btn-primary float-left ArFontStyle shadesOfOrange8"
+                <button type="button" class="btn btn-primary float-left ArFontStyle creamBrulee"
                     lang="AR-SA">{{bodyLabel[0].title}}</button>
-                <button type="button" class="btn btn-warning float-left ArFontStyle shadesOfOrange9"
+                <button type="button" class="btn btn-primary float-left ArFontStyle sandyBeach"
                     lang="AR-SA">{{bodyLabel[1].title}}</button>
-                <button type="button" class="btn btn-danger float-left ArFontStyle shadesOfOrange10"
+                <button type="button" class="btn btn-primary float-left ArFontStyle peach"
                     lang="AR-SA">{{bodyLabel[2].title}}</button>
             </div>
         </div>
     </div>
   </div>
 
-<app-search-tab></app-search-tab>
+<app-search-tab [pageName]="'AddEmployeeMovementP'"></app-search-tab>
 <div class="card mb-5 mb-xl-10">
     <!--begin::Card header-->
     <div class="card-header card-header-stretch pb-0 panelBgColor">

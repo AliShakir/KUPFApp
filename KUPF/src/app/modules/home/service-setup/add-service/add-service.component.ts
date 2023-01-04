@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, RoutesRecognized } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
@@ -13,7 +13,6 @@ import { CommonService } from 'src/app/modules/_services/common.service';
 import { DbCommonService } from 'src/app/modules/_services/db-common.service';
 import { FinancialService } from 'src/app/modules/_services/financial.service';
 import { environment } from 'src/environments/environment';
-
 @Component({
   selector: 'app-add-service',
   templateUrl: './add-service.component.html',
@@ -81,7 +80,9 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     private activatedRout: ActivatedRoute,
     public common: CommonService,
     public datepipe: DatePipe,
+    private router: Router,
     private modalService: NgbModal) {
+    
     this.setUpParentForm();
 
     this.minDate = new Date();
@@ -91,7 +92,6 @@ export class AddServiceComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
     //#region TO SETUP THE FORM LOCALIZATION    
     // TO GET THE LANGUAGE ID e.g. 1 = ENGLISH and 2 =  ARABIC
     this.languageType = localStorage.getItem('langType');

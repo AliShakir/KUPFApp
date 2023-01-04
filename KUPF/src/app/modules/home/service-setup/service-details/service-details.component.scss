@@ -1,10 +1,26 @@
-.panel1bgColor{
-    background-color: #DCEDC2;
+.header_waves{
+    background-color: var(--green);
 }
 .ArFontStyle{
-    font-family:"Tahoma","sans-serif"
+    font-family:"Tahoma","sans-serif";
+
+    &.header_color{
+        color: #fff !important;
+    }
 }
 tr:hover td {
-    background: #d8ecfa !important;
-    
+    background: #d8ecfa !important;    
+}
+
+.row_header{
+    background-color: var(--leaf);
+    color: #fff !important;
+}
+
+
+
+.mat-sort-header-content {
+    text-align: center;
+    display: flex;
+    align-items: center;
 }
