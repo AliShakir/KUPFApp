@@ -9,3 +9,36 @@ input:focus {
   }
   
  
+
+  
+.moonstone-blue{
+    background-color: var(--moonstone-blue);
+    color: #fff;
+}
+
+.cyan-azure{
+    background-color: var(--cyan-azure);
+    color: #fff;
+  
+}
+
+.beau-blue{
+    background-color: var(--beau-blue2);
+    color: #fff;
+}
+
+.moonstone-blue, .cyan-azure, .beau-blue {
+    &.btn {
+        &.btn-primary:hover, &.btn-primary:focus, &.btn-primary:active {
+            background-color: var(--dark-sky-blue) !important; 
+        }
+    }
+}
+
+.header_color{
+    color: #fff !important;
+}
+
+.btn-group{
+    column-gap: 12px;
+}

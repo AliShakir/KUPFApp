@@ -4,3 +4,11 @@
 .ArFontStyle{
     font-family:"Tahoma","sans-serif"
 }
+
+.m_approval_thead{
+    background-color: var(--texasRose);
+    
+    .mat-header-cell{
+        color: black !important;
+    }
+}

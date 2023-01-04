@@ -93,6 +93,23 @@
   --moonstone-blue: #73A5C6;
   --dark-sky-blue: #91BAD6;
   --beau-blue: #BCD2E8;
+  --beau-blue2: #86a9cc;
+
+  --baby-blue: #89CFF0;
+  --baby-blue-eyes: #A1CAF1;
+  --little-boy-blue: #6CA0DC;
+  --steel-blue: #4682B4;
+  --rudy-blue: #76ABDF;
+
+  --fluroscent-blue: #15f4ee;
+  --light-sea-green: #16aca8;
+  --comm-btn-hover: #0b8c7f;
+
+  --fluro_btn_shade_i1: #47b8b4;
+  --fluro_btn_shade_i2: #53b6b2d6;
+  --fluro_btn_shade_i3: #4bb1ada8;
+  --fluro_btn_shade_i4: #429f9c94;
+
 }
 
 *,
@@ -47976,6 +47993,9 @@ body {
   background-color: var(--caledon);
 }
 
+.panelBgColor_addEmplyee .accordion-button {
+  background-color: var(--moonstone-blue);
+}
 
 .approvaldetails .accordion-button {
   background-color: #ffd27f;
@@ -47983,4 +48003,21 @@ body {
 
 .panelBgColor_approval .accordion-button {
   background-color: var(--tea-green);
+}
+
+.viewEmployee .viewEmployeeBtn {
+  background-color: var(--blueberry);
+}
+
+.addEmployee .accordion-button {
+  background-color: var(--steel-blue);
+}
+
+
+.job_details_accordian .accordion-button{
+  background-color: var(--cyan-azure);
+}
+
+.membership_details_accordian .accordion-button{
+  background-color: var(--little-boy-blue);
 }
