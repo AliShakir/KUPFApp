@@ -302,5 +302,12 @@ namespace API.Servivces.Implementation
             var data = _mapper.Map<IEnumerable<SelectServiceTypeDto>>(result);
             return data;
         }
+
+        public async Task<IEnumerable<SelectServiceTypeDto>> GetDocTypes(int tenentId)
+        {
+            var result = await _context.Reftables.Where(c => c.Refsubtype == "DocType" && c.TenentId == tenentId).ToListAsync();
+            var data = _mapper.Map<IEnumerable<SelectServiceTypeDto>>(result);
+            return data;
+        }
     }
 }

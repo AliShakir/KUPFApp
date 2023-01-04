@@ -39,11 +39,11 @@ namespace API.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("AddFinancialService")]
-        public async Task<ActionResult<string>> AddFinancialService(TransactionHdDto transactionHdDto)
+        public async Task<ActionResult<FinancialServiceResponse>> AddFinancialService([FromForm]TransactionHdDto transactionHdDto)
         {
-            await _financialService.AddFinancialServiceAsync(transactionHdDto);
+            var response = await _financialService.AddFinancialServiceAsync(transactionHdDto);
             await _context.SaveChangesAsync();
-            return transactionHdDto.Mytransid.ToString();
+            return response;
         }
         /// <summary>
         /// Api to update existing record(s) in TransactionHd and TransactionDt

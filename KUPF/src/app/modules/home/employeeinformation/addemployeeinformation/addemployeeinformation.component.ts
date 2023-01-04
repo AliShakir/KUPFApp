@@ -146,7 +146,7 @@ export class AddemployeeinformationComponent implements OnInit {
       
       this.editEmployeeInformation$ = this.employeeService.GetEmployeeById(this.employeeId);
       this.editEmployeeInformation$.subscribe((response: any) => {
-        console.log(response);        
+        console.log('Edit employee',response);        
         this.parentForm.patchValue({
           addEmployeeForm: {
             employeeId: this.employeeId,
@@ -159,7 +159,10 @@ export class AddemployeeinformationComponent implements OnInit {
             empWorkTelephone: response.empWorkTelephone,
             empWorkEmail: response.empWorkEmail,
             next2KinName: response.next2KinName,
-            next2KinMobNumber: response.next2KinMobNumber
+            next2KinMobNumber: response.next2KinMobNumber,
+            isKUEmployee:response.isKUEmployee,
+            isMemberOfFund:response.isMemberOfFund,
+            isOnSickLeave:response.isOnSickLeave            
           },
           jobDetailsForm: {            
             department: response.department,
@@ -205,7 +208,10 @@ export class AddemployeeinformationComponent implements OnInit {
       empWorkTelephone: new FormControl('', Validators.required),
       empWorkEmail: new FormControl('', Validators.required),
       next2KinName: new FormControl('', Validators.required),
-      next2KinMobNumber: new FormControl('', Validators.required)
+      next2KinMobNumber: new FormControl('', Validators.required),
+      isKUEmployee: new FormControl('', Validators.required),
+      isOnSickLeave: new FormControl('', Validators.required),
+      isMemberOfFund: new FormControl('', Validators.required)
     })
     this.parentForm.setControl('addEmployeeForm', this.addEmployeeForm);
   }

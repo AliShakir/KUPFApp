@@ -11,7 +11,7 @@ namespace API.Servivces.Interfaces.FinancialServices
 {
     public interface IFinancialService
     {
-        Task<string> AddFinancialServiceAsync(TransactionHdDto transactionHdDto);
+        Task<FinancialServiceResponse> AddFinancialServiceAsync(TransactionHdDto transactionHdDto);
         Task<string> UpdateFinancialServiceAsync(TransactionHdDto transactionHdDto);
         Task<ReturnSingleFinancialServiceById> GetFinancialServiceByIdAsync(long id);
         Task<IEnumerable<ReturnTransactionHdDto>> GetFinancialServiceAsync();
@@ -33,6 +33,5 @@ namespace API.Servivces.Interfaces.FinancialServices
         Task<ReturnApprovalDetailsDto> GetServiceApprovalsByTransIdAsync(int tenentId, int locationId,int transId);
 
         long GetPeriodCode();
-        void CreateSubscriptionInstallments(string subscriptionType);
     }
 }

@@ -157,7 +157,7 @@ export const environment = {
     },
   },
   //KUPFApiUrl :'https://kupfapi.erp53.com/api/'
-  KUPFApiUrl :'https://localhost:5001/api/'
+  KUPFApiUrl :'https://localhost:44336/api/'
 };
 
 /*

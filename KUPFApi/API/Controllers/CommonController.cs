@@ -346,5 +346,16 @@ namespace API.Controllers
             var result = await _commonServiceService.GetSubServiceTypeByServiceType(tenentId, refId);
             return result;
         }
+        /// <summary>
+        /// Api to get doc types
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetDocTypes")]
+        public async Task<IEnumerable<SelectServiceTypeDto>> GetDocTypes(int tenentId)
+        {
+            var result = await _commonServiceService.GetDocTypes(tenentId);
+            return result;
+        }
     }
 }

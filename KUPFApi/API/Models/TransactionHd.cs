@@ -13,6 +13,8 @@ namespace API.Models
         public int? EmployeeId { get; set; }
         public int? ServiceId { get; set; }
         public int? MasterServiceId { get; set; }
+        public int? ServiceTypeId { get; set; }
+        public int? ServiceSubTypeId { get; set; }
         public string? ServiceType { get; set; }
         public string? ServiceSubType { get; set; }
         public string Source { get; set; }
@@ -76,7 +78,6 @@ namespace API.Models
         public decimal? InstallmentAmount { get; set; }
         public DateTime InstallmentsBegDate { get; set; }
         public string UntilMonth { get; set; }
-
-
+        
     }
 }

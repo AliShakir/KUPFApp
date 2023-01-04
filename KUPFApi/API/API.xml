@@ -178,6 +178,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:API.Controllers.CommonController.GetDocTypes(System.Int32)">
+            <summary>
+            Api to get doc types
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:API.Controllers.CrupAuditController.#ctor(API.Servivces.Interfaces.ICrupAuditService)">
             <summary>
             

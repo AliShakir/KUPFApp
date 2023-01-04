@@ -1,7 +1,8 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RoutesRecognized } from '@angular/router';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, takeUntil, takeWhile } from 'rxjs';
@@ -59,6 +60,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
   //
   parentForm: FormGroup;
   addServiceForm: FormGroup;
+  popUpForm: FormGroup;
   isFormSubmitted = false;
   minDate: Date;
   editService$: Observable<TransactionHdDto[]>;
@@ -67,7 +69,9 @@ export class AddServiceComponent implements OnInit, OnDestroy {
   pfId: any;
   isSubscriber = false;
   // If PF Id is Not Null - SubscribeDate = Null and TerminationDate = Null
-  notSubscriber:boolean = false;
+  notSubscriber: boolean = false;
+  // 
+  @ViewChild('popupModal', { static: true }) popupModal: ElementRef;
   constructor(
     private financialService: FinancialService,
     private commonService: DbCommonService,
@@ -76,7 +80,9 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     private activatedRout: ActivatedRoute,
     public common: CommonService,
     public datepipe: DatePipe,
-    private router: Router) {
+    private router: Router,
+    private modalService: NgbModal) {
+    
     this.setUpParentForm();
 
     this.minDate = new Date();
@@ -116,6 +122,8 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     //#endregion
 
     this.initializeAddServiceForm();
+    //
+    this.initPopUpModal();
     this.setValidators(this.notSubscriber);
     // Get Tenant Id
     // var data = JSON.parse(localStorage.getItem("user")!);
@@ -209,7 +217,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           let arr = this.selectServiceType.filter(x => x.refId == 1)
           this.selectServiceType = arr;
           this.isSubscriber = true;
-          
+
         }
       });
     })
@@ -234,9 +242,17 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       allowDiscount: new FormControl('', Validators.required),
       installmentAmount: new FormControl('', Validators.required),
       installmentsBegDate: new FormControl('', Validators.required),
-      untilMonth: new FormControl('', Validators.required)
+      untilMonth: new FormControl('', Validators.required),
+      serviceSubTypeId: new FormControl(''),
+      serviceTypeId: new FormControl(''),
     })
     this.parentForm.setControl('addServiceForm', this.addServiceForm);
+  }
+  initPopUpModal(){
+    this.popUpForm = this.fb.group({
+      transactionId:new FormControl(null),
+      attachId: new FormControl(null)
+    })
   }
   saveFinancialService() {
     this.setValidators(this.notSubscriber);
@@ -245,8 +261,10 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     // const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
     //console.log(this.common.ifEmployeeExists);
     this.addServiceForm.patchValue({
-      serviceType:this.selectedServiceTypeText,
-      serviceSubType:this.selectedServiceSubTypeText
+      serviceType: this.selectedServiceTypeText,
+      serviceSubType: this.selectedServiceSubTypeText, //selectedServiceSubTypeText
+      serviceTypeId: this.selectedServiceType,
+      serviceSubTypeId: this.selectedServiceSubType
     })
     let formData = {
       ...this.parentForm.value.addServiceForm,
@@ -256,33 +274,83 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       //...this.parentForm.value.financialFormArray,
       tenentID: 21, cruP_ID: 0, locationID: 1
     }
-
+    formData['installmentsBegDate'] = moment(formData['installmentsBegDate']).format("yyyy-MM-DD");
+    let finalformData = new FormData();
+    Object.keys(formData).forEach(key => finalformData.append(key, formData[key]));
+    finalformData.append('personalPhotoDocType',  this.parentForm.value.documentAttachmentForm[0].docType);
+    finalformData.append('personalPhotoDocument',  this.parentForm.value.documentAttachmentForm[0].Document);
+    finalformData.append('appplicationFileDocType',  this.parentForm.value.documentAttachmentForm[1].docType);
+    finalformData.append('appplicationFileDocument',  this.parentForm.value.documentAttachmentForm[1].Document);    
+    finalformData.append('workIdDocType',  this.parentForm.value.documentAttachmentForm[2].docType);
+    finalformData.append('workIdDocument',  this.parentForm.value.documentAttachmentForm[2].Document);
+    finalformData.append('civilIdDocType',  this.parentForm.value.documentAttachmentForm[3].docType);
+    finalformData.append('civilIdDocument',  this.parentForm.value.documentAttachmentForm[3].Document);
+    finalformData.append('salaryDataDocType',  this.parentForm.value.documentAttachmentForm[4].docType);
+    finalformData.append('salaryDataDocument',  this.parentForm.value.documentAttachmentForm[4].Document);
+    //
+    finalformData.append('subject',  this.parentForm.value.documentAttachmentForm[0].subject);
+    
+    finalformData.append('metaTags',  JSON.parse(JSON.stringify(this.parentForm.value.documentAttachmentForm[0].metaTag)));
+    finalformData.append('attachmentRemarks',  this.parentForm.value.documentAttachmentForm[0].attachmentRemarks);
+    //
     this.isFormSubmitted = true;
+    //
     if (this.mytransid) {
-      this.financialService.UpdateFinancialService(formData).subscribe(() => {
+      this.financialService.UpdateFinancialService(finalformData).subscribe(() => {
         this.toastrService.success('Updated successfully', 'Success');
-        this.parentForm.reset();
+        this.parentForm.reset();   
       })
     } else {
-      //console.log(this.addServiceForm.value);
-      this.financialService.AddFinacialService(formData).subscribe(() => {
-        // this.toastrService.success('Saved successfully', 'Success');
-        //   this.parentForm.reset();
-        this.saveFinancialArray();  
+      
+       this.financialService.AddFinacialService(finalformData).subscribe((response:any) => {        
+        if (response.response == '1') {
+          this.toastrService.error('Subscription apply only to the KU Employees ', 'Error');
+        }
+        else if (response.response == '2') {
+          this.toastrService.error('A KU Employee on the Sick Leave Cannot apply for the Membership', 'Error');
+        } 
+        else if (response.response == '3') {
+          this.toastrService.error('Employee is Member of a KUPF Fund Committe', 'Error');
+        }
+        else if (response.response == '4') {
+          this.toastrService.error('Employee Was Terminated Earlier', 'Error');
+        }
+        else if (response.response == '5') {
+          this.toastrService.error('Duplicate subscriber', 'Error');
+        }
+        else {
+          this.toastrService.success('Saved successfully', 'Success');
+          this.popUpForm.patchValue({
+            transactionId: response.transactionId,
+            attachId: response.attachId
+          })
+          /**
+           * 
+            : 
+            "1"
+            
+            : 
+            "5074"
+           */
+          
+          this.parentForm.reset();
+          this.openPopUpModal(this.popupModal);
+        }
+        //this.saveFinancialArray();  
       })
     }
 
   }
-  saveFinancialArray() {    
+  saveFinancialArray() {
     this.financialService.saveCOA(this.parentForm.value.financialFormArray, {}).subscribe(() => {
       this.toastrService.success('Saved successfully', 'Success');
-      this.parentForm.reset();
+      this.parentForm.reset();  
     })
   }
   getFormValues() {
-    if(this.notSubscriber){
+    if (this.notSubscriber) {
       console.log('True');
-    }else {
+    } else {
       console.log('False');
     }
   }
@@ -331,8 +399,8 @@ export class AddServiceComponent implements OnInit, OnDestroy {
         this.notSubscriber = false;
       }
     });
-    
-    
+
+
     this.selectedServiceType = event.refId;
     this.selectedServiceTypeText = event.shortname;
   }
@@ -348,7 +416,9 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           searialNo: '',
           amount: '',
           totinstallments: response.maxInstallment,
-          allowDiscount: response.allowDiscountAmount
+          allowDiscount: response.allowDiscountAmount,
+          serviceSubTypeId: response.serviceSubTypeId,
+          serviceTypeId: response.serviceTypeId,
         },
         approvalDetailsForm: {
           serApproval1: +response.serApproval1,
@@ -385,46 +455,64 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       });
 
     })
-    console.log(this.addServiceForm.value);
+    //console.log('Ok 1',this.addServiceForm.value);
   }
 
   // To access form controls...
   get addServiceFrm() { return this.addServiceForm.controls; }
   // Conditionally set validations.
-  setValidators(isNotSubscriber:boolean) {
+  setValidators(isNotSubscriber: boolean) {
     const totamt = this.addServiceForm.get('totamt');
-    const totinstallments = this.addServiceForm.get('totinstallments');    
+    const totinstallments = this.addServiceForm.get('totinstallments');
     const installmentAmount = this.addServiceForm.get('installmentAmount');
     const allowDiscount = this.addServiceForm.get('allowDiscount');
     const installmentsBegDate = this.addServiceForm.get('installmentsBegDate');
 
     const serviceType = this.addServiceForm.get('serviceType');
     const serviceSubType = this.addServiceForm.get('serviceSubType');
-        if (isNotSubscriber) {
-          totamt?.setValidators([Validators.required]);
-          totinstallments?.setValidators([Validators.required]);
-          installmentAmount?.setValidators([Validators.required]);
-          allowDiscount?.setValidators([Validators.required]);
-          installmentsBegDate?.setValidators([Validators.required]);
-          serviceType?.setValidators([Validators.required]);
-          serviceSubType?.setValidators([Validators.required]);
-        }
-        if (!isNotSubscriber) {
-          totamt?.setValidators(null);
-          totinstallments?.setValidators(null);
-          installmentAmount?.setValidators(null);
-          allowDiscount?.setValidators(null);
-          installmentsBegDate?.setValidators(null);
-          serviceType?.setValidators(null);
-          serviceSubType?.setValidators(null);
-        }
-        totamt?.updateValueAndValidity();
-        totinstallments?.updateValueAndValidity();
-        installmentAmount?.updateValueAndValidity();  
-        allowDiscount?.updateValueAndValidity();  
-        installmentsBegDate?.updateValueAndValidity();   
-        serviceType?.updateValueAndValidity();
-        serviceSubType?.updateValueAndValidity();   
+    if (isNotSubscriber) {
+      totamt?.setValidators([Validators.required]);
+      totinstallments?.setValidators([Validators.required]);
+      installmentAmount?.setValidators([Validators.required]);
+      allowDiscount?.setValidators([Validators.required]);
+      installmentsBegDate?.setValidators([Validators.required]);
+      serviceType?.setValidators([Validators.required]);
+      serviceSubType?.setValidators([Validators.required]);
     }
+    if (!isNotSubscriber) {
+      totamt?.setValidators(null);
+      totinstallments?.setValidators(null);
+      installmentAmount?.setValidators(null);
+      allowDiscount?.setValidators(null);
+      installmentsBegDate?.setValidators(null);
+      serviceType?.setValidators(null);
+      serviceSubType?.setValidators(null);
+    }
+    totamt?.updateValueAndValidity();
+    totinstallments?.updateValueAndValidity();
+    installmentAmount?.updateValueAndValidity();
+    allowDiscount?.updateValueAndValidity();
+    installmentsBegDate?.updateValueAndValidity();
+    serviceType?.updateValueAndValidity();
+    serviceSubType?.updateValueAndValidity();
+  }
+//#region Delete operation and Modal Config
+openPopUpModal(content:any) {
+  this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+    this.closeResult = `Closed with: ${result}`;
+    
+  }, (reason) => {
+    this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+  });
 
+}
+private getDismissReason(reason: any): string {
+  if (reason === ModalDismissReasons.ESC) {
+    return 'by pressing ESC';
+  } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+    return 'by clicking on a backdrop';
+  } else {
+    return `with: ${reason}`;
+  }
+}
 }
