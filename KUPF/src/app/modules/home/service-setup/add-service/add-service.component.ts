@@ -1,7 +1,8 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, takeUntil, takeWhile } from 'rxjs';
@@ -60,6 +61,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
   //
   parentForm: FormGroup;
   addServiceForm: FormGroup;
+  popUpForm: FormGroup;
   isFormSubmitted = false;
   minDate: Date;
   editService$: Observable<TransactionHdDto[]>;
@@ -69,6 +71,8 @@ export class AddServiceComponent implements OnInit, OnDestroy {
   isSubscriber = false;
   // If PF Id is Not Null - SubscribeDate = Null and TerminationDate = Null
   notSubscriber: boolean = false;
+  // 
+  @ViewChild('popupModal', { static: true }) popupModal: ElementRef;
   constructor(
     private financialService: FinancialService,
     private commonService: DbCommonService,
@@ -76,7 +80,8 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     private toastrService: ToastrService,
     private activatedRout: ActivatedRoute,
     public common: CommonService,
-    public datepipe: DatePipe) {
+    public datepipe: DatePipe,
+    private modalService: NgbModal) {
     this.setUpParentForm();
 
     this.minDate = new Date();
@@ -117,6 +122,8 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     //#endregion
 
     this.initializeAddServiceForm();
+    //
+    this.initPopUpModal();
     this.setValidators(this.notSubscriber);
     // Get Tenant Id
     // var data = JSON.parse(localStorage.getItem("user")!);
@@ -235,9 +242,17 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       allowDiscount: new FormControl('', Validators.required),
       installmentAmount: new FormControl('', Validators.required),
       installmentsBegDate: new FormControl('', Validators.required),
-      untilMonth: new FormControl('', Validators.required)
+      untilMonth: new FormControl('', Validators.required),
+      serviceSubTypeId: new FormControl(''),
+      serviceTypeId: new FormControl(''),
     })
     this.parentForm.setControl('addServiceForm', this.addServiceForm);
+  }
+  initPopUpModal(){
+    this.popUpForm = this.fb.group({
+      transactionId:new FormControl(null),
+      attachId: new FormControl(null)
+    })
   }
   saveFinancialService() {
     this.setValidators(this.notSubscriber);
@@ -247,7 +262,9 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     //console.log(this.common.ifEmployeeExists);
     this.addServiceForm.patchValue({
       serviceType: this.selectedServiceTypeText,
-      serviceSubType: this.selectedServiceSubTypeText
+      serviceSubType: this.selectedServiceSubTypeText, //selectedServiceSubTypeText
+      serviceTypeId: this.selectedServiceType,
+      serviceSubTypeId: this.selectedServiceSubType
     })
     let formData = {
       ...this.parentForm.value.addServiceForm,
@@ -270,31 +287,55 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     finalformData.append('civilIdDocument',  this.parentForm.value.documentAttachmentForm[3].Document);
     finalformData.append('salaryDataDocType',  this.parentForm.value.documentAttachmentForm[4].docType);
     finalformData.append('salaryDataDocument',  this.parentForm.value.documentAttachmentForm[4].Document);
+    //
+    finalformData.append('subject',  this.parentForm.value.documentAttachmentForm[0].subject);
+    
+    finalformData.append('metaTags',  JSON.parse(JSON.stringify(this.parentForm.value.documentAttachmentForm[0].metaTag)));
+    finalformData.append('attachmentRemarks',  this.parentForm.value.documentAttachmentForm[0].attachmentRemarks);
+    //
     this.isFormSubmitted = true;
+    //
     if (this.mytransid) {
       this.financialService.UpdateFinancialService(finalformData).subscribe(() => {
         this.toastrService.success('Updated successfully', 'Success');
         this.parentForm.reset();   
       })
     } else {
-      this.financialService.AddFinacialService(finalformData).subscribe((response) => {
-        if (response == 1) {
+      
+       this.financialService.AddFinacialService(finalformData).subscribe((response:any) => {        
+        if (response.response == '1') {
           this.toastrService.error('Subscription apply only to the KU Employees ', 'Error');
         }
-        else if (response == 2) {
+        else if (response.response == '2') {
           this.toastrService.error('A KU Employee on the Sick Leave Cannot apply for the Membership', 'Error');
         } 
-        else if (response == 3) {
+        else if (response.response == '3') {
           this.toastrService.error('Employee is Member of a KUPF Fund Committe', 'Error');
         }
-        else if (response == 4) {
+        else if (response.response == '4') {
           this.toastrService.error('Employee Was Terminated Earlier', 'Error');
+        }
+        else if (response.response == '5') {
+          this.toastrService.error('Duplicate subscriber', 'Error');
         }
         else {
           this.toastrService.success('Saved successfully', 'Success');
+          this.popUpForm.patchValue({
+            transactionId: response.transactionId,
+            attachId: response.attachId
+          })
+          /**
+           * 
+            : 
+            "1"
+            
+            : 
+            "5074"
+           */
+          
           this.parentForm.reset();
+          this.openPopUpModal(this.popupModal);
         }
-
         //this.saveFinancialArray();  
       })
     }
@@ -303,7 +344,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
   saveFinancialArray() {
     this.financialService.saveCOA(this.parentForm.value.financialFormArray, {}).subscribe(() => {
       this.toastrService.success('Saved successfully', 'Success');
-      this.parentForm.reset();
+      this.parentForm.reset();  
     })
   }
   getFormValues() {
@@ -367,7 +408,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     this.selectedServiceSubType = $event.refId;
     this.selectedServiceSubTypeText = $event.shortname;
     this.financialService.GetSelectedServiceSubType(this.selectedServiceType, this.selectedServiceSubType, 21).subscribe((response: any) => {
-
+      
       this.parentForm.patchValue({
         addServiceForm: {
           serviceSubType: response.serviceSubType,
@@ -375,7 +416,9 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           searialNo: '',
           amount: '',
           totinstallments: response.maxInstallment,
-          allowDiscount: response.allowDiscountAmount
+          allowDiscount: response.allowDiscountAmount,
+          serviceSubTypeId: response.serviceSubTypeId,
+          serviceTypeId: response.serviceTypeId,
         },
         approvalDetailsForm: {
           serApproval1: +response.serApproval1,
@@ -412,7 +455,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       });
 
     })
-    console.log(this.addServiceForm.value);
+    //console.log('Ok 1',this.addServiceForm.value);
   }
 
   // To access form controls...
@@ -453,5 +496,23 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     serviceType?.updateValueAndValidity();
     serviceSubType?.updateValueAndValidity();
   }
+//#region Delete operation and Modal Config
+openPopUpModal(content:any) {
+  this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+    this.closeResult = `Closed with: ${result}`;
+    
+  }, (reason) => {
+    this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+  });
 
+}
+private getDismissReason(reason: any): string {
+  if (reason === ModalDismissReasons.ESC) {
+    return 'by pressing ESC';
+  } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+    return 'by clicking on a backdrop';
+  } else {
+    return `with: ${reason}`;
+  }
+}
 }

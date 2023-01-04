@@ -8,7 +8,7 @@
                 <button type="button" class="btn btn-primary float-left ArFontStyle" lang="AR-SA"
                     (click)="saveFinancialService()">{{bodyLabel[0].title}}</button>
                 <button type="button" class="btn btn-warning float-left ArFontStyle" lang="AR-SA"
-                    (click)="getFormValues()">{{bodyLabel[1].title}}</button>
+                   (click)="openPopUpModal(popupModal)" >{{bodyLabel[1].title}}</button>
                 <button type="button" class="btn btn-danger float-left ArFontStyle" lang="AR-SA"
                     routerLink="/service-setup/service-details">{{bodyLabel[2].title}}</button>
             </div>
@@ -179,3 +179,23 @@
     <!--Approval Details-->
     <app-approval-detials [parentFormGroup]="parentForm"></app-approval-detials>
 </div>
+<!--PopupModal Modal-->
+<ng-template #popupModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title"></h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="popUpForm" id="popUpForm">
+            <div class="mb-3">
+                <span>Your Transaction Id:- <strong>{{popUpForm.controls.transactionId.value}}</strong></span>
+                <br/>
+                <br/>
+                <span>Attachment Id:- <strong>{{popUpForm.controls.attachId.value}}</strong></span>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer text-right">
+        <button mat-raised-button color="accent" (click)="modal.close('yes')">Okay</button> 
+    </div>
+</ng-template>

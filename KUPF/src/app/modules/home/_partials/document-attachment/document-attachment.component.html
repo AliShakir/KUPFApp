@@ -7,8 +7,72 @@
         </ng-template>
         <ng-template ngbPanelContent>
             <div class="row gx-9 gy-6">
-                <form autocomplete="off">
+                <form autocomplete="off" >
                     <div class="row">
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-form-label fw-bold fs-6 ArFontStyle"
+                                    lang="AR-SA">Created Date</label>
+                                <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" readonly/>
+                        </div>
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-form-label fw-bold fs-6 ArFontStyle"
+                                    lang="AR-SA">Attach Id</label>
+                                <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" readonly/>
+                        </div>                        
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-form-label fw-bold fs-6 ArFontStyle"
+                                    lang="AR-SA">Subject</label>
+                                <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0"
+                                [formControl]="documentAttachmentForm.controls[0].controls['subject']"/>
+                        </div>
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-form-label fw-bold fs-6 ArFontStyle"
+                                    lang="AR-SA">Remarks</label>
+                                <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0"
+                                [formControl]="documentAttachmentForm.controls[0].controls['attachmentRemarks']"/>
+                        </div>
+                        <div class="col-lg-4 fv-row">
+                            <label class="col-form-label fw-bold fs-6 ArFontStyle"
+                                    lang="AR-SA">Meta Tag</label>
+                                 <!--<input type="text" class="form-control form-control-lg  mb-3 mb-lg-0"
+                                [formControl]="documentAttachmentForm.controls[0].controls['metaTag']"/> -->
+                                <mat-form-field class="example-chip-list" appearance="outline">
+                                    <mat-chip-list #chipList aria-label="Fruit selection">
+                                    <mat-chip
+                                    *ngFor="let fruit of metaTag"
+                                    [selectable]="selectable"
+                                    [removable]="removable"
+                                    (removed)="remove(fruit)">
+                                    {{fruit}}
+                                        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                    </mat-chip>
+                                    <input
+                                    #fruitInput
+                                    [formControl]="documentAttachmentForm.controls[0].controls['metaTag']"
+                                    [matAutocomplete]="auto"
+                                    [matChipInputFor]="chipList"
+                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    [matChipInputAddOnBlur]="addOnBlur"
+                                    (matChipInputTokenEnd)="add($event)">
+                                    </mat-chip-list>
+                                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                                    
+                                    </mat-autocomplete>
+                                    </mat-form-field>
+                        </div>
+                        <!-- {{ metaTag | json }} -->
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 fv-row">
+                            <div class="mt-4">
+                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">Select Document Type</label>
+                                <ng-select [items]="selectDocTypeDto$ | async" bindLabel="shortname" bindValue="refId"
+                                [formControl]="documentAttachmentForm.controls[0].controls['docType']" lang="AR-SA">
+                                </ng-select>
+                            </div>
+                        </div>
                         <div class="col-lg-6 fv-row">
                             <div class="mt-4">
                                 <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">The
@@ -17,17 +81,17 @@
                                     (change)="onTheApplicationSelect($event)" />
                             </div>
                         </div>
+                        
+                    </div>
+                    <div class="row">
                         <div class="col-lg-6 fv-row">
                             <div class="mt-4">
-                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">Select Doc
-                                    Type</label>
+                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">Select Document Type</label>
                                 <ng-select [items]="selectDocTypeDto$ | async" bindLabel="shortname" bindValue="refId"
-                                [formControl]="documentAttachmentForm.controls[0].controls['docType']" lang="AR-SA">
+                                [formControl]="documentAttachmentForm.controls[1].controls['docType']" lang="AR-SA">
                                 </ng-select>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-lg-6 fv-row">
                             <div class="mt-4">
                                 <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">A personal
@@ -36,17 +100,17 @@
                                     (change)="onPersonalPhotoSelect($event)" />
                             </div>
                         </div> 
+                        
+                    </div>
+                    <div class="row">
                         <div class="col-lg-6 fv-row">
                             <div class="mt-4">
-                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">Select Doc
-                                    Type</label>
+                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">Select Document Type</label>
                                 <ng-select [items]="selectDocTypeDto$ | async" bindLabel="shortname" bindValue="refId"
-                                [formControl]="documentAttachmentForm.controls[1].controls['docType']" lang="AR-SA">
+                                [formControl]="documentAttachmentForm.controls[2].controls['docType']" lang="AR-SA">
                                 </ng-select>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-lg-6 fv-row">
                             <div class="mt-4">
                                 <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">A copy of the work
@@ -55,17 +119,17 @@
                                     (change)="onWorkIdSelect($event)" />
                             </div>
                         </div>
+                       
+                    </div>
+                    <div class="row">
                         <div class="col-lg-6 fv-row">
                             <div class="mt-4">
-                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">Select Doc
-                                    Type</label>
+                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">Select Document Type</label>
                                 <ng-select [items]="selectDocTypeDto$ | async" bindLabel="shortname" bindValue="refId"
-                                [formControl]="documentAttachmentForm.controls[2].controls['docType']" lang="AR-SA">
+                                [formControl]="documentAttachmentForm.controls[3].controls['docType']" lang="AR-SA">
                                 </ng-select>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-lg-6 fv-row">
                             <div class="mt-4">
                                 <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">A copy of a valid
@@ -74,17 +138,18 @@
                                     (change)="onCivilIdSelect($event)" />
                             </div>
                         </div>
+                        
+                    </div>
+                    <div class="row">
                         <div class="col-lg-6 fv-row">
                             <div class="mt-4">
-                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">Select Doc
+                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">Select Document Type
                                     Type</label>
                                 <ng-select [items]="selectDocTypeDto$ | async" bindLabel="shortname" bindValue="refId"
-                                [formControl]="documentAttachmentForm.controls[3].controls['docType']" lang="AR-SA">
+                                [formControl]="documentAttachmentForm.controls[4].controls['docType']"  lang="AR-SA">
                                 </ng-select>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-lg-6 fv-row">
                             <div class="mt-4">
                                 <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">Copy from System
@@ -93,15 +158,7 @@
                                     (change)="onSalaryDataSelect($event)" />
                             </div>
                         </div>
-                        <div class="col-lg-6 fv-row">
-                            <div class="mt-4">
-                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">Select Doc
-                                    Type</label>
-                                <ng-select [items]="selectDocTypeDto$ | async" bindLabel="shortname" bindValue="refId"
-                                [formControl]="documentAttachmentForm.controls[4].controls['docType']"  lang="AR-SA">
-                                </ng-select>
-                            </div>
-                        </div>
+                        
                     </div>
 
                 </form>

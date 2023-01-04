@@ -8,12 +8,19 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import {MatStepperModule} from '@angular/material/stepper';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+
+import {MatAutocompleteModule} from '@angular/material/autocomplete'
 const MaterialComponents = [
   MatButtonModule,MatTableModule,
   MatPaginatorModule,MatSortModule,
   MatFormFieldModule,MatInputModule,
   MatTooltipModule,MatCheckboxModule,
-  MatStepperModule
+  MatStepperModule,MatChipsModule,
+  MatSelectModule, MatIconModule,
+  MatAutocompleteModule
 
 ]
 

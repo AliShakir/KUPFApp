@@ -17,6 +17,7 @@ import { ElectronicFormsComponent } from './electronic-forms/electronic-forms.co
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { DocumentAttachmentComponent } from './document-attachment/document-attachment.component';
+import { MaterialModule } from '../../material/material.module';
 
 
 
@@ -45,6 +46,7 @@ import { DocumentAttachmentComponent } from './document-attachment/document-atta
     CKEditorModule,
     AngularEditorModule,
     TabsModule.forRoot(),
+    MaterialModule
   ],
   exports: [
     SearchTabComponent,

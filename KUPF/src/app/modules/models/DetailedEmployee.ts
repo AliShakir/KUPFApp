@@ -68,6 +68,9 @@
         membershipJoiningDate:Date;
         termination:string;
         terminationDate:Date;
+        isKUEmployee: boolean;
+        isOnSickLeave: boolean;
+        isMemberOfFund: boolean;
     }
 
 

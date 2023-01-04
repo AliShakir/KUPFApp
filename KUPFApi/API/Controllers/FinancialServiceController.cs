@@ -39,9 +39,9 @@ namespace API.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("AddFinancialService")]
-        public async Task<ActionResult<string>> AddFinancialService([FromForm]TransactionHdDto transactionHdDto)
+        public async Task<ActionResult<FinancialServiceResponse>> AddFinancialService([FromForm]TransactionHdDto transactionHdDto)
         {
-            string response = await _financialService.AddFinancialServiceAsync(transactionHdDto);
+            var response = await _financialService.AddFinancialServiceAsync(transactionHdDto);
             await _context.SaveChangesAsync();
             return response;
         }
