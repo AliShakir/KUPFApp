@@ -2,9 +2,9 @@
 <input type="hidden" #RefTableEntry name="RefTableEntry" value="RefTableEntry">
 <div class="card mb-5 mb-xl-8">
   <!--begin::Header-->
-  <div class="card-header border-0 pt-5 bg-light">
+  <div class="card-header border-0 pt-5 setup-bg-header">
     <div class="card-toolbar" *ngFor="let label of formHeaderLabels; let i = index">
-      <h3 class="text-dark ArFontStyle" lang="AR-SA" id="RefTableEntry">{{label.headerName}}</h3>
+      <h3 class="text-dark ArFontStyle theader" lang="AR-SA" id="RefTableEntry">{{label.headerName}}</h3>
     </div>
 
   </div>
@@ -73,7 +73,7 @@
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky:true"
-            [ngClass]="{'hidden':!isLoadingCompleted}"></tr>
+            [ngClass]="{'hidden':!isLoadingCompleted}" class="setup-search-header"></tr>
           <tr mat-row *matRowDef="let refTableDto; columns: columnsToDisplay"></tr>
         </table>
       </div>

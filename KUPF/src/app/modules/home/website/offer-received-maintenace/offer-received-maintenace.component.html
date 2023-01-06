@@ -2,15 +2,15 @@
 <input type="hidden" #OfferDetails name="OfferDetails" value="OfferDetails">
 <div class="card mb-5 mb-xl-10">
     <!--begin::Card header-->
-    <div class="card-header card-header-stretch pb-0 bg-light-dark">
+    <div class="card-header card-header-stretch pb-0 t_header_orm1">
         <!--begin::Title-->
         <div class="card-title" *ngFor="let label of formHeaderLabels; let i = index">
             <h3 class="m-0 ArFontStyle" lang="AR-SA" id="AddSpecialOffer">{{label.headerName}}</h3>
         </div>
         <h3 class="card-title align-items-start flex-column" *ngFor="let bodyLabel of formBodyLabels; let i = index">
             <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-primary ArFontStyle">{{bodyLabel[0].title}}</button>
-                <button type="button" class="btn btn-warning ArFontStyle">{{bodyLabel[1].title}}</button>
+                <button type="button" class="btn btn-primary ArFontStyle btn-website">{{bodyLabel[0].title}}</button>
+                <button type="button" class="btn btn-primary ArFontStyle btn-website_cancel">{{bodyLabel[1].title}}</button>
               </div>
               
         </h3>
@@ -75,7 +75,7 @@
 </div>
 <div class="card mb-5 mb-xl-8">
     <!--begin::Header-->
-    <div class="card-header border-0 pt-5 bg-light-dark" *ngFor="let bodyLabel of formBodyLabels; let i = index">       
+    <div class="card-header border-0 pt-5 t_header_orm2" *ngFor="let bodyLabel of formBodyLabels; let i = index">       
         <h3 class="m-0 ArFontStyle" lang="AR-SA">{{bodyLabel[8].title}}</h3>
     </div>
     <!--end::Header-->
@@ -172,8 +172,8 @@
             <!--begin::Table-->
             <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
                 <!--begin::Table head-->
-                <thead class="bg-dark">
-                    <tr class="fw-bolder text-white" *ngFor="let bodyLabel of formBodyLabels; let i = index">
+                <thead class="orm_subt_header">
+                    <tr class="fw-bolder" *ngFor="let bodyLabel of formBodyLabels; let i = index">
                         <th class="min-w-80px text-center ArFontStyle" lang="AR-SA">{{bodyLabel[7].title}}</th>
                         <th class="min-w-100px ArFontStyle" lang="AR-SA">{{bodyLabel[3].title}}</th>
                         <th class="min-w-120px ArFontStyle" lang="AR-SA">{{bodyLabel[4].title}}</th>

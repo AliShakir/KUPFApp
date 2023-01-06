@@ -8,6 +8,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./electronic-forms.component.scss']
 })
 export class ElectronicFormsComponent implements OnInit {
+  @Input() accordialElectronic: string;
 
   @Input() parentFormGroup: FormGroup;
   electronicForm: FormGroup | undefined;

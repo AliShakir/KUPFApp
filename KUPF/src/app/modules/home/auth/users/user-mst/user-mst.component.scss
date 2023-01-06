@@ -14,3 +14,10 @@ table {
 input:focus {
   background-color: #E9E9E9;
 }
+
+.usermstTableHeader{
+  background-color: var(--venitan-red2);
+  th {
+    color: #fff !important;
+  }
+}

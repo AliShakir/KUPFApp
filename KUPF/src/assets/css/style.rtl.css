@@ -101,6 +101,7 @@
   --steel-blue: #4682B4;
   --rudy-blue: #76ABDF;
 
+  --fluroscent-green: #22d600ed;
   --fluroscent-blue: #15f4ee;
   --light-sea-green: #16aca8;
   --comm-btn-hover: #0b8c7f;
@@ -110,7 +111,23 @@
   --fluro_btn_shade_i3: #4bb1ada8;
   --fluro_btn_shade_i4: #429f9c94;
 
+  --fluroscent-green-v1: #42c829;
+  --fluroscent-green-v2: #77d466;
+  --fluroscent-green-v3: #90d384;
+
+  --sweet-brown: #b23133;
+  --english-vermillion: #cc494b;
+  --candy-pink: #d66f71;
+  --ruddy-pink: #e19596;
+  --spanish-pink: #ecbcbc;
+  --misty-rose: #f6e2e2;
+  --setup-btn-hover: #74292a;
+  --venitan-red: #c4595b;
+  --venitan-red2: #c37c7d;
+  --venitan-red3: #b39192;
+
 }
+
 
 *,
 *::before,
@@ -48021,3 +48038,86 @@ body {
 .membership_details_accordian .accordion-button{
   background-color: var(--little-boy-blue);
 }
+
+.offer_details .accordion-button {
+  background-color: var(--fluroscent-green-v1);
+}
+
+.details_som .accordion-button {
+  background-color: var(--fluroscent-green-v2);
+}
+
+.details_som .accordion-button:not(.collapsed) {
+  color: black !important;
+}
+
+.offer_details .accordion-button:not(.collapsed) {
+  color: black !important;
+}
+
+.panelBgColor_setupadd .accordion-button{
+  background-color: var(--venitan-red);
+}
+
+
+.panelBgColorAddTenant .accordion-button {
+  background-color: var(--venitan-red2);
+}
+
+.panelBgColor_addServiceSetup .accordion-button {
+  background-color: var(--english-vermillion);
+}
+
+.e-serviceSetup .accordion-button {
+  background-color: var(--venitan-red);
+}
+
+.bgColorFromServiceSetup .accordion-button {
+  background-color: var(--venitan-red2);
+}
+
+.panelBgColor_setupadservice .accordion-button {
+  background-color: var(--venitan-red3);
+}
+
+.setupUser_functions .accordion-button {
+  background-color: var(--english-vermillion);
+  color: #fff !important;
+}
+
+.setupUser_functions .accordion-button:not(.collapsed) {
+  color: #fff !important;
+}
+
+.searchUsermst .accordion-button {
+  background-color: var(--sweet-brown);
+  color: #fff;
+}
+
+.addUsermst .accordion-button {
+  background-color: var(--english-vermillion);
+  color: #fff;
+
+}
+
+.listUsermst .accordion-button {
+  background-color: var(--venitan-red);
+  color: #fff;
+
+}
+
+
+.searchUsermst .accordion-button:not(.collapsed) {
+  color: #fff !important;
+}
+
+.addUsermst .accordion-button:not(.collapsed) {
+  color: #fff !important;
+}
+
+.listUsermst .accordion-button:not(.collapsed) {
+  color: #fff !important;
+}
+
+
+

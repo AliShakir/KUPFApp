@@ -1,7 +1,8 @@
 <!-- TO GET FORM ID AND SETTINGUP LANGAUGE. -->
 <input type="hidden" #OfferDetails name="OfferDetails" value="OfferDetails">
   
-    <ngb-accordion #ngbAddOffer="ngbAccordion" activeIds="ngb-panel-0" opened="true" *ngFor="let label of formHeaderLabels; let i = index">
+    <ngb-accordion #ngbAddOffer="ngbAccordion" activeIds="ngb-panel-0" opened="true" *ngFor="let label of formHeaderLabels; let i = index"
+    class="offer_details">
         <ngb-panel title={{label.headerName}} >
             <ng-template ngbPanelContent>
                 <div class="row">
@@ -73,7 +74,7 @@
     </ngb-accordion>
 
 <br/>
-<ngb-accordion #ngbOfferDetails="ngbAccordion" activeIds="ngb-panel-1" opened="false">
+<ngb-accordion #ngbOfferDetails="ngbAccordion" activeIds="ngb-panel-1" opened="false" class="details_som">
     <ngb-panel title="Details">
         <ng-template ngbPanelContent>
             <form [formGroup]="formGroup">
@@ -111,7 +112,7 @@
                             <td mat-cell *matCellDef="let item" class="ArFontStyle w-10">{{item.offerAmount }}</td>
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky:true"
-                            [ngClass]="{'hidden':!isLoadingCompleted}"></tr>
+                            [ngClass]="{'hidden':!isLoadingCompleted}" class="som_t_header"></tr>
                         <tr mat-row *matRowDef="let offers; columns: columnsToDisplay"></tr>
                     </table>
                 </div>

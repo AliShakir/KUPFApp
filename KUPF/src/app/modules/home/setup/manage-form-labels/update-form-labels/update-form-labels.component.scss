@@ -2,6 +2,28 @@
     font-family:"Tahoma","sans-serif"
 }
 .panel1bgColor{
-    background-color: rgba(88, 147, 157, 0.829);
+    background-color: var(--sweet-brown);
     }
+
+.panel1bgColorBody{
+    background-color: var(--english-vermillion);
+}
     
+.updateLabelBtnStyle{
+    background-color: var(--english-vermillion);
+    color: #fff;
+}
+
+.headerTableLanguage{
+    background-color: var(--venitan-red);
+    th {
+        color: #fff;
+    }
+}
+
+.headerTableLanguage1{
+    background-color: var(--venitan-red2);
+    th {
+        color: #fff;
+    }
+}

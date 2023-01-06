@@ -2,12 +2,12 @@
 <input type="hidden" #CarousalDetails name="CarousalDetails" value="CarousalDetails">
 <div class="card mb-5 mb-xl-8">
     <!--begin::Header-->
-    <div class="card-header border-0 pt-5 bg-light-danger">
+    <div class="card-header border-0 pt-5 bg-header">
         <div class="card-toolbar" *ngFor="let label of formHeaderLabels; let i = index">
             <h3 class="text-dark ArFontStyle" lang="AR-SA" id="CarousalDetails">{{label.headerName}}</h3>
         </div>
         <h3 class="card-title align-items-start flex-column" *ngFor="let bodyLabel of formBodyLabels; let i = index">
-            <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA" routerLink="/website-maintenace/add-carousal">{{bodyLabel[0].title}}</button>
+            <button type="button" class="btn btn-primary ArFontStyle btn-website" lang="AR-SA" routerLink="/website-maintenace/add-carousal">{{bodyLabel[0].title}}</button>
         </h3>
     </div>
     <!--end::Header-->
@@ -104,7 +104,7 @@
             <!--begin::Table-->
             <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
                 <!--begin::Table head-->
-                <thead class="bg-dark">
+                <thead class="bg-dark t-header-carousal">
                     <tr class="fw-bolder text-white" *ngFor="let bodyLabel of formBodyLabels; let i = index">
                         <th class="min-w-80px text-center ArFontStyle" lang="AR-SA">{{bodyLabel[1].title}}</th>
                         <th class="min-w-140px ArFontStyle" lang="AR-SA">{{bodyLabel[2].title}}</th>
