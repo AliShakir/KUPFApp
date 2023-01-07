@@ -58,8 +58,11 @@ namespace API.Servivces.Implementation.DetailedEmployee
         {
             if (_context != null)
             {
+                var crupId = _context.CrupMsts.Max(c => c.CrupId);
+                var maxCrupId = crupId + 1;
                 var newEmployee = _mapper.Map<Models.DetailedEmployee>(detailedEmployeeDto);                
                 newEmployee.LocationId = 1;
+                newEmployee.CRUP_ID = maxCrupId;
                 newEmployee.EmployeeId = CommonMethods.CreateEmployeeId().ToString();                
                 await _context.DetailedEmployees.AddAsync(newEmployee);
                 await _context.SaveChangesAsync();
@@ -78,10 +81,24 @@ namespace API.Servivces.Implementation.DetailedEmployee
 
                 if(existingEmployee != null)
                 {
-                    _mapper.Map(detailedEmployeeDto, existingEmployee);
-                    existingEmployee.LocationId = 1;
-                    _context.DetailedEmployees.Update(existingEmployee);
-                    await _context.SaveChangesAsync();
+                    if(existingEmployee.CRUP_ID == 0 || existingEmployee.CRUP_ID == null)
+                    {
+                        var crupId = _context.CrupMsts.Max(c => c.CrupId);
+                        var maxCrupId = crupId + 1;
+                        _mapper.Map(detailedEmployeeDto, existingEmployee);
+                        existingEmployee.LocationId = 1;
+                        existingEmployee.CRUP_ID = maxCrupId;
+                        _context.DetailedEmployees.Update(existingEmployee);
+                        await _context.SaveChangesAsync();
+                    }
+                    else
+                    {
+                        _mapper.Map(detailedEmployeeDto, existingEmployee);
+                        existingEmployee.LocationId = 1;
+                        _context.DetailedEmployees.Update(existingEmployee);
+                        await _context.SaveChangesAsync();
+                    }
+                    
                 }
                 
                 return detailedEmployeeDto.EmployeeId;

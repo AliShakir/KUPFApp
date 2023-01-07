@@ -245,7 +245,7 @@ export class ApprovalManagementComponent implements OnInit {
     //
     this.rejectServiceForm.patchValue({
       mytransId: event.target.id
-    })
+    }) 
     //
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', modalDialogClass: 'modal-md' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;

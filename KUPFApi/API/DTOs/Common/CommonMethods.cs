@@ -36,5 +36,16 @@ namespace API.Common
             int installments = remainingMonths + 12;
             return installments;
         }
+        /// <summary>
+        /// To calculate subscription duration...
+        /// </summary>
+        /// <param name="subscribeDate">Get total months</param>
+        /// <returns></returns>
+        public static int CalculateMembershipDuration(DateTime subscribeDate)
+        {
+            DateTime CurrentDate = DateTime.Now;
+            int totalMonths = 12 * (CurrentDate.Year - subscribeDate.Year) + CurrentDate.Month - subscribeDate.Month;
+            return totalMonths;
+        }
     }
 }

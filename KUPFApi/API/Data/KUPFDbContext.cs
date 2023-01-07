@@ -456,8 +456,8 @@ namespace API.Models
                     .HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.EmpStatus)
-                    .HasColumnName("emp_status")
-                    .HasDefaultValueSql("((1))");
+                    .HasColumnName("EmpStatus")
+                    .HasColumnType("int");
 
                 entity.Property(e => e.EmpStreet1)
                     .HasMaxLength(100)
@@ -664,8 +664,8 @@ namespace API.Models
                     .HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.EmpStatus)
-                    .HasColumnName("emp_status")
-                    .HasDefaultValueSql("((1))");
+                    .HasColumnName("EmpStatus")
+                    .HasColumnType("int");
 
                 entity.Property(e => e.EmpStreet1)
                     .HasMaxLength(100)
@@ -3994,8 +3994,9 @@ namespace API.Models
                     .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.AttachId)
-                    .HasColumnName("AttachID")
-                    .HasComment("TransactionHDDMS.AttachID");
+                    .HasColumnName("AttachId")
+                    .HasColumnType("int")
+                    .HasComment("TransactionHDDMS.AttachId");
 
                 entity.Property(e => e.CrupId).HasColumnName("CRUP_ID");
 
@@ -4093,7 +4094,9 @@ namespace API.Models
                     .HasColumnType("decimal(18, 3)")
                     .HasDefaultValueSql("((0))");
 
-                entity.Property(e => e.AttachId).HasColumnName("AttachID");
+                entity.Property(e => e.AttachId)
+                .HasColumnName("AttachId")
+                .HasColumnType("int");
 
                 entity.Property(e => e.BankId).HasColumnName("BankID");
 

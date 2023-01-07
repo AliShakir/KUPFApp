@@ -77,5 +77,11 @@ namespace API.Models
         public bool? IsKUEmployee { get; set; }
         public bool? IsOnSickLeave { get; set; }
         public bool? IsMemberOfFund { get; set; }
+        public long? CRUP_ID { get; set; }
+        public int? SettlementSerMonths { get; set; }
+        public decimal? SettlementAmount { get; set; }
+        public DateTime? NextSetlementPayDate { get; set; }
+        public decimal? NextSetlementPayAmount { get; set; }
+        public int? Subscription_status { get; set; }
     }
 }

@@ -7,6 +7,9 @@ namespace API.DTOs
 {
     public class ApproveRejectServiceDto
     {
+        public int TenantId { get; set; }
+        public int LocationId { get; set; }
+        public int UserId { get; set; }
         public long Mytransid { get; set; }        
         public DateTime? ApprovalDate { get; set; }
         public int? RejectionType { get; set; }
