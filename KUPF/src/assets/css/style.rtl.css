@@ -48119,5 +48119,6 @@ body {
   color: #fff !important;
 }
 
-
-
+.documentAccordian .accordion-button {
+  background-color: #9ac19a;
+}

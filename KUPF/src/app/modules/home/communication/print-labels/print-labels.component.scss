@@ -1,6 +1,10 @@
 .panelBackgroundColor{
     background-color: var(--fluroscent-blue);
 }
+
+.panelBackgroundSetup{
+    background-color: var(--sweet-brown);
+}
 .ArFontStyle{
     font-family:"Tahoma","sans-serif"
 }
@@ -15,3 +19,19 @@
     }
 }
 
+.bg-btn-print-labels-Setup{
+    background-color: var(--english-vermillion);
+
+    &.btn {
+        &.btn-primary:hover, &.btn-primary:focus, &.btn-primary:active {
+            background-color: var(--setup-btn-hover) !important; 
+        }
+    }
+}
+.labelHeader{
+    color: #000 !important;
+}
+
+.labelHeaderSetup{
+    color: #fff !important;
+}

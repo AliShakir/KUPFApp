@@ -46,4 +46,8 @@ export class AsideMenuComponent implements OnInit {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
       this.router.navigate([uri]));
   }
+
+  toPrint(val:string) {
+    localStorage.setItem('LabelFrom', val);
+  }
 }
