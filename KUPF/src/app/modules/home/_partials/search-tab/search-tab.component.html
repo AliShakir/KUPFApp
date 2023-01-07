@@ -2,9 +2,12 @@
 <input type="hidden" #SearchForm name="SearchForm" value="SearchForm">
 
 <div class="card mb-5 mb-xl-10">
-    <div class="card-header border-0 cursor-pointer panelBgColor3 orangeHeader" role="button" data-bs-toggle="collapse"
+    <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse"
         data-bs-target="#kt_account_email_preferences" aria-expanded="true"
-        aria-controls="kt_account_email_preferences">
+        aria-controls="kt_account_email_preferences"
+        [ngClass]="{'panelBgColor_membership': (pageName === 'AddSubscription' || pageName === 'AddEmployeeMovementP'),
+        'panelBgColor_service' : (pageName === 'AddService' || pageName === 'AddEmployeeDiscount'), 
+        'panelBgColor_references' : pageName === 'AddEmployeeCertificate'}">
         <div class="card-title m-0" *ngFor="let label of formHeaderLabels let i = index;">
             <h3 class="fw-bolder m-0 ArFontStyle" lang="AR-SA" id="SearchForm">{{label.headerName}}</h3>
         </div>
@@ -25,11 +28,11 @@
                         </select>
                     </div>
                     <div class="col-lg-2">
-                        <button type="button" class="btn btn-sm btn-success shadesOfOrange5" lang="AR-SA" (click)="open(sponsorModal)"
-                            [style]='arabicFont'>{{bodyLabel[0].title}}</button>
+                        <button type="button" class="btn btn-sm btn-success" lang="AR-SA" (click)="open(sponsorModal)"
+                        [ngClass]="{'search_sunglow': pageName === 'AddSubscription', 'search_color_service' :pageName === 'AddService' }" [style]='arabicFont' >{{bodyLabel[0].title}}</button>
                     </div>
                 </div>
-                <div class="notice d-flex bg-light-primary-orange-shade1 rounded border-primary border border-dashed p-6">
+                <div class="notice d-flex search_green_apple rounded border-primary border border-dashed p-6">
                     <div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
                         <form [formGroup]="searchForm">
                             <div class="row mb-4">
@@ -50,7 +53,7 @@
                                         name="employeeId" />
                                 </div>
                                 <div class="col-lg-3 fv-row">
-                                    <button type="button" class="btn btn-primary mt-8 shadesOfOrange6" lang="AR-SA"
+                                    <button type="button" class="btn btn-primary mt-8 fringy_flower" lang="AR-SA"
                                         [style]='arabicFont' (click)="SearchEmployee()">{{bodyLabel[5].title}}</button>
                                 </div>
                             </div>

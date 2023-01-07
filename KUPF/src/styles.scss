@@ -7,6 +7,9 @@
 
 @import "./assets/sass/style.angular.scss";
 @import "~@ng-select/ng-select/themes/default.theme.css";
+
+
+
 .card {
     transition: box-shadow .3s;
     box-shadow: 0 0 11px rgba(33,33,33,.2);
@@ -604,4 +607,46 @@ th.mat-header-cell:first-of-type,td.mat-cell:first-of-type,td.mat-footer-cell:fi
   border-top: 5px solid #065eb1;
   border-radius: 6px;
 }
+
+.btn_orange_peach {
+  background-color: var(--peach) !important;
+  margin-left: 10px;
+
+  &.btn {
+      &.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+          background-color: var(--sandyBeach) !important; 
+      }
+  }
+}
+
+.btn_green-pool-tb {
+  background-color: var(--pool-table) !important;
+  margin-left: 10px;
+
+  &.btn {
+      &.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+          background-color: var(--grass) !important; 
+      }
+  }
+}
+
+.service-details-table{
+  .mat-table {
+    thead{
+        .mat-header-row{
+          .mat-header-cell{
+            color: #fff !important;
+          }
+            .mat-sort-header-container{
+                .mat-sort-header-content{
+                    color: #fff !important;
+                }
+            }
+        }
+    }
+ 
+  }
+}
+
 /*************************End of style for material***************************/
+

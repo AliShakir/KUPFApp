@@ -1,16 +1,16 @@
 <!-- TO GET FORM ID AND SETTINGUP LANGAUGE. -->
 <input type="hidden" #ServiceDetails name="ServiceDetails" value="ServiceDetails">
 <div class="card mb-5 mb-xl-8">
-    <!--begin::Header-->
-    <div class="card-header border-0 pt-5 panel1bgColor">
+    <!--begin::Header--> 
+    <div class="card-header border-0 pt-5 header_waves">
         <div class="card-toolbar" *ngFor="let label of formHeaderLabels; let i = index">
-            <h3 class="text-dark ArFontStyle" lang="AR-SA" id="ServiceDetails">{{label.headerName}}</h3>
+            <h3 class="text-dark ArFontStyle header_color" lang="AR-SA" id="ServiceDetails">{{label.headerName}}</h3>
         </div>
         <div class="d-flex justify-content-between gap-4">
             <h3 class="card-title align-items-start flex-column">
                 <div class="btn-group" role="group" aria-label="Basic example" *ngFor="let bodyLabel of formBodyLabels; let i = index">
-                    <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA" (click)="openLoanForm()">{{bodyLabel[0].title}}</button>
-                    <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA">{{bodyLabel[1].title}}</button>
+                    <button type="button" class="btn btn-primary ArFontStyle btn_green-pool-tb" lang="AR-SA" (click)="openLoanForm()">{{bodyLabel[0].title}}</button>
+                    <button type="button" class="btn btn-primary ArFontStyle btn_green-pool-tb" lang="AR-SA">{{bodyLabel[1].title}}</button>
                 </div>
             </h3>
         </div>
@@ -95,7 +95,7 @@
                     <mat-icon matPrefix class="material-icons">search</mat-icon>                        
                     <mat-icon matSuffix (click)="clearFilter()" class="material-icons">close</mat-icon>
                 </mat-form-field>
-                <div class="table-container">
+                <div class="table-container service-details-table">
                     <table mat-table class="w-100" [dataSource]="returnTransactionHdDto" matSort>
                         <ng-container matColumnDef="action">
                             <th mat-header-cell *matHeaderCellDef>Action</th>
@@ -140,7 +140,7 @@
                             <td mat-cell *matCellDef="let item" class="ArFontStyle">{{item.discounted}}</td>
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky:true"
-                            [ngClass]="{'hidden':!isLoadingCompleted}"></tr>
+                            [ngClass]="{'hidden':!isLoadingCompleted}" class="row_header"></tr>
                         <tr mat-row *matRowDef="let formTitleHd; columns: columnsToDisplay"></tr>
                     </table>
                 </div>

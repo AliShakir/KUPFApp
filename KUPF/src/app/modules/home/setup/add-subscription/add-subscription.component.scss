@@ -1,28 +1,37 @@
 .panelBgColor{
-    background-color: #ffc04c;
+    background-color: var(--texasRose);
 }
 .ArFontStyle{
     font-family:"Tahoma","sans-serif";
     color: black !important;
 }
 
-.shadesOfOrange11{
-    background: #ffdb99;
+.creamBrulee{
+    background: var(--creamBrulee);
     color: #000;
 }
 
-.shadesOfOrange10{
-    background: #ffe4b2;
+.creamBrulee, .peach, .sandyBeach, .sazerac {
+    &.btn {
+        &.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+            background-color: var(--wheat) !important; 
+        }
+    }
+}
+
+.peach{
+    background: var(--peach);
+    color: #000;
+  
+}
+
+.sandyBeach{
+    background: var(--sandyBeach);
     color: #000;
 }
 
-.shadesOfOrange9{
-    background: #ffedcc;
-    color: #000;
-}
-
-.shadesOfOrange8{
-    background: #fff6e5;
+.sazerac{
+    background: var(--sazerac);
     color: #000;
 }
 

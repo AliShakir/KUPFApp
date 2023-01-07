@@ -1,20 +1,13 @@
-.panel1bgColor{
-    background-color: #FFA500;
-}
 .ArFontStyle{
     font-family:"Tahoma","sans-serif";
     color: #000 !important;
 }
 
-
-.bg-light-primary-orange-shade3{
-    background-color: #ffc04c;
+.headerWebOrange {
+    background-color: var(--webOrange);
 }
 
-.shadesOfOrange5{
-    background: #ffe4b2;
-
-    &.sdmargin{
-        margin-left: 10px;
-    }
+.t_header_orangeTexasRose{
+    background-color: var(--texasRose);
 }
+

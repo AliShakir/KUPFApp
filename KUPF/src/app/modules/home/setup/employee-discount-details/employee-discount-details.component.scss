@@ -1,6 +1,13 @@
-.ArFontStyle{
-    font-family:"Tahoma","sans-serif"
+.header_waves{
+    background-color: var(--green);
 }
-.panel1bgColor{
-    background-color: #474747;
+.ArFontStyle{
+    font-family:"Tahoma","sans-serif";
+    &.header_color{
+        color: #fff !important;
     }
+}
+.row_header{
+        background-color: var(--leaf) !important;
+        color: #fff !important;
+}

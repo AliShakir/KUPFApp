@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, Input } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
@@ -44,7 +44,7 @@ export class AddSubscriptionComponent implements OnInit {
 
     /*----------------------------------------------------*/  
   //#endregion
-
+  
   closeResult: string = '';
   constructor(private modalService: NgbModal,
     private localizationService: LocalizationService,

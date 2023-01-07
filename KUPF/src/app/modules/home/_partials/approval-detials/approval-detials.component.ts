@@ -15,7 +15,7 @@ import { LocalizationService } from 'src/app/modules/_services/localization.serv
 })
 export class ApprovalDetialsComponent implements OnInit {
 
-
+  @Input() accordialApprovalDetails: string;
 //#region 
     /*----------------------------------------------------*/
 
