@@ -4,14 +4,14 @@
     <div class="card-header border-0 pt-5 panelBgColor1">
        <!-- TO GET FORM ID AND SETTINGUP LANGAUGE. -->
         <div class="card-toolbar" *ngFor="let label of formHeaderLabels; let i = index">
-            <h3 class="text-dark ArFontStyle" lang="AR-SA" id="ServiceSetupDetail">{{label.headerName}}</h3>
+            <h3 class="text-dark ArFontStyle header-color" lang="AR-SA" id="ServiceSetupDetail">{{label.headerName}}</h3>
         </div>
         <h3 class="card-title align-items-start flex-column">
             <div class="btn-group" role="group" aria-label="Basic example"
                 *ngFor="let bodyLabel of formBodyLabels; let i = index">
-                <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA"
-                    routerLink="/service-setup/add-service-setup">{{bodyLabel[1].title}}</button>
-                <button type="button" class="btn btn-warning ArFontStyle" lang="AR-SA">{{bodyLabel[3].title}}</button>
+                <button type="button" class="btn btn-primary ArFontStyle english-vermillion" lang="AR-SA"
+                    routerLink="/service-setup/add-service-setup ">{{bodyLabel[1].title}}</button>
+                <button type="button" class="btn btn-primary ArFontStyle candy-pink" lang="AR-SA">{{bodyLabel[3].title}}</button>
             </div>
         </h3>
     </div>

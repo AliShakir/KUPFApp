@@ -1,7 +1,10 @@
-<ngb-accordion #acc="ngbAccordion" class="mb-2" opened="false">
+<ngb-accordion #acc="ngbAccordion" class="mb-2" opened="false" 
+[ngClass]="{'panelBgColor_addServiceSetup': accordialHTMLForms === 'addServiceSetup'}">
     <ngb-panel>
         <ng-template ngbPanelTitle>            
-            <h3 class="m-0 ArFontStyle" lang="AR-SA">Website Display Content - محتوى عرض الموقع</h3>  
+            <h3 class="m-0 ArFontStyle" lang="AR-SA"
+            [ngClass]="{'headcolor_addServiceSetup': accordialHTMLForms === 'addServiceSetup'}"
+            >Website Display Content - محتوى عرض الموقع</h3>  
           </ng-template>
       <ng-template ngbPanelContent >    
         <form [formGroup]="editorForm" id="editorForm" autocomplete="off">

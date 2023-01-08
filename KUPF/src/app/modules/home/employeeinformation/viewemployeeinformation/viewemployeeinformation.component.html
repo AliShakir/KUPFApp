@@ -2,10 +2,10 @@
 <div class="card mb-5 mb-xl-8">    
     <div class="card-header border-0 pt-5 panelBgColor">
         <div class="card-toolbar" *ngFor="let label of formHeaderLabels; let i = index">            
-            <h3 class="m-0 ArFontStyle" lang="AR-SA">{{label.headerName}}</h3>
+            <h3 class="m-0 ArFontStyle header_color" lang="AR-SA">{{label.headerName}}</h3>
         </div>         
-        <h3 class="card-title align-items-start flex-column" *ngFor="let bodyLabel of formBodyLabels; let i = index">
-            <a routerLink="/employee/add-employee" class="btn btn-primary w-100 ArFontStyle" lang="AR-SA">
+        <h3 class="card-title align-items-start flex-column viewEmployee" *ngFor="let bodyLabel of formBodyLabels; let i = index">
+            <a routerLink="/employee/add-employee" class="btn btn-primary w-100 ArFontStyle viewEmployeeBtn" lang="AR-SA">
                 <span class="svg-icon svg-icon-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path
@@ -88,7 +88,7 @@
                             </ng-container>
                         </div>
                         <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky:true"
-                            [ngClass]="{'hidden':!isLoadingCompleted}"></tr>
+                            [ngClass]="{'hidden':!isLoadingCompleted}" class="viewEmployee_thead"></tr>
                         <tr mat-row *matRowDef="let formTitleHd; columns: columnsToDisplay"></tr>
                     </table>
                 </div>

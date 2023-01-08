@@ -7,6 +7,7 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
   styleUrls: ['./html-forms.component.scss']
 })
 export class HtmlFormsComponent implements OnInit {
+  @Input() accordialHTMLForms: string;
  
   englishHTML: any = '';
   arabicHtml: any = '';

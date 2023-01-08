@@ -1,7 +1,7 @@
 
 .panel1bgColor{
-    background-color: rgba(88, 147, 157, 0.829);
-    }
+    background-color: var(--sweet-brown);
+}
     tr:hover td {
         background: #d8ecfa !important;
         
@@ -11,4 +11,13 @@
     }
 
 
+.header_color{
+    color: #fff !important;
+}
  
+.table_header_bg{
+    background-color: var(--english-vermillion);
+    .mat-header-cell{
+        color: #fff !important;
+    }
+}

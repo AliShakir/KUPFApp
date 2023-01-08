@@ -27,7 +27,7 @@ background-color: var(--fringy_flower);
 
 .dark-sea-green, .tea-green, .caledon {
     &.btn {
-        &.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+        &.btn-primary:hover, &.btn-primary:focus, &.btn-primary:active {
             background-color: var(--light-moss-green) !important; 
         }
     }

@@ -1,4 +1,4 @@
-<ngb-accordion #ngbListUsers="ngbAccordion" activeIds="ngb-panel-0">
+<ngb-accordion #ngbListUsers="ngbAccordion" activeIds="ngb-panel-0" class="searchUsermst">
     <ngb-panel title="Function MST Details">
         <ng-template ngbPanelContent>
             <form [formGroup]="formGroup">
@@ -54,7 +54,7 @@
                             <td mat-cell *matCellDef="let element" class="text-right ArFontStyle"> {{element.link}}</td>
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky:true"
-                                [ngClass]="{'hidden':!isLoadingCompleted}"></tr>
+                                [ngClass]="{'hidden':!isLoadingCompleted}" class="functionMstHeader"></tr>
                             <tr mat-row *matRowDef="let formTitleHd; columns: columnsToDisplay"></tr>
                     </table>
                 </div>
@@ -67,7 +67,7 @@
     </ngb-panel>
 </ngb-accordion>
 <br />
-<ngb-accordion #ngbListUsers="ngbAccordion" activeIds="ngb-panel-0">
+<ngb-accordion #ngbListUsers="ngbAccordion" activeIds="ngb-panel-0" class="addUsermst">
     <ngb-panel title="Add/Edit">
         <ng-template ngbPanelContent>
             <mat-stepper [linear]="isLinear" #stepper>

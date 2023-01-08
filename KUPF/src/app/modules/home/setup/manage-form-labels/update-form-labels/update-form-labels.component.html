@@ -6,7 +6,7 @@
             <h3 class="m-0 text-white ArFontStyle" lang="AR-SA">Manage Form Header Language</h3>
         </div>
         <div class="card-title">
-            <button mat-raised-button color="accent" routerLink="/references/manage-form-labels" routerLinkActive="">Back</button>
+            <button mat-raised-button color="accent" class="updateLabelBtnStyle" routerLink="/references/manage-form-labels" routerLinkActive="">Back</button>
         </div>
         <!--end::Title-->
     </div>
@@ -71,7 +71,7 @@
                                 </td>
                               </ng-container>                         
                             <tr mat-header-row *matHeaderRowDef="headerColumnsToDisplay; sticky:true"
-                                [ngClass]="{'hidden':!isLoadingCompleted}" class="table-row"></tr>
+                                [ngClass]="{'hidden':!isLoadingCompleted}" class="headerTableLanguage"></tr>
                             <tr mat-row *matRowDef="let formTitleHd; columns: headerColumnsToDisplay;"></tr>
                         </table>
                     </div>
@@ -87,7 +87,7 @@
 
 <div class="card mb-5 mb-xl-10">
     <!--begin::Card header-->
-    <div class="card-header card-header-stretch pb-0 panel1bgColor">
+    <div class="card-header card-header-stretch pb-0 panel1bgColorBody">
         <!--begin::Title-->
         <div class="card-title">
             <h3 class="m-0 text-white ArFontStyle" lang="AR-SA">Manage Form Body Language</h3>
@@ -163,7 +163,7 @@
                                 </td>
                             </ng-container>
                             <tr mat-header-row *matHeaderRowDef="bodyColumnsToDisplay; sticky:true"
-                                [ngClass]="{'hidden':!isLoadingCompleted}"></tr>
+                                [ngClass]="{'hidden':!isLoadingCompleted}" class="headerTableLanguage1"></tr>
                             <tr mat-row *matRowDef="let formTitleHd; columns: bodyColumnsToDisplay"></tr>
                         </table>
                     </div>

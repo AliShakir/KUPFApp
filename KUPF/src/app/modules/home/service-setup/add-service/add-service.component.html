@@ -8,9 +8,9 @@
                 <button type="button" class="btn btn-primary float-left ArFontStyle dark-sea-green" lang="AR-SA"
                     (click)="saveFinancialService()">{{bodyLabel[0].title}}</button>
 
-                <button type="button" class="btn btn-warning float-left ArFontStyle caledon" lang="AR-SA"
+                <button type="button" class="btn btn-primary float-left ArFontStyle caledon" lang="AR-SA"
                    (click)="openPopUpModal(popupModal)" >{{bodyLabel[1].title}}</button>
-                <button type="button" class="btn btn-danger float-left ArFontStyle tea-green" lang="AR-SA"
+                <button type="button" class="btn btn-primary float-left ArFontStyle tea-green" lang="AR-SA"
                     routerLink="/service-setup/service-details">{{bodyLabel[2].title}}</button>
             </div>
         </div>
@@ -171,7 +171,7 @@
         <!--end::Tab content-->
     </div>
     <!--Document Information-->
-    <app-document-attachment [parentFormGroup]="parentForm"></app-document-attachment>
+    <app-document-attachment [parentFormGroup]="parentForm" [documentAccordialDetails]="'ServiceFinanceAccordian'"></app-document-attachment>
     <br />
     <!--Financial Details-->
     <app-financial-detials [parentFormGroup]="parentForm" [accordialDetails]="'ServiceFinanceAccordian'"></app-financial-detials>

@@ -402,7 +402,8 @@
           Letter</span></a>
     </div>
     <div class="menu-item">
-      <a class="menu-link without-sub" routerLink="/communication/print-labels" routerLinkActive="active"><span
+      <a class="menu-link without-sub" routerLink="/communication/print-labels" routerLinkActive="active"
+      (click)="toPrint('Communication')"><span
           class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Print
           Label</span></a>
     </div>
@@ -487,7 +488,7 @@
           Setup</span></a>
     </div>
     <div class="menu-item">
-      <a class="menu-link without-sub" routerLink="/communication/print-labels" routerLinkActive="active"><span
+      <a class="menu-link without-sub" routerLink="/communication/print-labels" routerLinkActive="active" (click)="toPrint('Setup')"><span
           class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">
           Labels</span></a>
     </div>
