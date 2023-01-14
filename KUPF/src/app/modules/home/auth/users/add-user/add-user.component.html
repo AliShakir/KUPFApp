@@ -7,9 +7,9 @@
         </div>
         <h3 class="card-title align-items-start flex-column">
             <div class="btn-group" role="group" aria-label="Basic example" *ngFor="let bodyLabel of formBodyLabels; let i = index">
-                <button type="button" class="btn btn-primary ArFontStyle">{{bodyLabel[0].title}}</button>
-                <button type="button" class="btn btn-warning ArFontStyle">{{bodyLabel[1].title}}</button>
-                <button type="button" class="btn btn-light-dark ArFontStyle" routerLink="/users/user-details">{{bodyLabel[2].title}}</button>
+                <button type="button" class="btn btn-primary ArFontStyle english-vermillion">{{bodyLabel[0].title}}</button>
+                <button type="button" class="btn btn-primary ArFontStyle candy-pink">{{bodyLabel[1].title}}</button>
+                <button type="button" class="btn btn-primary ArFontStyle ruddy-pink" routerLink="/users/user-details">{{bodyLabel[2].title}}</button>
             </div>
 
         </h3>
@@ -77,7 +77,7 @@
 </div>
 <div class="card mb-5 mb-xl-8" *ngFor="let bodyLabel of formBodyLabels; let i = index">
     <!--begin::Header-->
-    <div class="card-header border-0 pt-5 panel1bgColor">
+    <div class="card-header border-0 pt-5 panel1bgColorRights">
         <div class="card-title">
             <h3 class="m-0 text-white ArFontStyle">{{bodyLabel[9].title}}</h3>
         </div>

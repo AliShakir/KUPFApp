@@ -3,13 +3,13 @@
     <div class="card-header card-header-stretch pb-0 panelBgColor1">
         <!--begin::Title-->
         <div class="card-title" *ngFor="let label of formHeaderLabels; let i = index">
-            <h3 class="m-0 ArFontStyle">{{label.headerName}}</h3>
+            <h3 class="m-0 ArFontStyle theader">{{label.headerName}}</h3>
         </div>
         <h3 class="card-title align-items-start flex-column">
             <div class="btn-group" role="group" aria-label="Basic example" *ngFor="let bodyLabel of formBodyLabels; let i = index">
-                <button type="button" class="btn btn-primary ArFontStyle" (click)="addServiceSetup()">{{bodyLabel[0].title}}</button>
-                <button type="button" class="btn btn-warning ArFontStyle ">{{bodyLabel[1].title}}</button>
-                <button type="button" class="btn btn-light-dark ArFontStyle" routerLink="/service-setup/service-setup-details" routerLinkActive="active" >{{bodyLabel[2].title}}</button>
+                <button type="button" class="btn btn-primary ArFontStyle english-vermillion" (click)="addServiceSetup()">{{bodyLabel[0].title}}</button>
+                <button type="button" class="btn btn-primary ArFontStyle candy-pink">{{bodyLabel[1].title}}</button>
+                <button type="button" class="btn btn-primary ArFontStyle ruddy-pink" routerLink="/service-setup/service-setup-details" routerLinkActive="active" >{{bodyLabel[2].title}}</button>
               </div>              
         </h3>
         <!--end::Title-->
@@ -190,24 +190,25 @@
     </div>
     <!--end::Tab content-->
 </div>
-<app-html-forms [parentFormGroup]="parentForm"> 
+<app-html-forms [parentFormGroup]="parentForm" [accordialHTMLForms]="'addServiceSetup'"> 
 
 </app-html-forms>
 
 <br/>
 <app-electronic-forms [parentFormGroup]="parentForm" 
 (fileSelect1Event)="onfileSelect1Event($event)"
-(fileSelect2Event)="onfileSelect2Event($event)">
+(fileSelect2Event)="onfileSelect2Event($event)"
+[accordialElectronic]="'fromAddServiceSetup'">
 
 </app-electronic-forms>
 
 <br/>
-<app-financial-detials [parentFormGroup]="parentForm">
+<app-financial-detials [parentFormGroup]="parentForm" [accordialDetails]="'addServiceSetup'">
 
 </app-financial-detials>
 
 <br/>
-<app-approval-detials [parentFormGroup]="parentForm">
+<app-approval-detials [parentFormGroup]="parentForm" [accordialApprovalDetails]="'addServiceSetup'">
 
 </app-approval-detials>
 

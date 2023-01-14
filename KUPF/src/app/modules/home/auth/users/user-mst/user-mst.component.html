@@ -1,4 +1,4 @@
-<ngb-accordion #ngbSearchUser="ngbAccordion" activeIds="ngb-panel-0">
+<ngb-accordion #ngbSearchUser="ngbAccordion" activeIds="ngb-panel-0" class="searchUsermst">
     <ngb-panel title="Search User">
         <ng-template ngbPanelContent>
 
@@ -25,7 +25,7 @@
     </ngb-panel>
 </ngb-accordion>
 <br />
-<ngb-accordion #ngbAddUser="ngbAccordion" activeIds="ngb-panel-0" opened="true">
+<ngb-accordion #ngbAddUser="ngbAccordion" activeIds="ngb-panel-0" opened="true" class="addUsermst">
     <ngb-panel title="Add User">
         <ng-template ngbPanelContent>
             <div class="row mb-4">
@@ -151,7 +151,7 @@
 </ngb-accordion>
 <br />
 
-<ngb-accordion #ngbListUsers="ngbAccordion" activeIds="ngb-panel-0">
+<ngb-accordion #ngbListUsers="ngbAccordion" activeIds="ngb-panel-0" class="listUsermst">
     <ngb-panel title="List">
         <ng-template ngbPanelContent>
             <form [formGroup]="formGroup">
@@ -195,7 +195,7 @@
                                 'Active':'Inactive'}}</td>
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky:true"
-                            [ngClass]="{'hidden':!isLoadingCompleted}"></tr>
+                            [ngClass]="{'hidden':!isLoadingCompleted}" class="usermstTableHeader"></tr>
                         <tr mat-row *matRowDef="let userMst; columns: columnsToDisplay"></tr>
                     </table>
                 </div>

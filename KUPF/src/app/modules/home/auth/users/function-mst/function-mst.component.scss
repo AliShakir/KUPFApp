@@ -13,3 +13,10 @@ input:focus {
 .fontSizeHeader{
   font-size: 13px;
   }
+
+.functionMstHeader{
+  background-color: var(--venitan-red);
+  th {
+    color: #fff !important;
+  }
+}

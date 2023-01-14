@@ -36,9 +36,11 @@ export class PrintLabelsComponent implements OnInit {
   constructor() {
 
   }
-
+  labelBackground:any;
   ngOnInit(): void {
-
+    const label = localStorage.getItem('LabelFrom');
+    this.labelBackground = label;
+    // localStorage.removeItem('LabelFrom');
     //#region TO SETUP THE FORM LOCALIZATION    
     // TO GET THE LANGUAGE ID e.g. 1 = ENGLISH and 2 =  ARABIC
     this.languageType = localStorage.getItem('langType');

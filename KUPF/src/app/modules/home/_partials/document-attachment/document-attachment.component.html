@@ -1,6 +1,6 @@
 <!-- TO GET FORM ID AND SETTINGUP LANGAUGE. -->
 <input type="hidden" #DocumentAttachments name="DocumentAttachments" value="DocumentAttachments">
-<ngb-accordion #acc="ngbAccordion" class="mb-2" activeIds="ngb-panel-0">
+<ngb-accordion #acc="ngbAccordion" class="mb-2" activeIds="ngb-panel-0" [ngClass]="{'documentAccordian': documentAccordialDetails  === 'ServiceFinanceAccordian'}">
     <ngb-panel>
         <ng-template ngbPanelTitle>
             <h3 class="m-0 ArFontStyle" lang="AR-SA" id="DocumentAttachments">Document Attachments</h3>

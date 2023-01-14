@@ -1,7 +1,10 @@
-<ngb-accordion #acc="ngbAccordion" class="mb-2" activeIds="ngb-panel-0">
+<ngb-accordion #acc="ngbAccordion" class="mb-2" activeIds="ngb-panel-0"
+[ngClass]="{'e-serviceSetup':accordialElectronic === 'fromAddServiceSetup'}">
     <ngb-panel>
         <ng-template ngbPanelTitle>            
-            <h3 class="m-0 ArFontStyle" lang="AR-SA">Electronic Forms - النماذج الإلكترونية</h3>  
+            <h3 class="m-0 ArFontStyle"
+            [ngClass]="{'head-color-e-serviceSetup':accordialElectronic === 'fromAddServiceSetup'}"
+            lang="AR-SA">Electronic Forms - النماذج الإلكترونية</h3>  
           </ng-template>
       <ng-template ngbPanelContent >    
         <form [formGroup]="electronicForm" id="electronicForm" autocomplete="off">

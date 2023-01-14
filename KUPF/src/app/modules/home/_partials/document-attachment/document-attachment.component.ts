@@ -18,6 +18,7 @@ export interface Fruit {
 })
 export class DocumentAttachmentComponent implements OnInit {
   @Input() parentFormGroup: FormGroup;
+  @Input() documentAccordialDetails: string;
   documentAttachmentForm: FormArray<any>;
   selectDocTypeDto$: Observable<SelectServiceTypeDto[]>;
   documentForm: FormGroup;

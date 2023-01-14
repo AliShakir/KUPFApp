@@ -9,8 +9,8 @@
         </div>
         <h3 class="card-title align-items-start flex-column">
             <div class="btn-group" role="group" aria-label="Basic example" *ngFor="let bodyLabel of formBodyLabels; let i = index">
-                <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA">{{bodyLabel[0].title}}</button>
-                <button type="button" class="btn btn-warning ArFontStyle" lang="AR-SA">{{bodyLabel[2].title}}</button>
+                <button type="button" class="btn btn-primary ArFontStyle english-vermillion" lang="AR-SA">{{bodyLabel[0].title}}</button>
+                <button type="button" class="btn btn-primary ArFontStyle candy-pink" lang="AR-SA">{{bodyLabel[2].title}}</button>
               </div>
         </h3>
         <!--end::Title-->
@@ -144,7 +144,7 @@
 
 <div class="card mb-5 mb-xl-10">
     <!--begin::Card header-->
-    <div class="card-header card-header-stretch pb-0 panelBgColor">
+    <div class="card-header card-header-stretch pb-0 panelBgColor1">
         <!--begin::Title-->
         <div class="card-title" *ngFor="let bodyLabel of formBodyLabels; let i = index">
             <h3 class="m-0 text-white ArFontStyle" lang="AR-SA">{{bodyLabel[26].title}}</h3>
@@ -222,6 +222,6 @@
         </div>
     </div>
 </div>
-<app-approval-detials></app-approval-detials>
+<app-approval-detials [accordialApprovalDetails]="'setupAddUniversityTenant'"></app-approval-detials>
 <br/>
-<app-financial-detials></app-financial-detials>
+<app-financial-detials [accordialDetails]="'setupAddUniversityTenantfinance'"></app-financial-detials>

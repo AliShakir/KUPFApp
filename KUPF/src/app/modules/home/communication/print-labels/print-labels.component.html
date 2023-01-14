@@ -1,9 +1,12 @@
 
 <div class="card mb-5 mb-xl-10">
-    <div class="card-header card-header-stretch pb-0 panelBackgroundColor"
+    <div class="card-header card-header-stretch pb-0"
+    [ngClass]="{'panelBackgroundColor': labelBackground === 'Communication', 'panelBackgroundSetup': labelBackground === 'Setup'}"
         *ngFor="let label of formHeaderLabels; let i = index">
         <div class="card-title">
-            <h3 class="m-0 ArFontStyle" lang="AR-SA" id="PrintLabels">{{label.headerName}}</h3>
+            <h3 class="m-0 ArFontStyle" lang="AR-SA" id="PrintLabels"
+            [ngClass]="{'labelHeader': labelBackground === 'Communication', 'labelHeaderSetup': labelBackground === 'Setup'}"
+            >{{label.headerName}}</h3>
         </div>
     </div>
     <div *ngFor="let bodyLabel of formBodyLabels; let i = index">
@@ -43,7 +46,9 @@
         </div>
         <div class="card-footer d-flex justify-content-end py-6 px-9 ">
             <div class="d-flex">
-                <a href="#" class="btn btn-primary me-3 ArFontStyle" lang="AR-SA">{{bodyLabel[4].title}}</a>
+                <a href="#" class="btn btn-primary me-3 ArFontStyle"
+                [ngClass]="{'bg-btn-print-labels': labelBackground === 'Communication', 'bg-btn-print-labels-Setup': labelBackground === 'Setup'}"
+                lang="AR-SA">{{bodyLabel[4].title}}</a>
             </div>
         </div>
     </div>

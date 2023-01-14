@@ -2,7 +2,7 @@
 <input type="hidden" #ImportEmployeeMaster name="ImportEmployeeMaster" value="ImportEmployeeMaster">
 <div class="card mb-5 mb-xl-10">
     <!--begin::Card header-->
-    <div class="card-header card-header-stretch pb-0 bg-primary">
+    <div class="card-header card-header-stretch pb-0 header_bg">
         <!--begin::Title-->
         <div class="card-title" *ngFor="let label of formHeaderLabels; let i = index">
             <h3 class="m-0 text-white ArFontStyle" lang="AR-SA">{{label.headerName}}</h3>
@@ -38,6 +38,6 @@
     </div>
     <!--end::Tab content-->
     <div class="card-footer d-flex justify-content-end py-6 px-9 " *ngFor="let bodyLabel of formBodyLabels; let i = index">
-        <button type="button" class="btn btn-primary float-right ArFontStyle" lang="AR-SA"> {{bodyLabel[4].title}}</button>
+        <button type="button" class="btn btn-primary float-right ArFontStyle btn-bg" lang="AR-SA"> {{bodyLabel[4].title}}</button>
     </div>
 </div>

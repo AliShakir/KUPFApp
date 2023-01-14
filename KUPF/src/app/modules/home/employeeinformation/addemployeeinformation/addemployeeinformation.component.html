@@ -8,21 +8,23 @@
         <!-- Save Button -->
         <button type="button" class="btn btn-primary float-left ArFontStyle" lang="AR-SA" (click)="submitForm()"
           [disabled]="!addEmployeeForm.valid || !jobDetailsForm.valid">{{bodyLabel[0].title}}</button>
+        <button type="button" class="btn btn-primary float-left ArFontStyle cyan-azure" lang="AR-SA"
+          (click)="submitForm()">{{bodyLabel[0].title}}</button>
         <!-- Cancel Button -->
-        <button type="button" class="btn btn-warning float-left ArFontStyle"
+        <button type="button" class="btn btn-primary float-left ArFontStyle moonstone-blue "
           lang="AR-SA">{{bodyLabel[1].title}}</button>
         <!-- Back Button -->
-        <button type="button" class="btn btn-danger float-left ArFontStyle" routerLink="/employee/view-employee"
+        <button type="button" class="btn btn-primary float-left ArFontStyle beau-blue" routerLink="/employee/view-employee"
           routerLinkActive="active" lang="AR-SA">{{bodyLabel[2].title}}</button>
       </div>
     </div>
   </div>
 </div>
 <!-- TO GET FORM ID AND SETTINGUP LANGAUGE. -->
-<ngb-accordion #acc="ngbAccordion" class="mb-2" activeIds="ngb-panel-0">
+<ngb-accordion #acc="ngbAccordion" class="mb-2 addEmployee" activeIds="ngb-panel-0">
   <ngb-panel>
     <ng-template ngbPanelTitle *ngFor="let label of formHeaderLabels; let i = index">
-      <h3 class="m-0 ArFontStyle" lang="AR-SA" id="FinancialDetails">{{label.headerName}}</h3>
+      <h3 class="m-0 ArFontStyle header_color" lang="AR-SA" id="FinancialDetails">{{label.headerName}}</h3>
     </ng-template>
     <ng-template ngbPanelContent>
       <div class="row gx-9 gy-6" *ngFor="let bodyLabel of formBodyLabels; let i = index">
@@ -191,10 +193,10 @@
 </ngb-accordion>
 <br />
 
-<ngb-accordion #acc="ngbAccordion" class="mb-2 mt-4" activeIds="ngb-panel-0">
+<ngb-accordion #acc="ngbAccordion" class="mb-2 mt-4 job_details_accordian" activeIds="ngb-panel-0">
   <ngb-panel>
     <ng-template ngbPanelTitle *ngFor="let bodyLabel of formBodyLabels; let i = index">
-      <h3 class="m-0 ArFontStyle" lang="AR-SA" id="FinancialDetails">{{bodyLabel[14].title}}</h3>
+      <h3 class="m-0 ArFontStyle header_color" lang="AR-SA" id="FinancialDetails">{{bodyLabel[14].title}}</h3>
     </ng-template>
     <ng-template ngbPanelContent>
       <div class="row gx-9 gy-6" *ngFor="let bodyLabel of formBodyLabels; let i = index">
@@ -267,10 +269,10 @@
 </ngb-accordion>
 <br />
 
-<ngb-accordion #acc="ngbAccordion" class="mb-2" activeIds="ngb-panel-0">
+<ngb-accordion #acc="ngbAccordion" class="mb-2 membership_details_accordian" activeIds="ngb-panel-0">
   <ngb-panel>
     <ng-template ngbPanelTitle *ngFor="let bodyLabel of formBodyLabels; let i = index">
-      <h3 class="m-0 ArFontStyle" lang="AR-SA" id="FinancialDetails">{{bodyLabel[21].title}}</h3>
+      <h3 class="m-0 ArFontStyle header_color" lang="AR-SA" id="FinancialDetails">{{bodyLabel[21].title}}</h3>
     </ng-template>
     <ng-template ngbPanelContent>
       <div class="row gx-9 gy-6" *ngFor="let bodyLabel of formBodyLabels; let i = index">
@@ -315,7 +317,7 @@
   </ngb-panel>
 </ngb-accordion>
 <br />
-<app-financial-detials [parentFormGroup]="parentForm">
+<app-financial-detials [parentFormGroup]="parentForm" [accordialDetails]="'AddEmployee'">
 </app-financial-detials>
 
 <!--PopupModal Modal-->

@@ -2,8 +2,19 @@
     font-family:"Tahoma","sans-serif"
 }
 .panelBgColor{
-    background-color: #DAE4EA
+    background-color: var(--celtic-blue);
+    .header_color{
+        color: #fff;
+    }
 }
 .fontSizeHeader{
 font-size: 13px;
+}
+
+.viewEmployee_thead{
+    background-color: var(--blueberry);
+
+     .mat-header-cell{
+        color: #fff !important;
+    }
 }

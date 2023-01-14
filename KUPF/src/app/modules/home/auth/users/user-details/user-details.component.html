@@ -9,7 +9,7 @@
         <h3 class="card-title align-items-start flex-column">
             <div class="btn-group" role="group" aria-label="Basic example"
                 *ngFor="let bodyLabel of formBodyLabels; let i = index">
-                <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA"
+                <button type="button" class="btn btn-primary ArFontStyle ad-user-style" lang="AR-SA"
                     routerLink="/users/add-user">{{bodyLabel[0].title}}</button>
             </div>
         </h3>
@@ -109,7 +109,7 @@
             <!--begin::Table-->
             <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
                 <!--begin::Table head-->
-                <thead class="bg-secondary">
+                <thead class="bg-secondary ud_thead" >
                     <tr class="fw-bolder" *ngFor="let bodyLabel of formBodyLabels; let i = index">
                         <th class="min-w-80px text-center ArFontStyle" lang="AR-SA">{{bodyLabel[1].title}}</th>
                         <th class="min-w-100px ArFontStyle" lang="AR-SA">{{bodyLabel[2].title}}</th>

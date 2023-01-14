@@ -7,12 +7,12 @@
     <div class="card-header card-header-stretch pb-0 panel2bgColor">
         <!--begin::Title-->
         <div class="card-title" *ngFor="let label of formHeaderLabels; let i = index">
-            <h3 class="m-0 ArFontStyle" lang="AR-SA">{{label.headerName}}</h3>
+            <h3 class="m-0 ArFontStyle header-color" lang="AR-SA">{{label.headerName}}</h3>
         </div>
         <h3 class="card-title align-items-start flex-column">
             <div class="btn-group" role="group" aria-label="Basic example" *ngFor="let bodyLabel of formBodyLabels; let i = index">
-                <button type="button" class="btn btn-primary ArFontStyle" lang="AR-SA">{{bodyLabel[0].title}}</button>
-                <button type="button" class="btn btn-warning ArFontStyle" lang="AR-SA">{{bodyLabel[1].title}}</button>
+                <button type="button" class="btn btn-primary ArFontStyle english-vermillion" lang="AR-SA">{{bodyLabel[0].title}}</button>
+                <button type="button" class="btn btn-primary ArFontStyle candy-pink" lang="AR-SA">{{bodyLabel[1].title}}</button>
               </div>              
         </h3>
         <!--end::Title-->

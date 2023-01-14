@@ -62,7 +62,7 @@ input:focus {
     color: #000;
 
     &.btn {
-        &.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+        &.btn-primary:hover, &.btn-primary:focus, &.btn-primary:active {
             background-color: var(--surf_crest) !important; 
             color: #000 !important;
         }
