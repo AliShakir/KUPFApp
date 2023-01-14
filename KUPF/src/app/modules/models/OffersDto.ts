@@ -20,4 +20,8 @@ export interface OffersDto
         offerStartDate: Date;
         offerEndDate: Date;
         offerAmount: number;
+        offerTypeName:string;
+        electronicForm1File: string,
+  electronicForm2File:string,
+  offerImageFile: string
 }

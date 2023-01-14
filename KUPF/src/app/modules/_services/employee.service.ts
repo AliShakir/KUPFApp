@@ -34,6 +34,9 @@ export class EmployeeService {
    AddEmployee(response: DetailedEmployee) {    
     return this.httpClient.post(this.baseUrl +`Employee/AddEmployee`,response);
   }
+  ValidateEmployeeData(response: DetailedEmployee) {    
+    return this.httpClient.post(this.baseUrl +`Employee/ValidateEmployeeData`,response);
+  }
   UpdateEmployee(response: DetailedEmployee) {    
     return this.httpClient.put(this.baseUrl +`Employee/UpdateEmployee`,response);
   }

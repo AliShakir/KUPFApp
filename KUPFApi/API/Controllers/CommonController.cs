@@ -357,5 +357,16 @@ namespace API.Controllers
             var result = await _commonServiceService.GetDocTypes(tenentId);
             return result;
         }
+        /// <summary>
+        /// This api will get all Contract Types from RefTable
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetContractType")]
+        public async Task<IEnumerable<SelectOccupationDto>> GetContractType()
+        {
+            var result = await _commonServiceService.GetContractTypeAsync();
+            return result;
+        }
     }
 }

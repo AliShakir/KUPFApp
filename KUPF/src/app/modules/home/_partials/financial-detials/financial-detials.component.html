@@ -22,7 +22,7 @@
                     <tbody>
                         <tr>                        
                             <td>
-                                <input type="number" class="form-control" [formControl]="accountsArray.controls[0].controls['loanAct']" id="loanAct" name="loanAct" />
+                                <input type="number" class="form-control" [formControl]="accountsArray.controls[0].controls['loanAct']" id="loanAct" name="loanAct" maxlength="10"/>
                             </td>
                             <td>
                                 <button type="button" class="btn btn-sm btn-primary mt-1" (click)="verifyLoanAccount()">Verify</button>
@@ -41,7 +41,7 @@
                         </tr>
                         <tr>                        
                             <td>
-                                <input type="number" class="form-control" [formControl]="accountsArray.controls[1].controls['hajjAct']"  id="hajjAct" name="hajjAct"/>
+                                <input type="number" class="form-control" [formControl]="accountsArray.controls[1].controls['hajjAct']"  id="hajjAct" name="hajjAct" maxlength="10"/>
                             </td>
                             <td>
                                 <button type="button" class="btn btn-sm btn-primary mt-1" (click)="verifyHajjAccount()">Verify</button>
@@ -60,7 +60,7 @@
                         </tr>
                         <tr>                        
                             <td>
-                                <input type="number" class="form-control" [formControl]="accountsArray.controls[2].controls['persLoanAct']"  id="persLoanAct" name="persLoanAct"/>
+                                <input type="number" class="form-control" [formControl]="accountsArray.controls[2].controls['persLoanAct']"  id="persLoanAct" name="persLoanAct" maxlength="10"/>
                             </td>
                             <td>
                                 <button type="button" class="btn btn-sm btn-primary mt-1" (click)="verifyPerLoanAct()">Verify</button>
@@ -79,7 +79,7 @@
                         </tr>
                         <tr>                        
                             <td>
-                                <input type="number" class="form-control" [formControl]="accountsArray.controls[3].controls['consumerLoanAct']" id="consumerLoanAct" name="consumerLoanAct"/>
+                                <input type="number" class="form-control" [formControl]="accountsArray.controls[3].controls['consumerLoanAct']" id="consumerLoanAct" name="consumerLoanAct" maxlength="10"/>
                             </td>
                             <td>
                                 <button type="button" class="btn btn-sm btn-primary mt-1" (click)="verifyConsumerLoanAct()">Verify</button>
@@ -98,7 +98,7 @@
                         </tr>
                         <tr>                        
                             <td>
-                                <input type="number" class="form-control" [formControl]="accountsArray.controls[4].controls['otherAct1']"  id="otherAct1" name="otherAct1"/>
+                                <input type="number" class="form-control" [formControl]="accountsArray.controls[4].controls['otherAct1']"  id="otherAct1" name="otherAct1" maxlength="10"/>
                             </td>
                             <td>
                                 <button type="button" class="btn btn-sm btn-primary mt-1" (click)="verifyOtherAct1()">Verify</button>
@@ -117,7 +117,7 @@
                         </tr>
                         <tr>                        
                             <td>
-                                <input type="number" class="form-control" [formControl]="accountsArray.controls[5].controls['otherAct2']" id="otherAct2" name="otherAct2"/>
+                                <input type="number" class="form-control" [formControl]="accountsArray.controls[5].controls['otherAct2']" id="otherAct2" name="otherAct2" maxlength="10"/>
                             </td>
                             <td>
                                 <button type="button" class="btn btn-sm btn-primary mt-1" (click)="verifyOtherAct2()">Verify</button>
@@ -136,7 +136,7 @@
                         </tr>
                         <tr>                        
                             <td>
-                                <input type="number" class="form-control" [formControl]="accountsArray.controls[6].controls['otherAct3']"  id="otherAct3" name="otherAct3"/>
+                                <input type="number" class="form-control" [formControl]="accountsArray.controls[6].controls['otherAct3']"  id="otherAct3" name="otherAct3" maxlength="10"/>
                             </td>
                             <td>
                                 <button type="button" class="btn btn-sm btn-primary mt-1" (click)="verifyOtherAct3()">Verify</button>
@@ -155,7 +155,7 @@
                         </tr>
                         <tr>                        
                             <td>
-                                <input type="number" class="form-control" [formControl]="accountsArray.controls[7].controls['otherAct4']" id="otherAct4" name="otherAct4"/>
+                                <input type="number" class="form-control" [formControl]="accountsArray.controls[7].controls['otherAct4']" id="otherAct4" name="otherAct4" maxlength="10"/>
                             </td>
                             <td>
                                 <button type="button" class="btn btn-sm btn-primary mt-1" (click)="verifyOtherAct4()">Verify</button>
@@ -174,7 +174,8 @@
                         </tr>
                         <tr>                        
                             <td>
-                                <input type="number" class="form-control" [formControl]="accountsArray.controls[8].controls['otherAct5']" id="otherAct5" name="otherAct5"/>
+                                <input type="number" class="form-control" [formControl]="accountsArray.controls[8].controls['otherAct5']" id="otherAct5" name="otherAct5" maxlength="10"/>
+                                
                             </td>
                             <td>
                                 <button type="button" class="btn btn-sm btn-primary mt-1" (click)="verifyOtherAct5()">Verify</button>

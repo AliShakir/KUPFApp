@@ -18,9 +18,9 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./special-offer-maintenace.component.scss']
 })
 export class SpecialOfferMaintenaceComponent implements OnInit {
-//#region
+  //#region
   // 
-  columnsToDisplay: string[] = ['action', 'offerType', 'offerStart', 'offerEnd', 'offerAmount'];
+  columnsToDisplay: string[] = ['action', 'offerTypeName', 'offerStart', 'offerEnd', 'offerAmount'];
   //
   offers$: Observable<OffersDto[]>;
 
@@ -49,45 +49,54 @@ export class SpecialOfferMaintenaceComponent implements OnInit {
   searchTerm: string = '';
   //#endregion
 
-//#region 
-    /*----------------------------------------------------*/
+  //#region 
+  /*----------------------------------------------------*/
 
-    // Language Type e.g. 1 = ENGLISH and 2 =  ARABIC
-    languageType: any;
+  // Language Type e.g. 1 = ENGLISH and 2 =  ARABIC
+  languageType: any;
 
-    // Selected Language
-    language: any;
+  // Selected Language
+  language: any;
 
-    // We will get form lables from lcale storage and will put into array.
-    AppFormLabels: FormTitleHd[] = [];
+  // We will get form lables from lcale storage and will put into array.
+  AppFormLabels: FormTitleHd[] = [];
 
-    // We will filter form header labels array
-    formHeaderLabels: any[] = [];
+  // We will filter form header labels array
+  formHeaderLabels: any[] = [];
 
-    // We will filter form body labels array
-    formBodyLabels: any[] = [];
+  // We will filter form body labels array
+  formBodyLabels: any[] = [];
 
-    // FormId
-    formId: string;
+  // FormId
+  formId: string;
 
-    /*----------------------------------------------------*/  
+  /*----------------------------------------------------*/
   //#endregion
-//
-offerForm: FormGroup;
-offersArray = [
-  { id: 1, name: 'ConsumerLoanType' },
-  { id: 2, name: 'Department' },
-  { id: 3, name: 'DocType' },
-  { id: 4, name: 'EmplContract' },
-  { id: 5, name: 'FilingPlace' },
-  { id: 6, name: 'FilingTag' },
-  { id: 7, name: 'Occupation' },
-];
-offerImage: File;
-// Modal close result...
-closeResult = '';
-// Getting base URL of Api from enviroment.
-baseUrl = environment.KUPFApiUrl;
+
+  //
+  parentForm: FormGroup;
+  //
+  offerForm: FormGroup;
+  offersArray = [
+    { id: 1, name: 'ConsumerLoanType' },
+    { id: 2, name: 'Department' },
+    { id: 3, name: 'DocType' },
+    { id: 4, name: 'EmplContract' },
+    { id: 5, name: 'FilingPlace' },
+    { id: 6, name: 'FilingTag' },
+    { id: 7, name: 'Occupation' },
+  ];
+  offerImage: File;
+  attachment1: File;
+  attachment2: File;
+
+  // Modal close result...
+  closeResult = '';
+  // Getting base URL of Api from enviroment.
+  baseUrl = environment.KUPFApiUrl;
+  electronicFile1: File;
+  electronicFile2: File;
+  offerTypeName: any;
   constructor(private fb: FormBuilder,
     private offersService: OffersService,
     private toastrService: ToastrService,
@@ -95,9 +104,10 @@ baseUrl = environment.KUPFApiUrl;
     this.formGroup = new FormGroup({
       searchTerm: new FormControl(null)
     })
-   }
+    this.setUpParentForm();
+  }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
     //#region TO SETUP THE FORM LOCALIZATION    
     // TO GET THE LANGUAGE ID e.g. 1 = ENGLISH and 2 =  ARABIC
     this.languageType = localStorage.getItem('langType');
@@ -131,9 +141,40 @@ baseUrl = environment.KUPFApiUrl;
     //
     this.LoadData();
   }
-  onOfferFormSubmit(){    
+  setUpParentForm() {
+    this.parentForm = this.fb.group({});
+  }
+  initOfferForm() {
+    this.offerForm = this.fb.group({
+      offerType: new FormControl('', Validators.required),
+      offerStartDate: new FormControl(''),
+      offerEndDate: new FormControl(''),
+      offerAmount: new FormControl('', Validators.required),
+      serviceId: new FormControl(0),
+      offerImage: new FormControl('', Validators.required),
+      electronicForm1: new FormControl('', Validators.required),
+      electronicForm1URL: new FormControl('', Validators.required),
+      electronicForm2: new FormControl('', Validators.required),
+      electronicForm2URL: new FormControl('', Validators.required),
+      offerTypeName: new FormControl(null)
+    })
+    this.parentForm.setControl('offerForm', this.offerForm);
+  }
+  onOfferFormSubmit() {
+    let formData = {
+      ...this.parentForm.value.offerForm,
+      ...this.parentForm.value.editorForm,
+      tenentID: 21, cruP_ID: 0
+    }
+
+    // 
+    this.offerForm.get('offerTypeName')?.setValue(this.offerTypeName);
+
     const finalformData = new FormData();
     finalformData.append('File1', this.offerImage);
+
+    finalformData.append('ElectronicForm1Attachment', this.attachment1);
+    finalformData.append('ElectronicForm2Attachment', this.attachment2);
 
     var startDate = this.offerForm.controls['offerStartDate'].value;
     var offerStartDate = (new Date(startDate)).toISOString();
@@ -143,70 +184,112 @@ baseUrl = environment.KUPFApiUrl;
     var offerEndDate = (new Date(endDate)).toISOString();
     finalformData.append("offerEndDate", offerEndDate);
 
-    finalformData.set("tenentId",'21');
+    finalformData.set("tenentId", '21');
 
-    Object.keys(this.offerForm.value).forEach(key => finalformData.append(key, this.offerForm.value[key]));
-    
-    if(this.offerForm.controls['serviceId'].value === '' || this.offerForm.controls['serviceId'].value === 0){
+    Object.keys(formData).forEach(key => finalformData.append(key, formData[key]));
+    if (this.offerForm.controls['serviceId'].value === '' || this.offerForm.controls['serviceId'].value === 0) {
       this.offersService.AddOffer(finalformData).subscribe({
         next: () => {
-              this.toastrService.success('Saved successfully', 'Success');
-              this.offerForm.reset();        
-            },
-            error: (error) => {
-              if (error.status === 500) {
-                this.toastrService.error('Duplicate value found', 'Error');
-              }
-            }
-      })
-    }
-    else{
-      this.offersService.UpdateOffer(finalformData).subscribe({
-        next: () => {
-          this.toastrService.success('Updated successfully', 'Success');
-          this.offerForm.reset();        
+          this.toastrService.success('Saved successfully', 'Success');
+          this.offerForm.reset();
         },
         error: (error) => {
           if (error.status === 500) {
             this.toastrService.error('Duplicate value found', 'Error');
           }
         }
-      })      
+      })
+      console.log(finalformData);
     }
+    else {
+      this.offersService.UpdateOffer(finalformData).subscribe({
+        next: () => {
+          this.toastrService.success('Updated successfully', 'Success');
+          this.offerForm.reset();
+        },
+        error: (error) => {
+          if (error.status === 500) {
+            this.toastrService.error('Duplicate value found', 'Error');
+          }
+        }
+      })
+    }
+
+  }
+  offerFile:any;
+  electricform1:any;
+  electricform2:any;
+  editData(serviceId: any) {
+    if(this.offerFile!=undefined){
+      this.offerFile="";
+    }
+    if(this.electricform1!=undefined){
+      this.electricform1="";
+    }
+    if(this.electricform2!=undefined){
+      this.electricform2="";
+    }
+    this.offersService.GetOfferById(serviceId).subscribe((response: any) => {
+      console.log(response.electricform2); 
+      this.parentForm.patchValue({
+          offerForm: {
+            offerType: +response.offerType,
+            offerStartDate: response.offerStartDate ? new Date(response.offerStartDate) : '',
+            offerEndDate: response.offerEndDate ? new Date(response.offerEndDate) : '',
+            offerAmount: response.offerAmount,
+            offerImage: response.offerImage,
+            serviceId: response.serviceId,
+            electronicForm1: response.electronicForm1,
+            electronicForm2: response.electronicForm2,
+            electronicForm1URL: response.electronicForm1URL,
+            electronicForm2URL: response.electronicForm2URL
+           
+          },
+          editorForm:{
+            englishHtml:response.englishHTML,
+            arabicHtml:response.arabicHTML,
+            englishWebPageName:response.englishWebPageName,
+            arabicWebPageName:response.arabicWebPageName
+          }
+      })  
+      this.offerFile=response.offerImage;
+      this.electricform1=response.electronicForm1;
+      this.electricform2=response.electronicForm2;
+     
+    })
     
   }
-  editData(serviceId:any){    
-    this.offersService.GetOfferById(serviceId).subscribe((response:any)=>{
-      this.offerForm.patchValue({
-        offerType: +response.offerType,
-        offerStartDate:response.offerStartDate,
-        offerEndDate:response.offerEndDate,
-        offerAmount: response.offerAmount,
-        offerImage:response.offerImage,
-        serviceId:response.serviceId
-      })
-    })
-  }
-  resetForm(){
+  resetForm() {
     this.offerForm.reset();
   }
   // On file Select
-  
-  onFileSelectChange(event: any) {
+
+  onOfferFileSelectChange(event: any) {
     if (event.target.files.length > 0) {
-        const file = event.target.files[0];
-        this.offerImage= file; 
-      }
-}
-  initOfferForm(){
-    this.offerForm = this.fb.group({     
-      offerType: new FormControl('', Validators.required),
-      offerStartDate: new FormControl(''),
-      offerEndDate: new FormControl(''),
-      offerAmount: new FormControl('', Validators.required),
-      serviceId: new FormControl(0)
-    })
+      const file = event.target.files[0];
+      this.offerImage = file;
+      this.offerFile=this.offerImage.name;
+    }
   }
+  onElectronicForm1Select(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.electricform1 = file;
+      this.electricform1=file.name;
+    }
+  }
+  onElectronicForm2Select(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.electricform2 = file;
+      this.electricform2=file.name;
+    }
+  }
+  onOfferTypeChange($event: any) {
+    this.offerTypeName = $event.name
+    console.log(this.offerTypeName);
+  }
+
   LoadData() {
     this.offers$ = this.offersService.GetOffers();
     this.offers$.subscribe((response: OffersDto[]) => {
@@ -215,10 +298,10 @@ baseUrl = environment.KUPFApiUrl;
       this.offers.sort = this.sort;
       this.isLoadingCompleted = true;
     }, error => {
-      console.log(error);
       this.dataLoadingStatus = 'Error fetching the data';
       this.isError = true;
     })
+
   }
 
 
@@ -227,25 +310,25 @@ baseUrl = environment.KUPFApiUrl;
 
   //#region 
   // Delete recored...
-  open(content:any, id:number) {  
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {  
-      this.closeResult = `Closed with: ${result}`;        
-      if (result === 'yes') {  
+  open(content: any, id: number) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+      if (result === 'yes') {
         this.offersService.DeleteOffer(id).subscribe(
           res => {
-            this.toastrService.success('Deleted Successfully', 'Deleted')            
+            this.toastrService.success('Deleted Successfully', 'Deleted')
           },
           error => {
             console.log(error);
-          },()=>{
+          }, () => {
             // TO REFRESH / RELOAD THE PAGE WITHOUT REFRESH THE WHOLE PAGE.
             this.LoadData();
           })
-      }  
-    }, (reason) => {  
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;  
-    });  
-          
+      }
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+
   }
 
   private getDismissReason(reason: any): string {
@@ -257,7 +340,7 @@ baseUrl = environment.KUPFApiUrl;
       return `with: ${reason}`;
     }
   }
-//#endregion
+  //#endregion
   //#region Material Search and Clear Filter
   filterRecords() {
     if (this.formGroup.value.searchTerm != null && this.offers) {

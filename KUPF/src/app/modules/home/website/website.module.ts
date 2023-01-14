@@ -12,6 +12,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../../material/material.module';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { SearchTabModule } from '../_partials/search-tab.module';
 
 
 @NgModule({
@@ -31,6 +32,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ReactiveFormsModule,
     MaterialModule,
     NgSelectModule,
+    SearchTabModule, 
+    
   ],
   exports:[
     BsDatepickerModule,

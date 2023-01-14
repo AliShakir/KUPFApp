@@ -1,5 +1,6 @@
 ﻿using API.DTOs;
 using API.DTOs.DropDown;
+using API.DTOs.EmployeeDto;
 using API.DTOs.FinancialServicesDto;
 using API.DTOs.RefTable;
 using System;
@@ -33,5 +34,11 @@ namespace API.Servivces.Interfaces.FinancialServices
         Task<ReturnApprovalDetailsDto> GetServiceApprovalsByTransIdAsync(int tenentId, int locationId,int transId);
 
         long GetPeriodCode();
+
+        /// <summary>
+        /// Search employee by EmployeeId,PF Id and C Id
+        /// </summary>
+        /// <returns></returns>
+        Task<ReturnSearchResultDto> SearchEmployee(SearchEmployeeDto searchEmployeeDto);
     }
 }

@@ -309,5 +309,14 @@ namespace API.Servivces.Implementation
             var data = _mapper.Map<IEnumerable<SelectServiceTypeDto>>(result);
             return data;
         }
+
+        public async Task<IEnumerable<SelectOccupationDto>> GetContractTypeAsync()
+        {
+            var result = await _context.Reftables
+                .Where(c => c.Refsubtype == "ContractType" && c.Reftype == "KUPF" && c.TenentId == 21)
+                .OrderBy(x => x.Refsubtype).ToListAsync();
+            var data = _mapper.Map<IEnumerable<SelectOccupationDto>>(result);
+            return data;
+        }
     }
 }

@@ -19,11 +19,22 @@ namespace API.DTOs
         public string Syncby { get; set; }
         public int? SynId { get; set; }
         public IFormFile? File1 { get; set; }
+        public IFormFile? ElectronicForm1Attachment { get; set; }
+        public string? ElectronicForm1 { get; set; }
+        public IFormFile? ElectronicForm2Attachment { get; set; }
+        public string? ElectronicForm2 { get; set; }
         public string? OfferImage { get; set; }
         public string? OfferType { get; set; }
         public string? Offer { get; set; }
         public DateTime? OfferStartDate { get; set; }
         public DateTime? OfferEndDate { get; set; }
         public decimal? OfferAmount { get; set; }
+        public string? ElectronicForm1URL { get; set; }
+        public string? ElectronicForm2URL { get; set; }
+        public string? EnglishHTML { get; set; }
+        public string? EnglishWebPageName { get; set; }
+        public string? ArabicHTML { get; set; }
+        public string? ArabicWebPageName { get; set; }
+        public string? OfferTypeName { get; set; }
     }
 }

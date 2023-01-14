@@ -86,6 +86,7 @@ namespace API.DTOs.EmployeeDto
         public DateTime? NextSetlementPayDate { get; set; }
         public decimal? NextSetlementPayAmount { get; set; }
         public int? Subscription_status { get; set; }
-        
+        public string Username { get; set; }
+
     }
 }

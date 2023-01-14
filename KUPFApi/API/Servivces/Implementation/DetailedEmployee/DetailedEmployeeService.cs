@@ -49,27 +49,48 @@ namespace API.Servivces.Implementation.DetailedEmployee
                             RefName1 = r.Refname1,
                             RefName2 = r.Refname2
                         })
-                     .AsQueryable();
+                        .AsQueryable();
 
-            return await PagedList<DetailedEmployeeDto>.CreateAsync(data,paginationParams.PageNumber, paginationParams.PageSize);
+            return await PagedList<DetailedEmployeeDto>.CreateAsync(data, paginationParams.PageNumber, paginationParams.PageSize);
         }
 
         public async Task<string> AddEmployeeAsync(DetailedEmployeeDto detailedEmployeeDto)
         {
+            string response = string.Empty;
             if (_context != null)
             {
                 var crupId = _context.CrupMsts.Max(c => c.CrupId);
                 var maxCrupId = crupId + 1;
-                var newEmployee = _mapper.Map<Models.DetailedEmployee>(detailedEmployeeDto);                
+                var newEmployee = _mapper.Map<Models.DetailedEmployee>(detailedEmployeeDto);
                 newEmployee.LocationId = 1;
                 newEmployee.CRUP_ID = maxCrupId;
-                newEmployee.EmployeeId = CommonMethods.CreateEmployeeId().ToString();                
+                newEmployee.EmployeeId = CommonMethods.CreateEmployeeId().ToString();
                 await _context.DetailedEmployees.AddAsync(newEmployee);
                 await _context.SaveChangesAsync();
-                return detailedEmployeeDto.EmployeeId;         
+                //
+                var auditInfo = _context.Reftables.FirstOrDefault(c => c.Reftype == "audit" && c.Refsubtype == "Employee");
+                var crupAudit = new Crupaudit
+                {
+                    TenantId = detailedEmployeeDto.TenentId,
+                    LocationId = detailedEmployeeDto.LocationId,
+                    CrupId = maxCrupId, 
+                    MySerial = (int)maxCrupId,
+                    AuditNo = auditInfo.Refid,
+                    AuditType = auditInfo.Shortname,
+                    TableName = DbTableEnums.DetailedEmployee.ToString(),
+                    FieldName = $"",
+                    OldValue = "Non",
+                    NewValue = "Inserted",
+                    CreatedDate = DateTime.Now,
+                    CreatedUserName = detailedEmployeeDto.Username
+                };
+                await _context.Crupaudits.AddAsync(crupAudit);
+                await _context.SaveChangesAsync();
+                return response = detailedEmployeeDto.EmployeeId;
+                
             }
-            return string.Empty;
-           
+            return response;
+
         }
 
         public async Task<string> UpdateEmployeeAsync(DetailedEmployeeDto detailedEmployeeDto)
@@ -79,9 +100,9 @@ namespace API.Servivces.Implementation.DetailedEmployee
                 var existingEmployee = _context.DetailedEmployees
                     .Where(c => c.EmployeeId == detailedEmployeeDto.EmployeeId).FirstOrDefault();
 
-                if(existingEmployee != null)
+                if (existingEmployee != null)
                 {
-                    if(existingEmployee.CRUP_ID == 0 || existingEmployee.CRUP_ID == null)
+                    if (existingEmployee.CRUP_ID == 0 || existingEmployee.CRUP_ID == null)
                     {
                         var crupId = _context.CrupMsts.Max(c => c.CrupId);
                         var maxCrupId = crupId + 1;
@@ -98,9 +119,9 @@ namespace API.Servivces.Implementation.DetailedEmployee
                         _context.DetailedEmployees.Update(existingEmployee);
                         await _context.SaveChangesAsync();
                     }
-                    
+
                 }
-                
+
                 return detailedEmployeeDto.EmployeeId;
             };
             return string.Empty;
@@ -124,44 +145,44 @@ namespace API.Servivces.Implementation.DetailedEmployee
             }
             return result;
         }
+                
 
-        public async Task<int> AddTestUser(TestTableDto testTableDto)
+        public async Task<string> ValidateEmployeeData(DetailedEmployeeDto detailedEmployeeDto)
         {
+            string response = string.Empty;
             if (_context != null)
             {
-                var newRec = _mapper.Map<TestTable>(testTableDto);
-                await _context.TestTables.AddAsync(newRec);
-                await _context.SaveChangesAsync();
-                return newRec.Id;
+                // Validate Civil Id
+                if (detailedEmployeeDto.EmpCidNum != null && !string.IsNullOrWhiteSpace(detailedEmployeeDto.EmpCidNum))
+                {
+                    var checkDuplicateCID = _context.DetailedEmployees.Where(c => c.TenentId == detailedEmployeeDto.TenentId
+                    && c.LocationId == detailedEmployeeDto.LocationId && c.EmpCidNum == detailedEmployeeDto.EmpCidNum).FirstOrDefault();
+                    if (checkDuplicateCID != null)
+                    {
+                        return response = "1"; // duplicate Civil Id
+                    }
+                }
+                if (detailedEmployeeDto.MobileNumber != null && !string.IsNullOrWhiteSpace(detailedEmployeeDto.MobileNumber))
+                {
+                    var checkMobileNumber = _context.DetailedEmployees.Where(c => c.TenentId == detailedEmployeeDto.TenentId
+                    && c.LocationId == detailedEmployeeDto.LocationId && c.MobileNumber == detailedEmployeeDto.MobileNumber).FirstOrDefault();
+                    if (checkMobileNumber != null)
+                    {
+                        return response = "2"; // duplicate mobile number
+                    }
+                }
+                if (detailedEmployeeDto.EmpWorkEmail != null && !string.IsNullOrWhiteSpace(detailedEmployeeDto.EmpWorkEmail))
+                {
+                    var checkEmpWorkEmail = _context.DetailedEmployees.Where(c => c.TenentId == detailedEmployeeDto.TenentId
+                    && c.LocationId == detailedEmployeeDto.LocationId && c.EmpWorkEmail == detailedEmployeeDto.EmpWorkEmail).FirstOrDefault();
+                    if (checkEmpWorkEmail != null)
+                    {
+                        return response = "3"; // duplicate email
+                    }
+                }
+                return response = "0";
             }
-            return 0;
-        }
-
-        public async Task<IEnumerable<TestTableDto>> GetUsers()
-        {
-            var data = await _context.TestTables.ToListAsync();
-            var result = _mapper.Map<IEnumerable<TestTableDto>>(data);
-            return result;
-        }
-
-        public async Task<TestTableDto> GetTestUserById(int id)
-        {
-            var data = await _context.TestTables.Where(c => c.Id == id).FirstOrDefaultAsync();
-            var result = _mapper.Map<TestTableDto>(data);
-            return result;
-        }
-
-        public async Task<int> GetUpdateTestUserById(TestTableDto testTableDto)
-        {
-            if (_context != null)
-            {
-                var existingUser = _mapper.Map<TestTable>(testTableDto);
-                _context.TestTables.Update(existingUser);
-
-                await _context.SaveChangesAsync();
-                return testTableDto.Id;
-            };
-            return testTableDto.Id;
+            return response;
         }
     }
 }

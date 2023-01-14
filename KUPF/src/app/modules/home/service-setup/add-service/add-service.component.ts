@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RoutesRecognized } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -72,6 +72,19 @@ export class AddServiceComponent implements OnInit, OnDestroy {
   notSubscriber: boolean = false;
   // 
   @ViewChild('popupModal', { static: true }) popupModal: ElementRef;
+  //
+  employeeForm: FormGroup | undefined;
+  searchForm: FormGroup;
+  genderArray: any = [
+    { id: 1, name: 'Male' },
+    { id: 2, name: 'Female' }
+  ];
+  maritalStatusArray: any = [
+    { id: 1, name: 'Married' },
+    { id: 2, name: 'Single' }
+  ];
+  @Input() arabicFont: string = 'font-family:"Tahoma","sans-serif"';
+  @Input() pageName: string;
   constructor(
     private financialService: FinancialService,
     private commonService: DbCommonService,
@@ -82,7 +95,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     public datepipe: DatePipe,
     private router: Router,
     private modalService: NgbModal) {
-    
+
     this.setUpParentForm();
 
     this.minDate = new Date();
@@ -125,6 +138,10 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     //
     this.initPopUpModal();
     this.setValidators(this.notSubscriber);
+    // 
+    this.initializeEmployeeForm();
+    //
+    this.initializeSearchForm();
     // Get Tenant Id
     // var data = JSON.parse(localStorage.getItem("user")!);
     // const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
@@ -193,34 +210,34 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       })
     }
 
-    this.common.empSearchClickEvent.pipe(takeWhile(() => this.isObservableActive)).subscribe(result => {
-      //
-      this.notSubscriber = false;
-      this.financialService.GetServiceType(21).subscribe((response: any) => {
-        this.pfId = this.common.PFId;
-        this.selectServiceType = response;
-        if (this.common.PFId != null
-          && this.common.subscribedDate == null
-          && this.common.terminationDate == null) {
-          // remove subscribe from servicetype & Subtype
-          if (result.trim()) {
-            let index = this.selectServiceType.findIndex(x => x.refId == 1);
-            if (index >= 0) {
-              this.selectServiceType.splice(index, 1);
-            }
-          }
-          this.notSubscriber = true;
-        } else if (this.common.PFId == null
-          && this.common.subscribedDate == null
-          && this.common.terminationDate == null) {
-          this.selectServiceType = response;
-          let arr = this.selectServiceType.filter(x => x.refId == 1)
-          this.selectServiceType = arr;
-          this.isSubscriber = true;
+    // this.common.empSearchClickEvent.pipe(takeWhile(() => this.isObservableActive)).subscribe(result => {
+    //   //
+    //   this.notSubscriber = false;
+    //   this.financialService.GetServiceType(21).subscribe((response: any) => {
+    //     this.pfId = this.common.PFId;
+    //     this.selectServiceType = response;
+    //     if (this.common.PFId != null
+    //       && this.common.subscribedDate == null
+    //       && this.common.terminationDate == null) {
+    //       // remove subscribe from servicetype & Subtype
+    //       if (result.trim()) {
+    //         let index = this.selectServiceType.findIndex(x => x.refId == 1);
+    //         if (index >= 0) {
+    //           this.selectServiceType.splice(index, 1);
+    //         }
+    //       }
+    //       this.notSubscriber = true;
+    //     } else if (this.common.PFId == null
+    //       && this.common.subscribedDate == null
+    //       && this.common.terminationDate == null) {
+    //       this.selectServiceType = response;
+    //       let arr = this.selectServiceType.filter(x => x.refId == 1)
+    //       this.selectServiceType = arr;
+    //       this.isSubscriber = true;
 
-        }
-      });
-    })
+    //     }
+    //   });
+    // })
   }
 
   ngOnDestroy(): void {
@@ -230,6 +247,40 @@ export class AddServiceComponent implements OnInit, OnDestroy {
 
   setUpParentForm() {
     this.parentForm = this.fb.group({});
+  }
+  initializeEmployeeForm() {
+    this.employeeForm = new FormGroup({
+      employeeId: new FormControl(''),
+      englishName: new FormControl('', Validators.required),
+      arabicName: new FormControl('', Validators.required),
+      empGender: new FormControl('', Validators.required),
+      joinedDate: new FormControl('', Validators.required),
+      mobileNumber: new FormControl('', Validators.required),
+      empMaritalStatus: new FormControl('', Validators.required),
+      nationName: new FormControl('', Validators.required),
+      contractType: new FormControl('', Validators.required),
+      kinName: new FormControl('', Validators.required),
+      kinMobile: new FormControl('', Validators.required),
+      subscriptionAmount: new FormControl('', Validators.required),
+      subscriptionPaid: new FormControl('', Validators.required),
+      lastSubscriptionPaid: new FormControl(''),
+      subscriptionDueAmount: new FormControl(''),
+      subscriptionStatus: new FormControl(''),
+      terminationDate: new FormControl(''),
+      endDate: new FormControl(''),
+      employeeStatus: new FormControl(''),
+      isKUEmployee: new FormControl(''),
+      isOnSickLeave: new FormControl(''),
+      isMemberOfFund: new FormControl('')      
+    })
+    this.parentForm.setControl('employeeForm', this.employeeForm);
+  }
+  initializeSearchForm() {
+    this.searchForm = new FormGroup({
+      employeeId: new FormControl('', Validators.required),
+      pfId: new FormControl('', Validators.required),
+      cId: new FormControl('', Validators.required),
+    })
   }
   initializeAddServiceForm() {
     this.addServiceForm = this.fb.group({
@@ -248,9 +299,9 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     })
     this.parentForm.setControl('addServiceForm', this.addServiceForm);
   }
-  initPopUpModal(){
+  initPopUpModal() {
     this.popUpForm = this.fb.group({
-      transactionId:new FormControl(null),
+      transactionId: new FormControl(null),
       attachId: new FormControl(null)
     })
   }
@@ -274,41 +325,42 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       //...this.parentForm.value.financialFormArray,
       tenentID: 21, cruP_ID: 0, locationID: 1
     }
+    
     formData['installmentsBegDate'] = moment(formData['installmentsBegDate']).format("yyyy-MM-DD");
     let finalformData = new FormData();
     Object.keys(formData).forEach(key => finalformData.append(key, formData[key]));
-    finalformData.append('personalPhotoDocType',  this.parentForm.value.documentAttachmentForm[0].docType);
-    finalformData.append('personalPhotoDocument',  this.parentForm.value.documentAttachmentForm[0].Document);
-    finalformData.append('appplicationFileDocType',  this.parentForm.value.documentAttachmentForm[1].docType);
-    finalformData.append('appplicationFileDocument',  this.parentForm.value.documentAttachmentForm[1].Document);    
-    finalformData.append('workIdDocType',  this.parentForm.value.documentAttachmentForm[2].docType);
-    finalformData.append('workIdDocument',  this.parentForm.value.documentAttachmentForm[2].Document);
-    finalformData.append('civilIdDocType',  this.parentForm.value.documentAttachmentForm[3].docType);
-    finalformData.append('civilIdDocument',  this.parentForm.value.documentAttachmentForm[3].Document);
-    finalformData.append('salaryDataDocType',  this.parentForm.value.documentAttachmentForm[4].docType);
-    finalformData.append('salaryDataDocument',  this.parentForm.value.documentAttachmentForm[4].Document);
+    finalformData.append('personalPhotoDocType', this.parentForm.value.documentAttachmentForm[0].docType);
+    finalformData.append('personalPhotoDocument', this.parentForm.value.documentAttachmentForm[0].Document);
+    finalformData.append('appplicationFileDocType', this.parentForm.value.documentAttachmentForm[1].docType);
+    finalformData.append('appplicationFileDocument', this.parentForm.value.documentAttachmentForm[1].Document);
+    finalformData.append('workIdDocType', this.parentForm.value.documentAttachmentForm[2].docType);
+    finalformData.append('workIdDocument', this.parentForm.value.documentAttachmentForm[2].Document);
+    finalformData.append('civilIdDocType', this.parentForm.value.documentAttachmentForm[3].docType);
+    finalformData.append('civilIdDocument', this.parentForm.value.documentAttachmentForm[3].Document);
+    finalformData.append('salaryDataDocType', this.parentForm.value.documentAttachmentForm[4].docType);
+    finalformData.append('salaryDataDocument', this.parentForm.value.documentAttachmentForm[4].Document);
     //
-    finalformData.append('subject',  this.parentForm.value.documentAttachmentForm[0].subject);
-    
-    finalformData.append('metaTags',  JSON.parse(JSON.stringify(this.parentForm.value.documentAttachmentForm[0].metaTag)));
-    finalformData.append('attachmentRemarks',  this.parentForm.value.documentAttachmentForm[0].attachmentRemarks);
+    finalformData.append('subject', this.parentForm.value.documentAttachmentForm[0].subject);
+
+    finalformData.append('metaTags', JSON.parse(JSON.stringify(this.parentForm.value.documentAttachmentForm[0].metaTag)));
+    finalformData.append('attachmentRemarks', this.parentForm.value.documentAttachmentForm[0].attachmentRemarks);
     //
     this.isFormSubmitted = true;
     //
     if (this.mytransid) {
       this.financialService.UpdateFinancialService(finalformData).subscribe(() => {
         this.toastrService.success('Updated successfully', 'Success');
-        this.parentForm.reset();   
+        this.parentForm.reset();
       })
     } else {
-      
-       this.financialService.AddFinacialService(finalformData).subscribe((response:any) => {        
+
+      this.financialService.AddFinacialService(finalformData).subscribe((response: any) => {
         if (response.response == '1') {
           this.toastrService.error('Subscription apply only to the KU Employees ', 'Error');
         }
         else if (response.response == '2') {
           this.toastrService.error('A KU Employee on the Sick Leave Cannot apply for the Membership', 'Error');
-        } 
+        }
         else if (response.response == '3') {
           this.toastrService.error('Employee is Member of a KUPF Fund Committe', 'Error');
         }
@@ -324,19 +376,10 @@ export class AddServiceComponent implements OnInit, OnDestroy {
             transactionId: response.transactionId,
             attachId: response.attachId
           })
-          /**
-           * 
-            : 
-            "1"
-            
-            : 
-            "5074"
-           */
-          
           this.parentForm.reset();
           this.openPopUpModal(this.popupModal);
         }
-        //this.saveFinancialArray();  
+        //this.saveFinancialArray();   
       })
     }
 
@@ -344,7 +387,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
   saveFinancialArray() {
     this.financialService.saveCOA(this.parentForm.value.financialFormArray, {}).subscribe(() => {
       this.toastrService.success('Saved successfully', 'Success');
-      this.parentForm.reset();  
+      this.parentForm.reset();
     })
   }
   getFormValues() {
@@ -408,7 +451,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     this.selectedServiceSubType = $event.refId;
     this.selectedServiceSubTypeText = $event.shortname;
     this.financialService.GetSelectedServiceSubType(this.selectedServiceType, this.selectedServiceSubType, 21).subscribe((response: any) => {
-      
+
       this.parentForm.patchValue({
         addServiceForm: {
           serviceSubType: response.serviceSubType,
@@ -496,23 +539,91 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     serviceType?.updateValueAndValidity();
     serviceSubType?.updateValueAndValidity();
   }
-//#region Delete operation and Modal Config
-openPopUpModal(content:any) {
-  this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
-    this.closeResult = `Closed with: ${result}`;
-    
-  }, (reason) => {
-    this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-  });
+  //#region Delete operation and Modal Config
+  openPopUpModal(content: any) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
 
-}
-private getDismissReason(reason: any): string {
-  if (reason === ModalDismissReasons.ESC) {
-    return 'by pressing ESC';
-  } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-    return 'by clicking on a backdrop';
-  } else {
-    return `with: ${reason}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+
   }
-}
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+  SearchEmployee() {
+    this.financialService.SearchEmployee(this.searchForm.value).subscribe((response: any) => {
+      if (response === null) {
+        this.common.ifEmployeeExists = false;
+        this.toastrService.error('Sorry, record not found', 'Error');
+        this.employeeForm?.reset();
+      } else {        
+        this.common.ifEmployeeExists = true;
+        this.employeeForm?.patchValue({
+          employeeId: response.employeeId,
+          englishName: response.englishName,
+          arabicName: response.arabicName,
+          empGender: response.empGender,
+          joinedDate: new Date(response.joinedDate),
+          empBirthday: new Date(response.empBirthday),
+          mobileNumber: response.mobileNumber,
+          empMaritalStatus: +response.empMaritalStatus,
+          nationName: response.nationName,
+          contractType: response.contractType,
+          subscriptionAmount: response.subscriptionAmount,
+          subscriptionPaid: response.subscriptionPaid,
+          lastSubscriptionPaid: response.lastSubscriptionPaid,
+          subscriptionDueAmount: response.subscriptionDueAmount,
+          subscriptionStatus: response.subscriptionStatus,
+          terminationDate: response.terminationDate,
+          endDate: response.endDate,
+          employeeStatus: response.employeeStatus,
+          isKUEmployee:response.isKUEmployee,
+          isOnSickLeave:response.isOnSickLeave,
+          isMemberOfFund:response.isMemberOfFund
+        })
+        
+        this.common.PFId = response.pfid;
+        this.common.subscribedDate = response.subscribedDate;
+        this.common.terminationDate = response.terminationDate;
+        // fill service type dropdown according to searched employee Id
+        this.notSubscriber = false;
+        this.financialService.GetServiceType(21).subscribe((response: any) => {
+          this.pfId = this.common.PFId;
+          this.selectServiceType = response;
+          if (this.common.PFId != null
+            && this.common.subscribedDate == null
+            && this.common.terminationDate == null) {
+            // remove subscribe from servicetype & Subtype
+            //if (result.trim()) {
+            let index = this.selectServiceType.findIndex(x => x.refId == 1);
+            if (index >= 0) {
+              this.selectServiceType.splice(index, 1);
+            }
+            //}
+            this.notSubscriber = true;
+          } else if (this.common.PFId == null
+            && this.common.subscribedDate == null
+            && this.common.terminationDate == null) {
+            this.selectServiceType = response;
+            let arr = this.selectServiceType.filter(x => x.refId == 1)
+            this.selectServiceType = arr;
+            this.isSubscriber = true;
+
+          }
+        });
+      }
+    }, error => {
+      if (error.status === 500) {
+        this.toastrService.error('Please enter Employee Id or CID or PFId', 'Error');
+      }
+    });
+  }
 }

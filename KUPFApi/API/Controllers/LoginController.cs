@@ -1,7 +1,9 @@
 ﻿using API.Common;
 using API.DTOs;
+using API.DTOs.EmployeeDto;
 using API.Models;
 using API.Servivces.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,11 +21,13 @@ namespace API.Controllers
     {
         private readonly KUPFDbContext _context;
         private readonly IFunctionUserService _functionUserService;
+        private readonly IMapper _mapper;
         //private readonly ITokenService _tokenService;
-        public LoginController(KUPFDbContext context, IFunctionUserService functionUserService)
+        public LoginController(KUPFDbContext context, IFunctionUserService functionUserService, IMapper mapper)
         {
             _context = context;
             _functionUserService = functionUserService;
+            _mapper = mapper;
             //_tokenService = tokenService;
         }
         /// <summary>
@@ -231,6 +235,23 @@ namespace API.Controllers
             }
             return Ok(menuHeader);
 
+        }
+
+        /// <summary>
+        /// Api to Employee Login
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("MobileLogin")]
+        public async Task<ActionResult<DetailedEmployeeDto>> MobileLogin(MobileLoginDto mobileLoginDto)
+        {
+            var employee = await _context.DetailedEmployees.
+                Where(c => c.EmployeeLoginId == mobileLoginDto.username && c.EmployeePassword == mobileLoginDto.password)
+                .FirstOrDefaultAsync();
+
+           var user = _mapper.Map<DetailedEmployeeDto>(employee);
+
+            return user;
         }
     }
 }

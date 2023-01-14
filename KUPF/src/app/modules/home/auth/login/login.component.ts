@@ -112,7 +112,7 @@ async login() {
       // TO get UserMenu Options by UserId...
       this.loginService.GetUserFunctionsByUserId(this.loginDto[0].userId).subscribe((response:any[])=>{
         this.menuHeading = response;   
-        console.log('Login',this.menuHeading);  
+         
         if(localStorage.getItem('userMenu') != null){
           localStorage.removeItem("userMenu");
           localStorage.setItem('userMenu',JSON.stringify(this.menuHeading));

@@ -15,11 +15,7 @@ namespace API.Servivces.Interfaces.DetailedEmployee
         Task<DetailedEmployeeDto> GetEmployeeByIdAsync(string id);
         Task<PagedList<DetailedEmployeeDto>> GetEmployeesAsync(PaginationParams paginationParams);
         Task<int> DeleteEmployeeAsync(string id);
-
-        // This api will be deleted latter.
-        Task<int> AddTestUser(TestTableDto testTableDto);
-        Task<IEnumerable<TestTableDto>> GetUsers();
-        Task<TestTableDto> GetTestUserById(int id);
-        Task<int> GetUpdateTestUserById(TestTableDto testTableDto);
+         
+        Task<string> ValidateEmployeeData(DetailedEmployeeDto detailedEmployeeDto);
     }
 }

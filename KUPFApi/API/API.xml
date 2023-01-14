@@ -184,6 +184,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:API.Controllers.CommonController.GetContractType">
+            <summary>
+            This api will get all Contract Types from RefTable
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:API.Controllers.CrupAuditController.#ctor(API.Servivces.Interfaces.ICrupAuditService)">
             <summary>
             
@@ -286,6 +292,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:API.Controllers.EmployeeController.ValidateEmployeeData(API.DTOs.EmployeeDto.DetailedEmployeeDto)">
+            <summary>
+            Validate new employee data
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:API.Controllers.FinancialServiceController.AddFinancialService(API.DTOs.TransactionHdDto)">
             <summary>
             Api to add new record(s) in TransactionHd and TransactionDt
@@ -379,6 +391,12 @@
         <member name="M:API.Controllers.FinancialServiceController.GetServiceApprovalsByTransIdAsync(System.Int32,System.Int32,System.Int32)">
             <summary>
             Api to get Get Service Approvals By Transation Id 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.FinancialServiceController.SearchEmployee(API.DTOs.SearchEmployeeDto)">
+            <summary>
+            Api to search employee by EmployyeId,PFId,CId
             </summary>
             <returns></returns>
         </member>
@@ -529,6 +547,12 @@
         <member name="M:API.Controllers.LoginController.GetUserFunctionsByUserId(System.Int32)">
             <summary>
             Api to Get User Functions By User Id
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.LoginController.MobileLogin(API.DTOs.MobileLoginDto)">
+            <summary>
+            Api to Employee Login
             </summary>
             <returns></returns>
         </member>
@@ -734,6 +758,12 @@
         <member name="M:API.Servivces.Implementation.Localization.LocalizationService.EditFormBodyLabels(System.Guid)">
             <summary>
             Edit form header labels by Id.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Servivces.Interfaces.FinancialServices.IFinancialService.SearchEmployee(API.DTOs.SearchEmployeeDto)">
+            <summary>
+            Search employee by EmployeeId,PF Id and C Id
             </summary>
             <returns></returns>
         </member>

@@ -91,5 +91,6 @@ namespace API.Controllers
             var result = await _offerService.GetOffers();
             return Ok(result);
         }
+        
     }
 }

@@ -37,9 +37,9 @@ namespace API.Controllers
         [Route("AddEmployee")]
         public async Task<ActionResult<string>> AddEmployee(DetailedEmployeeDto detailedEmployeeDto)
         {
-            await _detailedEmployeeService.AddEmployeeAsync(detailedEmployeeDto);
+            var response = await _detailedEmployeeService.AddEmployeeAsync(detailedEmployeeDto);
             await _context.SaveChangesAsync();
-            return detailedEmployeeDto.EmployeeId;
+            return response;
         }
         /// <summary>
         /// Api to update existing employee
@@ -99,6 +99,17 @@ namespace API.Controllers
             
             return result;
         }
-        
+        /// <summary>
+        /// Validate new employee data
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("ValidateEmployeeData")]
+        public async Task<ActionResult<string>> ValidateEmployeeData(DetailedEmployeeDto detailedEmployeeDto)
+        {
+            var response = await _detailedEmployeeService.ValidateEmployeeData(detailedEmployeeDto);
+            //await _context.SaveChangesAsync();
+            return response;
+        }
     }
 }

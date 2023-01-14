@@ -1,5 +1,6 @@
 ﻿using API.DTOs;
 using API.DTOs.DropDown;
+using API.DTOs.EmployeeDto;
 using API.DTOs.FinancialServicesDto;
 using API.DTOs.FinancialTransaction;
 using API.DTOs.RefTable;
@@ -244,6 +245,17 @@ namespace API.Controllers
         public async Task<ReturnApprovalDetailsDto> GetServiceApprovalsByTransIdAsync(int tenentId, int locationId,int transId)
         {
             var result = await _financialService.GetServiceApprovalsByTransIdAsync(tenentId, locationId, transId);
+            return result;
+        }
+        /// <summary>
+        /// Api to search employee by EmployyeId,PFId,CId
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("SearchEmployee")]
+        public async Task<ReturnSearchResultDto> SearchEmployee(SearchEmployeeDto searchEmployeeDto)
+        {
+            var result = await _financialService.SearchEmployee(searchEmployeeDto);
             return result;
         }
     }

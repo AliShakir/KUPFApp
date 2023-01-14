@@ -41,6 +41,8 @@ export class DbCommonService {
   //
   occupationsDto: SelectOccupationsDto[] = [];
   //
+  contractTypeDto: SelectOccupationsDto[] = [];
+  //
   departmentsDto: SelectDepartmentsDto[] = [];
   //
   terminationDto: SelectTerminationsDto[] = [];
@@ -187,6 +189,15 @@ export class DbCommonService {
       map(occupationsDto => {
         this.occupationsDto = occupationsDto;
         return occupationsDto;
+      })
+    )
+  }
+  // Get all Occupations.
+  GetContractType() {
+    return this.httpClient.get<SelectOccupationsDto[]>(this.baseUrl + `Common/GetContractType`).pipe(
+      map(contractTypeDto => {
+        this.contractTypeDto = contractTypeDto;
+        return contractTypeDto;
       })
     )
   }

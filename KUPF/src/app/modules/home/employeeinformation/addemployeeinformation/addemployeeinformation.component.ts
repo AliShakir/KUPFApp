@@ -1,7 +1,8 @@
 
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
@@ -41,6 +42,8 @@ export class AddemployeeinformationComponent implements OnInit {
   departments$: Observable<SelectDepartmentsDto[]>;
   terminations$: Observable<SelectTerminationsDto[]>;
   //
+  contractType$:Observable<SelectOccupationsDto[]>;
+  //
   editEmployeeInformation$: Observable<DetailedEmployee[]>;
   employeeId: any;
   //#region 
@@ -77,6 +80,11 @@ export class AddemployeeinformationComponent implements OnInit {
     { id: 1, name: 'Male' },
     { id: 2, name: 'Female' }
   ];
+  // 
+  @ViewChild('popupModal', { static: true }) popupModal: ElementRef;
+  //
+  popUpForm: FormGroup;
+  closeResult: string = '';
   constructor(
     private cdr: ChangeDetectorRef,
     private employeeService: EmployeeService,
@@ -84,7 +92,8 @@ export class AddemployeeinformationComponent implements OnInit {
     private commonDbService: DbCommonService,
     private fb: FormBuilder,
     private activatedRout: ActivatedRoute,
-    private router:Router) {
+    private router:Router,
+    private modalService:NgbModal) {
 
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-dark-blue' })
     const loadingSubscr = this.isLoading$
@@ -104,6 +113,8 @@ export class AddemployeeinformationComponent implements OnInit {
     this.initializeJobDetailsForm();
     //
     this.initializeMembershipForm();
+    //
+    this.initPopUpModal();
     //#region TO SETUP THE FORM LOCALIZATION    
     // TO GET THE LANGUAGE ID e.g. 1 = ENGLISH and 2 =  ARABIC
     this.languageType = localStorage.getItem('langType');
@@ -140,6 +151,8 @@ export class AddemployeeinformationComponent implements OnInit {
     this.departments$ = this.commonDbService.GetDepartments();
     // To FillUp terminations
     this.terminations$ = this.commonDbService.GetTerminations();
+    // To FillUp Contract Types
+    this.contractType$ = this.commonDbService.GetContractType();
     //#endregion
     // Get and fill data in Edit Mode...
     if (this.employeeId != null) {
@@ -170,7 +183,8 @@ export class AddemployeeinformationComponent implements OnInit {
             salary: response.salary,
             empCidNum: response.empCidNum,
             empPaciNum: response.empPaciNum,
-            empOtherId: response.empOtherId
+            empOtherId: response.empOtherId,
+            contractType:response.contractType
           },
           membershipForm: {
             membership: response.membership,
@@ -205,13 +219,13 @@ export class AddemployeeinformationComponent implements OnInit {
       empGender: new FormControl('', Validators.required),
       empMaritalStatus: new FormControl('', Validators.required),
       mobileNumber: new FormControl('', Validators.required),
-      empWorkTelephone: new FormControl('', Validators.required),
+      empWorkTelephone: new FormControl(''),
       empWorkEmail: new FormControl('', Validators.required),
-      next2KinName: new FormControl('', Validators.required),
-      next2KinMobNumber: new FormControl('', Validators.required),
-      isKUEmployee: new FormControl('', Validators.required),
-      isOnSickLeave: new FormControl('', Validators.required),
-      isMemberOfFund: new FormControl('', Validators.required)
+      next2KinName: new FormControl(''),
+      next2KinMobNumber: new FormControl(''),
+      isKUEmployee: new FormControl('true'),
+      isOnSickLeave: new FormControl(''),
+      isMemberOfFund: new FormControl('')
     })
     this.parentForm.setControl('addEmployeeForm', this.addEmployeeForm);
   }
@@ -219,10 +233,11 @@ export class AddemployeeinformationComponent implements OnInit {
     this.jobDetailsForm = this.fb.group({
       department: new FormControl('', Validators.required),
       departmentName: new FormControl('', Validators.required),
-      salary: new FormControl('', Validators.required),
-      empCidNum: new FormControl('', Validators.required),
-      empPaciNum: new FormControl('', Validators.required),
-      empOtherId: new FormControl('', Validators.required),
+      salary: new FormControl(''),
+      empCidNum: new FormControl('', [Validators.required,Validators.maxLength(12)]),
+      empPaciNum: new FormControl(''),
+      empOtherId: new FormControl(''),
+      contractType:new FormControl('',Validators.required)
     })
     this.parentForm.setControl('jobDetailsForm', this.jobDetailsForm);
   }
@@ -235,6 +250,11 @@ export class AddemployeeinformationComponent implements OnInit {
     })
     this.parentForm.setControl('membershipForm', this.membershipForm);
   }
+  initPopUpModal() {
+    this.popUpForm = this.fb.group({
+      errorMessage: new FormControl(null)
+    })
+  }
   setUpParentForm() {
     this.parentForm = this.fb.group({});
   }
@@ -246,6 +266,8 @@ export class AddemployeeinformationComponent implements OnInit {
     // Get Tenant Id
     var data = JSON.parse(localStorage.getItem("user")!);
     const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
+    const locationId = data.map((obj: { locationId: any; }) => obj.locationId);
+    const username = data.map((obj: { username: any; }) => obj.username);
     //  TO CONVER OBJECT ARRAY AS SIMPLE ARRAY.
     this.parentForm.controls.addEmployeeForm.patchValue({
       empGender: +this.parentForm.value.addEmployeeForm.empGender,
@@ -256,14 +278,16 @@ export class AddemployeeinformationComponent implements OnInit {
       ...this.parentForm.value.jobDetailsForm,
       ...this.parentForm.value.membershipForm,
       ...this.parentForm.value.financialForm,
-      tenentID: tenantId[0], cruP_ID: 0
+      tenentID: tenantId[0], 
+      cruP_ID: 0,
+      locationId:locationId[0],
+      username:username[0]
     }
     //
     this.isFormSubmitted = true;
     //
-    if (this.addEmployeeForm.valid) {      
-      if(this.employeeId != null){  
-        console.log(formData);        
+    //if (this.addEmployeeForm.valid) {      
+      if(this.employeeId != null){              
         this.employeeService.UpdateEmployee(formData).subscribe(() => {
           this.toastrService.success('Saved successfully', 'Success');
           this.parentForm.reset();
@@ -273,17 +297,41 @@ export class AddemployeeinformationComponent implements OnInit {
               this.toastrService.error('Something went wrong', 'Error');
             }
           })
-      }else{
-        console.log(formData); 
-        this.employeeService.AddEmployee(formData).subscribe(() => {
-          this.toastrService.success('Saved successfully', 'Success');
-          this.parentForm.reset();
-        })
+      }
+      else{ 
+        this.employeeService.ValidateEmployeeData(formData).subscribe((response:any) => {
+          if(response == "1")
+            {
+             this.toastrService.error('Duplicate Civil Id, please enter a different Civil Id', 'Error');             
+            }
+            else if(response == "2")
+            {              
+              this.popUpForm.patchValue({
+                errorMessage: '?Duplicate mobile number found, do you want to proceed'
+              })
+              this.openPopUpModal(this.popupModal,formData);              
+            }
+            else if(response == "3")
+            {
+              this.popUpForm.patchValue({
+                errorMessage: '?Duplicate email found, do you want to proceed'
+              })
+              this.openPopUpModal(this.popupModal,formData);
+            } 
+            else if(response == "0")
+            {
+              this.employeeService.AddEmployee(formData).subscribe((response:any) => {          
+                this.toastrService.success('Saved successfully', 'Success');                  
+              this.parentForm.reset();
+            })
+            }        
+        }); 
       } 
-    }
+    //}
   }
   //
   get empForm() { return this.addEmployeeForm.controls; }
+  get jobForm() { return this.jobDetailsForm.controls; }
   //
   addChildComponent(): void {
     this.showChildComponent = true;
@@ -304,6 +352,28 @@ export class AddemployeeinformationComponent implements OnInit {
   ngOnDestroy() {
     this.unsubscribe.forEach((sb) => sb.unsubscribe());
   }
-
+//#region Delete operation and Modal Config
+openPopUpModal(content: any, formData:any) {
+  this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {  
+    this.closeResult = `Closed with: ${result}`;        
+    if (result === 'yes') {        
+      this.employeeService.AddEmployee(formData).subscribe((response:any) => {          
+            this.toastrService.success('Saved successfully', 'Success');                  
+          this.parentForm.reset();
+        })      
+    }  
+  }, (reason) => {  
+    this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;  
+  });
+}
+private getDismissReason(reason: any): string {
+  if (reason === ModalDismissReasons.ESC) {
+    return 'by pressing ESC';
+  } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+    return 'by clicking on a backdrop';
+  } else {
+    return `with: ${reason}`;
+  }
+}
 
 }

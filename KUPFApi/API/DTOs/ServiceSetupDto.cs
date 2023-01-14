@@ -82,5 +82,10 @@ namespace API.DTOs
         public string? OfferStartDate { get; set; }
         public string? OfferEndDate { get; set; }
         public decimal? OfferAmount { get; set; }
+        public string? OfferTypeName { get; set; }
+        public byte[] ElectronicForm1File { get; set; }
+        public byte[] ElectronicForm2File { get; set; }
+        public byte[] OfferImageFile { get; set; }
+
     }
 }

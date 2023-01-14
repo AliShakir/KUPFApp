@@ -8,8 +8,10 @@ import { ReturnTransactionHdDto } from '../models/FinancialService/ReturnTransac
 import { TransactionHdDto } from '../models/FinancialService/TransactionHdDto';
 import { RefTableDto } from '../models/ReferenceDetails/RefTableDto';
 import { ReturnApprovalDetailsDto } from '../models/ReturnApprovalDetailsDto';
+import { ReturnSearchResultDto } from '../models/ReturnSearchResultDto';
 import { ReturnServiceApprovalDetails } from '../models/ReturnServiceApprovalDetails';
 import { ReturnServiceApprovals } from '../models/ReturnServiceApprovals';
+import { SearchEmployeeDto } from '../models/SearchEmployeeDto';
 import { SelectServiceTypeDto } from '../models/ServiceSetup/SelectServiceTypeDto';
 import { ServiceSetupDto } from '../models/ServiceSetup/ServiceSetupDto';
 
@@ -192,5 +194,9 @@ export class FinancialService {
 
   GetServiceApprovalsByTransIdAsync(tenentId:number,locationId:number,transId:number) { 
     return this.httpClient.get<ReturnApprovalDetailsDto[]>(this.baseUrl + `FinancialService/GetServiceApprovalsByTransIdAsync?tenentId=${tenentId}&locationId=${locationId}&transId=${transId}`);    
+  }
+
+  SearchEmployee(searchEmployeeDto: SearchEmployeeDto) {
+    return this.httpClient.post<ReturnSearchResultDto[]>(this.baseUrl + `FinancialService/SearchEmployee`,searchEmployeeDto);
   }
 }

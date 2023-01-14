@@ -81,5 +81,6 @@ namespace API.Models
         public DateTime? OfferStartDate { get; set; }
         public DateTime? OfferEndDate { get; set; }
         public decimal? OfferAmount { get; set; }
+        public string? OfferTypeName { get; set; }
     }
 }
