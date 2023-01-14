@@ -6,10 +6,10 @@
       <div class="btn-group " role="group" aria-label="Basic example"
         *ngFor="let bodyLabel of formBodyLabels; let i = index">
         <!-- Save Button -->
-        <button type="button" class="btn btn-primary float-left ArFontStyle" lang="AR-SA" (click)="submitForm()"
+        <button type="button" class="btn btn-primary float-left ArFontStyle cyan-azure" lang="AR-SA" (click)="submitForm()"
           [disabled]="!addEmployeeForm.valid || !jobDetailsForm.valid">{{bodyLabel[0].title}}</button>
-        <button type="button" class="btn btn-primary float-left ArFontStyle cyan-azure" lang="AR-SA"
-          (click)="submitForm()">{{bodyLabel[0].title}}</button>
+        <!-- <button type="button" class="btn btn-primary float-left ArFontStyle cyan-azure" lang="AR-SA"
+          (click)="submitForm()">{{bodyLabel[0].title}}</button> -->
         <!-- Cancel Button -->
         <button type="button" class="btn btn-primary float-left ArFontStyle moonstone-blue "
           lang="AR-SA">{{bodyLabel[1].title}}</button>
