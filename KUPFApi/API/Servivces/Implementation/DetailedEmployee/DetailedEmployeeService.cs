@@ -69,12 +69,14 @@ namespace API.Servivces.Implementation.DetailedEmployee
                 await _context.SaveChangesAsync();
                 //
                 var auditInfo = _context.Reftables.FirstOrDefault(c => c.Reftype == "audit" && c.Refsubtype == "Employee");
+                var mySerialNo = _context.TblAudits.Max(c => c.MySerial);
+                var maxSerialNo = mySerialNo + 1;
                 var crupAudit = new Crupaudit
                 {
                     TenantId = detailedEmployeeDto.TenentId,
                     LocationId = detailedEmployeeDto.LocationId,
                     CrupId = maxCrupId, 
-                    MySerial = (int)maxCrupId,
+                    MySerial = maxSerialNo,
                     AuditNo = auditInfo.Refid,
                     AuditType = auditInfo.Shortname,
                     TableName = DbTableEnums.DetailedEmployee.ToString(),
@@ -102,10 +104,10 @@ namespace API.Servivces.Implementation.DetailedEmployee
 
                 if (existingEmployee != null)
                 {
+                    var crupId = _context.CrupMsts.Max(c => c.CrupId);
+                    var maxCrupId = crupId + 1;
                     if (existingEmployee.CRUP_ID == 0 || existingEmployee.CRUP_ID == null)
-                    {
-                        var crupId = _context.CrupMsts.Max(c => c.CrupId);
-                        var maxCrupId = crupId + 1;
+                    {                       
                         _mapper.Map(detailedEmployeeDto, existingEmployee);
                         existingEmployee.LocationId = 1;
                         existingEmployee.CRUP_ID = maxCrupId;
@@ -119,6 +121,27 @@ namespace API.Servivces.Implementation.DetailedEmployee
                         _context.DetailedEmployees.Update(existingEmployee);
                         await _context.SaveChangesAsync();
                     }
+                    //                    
+                    var auditInfo = _context.Reftables.FirstOrDefault(c => c.Reftype == "audit" && c.Refsubtype == "Employee");
+                    var mySerialNo = _context.TblAudits.Max(c => c.MySerial);
+                    var maxSerialNo = mySerialNo + 1;
+                    var crupAudit = new Crupaudit
+                    {
+                        TenantId = detailedEmployeeDto.TenentId,
+                        LocationId = detailedEmployeeDto.LocationId,
+                        CrupId = maxCrupId,
+                        MySerial = maxSerialNo,
+                        AuditNo = auditInfo.Refid,
+                        AuditType = auditInfo.Shortname,
+                        TableName = DbTableEnums.DetailedEmployee.ToString(),
+                        FieldName = $"",
+                        OldValue = "Non",
+                        NewValue = "Edited",
+                        CreatedDate = DateTime.Now,
+                        CreatedUserName = detailedEmployeeDto.Username
+                    };
+                    await _context.Crupaudits.AddAsync(crupAudit);
+                    await _context.SaveChangesAsync();
 
                 }
 
@@ -138,8 +161,9 @@ namespace API.Servivces.Implementation.DetailedEmployee
                 if (employee != null)
                 {
                     _context.DetailedEmployees.Remove(employee);
-
                     result = await _context.SaveChangesAsync();
+
+
                 }
                 return result;
             }

@@ -6,9 +6,12 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { Observable } from 'rxjs';
+import { observable, Observable } from 'rxjs';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
 import { OffersDto } from 'src/app/modules/models/OffersDto';
+import { SelectServiceTypeDto } from 'src/app/modules/models/ServiceSetup/SelectServiceTypeDto';
+import { CommonService } from 'src/app/modules/_services/common.service';
+import { DbCommonService } from 'src/app/modules/_services/db-common.service';
 import { OffersService } from 'src/app/modules/_services/offers.service';
 import { environment } from 'src/environments/environment';
 
@@ -96,11 +99,16 @@ export class SpecialOfferMaintenaceComponent implements OnInit {
   baseUrl = environment.KUPFApiUrl;
   electronicFile1: File;
   electronicFile2: File;
-  offerTypeName: any;
+  isFormSubmitted = false;
+  // 
+  offerType$: Observable<SelectServiceTypeDto[]>;
+
   constructor(private fb: FormBuilder,
     private offersService: OffersService,
     private toastrService: ToastrService,
-    private modalService: NgbModal) {
+    private modalService: NgbModal,
+    private commonService: CommonService,
+    private dbCommonService:DbCommonService) {
     this.formGroup = new FormGroup({
       searchTerm: new FormControl(null)
     })
@@ -140,6 +148,8 @@ export class SpecialOfferMaintenaceComponent implements OnInit {
     this.initOfferForm();
     //
     this.LoadData();
+    //
+    this.offerType$ = this.dbCommonService.GetOffers();
   }
   setUpParentForm() {
     this.parentForm = this.fb.group({});
@@ -147,34 +157,29 @@ export class SpecialOfferMaintenaceComponent implements OnInit {
   initOfferForm() {
     this.offerForm = this.fb.group({
       offerType: new FormControl('', Validators.required),
-      offerStartDate: new FormControl(''),
-      offerEndDate: new FormControl(''),
+      offerStartDate: new FormControl('', Validators.required),
+      offerEndDate: new FormControl('', Validators.required),
       offerAmount: new FormControl('', Validators.required),
       serviceId: new FormControl(0),
       offerImage: new FormControl('', Validators.required),
-      electronicForm1: new FormControl('', Validators.required),
-      electronicForm1URL: new FormControl('', Validators.required),
-      electronicForm2: new FormControl('', Validators.required),
-      electronicForm2URL: new FormControl('', Validators.required),
       offerTypeName: new FormControl(null)
     })
     this.parentForm.setControl('offerForm', this.offerForm);
   }
+  get _offerForm() { return this.offerForm.controls; }
   onOfferFormSubmit() {
+    this.isFormSubmitted = true;
     let formData = {
       ...this.parentForm.value.offerForm,
       ...this.parentForm.value.editorForm,
       tenentID: 21, cruP_ID: 0
     }
-
-    // 
-    this.offerForm.get('offerTypeName')?.setValue(this.offerTypeName);
-
+   
     const finalformData = new FormData();
     finalformData.append('File1', this.offerImage);
 
-    finalformData.append('ElectronicForm1Attachment', this.attachment1);
-    finalformData.append('ElectronicForm2Attachment', this.attachment2);
+    finalformData.append('ElectronicForm1Attachment', this.commonService.attachment1);
+    finalformData.append('ElectronicForm2Attachment', this.commonService.attachment2);
 
     var startDate = this.offerForm.controls['offerStartDate'].value;
     var offerStartDate = (new Date(startDate)).toISOString();
@@ -184,14 +189,15 @@ export class SpecialOfferMaintenaceComponent implements OnInit {
     var offerEndDate = (new Date(endDate)).toISOString();
     finalformData.append("offerEndDate", offerEndDate);
 
-    finalformData.set("tenentId", '21');
+    finalformData.set("tenentId", formData.tenentID);
 
     Object.keys(formData).forEach(key => finalformData.append(key, formData[key]));
     if (this.offerForm.controls['serviceId'].value === '' || this.offerForm.controls['serviceId'].value === 0) {
       this.offersService.AddOffer(finalformData).subscribe({
         next: () => {
           this.toastrService.success('Saved successfully', 'Success');
-          this.offerForm.reset();
+          //this.offerForm.reset();
+          this.parentForm.reset();
         },
         error: (error) => {
           if (error.status === 500) {
@@ -199,7 +205,7 @@ export class SpecialOfferMaintenaceComponent implements OnInit {
           }
         }
       })
-      console.log(finalformData);
+      
     }
     else {
       this.offersService.UpdateOffer(finalformData).subscribe({
@@ -222,15 +228,17 @@ export class SpecialOfferMaintenaceComponent implements OnInit {
   editData(serviceId: any) {
     if(this.offerFile!=undefined){
       this.offerFile="";
-    }
-    if(this.electricform1!=undefined){
-      this.electricform1="";
-    }
+    } 
+    // if(this.commonService.attachment1!=undefined){
+    //   //this.commonService.attachment1="";
+    // }
     if(this.electricform2!=undefined){
       this.electricform2="";
     }
-    this.offersService.GetOfferById(serviceId).subscribe((response: any) => {
-      console.log(response.electricform2); 
+    this.offersService.GetOfferById(serviceId).subscribe((response: any) => {  
+      this.commonService.ecform1=response.electronicForm1;
+      this.commonService.ecform2=response.electronicForm2;
+      console.log(response); 
       this.parentForm.patchValue({
           offerForm: {
             offerType: +response.offerType,
@@ -249,12 +257,19 @@ export class SpecialOfferMaintenaceComponent implements OnInit {
             englishHtml:response.englishHTML,
             arabicHtml:response.arabicHTML,
             englishWebPageName:response.englishWebPageName,
-            arabicWebPageName:response.arabicWebPageName
+            arabicWebPageName:response.arabicWebPageName,
+            electronicForm1: response.electronicForm1,
+            electronicForm1URL: response.electronicForm1URL,
+            electronicForm2: response.electronicForm2,
+            electronicForm2URL: response.electronicForm2URL,
+            webEnglish:response.webEnglish,
+            webArabic:response.webArabic             
           }
       })  
       this.offerFile=response.offerImage;
-      this.electricform1=response.electronicForm1;
+      this.commonService.attachment1=response.electronicForm1;
       this.electricform2=response.electronicForm2;
+      console.log('Editor Form',this.commonService.attachment1)
      
     })
     
@@ -264,30 +279,31 @@ export class SpecialOfferMaintenaceComponent implements OnInit {
   }
   // On file Select
 
-  onOfferFileSelectChange(event: any) {
+  onOfferFileSelectChange(event: any) {   
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
       this.offerImage = file;
       this.offerFile=this.offerImage.name;
     }
   }
-  onElectronicForm1Select(event: any) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.electricform1 = file;
-      this.electricform1=file.name;
-    }
-  }
-  onElectronicForm2Select(event: any) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.electricform2 = file;
-      this.electricform2=file.name;
-    }
-  }
-  onOfferTypeChange($event: any) {
-    this.offerTypeName = $event.name
-    console.log(this.offerTypeName);
+  // onElectronicForm1Select(event: any) {
+  //   if (event.target.files.length > 0) {
+  //     const file = event.target.files[0];
+  //     this.electricform1 = file;
+  //     this.electricform1=file.name;
+  //   }
+  // }
+  // onElectronicForm2Select(event: any) {
+  //   if (event.target.files.length > 0) {
+  //     const file = event.target.files[0];
+  //     this.electricform2 = file;
+  //     this.electricform2=file.name;
+  //   }
+  // }
+  onOfferTypeChange($event: any) {   
+    this.offerForm.patchValue({
+      offerTypeName :$event.shortname      
+    })    
   }
 
   LoadData() {
@@ -303,11 +319,6 @@ export class SpecialOfferMaintenaceComponent implements OnInit {
     })
 
   }
-
-
-
-
-
   //#region 
   // Delete recored...
   open(content: any, id: number) {

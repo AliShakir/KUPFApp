@@ -5,6 +5,7 @@ using API.Models;
 using API.Servivces.Interfaces;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -316,6 +317,20 @@ namespace API.Servivces.Implementation
                 .Where(c => c.Refsubtype == "ContractType" && c.Reftype == "KUPF" && c.TenentId == 21)
                 .OrderBy(x => x.Refsubtype).ToListAsync();
             var data = _mapper.Map<IEnumerable<SelectOccupationDto>>(result);
+            return data;
+        }
+
+        public async Task<IEnumerable<ServiceSetupServicesDto>> GetServicesForWebMenu()
+        {
+            var data = _context.ServiceSetups.Where(c=>c.Active == "1" && c.Offer == "Offer").ToList();
+            var result = _mapper.Map<IEnumerable<ServiceSetupServicesDto>>(data);
+            return result;
+        }
+
+        public async Task<IEnumerable<SelectServiceTypeDto>> GetOffers()
+        {
+            var result = await _context.Reftables.Where(c => c.Refsubtype == "ServicesOffer").ToListAsync();
+            var data = _mapper.Map<IEnumerable<SelectServiceTypeDto>>(result);
             return data;
         }
     }

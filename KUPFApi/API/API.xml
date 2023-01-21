@@ -190,6 +190,18 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:API.Controllers.CommonController.GetServicesForWebMenu">
+            <summary>
+            This api will get all active services from service setup for web menu...
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.CommonController.GetOffers">
+            <summary>
+            This api will get all active services from service setup for web menu...
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:API.Controllers.CrupAuditController.#ctor(API.Servivces.Interfaces.ICrupAuditService)">
             <summary>
             

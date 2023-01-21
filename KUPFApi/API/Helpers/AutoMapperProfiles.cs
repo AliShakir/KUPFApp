@@ -133,6 +133,8 @@ namespace API.Helpers
             CreateMap<TransactionHddapprovalDetailDto, TransactionHddapprovalDetail>();
             //
             CreateMap<TransactionHd, ReturnApprovalDetailsDto>();
+            //
+            CreateMap<ServiceSetup, ServiceSetupServicesDto>();
 
         }
     }

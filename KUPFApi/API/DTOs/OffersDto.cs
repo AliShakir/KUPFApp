@@ -36,5 +36,10 @@ namespace API.DTOs
         public string? ArabicHTML { get; set; }
         public string? ArabicWebPageName { get; set; }
         public string? OfferTypeName { get; set; }
+        // menu name arabic
+        public string? WebArabic { get; set; }
+        // menu name english
+        public string? WebEnglish { get; set; }
+        public bool? IsElectronicForm { get; set; }
     }
 }

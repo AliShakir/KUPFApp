@@ -14,6 +14,12 @@ export class CommonService {
   PFId:any;
   subscribedDate:Date;
   terminationDate:Date;
+  //
+  attachment1: File;
+  attachment2: File;
+
+  ecform1:any;
+  ecform2:any;
   public menuSessionUdpated = new Subject<any>();
   public empSearchClickEvent = new Subject<any>();
   constructor() { }

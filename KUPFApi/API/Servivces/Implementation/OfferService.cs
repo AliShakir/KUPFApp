@@ -41,7 +41,7 @@ namespace API.Servivces.Implementation
                     TenentId = offersDto.TenentId,
                     Userid = offersDto.Userid,
                     OfferType = offersDto.OfferType,
-                    Offer = "Offer",
+                    Offer = offersDto.OfferTypeName,
                     OfferStartDate = offersDto.OfferStartDate,
                     OfferEndDate = offersDto.OfferEndDate,
                     OfferAmount = offersDto.OfferAmount,
@@ -52,41 +52,49 @@ namespace API.Servivces.Implementation
                     ArabicHTML = offersDto.ArabicHTML,
                     EnglishWebPageName = offersDto.EnglishWebPageName,
                     ArabicWebPageName = offersDto.ArabicWebPageName,
-                    OfferTypeName = offersDto.OfferTypeName
-
+                    OfferTypeName = offersDto.OfferTypeName,
+                    WebEnglish = offersDto.WebEnglish,
+                    WebArabic = offersDto.WebArabic,
+                    Active = "1",
+                    IsElectronicForm = offersDto.IsElectronicForm
                 };
                 newService.ServiceId = maxIdServiceId;
-                //var path = @"/HostingSpaces/kupf1/kupfapi.erp53.com/new/OfferImages";
+                
+                //var path = @"/HostingSpaces/kupf1/kuweb.erp53.com/wwwroot/Offers/";                
                 var path = @"E:\\";
                 if (offersDto.File1 != null && offersDto.File1.Length != 0)
                 {   
                     var fileExtenstion = Path.GetExtension(offersDto.File1.FileName);
-                    var filePath = Path.Combine(path, Guid.NewGuid() + fileExtenstion);
+                    var fileName = Guid.NewGuid() + fileExtenstion;
+                    var filePath = Path.Combine(path, fileName);
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
                         offersDto.File1.CopyTo(stream);
                     }
-                    newService.OfferImage = Guid.NewGuid() + fileExtenstion;
+                    newService.OfferImage = "/Offers/"+fileName;
+
                 }
                 if (offersDto.ElectronicForm1Attachment != null && offersDto.ElectronicForm1Attachment.Length != 0)
                 {
                     var fileExtenstion = Path.GetExtension(offersDto.ElectronicForm1Attachment.FileName);
-                    var filePath = Path.Combine(path, Guid.NewGuid() + fileExtenstion);
+                    var fileName = Guid.NewGuid() + fileExtenstion;
+                    var filePath = Path.Combine(path, fileName);
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
                         offersDto.ElectronicForm1Attachment.CopyTo(stream);
                     }
-                    newService.ElectronicForm1 = Guid.NewGuid() + fileExtenstion;
+                    newService.ElectronicForm1 = "/Offers/" + fileName;
                 }
                 if (offersDto.ElectronicForm2Attachment != null && offersDto.ElectronicForm2Attachment.Length != 0)
                 {
                     var fileExtenstion = Path.GetExtension(offersDto.ElectronicForm2Attachment.FileName);
-                    var filePath = Path.Combine(path, Guid.NewGuid() + fileExtenstion);
+                    var fileName = Guid.NewGuid() + fileExtenstion;
+                    var filePath = Path.Combine(path, fileName);
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
                         offersDto.ElectronicForm2Attachment.CopyTo(stream);
                     }
-                    newService.ElectronicForm2 = Guid.NewGuid() + fileExtenstion;
+                    newService.ElectronicForm2 = "/Offers/" + fileName;
                 }
                 await _context.ServiceSetups.AddAsync(newService);
                 result = await _context.SaveChangesAsync();
@@ -127,7 +135,7 @@ namespace API.Servivces.Implementation
                     existingService.TenentId = offersDto.TenentId;
                     existingService.Userid = offersDto.Userid;
                     existingService.OfferType = offersDto.OfferType;
-                    existingService.Offer = "Offer";
+                    existingService.Offer = offersDto.OfferTypeName;
                     existingService.OfferStartDate = offersDto.OfferStartDate;
                     existingService.OfferEndDate = offersDto.OfferEndDate;
                     existingService.OfferAmount = offersDto.OfferAmount;
@@ -138,39 +146,43 @@ namespace API.Servivces.Implementation
                     existingService.EnglishWebPageName = offersDto.EnglishWebPageName;
                     existingService.ArabicWebPageName = offersDto.ArabicWebPageName;
                     existingService.OfferTypeName = offersDto.OfferTypeName;
+                    existingService.WebEnglish = offersDto.WebEnglish;
+                    existingService.WebArabic = offersDto.WebArabic;
 
-                    //var path = @"/HostingSpaces/kupf1/kupfapi.erp53.com/new/OfferImages";
-                    var path = @"E:\\";
-
+                    var path = @"/HostingSpaces/kupf1/kuweb.erp53.com/wwwroot/Offers/";
+                    
                     if (offersDto.File1 != null && offersDto.File1.Length != 0)
                     {
                         var fileExtenstion = Path.GetExtension(offersDto.File1.FileName);
-                        var filePath = Path.Combine(path, Guid.NewGuid() + fileExtenstion);
+                        var fileName = Guid.NewGuid() + fileExtenstion;
+                        var filePath = Path.Combine(path, fileName);
                         using (var stream = new FileStream(filePath, FileMode.Create))
                         {
                             offersDto.File1.CopyTo(stream);
                         }
-                        existingService.OfferImage = Guid.NewGuid() + fileExtenstion;
+                        existingService.OfferImage = "/Offers/" + fileName;
                     }
                     if (offersDto.ElectronicForm1Attachment != null && offersDto.ElectronicForm1Attachment.Length != 0)
                     {
                         var fileExtenstion = Path.GetExtension(offersDto.ElectronicForm1Attachment.FileName);
-                        var filePath = Path.Combine(path, Guid.NewGuid() + fileExtenstion);
+                        var fileName = Guid.NewGuid() + fileExtenstion;
+                        var filePath = Path.Combine(path, fileName);
                         using (var stream = new FileStream(filePath, FileMode.Create))
                         {
                             offersDto.ElectronicForm1Attachment.CopyTo(stream);
                         }
-                        existingService.ElectronicForm1 = Guid.NewGuid() + fileExtenstion;
+                        existingService.ElectronicForm1 = "/Offers/" + fileName;
                     }
                     if (offersDto.ElectronicForm2Attachment != null && offersDto.ElectronicForm2Attachment.Length != 0)
                     {
                         var fileExtenstion = Path.GetExtension(offersDto.ElectronicForm2Attachment.FileName);
-                        var filePath = Path.Combine(path, Guid.NewGuid() + fileExtenstion);
+                        var fileName = Guid.NewGuid() + fileExtenstion;
+                        var filePath = Path.Combine(path, fileName);
                         using (var stream = new FileStream(filePath, FileMode.Create))
                         {
                             offersDto.ElectronicForm2Attachment.CopyTo(stream);
                         }
-                        existingService.ElectronicForm2 = Guid.NewGuid() + fileExtenstion;
+                        existingService.ElectronicForm2 = "/Offers/" + fileName;
                     }
                     // 
                     _context.ServiceSetups.Update(existingService);
@@ -184,17 +196,20 @@ namespace API.Servivces.Implementation
 
         public async Task<ServiceSetupDto> GetOfferById(int id)
         {
-            var result = await _context.ServiceSetups.Where(c => c.ServiceId == id && c.Offer == "Offer").FirstOrDefaultAsync();
+            var path = @"/HostingSpaces/kupf1/kuweb.erp53.com/wwwroot"; 
+            //var path = @"E:\\";
+
+            var result = await _context.ServiceSetups.Where(c => c.ServiceId == id && c.OfferType == "1").FirstOrDefaultAsync();
             var data = _mapper.Map<ServiceSetupDto>(result);
-            data.OfferImageFile = GetFileFromFolder("E:\\" + result.OfferImage);
-            data.ElectronicForm1File = GetFileFromFolder("E:\\" + result.ElectronicForm1);
-            data.ElectronicForm2File = GetFileFromFolder("E:\\" + result.ElectronicForm2);
+            data.OfferImageFile = GetFileFromFolder(path + result.OfferImage);
+            data.ElectronicForm1File = GetFileFromFolder(path + result.ElectronicForm1);
+            data.ElectronicForm2File = GetFileFromFolder(path + result.ElectronicForm2);
             return data;
         }
 
         public async Task<IEnumerable<ServiceSetupDto>> GetOffers()
         {
-            var result = _context.ServiceSetups.Where(c=>c.Offer == "Offer").ToList();
+            var result = _context.ServiceSetups.Where(c=>c.OfferType == "1").ToList();
             var data = _mapper.Map<IEnumerable<ServiceSetupDto>>(result);
             return data;
         }

@@ -368,5 +368,27 @@ namespace API.Controllers
             var result = await _commonServiceService.GetContractTypeAsync();
             return result;
         }
+        /// <summary>
+        /// This api will get all active services from service setup for web menu...
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetServicesForWebMenu")]
+        public async Task<IEnumerable<ServiceSetupServicesDto>> GetServicesForWebMenu()
+        {
+            var result = await _commonServiceService.GetServicesForWebMenu();
+            return result;
+        }
+        /// <summary>
+        /// This api will get all active services from service setup for web menu...
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetOffers")]
+        public async Task<IEnumerable<SelectServiceTypeDto>> GetOffers()
+        {
+            var result = await _commonServiceService.GetOffers();
+            return result;
+        }
     }
 }

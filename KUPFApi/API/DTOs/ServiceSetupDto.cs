@@ -86,6 +86,11 @@ namespace API.DTOs
         public byte[] ElectronicForm1File { get; set; }
         public byte[] ElectronicForm2File { get; set; }
         public byte[] OfferImageFile { get; set; }
+        // menu name arabic
+        public string? WebArabic { get; set; }
+        // menu name english
+        public string? WebEnglish { get; set; }
+        public bool? IsElectronicForm { get; set; }
 
     }
 }

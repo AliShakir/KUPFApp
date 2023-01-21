@@ -1,26 +1,9 @@
 <!-- TO GET FORM ID AND SETTINGUP LANGAUGE. [disabled]="!offerForm.valid"-->
 <input type="hidden" #OfferDetails name="OfferDetails" value="OfferDetails">
-  
-    <ngb-accordion #ngbAddOffer="ngbAccordion" activeIds="ngb-panel-0" opened="true" *ngFor="let label of formHeaderLabels; let i = index"
-    class="offer_details">
-        <ngb-panel title={{label.headerName}} >
-            <ng-template ngbPanelContent>
-                <div class="row">
-                    <div class="col-lg-6 fv-row">
-    
-                    </div>
-                    <div class="col-lg-6 fv-row text-left">                        
-                        <div class="btn-group" role="group" aria-label="Basic example" *ngFor="let bodyLabel of formBodyLabels; let i = index">
-                            <button mat-raised-button color="primary" class="float-left" (click)="onOfferFormSubmit()"
-                            [disabled]="!offerForm.valid" form="userForm">{{bodyLabel[0].title}}</button> &nbsp;&nbsp;
-                            <button mat-raised-button color="accent" class="float-left"
-                            (click)="resetForm()">{{bodyLabel[1].title}}</button>  
-                        </div>
-                    </div>
-                </div>     
+      
 
-<ngb-accordion #ngbAddOffer="ngbAccordion" activeIds="ngb-panel-0" opened="true"
-    *ngFor="let label of formHeaderLabels; let i = index">
+<ngb-accordion #ngbAddOffer="ngbAccordion"  
+*ngFor="let label of formHeaderLabels; let i = index" class="offer_details">
     <ngb-panel>
         <ng-template ngbPanelTitle>
             <h3 class="m-0 ArFontStyle" lang="AR-SA">Add Offer</h3>
@@ -34,7 +17,7 @@
                     <div class="btn-group" role="group" aria-label="Basic example"
                         *ngFor="let bodyLabel of formBodyLabels; let i = index">
                         <button mat-raised-button color="primary" class="float-left" (click)="onOfferFormSubmit()"
-                            form="userForm">{{bodyLabel[0].title}}</button> &nbsp;&nbsp;
+                            form="userForm" [disabled]="!offerForm.valid">{{bodyLabel[0].title}}</button> &nbsp;&nbsp;
                         <button mat-raised-button color="accent" class="float-left"
                             (click)="resetForm()">{{bodyLabel[1].title}}</button>
                     </div>
@@ -50,7 +33,7 @@
                                     <label for="formFile" class="form-label ArFontStyle"
                                         lang="AR-SA">{{bodyLabel[2].title}}</label><br>
                                     <input #file type="file" class="form-control form-control-lg  mb-3 mb-lg-0"
-                                        [hidden]="true" formControlName="offerImage"
+                                        [hidden]="true" formControlName="offerImage" 
                                         (change)="onOfferFileSelectChange($event)" title="testing" />
                                     <div class="d-flex">
                                         <button class="btn btn-sm btn-upload" (mousedown)="file.click()">Choose
@@ -59,21 +42,29 @@
                                             {{!offerFile? "No file choosen":offerFile}}
                                         </div>
                                     </div>
+                                    <span class="text-danger"
+                                    *ngIf="(_offerForm.offerImage.touched || isFormSubmitted) && _offerForm.offerImage.errors?.required">
+                                    Offer image is required
+                                </span>
                                 </div>
                             </div>
                             <div class="col-lg-6 fv-row">
                                 <label class="col-form-label fw-bold fs-6 ArFontStyle"
                                     lang="AR-SA">{{bodyLabel[3].title}}</label>
-                                <ng-select [items]="offersArray" bindValue="id" bindLabel="name"
+                                <ng-select [items]="offerType$ | async" bindValue="refId" bindLabel="shortname"
                                     formControlName="offerType" (change)="onOfferTypeChange($event)" lang="AR-SA">
                                 </ng-select>
+                                <span class="text-danger"
+                                    *ngIf="(_offerForm.offerType.touched || isFormSubmitted) && _offerForm.offerType.errors?.required">
+                                    Offer is required
+                                </span>
                             </div>
                         </div>
                         <div class="row mb-4">
                             <div class="col-lg-4 fv-row">
                                 <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"
                                     lang="AR-SA">{{bodyLabel[4].title}}</label>
-                                <div class="input-group mb-5">
+                                <div class="input-group">
                                     <span class="input-group-text" id="basic-addon1">
                                         <i class="fas fa-calendar"></i>
                                     </span>
@@ -81,71 +72,39 @@
                                         [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }"
                                         formControlName="offerStartDate" />
                                 </div>
+                                <span class="text-danger"
+                                    *ngIf="(_offerForm.offerStartDate.touched || isFormSubmitted) && _offerForm.offerStartDate.errors?.required">
+                                    Start date is required
+                                </span>
                             </div>
                             <div class="col-lg-4 fv-row">
                                 <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"
                                     lang="AR-SA">{{bodyLabel[5].title}}</label>
-                                <div class="input-group mb-5">
+                                <div class="input-group">
                                     <span class="input-group-text" id="basic-addon1">
                                         <i class="fas fa-calendar"></i>
                                     </span>
                                     <input type="text" class="form-control" bsDatepicker
                                         [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }" formControlName="offerEndDate" />
                                 </div>
+                                <span class="text-danger"
+                                    *ngIf="(_offerForm.offerEndDate.touched || isFormSubmitted) && _offerForm.offerEndDate.errors?.required">
+                                    End date is required
+                                </span>
                             </div>
-                            <div class="col-lg-4 fv-row">
-                                <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"
-                                    lang="AR-SA">{{bodyLabel[6].title}}</label>
-                                <input type="number" class="form-control form-control-lg  mb-3 mb-lg-0"
-                                    formControlName="offerAmount" name="offerAmount" id="offerAmount" />
-                            </div>
+                                <div class="col-lg-4 fv-row">
+                                    <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"
+                                        lang="AR-SA">{{bodyLabel[6].title}}</label>
+                                    <input type="number" class="form-control form-control-lg  mb-3 mb-lg-0"
+                                        formControlName="offerAmount" name="offerAmount" id="offerAmount" />
+                                        <span class="text-danger"
+                                        *ngIf="(_offerForm.offerAmount.touched || isFormSubmitted) && _offerForm.offerAmount.errors?.required">
+                                        Amount is required
+                                </span>
+                                </div>
+                                
                         </div>
-                        <div class="row mb-4">
-                            <div class="row mb-6">
-                                <div class="col-lg-6 fv-row">
-                                    <label class="col-lg-8 col-form-label fw-bold fs-6 ArFontStyle"><span
-                                            class="">Electronic Form 1 - نموذج إلكتروني
-                                        </span></label><br>
-                                    <input #file1 type="file" class="form-control form-control-lg  mb-3 mb-lg-0"
-                                        [hidden]="true" (change)="onElectronicForm1Select($event)"
-                                        formControlName="electronicForm1" title="testing" />
-                                    <div class="d-flex">
-                                        <button class="btn btn-sm btn-upload"
-                                            (mousedown)="file1.click()">Choose file</button>
-                                        <div class="border border-secondary rounded p-3 w-100" style="height: 43px;">
-                                            {{!electricform1? "No file choosen":electricform1}}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 fv-row">
-                                    <label class="col-lg-8 col-form-label fw-bold fs-6 ArFontStyle"><span
-                                            class="">Electronic Form URL 1 - عنوان URL للنموذج الإلكتروني</span></label>
-                                    <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0"
-                                        formControlName="electronicForm1URL" />
-                                </div>
-                            </div>
-                            <div class="row mb-6">
-                                <div class="col-lg-6 fv-row">
-                                    <label class="col-lg-8 col-form-label fw-bold fs-6 ArFontStyle"><span
-                                            class="">Electronic Form 2 - نموذج إلكتروني
-                                        </span></label>
-                                    <input #file2 type="file" class="form-control form-control-lg  mb-3 mb-lg-0" 
-                                    [hidden]="true" (change)="onElectronicForm2Select($event)" 
-                                    formControlName="electronicForm2" />
-                                    <div class="d-flex">
-                                        <button class="btn btn-sm btn-upload"
-                                            (mousedown)="file2.click()">Choose file</button>
-                                        <div class="border border-secondary rounded p-3 w-100" style="height: 43px;">
-                                            {{!electricform2? "No file choosen":electricform2}}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 fv-row">
-                                    <label class="col-lg-8 col-form-label fw-bold fs-6 ArFontStyle"><span
-                                            class="">Electronic Form URL 2 - عنوان URL للنموذج الإلكتروني</span></label>
-                                    <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0"
-                                        formControlName="electronicForm2URL" />
-                                </div>
-                            </div>
-                        </div>
+                        
                     </form>
                 </div>
             </div>
@@ -156,12 +115,10 @@
 <app-html-forms [parentFormGroup]="parentForm">
 </app-html-forms>
 <br/>
-<ngb-accordion #ngbOfferDetails="ngbAccordion" activeIds="ngb-panel-1" opened="false" class="details_som">
-    <ngb-panel title="Details">
 
-<br />
-<ngb-accordion #ngbOfferDetails="ngbAccordion" activeIds="ngb-panel-1" opened="false">
-    <ngb-panel>
+
+<ngb-accordion #ngbOfferDetails="ngbAccordion" activeIds="ngb-panel-1" opened="true">
+    <ngb-panel id="ngb-panel-1">
         <ng-template ngbPanelTitle>
             <h3 class="m-0 ArFontStyle" lang="AR-SA">Offer Details</h3>
         </ng-template>
