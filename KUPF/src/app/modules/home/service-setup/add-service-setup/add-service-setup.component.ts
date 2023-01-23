@@ -135,6 +135,12 @@ export class AddServiceSetupComponent implements OnInit {
     { id: "11", name: "2" },
     { id: "12", name: "1" }
   ]
+  //
+  discountTypeArray = [
+    { id: "1", name: "Percent" },
+    { id: "2", name: "Fixed Amount" },
+  ]
+
   showHide: boolean;
   // Getting base URL of Api from enviroment.
   baseUrl = environment.KUPFApiUrl;
@@ -204,7 +210,6 @@ export class AddServiceSetupComponent implements OnInit {
             frozen: response.frozen,
             previousEmployees: response.previousEmployees,
             masterServiceId: response.masterServiceId,
-            allowDiscountDefault: response.allowDiscountDefault,
             allowDiscountPer: response.allowDiscountPer,
             allowDiscountAmount: response.allowDiscountAmount,
           },
@@ -316,8 +321,8 @@ export class AddServiceSetupComponent implements OnInit {
       maxInstallment: new FormControl('', Validators.required),
       frozen: new FormControl('', Validators.required),
       previousEmployees: new FormControl('', Validators.required),
-      allowDiscountDefault: new FormControl(''),
       allowDiscountPer: new FormControl(''),
+      discountType: new FormControl(''),
       allowDiscountAmount: new FormControl('0.0'),
     })
     this.parentForm.setControl('addServiceSetupForm', this.addServiceSetupForm);
@@ -343,9 +348,7 @@ export class AddServiceSetupComponent implements OnInit {
     let formData = {
       ...this.parentForm.value.addServiceSetupForm,
       ...this.parentForm.value.approvalDetailsForm,
-      ...this.parentForm.value.financialForm,
-      ...this.parentForm.value.editorForm,
-      ...this.parentForm.value.electronicForm,
+      ...this.parentForm.value.financialForm,     
       tenentID: 21, cruP_ID: 0
     }
     const finalformData = new FormData();
@@ -360,7 +363,6 @@ export class AddServiceSetupComponent implements OnInit {
           this.toastr.success('Saved successfully', 'Success');
           this.parentForm.reset();
           this.parentForm.get('addServiceSetupForm')?.patchValue({
-            allowDiscountDefault: '',
             allowDiscountPer: '',
             allowDiscountAmount: '0.0',
             serviceId: ''
@@ -416,4 +418,5 @@ export class AddServiceSetupComponent implements OnInit {
       this.serviceType$ = response
     });
   }
+ 
 }

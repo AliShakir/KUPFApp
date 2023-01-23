@@ -47,26 +47,26 @@ namespace API.Servivces.Implementation
                 string masterIds = String.Join(",", serviceSetupDto.MasterServiceId);
                 newService.MasterServiceId = masterIds;
 
-                if (serviceSetupDto.File1 != null && serviceSetupDto.File1.Length != 0)
-                {
-                    newService.ElectronicForm1 = serviceSetupDto.File1.FileName;
-                    var path = @"/HostingSpaces/kupf1/kuweb.erp53.com/wwwroot/contents/";
-                    var filePath = Path.Combine(path, serviceSetupDto.File1.FileName);
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        serviceSetupDto.File1.CopyTo(stream);
-                    }
-                }
-                if (serviceSetupDto.File2 != null && serviceSetupDto.File2.Length != 0)
-                {
-                    newService.ElectronicForm2 = serviceSetupDto.File2.FileName;
-                    var path = @"/HostingSpaces/kupf1/kuweb.erp53.com/wwwroot/contents/";
-                    var filePath = Path.Combine(path, serviceSetupDto.File2.FileName);
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        serviceSetupDto.File2.CopyTo(stream);
-                    }
-                }
+                //if (serviceSetupDto.File1 != null && serviceSetupDto.File1.Length != 0)
+                //{
+                //    newService.ElectronicForm1 = serviceSetupDto.File1.FileName;
+                //    var path = @"/HostingSpaces/kupf1/kuweb.erp53.com/wwwroot/contents/";
+                //    var filePath = Path.Combine(path, serviceSetupDto.File1.FileName);
+                //    using (var stream = new FileStream(filePath, FileMode.Create))
+                //    {
+                //        serviceSetupDto.File1.CopyTo(stream);
+                //    }
+                //}
+                //if (serviceSetupDto.File2 != null && serviceSetupDto.File2.Length != 0)
+                //{
+                //    newService.ElectronicForm2 = serviceSetupDto.File2.FileName;
+                //    var path = @"/HostingSpaces/kupf1/kuweb.erp53.com/wwwroot/contents/";
+                //    var filePath = Path.Combine(path, serviceSetupDto.File2.FileName);
+                //    using (var stream = new FileStream(filePath, FileMode.Create))
+                //    {
+                //        serviceSetupDto.File2.CopyTo(stream);
+                //    }
+                //}
 
                 await _context.ServiceSetups.AddAsync(newService);
                 result = await _context.SaveChangesAsync();

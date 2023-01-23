@@ -55,6 +55,7 @@ export interface ServiceSetupDto {
     syncby: string;
     synId: number;
     allowDiscountPer?: boolean;
+    discountType:string;
     allowDiscountAmount?: number;
     allowDiscountDefault?: boolean;
     englishHTML?: string;

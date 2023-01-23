@@ -64,7 +64,8 @@ namespace API.Models
         public DateTime? SyncDate { get; set; }
         public string Syncby { get; set; }
         public int? SynId { get; set; }
-        public decimal? AllowDiscountPer { get; set; }
+        public bool? AllowDiscountPer { get; set; }
+        public string? DiscountType { get; set; }
         public decimal? AllowDiscountAmount { get; set; }
         public bool? AllowDiscountDefault { get; set; }
         public string? EnglishHTML { get; set; }

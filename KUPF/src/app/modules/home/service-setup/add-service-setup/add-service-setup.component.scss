@@ -44,3 +44,9 @@ input:focus {
 .theader{
     color: #fff !important;
 }
+input[type=checkbox]{
+    background-color: #5f6d7a!important;
+}
+.form-switch .form-check-input:checked{
+    background-color: #348be1!important;
+}
