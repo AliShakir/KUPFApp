@@ -102,6 +102,7 @@ namespace API.DTOs
         public string Subject { get; set; }
         public string  MetaTags { get; set; }
         public string AttachmentRemarks { get; set; }
+        public decimal? DownPayment { get; set; }
     }
    
 }

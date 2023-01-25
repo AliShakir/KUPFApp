@@ -25,4 +25,8 @@ export interface ReturnSearchResultDto{
         isKUEmployee: boolean;
         isOnSickLeave: boolean;
         isMemberOfFund: boolean;
+        countryId:number;
+        countryNameEnglish:any;
+        countryNameArabic:any;
+        
 }

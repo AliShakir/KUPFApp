@@ -323,7 +323,7 @@ export class AddServiceSetupComponent implements OnInit {
       previousEmployees: new FormControl('', Validators.required),
       allowDiscountPer: new FormControl(''),
       discountType: new FormControl(''),
-      allowDiscountAmount: new FormControl('0.0'),
+      allowDiscountAmount: new FormControl('0.0')
     })
     this.parentForm.setControl('addServiceSetupForm', this.addServiceSetupForm);
   }

@@ -271,7 +271,9 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       employeeStatus: new FormControl(''),
       isKUEmployee: new FormControl(''),
       isOnSickLeave: new FormControl(''),
-      isMemberOfFund: new FormControl('')      
+      isMemberOfFund: new FormControl(''),
+      CountryNameEnglish: new FormControl(''),
+      CountryNameArabic: new FormControl('')
     })
     this.parentForm.setControl('employeeForm', this.employeeForm);
   }
@@ -296,6 +298,10 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       untilMonth: new FormControl('', Validators.required),
       serviceSubTypeId: new FormControl(''),
       serviceTypeId: new FormControl(''),
+      downPayment: new FormControl('0'),
+      discountType: new FormControl(null),
+      allowDiscountAmount: new FormControl(null),
+      allowDiscountPer: new FormControl(null),
     })
     this.parentForm.setControl('addServiceForm', this.addServiceForm);
   }
@@ -325,7 +331,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       //...this.parentForm.value.financialFormArray,
       tenentID: 21, cruP_ID: 0, locationID: 1
     }
-    
+
     formData['installmentsBegDate'] = moment(formData['installmentsBegDate']).format("yyyy-MM-DD");
     let finalformData = new FormData();
     Object.keys(formData).forEach(key => finalformData.append(key, formData[key]));
@@ -390,13 +396,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       this.parentForm.reset();
     })
   }
-  getFormValues() {
-    if (this.notSubscriber) {
-      console.log('True');
-    } else {
-      console.log('False');
-    }
-  }
+  
   calculateUntilMonth(selectedDate: Date) {
     if (selectedDate !== undefined) {
       let noOfinstallments = this.addServiceForm.get('totinstallments')?.value;
@@ -408,15 +408,44 @@ export class AddServiceComponent implements OnInit, OnDestroy {
 
   }
 
-  // Calculate Installments based on Installment Months...
+  // Calculate Installments based on Installment Months...allowDiscountAmount
   calculateInstallments() {
+    //
     let amount = this.addServiceForm.get('totamt')?.value;
     let noOfinstallments = this.addServiceForm.get('totinstallments')?.value;
-    let calculatedAmount = (amount / noOfinstallments);
-    this.addServiceForm.patchValue({
-      installmentAmount: calculatedAmount
-    })
+    let allowDiscountAmount = this.addServiceForm.get('allowDiscountAmount')?.value;
+    let downPayment = this.addServiceForm.get('downPayment')?.value;
+    //
+    let calculatedAmount = 0;
+    let percentageAmount = 0;
+    let netAmount = 0;
+    //
+    if (amount == 0 || amount == '') {
+      this.toastrService.error('Please enter amount', 'Error');
+    }
+    else if (noOfinstallments == 0 || noOfinstallments == '') {
+      this.toastrService.error('Please enter installments', 'Error');
+    }else{
+      // If 1 Percentage...
+      if (this.addServiceForm.get('discountType')?.value === '1') {
+        percentageAmount = ((amount * allowDiscountAmount) / 100);
+        calculatedAmount = ((amount - percentageAmount) - downPayment);
+        netAmount = (calculatedAmount / noOfinstallments);
+      }
+      // If 2 Fixed Amount...
+      else if (this.addServiceForm.get('discountType')?.value === '2') {
+        calculatedAmount = ((amount - allowDiscountAmount) - downPayment);
+        netAmount = (calculatedAmount / noOfinstallments);
+      }
+
+      this.addServiceForm.patchValue({
+        installmentAmount: netAmount.toFixed(2)
+      })
+    }
+
+    
   }
+
   onServiceTypeChange(event: any) {
     this.commonService.GetSubServiceTypeByServiceType(21, event.refId).subscribe((response: any) => {
       this.selectServiceSubType = response
@@ -455,13 +484,16 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       this.parentForm.patchValue({
         addServiceForm: {
           serviceSubType: response.serviceSubType,
-          serviceType: this.selectedServiceTypeText,
+          //serviceType: this.selectedServiceTypeText,
           searialNo: '',
           amount: '',
           totinstallments: response.maxInstallment,
           allowDiscount: response.allowDiscountAmount,
           serviceSubTypeId: response.serviceSubTypeId,
           serviceTypeId: response.serviceTypeId,
+          allowDiscountPer: response.allowDiscountPer,
+          discountType: response.discountType,
+          allowDiscountAmount: response.allowDiscountAmount
         },
         approvalDetailsForm: {
           serApproval1: +response.serApproval1,
@@ -496,9 +528,9 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           otherAct5: response.otherAct5
         },
       });
-
+      
     })
-    //console.log('Ok 1',this.addServiceForm.value);
+
   }
 
   // To access form controls...
@@ -560,11 +592,12 @@ export class AddServiceComponent implements OnInit, OnDestroy {
   }
   SearchEmployee() {
     this.financialService.SearchEmployee(this.searchForm.value).subscribe((response: any) => {
+
       if (response === null) {
         this.common.ifEmployeeExists = false;
         this.toastrService.error('Sorry, record not found', 'Error');
         this.employeeForm?.reset();
-      } else {        
+      } else {
         this.common.ifEmployeeExists = true;
         this.employeeForm?.patchValue({
           employeeId: response.employeeId,
@@ -585,11 +618,12 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           terminationDate: response.terminationDate,
           endDate: response.endDate,
           employeeStatus: response.employeeStatus,
-          isKUEmployee:response.isKUEmployee,
-          isOnSickLeave:response.isOnSickLeave,
-          isMemberOfFund:response.isMemberOfFund
+          isKUEmployee: response.isKUEmployee,
+          isOnSickLeave: response.isOnSickLeave,
+          isMemberOfFund: response.isMemberOfFund,
+          CountryNameEnglish: response.countryNameEnglish,
+          CountryNameArabic: response.countryNameArabic
         })
-        
         this.common.PFId = response.pfid;
         this.common.subscribedDate = response.subscribedDate;
         this.common.terminationDate = response.terminationDate;

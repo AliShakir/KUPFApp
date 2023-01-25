@@ -31,6 +31,9 @@ namespace API.DTOs
         public bool? IsKUEmployee { get; set; }
         public bool? IsOnSickLeave { get; set; }
         public bool? IsMemberOfFund { get; set; }
+        public int? CountryId { get; set; }
+        public string? CountryNameEnglish { get; set; }
+        public string? CountryNameArabic { get; set; }
 
     }
 }

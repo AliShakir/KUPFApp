@@ -723,6 +723,13 @@
             <param name="subscribeDate">Get total months</param>
             <returns></returns>
         </member>
+        <member name="M:API.Common.CommonMethods.CalculatPerMonthInstallments(System.Decimal,System.Decimal,System.Decimal,System.Int32)">
+            <summary>
+            To calculat per month installments
+            </summary>
+            <param name="subscribeDate"></param>
+            <returns></returns>
+        </member>
         <member name="T:API.Servivces.Implementation.CommonService">
             <summary>
             This class contains all functions/methods that can be use 

@@ -79,6 +79,7 @@ namespace API.Models
         public DateTime InstallmentsBegDate { get; set; }
         public string UntilMonth { get; set; }
         public int? SponserProvidentID { get; set; }
+        public decimal? DownPayment { get; set; }
 
     }
 }

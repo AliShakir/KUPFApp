@@ -93,5 +93,6 @@ namespace API.DTOs
         public string? WebEnglish { get; set; }
         public bool? IsElectronicForm { get; set; }
 
+
     }
 }

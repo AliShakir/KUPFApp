@@ -47,5 +47,17 @@ namespace API.Common
             int totalMonths = 12 * (CurrentDate.Year - subscribeDate.Year) + CurrentDate.Month - subscribeDate.Month;
             return totalMonths;
         }
+
+        /// <summary>
+        /// To calculat per month installments
+        /// </summary>
+        /// <param name="subscribeDate"></param>
+        /// <returns></returns>
+        public static decimal CalculatPerMonthInstallments(decimal amountPayable,decimal discount,decimal downPayment, int totalInstallments)
+        {
+            decimal totalAmount = ((amountPayable - discount) - downPayment) / totalInstallments;
+            
+            return totalAmount;
+        }
     }
 }
