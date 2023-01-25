@@ -79,6 +79,24 @@
                     <form [formGroup]="employeeForm">
                         <div class="row mb-4">
                             <div class="col-lg-4 fv-row">
+                                <label class="form-label _title" for="form3Example1 " lang="AR-SA"
+                                    [style]='arabicFont'>PF Id</label>
+                                <input type="text" class="form-control" formControlName="employeePFId" name="employeePFId" readonly/>
+                            </div>
+                            <div class="col-lg-4 fv-row">
+                                <label class="form-label _title" for="form3Example2 " lang="AR-SA"
+                                    [style]='arabicFont'>CID</label>
+                                <input type="text" class="form-control" formControlName="employeeCID" name="employeeCID" readonly/>
+                            </div>
+                            <div class="col-lg-4 fv-row">
+                                <label class="form-label _title" for="form3Example2 " lang="AR-SA"
+                                    [style]='arabicFont'>Employee Id</label>
+                                <input type="text" class="form-control" formControlName="employeeFormEmployeeId"
+                                    name="employeeFormEmployeeId" readonly/>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-lg-4 fv-row">
                                 <input type="hidden" class="form-control" formControlName="employeeId" name="employeeId" />
                                 <label class="form-label" for="englishName " lang="AR-SA"
                                     [style]='arabicFont'>English Name</label>
@@ -281,7 +299,7 @@
                                 <label class="col-form-label fw-bold fs-6 ArFontStyle"
                                     lang="AR-SA">{{bodyLabel[6].title}}</label>
                                 <input type="number" class="form-control form-control-lg  mb-3 mb-lg-0"
-                                    (keyup)="calculateInstallments()" formControlName="totamt" />
+                                    (keyup)="calculateInstallments()" formControlName="totamt"/>
                                 <span class="text-danger"
                                     *ngIf="isFormSubmitted && addServiceFrm.totamt.errors?.required">
                                     Amount is required
@@ -292,7 +310,7 @@
                                         class="text-danger">Incase of Gift By Default=Y </small> {{bodyLabel[9].title}}
                                 </label>
                                 <input type="number" class="form-control form-control-lg  mb-3 mb-lg-0"
-                                    formControlName="allowDiscountAmount" (keyup)="calculateInstallments()"/>
+                                    formControlName="allowDiscountAmount" (keyup)="calculateInstallments()" readonly/>
                                 <span class="text-danger"
                                     *ngIf="isFormSubmitted && addServiceFrm.allowDiscountAmount.errors?.required">
                                     Discount Amount is required

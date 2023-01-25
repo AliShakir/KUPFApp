@@ -154,6 +154,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       this.financialService.GetFinancialServiceById(this.mytransid).subscribe((response: any) => {
 
         this.selectServiceSubType$ = this.commonService.GetSubServiceTypeByServiceType(21, response.serviceType);
+        
         this.parentForm.patchValue({
           employeeForm: {
             employeeId: response.employeeId,
@@ -206,7 +207,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
             approvedDate5: response.approvedDate5,
           }
         })
-        console.log(this.addServiceForm.value);
+        
       })
     }
 
@@ -273,7 +274,10 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       isOnSickLeave: new FormControl(''),
       isMemberOfFund: new FormControl(''),
       CountryNameEnglish: new FormControl(''),
-      CountryNameArabic: new FormControl('')
+      CountryNameArabic: new FormControl(''),
+      employeePFId: new FormControl(''),
+      employeeCID: new FormControl(''),
+      employeeFormEmployeeId: new FormControl(''),
     })
     this.parentForm.setControl('employeeForm', this.employeeForm);
   }
@@ -360,24 +364,12 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       })
     } else {
 
-      this.financialService.AddFinacialService(finalformData).subscribe((response: any) => {
-        if (response.response == '1') {
-          this.toastrService.error('Subscription apply only to the KU Employees ', 'Error');
-        }
-        else if (response.response == '2') {
-          this.toastrService.error('A KU Employee on the Sick Leave Cannot apply for the Membership', 'Error');
-        }
-        else if (response.response == '3') {
-          this.toastrService.error('Employee is Member of a KUPF Fund Committe', 'Error');
-        }
-        else if (response.response == '4') {
-          this.toastrService.error('Employee Was Terminated Earlier', 'Error');
-        }
-        else if (response.response == '5') {
-          this.toastrService.error('Duplicate subscriber', 'Error');
+      this.financialService.AddFinacialService(finalformData).subscribe((response: any) => {        
+        if (response.isSuccess == false) {
+          this.toastrService.error(response.message, 'Error');
         }
         else {
-          this.toastrService.success('Saved successfully', 'Success');
+          this.toastrService.success(response.message, 'Success');
           this.popUpForm.patchValue({
             transactionId: response.transactionId,
             attachId: response.attachId
@@ -480,7 +472,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     this.selectedServiceSubType = $event.refId;
     this.selectedServiceSubTypeText = $event.shortname;
     this.financialService.GetSelectedServiceSubType(this.selectedServiceType, this.selectedServiceSubType, 21).subscribe((response: any) => {
-
+      console.log('OK 123',response);
       this.parentForm.patchValue({
         addServiceForm: {
           serviceSubType: response.serviceSubType,
@@ -599,6 +591,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
         this.employeeForm?.reset();
       } else {
         this.common.ifEmployeeExists = true;
+        console.log(response);
         this.employeeForm?.patchValue({
           employeeId: response.employeeId,
           englishName: response.englishName,
@@ -622,7 +615,10 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           isOnSickLeave: response.isOnSickLeave,
           isMemberOfFund: response.isMemberOfFund,
           CountryNameEnglish: response.countryNameEnglish,
-          CountryNameArabic: response.countryNameArabic
+          CountryNameArabic: response.countryNameArabic,
+          employeePFId: response.pfid,
+          employeeCID: response.empCidNum,
+          employeeFormEmployeeId: response.employeeId,
         })
         this.common.PFId = response.pfid;
         this.common.subscribedDate = response.subscribedDate;

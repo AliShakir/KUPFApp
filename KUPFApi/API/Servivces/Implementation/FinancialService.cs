@@ -48,24 +48,31 @@ namespace API.Servivces.Implementation
                 {
                     return new FinancialServiceResponse
                     {
-                        Response = "1"
+                        IsSuccess = false,
+                        Message = "Subscription apply only to the KU Employees"
                     };
                 }
                 else if (transactionHdDto.IsOnSickLeave == true)
                 {
                     return new FinancialServiceResponse
                     {
-                        Response = "2"
+                        Response = "2" // A KU Employee on the Sick Leave Cannot apply for the Membership
                     };
                 }
                 else if (transactionHdDto.IsMemberOfFund == true)
                 {
-                    return new FinancialServiceResponse { Response = "3" };
+                    return new FinancialServiceResponse
+                    {
+                        Response = "3" // Employee is Member of a KUPF Fund Committe
+                    };
                 }
-                //else if (transactionHdDto.TerminationId != null)
-                //{
-                //    return response = "4";
-                //}
+                else if (transactionHdDto.TerminationId != null)
+                {
+                    return new FinancialServiceResponse
+                    {
+                        Response = "4" // Employee Was Terminated Earlier
+                    };
+                }
                 else
                 {
                     #region Subscriber    
@@ -75,24 +82,119 @@ namespace API.Servivces.Implementation
                     int maxSwitch1 = _context.Reftables.Where(c => c.Reftype == "KUPF" && c.Refsubtype == "ServicesSubType"
                        && c.Switch4 == transactionHdDto.ServiceTypeId && c.Refid == transactionHdDto.ServiceSubTypeId).Max(x => Convert.ToInt32(x.Switch1));
                     int maxSwitch = maxSwitch1 + 1;
-
-                    if (transactionHdDto.ServiceType == "Subscriber  - مشترك")
+                    
+                    #region Save into TransactionHddm
+                    var attachmentsData = new TransactionHddm
                     {
-                        var existingSubscriber = _context.TransactionHds.Where(c => c.EmployeeId == newTransaction.EmployeeId).FirstOrDefault();
-                        if (existingSubscriber != null)
+                        TenentId = (int)transactionHdDto.TenentId,
+                        Mytransid = newTransaction.Mytransid,
+                        AttachId = attachId,
+                        Remarks = transactionHdDto.AttachmentRemarks,
+                        Subject = transactionHdDto.Subject,
+                        MetaTags = transactionHdDto.MetaTags
+                    };
+
+                    
+                    //var path = "E:\\";
+                    var path = @"/HostingSpaces/kupf1/kupfapi.erp53.com/New/ServiceAttachments/";
+
+                    if (transactionHdDto.personalPhotoDocument.Length != 0 &&
+                        transactionHdDto.personalPhotoDocument != null)
+                    {
+                        var personalDocFileExtension = Path.GetExtension(transactionHdDto.personalPhotoDocument.FileName);
+                        var filePath = Path.Combine(path, Guid.NewGuid() + personalDocFileExtension);
+                        using (var stream = new FileStream(filePath, FileMode.Create))
                         {
-                            return new FinancialServiceResponse
-                            {
-                                Response = "5" // Duplicate subscriber...
-                            };
+                            transactionHdDto.personalPhotoDocument.CopyTo(stream);
                         }
-
-                        newTransaction.Mytransid = CommonMethods.CreateEmployeeId();
-                        newTransaction.MasterServiceId = maxSwitch;
-                        await _context.TransactionHds.AddAsync(newTransaction);
+                        attachmentsData.Serialno = serialNo;
+                        attachmentsData.DocumentType = transactionHdDto.personalPhotoDocType;
+                        attachmentsData.AttachmentPath = filePath;
+                        attachmentsData.AttachmentByName = Guid.NewGuid() + personalDocFileExtension;
+                        attachmentsData.AttachmentsDetail = null;
+                        await _context.TransactionHddms.AddAsync(attachmentsData);
                         await _context.SaveChangesAsync();
+                        _context.ChangeTracker.Clear();
+                    }
+                    if (transactionHdDto.appplicationFileDocument.Length != 0 &&
+                        transactionHdDto.appplicationFileDocument != null)
+                    {
+                        var appplicationFileExtension = Path.GetExtension(transactionHdDto.appplicationFileDocument.FileName);
+                        var filePath = Path.Combine(path, Guid.NewGuid() + appplicationFileExtension);
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            transactionHdDto.appplicationFileDocument.CopyTo(stream);
+                        }
+                        attachmentsData.Serialno = attachmentsData.Serialno + 1;
+                        attachmentsData.DocumentType = transactionHdDto.appplicationFileDocType;
+                        attachmentsData.AttachmentPath = filePath;
+                        attachmentsData.AttachmentByName = Guid.NewGuid() + appplicationFileExtension;
+                        attachmentsData.AttachmentsDetail = null;
+                        await _context.TransactionHddms.AddAsync(attachmentsData);
+                        await _context.SaveChangesAsync();
+                        _context.ChangeTracker.Clear();
+                    }
+                    if (transactionHdDto.workIdDocument.Length != 0 &&
+                        transactionHdDto.workIdDocument != null)
+                    {
+                        var workIdFileExtension = Path.GetExtension(transactionHdDto.workIdDocument.FileName);
+                        var filePath = Path.Combine(path, Guid.NewGuid() + workIdFileExtension);
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            transactionHdDto.workIdDocument.CopyTo(stream);
+                        }
+                        attachmentsData.Serialno = attachmentsData.Serialno + 1;
+                        attachmentsData.DocumentType = transactionHdDto.workIdDocType;
+                        attachmentsData.AttachmentPath = filePath;
+                        attachmentsData.AttachmentByName = Guid.NewGuid() + workIdFileExtension;
+                        attachmentsData.AttachmentsDetail = null;
+                        await _context.TransactionHddms.AddAsync(attachmentsData);
+                        await _context.SaveChangesAsync();
+                        _context.ChangeTracker.Clear();
+                    }
+                    if (transactionHdDto.civilIdDocument.Length != 0 &&
+                        transactionHdDto.civilIdDocument != null)
+                    {
+                        var civilIdFileExtension = Path.GetExtension(transactionHdDto.civilIdDocument.FileName);
+                        var filePath = Path.Combine(path, Guid.NewGuid() + civilIdFileExtension);
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            transactionHdDto.civilIdDocument.CopyTo(stream);
+                        }
+                        attachmentsData.Serialno = attachmentsData.Serialno + 1;
+                        attachmentsData.DocumentType = transactionHdDto.workIdDocType;
+                        attachmentsData.AttachmentPath = filePath;
+                        attachmentsData.AttachmentByName = Guid.NewGuid() + civilIdFileExtension;
+                        attachmentsData.AttachmentsDetail = null;
+                        await _context.TransactionHddms.AddAsync(attachmentsData);
+                        await _context.SaveChangesAsync();
+                        _context.ChangeTracker.Clear();
+                    }
+                    if (transactionHdDto.salaryDataDocument.Length != 0 &&
+                        transactionHdDto.salaryDataDocument != null)
+                    {
+                        var salaryDataFileExtension = Path.GetExtension(transactionHdDto.salaryDataDocument.FileName);
+                        var filePath = Path.Combine(path, Guid.NewGuid() + salaryDataFileExtension);
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            transactionHdDto.salaryDataDocument.CopyTo(stream);
+                        }
+                        attachmentsData.Serialno = attachmentsData.Serialno + 1;
+                        attachmentsData.DocumentType = transactionHdDto.salaryDataDocType;
+                        attachmentsData.AttachmentPath = filePath;
+                        attachmentsData.AttachmentByName = Guid.NewGuid() + salaryDataFileExtension;
+                        attachmentsData.AttachmentsDetail = null;
+                        await _context.TransactionHddms.AddAsync(attachmentsData);
+                        await _context.SaveChangesAsync();
+                        _context.ChangeTracker.Clear();
+                    }
+                    #endregion
 
-                        var serviceApprovals = _context.ServiceSetups.Where(p => p.ServiceType == 2 && p.ServiceSubType == 5).FirstOrDefault();
+
+                    #region Save Into TransactionHDDApprovalDetails
+                    var serviceApprovals = _context.ServiceSetups.Where(p => p.ServiceType == 2 && p.ServiceSubType == 5).FirstOrDefault();
+                    if(serviceApprovals != null)
+                    {
                         List<string> myService = new List<string>
                             {
                                 serviceApprovals.SerApproval1,
@@ -141,8 +243,30 @@ namespace API.Servivces.Implementation
                                 srId++;
                             }
                         }
+                    }
+                    
+                    #endregion
 
 
+
+
+                    if (transactionHdDto.ServiceType == "Subscriber  - مشترك")
+                    {
+                        var existingSubscriber = _context.TransactionHds.Where(c => c.EmployeeId == newTransaction.EmployeeId).FirstOrDefault();
+                        if (existingSubscriber != null)
+                        {
+                            return new FinancialServiceResponse
+                            {
+                                Response = "5" // Duplicate subscriber...
+                            };
+                        }
+
+                        newTransaction.Mytransid = CommonMethods.CreateEmployeeId();
+                        newTransaction.MasterServiceId = maxSwitch;
+                        await _context.TransactionHds.AddAsync(newTransaction);
+                        await _context.SaveChangesAsync();
+
+                        
                         int installments = CommonMethods.CreateSubscriberInstallments(transactionHdDto.InstallmentsBegDate);
                         for (int i = 0; i < installments; i++)
                         {
@@ -186,109 +310,7 @@ namespace API.Servivces.Implementation
                         }
 
 
-                        var attachmentsData = new TransactionHddm
-                        {
-                            TenentId = (int)transactionHdDto.TenentId,
-                            Mytransid = newTransaction.Mytransid,
-                            AttachId = attachId,
-                            Remarks = transactionHdDto.AttachmentRemarks,
-                            Subject = transactionHdDto.Subject,
-                            MetaTags = transactionHdDto.MetaTags
-                        };
-
-                        var path = "E:\\";
-                        //var path = @"/HostingSpaces/kupf1/KUPF_Public/ServiceAttachments";
-
-                        if (transactionHdDto.personalPhotoDocument.Length != 0 &&
-                            transactionHdDto.personalPhotoDocument != null)
-                        {
-                            var personalDocFileExtension = Path.GetExtension(transactionHdDto.personalPhotoDocument.FileName);
-                            var filePath = Path.Combine(path, Guid.NewGuid() + personalDocFileExtension);
-                            using (var stream = new FileStream(filePath, FileMode.Create))
-                            {
-                                transactionHdDto.personalPhotoDocument.CopyTo(stream);
-                            }
-                            attachmentsData.Serialno = serialNo;
-                            attachmentsData.DocumentType = transactionHdDto.personalPhotoDocType;
-                            attachmentsData.AttachmentPath = filePath;
-                            attachmentsData.AttachmentByName = Guid.NewGuid() + personalDocFileExtension;
-                            attachmentsData.AttachmentsDetail = null;
-                            await _context.TransactionHddms.AddAsync(attachmentsData);
-                            await _context.SaveChangesAsync();
-                            _context.ChangeTracker.Clear();
-                        }
-                        if (transactionHdDto.appplicationFileDocument.Length != 0 &&
-                            transactionHdDto.appplicationFileDocument != null)
-                        {
-                            var appplicationFileExtension = Path.GetExtension(transactionHdDto.appplicationFileDocument.FileName);
-                            var filePath = Path.Combine(path, Guid.NewGuid() + appplicationFileExtension);
-                            using (var stream = new FileStream(filePath, FileMode.Create))
-                            {
-                                transactionHdDto.appplicationFileDocument.CopyTo(stream);
-                            }
-                            attachmentsData.Serialno = attachmentsData.Serialno + 1;
-                            attachmentsData.DocumentType = transactionHdDto.appplicationFileDocType;
-                            attachmentsData.AttachmentPath = filePath;
-                            attachmentsData.AttachmentByName = Guid.NewGuid() + appplicationFileExtension;
-                            attachmentsData.AttachmentsDetail = null;
-                            await _context.TransactionHddms.AddAsync(attachmentsData);
-                            await _context.SaveChangesAsync();
-                            _context.ChangeTracker.Clear();
-                        }
-                        if (transactionHdDto.workIdDocument.Length != 0 &&
-                            transactionHdDto.workIdDocument != null)
-                        {
-                            var workIdFileExtension = Path.GetExtension(transactionHdDto.workIdDocument.FileName);
-                            var filePath = Path.Combine(path, Guid.NewGuid() + workIdFileExtension);
-                            using (var stream = new FileStream(filePath, FileMode.Create))
-                            {
-                                transactionHdDto.workIdDocument.CopyTo(stream);
-                            }
-                            attachmentsData.Serialno = attachmentsData.Serialno + 1;
-                            attachmentsData.DocumentType = transactionHdDto.workIdDocType;
-                            attachmentsData.AttachmentPath = filePath;
-                            attachmentsData.AttachmentByName = Guid.NewGuid() + workIdFileExtension;
-                            attachmentsData.AttachmentsDetail = null;
-                            await _context.TransactionHddms.AddAsync(attachmentsData);
-                            await _context.SaveChangesAsync();
-                            _context.ChangeTracker.Clear();
-                        }
-                        if (transactionHdDto.civilIdDocument.Length != 0 &&
-                            transactionHdDto.civilIdDocument != null)
-                        {
-                            var civilIdFileExtension = Path.GetExtension(transactionHdDto.civilIdDocument.FileName);
-                            var filePath = Path.Combine(path, Guid.NewGuid() + civilIdFileExtension);
-                            using (var stream = new FileStream(filePath, FileMode.Create))
-                            {
-                                transactionHdDto.civilIdDocument.CopyTo(stream);
-                            }
-                            attachmentsData.Serialno = attachmentsData.Serialno + 1;
-                            attachmentsData.DocumentType = transactionHdDto.workIdDocType;
-                            attachmentsData.AttachmentPath = filePath;
-                            attachmentsData.AttachmentByName = Guid.NewGuid() + civilIdFileExtension;
-                            attachmentsData.AttachmentsDetail = null;
-                            await _context.TransactionHddms.AddAsync(attachmentsData);
-                            await _context.SaveChangesAsync();
-                            _context.ChangeTracker.Clear();
-                        }
-                        if (transactionHdDto.salaryDataDocument.Length != 0 &&
-                            transactionHdDto.salaryDataDocument != null)
-                        {
-                            var salaryDataFileExtension = Path.GetExtension(transactionHdDto.salaryDataDocument.FileName);
-                            var filePath = Path.Combine(path, Guid.NewGuid() + salaryDataFileExtension);
-                            using (var stream = new FileStream(filePath, FileMode.Create))
-                            {
-                                transactionHdDto.salaryDataDocument.CopyTo(stream);
-                            }
-                            attachmentsData.Serialno = attachmentsData.Serialno + 1;
-                            attachmentsData.DocumentType = transactionHdDto.salaryDataDocType;
-                            attachmentsData.AttachmentPath = filePath;
-                            attachmentsData.AttachmentByName = Guid.NewGuid() + salaryDataFileExtension;
-                            attachmentsData.AttachmentsDetail = null;
-                            await _context.TransactionHddms.AddAsync(attachmentsData);
-                            await _context.SaveChangesAsync();
-                            _context.ChangeTracker.Clear();
-                        }
+                        
                     }
 
                     else if (transactionHdDto.ServiceType == "Membership Withdrawal - الانسحاب من العضوية"
@@ -301,22 +323,14 @@ namespace API.Servivces.Implementation
                         {
                             return new FinancialServiceResponse
                             {
-                                Response = "6" // Terminated...
+                                Response = "6" // Not Terminated...
                             };
                         }
                         else if (employeeMembership.EndDate != null)
                         {
                             return new FinancialServiceResponse
                             {
-                                Response = "7" // End of service...
-                            };
-                        }
-                        // To check Not completing the requried data...
-                        else if (employeeMembership.EndDate != null)
-                        {
-                            return new FinancialServiceResponse
-                            {
-                                //Response = "8" // End of service...
+                                Response = "7" // End of date not null...
                             };
                         }
                         else
@@ -434,7 +448,6 @@ namespace API.Servivces.Implementation
                                         payableAmount = ((((decimal)transactionHdDto.Totamt * totalMonths) / 100) * Convert.ToInt32(discountValues[i].Switch2));
                                         //
                                         payableAmountAfterOneYear = payableAmount;
-                                        ;
                                         data = new TransactionDtDto
                                         {
                                             TenentId = transactionHdDto.TenentId,
@@ -533,48 +546,6 @@ namespace API.Servivces.Implementation
 
                             }
                         }
-                        //for (int i = 0; i < transactionHdDto.Totinstallments; i++)
-                        //{
-                        //    decimal eachInstallmentAmount = (decimal)(transactionHdDto.InstallmentAmount / transactionHdDto.Totinstallments);
-                        //    var data = new TransactionDtDto
-                        //    {
-                        //        TenentId = transactionHdDto.TenentId,
-                        //        LocationId = transactionHdDto.LocationId,
-                        //        Mytransid = newTransaction.Mytransid,
-                        //        Myid = myId,
-                        //        EmployeeId = transactionHdDto.EmployeeId,
-                        //        InstallmentNumber = 1,//Create a method to create subscription and this should be starts from currnet month + next year....
-                        //        AttachId = 0,
-                        //        PeriodCode = GetPeriodCode(),// comes from TBLPeriods table.
-                        //        InstallmentAmount = eachInstallmentAmount,
-                        //        ReceivedAmount = 0,
-                        //        PendingAmount = transactionHdDto.InstallmentAmount,
-                        //        DiscountAmount = 0,
-                        //        DiscountReference = string.Empty,
-                        //        UniversityBatchNo = string.Empty,
-                        //        ReceivedDate = null,
-                        //        EffectedAccount = null,
-                        //        OtherReference = null,
-                        //        Activityid = null,
-                        //        CrupId = 1,
-                        //        Glpost = "1",
-                        //        Glpost1 = null,
-                        //        Glpostref = "1",
-                        //        Glpostref1 = "1",
-                        //        Active = true,
-                        //        Switch1 = null,
-                        //        DelFlag = null,
-                        //        InstallmentsBegDate = transactionHdDto.InstallmentsBegDate,
-                        //        UntilMonth = transactionHdDto.UntilMonth
-                        //    };
-                        //    var transactionDt = _mapper.Map<TransactionDt>(data);
-                        //    await _context.TransactionDts.AddAsync(transactionDt);
-                        //    await _context.SaveChangesAsync();
-                        //    _context.ChangeTracker.Clear();
-                        //    myId++;
-                        //}
-
-
                         #endregion
                     }
                     else if (transactionHdDto.ServiceType == "End of Service - نهاية الخدمة")
@@ -589,49 +560,49 @@ namespace API.Servivces.Implementation
                         {
                             return new FinancialServiceResponse
                             {
-                                Response = "9" // Error...                            
+                                Response = "9" // Employee Status Not valid                          
                             };
                         }
                         else if (employeeMembership.TerminationId == null)
                         {
                             return new FinancialServiceResponse
                             {
-                                Response = "10" // Error...                            
+                                Response = "10" // TerminationId is null...                            
                             };
                         }
                         else if (employeeMembership.TerminationDate == null)
                         {
                             return new FinancialServiceResponse
                             {
-                                Response = "11" // Error...                            
+                                Response = "11" // TerminationDate is null...                            
                             };
                         }
                         else if (employeeMembership.Termination == null)
                         {
                             return new FinancialServiceResponse
                             {
-                                Response = "12" // Error...                            
+                                Response = "12" // Termination is null...                            
                             };
                         }
                         else if (employeeMembership.EndDate == null)
                         {
                             return new FinancialServiceResponse
                             {
-                                Response = "13" // Error...                            
+                                Response = "13" // End date is null...                            
                             };
                         }
                         else if (employeeMembership.SubscribedDate == null || employeeMembership.ReSubscripedDate == null)
                         {
                             return new FinancialServiceResponse
                             {
-                                Response = "14" // Error...                            
+                                Response = "14" // SubscribedDate Or ReSubscribedDate is date is null...                            
                             };
                         }
                         else if (employeeMembership.JoinedDate == null)
                         {
                             return new FinancialServiceResponse
                             {
-                                Response = "15" // Error...                            
+                                Response = "15" // JoinedDate is null...                            
                             };
                         }
                         else
@@ -666,14 +637,14 @@ namespace API.Servivces.Implementation
                             {
                                 return new FinancialServiceResponse
                                 {
-                                    Response = "16" // Error...                            
+                                    Response = "8" // Employee have due Loan amount
                                 };
                             }
                             else if (pendingLoanAmount != 0)
                             {
                                 return new FinancialServiceResponse
                                 {
-                                    Response = "17" // Error...                            
+                                    Response = "9" // Employee is sponsored for the pending Loan Amount
                                 };
                             }
                             else
@@ -862,49 +833,49 @@ namespace API.Servivces.Implementation
                         {
                             return new FinancialServiceResponse
                             {
-                                Response = "9" // Error...                            
+                                Response = "9" // Employee Status Not valid                           
                             };
                         }
                         else if (employeeMembership.TerminationId == null)
                         {
                             return new FinancialServiceResponse
                             {
-                                Response = "10" // Error...                            
+                                Response = "10" // TerminationId is null...                          
                             };
                         }
                         else if (employeeMembership.TerminationDate == null)
                         {
                             return new FinancialServiceResponse
                             {
-                                Response = "11" // Error...                            
+                                Response = "11" // TerminationDate is null...                                
                             };
                         }
                         else if (employeeMembership.Termination == null)
                         {
                             return new FinancialServiceResponse
                             {
-                                Response = "12" // Error...                            
+                                Response = "12" // Termination is null...                         
                             };
                         }
                         else if (employeeMembership.EndDate == null)
                         {
                             return new FinancialServiceResponse
                             {
-                                Response = "13" // Error...                            
+                                Response = "13" // End date is null...                             
                             };
                         }
                         else if (employeeMembership.SubscribedDate == null && employeeMembership.ReSubscripedDate == null)
                         {
                             return new FinancialServiceResponse
                             {
-                                Response = "14" // Error...                            
+                                Response = "14" // SubscribedDate Or ReSubscribedDate is date is null...                           
                             };
                         }
                         else if (employeeMembership.JoinedDate == null)
                         {
                             return new FinancialServiceResponse
                             {
-                                Response = "15" // Error...                            
+                                Response = "15" // JoinedDate is null...                           
                             };
                         }
                         else
@@ -1035,9 +1006,9 @@ namespace API.Servivces.Implementation
                         }
                         #endregion
                     }
-                    else if (transactionHdDto.ServiceType == "Financial Loan")
+                    else if (transactionHdDto.ServiceTypeId == 22)
                     {
-                        #region
+                        #region Financial Loan
                         // check if membership rejeced / terminated..
                         var employeeMembership = _context.DetailedEmployees.FirstOrDefault(c => c.EmployeeId == transactionHdDto.EmployeeId.ToString());
                         if (employeeMembership.EmpStatus == 1 ||
@@ -1046,55 +1017,62 @@ namespace API.Servivces.Implementation
                         {
                             return new FinancialServiceResponse
                             {
-                                Response = "16" // Error...                            
+                                IsSuccess = false,
+                                Message = "Employee Status Not valid"
                             };
                         }
                         else if (employeeMembership.TerminationId == null)
                         {
                             return new FinancialServiceResponse
                             {
-                                Response = "17" // Error...                            
+                                IsSuccess = false,
+                                Message = "TerminationId is null"
                             };
                         }
                         else if (employeeMembership.TerminationDate == null)
                         {
                             return new FinancialServiceResponse
                             {
-                                Response = "18" // Error...                            
+                                IsSuccess = false,
+                                Message = "Termination Date is null"
                             };
                         }
                         else if (employeeMembership.Termination == null)
                         {
                             return new FinancialServiceResponse
                             {
-                                Response = "19" // Error...                            
+                                IsSuccess = false,
+                                Message = "Termination is null"
                             };
                         }
                         else if (employeeMembership.EndDate == null)
                         {
                             return new FinancialServiceResponse
                             {
-                                Response = "20" // Error...                            
+                                IsSuccess = false,
+                                Message = "End date is null"
                             };
                         }
                         else if (employeeMembership.SubscribedDate == null && employeeMembership.ReSubscripedDate == null)
                         {
                             return new FinancialServiceResponse
                             {
-                                Response = "21" // Error...                            
+                                IsSuccess = false,
+                                Message = "SubscribedDate Or ReSubscribedDate is date is null"
                             };
                         }
                         else if (employeeMembership.JoinedDate == null)
                         {
                             return new FinancialServiceResponse
                             {
-                                Response = "22" // Error...                            
+                                IsSuccess = false,
+                                Message = "JoinedDate is null"
                             };
                         }
                         else
                         {
-                            #region Hajj Loan 
-                            if (transactionHdDto.ServiceSubType == "Hajj Loan  - قرض الحج ")
+                            #region Hajj-Loan 
+                            if (transactionHdDto.ServiceSubTypeId == 5)
                             {
                                 // To make sure Employee dont have any due Loan amount
                                 var dueLoanamount = (from hd in _context.TransactionHds
@@ -1126,14 +1104,16 @@ namespace API.Servivces.Implementation
                                 {
                                     return new FinancialServiceResponse
                                     {
-                                        Response = "23" // Error...                            
+                                        IsSuccess = false,
+                                        Message = "Employee have due Loan amount"
                                     };
                                 }
                                 else if (pendingLoanAmount != 0)
                                 {
                                     return new FinancialServiceResponse
                                     {
-                                        Response = "24" // Error...                            
+                                        IsSuccess = false,
+                                        Message = "Employee is sponsored for the pending Loan Amount"
                                     };
                                 }
                                 else
@@ -1144,7 +1124,8 @@ namespace API.Servivces.Implementation
                                     {
                                         return new FinancialServiceResponse
                                         {
-                                            Response = "25" // Minimum 6 months...                            
+                                            IsSuccess = false,
+                                            Message = "Minimum 6 months"
                                         };
                                     }
                                     //
@@ -1161,7 +1142,7 @@ namespace API.Servivces.Implementation
 
                                     // Get Subscription Status
                                     var subscriptionStatus = _context.Reftables.Where(c => c.Refid == 1 && c.Reftype == "KUPF" && c.Refsubtype == "SubscriptionStatus").FirstOrDefault();
-                                    
+
                                     // Add record to TransactionHD
                                     newTransaction.Mytransid = CommonMethods.CreateEmployeeId();
                                     newTransaction.MasterServiceId = maxSwitch;
@@ -1169,43 +1150,43 @@ namespace API.Servivces.Implementation
                                     await _context.SaveChangesAsync();
                                     myId = 1;
                                     for (int i = 0; i < transactionHdDto.Totinstallments; i++)
-                                    {                                       
-                                            // Add record to TransactionDT
-                                            var data = new TransactionDtDto
-                                            {
-                                                TenentId = transactionHdDto.TenentId,
-                                                LocationId = transactionHdDto.LocationId,
-                                                Mytransid = newTransaction.Mytransid,
-                                                Myid = myId,
-                                                EmployeeId = transactionHdDto.EmployeeId,
-                                                InstallmentNumber = 1,//Create a method to create subscription and this should be starts from currnet month + next year....
-                                                AttachId = 0,
-                                                PeriodCode = GetPeriodCode(),// comes from TBLPeriods table.
-                                                InstallmentAmount = CommonMethods.CalculatPerMonthInstallments((decimal)transactionHdDto.Totamt, 0,(decimal)transactionHdDto.DownPayment,(int)transactionHdDto.Totinstallments),
-                                                ReceivedAmount = 0,
-                                                PendingAmount = transactionHdDto.InstallmentAmount,
-                                                DiscountAmount = 0,
-                                                DiscountReference = string.Empty,
-                                                UniversityBatchNo = string.Empty,
-                                                ReceivedDate = null,
-                                                EffectedAccount = null,
-                                                OtherReference = null,
-                                                Activityid = null,
-                                                CrupId = 1,
-                                                Glpost = "1",
-                                                Glpost1 = null,
-                                                Glpostref = "1",
-                                                Glpostref1 = "1",
-                                                Active = true,
-                                                Switch1 = null,
-                                                DelFlag = null,
-                                                InstallmentsBegDate = transactionHdDto.InstallmentsBegDate,
-                                                UntilMonth = transactionHdDto.UntilMonth
-                                            };
-                                            var transactionDt = _mapper.Map<TransactionDt>(data);
-                                            await _context.TransactionDts.AddAsync(transactionDt);
-                                            await _context.SaveChangesAsync();
-                                            _context.ChangeTracker.Clear();
+                                    {
+                                        // Add record to TransactionDT
+                                        var data = new TransactionDtDto
+                                        {
+                                            TenentId = transactionHdDto.TenentId,
+                                            LocationId = transactionHdDto.LocationId,
+                                            Mytransid = newTransaction.Mytransid,
+                                            Myid = myId,
+                                            EmployeeId = transactionHdDto.EmployeeId,
+                                            InstallmentNumber = 1,//Create a method to create subscription and this should be starts from currnet month + next year....
+                                            AttachId = 0,
+                                            PeriodCode = GetPeriodCode(),// comes from TBLPeriods table.
+                                            InstallmentAmount = newTransaction.InstallmentAmount,
+                                            ReceivedAmount = 0,
+                                            PendingAmount = transactionHdDto.InstallmentAmount,
+                                            DiscountAmount = 0,
+                                            DiscountReference = string.Empty,
+                                            UniversityBatchNo = string.Empty,
+                                            ReceivedDate = null,
+                                            EffectedAccount = null,
+                                            OtherReference = null,
+                                            Activityid = null,
+                                            CrupId = 1,
+                                            Glpost = "1",
+                                            Glpost1 = null,
+                                            Glpostref = "1",
+                                            Glpostref1 = "1",
+                                            Active = true,
+                                            Switch1 = null,
+                                            DelFlag = null,
+                                            InstallmentsBegDate = transactionHdDto.InstallmentsBegDate,
+                                            UntilMonth = transactionHdDto.UntilMonth
+                                        };
+                                        var transactionDt = _mapper.Map<TransactionDt>(data);
+                                        await _context.TransactionDts.AddAsync(transactionDt);
+                                        await _context.SaveChangesAsync();
+                                        _context.ChangeTracker.Clear();
                                         myId++;
 
                                     }
@@ -1220,7 +1201,8 @@ namespace API.Servivces.Implementation
                                     employeeMembership.TerminationId = termination.Refid;
                                     employeeMembership.Termination = termination.Refsubtype;
                                     employeeMembership.TerminationDate = DateTime.Now;
-
+                                    _context.DetailedEmployees.Update(employeeMembership);
+                                    await _context.SaveChangesAsync();
                                 }
                             }
                             #endregion
@@ -1239,59 +1221,74 @@ namespace API.Servivces.Implementation
                         {
                             return new FinancialServiceResponse
                             {
-                                Response = "16" // Error...                            
+                                Response = "9", // Employee Status Not valid
+                                IsSuccess = false,
+                                Message = "Employee Status Not valid"
                             };
                         }
                         else if (employeeMembership.TerminationId == null)
                         {
                             return new FinancialServiceResponse
                             {
-                                Response = "17" // Error...                            
+                                Response = "10" // TerminationId is null...                          
                             };
                         }
                         else if (employeeMembership.TerminationDate == null)
                         {
                             return new FinancialServiceResponse
                             {
-                                Response = "18" // Error...                            
+                                Response = "11" // TerminationDate is null...                                
                             };
                         }
                         else if (employeeMembership.Termination == null)
                         {
                             return new FinancialServiceResponse
                             {
-                                Response = "19" // Error...                            
+                                Response = "12" // Termination is null...                         
                             };
                         }
                         else if (employeeMembership.EndDate == null)
                         {
                             return new FinancialServiceResponse
                             {
-                                Response = "20" // Error...                            
+                                Response = "13" // End date is null...                             
                             };
                         }
                         else if (employeeMembership.SubscribedDate == null && employeeMembership.ReSubscripedDate == null)
                         {
                             return new FinancialServiceResponse
                             {
-                                Response = "21" // Error...                            
+                                Response = "14" // SubscribedDate Or ReSubscribedDate is date is null...                           
                             };
                         }
                         else if (employeeMembership.JoinedDate == null)
                         {
                             return new FinancialServiceResponse
                             {
-                                Response = "22" // Error...                            
+                                Response = "15" // JoinedDate is null...                           
                             };
                         }
                         else
                         {
-                                                    
-                                // To make sure Employee dont have any due Loan amount
-                                var dueLoanamount = (from hd in _context.TransactionHds
+
+                            // To make sure Employee dont have any due Loan amount
+                            var dueLoanamount = (from hd in _context.TransactionHds
+                                                 join dt in _context.TransactionDts
+                                                 on hd.Mytransid equals dt.Mytransid
+                                                 where hd.EmployeeId == transactionHdDto.EmployeeId &&
+                                                 hd.TenentId == transactionHdDto.TenentId &&
+                                                 hd.LocationId == transactionHdDto.LocationId &&
+                                                 hd.ServiceTypeId != 1 || hd.ServiceTypeId != 8
+                                                 select new
+                                                 {
+                                                     hd,
+                                                     dt
+                                                 }).Count();
+                            // To make sure Employee is not sponsored for the pending Loan Amount
+                            var pendingLoanAmount = (from hd in _context.TransactionHds
                                                      join dt in _context.TransactionDts
                                                      on hd.Mytransid equals dt.Mytransid
-                                                     where hd.EmployeeId == transactionHdDto.EmployeeId &&
+                                                     where hd.SponserProvidentID == transactionHdDto.EmployeeId &&
                                                      hd.TenentId == transactionHdDto.TenentId &&
                                                      hd.LocationId == transactionHdDto.LocationId &&
                                                      hd.ServiceTypeId != 1 || hd.ServiceTypeId != 8
@@ -1300,114 +1297,101 @@ namespace API.Servivces.Implementation
                                                          hd,
                                                          dt
                                                      }).Count();
-                                // To make sure Employee is not sponsored for the pending Loan Amount
-                                var pendingLoanAmount = (from hd in _context.TransactionHds
-                                                         join dt in _context.TransactionDts
-                                                         on hd.Mytransid equals dt.Mytransid
-                                                         where hd.SponserProvidentID == transactionHdDto.EmployeeId &&
-                                                         hd.TenentId == transactionHdDto.TenentId &&
-                                                         hd.LocationId == transactionHdDto.LocationId &&
-                                                         hd.ServiceTypeId != 1 || hd.ServiceTypeId != 8
-                                                         select new
-                                                         {
-                                                             hd,
-                                                             dt
-                                                         }).Count();
-                                if (dueLoanamount != 0)
+                            if (dueLoanamount != 0)
+                            {
+                                return new FinancialServiceResponse
                                 {
-                                    return new FinancialServiceResponse
-                                    {
-                                        Response = "23" // Error...                            
-                                    };
-                                }
-                                else if (pendingLoanAmount != 0)
+                                    Response = "8" // Employee have due Loan amount
+                                };
+                            }
+                            else if (pendingLoanAmount != 0)
+                            {
+                                return new FinancialServiceResponse
                                 {
-                                    return new FinancialServiceResponse
-                                    {
-                                        Response = "24" // Error...                            
-                                    };
-                                }
-                                else
+                                    Response = "9" // Employee is sponsored for the pending Loan Amount
+                                };
+                            }
+                            else
+                            {
+                                //
+                                int totalMonths = CommonMethods.CalculateMembershipDuration((DateTime)employeeMembership.SubscribedDate);
+                                var discountValues = _context.Reftables.Where(c => c.Reftype == "KUPF" && c.Refsubtype == "FinancialAid").ToList();
+
+                                // Next Due Date for payment...
+                                DateTime nextDueDate = DateTime.Now.AddYears(1);
+
+                                // Get termination info
+                                var termination = _context.Reftables.Where(c => c.Reftype == "KUPF" && c.Refsubtype == "Termination").FirstOrDefault();
+
+                                // Get employee status
+                                var empStatus = _context.Reftables.Where(c => c.Refid == 9 && c.Reftype == "KUPF" && c.Refsubtype == "EmpStatus").FirstOrDefault();
+
+                                // Get Subscription Status
+                                var subscriptionStatus = _context.Reftables.Where(c => c.Refid == 1 && c.Reftype == "KUPF" && c.Refsubtype == "SubscriptionStatus").FirstOrDefault();
+
+                                for (int i = 0; i < discountValues.Count; i++)
                                 {
-                                    //
-                                    int totalMonths = CommonMethods.CalculateMembershipDuration((DateTime)employeeMembership.SubscribedDate);
-                                    var discountValues = _context.Reftables.Where(c => c.Reftype == "KUPF" && c.Refsubtype == "FinancialAid").ToList();
-
-                                    // Next Due Date for payment...
-                                    DateTime nextDueDate = DateTime.Now.AddYears(1);
-
-                                    // Get termination info
-                                    var termination = _context.Reftables.Where(c => c.Reftype == "KUPF" && c.Refsubtype == "Termination").FirstOrDefault();
-
-                                    // Get employee status
-                                    var empStatus = _context.Reftables.Where(c => c.Refid == 9 && c.Reftype == "KUPF" && c.Refsubtype == "EmpStatus").FirstOrDefault();
-
-                                    // Get Subscription Status
-                                    var subscriptionStatus = _context.Reftables.Where(c => c.Refid == 1 && c.Reftype == "KUPF" && c.Refsubtype == "SubscriptionStatus").FirstOrDefault();
-
-                                    for (int i = 0; i < discountValues.Count; i++)
+                                    if (totalMonths > Convert.ToInt32(discountValues[i].Switch1)
+                                        && totalMonths <= Convert.ToInt32(discountValues[i].Switch2))
                                     {
-                                        if (totalMonths > Convert.ToInt32(discountValues[i].Switch1)
-                                            && totalMonths <= Convert.ToInt32(discountValues[i].Switch2))
+                                        // Add record to TransactionHD
+                                        newTransaction.Mytransid = CommonMethods.CreateEmployeeId();
+                                        newTransaction.MasterServiceId = maxSwitch;
+                                        await _context.TransactionHds.AddAsync(newTransaction);
+                                        await _context.SaveChangesAsync();
+
+                                        // Add record to TransactionDT
+                                        var data = new TransactionDtDto
                                         {
-                                            // Add record to TransactionHD
-                                            newTransaction.Mytransid = CommonMethods.CreateEmployeeId();
-                                            newTransaction.MasterServiceId = maxSwitch;
-                                            await _context.TransactionHds.AddAsync(newTransaction);
-                                            await _context.SaveChangesAsync();
-
-                                            // Add record to TransactionDT
-                                            var data = new TransactionDtDto
-                                            {
-                                                TenentId = transactionHdDto.TenentId,
-                                                LocationId = transactionHdDto.LocationId,
-                                                Mytransid = newTransaction.Mytransid,
-                                                Myid = myId,
-                                                EmployeeId = transactionHdDto.EmployeeId,
-                                                InstallmentNumber = 1,//Create a method to create subscription and this should be starts from currnet month + next year....
-                                                AttachId = 0,
-                                                PeriodCode = GetPeriodCode(),// comes from TBLPeriods table.
-                                                InstallmentAmount = Convert.ToDecimal(discountValues[i].Switch4),
-                                                ReceivedAmount = 0,
-                                                PendingAmount = transactionHdDto.InstallmentAmount,
-                                                DiscountAmount = 0,
-                                                DiscountReference = string.Empty,
-                                                UniversityBatchNo = string.Empty,
-                                                ReceivedDate = null,
-                                                EffectedAccount = null,
-                                                OtherReference = null,
-                                                Activityid = null,
-                                                CrupId = 1,
-                                                Glpost = "1",
-                                                Glpost1 = null,
-                                                Glpostref = "1",
-                                                Glpostref1 = "1",
-                                                Active = true,
-                                                Switch1 = null,
-                                                DelFlag = null,
-                                                InstallmentsBegDate = transactionHdDto.InstallmentsBegDate,
-                                                UntilMonth = transactionHdDto.UntilMonth
-                                            };
-                                            var transactionDt = _mapper.Map<TransactionDt>(data);
-                                            await _context.TransactionDts.AddAsync(transactionDt);
-                                            await _context.SaveChangesAsync();
-                                            // Update detailedEmployee
-                                            employeeMembership.EndDate = DateTime.Now;
-                                            employeeMembership.SettlementSerMonths = totalMonths;
-                                            employeeMembership.NextSetlementPayAmount = 0;
-                                            employeeMembership.NextSetlementPayDate = nextDueDate;
-                                            employeeMembership.Active = false;
-                                            employeeMembership.Subscription_status = empStatus.Refid;
-                                            employeeMembership.EmpStatus = subscriptionStatus.Refid;
-                                            employeeMembership.TerminationId = termination.Refid;
-                                            employeeMembership.Termination = termination.Refsubtype;
-                                            employeeMembership.TerminationDate = DateTime.Now;
-                                            break;
-                                        }
-
+                                            TenentId = transactionHdDto.TenentId,
+                                            LocationId = transactionHdDto.LocationId,
+                                            Mytransid = newTransaction.Mytransid,
+                                            Myid = myId,
+                                            EmployeeId = transactionHdDto.EmployeeId,
+                                            InstallmentNumber = 1,//Create a method to create subscription and this should be starts from currnet month + next year....
+                                            AttachId = 0,
+                                            PeriodCode = GetPeriodCode(),// comes from TBLPeriods table.
+                                            InstallmentAmount = Convert.ToDecimal(discountValues[i].Switch4),
+                                            ReceivedAmount = 0,
+                                            PendingAmount = transactionHdDto.InstallmentAmount,
+                                            DiscountAmount = 0,
+                                            DiscountReference = string.Empty,
+                                            UniversityBatchNo = string.Empty,
+                                            ReceivedDate = null,
+                                            EffectedAccount = null,
+                                            OtherReference = null,
+                                            Activityid = null,
+                                            CrupId = 1,
+                                            Glpost = "1",
+                                            Glpost1 = null,
+                                            Glpostref = "1",
+                                            Glpostref1 = "1",
+                                            Active = true,
+                                            Switch1 = null,
+                                            DelFlag = null,
+                                            InstallmentsBegDate = transactionHdDto.InstallmentsBegDate,
+                                            UntilMonth = transactionHdDto.UntilMonth
+                                        };
+                                        var transactionDt = _mapper.Map<TransactionDt>(data);
+                                        await _context.TransactionDts.AddAsync(transactionDt);
+                                        await _context.SaveChangesAsync();
+                                        // Update detailedEmployee
+                                        employeeMembership.EndDate = DateTime.Now;
+                                        employeeMembership.SettlementSerMonths = totalMonths;
+                                        employeeMembership.NextSetlementPayAmount = 0;
+                                        employeeMembership.NextSetlementPayDate = nextDueDate;
+                                        employeeMembership.Active = false;
+                                        employeeMembership.Subscription_status = empStatus.Refid;
+                                        employeeMembership.EmpStatus = subscriptionStatus.Refid;
+                                        employeeMembership.TerminationId = termination.Refid;
+                                        employeeMembership.Termination = termination.Refsubtype;
+                                        employeeMembership.TerminationDate = DateTime.Now;
+                                        break;
                                     }
 
                                 }
+
+                            }
 
                         }
                         #endregion
@@ -1421,7 +1405,9 @@ namespace API.Servivces.Implementation
                     {
                         Response = newTransaction.Mytransid.ToString(),
                         AttachId = attachId.ToString(),
-                        TransactionId = newTransaction.Mytransid.ToString()
+                        TransactionId = newTransaction.Mytransid.ToString(),
+                        IsSuccess = true,
+                        Message = "Saved Successfully..."
                     };
                 }
 
@@ -1447,7 +1433,8 @@ namespace API.Servivces.Implementation
             }
             return new FinancialServiceResponse
             {
-                Response = string.Empty
+                IsSuccess = true,
+                Message = "Saved Successfully..."
             };
 
         }
@@ -1515,7 +1502,7 @@ namespace API.Servivces.Implementation
                         }).ToList();
             return data;
         }
-        
+
         public async Task<ReturnSingleFinancialServiceById> GetFinancialServiceByIdAsync(long id)
         {
             var result = (from e in _context.DetailedEmployees
@@ -1816,7 +1803,7 @@ namespace API.Servivces.Implementation
 
         public async Task<IEnumerable<SelectServiceTypeDto>> GetServiceType(int tenentId)
         {
-            var result = await _context.Reftables.Where(c =>c.Reftype == "KUPF" && c.Refsubtype == "ServiceType").ToListAsync();
+            var result = await _context.Reftables.Where(c => c.Reftype == "KUPF" && c.Refsubtype == "ServiceType").ToListAsync();
             var data = _mapper.Map<IEnumerable<SelectServiceTypeDto>>(result);
             return data;
         }
@@ -1885,7 +1872,7 @@ namespace API.Servivces.Implementation
             //
             var country = await _context.TblCountries.Where(c => c.TenentId == employee.TenentId && c.Countryid == employee.NationCode).FirstOrDefaultAsync();
             //
-            var contractType = await _context.Reftables.Where(c=>c.TenentId == employee.TenentId && c.Refid == Convert.ToInt32(employee.ContractType) && c.Refsubtype == "ContractType").FirstOrDefaultAsync();
+            var contractType = await _context.Reftables.Where(c => c.TenentId == employee.TenentId && c.Refid == Convert.ToInt32(employee.ContractType) && c.Refsubtype == "ContractType").FirstOrDefaultAsync();
 
             var data = new ReturnSearchResultDto()
             {
@@ -1914,7 +1901,7 @@ namespace API.Servivces.Implementation
                 IsOnSickLeave = employee.IsOnSickLeave,
                 CountryId = country.Countryid,
                 CountryNameArabic = country.Couname2,
-                CountryNameEnglish = country.Couname1               
+                CountryNameEnglish = country.Couname1
             };
             return data;
         }
