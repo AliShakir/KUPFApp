@@ -18,6 +18,8 @@
         public string? ElectronicForm2 { get; set; }
         public string? ElectronicForm2URL { get; set; }
         public bool? IsElectronicForm { get; set; }
+        public byte[] OfferImageFile { get; set; }
+        public string? OfferImage { get; set; }
 
     }
 }

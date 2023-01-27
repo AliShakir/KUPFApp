@@ -471,8 +471,12 @@ export class AddServiceComponent implements OnInit, OnDestroy {
   onServiceSubTypeChange($event: any) {
     this.selectedServiceSubType = $event.refId;
     this.selectedServiceSubTypeText = $event.shortname;
+    // ServiceType and SubType is Financial Aid...
+    // No need create monthly installments...
+   
     this.financialService.GetSelectedServiceSubType(this.selectedServiceType, this.selectedServiceSubType, 21).subscribe((response: any) => {
-      console.log('OK 123',response);
+      // To enable back the down payment...
+      this.addServiceForm.get('downPayment')?.enable();
       this.parentForm.patchValue({
         addServiceForm: {
           serviceSubType: response.serviceSubType,
@@ -507,7 +511,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           serApproval5: +response.serApproval5,
           approvalBy5: response.approvalBy5,
           approvedDate5: response.approvedDate5 ? new Date(response.approvedDate5) : '',
-        },
+        }, 
         financialForm: {
           loanAct: response.loanAct,
           hajjAct: response.hajjAct,
@@ -520,7 +524,15 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           otherAct5: response.otherAct5
         },
       });
-      
+      if(this.selectedServiceType == 2 && $event.refId == 3){
+        this.parentForm.patchValue({
+          addServiceForm: {            
+            allowDiscountAmount: 100
+          }
+        });
+        //
+        this.addServiceForm.get('downPayment')?.disable();
+      }
     })
 
   }

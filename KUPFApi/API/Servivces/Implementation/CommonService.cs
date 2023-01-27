@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -242,7 +243,7 @@ namespace API.Servivces.Implementation
             {
                 throw new Exception("Invalid Input");
             }
-            
+
             var result = new Models.DetailedEmployee();
             if (searchEmployeeDto.EmployeeId != string.Empty || !string.IsNullOrWhiteSpace(searchEmployeeDto.EmployeeId))
             {
@@ -255,7 +256,7 @@ namespace API.Servivces.Implementation
             else if (searchEmployeeDto.CID != string.Empty || !string.IsNullOrWhiteSpace(searchEmployeeDto.CID))
             {
                 result = await _context.DetailedEmployees.Where(c => c.Pfid == searchEmployeeDto.PFId).FirstOrDefaultAsync();
-            }           
+            }
 
             var data = _mapper.Map<DetailedEmployeeDto>(result);
 
@@ -322,9 +323,28 @@ namespace API.Servivces.Implementation
 
         public async Task<IEnumerable<ServiceSetupServicesDto>> GetServicesForWebMenu()
         {
-            var data = _context.ServiceSetups.Where(c=>c.Active == "1" && c.Offer == "Offer").ToList();
+            var path = @"/HostingSpaces/kupf1/kuweb.erp53.com/wwwroot";
+            //var path = @"E:\\";
+            var data = _context.ServiceSetups.Where(c => c.Active == "1" && c.Offer == "Offer").ToList();
             var result = _mapper.Map<IEnumerable<ServiceSetupServicesDto>>(data);
-            return result;
+            var finalResult = result.Select(x => new ServiceSetupServicesDto
+            {
+                ElectronicForm2 = x.ElectronicForm2,
+                ElectronicForm1 = x.ElectronicForm1,
+                OfferImageFile = GetFileFromFolder(path + x.OfferImage),
+                ArabicHTML = x.ArabicHTML,
+                ArabicWebPageName = x.ArabicWebPageName,
+                ElectronicForm1URL = x.ElectronicForm1URL,
+                ElectronicForm2URL = x.ElectronicForm2URL,
+                EnglishHTML = x.EnglishHTML,
+                EnglishWebPageName = x.EnglishWebPageName,
+                IsElectronicForm = x.IsElectronicForm,
+                ServiceID = x.ServiceID,
+                WebArabic = x.WebArabic,
+                WebEnglish = x.WebEnglish
+            }).ToList();
+
+            return finalResult;
         }
 
         public async Task<IEnumerable<SelectServiceTypeDto>> GetOffers()
@@ -332,6 +352,16 @@ namespace API.Servivces.Implementation
             var result = await _context.Reftables.Where(c => c.Refsubtype == "ServicesOffer").ToListAsync();
             var data = _mapper.Map<IEnumerable<SelectServiceTypeDto>>(result);
             return data;
+        }
+        public static byte[] GetFileFromFolder(string filePath)
+        {
+            byte[] result = null;
+            if (filePath != null)
+            {
+                var file = File.ReadAllBytes(filePath);
+                result = file;
+            }
+            return result;
         }
     }
 }
