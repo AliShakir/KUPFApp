@@ -40,5 +40,7 @@ namespace API.Servivces.Interfaces.FinancialServices
         /// </summary>
         /// <returns></returns>
         Task<ReturnSearchResultDto> SearchEmployee(SearchEmployeeDto searchEmployeeDto);
+
+        Task<IEnumerable<CashierApprovalDto>> GetCashierApprovals(long periodCode, int tenentId, int locationId);
     }
 }

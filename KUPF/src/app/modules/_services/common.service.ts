@@ -20,6 +20,8 @@ export class CommonService {
 
   ecform1:any;
   ecform2:any;
+  // If ServiceSetup is ViewOnly...
+  isViewOnly = false;
   public menuSessionUdpated = new Subject<any>();
   public empSearchClickEvent = new Subject<any>();
   constructor() { }

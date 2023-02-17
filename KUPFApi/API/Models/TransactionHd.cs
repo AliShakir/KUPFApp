@@ -76,10 +76,48 @@ namespace API.Models
         public DateTime? Entrytime { get; set; }
         public DateTime? Updttime { get; set; }
         public decimal? InstallmentAmount { get; set; }
-        public DateTime InstallmentsBegDate { get; set; }
-        public string UntilMonth { get; set; }
+        public DateTime? InstallmentsBegDate { get; set; }
+        public string? UntilMonth { get; set; }
         public int? SponserProvidentID { get; set; }
         public decimal? DownPayment { get; set; }
+        //
+        public decimal? EntireLoanAmount { get; set; }
+        public string? FinancialAidPercentage { get; set; }
+        public decimal? PFFundRevenue { get; set; }
+        public string? PFFundRevenuePercentage { get; set; }
+        public decimal? AdjustmentAmount { get; set; }
+        public string? AdjustmentAmountRemarks { get; set; }
+        public decimal? FinancialAmount { get; set; }
+        public string? FinancialAmountRemarks { get; set; }
+        public int? NoOfSponsor { get; set; }
+        public decimal? SponsorDueAmount { get; set; }
+
+        //
+        public string? YearOfService { get; set; }
+        public int? NoOfTransactions { get; set; }
+        public decimal? PaidSubscriptionAmount { get; set; }
+        public decimal? SubscriptionDueAmount { get; set; }
+        public decimal? LoanAmountBalance { get; set; }
+        public decimal? FinancialAid { get; set; }
+        public decimal? TotalAmount { get; set; }
+        //
+        public decimal? PayPer1 { get; set; }
+        public string? DraftNumber1 { get; set; }
+        public DateTime? DraftDate1 { get; set; }
+        public decimal? DraftAmount1 { get; set; }
+        public string? BankAccount1 { get; set; }
+        public DateTime? DeliveryDate1 { get; set; }
+        public string? ReceivedBy1 { get; set; }
+        public string? DeliveredBy1 { get; set; }
+
+        public decimal? PayPer2 { get; set; }
+        public string? DraftNumber2 { get; set; }
+        public DateTime? DraftDate2 { get; set; }
+        public decimal? DraftAmount2 { get; set; }
+        public string? BankAccount2 { get; set; }
+        public DateTime? DeliveryDate2 { get; set; }
+        public string? ReceivedBy2 { get; set; }
+        public string? DeliveredBy2 { get; set; }
 
     }
 }

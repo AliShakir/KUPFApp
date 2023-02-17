@@ -48034,6 +48034,9 @@ body {
 .job_details_accordian .accordion-button{
   background-color: var(--cyan-azure);
 }
+.financial_calculation .accordion-button{
+  background-color: var(--fluroscent-green-v1);
+}
 
 .membership_details_accordian .accordion-button{
   background-color: var(--little-boy-blue);

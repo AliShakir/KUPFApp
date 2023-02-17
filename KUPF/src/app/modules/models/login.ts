@@ -4,4 +4,7 @@ export interface Login {
     locationId:number;
     tenantId:number
     userId:number;
+    roleId:number;
+    periodCode:string;
+    prevPeriodCode:string;
 }

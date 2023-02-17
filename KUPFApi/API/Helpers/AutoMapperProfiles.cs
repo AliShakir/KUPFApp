@@ -135,6 +135,12 @@ namespace API.Helpers
             CreateMap<TransactionHd, ReturnApprovalDetailsDto>();
             //
             CreateMap<ServiceSetup, ServiceSetupServicesDto>();
+            //
+            CreateMap<TransactionHddm, TransactionHDDMSDto>();
+            //
+            CreateMap<TransactionHd, CashierInformationDto>();
+            //
+            CreateMap<Coa, SelectBankAccount>();
 
         }
     }

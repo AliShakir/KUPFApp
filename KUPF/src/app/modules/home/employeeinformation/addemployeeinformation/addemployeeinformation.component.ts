@@ -263,11 +263,12 @@ export class AddemployeeinformationComponent implements OnInit {
 
   //Save employee data...
   submitForm() {
-    // Get Tenant Id
+    
     var data = JSON.parse(localStorage.getItem("user")!);
     const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
     const locationId = data.map((obj: { locationId: any; }) => obj.locationId);
     const username = data.map((obj: { username: any; }) => obj.username);
+    const userId = data.map((obj: { userId: any; }) => obj.userId);
     //  TO CONVER OBJECT ARRAY AS SIMPLE ARRAY.
     this.parentForm.controls.addEmployeeForm.patchValue({
       empGender: +this.parentForm.value.addEmployeeForm.empGender,
@@ -278,10 +279,10 @@ export class AddemployeeinformationComponent implements OnInit {
       ...this.parentForm.value.jobDetailsForm,
       ...this.parentForm.value.membershipForm,
       ...this.parentForm.value.financialForm,
-      tenentID: tenantId[0], 
-      cruP_ID: 0,
+      tenentID: tenantId[0],
       locationId:locationId[0],
-      username:username[0]
+      username:username[0],
+      userId:userId[0]
     }
     //
     this.isFormSubmitted = true;
@@ -320,6 +321,7 @@ export class AddemployeeinformationComponent implements OnInit {
             } 
             else if(response == "0")
             {
+              
               this.employeeService.AddEmployee(formData).subscribe((response:any) => {          
                 this.toastrService.success('Saved successfully', 'Success');                  
               this.parentForm.reset();

@@ -40,7 +40,6 @@ namespace API.Servivces.Implementation
         {
             if (_context != null)
             {
-
                 FinancialServiceResponse response = new FinancialServiceResponse();
                 var newTransaction = _mapper.Map<TransactionHd>(transactionHdDto);
 
@@ -102,104 +101,104 @@ namespace API.Servivces.Implementation
 
                     
                     //var path = "E:\\";
-                    var path = @"/HostingSpaces/kupf1/kupfapi.erp53.com/New/ServiceAttachments/";
+                    ////var path = @"/HostingSpaces/kupf1/kupfapi.erp53.com/New/ServiceAttachments/";
 
-                    if (transactionHdDto.personalPhotoDocument.Length != 0 &&
-                        transactionHdDto.personalPhotoDocument != null)
-                    {
-                        var personalDocFileExtension = Path.GetExtension(transactionHdDto.personalPhotoDocument.FileName);
-                        var filePath = Path.Combine(path, Guid.NewGuid() + personalDocFileExtension);
-                        using (var stream = new FileStream(filePath, FileMode.Create))
-                        {
-                            transactionHdDto.personalPhotoDocument.CopyTo(stream);
-                        }
-                        attachmentsData.Serialno = serialNo;
-                        attachmentsData.DocumentType = transactionHdDto.personalPhotoDocType;
-                        attachmentsData.AttachmentPath = filePath;
-                        attachmentsData.AttachmentByName = Guid.NewGuid() + personalDocFileExtension;
-                        attachmentsData.AttachmentsDetail = null;
-                        await _context.TransactionHddms.AddAsync(attachmentsData);
-                        await _context.SaveChangesAsync();
-                        _context.ChangeTracker.Clear();
-                    }
-                    if (transactionHdDto.appplicationFileDocument.Length != 0 &&
-                        transactionHdDto.appplicationFileDocument != null)
-                    {
-                        var appplicationFileExtension = Path.GetExtension(transactionHdDto.appplicationFileDocument.FileName);
-                        var filePath = Path.Combine(path, Guid.NewGuid() + appplicationFileExtension);
-                        using (var stream = new FileStream(filePath, FileMode.Create))
-                        {
-                            transactionHdDto.appplicationFileDocument.CopyTo(stream);
-                        }
-                        attachmentsData.Serialno = attachmentsData.Serialno + 1;
-                        attachmentsData.DocumentType = transactionHdDto.appplicationFileDocType;
-                        attachmentsData.AttachmentPath = filePath;
-                        attachmentsData.AttachmentByName = Guid.NewGuid() + appplicationFileExtension;
-                        attachmentsData.AttachmentsDetail = null;
-                        await _context.TransactionHddms.AddAsync(attachmentsData);
-                        await _context.SaveChangesAsync();
-                        _context.ChangeTracker.Clear();
-                    }
-                    if (transactionHdDto.workIdDocument.Length != 0 &&
-                        transactionHdDto.workIdDocument != null)
-                    {
-                        var workIdFileExtension = Path.GetExtension(transactionHdDto.workIdDocument.FileName);
-                        var filePath = Path.Combine(path, Guid.NewGuid() + workIdFileExtension);
-                        using (var stream = new FileStream(filePath, FileMode.Create))
-                        {
-                            transactionHdDto.workIdDocument.CopyTo(stream);
-                        }
-                        attachmentsData.Serialno = attachmentsData.Serialno + 1;
-                        attachmentsData.DocumentType = transactionHdDto.workIdDocType;
-                        attachmentsData.AttachmentPath = filePath;
-                        attachmentsData.AttachmentByName = Guid.NewGuid() + workIdFileExtension;
-                        attachmentsData.AttachmentsDetail = null;
-                        await _context.TransactionHddms.AddAsync(attachmentsData);
-                        await _context.SaveChangesAsync();
-                        _context.ChangeTracker.Clear();
-                    }
-                    if (transactionHdDto.civilIdDocument.Length != 0 &&
-                        transactionHdDto.civilIdDocument != null)
-                    {
-                        var civilIdFileExtension = Path.GetExtension(transactionHdDto.civilIdDocument.FileName);
-                        var filePath = Path.Combine(path, Guid.NewGuid() + civilIdFileExtension);
-                        using (var stream = new FileStream(filePath, FileMode.Create))
-                        {
-                            transactionHdDto.civilIdDocument.CopyTo(stream);
-                        }
-                        attachmentsData.Serialno = attachmentsData.Serialno + 1;
-                        attachmentsData.DocumentType = transactionHdDto.workIdDocType;
-                        attachmentsData.AttachmentPath = filePath;
-                        attachmentsData.AttachmentByName = Guid.NewGuid() + civilIdFileExtension;
-                        attachmentsData.AttachmentsDetail = null;
-                        await _context.TransactionHddms.AddAsync(attachmentsData);
-                        await _context.SaveChangesAsync();
-                        _context.ChangeTracker.Clear();
-                    }
-                    if (transactionHdDto.salaryDataDocument.Length != 0 &&
-                        transactionHdDto.salaryDataDocument != null)
-                    {
-                        var salaryDataFileExtension = Path.GetExtension(transactionHdDto.salaryDataDocument.FileName);
-                        var filePath = Path.Combine(path, Guid.NewGuid() + salaryDataFileExtension);
-                        using (var stream = new FileStream(filePath, FileMode.Create))
-                        {
-                            transactionHdDto.salaryDataDocument.CopyTo(stream);
-                        }
-                        attachmentsData.Serialno = attachmentsData.Serialno + 1;
-                        attachmentsData.DocumentType = transactionHdDto.salaryDataDocType;
-                        attachmentsData.AttachmentPath = filePath;
-                        attachmentsData.AttachmentByName = Guid.NewGuid() + salaryDataFileExtension;
-                        attachmentsData.AttachmentsDetail = null;
-                        await _context.TransactionHddms.AddAsync(attachmentsData);
-                        await _context.SaveChangesAsync();
-                        _context.ChangeTracker.Clear();
-                    }
+                    //if (transactionHdDto.personalPhotoDocument.Length != 0 &&
+                    //    transactionHdDto.personalPhotoDocument != null)
+                    //{
+                    //    var personalDocFileExtension = Path.GetExtension(transactionHdDto.personalPhotoDocument.FileName);
+                    //    var filePath = Path.Combine(path, Guid.NewGuid() + personalDocFileExtension);
+                    //    using (var stream = new FileStream(filePath, FileMode.Create))
+                    //    {
+                    //        transactionHdDto.personalPhotoDocument.CopyTo(stream);
+                    //    }
+                    //    attachmentsData.Serialno = serialNo;
+                    //    attachmentsData.DocumentType = transactionHdDto.personalPhotoDocType;
+                    //    attachmentsData.AttachmentPath = filePath;
+                    //    attachmentsData.AttachmentByName = Guid.NewGuid() + personalDocFileExtension;
+                    //    attachmentsData.AttachmentsDetail = null;
+                    //    await _context.TransactionHddms.AddAsync(attachmentsData);
+                    //    await _context.SaveChangesAsync();
+                    //    _context.ChangeTracker.Clear();
+                    //}
+                    //if (transactionHdDto.appplicationFileDocument.Length != 0 &&
+                    //    transactionHdDto.appplicationFileDocument != null)
+                    //{
+                    //    var appplicationFileExtension = Path.GetExtension(transactionHdDto.appplicationFileDocument.FileName);
+                    //    var filePath = Path.Combine(path, Guid.NewGuid() + appplicationFileExtension);
+                    //    using (var stream = new FileStream(filePath, FileMode.Create))
+                    //    {
+                    //        transactionHdDto.appplicationFileDocument.CopyTo(stream);
+                    //    }
+                    //    attachmentsData.Serialno = attachmentsData.Serialno + 1;
+                    //    attachmentsData.DocumentType = transactionHdDto.appplicationFileDocType;
+                    //    attachmentsData.AttachmentPath = filePath;
+                    //    attachmentsData.AttachmentByName = Guid.NewGuid() + appplicationFileExtension;
+                    //    attachmentsData.AttachmentsDetail = null;
+                    //    await _context.TransactionHddms.AddAsync(attachmentsData);
+                    //    await _context.SaveChangesAsync();
+                    //    _context.ChangeTracker.Clear();
+                    //}
+                    //if (transactionHdDto.workIdDocument.Length != 0 &&
+                    //    transactionHdDto.workIdDocument != null)
+                    //{
+                    //    var workIdFileExtension = Path.GetExtension(transactionHdDto.workIdDocument.FileName);
+                    //    var filePath = Path.Combine(path, Guid.NewGuid() + workIdFileExtension);
+                    //    using (var stream = new FileStream(filePath, FileMode.Create))
+                    //    {
+                    //        transactionHdDto.workIdDocument.CopyTo(stream);
+                    //    }
+                    //    attachmentsData.Serialno = attachmentsData.Serialno + 1;
+                    //    attachmentsData.DocumentType = transactionHdDto.workIdDocType;
+                    //    attachmentsData.AttachmentPath = filePath;
+                    //    attachmentsData.AttachmentByName = Guid.NewGuid() + workIdFileExtension;
+                    //    attachmentsData.AttachmentsDetail = null;
+                    //    await _context.TransactionHddms.AddAsync(attachmentsData);
+                    //    await _context.SaveChangesAsync();
+                    //    _context.ChangeTracker.Clear();
+                    //}
+                    //if (transactionHdDto.civilIdDocument.Length != 0 &&
+                    //    transactionHdDto.civilIdDocument != null)
+                    //{
+                    //    var civilIdFileExtension = Path.GetExtension(transactionHdDto.civilIdDocument.FileName);
+                    //    var filePath = Path.Combine(path, Guid.NewGuid() + civilIdFileExtension);
+                    //    using (var stream = new FileStream(filePath, FileMode.Create))
+                    //    {
+                    //        transactionHdDto.civilIdDocument.CopyTo(stream);
+                    //    }
+                    //    attachmentsData.Serialno = attachmentsData.Serialno + 1;
+                    //    attachmentsData.DocumentType = transactionHdDto.workIdDocType;
+                    //    attachmentsData.AttachmentPath = filePath;
+                    //    attachmentsData.AttachmentByName = Guid.NewGuid() + civilIdFileExtension;
+                    //    attachmentsData.AttachmentsDetail = null;
+                    //    await _context.TransactionHddms.AddAsync(attachmentsData);
+                    //    await _context.SaveChangesAsync();
+                    //    _context.ChangeTracker.Clear();
+                    //}
+                    //if (transactionHdDto.salaryDataDocument.Length != 0 &&
+                    //    transactionHdDto.salaryDataDocument != null)
+                    //{
+                    //    var salaryDataFileExtension = Path.GetExtension(transactionHdDto.salaryDataDocument.FileName);
+                    //    var filePath = Path.Combine(path, Guid.NewGuid() + salaryDataFileExtension);
+                    //    using (var stream = new FileStream(filePath, FileMode.Create))
+                    //    {
+                    //        transactionHdDto.salaryDataDocument.CopyTo(stream);
+                    //    }
+                    //    attachmentsData.Serialno = attachmentsData.Serialno + 1;
+                    //    attachmentsData.DocumentType = transactionHdDto.salaryDataDocType;
+                    //    attachmentsData.AttachmentPath = filePath;
+                    //    attachmentsData.AttachmentByName = Guid.NewGuid() + salaryDataFileExtension;
+                    //    attachmentsData.AttachmentsDetail = null;
+                    //    await _context.TransactionHddms.AddAsync(attachmentsData);
+                    //    await _context.SaveChangesAsync();
+                    //    _context.ChangeTracker.Clear();
+                    //}
                     #endregion
 
 
                     #region Save Into TransactionHDDApprovalDetails
-                    var serviceApprovals = _context.ServiceSetups.Where(p => p.ServiceType == 2 && p.ServiceSubType == 5).FirstOrDefault();
-                    if(serviceApprovals != null)
+                    var serviceApprovals = _context.ServiceSetups.Where(p => p.SerApproval1 == "1").FirstOrDefault();//Where(p => p.ServiceType == 2 && p.ServiceSubType == 5).FirstOrDefault();
+                    if (serviceApprovals != null)
                     {
                         List<string> myService = new List<string>
                             {
@@ -237,7 +236,9 @@ namespace API.Servivces.Implementation
                                         Entrydate = DateTime.Now,
                                         Entrytime = DateTime.Now,
                                         Updttime = DateTime.Now,
-                                        ApprovalRemarks = "BySystem"
+                                        ApprovalRemarks = "BySystem",
+                                        mySeq = srId + 1,
+                                        DisplayPERIOD_CODE = transactionHdDto.DisplayPERIOD_CODE                                        
                                     };
                                     //
                                     var transactionHddApprovals = _mapper.Map<TransactionHddapprovalDetail>(transactionHddApprovalsDto);
@@ -869,7 +870,7 @@ namespace API.Servivces.Implementation
                                                      {
                                                          hd,
                                                          dt
-                                                     }).Count();
+                                                     }).Where(x=>x.hd.EmployeeId ==transactionHdDto.EmployeeId).Count();
                                 // To make sure Employee is not sponsored for the pending Loan Amount
                                 var pendingLoanAmount = (from hd in _context.TransactionHds
                                                          join dt in _context.TransactionDts
@@ -882,7 +883,7 @@ namespace API.Servivces.Implementation
                                                          {
                                                              hd,
                                                              dt
-                                                         }).Count();
+                                                         }).Where(x => x.hd.EmployeeId == transactionHdDto.EmployeeId).Count();
                                 if (dueLoanamount != 0)
                                 {
                                     return new FinancialServiceResponse
@@ -1452,7 +1453,7 @@ namespace API.Servivces.Implementation
                                                  where hd.EmployeeId == transactionHdDto.EmployeeId &&
                                                  hd.TenentId == transactionHdDto.TenentId &&
                                                  hd.LocationId == transactionHdDto.LocationId &&
-                                                 hd.ServiceTypeId == 2 || hd.ServiceTypeId == 2
+                                                 hd.ServiceTypeId == 4 || hd.ServiceTypeId == 4
                                                  select new
                                                  {
                                                      hd,
@@ -1465,7 +1466,7 @@ namespace API.Servivces.Implementation
                                                      where hd.SponserProvidentID == transactionHdDto.EmployeeId &&
                                                      hd.TenentId == transactionHdDto.TenentId &&
                                                      hd.LocationId == transactionHdDto.LocationId &&
-                                                     hd.ServiceTypeId == 2 || hd.ServiceTypeId == 2
+                                                     hd.ServiceTypeId == 4 || hd.ServiceTypeId == 4
                                                      select new
                                                      {
                                                          hd,
@@ -1644,7 +1645,7 @@ namespace API.Servivces.Implementation
                                                  where hd.EmployeeId == transactionHdDto.EmployeeId &&
                                                  hd.TenentId == transactionHdDto.TenentId &&
                                                  hd.LocationId == transactionHdDto.LocationId &&
-                                                 hd.ServiceTypeId == 2 || hd.ServiceTypeId == 2
+                                                 hd.ServiceTypeId == 5 || hd.ServiceTypeId == 5
                                                  select new
                                                  {
                                                      hd,
@@ -1657,7 +1658,7 @@ namespace API.Servivces.Implementation
                                                      where hd.SponserProvidentID == transactionHdDto.EmployeeId &&
                                                      hd.TenentId == transactionHdDto.TenentId &&
                                                      hd.LocationId == transactionHdDto.LocationId &&
-                                                     hd.ServiceTypeId == 2 || hd.ServiceTypeId == 2
+                                                     hd.ServiceTypeId == 5 || hd.ServiceTypeId == 5
                                                      select new
                                                      {
                                                          hd,
@@ -1836,7 +1837,7 @@ namespace API.Servivces.Implementation
                                                  where hd.EmployeeId == transactionHdDto.EmployeeId &&
                                                  hd.TenentId == transactionHdDto.TenentId &&
                                                  hd.LocationId == transactionHdDto.LocationId &&
-                                                 hd.ServiceTypeId == 2 || hd.ServiceTypeId == 2
+                                                 hd.ServiceTypeId == 6 || hd.ServiceTypeId == 6
                                                  select new
                                                  {
                                                      hd,
@@ -1849,7 +1850,7 @@ namespace API.Servivces.Implementation
                                                      where hd.SponserProvidentID == transactionHdDto.EmployeeId &&
                                                      hd.TenentId == transactionHdDto.TenentId &&
                                                      hd.LocationId == transactionHdDto.LocationId &&
-                                                     hd.ServiceTypeId == 2 || hd.ServiceTypeId == 2
+                                                     hd.ServiceTypeId == 6 || hd.ServiceTypeId == 6
                                                      select new
                                                      {
                                                          hd,
@@ -2028,7 +2029,7 @@ namespace API.Servivces.Implementation
                                                  where hd.EmployeeId == transactionHdDto.EmployeeId &&
                                                  hd.TenentId == transactionHdDto.TenentId &&
                                                  hd.LocationId == transactionHdDto.LocationId &&
-                                                 hd.ServiceTypeId == 2 || hd.ServiceTypeId == 2
+                                                 hd.ServiceTypeId == 7 || hd.ServiceTypeId == 7
                                                  select new
                                                  {
                                                      hd,
@@ -2041,7 +2042,7 @@ namespace API.Servivces.Implementation
                                                      where hd.SponserProvidentID == transactionHdDto.EmployeeId &&
                                                      hd.TenentId == transactionHdDto.TenentId &&
                                                      hd.LocationId == transactionHdDto.LocationId &&
-                                                     hd.ServiceTypeId == 2 || hd.ServiceTypeId == 2
+                                                     hd.ServiceTypeId == 7 || hd.ServiceTypeId == 7
                                                      select new
                                                      {
                                                          hd,
@@ -2221,7 +2222,7 @@ namespace API.Servivces.Implementation
                                                  where hd.EmployeeId == transactionHdDto.EmployeeId &&
                                                  hd.TenentId == transactionHdDto.TenentId &&
                                                  hd.LocationId == transactionHdDto.LocationId &&
-                                                 hd.ServiceTypeId != 1 || hd.ServiceTypeId != 8
+                                                 hd.ServiceTypeId == 8 || hd.ServiceTypeId == 8
                                                  select new
                                                  {
                                                      hd,
@@ -2234,7 +2235,7 @@ namespace API.Servivces.Implementation
                                                      where hd.SponserProvidentID == transactionHdDto.EmployeeId &&
                                                      hd.TenentId == transactionHdDto.TenentId &&
                                                      hd.LocationId == transactionHdDto.LocationId &&
-                                                     hd.ServiceTypeId != 1 || hd.ServiceTypeId != 8
+                                                     hd.ServiceTypeId == 8 || hd.ServiceTypeId == 8
                                                      select new
                                                      {
                                                          hd,
@@ -2274,65 +2275,50 @@ namespace API.Servivces.Implementation
                                 // Get Subscription Status
                                 var subscriptionStatus = _context.Reftables.Where(c => c.Refid == 1 && c.Reftype == "KUPF" && c.Refsubtype == "SubscriptionStatus").FirstOrDefault();
 
-                                for (int i = 0; i < discountValues.Count; i++)
+                                // Add record to TransactionHD
+                                newTransaction.MasterServiceId = maxSwitch;
+                                await _context.TransactionHds.AddAsync(newTransaction);
+                                await _context.SaveChangesAsync();
+                                myId = 1;
+                                for (int i = 0; i < transactionHdDto.Totinstallments; i++)
                                 {
-                                    if (totalMonths > Convert.ToInt32(discountValues[i].Switch1)
-                                        && totalMonths <= Convert.ToInt32(discountValues[i].Switch2))
+                                    // Add record to TransactionDT
+                                    var data = new TransactionDtDto
                                     {
-                                        // Add record to TransactionHD
-                                        newTransaction.Mytransid = CommonMethods.CreateEmployeeId();
-                                        newTransaction.MasterServiceId = maxSwitch;
-                                        await _context.TransactionHds.AddAsync(newTransaction);
-                                        await _context.SaveChangesAsync();
-
-                                        // Add record to TransactionDT
-                                        var data = new TransactionDtDto
-                                        {
-                                            TenentId = transactionHdDto.TenentId,
-                                            LocationId = transactionHdDto.LocationId,
-                                            Mytransid = newTransaction.Mytransid,
-                                            Myid = myId,
-                                            EmployeeId = transactionHdDto.EmployeeId,
-                                            InstallmentNumber = 1,//Create a method to create subscription and this should be starts from currnet month + next year....
-                                            AttachId = 0,
-                                            PeriodCode = GetPeriodCode(),// comes from TBLPeriods table.
-                                            InstallmentAmount = Convert.ToDecimal(discountValues[i].Switch4),
-                                            ReceivedAmount = 0,
-                                            PendingAmount = transactionHdDto.InstallmentAmount,
-                                            DiscountAmount = 0,
-                                            DiscountReference = string.Empty,
-                                            UniversityBatchNo = string.Empty,
-                                            ReceivedDate = null,
-                                            EffectedAccount = null,
-                                            OtherReference = null,
-                                            Activityid = null,
-                                            CrupId = 1,
-                                            Glpost = "1",
-                                            Glpost1 = null,
-                                            Glpostref = "1",
-                                            Glpostref1 = "1",
-                                            Active = true,
-                                            Switch1 = null,
-                                            DelFlag = null,
-                                            InstallmentsBegDate = transactionHdDto.InstallmentsBegDate,
-                                            UntilMonth = transactionHdDto.UntilMonth
-                                        };
-                                        var transactionDt = _mapper.Map<TransactionDt>(data);
-                                        await _context.TransactionDts.AddAsync(transactionDt);
-                                        await _context.SaveChangesAsync();
-                                        // Update detailedEmployee
-                                        employeeMembership.EndDate = DateTime.Now;
-                                        employeeMembership.SettlementSerMonths = totalMonths;
-                                        employeeMembership.NextSetlementPayAmount = 0;
-                                        employeeMembership.NextSetlementPayDate = nextDueDate;
-                                        employeeMembership.Active = false;
-                                        employeeMembership.Subscription_status = empStatus.Refid;
-                                        employeeMembership.EmpStatus = subscriptionStatus.Refid;
-                                        employeeMembership.TerminationId = termination.Refid;
-                                        employeeMembership.Termination = termination.Refsubtype;
-                                        employeeMembership.TerminationDate = DateTime.Now;
-                                        break;
-                                    }
+                                        TenentId = transactionHdDto.TenentId,
+                                        LocationId = transactionHdDto.LocationId,
+                                        Mytransid = newTransaction.Mytransid,
+                                        Myid = myId,
+                                        EmployeeId = transactionHdDto.EmployeeId,
+                                        InstallmentNumber = 1,//Create a method to create subscription and this should be starts from currnet month + next year....
+                                        AttachId = 0,
+                                        PeriodCode = GetPeriodCode(),// comes from TBLPeriods table.
+                                        InstallmentAmount = newTransaction.InstallmentAmount,
+                                        ReceivedAmount = 0,
+                                        PendingAmount = transactionHdDto.InstallmentAmount,
+                                        DiscountAmount = 0,
+                                        DiscountReference = string.Empty,
+                                        UniversityBatchNo = string.Empty,
+                                        ReceivedDate = null,
+                                        EffectedAccount = null,
+                                        OtherReference = null,
+                                        Activityid = null,
+                                        CrupId = 1,
+                                        Glpost = "1",
+                                        Glpost1 = null,
+                                        Glpostref = "1",
+                                        Glpostref1 = "1",
+                                        Active = true,
+                                        Switch1 = null,
+                                        DelFlag = null,
+                                        InstallmentsBegDate = transactionHdDto.InstallmentsBegDate,
+                                        UntilMonth = transactionHdDto.UntilMonth
+                                    };
+                                    var transactionDt = _mapper.Map<TransactionDt>(data);
+                                    await _context.TransactionDts.AddAsync(transactionDt);
+                                    await _context.SaveChangesAsync();
+                                    _context.ChangeTracker.Clear();
+                                    myId++;
 
                                 }
 
@@ -2415,7 +2401,7 @@ namespace API.Servivces.Implementation
                                                  where hd.EmployeeId == transactionHdDto.EmployeeId &&
                                                  hd.TenentId == transactionHdDto.TenentId &&
                                                  hd.LocationId == transactionHdDto.LocationId &&
-                                                 hd.ServiceTypeId == 2 || hd.ServiceTypeId == 2
+                                                 hd.ServiceTypeId == 9 || hd.ServiceTypeId == 9
                                                  select new
                                                  {
                                                      hd,
@@ -2428,7 +2414,7 @@ namespace API.Servivces.Implementation
                                                      where hd.SponserProvidentID == transactionHdDto.EmployeeId &&
                                                      hd.TenentId == transactionHdDto.TenentId &&
                                                      hd.LocationId == transactionHdDto.LocationId &&
-                                                     hd.ServiceTypeId == 2 || hd.ServiceTypeId == 2
+                                                     hd.ServiceTypeId == 9 || hd.ServiceTypeId == 9
                                                      select new
                                                      {
                                                          hd,
@@ -2562,7 +2548,8 @@ namespace API.Servivces.Implementation
                                                  on hd.Mytransid equals dt.Mytransid
                                                  where hd.EmployeeId == transactionHdDto.EmployeeId &&
                                                  hd.TenentId == transactionHdDto.TenentId &&
-                                                 hd.LocationId == transactionHdDto.LocationId
+                                                 hd.LocationId == transactionHdDto.LocationId && 
+                                                 hd.ServiceTypeId == 10 || hd.ServiceTypeId == 10
                                                  select new
                                                  {
                                                      hd,
@@ -2574,7 +2561,8 @@ namespace API.Servivces.Implementation
                                                      on hd.Mytransid equals dt.Mytransid
                                                      where hd.SponserProvidentID == transactionHdDto.EmployeeId &&
                                                      hd.TenentId == transactionHdDto.TenentId &&
-                                                     hd.LocationId == transactionHdDto.LocationId
+                                                     hd.LocationId == transactionHdDto.LocationId &&
+                                                     hd.ServiceTypeId == 10 || hd.ServiceTypeId == 10
                                                      select new
                                                      {
                                                          hd,
@@ -2845,7 +2833,7 @@ namespace API.Servivces.Implementation
                                                  where hd.EmployeeId == transactionHdDto.EmployeeId &&
                                                  hd.TenentId == transactionHdDto.TenentId &&
                                                  hd.LocationId == transactionHdDto.LocationId &&
-                                                 hd.ServiceTypeId == 2 || hd.ServiceTypeId == 2
+                                                 hd.ServiceTypeId == 11 || hd.ServiceTypeId == 11
                                                  select new
                                                  {
                                                      hd,
@@ -2858,7 +2846,7 @@ namespace API.Servivces.Implementation
                                                      where hd.SponserProvidentID == transactionHdDto.EmployeeId &&
                                                      hd.TenentId == transactionHdDto.TenentId &&
                                                      hd.LocationId == transactionHdDto.LocationId &&
-                                                     hd.ServiceTypeId == 2 || hd.ServiceTypeId == 2
+                                                     hd.ServiceTypeId == 11 || hd.ServiceTypeId == 11
                                                      select new
                                                      {
                                                          hd,
@@ -3075,6 +3063,8 @@ namespace API.Servivces.Implementation
             var result = (from e in _context.DetailedEmployees
                           join t in _context.TransactionHds
                           on Convert.ToInt32(e.EmployeeId) equals t.EmployeeId
+                          //join hddms in _context.TransactionHddms
+                          //on t.Mytransid equals hddms.Mytransid
                           where t.Mytransid == id
                           select new ReturnSingleFinancialServiceById
                           {
@@ -3130,9 +3120,12 @@ namespace API.Servivces.Implementation
                               SerApproval5 = t.SerApproval5,
                               ApprovalBy5 = t.ApprovalBy5,
                               ApprovedDate5 = t.ApprovedDate5,
-                              InstallmentsBegDate = t.InstallmentsBegDate,
-                              UntilMonth = t.UntilMonth
+                              InstallmentsBegDate = (DateTime)t.InstallmentsBegDate,
+                              UntilMonth = t.UntilMonth,
+                              DownPayment = t.DownPayment,
                           }).FirstOrDefault();
+            var hddms = _context.TransactionHddms.Where(c => c.Mytransid == id).ToList();
+            result.TransactionHDDMSDto = _mapper.Map<List<TransactionHDDMSDto>>(hddms);
             return result;
         }
 
@@ -3473,6 +3466,36 @@ namespace API.Servivces.Implementation
             return data;
         }
 
-        
+        public async Task<IEnumerable<CashierApprovalDto>> GetCashierApprovals(long periodCode, int tenentId, int locationId)
+        {
+            var data = (from e in _context.DetailedEmployees
+                        join ap in _context.TransactionHddapprovalDetails
+                        on Convert.ToInt32(e.EmployeeId) equals ap.EmployeeId
+                        join hd in _context.TransactionHds
+                        on ap.Mytransid equals hd.Mytransid
+                        where ap.TenentId == tenentId && 
+                        ap.LocationId == locationId &&
+                        ap.SerApprovalId == 3 &&
+                        ap.DisplayPERIOD_CODE <= periodCode
+                        select new CashierApprovalDto
+                        {
+                            TransId = (int)ap.Mytransid,
+                            EmployeeId = e.EmployeeId,
+                            EnglishName = e.EnglishName,
+                            ArabicName = e.ArabicName,
+                            ServiceName = hd.ServiceType,
+                            Pfid = e.Pfid,
+                            EmpCidNum = e.EmpCidNum,
+                            MobileNumber = e.MobileNumber,
+                            PeriodCode = Convert.ToString(ap.DisplayPERIOD_CODE),
+                            TenentId = ap.TenentId,
+                            LocationId = ap.LocationId,
+                            DraftAmount1= hd.DraftAmount1,
+                            DraftAmount2 = hd.DraftAmount2,
+                            DraftDate1 = hd.DraftDate1,
+                            DraftDate2= hd.DraftDate2
+                        }).ToList();
+            return data;
+        }
     }
 }

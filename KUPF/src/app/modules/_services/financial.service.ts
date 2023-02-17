@@ -4,6 +4,7 @@ import { catchError, forkJoin, map, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ApproveRejectServiceDto } from '../models/ApproveRejectServiceDto';
 import { DetailedEmployee } from '../models/DetailedEmployee';
+import { CashierApprovalDto } from '../models/FinancialService/CashierApprovalDto';
 import { ReturnTransactionHdDto } from '../models/FinancialService/ReturnTransactionHdDto';
 import { TransactionHdDto } from '../models/FinancialService/TransactionHdDto';
 import { RefTableDto } from '../models/ReferenceDetails/RefTableDto';
@@ -198,5 +199,8 @@ export class FinancialService {
 
   SearchEmployee(searchEmployeeDto: SearchEmployeeDto) {
     return this.httpClient.post<ReturnSearchResultDto[]>(this.baseUrl + `FinancialService/SearchEmployee`,searchEmployeeDto);
+  }
+  GetCashierApprovals(periodCode:number,tenentId:number,locationId:number) { 
+    return this.httpClient.get<CashierApprovalDto[]>(this.baseUrl + `FinancialService/GetCashierApprovals?periodCode=${periodCode}&tenentId=${tenentId}&locationId=${locationId}`);    
   }
 }

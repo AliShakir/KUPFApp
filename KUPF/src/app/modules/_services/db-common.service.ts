@@ -30,6 +30,10 @@ import { SelectServiceSubTypeDto } from '../models/ServiceSetup/SelectServiceSub
 import { SelectMasterServiceTypeDto } from '../models/ServiceSetup/SelectMasterServiceTypeDto';
 import { SelectedServiceTypeDto } from '../models/ServiceSetup/SelectedServiceTypeDto';
 import { SelectedServiceSubTypeDto } from '../models/ServiceSetup/SelectedServiceSubTypeDto';
+import { FinanaceCalculationDto } from '../models/FinancialService/FinanaceCalculationDto';
+import { CashierInformationDto } from '../models/FinancialService/CashierInformationDto';
+import { SelectBankAccount } from '../models/SelectBankAccount';
+import { CashierApprovalDto } from '../models/FinancialService/CashierApprovalDto';
 
 @Injectable({
   providedIn: 'root'
@@ -93,7 +97,8 @@ export class DbCommonService {
 
   //
   detailedEmployee: DetailedEmployee[] = [];
-
+  //
+  selectBankAccount: SelectBankAccount[] = [];
   //selectedMasterIds: any[] = [];
 
   //loanAct: number;
@@ -103,47 +108,65 @@ export class DbCommonService {
 
   // Search employee...
   SearchEmployee(searchEmployeeDto: SearchEmployeeDto) {
-    return this.httpClient.post<DetailedEmployee[]>(this.baseUrl + `Common/SearchEmployee`,searchEmployeeDto);
+    return this.httpClient.post<DetailedEmployee[]>(this.baseUrl + `Common/SearchEmployee`, searchEmployeeDto);
   }
-    //#region Add Service
-    GetSelectedServiceType(tenentId:number) {  
-        return this.httpClient.get<SelectedServiceTypeDto[]>(this.baseUrl + `Common/GetSelectedServiceType?tenentId=${tenentId}`).pipe(
-          map(selectedServiceType => {
-            this.selectedServiceType = selectedServiceType;
-            return selectedServiceType;
-          })
-        )
-    }
-    GetSelectedServiceSubType(tenentId:number) {      
-      return this.httpClient.get<SelectedServiceSubTypeDto[]>(this.baseUrl + `Common/GetSelectedServiceSubType?tenentId=${tenentId}`).pipe(
-        map(selectedServiceSubType => {
-          this.selectedServiceSubType = selectedServiceSubType;
-          return selectedServiceSubType;
-        })
-      )
-    }
-    GetServiceType(tenentId:number) { 
-      return this.httpClient.get<SelectServiceTypeDto[]>(this.baseUrl + `Common/GetServiceType?tenentId=${tenentId}`);    
-    }
-    GetSubServiceTypeByServiceType(tenentId:number,refId:number) {       
-      return this.httpClient.get<SelectServiceTypeDto[]>(this.baseUrl + `FinancialService/GetSubServiceTypeByServiceType?tenentId=${tenentId}&refId=${refId}`);   
-    }
-    //#endregion
-    GetDocTypes(tenentId:number) {       
-      return this.httpClient.get<SelectServiceTypeDto[]>(this.baseUrl + `Common/GetDocTypes?tenentId=${tenentId}`);   
-    }
-    //#endregion
-    GetOffers() {       
-      return this.httpClient.get<SelectServiceTypeDto[]>(this.baseUrl + `Common/GetOffers`);   
-    }
+  GetBankAccounts(tenentId: number, locationId: number) {
+    return this.httpClient.get<SelectBankAccount[]>(this.baseUrl + `Common/GetBankAccounts?tenentId=${tenentId}&locationId=${locationId}`).pipe(
+      map(selectBankAccount => {
+        this.selectBankAccount = selectBankAccount;
+        return selectBankAccount;
+      })
+    )
+  }
+  GetDraftInformationByEmployeeId(employeeId:number, tenentId:number, locationId:number, transactionId:number) { 
+    return this.httpClient.get<CashierApprovalDto[]>(this.baseUrl + `Common/GetDraftInformationByEmployeeId?employeeId=${employeeId}&tenentId=${tenentId}&locationId=${locationId}&transactionId=${transactionId}`);    
+  }
+  //#region Add Service
+  GetSelectedServiceType(tenentId: number) {
+    return this.httpClient.get<SelectedServiceTypeDto[]>(this.baseUrl + `Common/GetSelectedServiceType?tenentId=${tenentId}`).pipe(
+      map(selectedServiceType => {
+        this.selectedServiceType = selectedServiceType;
+        return selectedServiceType;
+      })
+    )
+  }
+  GetSelectedServiceSubType(tenentId: number) {
+    return this.httpClient.get<SelectedServiceSubTypeDto[]>(this.baseUrl + `Common/GetSelectedServiceSubType?tenentId=${tenentId}`).pipe(
+      map(selectedServiceSubType => {
+        this.selectedServiceSubType = selectedServiceSubType;
+        return selectedServiceSubType;
+      })
+    )
+  }
+  GetServiceType(tenentId: number) {
+    return this.httpClient.get<SelectServiceTypeDto[]>(this.baseUrl + `Common/GetServiceType?tenentId=${tenentId}`);
+  }
+  GetSubServiceTypeByServiceType(tenentId: number, refId: number) {
+    return this.httpClient.get<SelectServiceTypeDto[]>(this.baseUrl + `FinancialService/GetSubServiceTypeByServiceType?tenentId=${tenentId}&refId=${refId}`);
+  }
+
+  GetDocTypes(tenentId: number) {
+    return this.httpClient.get<SelectServiceTypeDto[]>(this.baseUrl + `Common/GetDocTypes?tenentId=${tenentId}`);
+  }
+
+  GetOffers() {
+    return this.httpClient.get<SelectServiceTypeDto[]>(this.baseUrl + `Common/GetOffers`);
+  }
+  //#endregion
+  GetFinancialCalculationByEmployeeId(employeeId: number, tenentId: number, locationId: number, transactionDate: any) {
+    return this.httpClient.get<FinanaceCalculationDto>(this.baseUrl + `Common/GetFinancialCalculationByEmployeeId?employeeId=${employeeId}&tenentId=${tenentId}&locationId=${locationId}&transactionDate=${transactionDate}`);
+  }
+  GetCashierInformationByEmployeeId(employeeId: number, tenentId: number, locationId: number, transactionId: number) {
+    return this.httpClient.get<CashierInformationDto>(this.baseUrl + `Common/GetCashierInformationByEmployeeId?employeeId=${employeeId}&tenentId=${tenentId}&locationId=${locationId}&transactionId=${transactionId}`);
+  }
   //#region Service Setup 
   // Get GetServiceTypes...
-  GetServiceTypeByMasterIds(selectedMasterIds:any[]) { 
-    return this.httpClient.post<SelectServiceTypeDto[]>(this.baseUrl + `Common/GetServiceTypeByMasterIds`,selectedMasterIds);    
+  GetServiceTypeByMasterIds(selectedMasterIds: any[]) {
+    return this.httpClient.post<SelectServiceTypeDto[]>(this.baseUrl + `Common/GetServiceTypeByMasterIds`, selectedMasterIds);
   }
   // Get GetServiceTypes...
-  GetServiceSubTypes(switchNo:any) {
-    return this.httpClient.get<SelectServiceSubTypeDto[]>(this.baseUrl + `Common/GetServiceSubType/`+switchNo); 
+  GetServiceSubTypes(switchNo: any) {
+    return this.httpClient.get<SelectServiceSubTypeDto[]>(this.baseUrl + `Common/GetServiceSubType/` + switchNo);
   }
   // Get GetMasterServiceTypes...
   GetMaterServiceTypes() {

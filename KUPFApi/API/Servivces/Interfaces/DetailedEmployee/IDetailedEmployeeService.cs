@@ -14,7 +14,7 @@ namespace API.Servivces.Interfaces.DetailedEmployee
         Task<string> UpdateEmployeeAsync(DetailedEmployeeDto user);
         Task<DetailedEmployeeDto> GetEmployeeByIdAsync(string id);
         Task<PagedList<DetailedEmployeeDto>> GetEmployeesAsync(PaginationParams paginationParams);
-        Task<int> DeleteEmployeeAsync(string id);
+        Task<int> DeleteEmployeeAsync(DetailedEmployeeDto detailedEmployeeDto);
          
         Task<string> ValidateEmployeeData(DetailedEmployeeDto detailedEmployeeDto);
     }

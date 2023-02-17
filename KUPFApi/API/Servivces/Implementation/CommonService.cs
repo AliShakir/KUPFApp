@@ -325,7 +325,7 @@ namespace API.Servivces.Implementation
         {
             var path = @"/HostingSpaces/kupf1/kuweb.erp53.com/wwwroot";
             //var path = @"E:\\";
-            var data = _context.ServiceSetups.Where(c => c.Active == "1" && c.Offer == "Offer").ToList();
+            var data = _context.ServiceSetups.Where(c => c.Active == "1" && c.Offer == "Offers").ToList();
             var result = _mapper.Map<IEnumerable<ServiceSetupServicesDto>>(data);
             var finalResult = result.Select(x => new ServiceSetupServicesDto
             {
@@ -341,7 +341,8 @@ namespace API.Servivces.Implementation
                 IsElectronicForm = x.IsElectronicForm,
                 ServiceID = x.ServiceID,
                 WebArabic = x.WebArabic,
-                WebEnglish = x.WebEnglish
+                WebEnglish = x.WebEnglish,
+                Remarks = x.Remarks
             }).ToList();
 
             return finalResult;
@@ -362,6 +363,206 @@ namespace API.Servivces.Implementation
                 result = file;
             }
             return result;
+        }
+
+        public async Task<FinanaceCalculationDto> GetFinancialCalculationByEmployeeId(int employeeId, int tenentId, int locationId, DateTime transactionDate)
+        {
+            //
+            var hdtransactionData = _context.TransactionHds.AsEnumerable();
+            var dtTransactionsData = _context.TransactionDts.AsEnumerable();
+
+            // Get No of Transactions.
+            var noOfTransactions = hdtransactionData.Where(c => c.EmployeeId == employeeId && c.TenentId == tenentId && c.LocationId == locationId && c.ServiceTypeId != 1 && (c.ServiceSubTypeId != 2 || c.ServiceSubTypeId != 1)).ToList().Count();
+            if (noOfTransactions != 0)
+            {
+                // Get period code.
+                var periodCode = _context.Tblperiods.Where(c => c.PrdStartDate <= transactionDate && c.PrdEndDate >= transactionDate).FirstOrDefault().PeriodCode;
+
+                // Get No of subscriptionPaidAmount. 1
+                var subscriptionPaidAmount = (from hd in hdtransactionData
+                                              join dt in dtTransactionsData
+                                              on hd.EmployeeId equals dt.EmployeeId
+                                              where hd.Mytransid == dt.Mytransid &&
+                                              hd.TenentId == dt.TenentId &&
+                                              hd.LocationId == dt.LocationId &&
+                                              hd.ServiceTypeId == 1
+                                              where hd.EmployeeId == employeeId &&
+                                              dt.PeriodCode <= periodCode
+                                              select dt.ReceivedAmount).Sum();
+
+                // Get Subscription Due Amount . 2
+                var subscriptionDueAmount = (from hd in _context.TransactionHds
+                                             join dt in _context.TransactionDts
+                                             on hd.EmployeeId equals dt.EmployeeId
+                                             where hd.Mytransid == dt.Mytransid &&
+                                             hd.TenentId == dt.TenentId &&
+                                             hd.LocationId == dt.LocationId &&
+                                             hd.ServiceTypeId == 1
+                                             where hd.EmployeeId == employeeId &&
+                                              dt.PeriodCode <= periodCode
+                                             select dt.PendingAmount).Sum();
+
+                // Get Balance Of Loan Amount 3
+                var subscriptionInstalmentAmount = (from hd in _context.TransactionHds
+                                                    join dt in _context.TransactionDts
+                                                    on hd.EmployeeId equals dt.EmployeeId
+                                                    where hd.Mytransid == dt.Mytransid &&
+                                                    hd.TenentId == dt.TenentId &&
+                                                    hd.LocationId == dt.LocationId &&
+                                                    hd.ServiceTypeId == 1
+                                                    where hd.EmployeeId == employeeId &&
+                                                    dt.PeriodCode <= periodCode
+                                                    select dt.InstallmentAmount).Sum();
+                // Loan Paid Amount. 4
+                var loanInstallmentAmount = (from hd in _context.TransactionHds
+                                             join dt in _context.TransactionDts
+                                             on hd.EmployeeId equals dt.EmployeeId
+                                             where hd.Mytransid == dt.Mytransid &&
+                                             hd.TenentId == dt.TenentId &&
+                                             hd.LocationId == dt.LocationId &&
+                                             hd.ServiceTypeId != 1
+                                             where hd.EmployeeId == employeeId &&
+                                             dt.PeriodCode <= periodCode
+                                             select dt.InstallmentAmount).Sum();
+
+                // Loan Received Amount .5
+                var loanreceivedAmount = (from hd in _context.TransactionHds
+                                          join dt in _context.TransactionDts
+                                          on hd.EmployeeId equals dt.EmployeeId
+                                          where hd.Mytransid == dt.Mytransid &&
+                                          hd.TenentId == dt.TenentId &&
+                                          hd.LocationId == dt.LocationId &&
+                                          hd.ServiceTypeId != 1
+                                          where hd.EmployeeId == employeeId &&
+                                          dt.PeriodCode <= periodCode
+                                          select dt.ReceivedAmount).Sum();
+                // Loan Pending Amount.6 
+                var loanPendingAmount = (from hd in _context.TransactionHds
+                                         join dt in _context.TransactionDts
+                                         on hd.EmployeeId equals dt.EmployeeId
+                                         where hd.Mytransid == dt.Mytransid &&
+                                         hd.TenentId == dt.TenentId &&
+                                         hd.LocationId == dt.LocationId &&
+                                         hd.ServiceTypeId != 1
+                                         where hd.EmployeeId == employeeId &&
+                                         dt.PeriodCode <= periodCode
+                                         select dt.PendingAmount).Sum();
+
+                // Sponsor Loan Pending Amount. 7 
+                var sponsorLoanPendingAmount = (from hd in _context.TransactionHds
+                                                join dt in _context.TransactionDts
+                                                on hd.EmployeeId equals dt.EmployeeId
+                                                where hd.Mytransid == dt.Mytransid &&
+                                                hd.TenentId == dt.TenentId &&
+                                                hd.LocationId == dt.LocationId &&
+                                                hd.ServiceTypeId != 1
+                                                where hd.SponserProvidentID == employeeId &&
+                                                dt.PeriodCode <= periodCode
+                                                select dt.PendingAmount).Sum();
+
+                // No of Sponsor. 8 
+                var noOfSponsor = (from hd in _context.TransactionHds
+                                   join dt in _context.TransactionDts
+                                   on hd.EmployeeId equals dt.EmployeeId
+                                   where hd.Mytransid == dt.Mytransid &&
+                                   hd.TenentId == dt.TenentId &&
+                                   hd.LocationId == dt.LocationId &&
+                                   hd.ServiceTypeId != 1
+                                   where hd.SponserProvidentID == employeeId &&
+                                   dt.PeriodCode <= periodCode
+                                   select hd.SponserProvidentID).Count();
+
+
+                DateTime dd = (DateTime)_context.DetailedEmployees.Where(c => c.EmployeeId == employeeId.ToString()).FirstOrDefault().SubscribedDate;
+
+                double totalDays = (transactionDate - dd).TotalDays;
+
+                double totalYears = totalDays / 365;
+
+                const double mon = 30.4368499;
+
+                double months = totalDays / mon;
+
+                var myTransId = hdtransactionData.Where(c => c.EmployeeId == employeeId && c.TenentId == tenentId && c.LocationId == locationId).FirstOrDefault().Mytransid;
+                // 
+                var financialData = new FinanaceCalculationDto
+                {
+                    NoOfTransactions = noOfTransactions,
+                    SubscriptionPaidAmount = (decimal)subscriptionPaidAmount,
+                    SubscriptionDueAmount = (decimal)subscriptionDueAmount,
+                    SubscriptionInstalmentAmount = (decimal)subscriptionInstalmentAmount,
+                    LoanInstallmentAmount = (decimal)loanInstallmentAmount,
+                    LoanreceivedAmount = (decimal)loanreceivedAmount,
+                    LoanPendingAmount = (decimal)loanPendingAmount,
+                    SponsorLoanPendingAmount = (int)sponsorLoanPendingAmount,
+                    SponsorDueAmount = (decimal)subscriptionDueAmount,
+                    NoOfSponsor = (int)noOfSponsor,
+                    YearOfService = (int)totalYears + " y / " + (int)months + " m",
+                    MyTransId = myTransId
+                };
+                return financialData;
+            }
+            else
+            {
+                var financialData = new FinanaceCalculationDto
+                {
+
+                };
+                return financialData;
+            }
+
+
+        }
+
+        public async Task<CashierInformationDto> GetCashierInformationByEmployeeId(int employeeId, int tenentId, int locationId, int transactionId)
+        {
+            var data = _context.TransactionHds.Where(c => c.EmployeeId == employeeId && c.TenentId == tenentId && c.LocationId == locationId && c.Mytransid == transactionId).FirstOrDefault();
+            var result = _mapper.Map<CashierInformationDto>(data);
+            return result;
+        }
+
+        public async Task<IEnumerable<SelectBankAccount>> GetBankAccounts(int tenentId, int locationId)
+        {
+            var data = _context.Coas.Where(c => c.TenentId == tenentId && c.LocationId == locationId && c.FamilyId == 4 && c.HeadId == 15 && c.SubHeadId == 14).ToList();
+            var result = _mapper.Map<IEnumerable<SelectBankAccount>>(data);
+            return result;
+        }
+
+        public async Task<CashierApprovalDto> GetDraftInformationByEmployeeId(int employeeId, int tenentId, int locationId, int transactionId)
+        {
+            // select Max(draftNo+1) from [TransactionHDD]
+            var maxDraftNo = _context.TransactionHds.Select(c => c.DraftNumber1).Max();
+            if(maxDraftNo == null)
+            {
+                maxDraftNo = "1";
+            }
+            var data = (from emp in _context.DetailedEmployees
+                        join hd in _context.TransactionHds
+                        on Convert.ToInt32(emp.EmployeeId) equals hd.EmployeeId
+                        where Convert.ToInt32(emp.EmployeeId) == employeeId &&
+                        hd.Mytransid == transactionId &&
+                        emp.LocationId == locationId &&
+                        emp.TenentId == tenentId
+                        select new CashierApprovalDto
+                        {
+                            EnglishName = emp.EnglishName,
+                            ArabicName = emp.ArabicName,
+                            Pfid = emp.Pfid,
+                            EmpCidNum = emp.EmpCidNum,
+                            EmployeeId = emp.EmployeeId,
+                            DraftAmount1 = hd.DraftAmount1,
+                            DraftAmount2 = hd.DraftAmount2,
+                            DraftDate1 = hd.DraftDate1,
+                            DraftDate2 = hd.DraftDate2,
+                            TotalAmount = hd.Totamt,
+                            ReceivedBy = hd.ReceivedBy1,
+                            ReceivedDate = hd.DraftDate2,
+                            DraftNumber1 = maxDraftNo,
+                            DraftNumber2 = hd.DraftNumber2,
+                            TransId = hd.Mytransid
+
+                        }).FirstOrDefault();
+            return data;
         }
     }
 }

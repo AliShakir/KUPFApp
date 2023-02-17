@@ -258,5 +258,16 @@ namespace API.Controllers
             var result = await _financialService.SearchEmployee(searchEmployeeDto);
             return result;
         }
+        /// <summary>
+        /// Api to search employee by EmployyeId,PFId,CId
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetCashierApprovals")]
+        public async Task<IEnumerable<CashierApprovalDto>> GetCashierApprovals(long periodCode, int tenentId, int locationId)
+        {
+            var result = await _financialService.GetCashierApprovals(periodCode, tenentId, locationId);
+            return result;
+        }
     }
 }

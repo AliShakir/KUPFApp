@@ -12,6 +12,10 @@ import { ManageFormLabelsComponent } from '../setup/manage-form-labels/manage-fo
 
 import { ServiceDetailsComponent } from './service-details/service-details.component';
 import { ServiceSetupDetailsComponent } from './service-setup-details/service-setup-details.component';
+import { CashierApprovalComponent } from './cashier-approval/cashier-approval.component';
+import { FinancialApprovalComponent } from './financial-approval/financial-approval.component';
+import { CashierDeliveryComponent } from './cashier-delivery/cashier-delivery.component';
+import { CashierDraftComponent } from './cashier-draft/cashier-draft.component';
 
 const routes: Routes = [
   { path: 'service-setup-details', component: ServiceSetupDetailsComponent },
@@ -24,7 +28,11 @@ const routes: Routes = [
   { path: 'manage-approvals', component: ApprovalManagementComponent },
   { path: 'import-emplyee-monthly-payment', component: ImportEmployeeMonthlyPaymentComponent },
   { path: 'add-employee-movement', component: AddEmployeeMovementComponent },
-  { path: 'employee-movement-details', component: EmployeeMovementDetailsComponent }  
+  { path: 'employee-movement-details', component: EmployeeMovementDetailsComponent },  
+  { path: 'cashier-approval', component: CashierApprovalComponent }, 
+  { path: 'financial-approval', component: FinancialApprovalComponent },
+  { path: 'cashier-delivery/:mytransid', component: CashierDeliveryComponent },
+  { path: 'cashier-draft', component: CashierDraftComponent }
 ];
 
 @NgModule({

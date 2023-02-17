@@ -87,14 +87,14 @@ namespace API.Controllers
         /// Api to deleted employee By Id
         /// </summary>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpPost]
         [Route("DeleteEmployee")]
-        public async Task<int> DeleteEmployee(string employeeId)
+        public async Task<int> DeleteEmployee(DetailedEmployeeDto detailedEmployeeDto)
         {
             int result = 0;
-            if(employeeId != null)
+            if(detailedEmployeeDto != null)
             {
-                result = await _detailedEmployeeService.DeleteEmployeeAsync(employeeId);
+                result = await _detailedEmployeeService.DeleteEmployeeAsync(detailedEmployeeDto);
             }
             
             return result;

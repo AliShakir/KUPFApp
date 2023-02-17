@@ -10,6 +10,8 @@ namespace API.DTOs
         public int? Serialno { get; set; }
         public int DocType { get; set; }
         public IFormFile Document { get; set; }
-        
+        public string AttachmentPath { get; set; }
+        public string AttachmentByName { get; set; }
+
     }
 }

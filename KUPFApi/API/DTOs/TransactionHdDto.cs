@@ -103,6 +103,35 @@ namespace API.DTOs
         public string  MetaTags { get; set; }
         public string AttachmentRemarks { get; set; }
         public decimal? DownPayment { get; set; }
+        //
+        public string? YearOfService { get; set; }
+        public int NoOfTransactions { get; set; }
+        public decimal? PaidSubscriptionAmount { get; set; }
+        public decimal? SubscriptionDueAmount { get; set; }
+        public decimal? LoanAmountBalance { get; set; }
+        public decimal? FinancailAid { get; set; }
+        public decimal? FinancialAmount { get; set; }
+        public string? FinancialAmountRemarks { get; set; }
+        public decimal? TotalAmount { get; set; }
+        public string? DraftNumber { get; set; }
+        public string? BankAccount { get; set; }
+        public DateTime? DeliveryDate { get; set; }
+        public int? mySeq { get; set; }
+        public long? DisplayPERIOD_CODE { get; set; }
+        public decimal? SubscriptionInstalmentAmount { get; set; }
+        public decimal? FinancialAid { get; set; }
+        public decimal? PFFundRevenue { get; set; }
+        public decimal? AdjustmentAmount { get; set; }
+        public string? AdjustmentAmountRemarks { get; set; }
+        public string? PFFundRevenuePercentage { get; set; }
+        public decimal? SponsorLoanPendingAmount { get; set; }
+        public decimal? SponsorDueAmount { get; set; }
+        public string? FinAidAmountRemarks { get; set; }
+
+        public decimal? LoanPendingAmount { get; set; }
+        public decimal? LoanreceivedAmount { get; set; }
+        public decimal? LoanInstallmentAmount { get; set; }
+        public int? NoOfSponsor { get; set; }
     }
    
 }

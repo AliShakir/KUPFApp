@@ -1,5 +1,6 @@
 ﻿using API.Common;
 using API.DTOs;
+using API.DTOs.Common.Enums;
 using API.DTOs.EmployeeDto;
 using API.Helpers;
 using API.Models;
@@ -69,22 +70,25 @@ namespace API.Servivces.Implementation.DetailedEmployee
                 await _context.SaveChangesAsync();
                 //
                 var auditInfo = _context.Reftables.FirstOrDefault(c => c.Reftype == "audit" && c.Refsubtype == "Employee");
-                var mySerialNo = _context.TblAudits.Max(c => c.MySerial);
-                var maxSerialNo = mySerialNo + 1;
+                var mySerialNo = _context.TblAudits.Max(c => c.MySerial) + 1;
+                var auditNo = _context.Crupaudits.Max(c => c.AuditNo) + 1;
                 var crupAudit = new Crupaudit
                 {
                     TenantId = detailedEmployeeDto.TenentId,
                     LocationId = detailedEmployeeDto.LocationId,
                     CrupId = maxCrupId, 
-                    MySerial = maxSerialNo,
-                    AuditNo = auditInfo.Refid,
+                    MySerial = mySerialNo,
+                    AuditNo = auditNo,
                     AuditType = auditInfo.Shortname,
                     TableName = DbTableEnums.DetailedEmployee.ToString(),
                     FieldName = $"",
                     OldValue = "Non",
                     NewValue = "Inserted",
                     CreatedDate = DateTime.Now,
-                    CreatedUserName = detailedEmployeeDto.Username
+                    CreatedUserName = detailedEmployeeDto.Username,
+                    UserId = Convert.ToInt32(detailedEmployeeDto.UserId),
+                    CrudType = CrudTypeEnums.Insert.ToString(),
+                    Severity = SeverityEnums.Normal.ToString()
                 };
                 await _context.Crupaudits.AddAsync(crupAudit);
                 await _context.SaveChangesAsync();
@@ -123,22 +127,25 @@ namespace API.Servivces.Implementation.DetailedEmployee
                     }
                     //                    
                     var auditInfo = _context.Reftables.FirstOrDefault(c => c.Reftype == "audit" && c.Refsubtype == "Employee");
-                    var mySerialNo = _context.TblAudits.Max(c => c.MySerial);
-                    var maxSerialNo = mySerialNo + 1;
+                    var mySerialNo = _context.TblAudits.Max(c => c.MySerial) +1;
+                    var auditNo = _context.Crupaudits.Max(c => c.AuditNo) + 1;
                     var crupAudit = new Crupaudit
                     {
                         TenantId = detailedEmployeeDto.TenentId,
                         LocationId = detailedEmployeeDto.LocationId,
                         CrupId = maxCrupId,
-                        MySerial = maxSerialNo,
-                        AuditNo = auditInfo.Refid,
+                        MySerial = mySerialNo,
+                        AuditNo = auditNo,
                         AuditType = auditInfo.Shortname,
                         TableName = DbTableEnums.DetailedEmployee.ToString(),
                         FieldName = $"",
-                        OldValue = "Non",
-                        NewValue = "Edited",
+                        OldValue = $"",
+                        NewValue = $"",
                         CreatedDate = DateTime.Now,
-                        CreatedUserName = detailedEmployeeDto.Username
+                        CreatedUserName = detailedEmployeeDto.Username,
+                        UserId = Convert.ToInt32(detailedEmployeeDto.UserId),
+                        CrudType = CrudTypeEnums.Edit.ToString(),
+                        Severity = SeverityEnums.High.ToString()
                     };
                     await _context.Crupaudits.AddAsync(crupAudit);
                     await _context.SaveChangesAsync();
@@ -150,19 +157,46 @@ namespace API.Servivces.Implementation.DetailedEmployee
             return string.Empty;
         }
 
-        public async Task<int> DeleteEmployeeAsync(string id)
+        public async Task<int> DeleteEmployeeAsync(DetailedEmployeeDto detailedEmployeeDto)
         {
             int result = 0;
 
             if (_context != null)
             {
-                var employee = await _context.DetailedEmployees.FirstOrDefaultAsync(x => x.EmployeeId == id);
+                var employee = await _context.DetailedEmployees.FirstOrDefaultAsync(x => x.EmployeeId == detailedEmployeeDto.EmployeeId);
 
                 if (employee != null)
                 {
                     _context.DetailedEmployees.Remove(employee);
                     result = await _context.SaveChangesAsync();
-
+                    //  
+                    var crupId = _context.CrupMsts.Max(c => c.CrupId);
+                    var maxCrupId = crupId + 1;
+                    //
+                    var auditInfo = _context.Reftables.FirstOrDefault(c => c.Reftype == "audit" && c.Refsubtype == "Employee");
+                    var mySerialNo = _context.Crupaudits.Max(c => c.MySerial) + 1 ;
+                    var auditNo = _context.Crupaudits.Max(c => c.AuditNo) + 1;
+                    var crupAudit = new Crupaudit
+                    {
+                        TenantId = detailedEmployeeDto.TenentId,
+                        LocationId = detailedEmployeeDto.LocationId,
+                        CrupId = maxCrupId,
+                        MySerial = mySerialNo,
+                        AuditNo = auditNo, // auditInfo.Refid,// (Change this accordingly)	Select Max(AuditNo+1) From CrupAudit Where TENANT_ID = 21 and LocationID = 1 and Crup_Id = 2 and MySerial = 2
+                        AuditType = auditInfo.Shortname,
+                        TableName = DbTableEnums.DetailedEmployee.ToString(),
+                        FieldName = $"",
+                        OldValue = "Non",
+                        NewValue = "Deleted",
+                        CreatedDate = DateTime.Now,
+                        CreatedUserName = detailedEmployeeDto.Username,
+                        UserId = Convert.ToInt32(detailedEmployeeDto.UserId),
+                        CrudType = CrudTypeEnums.Delete.ToString(),
+                        Severity = SeverityEnums.High.ToString()
+                        
+                    };
+                    await _context.Crupaudits.AddAsync(crupAudit);
+                    await _context.SaveChangesAsync();
 
                 }
                 return result;

@@ -59,6 +59,8 @@ namespace API.DTOs
         public decimal? InstallmentAmount { get; set; }
         public DateTime InstallmentsBegDate { get; set; }
         public string UntilMonth { get; set; }
+        public List<TransactionHDDMSDto> TransactionHDDMSDto { get; set; }
+        public decimal? DownPayment { get; set; }
 
     }
 }

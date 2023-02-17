@@ -45,7 +45,7 @@
                         <ng-container matColumnDef="action">
                             <th mat-header-cell *matHeaderCellDef class="ArFontStyle">{{bodyLabel[1].title}}</th>
                             <td mat-cell *matCellDef="let item" class="w-20 text-right">
-                                <button mat-raised-button color="warn" (click)="open(content,item.employeeId)">Delete</button> | 
+                                <button mat-raised-button color="warn" (click)="open(content,item)">Delete</button> | 
                                 <button mat-raised-button color="accent" routerLink="/employee/add-employee/{{item.employeeId}}" id={{item.employeeId}}>Edit</button>
                             </td>
                         </ng-container>

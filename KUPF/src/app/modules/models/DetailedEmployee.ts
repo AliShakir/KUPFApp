@@ -71,6 +71,7 @@
         isKUEmployee: boolean;
         isOnSickLeave: boolean;
         isMemberOfFund: boolean;
+        username:string;
     }
 
 

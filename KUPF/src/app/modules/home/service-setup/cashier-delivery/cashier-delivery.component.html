@@ -1,0 +1,34 @@
+<ngb-accordion #ngbOfferDetails="ngbAccordion" activeIds="ngb-panel-1" opened="true">
+    <ngb-panel id="ngb-panel-1">
+        <ng-template ngbPanelTitle>
+            <h3 class="m-0 ArFontStyle" lang="AR-SA">Cashier Delivery</h3>
+        </ng-template>
+        <ng-template ngbPanelContent>
+            <form [formGroup]="cashierDeliveryForm">  
+                <div class="row">                                
+                    <div class="col-lg-4 fv-row">
+                        <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">Total Amount</label>
+                        <input type="number" class="form-control"
+                            formControlName="totalAmount"/>
+                    </div>
+                    <div class="col-lg-4 fv-row">
+                        <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">Draft Number</label>
+                        <input type="number" class="form-control"
+                            formControlName="draftNumber" />
+                    </div>  
+                    <div class="col-lg-4 fv-row">
+                        <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">Bank Account</label>
+                        <input type="number" class="form-control"
+                            formControlName="bankAccount"/>
+                    </div>              
+                </div>   
+                <div class="row mt-3">
+                    <div class="text-left">
+                        <button mat-raised-button color="primary" (click)="saveClick()">Save</button>&nbsp;
+                        <button mat-raised-button color="accent" routerLink="/service-setup/cashier-approval">Back</button>
+                    </div>                    
+                </div>             
+            </form>
+        </ng-template>
+    </ngb-panel>
+</ngb-accordion>

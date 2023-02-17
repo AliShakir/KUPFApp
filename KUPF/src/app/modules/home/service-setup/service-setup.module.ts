@@ -20,6 +20,10 @@ import { MaterialModule } from '../../material/material.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DocumentAttachmentComponent } from '../_partials/document-attachment/document-attachment.component';
+import { CashierApprovalComponent } from './cashier-approval/cashier-approval.component';
+import { FinancialApprovalComponent } from './financial-approval/financial-approval.component';
+import { CashierDeliveryComponent } from './cashier-delivery/cashier-delivery.component';
+import { CashierDraftComponent } from './cashier-draft/cashier-draft.component';
 @NgModule({
   declarations: [
     ServiceSetupDetailsComponent,
@@ -31,6 +35,10 @@ import { DocumentAttachmentComponent } from '../_partials/document-attachment/do
     ImportEmployeeMonthlyPaymentComponent,
     EmployeeMovementDetailsComponent,
     AddEmployeeMovementComponent,
+    CashierApprovalComponent,
+    FinancialApprovalComponent,
+    CashierDeliveryComponent,
+    CashierDraftComponent,
   ],
   imports: [
     CommonModule,

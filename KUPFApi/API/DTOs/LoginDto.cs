@@ -13,5 +13,8 @@ namespace API.DTOs
         public int LocationId { get; set; }
         public int UserId { get; set; }
         public string Token { get; set; }
+        public int RoleId { get; set; }
+        public string PeriodCode { get; set; }
+        public string PrevPeriodCode { get; set; }
     }
 }

@@ -390,5 +390,53 @@ namespace API.Controllers
             var result = await _commonServiceService.GetOffers();
             return result;
         }
+        /// <summary>
+        /// To Get No Of Transactions By EmployeeId
+        /// </summary>
+        /// <param name="employeeId"></param>
+        /// <param name="tenentId"></param>
+        /// <param name="locationId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetFinancialCalculationByEmployeeId")]
+        public async Task<FinanaceCalculationDto> GetFinancialCalculationByEmployeeId(int employeeId, int tenentId, int locationId, DateTime transactionDate)
+        {
+            var result = await _commonServiceService.GetFinancialCalculationByEmployeeId(employeeId, tenentId, locationId,transactionDate);
+            return result;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="employeeId"></param>
+        /// <param name="tenentId"></param>
+        /// <param name="locationId"></param>
+        /// <param name="transactionDate"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetCashierInformationByEmployeeId")]
+        public async Task<CashierInformationDto> GetCashierInformationByEmployeeId(int employeeId, int tenentId, int locationId, int transactionId)
+        {
+            var result = await _commonServiceService.GetCashierInformationByEmployeeId(employeeId, tenentId, locationId, transactionId);
+            return result;
+        }
+        [HttpGet]
+        [Route("GetBankAccounts")]
+        public async Task<IEnumerable<SelectBankAccount>> GetBankAccounts(int tenentId, int locationId)
+        {
+            var result = await _commonServiceService.GetBankAccounts(tenentId, locationId);
+            return result;
+        }
+        /// <summary>
+        /// Api to search employee by EmployyeId,PFId,CId
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetDraftInformationByEmployeeId")]
+        public async Task<CashierApprovalDto> GetDraftInformationByEmployeeId(int employeeId, int tenentId, int locationId, int transactionId)
+        {
+            var result = await _commonServiceService.GetDraftInformationByEmployeeId(employeeId, tenentId, locationId, transactionId);
+            return result;
+        }
+
     }
 }

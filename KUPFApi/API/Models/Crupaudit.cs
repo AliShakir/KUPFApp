@@ -24,5 +24,8 @@ namespace API.Models
         public string? UpdateUserName { get; set; }
         public DateTime? CreatedDate { get; set; }
         public string? CreatedUserName { get; set; }
+        public int UserId { get; set; }
+        public string? Severity { get; set; }
+        public string CrudType { get; set; }
     }
 }

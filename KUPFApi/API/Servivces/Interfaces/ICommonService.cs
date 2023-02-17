@@ -104,6 +104,11 @@ namespace API.Servivces.Interfaces
 
         Task<IEnumerable<SelectServiceTypeDto>> GetOffers();
 
+        Task<FinanaceCalculationDto> GetFinancialCalculationByEmployeeId(int employeeId, int tenentId, int locationId, DateTime transactionDate);
+        Task<CashierInformationDto> GetCashierInformationByEmployeeId(int employeeId, int tenentId, int locationId, int transactionId);
 
+        Task<IEnumerable<SelectBankAccount>> GetBankAccounts(int tenentId, int locationId);
+
+        Task<CashierApprovalDto> GetDraftInformationByEmployeeId(int employeeId, int tenentId, int locationId, int transactionId);
     }
 }

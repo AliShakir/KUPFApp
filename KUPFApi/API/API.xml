@@ -202,6 +202,31 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:API.Controllers.CommonController.GetFinancialCalculationByEmployeeId(System.Int32,System.Int32,System.Int32,System.DateTime)">
+            <summary>
+            To Get No Of Transactions By EmployeeId
+            </summary>
+            <param name="employeeId"></param>
+            <param name="tenentId"></param>
+            <param name="locationId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.CommonController.GetCashierInformationByEmployeeId(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="employeeId"></param>
+            <param name="tenentId"></param>
+            <param name="locationId"></param>
+            <param name="transactionDate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.CommonController.GetDraftInformationByEmployeeId(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Api to search employee by EmployyeId,PFId,CId
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:API.Controllers.CrupAuditController.#ctor(API.Servivces.Interfaces.ICrupAuditService)">
             <summary>
             
@@ -298,7 +323,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:API.Controllers.EmployeeController.DeleteEmployee(System.String)">
+        <member name="M:API.Controllers.EmployeeController.DeleteEmployee(API.DTOs.EmployeeDto.DetailedEmployeeDto)">
             <summary>
             Api to deleted employee By Id
             </summary>
@@ -407,6 +432,12 @@
             <returns></returns>
         </member>
         <member name="M:API.Controllers.FinancialServiceController.SearchEmployee(API.DTOs.SearchEmployeeDto)">
+            <summary>
+            Api to search employee by EmployyeId,PFId,CId
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.FinancialServiceController.GetCashierApprovals(System.Int64,System.Int32,System.Int32)">
             <summary>
             Api to search employee by EmployyeId,PFId,CId
             </summary>

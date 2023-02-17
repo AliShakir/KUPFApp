@@ -38,6 +38,7 @@ export class DocumentAttachmentComponent implements OnInit {
   allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
+  getForm!:FormGroup;
   @ViewChild('fruitInput', { static: false }) fruitInput!: ElementRef<HTMLInputElement>;
   @ViewChild('auto', { static: false }) matAutocomplete!: MatAutocomplete;
 
@@ -53,9 +54,23 @@ export class DocumentAttachmentComponent implements OnInit {
     this.initDocumentAttachments();
     this.selectDocTypeDto$ = this.dbCommonService.GetDocTypes(21);
     //
+    console.log('OK 12',this.parentFormGroup);
     if (this.parentFormGroup) {      
       this.parentFormGroup.setControl('documentAttachmentForm', this.documentAttachmentForm);
+      console.log(this.parentFormGroup.value.documentAttachmentForm);
     }
+    // this.getForm = this.fb.group({
+    //   subject: ['', Validators.required],
+    //   attachmentRemarks: ['', Validators.required],
+    //   metaTag: ['', Validators.required],
+    //   docType0: ['', Validators.required],
+    //   docType1: ['', Validators.required],
+    //   docType2: ['', Validators.required],
+    //   docType3: ['', Validators.required],
+    //   docType4: ['', Validators.required],
+    // })
+
+    // this.getForm.controls['subject'].setValue(this.parentFormGroup.)
   }
 
   onTheApplicationSelect(event: any) {
@@ -99,7 +114,8 @@ export class DocumentAttachmentComponent implements OnInit {
         Document: new FormControl('', Validators.required),
         subject: new FormControl('', Validators.required),
         metaTag: new FormControl([this.metaTag], Validators.required),
-        attachmentRemarks: new FormControl('', Validators.required)
+        attachmentRemarks: new FormControl('', Validators.required),
+        attachmentByName: new FormControl('', Validators.required)
       }));
     this.documentAttachmentForm.push(
       new FormGroup({
@@ -107,7 +123,8 @@ export class DocumentAttachmentComponent implements OnInit {
         Document: new FormControl('', Validators.required),
         subject: new FormControl('', Validators.required),
         metaTag: new FormControl([this.metaTag], Validators.required),
-        attachmentRemarks: new FormControl('', Validators.required)
+        attachmentRemarks: new FormControl('', Validators.required),
+         attachmentByName: new FormControl('', Validators.required)
       }));
     this.documentAttachmentForm.push(
       new FormGroup({
@@ -115,7 +132,8 @@ export class DocumentAttachmentComponent implements OnInit {
         Document: new FormControl('', Validators.required),
         subject: new FormControl('', Validators.required),
         metaTag: new FormControl('', Validators.required),
-        attachmentRemarks: new FormControl('', Validators.required)
+        attachmentRemarks: new FormControl('', Validators.required),
+        attachmentByName: new FormControl('', Validators.required)
       }));
     this.documentAttachmentForm.push(
       new FormGroup({
@@ -123,7 +141,8 @@ export class DocumentAttachmentComponent implements OnInit {
         Document: new FormControl('', Validators.required),
         subject: new FormControl('', Validators.required),
         metaTag: new FormControl('', Validators.required),
-        attachmentRemarks: new FormControl('', Validators.required)
+        attachmentRemarks: new FormControl('', Validators.required),
+        attachmentByName: new FormControl('', Validators.required)
       }));
     this.documentAttachmentForm.push(
       new FormGroup({
@@ -131,9 +150,10 @@ export class DocumentAttachmentComponent implements OnInit {
         Document: new FormControl('', Validators.required),
         subject: new FormControl('', Validators.required),
         metaTag: new FormControl('', Validators.required),
-        attachmentRemarks: new FormControl('', Validators.required)
+        attachmentRemarks: new FormControl('', Validators.required),
+        attachmentByName: new FormControl('', Validators.required)
       }));
-
+      this.parentFormGroup.setControl('documentAttachmentForm', this.documentAttachmentForm);
   }
 
 

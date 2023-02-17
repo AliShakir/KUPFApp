@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { DeleteDataDto } from '../models/DeleteDataDto';
 import { DetailedEmployee } from '../models/DetailedEmployee';
 import { UserParams } from '../models/UserParams';
 @Injectable({
@@ -48,8 +49,8 @@ export class EmployeeService {
       })
     )
   }
-  DeleteEmployee(employeeId: number) { 
-    return this.httpClient.delete(`${this.baseUrl}Employee/DeleteEmployee?employeeId=${employeeId}`);    
+  DeleteEmployee(dtailedEmployee: DetailedEmployee) { 
+    return this.httpClient.post(`${this.baseUrl}Employee/DeleteEmployee`,dtailedEmployee);    
   }
   GetAllEmployees(userParams: UserParams) {    
     return this.httpClient.get(this.baseUrl + `Employee/GetEmployees?PageNumber=${userParams.pageNumber}&PageSize=${userParams.pageSize}`, {observe: 'response'});    

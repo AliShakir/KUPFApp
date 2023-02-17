@@ -11,6 +11,7 @@ import { ReturnTransactionHdDto } from 'src/app/modules/models/FinancialService/
 import { FormTitleDt } from 'src/app/modules/models/formTitleDt';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
 import { CommonService } from 'src/app/modules/_services/common.service';
+import { DbCommonService } from 'src/app/modules/_services/db-common.service';
 import { FinancialService } from 'src/app/modules/_services/financial.service';
 import { LocalizationService } from 'src/app/modules/_services/localization.service';
 
@@ -84,7 +85,6 @@ export class ServiceDetailsComponent implements OnInit {
   closeResult = '';
   constructor(private common: CommonService, 
     private router: Router, 
-    private localizationService: LocalizationService,
     private financialService:FinancialService,
     private modalService: NgbModal,
     private toastrService:ToastrService) {
@@ -130,7 +130,7 @@ export class ServiceDetailsComponent implements OnInit {
   
   }
   loadData(){
-    this.financialService.GetFinancialServices().subscribe((response: ReturnTransactionHdDto[]) => {
+    this.financialService.GetFinancialServices().subscribe((response: ReturnTransactionHdDto[]) => {      
       this.returnTransactionHdDto = new MatTableDataSource<ReturnTransactionHdDto>(response);
       this.returnTransactionHdDto.paginator = this.paginator;
       this.returnTransactionHdDto.sort = this.sort;
@@ -200,5 +200,9 @@ private getDismissReason(reason: any): string {
   }
   //#endregion
    
-
+  viewDataClick(){
+    // To enable ViewOnly view...
+    this.common.isViewOnly = true
+    
+  }
 }

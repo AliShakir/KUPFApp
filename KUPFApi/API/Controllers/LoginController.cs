@@ -42,7 +42,17 @@ namespace API.Controllers
             var user = await _context.UserMsts.
                 Where(c => c.LoginId == loginDto.username && c.Password == decodedPass)
                 .ToListAsync();
+
+            // Get period code.
+            var periodCode = _context.Tblperiods.Where(c => c.PrdStartDate <= DateTime.Now && c.PrdEndDate >= DateTime.Now).FirstOrDefault().PeriodCode;
             
+            // Get the previous code...
+            var now = DateTime.Now;
+            var firstDayCurrentMonth = new DateTime(now.Year, now.Month, 1);
+            var firstDayLastMonth = firstDayCurrentMonth.AddDays(-30);
+            var lastDayLastMonth = firstDayCurrentMonth.AddDays(-1);
+
+            var prePeriodCode = _context.Tblperiods.Where(c => c.PrdStartDate <= lastDayLastMonth && c.PrdEndDate >= firstDayLastMonth).FirstOrDefault().PeriodCode;
             List<LoginDto> userList = new List<LoginDto>();
             if (user.Count() >= 1)
             {
@@ -54,6 +64,9 @@ namespace API.Controllers
                         LocationId = user[i].LocationId,
                         TenantId = user[i].TenentId,
                         UserId = user[i].UserId,
+                        RoleId = user[i].ROLEID,
+                        PeriodCode= Convert.ToString(periodCode),
+                        PrevPeriodCode = Convert.ToString(prePeriodCode)
                         //Token = _tokenService.CreateToken(user[i].LoginId)                        
                     };
                     userList.Add(dto);

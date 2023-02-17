@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
+import { DeleteDataDto } from 'src/app/modules/models/DeleteDataDto';
 import { DetailedEmployee } from 'src/app/modules/models/DetailedEmployee';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
 import { Pagination } from 'src/app/modules/models/pagination';
@@ -146,6 +147,7 @@ export class ViewemployeeinformationComponent implements OnInit {
      this.employeeService.setUserParams(this.userParams);
      //this.detailedEmployee = [];
      this.employeeService.GetAllEmployees(this.userParams).subscribe((response: any) => {
+      
       this.employeeHeaders = JSON.parse(response.headers.get('pagination'));
 
       this.detailedEmployee = new MatTableDataSource<DetailedEmployee>(response.body);
@@ -199,11 +201,21 @@ export class ViewemployeeinformationComponent implements OnInit {
   //#endregion
   
   //#region Delete operation and Modal Config
-  open(content:any, id:number) {  
+  open(content:any, dtailedEmployee: DetailedEmployee) {  
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {  
       this.closeResult = `Closed with: ${result}`;        
-      if (result === 'yes') {  
-        this.employeeService.DeleteEmployee(id).subscribe(
+      if (result === 'yes') { 
+        // Get logged In user info...
+        var data = JSON.parse(localStorage.getItem("user")!);
+        const userId = data.map((obj: { userId: any; }) => obj.userId);
+        const username = data.map((obj: { username: any; }) => obj.username);
+        const locationId = data.map((obj: { locationId: any; }) => obj.locationId);
+        const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);        
+        dtailedEmployee.userId = userId[0];
+        dtailedEmployee.username = username[0];
+        dtailedEmployee.locationId = locationId[0];
+        dtailedEmployee.tenentId = tenantId[0];
+        this.employeeService.DeleteEmployee(dtailedEmployee).subscribe(
           res => {
             this.toastr.success('Deleted Successfully', 'Deleted')            
           },

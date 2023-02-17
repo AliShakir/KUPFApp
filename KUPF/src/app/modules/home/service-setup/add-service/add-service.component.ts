@@ -60,6 +60,8 @@ export class AddServiceComponent implements OnInit, OnDestroy {
   //
   parentForm: FormGroup;
   addServiceForm: FormGroup;
+  financialCalculationForm: FormGroup;
+  cashierInformationForm: FormGroup;
   popUpForm: FormGroup;
   isFormSubmitted = false;
   minDate: Date;
@@ -85,6 +87,11 @@ export class AddServiceComponent implements OnInit, OnDestroy {
   ];
   @Input() arabicFont: string = 'font-family:"Tahoma","sans-serif"';
   @Input() pageName: string;
+  isViewOnly: Boolean;
+  // If Pf Id is null we will hide financial calculation div...
+  isPFIdNull: boolean = false;
+  //
+  myTransId: any;
   constructor(
     private financialService: FinancialService,
     private commonService: DbCommonService,
@@ -137,37 +144,60 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     this.initializeAddServiceForm();
     //
     this.initPopUpModal();
+    //
     this.setValidators(this.notSubscriber);
     // 
     this.initializeEmployeeForm();
     //
     this.initializeSearchForm();
-    // Get Tenant Id
-    // var data = JSON.parse(localStorage.getItem("user")!);
-    // const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
     //
-
-
+    this.initializeFinancialForm();
+    //
+    this.initializeCashierInformationForm();
+    // Get Tenant Id
+    var data = JSON.parse(localStorage.getItem("user")!);
+    const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
+    const locationId = data.map((obj: { location: any; }) => obj.location);
+    //
 
     if (this.mytransid) {
       this.common.ifEmployeeExists = true;
+      if(this.common.isViewOnly === true){
+        // If user comes from Cashier Approval...
+        this.isViewOnly = true;
+        console.log('Edit Data ViewOnly',this.isViewOnly);
+      }      
       this.financialService.GetFinancialServiceById(this.mytransid).subscribe((response: any) => {
-
-        this.selectServiceSubType$ = this.commonService.GetSubServiceTypeByServiceType(21, response.serviceType);
-        
+        this.selectServiceSubType$ = this.commonService.GetSubServiceTypeByServiceType(tenantId, response.serviceType);
+        console.log('Edit Data', response);
         this.parentForm.patchValue({
           employeeForm: {
             employeeId: response.employeeId,
             englishName: response.englishName,
             arabicName: response.arabicName,
-            empBirthday: response.empBirthday ? new Date(response.empBirthday) : '',
             empGender: response.empGender,
-            empMaritalStatus: response.empMaritalStatus,
+            joinedDate: new Date(response.joinedDate),
+            empBirthday: new Date(response.empBirthday),
             mobileNumber: response.mobileNumber,
-            empWorkTelephone: response.empWorkTelephone,
-            empWorkEmail: response.empWorkEmail,
-            next2KinName: response.next2KinName,
-            next2KinMobNumber: response.next2KinMobNumber
+            empMaritalStatus: +response.empMaritalStatus,
+            nationName: response.nationName,
+            contractType: response.contractType,
+            subscriptionAmount: response.subscriptionAmount,
+            subscriptionPaid: response.subscriptionPaid,
+            lastSubscriptionPaid: response.lastSubscriptionPaid,
+            subscriptionDueAmount: response.subscriptionDueAmount,
+            subscriptionStatus: response.subscriptionStatus,
+            terminationDate: response.terminationDate,
+            endDate: response.endDate,
+            employeeStatus: response.employeeStatus,
+            isKUEmployee: response.isKUEmployee,
+            isOnSickLeave: response.isOnSickLeave,
+            isMemberOfFund: response.isMemberOfFund,
+            CountryNameEnglish: response.countryNameEnglish,
+            CountryNameArabic: response.countryNameArabic,
+            employeePFId: response.pfid,
+            employeeCID: response.empCidNum,
+            employeeFormEmployeeId: response.employeeId,
           },
           addServiceForm: {
             mytransid: response.mytransid,
@@ -177,7 +207,8 @@ export class AddServiceComponent implements OnInit, OnDestroy {
             totamt: response.totamt,
             installmentAmount: response.installmentAmount,
             installmentsBegDate: response.installmentsBegDate ? new Date(response.installmentsBegDate) : '',
-            untilMonth: response.untilMonth
+            untilMonth: response.untilMonth,
+            downPayment: response.downPayment
           },
           financialForm: {
             hajjAct: response.hajjAct,
@@ -205,9 +236,21 @@ export class AddServiceComponent implements OnInit, OnDestroy {
             serApproval5: response.serApproval5,
             approvalBy5: response.approvalBy5,
             approvedDate5: response.approvedDate5,
-          }
+          },
+          // documentAttachmentForm: {
+          //   docType: response.transactionHDDMSDto[0].docType,
+          //   docType1: response.transactionHDDMSDto[1].docType,
+          //   docType2: response.transactionHDDMSDto[2].docType,
+          //   docType3: response.transactionHDDMSDto[3].docType,
+          //   docType4: response.transactionHDDMSDto[4].docType,
+          //   attachmentByName: response.transactionHDDMSDto[0].attachmentByName,
+          //   attachmentByName1: response.transactionHDDMSDto[1].attachmentByName,
+          //   attachmentByName2: response.transactionHDDMSDto[2].attachmentByName,
+          //   attachmentByName3: response.transactionHDDMSDto[3].attachmentByName,
+          //   attachmentByName4: response.transactionHDDMSDto[4].attachmentByName,
+          // }
         })
-        
+
       })
     }
 
@@ -244,6 +287,8 @@ export class AddServiceComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.isObservableActive = false;
     this.isSubscriber = false;
+    this.common.isViewOnly = false;
+    this.isPFIdNull = false;
   }
 
   setUpParentForm() {
@@ -304,8 +349,9 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       serviceTypeId: new FormControl(''),
       downPayment: new FormControl('0'),
       discountType: new FormControl(null),
-      allowDiscountAmount: new FormControl(null),
+      allowDiscountAmount: new FormControl('0'),
       allowDiscountPer: new FormControl(null),
+      transDate: new FormControl(null)
     })
     this.parentForm.setControl('addServiceForm', this.addServiceForm);
   }
@@ -315,6 +361,57 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       attachId: new FormControl(null)
     })
   }
+
+  initializeFinancialForm() {
+    this.financialCalculationForm = this.fb.group({
+      noOfTransactions: new FormControl('0'),
+      subscriptionPaidAmount: new FormControl('0.0'),
+      subscriptionDueAmount: new FormControl('0.0'),
+      subscriptionInstalmentAmount: new FormControl('0.0'),
+      financialAid: new FormControl('0.0'),
+      pfFundRevenue: new FormControl('0.0'),
+      adjustmentAmount: new FormControl('0.0'),
+      adjustmentAmountRemarks: new FormControl(null),
+      pfFundRevenuePercentage: new FormControl('0.0'),
+      sponsorLoanPendingAmount: new FormControl('0.0'),
+      sponsorDueAmount: new FormControl('0.0'),
+      finAidAmountRemarks: new FormControl(null),
+      loanPendingAmount: new FormControl('0.0'),
+      loanreceivedAmount: new FormControl('0.0'),
+      loanInstallmentAmount: new FormControl('0.0'),
+      noOfSponsor: new FormControl('0'),
+      yearOfService: new FormControl(null),
+      totalAmount: new FormControl('0.0'),
+      financialAidAmount: new FormControl('0.0'),
+      UpdateToDate: new FormControl(null),
+      mySeq:new FormControl(1),
+      DisplayPERIOD_CODE:new FormControl('20230214')
+    });
+  }
+
+  initializeCashierInformationForm() {
+    this.cashierInformationForm = this.fb.group({
+      payPer1: new FormControl('0'),
+      draftNumber1: new FormControl('0'),
+      draftDate1: new FormControl(null),
+      draftAmount1: new FormControl('0'),
+      bankAccount1: new FormControl('0'),
+      deliveryDate1: new FormControl(null),
+      receivedBy1: new FormControl(null),
+      deliveredBy1: new FormControl(null),
+      payPer2: new FormControl('0'),
+      draftNumber2: new FormControl('0'),
+      draftDate2: new FormControl(null),
+      draftAmount2: new FormControl('0'),
+      bankAccount2: new FormControl('0'),
+      deliveryDate2: new FormControl(null),
+      receivedBy2: new FormControl(null),
+      deliveredBy2: new FormControl(null),
+    })
+  }
+
+
+
   saveFinancialService() {
     this.setValidators(this.notSubscriber);
     // Get Tenant Id
@@ -332,28 +429,31 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       ...this.parentForm.value.approvalDetailsForm,
       ...this.parentForm.value.employeeForm,
       ...this.parentForm.value.financialForm,
+      ...this.financialCalculationForm.value,
       //...this.parentForm.value.financialFormArray,
       tenentID: 21, cruP_ID: 0, locationID: 1
     }
 
     formData['installmentsBegDate'] = moment(formData['installmentsBegDate']).format("yyyy-MM-DD");
+    formData['deliveryDate'] = moment(formData['deliveryDate']).format("yyyy-MM-DD"); 
+    formData['transDate'] = moment(formData['transDate']).format("yyyy-MM-DD"); 
     let finalformData = new FormData();
     Object.keys(formData).forEach(key => finalformData.append(key, formData[key]));
-    finalformData.append('personalPhotoDocType', this.parentForm.value.documentAttachmentForm[0].docType);
-    finalformData.append('personalPhotoDocument', this.parentForm.value.documentAttachmentForm[0].Document);
-    finalformData.append('appplicationFileDocType', this.parentForm.value.documentAttachmentForm[1].docType);
-    finalformData.append('appplicationFileDocument', this.parentForm.value.documentAttachmentForm[1].Document);
-    finalformData.append('workIdDocType', this.parentForm.value.documentAttachmentForm[2].docType);
-    finalformData.append('workIdDocument', this.parentForm.value.documentAttachmentForm[2].Document);
-    finalformData.append('civilIdDocType', this.parentForm.value.documentAttachmentForm[3].docType);
-    finalformData.append('civilIdDocument', this.parentForm.value.documentAttachmentForm[3].Document);
-    finalformData.append('salaryDataDocType', this.parentForm.value.documentAttachmentForm[4].docType);
-    finalformData.append('salaryDataDocument', this.parentForm.value.documentAttachmentForm[4].Document);
-    //
-    finalformData.append('subject', this.parentForm.value.documentAttachmentForm[0].subject);
+    // finalformData.append('personalPhotoDocType', this.parentForm.value.documentAttachmentForm[0].docType);
+    // finalformData.append('personalPhotoDocument', this.parentForm.value.documentAttachmentForm[0].Document);
+    // finalformData.append('appplicationFileDocType', this.parentForm.value.documentAttachmentForm[1].docType);
+    // finalformData.append('appplicationFileDocument', this.parentForm.value.documentAttachmentForm[1].Document);
+    // finalformData.append('workIdDocType', this.parentForm.value.documentAttachmentForm[2].docType);
+    // finalformData.append('workIdDocument', this.parentForm.value.documentAttachmentForm[2].Document);
+    // finalformData.append('civilIdDocType', this.parentForm.value.documentAttachmentForm[3].docType);
+    // finalformData.append('civilIdDocument', this.parentForm.value.documentAttachmentForm[3].Document);
+    // finalformData.append('salaryDataDocType', this.parentForm.value.documentAttachmentForm[4].docType);
+    // finalformData.append('salaryDataDocument', this.parentForm.value.documentAttachmentForm[4].Document);
+    // //
+    // finalformData.append('subject', this.parentForm.value.documentAttachmentForm[0].subject);
 
-    finalformData.append('metaTags', JSON.parse(JSON.stringify(this.parentForm.value.documentAttachmentForm[0].metaTag)));
-    finalformData.append('attachmentRemarks', this.parentForm.value.documentAttachmentForm[0].attachmentRemarks);
+    // finalformData.append('metaTags', JSON.parse(JSON.stringify(this.parentForm.value.documentAttachmentForm[0].metaTag)));
+    // finalformData.append('attachmentRemarks', this.parentForm.value.documentAttachmentForm[0].attachmentRemarks);
     //
     this.isFormSubmitted = true;
     //
@@ -363,8 +463,8 @@ export class AddServiceComponent implements OnInit, OnDestroy {
         this.parentForm.reset();
       })
     } else {
-
-      this.financialService.AddFinacialService(finalformData).subscribe((response: any) => {        
+      //console.log(formData);
+      this.financialService.AddFinacialService(finalformData).subscribe((response: any) => {
         if (response.isSuccess == false) {
           this.toastrService.error(response.message, 'Error');
         }
@@ -375,6 +475,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
             attachId: response.attachId
           })
           this.parentForm.reset();
+          this.financialCalculationForm.reset();
           this.openPopUpModal(this.popupModal);
         }
         //this.saveFinancialArray();   
@@ -382,13 +483,18 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     }
 
   }
+
+  
+
   saveFinancialArray() {
     this.financialService.saveCOA(this.parentForm.value.financialFormArray, {}).subscribe(() => {
       this.toastrService.success('Saved successfully', 'Success');
       this.parentForm.reset();
     })
   }
-  
+  cancelClicked() {
+    console.log(this.financialCalculationForm.value);
+  }
   calculateUntilMonth(selectedDate: Date) {
     if (selectedDate !== undefined) {
       let noOfinstallments = this.addServiceForm.get('totinstallments')?.value;
@@ -402,6 +508,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
 
   // Calculate Installments based on Installment Months...allowDiscountAmount
   calculateInstallments() {
+    console.log(this.addServiceForm.get('discountType')?.value);
     //
     let amount = this.addServiceForm.get('totamt')?.value;
     let noOfinstallments = this.addServiceForm.get('totinstallments')?.value;
@@ -417,7 +524,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     }
     else if (noOfinstallments == 0 || noOfinstallments == '') {
       this.toastrService.error('Please enter installments', 'Error');
-    }else{
+    } else {
       // If 1 Percentage...
       if (this.addServiceForm.get('discountType')?.value === '1') {
         percentageAmount = ((amount * allowDiscountAmount) / 100);
@@ -434,8 +541,6 @@ export class AddServiceComponent implements OnInit, OnDestroy {
         installmentAmount: netAmount.toFixed(2)
       })
     }
-
-    
   }
 
   onServiceTypeChange(event: any) {
@@ -468,12 +573,13 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     this.selectedServiceType = event.refId;
     this.selectedServiceTypeText = event.shortname;
   }
+
   onServiceSubTypeChange($event: any) {
     this.selectedServiceSubType = $event.refId;
     this.selectedServiceSubTypeText = $event.shortname;
     // ServiceType and SubType is Financial Aid...
     // No need create monthly installments...
-   
+
     this.financialService.GetSelectedServiceSubType(this.selectedServiceType, this.selectedServiceSubType, 21).subscribe((response: any) => {
       // To enable back the down payment...
       this.addServiceForm.get('downPayment')?.enable();
@@ -511,7 +617,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           serApproval5: +response.serApproval5,
           approvalBy5: response.approvalBy5,
           approvedDate5: response.approvedDate5 ? new Date(response.approvedDate5) : '',
-        }, 
+        },
         financialForm: {
           loanAct: response.loanAct,
           hajjAct: response.hajjAct,
@@ -524,9 +630,9 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           otherAct5: response.otherAct5
         },
       });
-      if(this.selectedServiceType == 2 && $event.refId == 3){
+      if (this.selectedServiceType == 2 && $event.refId == 3) {
         this.parentForm.patchValue({
-          addServiceForm: {            
+          addServiceForm: {
             allowDiscountAmount: 100
           }
         });
@@ -585,6 +691,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     });
 
   }
+
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
@@ -594,16 +701,22 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       return `with: ${reason}`;
     }
   }
-  SearchEmployee() {
-    this.financialService.SearchEmployee(this.searchForm.value).subscribe((response: any) => {
 
+  SearchEmployee() {
+    //
+    var data = JSON.parse(localStorage.getItem("user")!);
+    const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
+    const locationId = data.map((obj: { locationId: any; }) => obj.locationId);
+
+    // To hide/show the financial calculation div
+    this.isPFIdNull = false;
+    this.financialService.SearchEmployee(this.searchForm.value).subscribe((response: any) => {
       if (response === null) {
         this.common.ifEmployeeExists = false;
         this.toastrService.error('Sorry, record not found', 'Error');
         this.employeeForm?.reset();
       } else {
         this.common.ifEmployeeExists = true;
-        console.log(response);
         this.employeeForm?.patchValue({
           employeeId: response.employeeId,
           englishName: response.englishName,
@@ -658,7 +771,6 @@ export class AddServiceComponent implements OnInit, OnDestroy {
             let arr = this.selectServiceType.filter(x => x.refId == 1)
             this.selectServiceType = arr;
             this.isSubscriber = true;
-
           }
         });
       }
@@ -667,5 +779,100 @@ export class AddServiceComponent implements OnInit, OnDestroy {
         this.toastrService.error('Please enter Employee Id or CID or PFId', 'Error');
       }
     });
+  }
+  getFinancialCalculation() {
+    // 
+    var data = JSON.parse(localStorage.getItem("user")!);
+    const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
+    const locationId = data.map((obj: { locationId: any; }) => obj.locationId);
+    let transactionDate = moment(this.addServiceForm.get('transDate')?.value).format("yyyy-MM-DD");
+    //
+    if (!this.searchForm.value.employeeId) {
+      this.toastrService.error('Employee id not found', 'Error')
+    } else if (transactionDate === 'Invalid date') {
+      this.toastrService.error('Invalid transaction date', 'Error')
+    }
+    else if (this.addServiceForm.get('serviceType')?.value === 1) {
+      this.toastrService.error('Invalid transaction date', 'Error')
+    }
+    else if (this.addServiceForm.get('serviceSubType')?.value === 2) {
+      this.toastrService.error('Invalid transaction date', 'Error')
+    } else {
+      this.commonService.GetFinancialCalculationByEmployeeId(this.searchForm.value.employeeId, tenantId, locationId, transactionDate).subscribe((response: any) => {
+        this.isPFIdNull = true;
+        //
+        var total = response.subscriptionPaidAmount - (response.subscriptionDueAmount + response.loanPendingAmount);
+        //
+        var financialAid = (total / 100) * 1;
+        //
+        var pfRevenue = (total / 100) * 10;
+        //
+        var grandTotal = total - (financialAid + pfRevenue);
+
+        this.myTransId = response.myTransId
+        this.financialCalculationForm.patchValue({
+          noOfTransactions: response.noOfTransactions,
+          subscriptionPaidAmount: response.subscriptionPaidAmount.toFixed(2),
+          subscriptionDueAmount: response.subscriptionDueAmount.toFixed(2),
+          loanAmountBalance: response.balanceOfLoanAmount,
+          financialAid: financialAid.toFixed(2),
+          pfFundRevenue: pfRevenue.toFixed(2),
+          adjustmentAmountRemarks: response.adjustmentAmountRemarks,
+          financialAidPercentage: response.financialAidPercentage,
+          pfFundRevenuePercentage: response.pfFundRevenuePercentage,
+          noOfSponsor: response.noOfSponsor,
+          sponsorLoanPendingAmount: response.sponsorLoanPendingAmount,
+          financialAidAmountRemarks: response.finAidAmountRemarks,
+          yearOfService: response.yearOfService,
+          loanPendingAmount: response.loanPendingAmount.toFixed(2),
+          totalAmount: grandTotal.toFixed(2)
+        })
+      })
+
+    }
+  }
+  calculateFinancialAmount() {
+    var totalAmount = +this.financialCalculationForm.get('totalAmount')?.value;
+    var adjustmentAmount = +this.financialCalculationForm.get('adjustmentAmount')?.value;
+    var financialAidAmount = +this.financialCalculationForm.get('financialAidAmount')?.value;
+    var result = (totalAmount + adjustmentAmount + financialAidAmount);
+    this.financialCalculationForm.get('totalAmount')?.setValue(result);
+  }
+  openCashierInformation(content: any) {
+    //
+    var data = JSON.parse(localStorage.getItem("user")!);
+    const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
+    const locationId = data.map((obj: { locationId: any; }) => obj.locationId);
+
+    this.commonService.GetCashierInformationByEmployeeId(this.searchForm.value.employeeId, tenantId, locationId, this.myTransId).subscribe((response: any) => {
+      this.cashierInformationForm.patchValue({
+        payPer1: response.payPer1,
+        draftNumber1: response.draftNumber1,
+        draftDate1:  moment(response.draftDate1).format("yyyy-MM-DD"),
+        draftAmount1: response.draftAmount1,
+        bankAccount1: response.bankAccount1,
+        deliveryDate1: moment(response.deliveryDate1).format("yyyy-MM-DD"),
+        receivedBy1: response.receivedBy1,
+        deliveredBy1: response.deliveredBy1,
+        payPer2: response.payPer2,
+        draftNumber2: response.draftNumber2,
+        draftDate2: moment(response.draftDate2).format("yyyy-MM-DD"),
+        draftAmount2: response.draftAmount2,
+        bankAccount2: response.bankAccount2,
+        deliveryDate2: moment(response.deliveryDate2).format("yyyy-MM-DD"),
+        receivedBy2: response.receivedBy2,
+        deliveredBy2: response.deliveredBy2,
+      })
+    },
+      error => {
+        console.log(error);
+      })
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title',size:'lg',backdrop: 'static'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+
   }
 }

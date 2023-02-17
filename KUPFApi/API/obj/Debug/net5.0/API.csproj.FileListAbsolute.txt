@@ -158,6 +158,7 @@ E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\
 E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\KUPFApi\API\bin\Debug\net5.0\Microsoft.IdentityModel.Abstractions.dll
 E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\KUPFApi\API\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 E:\MyWork\GitHub11July2022\KUPFApp\KUPFApp\kupfapi\api\obj\Debug\net5.0\API.csproj.AssemblyReference.cache
+E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\publish\publish\publish\publish\web.config
 E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\publish\publish\publish\web.config
 E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\publish\publish\web.config
 E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\publish\web.config
@@ -180,6 +181,10 @@ E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\publish\publis
 E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\publish\publish\publish\API.runtimeconfig.json
 E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\publish\publish\publish\appsettings.Development.json
 E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\publish\publish\publish\appsettings.json
+E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\publish\publish\publish\publish\API.deps.json
+E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\publish\publish\publish\publish\API.runtimeconfig.json
+E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\publish\publish\publish\publish\appsettings.Development.json
+E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\publish\publish\publish\publish\publish\appsettings.json
 E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\API.exe
 E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\API.deps.json
 E:\MyWork\KUPF-28-10\KUPFApp\KUPFApi\API\bin\Debug\net5.0\API.runtimeconfig.json

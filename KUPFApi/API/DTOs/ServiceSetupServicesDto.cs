@@ -20,6 +20,7 @@
         public bool? IsElectronicForm { get; set; }
         public byte[] OfferImageFile { get; set; }
         public string? OfferImage { get; set; }
+        public string? Remarks { get; set; }
 
     }
 }

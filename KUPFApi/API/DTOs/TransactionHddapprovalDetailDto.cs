@@ -27,5 +27,7 @@ namespace API.DTOs
         public DateTime? Entrytime { get; set; }
         public DateTime? Updttime { get; set; }
         public string ApprovalRemarks { get; set; }
+        public int? mySeq { get; set; }
+        public long? DisplayPERIOD_CODE { get; set; }
     }
 }

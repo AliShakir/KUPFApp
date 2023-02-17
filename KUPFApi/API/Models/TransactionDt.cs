@@ -33,6 +33,6 @@ namespace API.Models
         public bool? Active { get; set; }
         public string Switch1 { get; set; }
         public int? DelFlag { get; set; }
-        
+
     }
 }

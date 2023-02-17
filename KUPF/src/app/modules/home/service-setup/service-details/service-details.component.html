@@ -99,9 +99,10 @@
                     <table mat-table class="w-100" [dataSource]="returnTransactionHdDto" matSort>
                         <ng-container matColumnDef="action">
                             <th mat-header-cell *matHeaderCellDef>Action</th>
-                            <td mat-cell *matCellDef="let item" class="w-20 text-right">
+                            <td mat-cell *matCellDef="let item" class="w-30 text-right">
                                 <button mat-raised-button color="warn" (click)="openDeleteModal(deleteModal,item.mytransid)">Delete</button> |                                
-                                <button mat-raised-button color="accent" routerLink="/service-setup/add-service/{{item.mytransid}}">Edit</button>
+                                <button mat-raised-button color="accent" routerLink="/service-setup/add-service/{{item.mytransid}}">Edit</button> |
+                                <button mat-raised-button color="primary" routerLink="/service-setup/add-service/{{item.mytransid}}" (click)="viewDataClick(item.mytransid)">View</button>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="employeeName">
@@ -112,8 +113,9 @@
                         <ng-container matColumnDef="services">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header>Service</th>
                             <td mat-cell *matCellDef="let item" class="ArFontStyle">{{item.serviceType}}</td>
-                        </ng-container>
-
+                        </ng-container> 
+                        
+  
                         <ng-container matColumnDef="installments">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header>Installment</th>
                             <td mat-cell *matCellDef="let item" class="ArFontStyle">{{item.installment}}</td>
