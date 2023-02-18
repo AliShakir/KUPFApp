@@ -60,6 +60,10 @@
                                 [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }" formControlName="draftDate"
                                 name="draftDate" lang="AR-SA" />
                         </div>
+                         <span class="text-danger"
+                                    *ngIf="isFormSubmitted && cashierDraftFrm.bankDetails.errors?.required">
+                                    Service Sub Type is required
+                          </span>
                     </div>
                 </div>
                 <div class="row">

@@ -77,7 +77,7 @@ export class CashierApprovalComponent implements OnInit {
       this.router.navigate([uri]));
   }
   loadData(){
-    //
+    //   
     var data = JSON.parse(localStorage.getItem("user")!);
     const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
     const locationId = data.map((obj: { locationId: any; }) => obj.locationId);

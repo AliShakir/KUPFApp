@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { isError } from 'lodash';
 import * as moment from 'moment';
+import { Validators } from 'ngx-editor';
 import { Observable } from 'rxjs';
 import { SelectBankAccount } from 'src/app/modules/models/SelectBankAccount';
 import { DbCommonService } from 'src/app/modules/_services/db-common.service';
@@ -18,6 +19,8 @@ export class CashierDraftComponent implements OnInit {
   cashierDraftForm: FormGroup;
   transId: number;
   employeeId: number
+  //
+  isFormSubmitted:false;
   //
   selectBankAccount$: Observable<SelectBankAccount[]>;
   constructor(private fb: FormBuilder,
@@ -62,10 +65,13 @@ export class CashierDraftComponent implements OnInit {
     })
   }
 
+  saveClicked(){
+    //this.isFormSubmitted = true;
+  }
   initializeCashierDeliveryForm() {
     this.cashierDraftForm = this.fb.group({
       totalAmount: new FormControl('0'),
-      bankDetails: new FormControl(),
+      bankDetails: new FormControl(Validators.required),
       draftNumber: new FormControl('0'),
       draftDate: new FormControl(moment(new Date).format("DD-MM-YYYY")),
       receivedBy: new FormControl(),
@@ -85,4 +91,6 @@ export class CashierDraftComponent implements OnInit {
       bankDetails:$event.accountNumber
     })
   }
+  // To access form controls...
+  get cashierDraftFrm() { return this.cashierDraftForm.controls; }
 }
