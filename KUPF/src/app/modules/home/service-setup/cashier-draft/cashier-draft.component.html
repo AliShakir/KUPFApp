@@ -1,107 +1,150 @@
 <ngb-accordion #ngbOfferDetails="ngbAccordion" activeIds="ngb-panel-1" opened="true">
     <ngb-panel id="ngb-panel-1">
         <ng-template ngbPanelTitle>
-            <h3 class="m-0 ArFontStyle" lang="AR-SA">Cashier Draft Preparation Screen - شاشة إعداد مسودة أمين الصندوق</h3>
+            <h3 class="m-0 ArFontStyle" lang="AR-SA">Cashier Draft Preparation Screen - شاشة إعداد مسودة أمين الصندوق
+            </h3>
         </ng-template>
         <ng-template ngbPanelContent>
             <form [formGroup]="cashierDraftForm">
-            <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed p-6 mb-3">
-                <div class=" flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
-                    <div class="row">
-                        <div class="col-lg-3 fv-row">
-                            <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">Employee Name</label>
-                            <input type="text" class="form-control" formControlName="englishName" readonly/>
-                        </div> 
-                        <div class="col-lg-3 fv-row">
-                            <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">Employee ID </label>
-                            <input type="text" class="form-control" formControlName="employeeId" readonly/>
-                        </div> 
-                        <div class="col-lg-3 fv-row">
-                            <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">CId</label>
-                            <input type="text" class="form-control" formControlName="empCidNum" readonly/>
-                        </div> 
-                        <div class="col-lg-3 fv-row">
-                            <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">PF Id</label>
-                            <input type="text" class="form-control" formControlName="pfid" readonly/>
-                        </div>                        
-                    </div>        
-                </div>
-            </div>              
-                <div class="row">                                
-                    <div class="col-lg-4 fv-row">
-                        <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">Total Amount - المبلغ الإجمالي</label>
-                        <input type="number" class="form-control"
-                            formControlName="totalAmount"/>
-                    </div>                                
-                </div>   
-                <div class="row">
-                    <div class="col-lg-4 fv-row">
-                        <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">Bank Details - التفاصيل المصرفية</label>
-                        <ng-select [items]="selectBankAccount$ | async" bindLabel="accountName"
-                                    formControlName="bankDetails" bindValue="accountNumber" lang="AR-SA" (change)="onBankAccountSelect($event)"> 
-                        </ng-select>
-                    </div>                        
-                </div>
-                <div class="row">
-                    <div class="col-lg-4 fv-row">
-                        <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">Draft Number - رقم المسودة</label>
-                        <input type="number" class="form-control"
-                            formControlName="draftNumber1"/>
+                <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed p-6 mb-3">
+                    <div class=" flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
+                        <div class="row">
+                            <div class="col-lg-3 fv-row">
+                                <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">Employee
+                                    Name</label>
+                                <input type="text" class="form-control" formControlName="englishName" readonly
+                                    style="background-color: #e9e9e9;" />
+                            </div>
+                            <div class="col-lg-3 fv-row">
+                                <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">Employee
+                                    ID </label>
+                                <input type="text" class="form-control" formControlName="employeeId" readonly
+                                    style="background-color: #e9e9e9;" />
+                            </div>
+                            <div class="col-lg-3 fv-row">
+                                <label class="col-form-label fw-bold fs-6 ArFontStyle label-color"
+                                    lang="AR-SA">CId</label>
+                                <input type="text" class="form-control" formControlName="empCidNum" readonly
+                                    style="background-color: #e9e9e9;" />
+                            </div>
+                            <div class="col-lg-3 fv-row">
+                                <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">PF
+                                    Id</label>
+                                <input type="text" class="form-control" formControlName="pfid" readonly
+                                    style="background-color: #e9e9e9;" />
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-4 fv-row">
-                        <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">Draft Date - تاريخ المسودة  </label>
+                        <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA"> 
+                            المبلغ الإجمالي   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Total Amount</label>
+                        <input type="number" class="form-control" formControlName="totalAmount" readonly
+                            style="background-color: #e9e9e9;" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 fv-row">
+                        <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">التفاصيل المصرفية &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bank Details</label>
+                        <ng-select [items]="selectBankAccount$ | async" bindLabel="accountName"
+                            formControlName="bankAccount1" bindValue="accountNumber" lang="AR-SA"
+                            (change)="onBankAccountSelect($event)">
+                        </ng-select>
+                        <span class="text-danger"
+                            *ngIf="isFormSubmitted && cashierDraftFrm.bankAccount1.errors?.required">
+                            Bank is required
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 fv-row">
+                        <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">رقم المسودة 
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Draft Number</label>
+                        <input type="number" class="form-control" formControlName="draftNumber1" readonly
+                            style="background-color: #e9e9e9;" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 fv-row">
+                        <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA"> تاريخ المسودة 
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            Draft Date</label>
                         <div class="input-group">
                             <span class="input-group-text" id="basic-addon1">
                                 <i class="fas fa-calendar"></i>
-                            </span>                                        
-                                <input type="text" class="form-control" bsDatepicker
-                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }" formControlName="draftDate"
+                            </span>
+                            <input type="text" class="form-control" bsDatepicker
+                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }" formControlName="draftDate1"
                                 name="draftDate" lang="AR-SA" />
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-4 fv-row">
-                        <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">Received By - استلمت من قبل </label>
-                        <input type="text" class="form-control"
-                            formControlName="receivedBy"/>
+                        <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">استلمت من قبل 
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Received By</label>
+                        <input type="text" class="form-control" formControlName="receivedBy1" readonly
+                            style="background-color: #e9e9e9;" />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-4 fv-row">
-                        <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">Received Date - تاريخ الحصول عليه  </label>
+                        <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">تاريخ الحصول عليه 
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            Received Date</label>
                         <div class="input-group">
                             <span class="input-group-text" id="basic-addon1">
                                 <i class="fas fa-calendar"></i>
-                            </span>                                        
-                                <input type="text" class="form-control" bsDatepicker
-                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }" formControlName="receivedDate"
-                                name="receivedDate" lang="AR-SA" />
+                            </span>
+                            <input type="text" class="form-control" bsDatepicker
+                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }" formControlName="receivedDate1"
+                                name="receivedDate1" lang="AR-SA" readonly style="background-color: #e9e9e9;" />
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-4 fv-row">
-                        <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">Prepared / Delivered by - من إعداد / تسليم بواسطة</label>
-                        <input type="text" class="form-control"
-                            formControlName="deliveredBy" readonly/>
+                        <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA"> من إعداد / تسليم بواسطة  
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            Prepared / Delivered by</label>
+                        <input type="text" class="form-control" formControlName="deliveredBy1" readonly
+                            style="background-color: #e9e9e9;" />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-4 fv-row">
-                        <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">Prepared / Delivered Date  - تاريخ التحضير / التسليم</label>
-                        <input type="text" class="form-control"
-                            formControlName="deliverDate" readonly/>
+                        <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">تاريخ التحضير / التسليم 
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            Prepared / Delivered Date</label>                      
+                            <div class="input-group">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <i class="fas fa-calendar"></i>
+                                </span>
+                                <input type="text" class="form-control" bsDatepicker
+                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }" formControlName="deliveryDate1" lang="AR-SA" readonly style="background-color: #e9e9e9;" />
+                            </div>
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="text-right">
-                        <button mat-raised-button color="primary">Save</button>&nbsp;
-                        <button mat-raised-button color="accent" routerLink="/service-setup/cashier-approval">Back</button>
-                    </div>                    
-                </div>             
+                        <button mat-raised-button color="primary" (click)="onSaveClick()">Save</button>&nbsp;
+                        <button mat-raised-button color="accent"
+                            routerLink="/service-setup/cashier-approval">Back</button>
+                    </div>
+                </div>
             </form>
         </ng-template>
     </ngb-panel>

@@ -203,4 +203,7 @@ export class FinancialService {
   GetCashierApprovals(periodCode:number,tenentId:number,locationId:number) { 
     return this.httpClient.get<CashierApprovalDto[]>(this.baseUrl + `FinancialService/GetCashierApprovals?periodCode=${periodCode}&tenentId=${tenentId}&locationId=${locationId}`);    
   }
+  SaveDraftAndDeliveryInformation(response: CashierApprovalDto) {    
+    return this.httpClient.post(this.baseUrl +`FinancialService/SaveDraftAndDeliveryInformation`,response);
+  }
 }

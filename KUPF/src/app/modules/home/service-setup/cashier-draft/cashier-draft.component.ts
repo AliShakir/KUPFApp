@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { isError } from 'lodash';
 import * as moment from 'moment';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { SelectBankAccount } from 'src/app/modules/models/SelectBankAccount';
 import { DbCommonService } from 'src/app/modules/_services/db-common.service';
+import { FinancialService } from 'src/app/modules/_services/financial.service';
 
 @Component({
   selector: 'app-cashier-draft',
@@ -20,9 +22,13 @@ export class CashierDraftComponent implements OnInit {
   employeeId: number
   //
   selectBankAccount$: Observable<SelectBankAccount[]>;
+  //
+  isFormSubmitted=false;
   constructor(private fb: FormBuilder,
     private dbCommonService: DbCommonService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private financialService:FinancialService,
+    private toastrService:ToastrService
   ) {
     this.activatedRoute.queryParams.subscribe(params => {
       this.transId = params['mytransId'];
@@ -44,40 +50,55 @@ export class CashierDraftComponent implements OnInit {
     this.dbCommonService.GetDraftInformationByEmployeeId(this.employeeId, tenantId, locationId, this.transId).subscribe((response: any) => {
       this.cashierDraftForm.patchValue({
         totalAmount: response.totalAmount.toFixed(3),
-        bankDetails: response.bankDetails,
-        draftNumber: response.draftNumber,
-        receivedBy: response.receivedBy,
-        receivedDate: response.receivedDate,
-        deliveredBy: username,
-        deliverDate: moment(new Date).format("DD-MM-YYYY"),
+        bankAccount1: +response.bankAccount1,
+        draftNumber1: response.draftNumber1,
+        draftDate1: response.draftDate1 ? new Date(response.draftDate1) : new Date(),
+        receivedBy1: response.receivedBy1 ? '' : '',
+        receivedDate1: response.receivedDate1 ? new Date(response.receivedDate1) : new Date(),
+        deliveredBy1: username[0],
+        deliveryDate1: response.deliveryDate1 ? new Date(response.deliveryDate1) : new Date(), 
         pfid: response.pfid,
         empCidNum: response.empCidNum,
-        employeeId: response.employeeId,
         arabicName: response.arabicName,
         englishName: response.englishName,
-        draftNumber1: response.draftNumber1
+        transId:this.transId,
+        employeeId:this.employeeId
       })
     }, error => {
       console.log(error);
     })
   }
 
+  onSaveClick(){
+    this.isFormSubmitted = true;
+    if(this.cashierDraftForm.valid){
+      this.financialService.SaveDraftAndDeliveryInformation(this.cashierDraftForm.value).subscribe((response:any)=>{
+        if(response === 1){
+          this.toastrService.success('Saved successfully','Success');
+        }else{
+          this.toastrService.error('Something went wrong','Error');
+        }
+      },error=>{
+        console.log(error)
+      })
+    }    
+  }
   initializeCashierDeliveryForm() {
     this.cashierDraftForm = this.fb.group({
       totalAmount: new FormControl('0'),
-      bankDetails: new FormControl(),
-      draftNumber: new FormControl('0'),
-      draftDate: new FormControl(moment(new Date).format("DD-MM-YYYY")),
-      receivedBy: new FormControl(),
-      receivedDate: new FormControl(),
-      deliveredBy: new FormControl(),
+      bankAccount1: new FormControl('',Validators.required),
+      draftNumber1: new FormControl('0'),
+      draftDate1: new FormControl(null),
+      receivedBy1: new FormControl(''),
+      receivedDate1: new FormControl(null),
+      deliveredBy1: new FormControl(),
       pfid: new FormControl(),
       empCidNum: new FormControl(),
       employeeId: new FormControl(),
       arabicName: new FormControl(),
       englishName: new FormControl(),
-      draftNumber1: new FormControl(),
-      deliverDate: new FormControl(null)
+      deliveryDate1: new FormControl(null),
+      transId:new FormControl('')
     })
   }
   onBankAccountSelect($event:any){    
@@ -85,4 +106,6 @@ export class CashierDraftComponent implements OnInit {
       bankDetails:$event.accountNumber
     })
   }
+  // To access form controls...
+  get cashierDraftFrm() { return this.cashierDraftForm.controls; }
 }

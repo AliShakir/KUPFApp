@@ -31,7 +31,7 @@ const routes: Routes = [
   { path: 'employee-movement-details', component: EmployeeMovementDetailsComponent },  
   { path: 'cashier-approval', component: CashierApprovalComponent }, 
   { path: 'financial-approval', component: FinancialApprovalComponent },
-  { path: 'cashier-delivery/:mytransid', component: CashierDeliveryComponent },
+  { path: 'cashier-delivery', component: CashierDeliveryComponent },
   { path: 'cashier-draft', component: CashierDraftComponent }
 ];
 

@@ -3480,7 +3480,7 @@ namespace API.Servivces.Implementation
                         select new CashierApprovalDto
                         {
                             TransId = (int)ap.Mytransid,
-                            EmployeeId = e.EmployeeId,
+                            EmployeeId = Convert.ToString(e.EmployeeId),
                             EnglishName = e.EnglishName,
                             ArabicName = e.ArabicName,
                             ServiceName = hd.ServiceType,
@@ -3490,12 +3490,41 @@ namespace API.Servivces.Implementation
                             PeriodCode = Convert.ToString(ap.DisplayPERIOD_CODE),
                             TenentId = ap.TenentId,
                             LocationId = ap.LocationId,
-                            DraftAmount1= hd.DraftAmount1,
+                            DraftAmount1 = hd.DraftAmount1,
                             DraftAmount2 = hd.DraftAmount2,
                             DraftDate1 = hd.DraftDate1,
-                            DraftDate2= hd.DraftDate2
+                            DraftDate2 = hd.DraftDate2
                         }).ToList();
             return data;
+        }
+
+        public async Task<int> SaveDraftAndDeliveryInformation(CashierApprovalDto cashierApprovalDto)
+        {
+            int result = 0;
+            var existingtransactionHd = _context.TransactionHds
+                    .Where(c => c.Mytransid == cashierApprovalDto.TransId &&
+                    c.EmployeeId == Convert.ToInt32(cashierApprovalDto.EmployeeId)).FirstOrDefault();
+            if(existingtransactionHd != null)
+            {
+                existingtransactionHd.DraftNumber1 = cashierApprovalDto.DraftNumber1;
+                existingtransactionHd.DraftNumber2 = cashierApprovalDto.DraftNumber2;
+                existingtransactionHd.DraftDate1 = cashierApprovalDto.DraftDate1;
+                existingtransactionHd.DraftDate2 = cashierApprovalDto.DraftDate2;
+                existingtransactionHd.TotalAmount = cashierApprovalDto.TotalAmount;
+                existingtransactionHd.BankAccount1 = cashierApprovalDto.BankAccount1;
+                existingtransactionHd.ReceivedBy1 = cashierApprovalDto.ReceivedBy1;
+                existingtransactionHd.ReceivedDate1 = cashierApprovalDto.ReceivedDate1;
+                existingtransactionHd.DeliveryDate1 = cashierApprovalDto.ReceivedDate;
+                existingtransactionHd.DeliveredBy1 = cashierApprovalDto.DeliveredBy1;
+                existingtransactionHd.Transdate = DateTime.Now;
+                existingtransactionHd.Mytransid = (long)cashierApprovalDto.TransId;
+                existingtransactionHd.EmployeeId = Convert.ToInt32(cashierApprovalDto.EmployeeId);
+
+                _context.TransactionHds.Update(existingtransactionHd);
+                result = await _context.SaveChangesAsync();
+            }
+            
+            return result;
         }
     }
 }

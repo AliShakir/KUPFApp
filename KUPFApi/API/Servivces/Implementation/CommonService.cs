@@ -549,17 +549,19 @@ namespace API.Servivces.Implementation
                             ArabicName = emp.ArabicName,
                             Pfid = emp.Pfid,
                             EmpCidNum = emp.EmpCidNum,
-                            EmployeeId = emp.EmployeeId,
+                            EmployeeId = Convert.ToString(emp.EmployeeId),
                             DraftAmount1 = hd.DraftAmount1,
                             DraftAmount2 = hd.DraftAmount2,
                             DraftDate1 = hd.DraftDate1,
                             DraftDate2 = hd.DraftDate2,
                             TotalAmount = hd.Totamt,
-                            ReceivedBy = hd.ReceivedBy1,
+                            ReceivedBy1 = hd.ReceivedBy1,
                             ReceivedDate = hd.DraftDate2,
                             DraftNumber1 = maxDraftNo,
                             DraftNumber2 = hd.DraftNumber2,
-                            TransId = hd.Mytransid
+                            TransId = hd.Mytransid,
+                            BankAccount1 = hd.BankAccount1,
+                            ReceivedDate1 = hd.ReceivedDate1,
 
                         }).FirstOrDefault();
             return data;

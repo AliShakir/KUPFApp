@@ -63,12 +63,13 @@ export class CashierApprovalComponent implements OnInit {
     //
     this.loadData();
   }
-  goProducts(mytransId:number,employeeId:number) {
-    //this.router.navigateByUrl('product?pageNum=2');
+  navigateToCashierDraft(mytransId:number,employeeId:number) {
     this.router.navigateByUrl(`/service-setup/cashier-draft?mytransId=${mytransId}&employeeId=${employeeId}`);
   }
-
-  showServiceSetupDetailsView(employeeId:number){
+  navigateToCashierDelivery(mytransId:number,employeeId:number) {
+    this.router.navigateByUrl(`/service-setup/cashier-delivery?mytransId=${mytransId}&employeeId=${employeeId}`);
+  }
+  onDetailsClick(employeeId:number){
     this.commonService.isViewOnly = true;
     this.redirectTo(`/service-setup/add-service/${employeeId}`);
   }

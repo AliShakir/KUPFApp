@@ -2,6 +2,9 @@
 {
   "exclude": ["dist"],
   "compileOnSave": false,
+  "include": [
+    "src", "index.d.ts"
+  ],
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
@@ -21,7 +24,8 @@
     "lib": [
       "es2018",
       "dom"
-    ]    
+    ], 
+       
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
@@ -31,4 +35,6 @@
     "enableIvy": true,
     
   }
+  
 }
+

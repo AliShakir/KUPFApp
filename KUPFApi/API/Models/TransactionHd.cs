@@ -118,6 +118,8 @@ namespace API.Models
         public DateTime? DeliveryDate2 { get; set; }
         public string? ReceivedBy2 { get; set; }
         public string? DeliveredBy2 { get; set; }
+        public DateTime? ReceivedDate1 { get; set; }
+        public DateTime? ReceivedDate2 { get; set; }
 
     }
 }

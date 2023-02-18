@@ -269,5 +269,12 @@ namespace API.Controllers
             var result = await _financialService.GetCashierApprovals(periodCode, tenentId, locationId);
             return result;
         }
+        [HttpPost]
+        [Route("SaveDraftAndDeliveryInformation")]
+        public async Task<int> SaveDraftAndDeliveryInformation(CashierApprovalDto cashierApprovalDto)
+        {
+            var result = await _financialService.SaveDraftAndDeliveryInformation(cashierApprovalDto);
+            return result;
+        }
     }
 }
