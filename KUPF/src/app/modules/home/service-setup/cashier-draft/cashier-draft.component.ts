@@ -21,9 +21,10 @@ export class CashierDraftComponent implements OnInit {
   transId: number;
   employeeId: number
   //
-  selectBankAccount$: Observable<SelectBankAccount[]>;
-  //
   isFormSubmitted=false;
+  //
+  selectBankAccount$: Observable<SelectBankAccount[]>;
+  
   constructor(private fb: FormBuilder,
     private dbCommonService: DbCommonService,
     private activatedRoute: ActivatedRoute,
