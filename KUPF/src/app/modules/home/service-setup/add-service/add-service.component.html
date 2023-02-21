@@ -9,7 +9,8 @@
                     (click)="saveFinancialService()">Save</button>
 
                 <button type="button" class="btn btn-primary float-left ArFontStyle caledon" lang="AR-SA"
-                (click)="cancelClicked()" >{{bodyLabel[1].title}}</button>
+                    routerLink="/service-setup/service-details" >{{bodyLabel[1].title}}</button>
+                
                 <button type="button" class="btn btn-primary float-left ArFontStyle tea-green" lang="AR-SA"
                     routerLink="/service-setup/service-details" >{{bodyLabel[2].title}}</button>
             </div>
@@ -21,54 +22,44 @@
 <!-- <app-search-tab [parentFormGroup]="parentForm" [pageName]="'AddService'">
 
 </app-search-tab> -->
-<ngb-accordion #acc="ngbAccordion" class="mb-2" activeIds="ngb-panel-0">
-    <ngb-panel>
+<ngb-accordion #acc="ngbAccordion" class="mb-2" activeIds="ngb-panel-1">
+    <ngb-panel id="ngb-panel-1">
         <ng-template ngbPanelTitle>
             <h3 class="m-0 ArFontStyle" lang="AR-SA" id="DocumentAttachments">Search Employee</h3>
         </ng-template>
         <ng-template ngbPanelContent>
             <div id="kt_account_email_preferences" class="collapse show"
-            *ngFor="let bodyLabel of formBodyLabels; let i = index">
-            <form class="form">
-                <div class="card-body px-9 py-9">
-                    <div class="row mb-4">
-                        <div class="col-lg-6 fv-row"></div>
-                        <div class="col-lg-4">
-                            <input type="text" class="form-control" />
-                        </div>
-                        <div class="col-lg-2">
-                            <button type="button" class="btn btn-sm btn-success mt-1" lang="AR-SA" (click)="open(sponsorModal)"
-                            [ngClass]="{'search_sunglow': pageName === 'AddSubscription', 'search_color_service' :pageName === 'AddService' }" [style]='arabicFont' >{{bodyLabel[0].title}}</button>
-                        </div>
-                        
-                    </div>
-                    <div class="notice d-flex search_green_apple rounded border-primary border border-dashed p-6">
-                        <div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
+                        *ngFor="let bodyLabel of formBodyLabels; let i = index"> 
+                    <div class="flex-grow-1 rounded border-primary border border-dashed p-6">                       
                             <form [formGroup]="searchForm">
                                 <div class="row mb-4">
-                                    <div class="col-lg-3 fv-row">
+                                    <div class="col-lg-2 fv-row">
                                         <label class="form-label _title" for="form3Example1 " lang="AR-SA"
                                             [style]='arabicFont'>PF Id</label>
                                         <input type="text" class="form-control" formControlName="pfId" name="pfId" />
                                     </div>
-                                    <div class="col-lg-3 fv-row">
+                                    <div class="col-lg-2 fv-row">
                                         <label class="form-label _title" for="form3Example2 " lang="AR-SA"
                                             [style]='arabicFont'>CID</label>
                                         <input type="text" class="form-control" formControlName="cId" name="cId" />
                                     </div>
-                                    <div class="col-lg-3 fv-row">
+                                    <div class="col-lg-2 fv-row">
                                         <label class="form-label _title" for="form3Example2 " lang="AR-SA"
                                             [style]='arabicFont'>Employee Id</label>
                                         <input type="text" class="form-control" formControlName="employeeId"
                                             name="employeeId" />
                                     </div>
-                                    <div class="col-lg-3 fv-row">
+                                    <div class="col-lg-2 fv-row">
                                         <button type="button" class="btn btn-primary mt-8 fringy_flower" lang="AR-SA"
-                                            [style]='arabicFont' (click)="SearchEmployee()">Search</button>
+                                            [style]='arabicFont' (click)="SearchEmployee()">Search Employee</button>                                            
+                                    </div>
+                                    <div class="col-lg-2 fv-row">
+                                        <button type="button" class="btn btn-success mt-8 fringy_flower" lang="AR-SA"
+                                        [style]='arabicFont' (click)="SearchSponsor()">Search Sponsor</button>
                                     </div>
                                 </div>
                             </form>
-                        </div>
+                      
                     </div>
                     <div class="separator separator-dashed my-6"></div>
                     <form [formGroup]="employeeForm">
@@ -223,8 +214,7 @@
                             </div>
                         </div> 
                     </form>
-                </div>
-            </form>
+                          
         </div>
         </ng-template>
     </ngb-panel>
@@ -275,7 +265,7 @@
                                     lang="AR-SA">{{bodyLabel[4].title}}</label>
                                 <ng-select [items]="selectServiceSubType" bindLabel="shortname"
                                     formControlName="serviceSubType" bindValue="refId" lang="AR-SA"
-                                    (change)="onServiceSubTypeChange($event)" [(ngModel)]="serviceSubTypeSelected">
+                                    (change)="onServiceSubTypeChange($event)" >
                                 </ng-select>
                                 <span class="text-danger"
                                     *ngIf="isFormSubmitted && addServiceFrm.serviceSubType.errors?.required">
@@ -525,7 +515,7 @@
                 </form>
               </ng-template>
             </ngb-panel>
-          </ngb-accordion>
+        </ngb-accordion>
     </div>
     <!--Document Information-->
     <app-document-attachment [parentFormGroup]="parentForm" [documentAccordialDetails]="'ServiceFinanceAccordian'"></app-document-attachment>
@@ -558,6 +548,7 @@
         <button mat-raised-button color="accent" (click)="modal.close('yes')">Okay</button> 
     </div>
 </ng-template>
+
 <!--Cashier Information PopupModal Modal-->
 <ng-template #cashierInformationModal let-modal>
     <div class="modal-header">

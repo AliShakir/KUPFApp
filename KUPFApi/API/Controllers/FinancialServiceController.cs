@@ -188,9 +188,9 @@ namespace API.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("GetServiceType")]
-        public async Task<IEnumerable<SelectServiceTypeDto>> GetServiceType(int transId)
+        public async Task<IEnumerable<SelectServiceTypeDto>> GetServiceType(int tenentId)
         {
-            var result = await _financialService.GetServiceType(transId);
+            var result = await _financialService.GetServiceType(tenentId);
             return result;
         }
         /// <summary>
@@ -269,6 +269,11 @@ namespace API.Controllers
             var result = await _financialService.GetCashierApprovals(periodCode, tenentId, locationId);
             return result;
         }
+        /// <summary>
+        /// SaveDraftAndDeliveryInformation
+        /// </summary>
+        /// <param name="cashierApprovalDto"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("SaveDraftAndDeliveryInformation")]
         public async Task<int> SaveDraftAndDeliveryInformation(CashierApprovalDto cashierApprovalDto)
@@ -276,11 +281,27 @@ namespace API.Controllers
             var result = await _financialService.SaveDraftAndDeliveryInformation(cashierApprovalDto);
             return result;
         }
+        /// <summary>
+        /// Generate Financial Service Serial No (Max + 1)
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GenerateFinancialServiceSerialNo")]
         public int GenerateFinancialServiceSerialNo()
         {
             var result = _financialService.GenerateFinancialServiceSerialNo();
+            return result;
+        }
+        /// <summary>
+        /// Search Sponsor
+        /// </summary>
+        /// <param name="searchEmployeeDto"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("SearchSponsor")]
+        public async Task<ReturnSearchResultDto> SearchSponsor(SearchEmployeeDto searchEmployeeDto)
+        {
+            var result = await _financialService.SearchSponsor(searchEmployeeDto);
             return result;
         }
     }

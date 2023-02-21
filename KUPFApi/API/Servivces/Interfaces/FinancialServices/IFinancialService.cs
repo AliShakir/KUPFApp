@@ -46,6 +46,8 @@ namespace API.Servivces.Interfaces.FinancialServices
         Task<int> SaveDraftAndDeliveryInformation(CashierApprovalDto cashierApprovalDto);
         int GenerateFinancialServiceSerialNo();
 
+        Task<ReturnSearchResultDto> SearchSponsor(SearchEmployeeDto searchEmployeeDto);
+
 
     }
 }

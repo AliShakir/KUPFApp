@@ -13,6 +13,8 @@ namespace API.Models
         public int SerApprovalId { get; set; }
         public string SerApproval { get; set; }
         public int? EmployeeId { get; set; }
+        public int? ServiceType { get; set; }
+        public int? ServiceSubType { get; set; }
         public int? ServiceId { get; set; }
         public int? MasterServiceId { get; set; }
         public DateTime? ApprovalDate { get; set; }

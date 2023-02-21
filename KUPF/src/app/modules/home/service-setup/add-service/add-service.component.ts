@@ -265,7 +265,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           //   attachmentByName4: response.transactionHDDMSDto[4].attachmentByName,
           // }
         })
-        console.log(this.allowedDiscountType);
+        
         if(this.allowedDiscountType === 1){
           //
           this.addServiceForm.get('downPayment')?.disable();
@@ -276,7 +276,6 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           this.addServiceForm.get('untilMonth')?.disable();
           this.addServiceForm.get('transDate')?.disable();
           this.addServiceForm.get('serviceType')?.disable();
-          this.addServiceForm.get('serviceSubType')?.disable();
           this.addServiceForm.get('serviceSubType')?.disable();
         }
       })
@@ -523,8 +522,24 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       this.parentForm.reset();
     })
   }
-  cancelClicked() {
-    console.log(this.financialCalculationForm.value);
+  cancelClick() {
+    // Clear search form 
+    this.searchForm.reset();
+    // Clear search form 
+    this.parentForm.reset();
+    this.financialCalculationForm.reset();
+     // Getting SerialNo...
+     this.financialService.GenerateFinancialServiceSerialNo().subscribe((response:any)=>{
+      //
+      this.addServiceForm.patchValue({
+        searialNo:response
+      }) 
+    });
+    // Setting current date to trans date...    
+    this.addServiceForm.get('transDate')?.setValue(moment(new Date()).format("yyyy-MM-DD"));
+    // Clear serviceTypeSelected
+    this.selectServiceType=[];
+    this.selectServiceSubType=[];
   }
   calculateUntilMonth(selectedDate: Date) {
     if (selectedDate !== undefined) {
@@ -557,13 +572,13 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       this.toastrService.error('Please enter installments', 'Error');
     } else {
       // If 1 Percentage...
-      if (this.addServiceForm.get('discountType')?.value === '1') {
+      if (this.addServiceForm.get('discountType')?.value === 1) {
         percentageAmount = ((amount * allowDiscountAmount) / 100);
         calculatedAmount = ((amount - percentageAmount) - downPayment);
         netAmount = (calculatedAmount / noOfinstallments);
       }
       // If 2 Fixed Amount...
-      else if (this.addServiceForm.get('discountType')?.value === '2') {
+      else if (this.addServiceForm.get('discountType')?.value === 2) {
         calculatedAmount = ((amount - allowDiscountAmount) - downPayment);
         netAmount = (calculatedAmount / noOfinstallments);
       }
@@ -662,7 +677,9 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           otherAct5: response.otherAct5
         },
       });
-      
+      if (this.addServiceForm.get('discountType')?.value === 2) {        
+        this.addServiceForm.get('allowDiscountAmount')?.disable();
+      }
       if (this.selectedServiceType == 2 && $event.refId == 3) {
         this.parentForm.patchValue({
           addServiceForm: {
@@ -777,6 +794,90 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           employeePFId: response.pfid,
           employeeCID: response.empCidNum,
           employeeFormEmployeeId: response.employeeId,
+        })
+        this.addServiceForm.patchValue({
+          pfId:response.pfid
+        })
+        this.common.PFId = response.pfid;
+        this.common.subscribedDate = response.subscribedDate;
+        this.common.terminationDate = response.terminationDate;
+        // fill service type dropdown according to searched employee Id
+        this.notSubscriber = false;
+        this.financialService.GetServiceType(21).subscribe((response: any) => {
+          this.pfId = this.common.PFId;
+          this.selectServiceType = response;
+          if (this.common.PFId != null
+            && this.common.subscribedDate == null
+            && this.common.terminationDate == null) {
+            // remove subscribe from servicetype & Subtype
+            //if (result.trim()) {
+            let index = this.selectServiceType.findIndex(x => x.refId == 1);
+            if (index >= 0) {
+              this.selectServiceType.splice(index, 1);
+            }
+            //}
+            this.notSubscriber = true;
+          } else if (this.common.PFId == null
+            && this.common.subscribedDate == null
+            && this.common.terminationDate == null) {
+            this.selectServiceType = response;
+            let arr = this.selectServiceType.filter(x => x.refId == 1)
+            this.selectServiceType = arr;
+            this.isSubscriber = true;
+          }
+        });
+      }
+    }, error => {
+      if (error.status === 500) {
+        this.toastrService.error('Please enter Employee Id or CID or PFId', 'Error');
+      }
+    });
+  }
+  SearchSponsor(){
+    //
+    var data = JSON.parse(localStorage.getItem("user")!);
+    const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
+    const locationId = data.map((obj: { locationId: any; }) => obj.locationId);
+
+    // To hide/show the financial calculation div
+    this.isPFIdNull = false;
+    this.financialService.SearchSponsor(this.searchForm.value).subscribe((response: any) => {
+      if (response === null) {
+        this.common.ifEmployeeExists = false;
+        this.toastrService.error('Sorry, record not found', 'Error');
+        this.employeeForm?.reset();
+      } else {
+        this.common.ifEmployeeExists = true;
+        this.employeeForm?.patchValue({
+          employeeId: response.employeeId,
+          englishName: response.englishName,
+          arabicName: response.arabicName,
+          empGender: response.empGender,
+          joinedDate: new Date(response.joinedDate),
+          empBirthday: new Date(response.empBirthday),
+          mobileNumber: response.mobileNumber,
+          empMaritalStatus: +response.empMaritalStatus,
+          nationName: response.nationName,
+          contractType: response.contractType,
+          subscriptionAmount: response.subscriptionAmount,
+          subscriptionPaid: response.subscriptionPaid,
+          lastSubscriptionPaid: response.lastSubscriptionPaid,
+          subscriptionDueAmount: response.subscriptionDueAmount,
+          subscriptionStatus: response.subscriptionStatus,
+          terminationDate: response.terminationDate,
+          endDate: response.endDate,
+          employeeStatus: response.employeeStatus,
+          isKUEmployee: response.isKUEmployee,
+          isOnSickLeave: response.isOnSickLeave,
+          isMemberOfFund: response.isMemberOfFund,
+          CountryNameEnglish: response.countryNameEnglish,
+          CountryNameArabic: response.countryNameArabic,
+          employeePFId: response.pfid,
+          employeeCID: response.empCidNum,
+          employeeFormEmployeeId: response.employeeId,
+        })
+        this.addServiceForm.patchValue({
+          pfId:response.pfid
         })
         this.common.PFId = response.pfid;
         this.common.subscribedDate = response.subscribedDate;

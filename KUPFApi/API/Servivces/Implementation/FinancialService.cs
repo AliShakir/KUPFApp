@@ -227,6 +227,8 @@ namespace API.Servivces.Implementation
                                         SerApprovalId = srId + 1,
                                         SerApproval = myService[i].ToString(),
                                         EmployeeId = newTransaction.EmployeeId,
+                                        ServiceType = newTransaction.ServiceTypeId,
+                                        ServiceSubType = newTransaction.ServiceSubTypeId,
                                         ServiceId = srId + 1,
                                         MasterServiceId = maxSwitch,
                                         ApprovalDate = null,
@@ -3390,7 +3392,7 @@ namespace API.Servivces.Implementation
 
         public async Task<IEnumerable<SelectServiceTypeDto>> GetSubServiceTypeByServiceType(int tenentId, int refId)
         {
-            var result = await _context.Reftables.Where(c => c.Refsubtype == "ServicesSubType" && c.Switch4 == refId && c.TenentId == tenentId).ToListAsync();
+            var result = await _context.Reftables.Where(c => c.Reftype == "KUPF" && c.Refsubtype == "ServicesSubType" && c.Switch4 == refId && c.TenentId == tenentId).ToListAsync();
             var data = _mapper.Map<IEnumerable<SelectServiceTypeDto>>(result);
             return data;
         }
@@ -3538,6 +3540,70 @@ namespace API.Servivces.Implementation
         {
             int maxSerialNo = (int)_context.TransactionHds.FromSqlRaw("select ISNULL(max(ServiceID),0)+1 as ServiceId from TransactionHD").Select(p => p.ServiceId).FirstOrDefault();
             return maxSerialNo;
+        }
+
+        public async Task<ReturnSearchResultDto> SearchSponsor(SearchEmployeeDto searchEmployeeDto)
+        {
+            if (searchEmployeeDto.EmployeeId == 0
+                && string.IsNullOrWhiteSpace(searchEmployeeDto.PFId)
+                && string.IsNullOrWhiteSpace(searchEmployeeDto.CID))
+            {
+                throw new Exception("Invalid Input");
+            }
+
+            var employee = new Models.DetailedEmployee();
+            List<TransactionDt> transactions = new List<TransactionDt>();
+
+            if (searchEmployeeDto.EmployeeId != 0)
+            {
+                employee = await _context.DetailedEmployees.Where(c => c.EmployeeId == searchEmployeeDto.EmployeeId && c.TerminationDate == null && c.SubscribedDate != null && c.Pfid != null).FirstOrDefaultAsync();
+                transactions = _context.TransactionDts.Where(p => p.TenentId == employee.TenentId && p.LocationId == employee.LocationId && p.EmployeeId == Convert.ToInt32(employee.EmployeeId)).ToList();
+            }
+            else if (searchEmployeeDto.PFId != string.Empty || !string.IsNullOrWhiteSpace(searchEmployeeDto.PFId))
+            {
+                employee = await _context.DetailedEmployees.Where(c => c.Pfid == searchEmployeeDto.PFId && c.TerminationDate == null && c.SubscribedDate != null && c.Pfid != null).FirstOrDefaultAsync();
+                transactions = _context.TransactionDts.Where(p => p.TenentId == employee.TenentId && p.LocationId == employee.LocationId && p.EmployeeId == Convert.ToInt32(employee.EmployeeId)).ToList();
+            }
+            else if (searchEmployeeDto.CID != string.Empty || !string.IsNullOrWhiteSpace(searchEmployeeDto.CID))
+            {
+                employee = await _context.DetailedEmployees.Where(c => c.EmpCidNum == searchEmployeeDto.CID && c.TerminationDate == null && c.SubscribedDate != null && c.Pfid != null).FirstOrDefaultAsync();
+                transactions = _context.TransactionDts.Where(p => p.TenentId == employee.TenentId && p.LocationId == employee.LocationId && p.EmployeeId == Convert.ToInt32(employee.EmployeeId)).ToList();
+            }
+            //
+            var country = await _context.TblCountries.Where(c => c.TenentId == employee.TenentId && c.Countryid == employee.NationCode).FirstOrDefaultAsync();
+            //
+            var contractType = await _context.Reftables.Where(c => c.TenentId == employee.TenentId && c.Refid == Convert.ToInt32(employee.ContractType) && c.Refsubtype == "ContractType").FirstOrDefaultAsync();
+
+            var data = new ReturnSearchResultDto()
+            {
+                TenentId = employee.TenentId,
+                LocationId = employee.LocationId,
+                EmployeeId = employee.EmployeeId.ToString(),
+                Pfid = employee.Pfid,
+                EmpCidNum = employee.EmpCidNum,
+                EnglishName = employee.EnglishName,
+                ArabicName = employee.ArabicName,
+                EmpGender = employee.EmpGender,
+                JoinedDate = employee.JoinedDate,
+                MobileNumber = employee.MobileNumber,
+                EmpMaritalStatus = employee.EmpMaritalStatus,
+                ContractType = contractType.Refname3,
+                Next2KinName = employee.Next2KinName,
+                Next2KinMobNumber = employee.Next2KinMobNumber,
+                EndDate = employee.EndDate,
+                EmployeeStatus = employee.EmpStatus.ToString(),
+                SubscriptionAmount = transactions.Sum(c => (decimal)c.InstallmentAmount),
+                SubscriptionPaid = transactions.Sum(c => (decimal)c.ReceivedAmount),
+                LastSubscriptionPaid = transactions.Sum(c => (decimal)c.PendingAmount),
+                SubscriptionDueAmount = transactions.Sum(c => (decimal)c.PendingAmount),
+                IsKUEmployee = employee.IsKUEmployee,
+                IsMemberOfFund = employee.IsMemberOfFund,
+                IsOnSickLeave = employee.IsOnSickLeave,
+                CountryId = country.Countryid,
+                CountryNameArabic = country.Couname2,
+                CountryNameEnglish = country.Couname1
+            };
+            return data;
         }
     }
 }

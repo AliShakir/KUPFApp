@@ -48,7 +48,7 @@ export class ServiceDetailsComponent implements OnInit {
 
   //#region
   // To display table column headers
-  columnsToDisplay: string[] = ['action', 'employeeName', 'services', 'installments', 'amount','dated','paid','payDate','discounted'];
+  columnsToDisplay: string[] = ['action','transId', 'employeeName', 'services', 'installments', 'amount','dated','paid','payDate'];
 
   // Getting data as abservable.
   returnTransactionHdDto$: Observable<ReturnTransactionHdDto[]>;

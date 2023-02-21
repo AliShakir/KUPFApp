@@ -200,6 +200,9 @@ export class FinancialService {
   SearchEmployee(searchEmployeeDto: SearchEmployeeDto) {
     return this.httpClient.post<ReturnSearchResultDto[]>(this.baseUrl + `FinancialService/SearchEmployee`,searchEmployeeDto);
   }
+  SearchSponsor(searchEmployeeDto: SearchEmployeeDto) {
+    return this.httpClient.post<ReturnSearchResultDto[]>(this.baseUrl + `FinancialService/SearchSponsor`,searchEmployeeDto);
+  }
   GetCashierApprovals(periodCode:number,tenentId:number,locationId:number) { 
     return this.httpClient.get<CashierApprovalDto[]>(this.baseUrl + `FinancialService/GetCashierApprovals?periodCode=${periodCode}&tenentId=${tenentId}&locationId=${locationId}`);    
   }
