@@ -10,9 +10,9 @@ namespace API.Servivces.Interfaces.DetailedEmployee
 {
     public interface IDetailedEmployeeService
     {
-        Task<string> AddEmployeeAsync(DetailedEmployeeDto detailedEmployeeDto);
-        Task<string> UpdateEmployeeAsync(DetailedEmployeeDto user);
-        Task<DetailedEmployeeDto> GetEmployeeByIdAsync(string id);
+        Task<int> AddEmployeeAsync(DetailedEmployeeDto detailedEmployeeDto);
+        Task<int> UpdateEmployeeAsync(DetailedEmployeeDto user);
+        Task<DetailedEmployeeDto> GetEmployeeByIdAsync(int id);
         Task<PagedList<DetailedEmployeeDto>> GetEmployeesAsync(PaginationParams paginationParams);
         Task<int> DeleteEmployeeAsync(DetailedEmployeeDto detailedEmployeeDto);
          

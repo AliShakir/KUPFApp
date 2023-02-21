@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Route, Router } from '@angular/router';
-import { isError } from 'lodash';
-import * as moment from 'moment';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { SelectBankAccount } from 'src/app/modules/models/SelectBankAccount';
@@ -10,14 +8,14 @@ import { DbCommonService } from 'src/app/modules/_services/db-common.service';
 import { FinancialService } from 'src/app/modules/_services/financial.service';
 
 @Component({
-  selector: 'app-cashier-draft',
-  templateUrl: './cashier-draft.component.html',
-  styleUrls: ['./cashier-draft.component.scss']
+  selector: 'app-financial-draft',
+  templateUrl: './financial-draft.component.html',
+  styleUrls: ['./financial-draft.component.scss']
 })
-export class CashierDraftComponent implements OnInit {
+export class FinancialDraftComponent implements OnInit {
 
   //
-  cashierDraftForm: FormGroup;
+  financialDraftForm: FormGroup;
   transId: number;
   employeeId: number
   //
@@ -44,12 +42,12 @@ export class CashierDraftComponent implements OnInit {
     const locationId = data.map((obj: { locationId: any; }) => obj.locationId);
     const username = data.map((obj: { username: any; }) => obj.username);
     //
-    this.initializeCashierDeliveryForm();
+    this.initializeFinancialDraftForm();
     //
     this.selectBankAccount$ = this.dbCommonService.GetBankAccounts(tenantId, locationId);
     //
     this.dbCommonService.GetDraftInformationByEmployeeId(this.employeeId, tenantId, locationId, this.transId).subscribe((response: any) => {
-      this.cashierDraftForm.patchValue({
+      this.financialDraftForm.patchValue({
         totalAmount: response.totalAmount.toFixed(3),
         bankAccount1: +response.bankAccount1,
         draftNumber1: response.draftNumber1,
@@ -72,8 +70,8 @@ export class CashierDraftComponent implements OnInit {
 
   onSaveClick(){
     this.isFormSubmitted = true;
-    if(this.cashierDraftForm.valid){
-      this.financialService.SaveDraftAndDeliveryInformation(this.cashierDraftForm.value).subscribe((response:any)=>{
+    if(this.financialDraftForm.valid){
+      this.financialService.SaveDraftAndDeliveryInformation(this.financialDraftForm.value).subscribe((response:any)=>{
         if(response === 1){
           this.toastrService.success('Saved successfully','Success');
         }else{
@@ -84,8 +82,8 @@ export class CashierDraftComponent implements OnInit {
       })
     }    
   }
-  initializeCashierDeliveryForm() {
-    this.cashierDraftForm = this.fb.group({
+  initializeFinancialDraftForm() {
+    this.financialDraftForm = this.fb.group({
       totalAmount: new FormControl('0'),
       bankAccount1: new FormControl('',Validators.required),
       draftNumber1: new FormControl('0'),
@@ -103,10 +101,11 @@ export class CashierDraftComponent implements OnInit {
     })
   }
   onBankAccountSelect($event:any){    
-    this.cashierDraftForm.patchValue({
+    this.financialDraftForm.patchValue({
       bankDetails:$event.accountNumber
     })
   }
   // To access form controls...
-  get cashierDraftFrm() { return this.cashierDraftForm.controls; }
+  get financialDraftFrm() { return this.financialDraftForm.controls; }
+
 }

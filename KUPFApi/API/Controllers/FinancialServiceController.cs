@@ -166,7 +166,7 @@ namespace API.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("GetServiceApprovalsByEmployeeId")]
-        public async Task<IEnumerable<ReturnServiceApprovals>> GetServiceApprovalsByEmployeeId(string employeeId)
+        public async Task<IEnumerable<ReturnServiceApprovals>> GetServiceApprovalsByEmployeeId(int employeeId)
         {
             var result = await _financialService.GetServiceApprovalsByEmployeeId(employeeId);
             return result;
@@ -274,6 +274,13 @@ namespace API.Controllers
         public async Task<int> SaveDraftAndDeliveryInformation(CashierApprovalDto cashierApprovalDto)
         {
             var result = await _financialService.SaveDraftAndDeliveryInformation(cashierApprovalDto);
+            return result;
+        }
+        [HttpGet]
+        [Route("GenerateFinancialServiceSerialNo")]
+        public int GenerateFinancialServiceSerialNo()
+        {
+            var result = _financialService.GenerateFinancialServiceSerialNo();
             return result;
         }
     }

@@ -61,6 +61,9 @@ namespace API.DTOs
         public string UntilMonth { get; set; }
         public List<TransactionHDDMSDto> TransactionHDDMSDto { get; set; }
         public decimal? DownPayment { get; set; }
+        public int? ServiceTypeId { get; set; }
+        public int? ServiceSubTypeId { get; set; }
+        public int? DiscountType { get; set; }
 
     }
 }

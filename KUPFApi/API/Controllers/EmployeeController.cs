@@ -35,7 +35,7 @@ namespace API.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("AddEmployee")]
-        public async Task<ActionResult<string>> AddEmployee(DetailedEmployeeDto detailedEmployeeDto)
+        public async Task<ActionResult<int>> AddEmployee(DetailedEmployeeDto detailedEmployeeDto)
         {
             var response = await _detailedEmployeeService.AddEmployeeAsync(detailedEmployeeDto);
             await _context.SaveChangesAsync();
@@ -47,7 +47,7 @@ namespace API.Controllers
         /// <returns></returns>
         [HttpPut]
         [Route("UpdateEmployee")]
-        public async Task<ActionResult<string>> UpdateEmployee(DetailedEmployeeDto detailedEmployeeDto)
+        public async Task<ActionResult<int>> UpdateEmployee(DetailedEmployeeDto detailedEmployeeDto)
         {
             if (detailedEmployeeDto != null)
             {
@@ -62,7 +62,7 @@ namespace API.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("GetEmployeeById")]
-        public async Task<DetailedEmployeeDto> GetEmployeeById(string employeeId)
+        public async Task<DetailedEmployeeDto> GetEmployeeById(int employeeId)
         {
             if (employeeId != null)
             {

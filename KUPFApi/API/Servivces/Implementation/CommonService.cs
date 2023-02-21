@@ -237,15 +237,15 @@ namespace API.Servivces.Implementation
 
         public async Task<DetailedEmployeeDto> SearchEmployee(SearchEmployeeDto searchEmployeeDto)
         {
-            if ((string.IsNullOrWhiteSpace(searchEmployeeDto.EmployeeId)
+            if (searchEmployeeDto.EmployeeId == 0
                 && string.IsNullOrWhiteSpace(searchEmployeeDto.PFId)
-                && string.IsNullOrWhiteSpace(searchEmployeeDto.CID)))
+                && string.IsNullOrWhiteSpace(searchEmployeeDto.CID))
             {
                 throw new Exception("Invalid Input");
             }
 
             var result = new Models.DetailedEmployee();
-            if (searchEmployeeDto.EmployeeId != string.Empty || !string.IsNullOrWhiteSpace(searchEmployeeDto.EmployeeId))
+            if (searchEmployeeDto.EmployeeId == 0)
             {
                 result = await _context.DetailedEmployees.Where(c => c.EmployeeId == searchEmployeeDto.EmployeeId).FirstOrDefaultAsync();
             }
@@ -473,7 +473,7 @@ namespace API.Servivces.Implementation
                                    select hd.SponserProvidentID).Count();
 
 
-                DateTime dd = (DateTime)_context.DetailedEmployees.Where(c => c.EmployeeId == employeeId.ToString()).FirstOrDefault().SubscribedDate;
+                DateTime dd = (DateTime)_context.DetailedEmployees.Where(c => c.EmployeeId == employeeId).FirstOrDefault().SubscribedDate;
 
                 double totalDays = (transactionDate - dd).TotalDays;
 

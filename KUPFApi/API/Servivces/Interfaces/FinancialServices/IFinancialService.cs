@@ -24,7 +24,7 @@ namespace API.Servivces.Interfaces.FinancialServices
 
         Task<IEnumerable<RefTableDto>> GetRejectionType();
         Task<string> RejectServiceAsync(ApproveRejectServiceDto approveRejectServiceDto);
-        Task<IEnumerable<ReturnServiceApprovals>> GetServiceApprovalsByEmployeeId(string employeeId);
+        Task<IEnumerable<ReturnServiceApprovals>> GetServiceApprovalsByEmployeeId(int employeeId);
         Task<IEnumerable<ReturnServiceApprovalDetails>> GetServiceApprovalDetailByTransId(int transId);
         Task<IEnumerable<SelectServiceTypeDto>> GetServiceType(int tenentId);
 
@@ -44,5 +44,8 @@ namespace API.Servivces.Interfaces.FinancialServices
         Task<IEnumerable<CashierApprovalDto>> GetCashierApprovals(long periodCode, int tenentId, int locationId);
 
         Task<int> SaveDraftAndDeliveryInformation(CashierApprovalDto cashierApprovalDto);
+        int GenerateFinancialServiceSerialNo();
+
+
     }
 }

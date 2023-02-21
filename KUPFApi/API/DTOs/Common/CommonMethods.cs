@@ -5,10 +5,10 @@ namespace API.Common
     public static class CommonMethods
     {
         
-        public static Int64 CreateEmployeeId()
+        public static Int32 CreateEmployeeId()
         {
             Random rnd = new Random();
-		    Int64 employeeId  = rnd.Next(1, 1000000); 
+            Int32 employeeId  = rnd.Next(1, 100000); 
             return employeeId;
         }
         public static Int32 CreateUserId()

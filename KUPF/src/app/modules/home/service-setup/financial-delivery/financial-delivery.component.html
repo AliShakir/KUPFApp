@@ -1,11 +1,11 @@
 <ngb-accordion #ngbOfferDetails="ngbAccordion" activeIds="ngb-panel-1" opened="true">
     <ngb-panel id="ngb-panel-1">
         <ng-template ngbPanelTitle>
-            <h3 class="m-0 ArFontStyle" lang="AR-SA">Cashier Deleviry Preparation Screen - شاشة إعداد مسودة أمين الصندوق
+            <h3 class="m-0 ArFontStyle" lang="AR-SA">Financial Draft Preparation Screen
             </h3>
         </ng-template>
-        <ng-template ngbPanelContent><!--cashierDeliveryForm-->
-            <form [formGroup]="cashierDeliveryForm">
+        <ng-template ngbPanelContent>
+            <form [formGroup]="financialDeliveryForm">
                 <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed p-6 mb-3">
                     <div class=" flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
                         <div class="row">
@@ -64,7 +64,7 @@
                             (change)="onBankAccountSelect($event)">
                         </ng-select>
                         <span class="text-danger"
-                            *ngIf="isFormSubmitted && cashierDeliveryFrm.bankAccount1.errors?.required">
+                            *ngIf="isFormSubmitted && financialDeliveryFrm.bankAccount1.errors?.required">
                             Bank is required
                         </span>
                     </div>
@@ -103,7 +103,7 @@
                                 lang="AR-SA" />
                         </div>
                         <span class="text-danger"
-                            *ngIf="isFormSubmitted && cashierDeliveryFrm.bankAccount1.errors?.required">
+                            *ngIf="isFormSubmitted && financialDeliveryFrm.bankAccount1.errors?.required">
                             Service Sub Type is required
                         </span>
                     </div>

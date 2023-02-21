@@ -206,4 +206,7 @@ export class FinancialService {
   SaveDraftAndDeliveryInformation(response: CashierApprovalDto) {    
     return this.httpClient.post(this.baseUrl +`FinancialService/SaveDraftAndDeliveryInformation`,response);
   }
+  GenerateFinancialServiceSerialNo() { 
+    return this.httpClient.get<any>(this.baseUrl + `FinancialService/GenerateFinancialServiceSerialNo`);    
+  }
 }

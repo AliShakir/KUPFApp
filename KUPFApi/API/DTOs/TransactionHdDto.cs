@@ -152,6 +152,7 @@ namespace API.DTOs
         public string? DeliveredBy2 { get; set; }
         public DateTime? ReceivedDate1 { get; set; }
         public DateTime? ReceivedDate2 { get; set; }
+        public int? DiscountType { get; set; }
     }
    
 }

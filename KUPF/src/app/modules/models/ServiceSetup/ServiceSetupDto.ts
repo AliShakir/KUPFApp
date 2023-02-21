@@ -55,7 +55,7 @@ export interface ServiceSetupDto {
     syncby: string;
     synId: number;
     allowDiscountPer?: boolean;
-    discountType:string;
+    discountType:number;
     allowDiscountAmount?: number;
     allowDiscountDefault?: boolean;
     englishHTML?: string;
@@ -64,4 +64,5 @@ export interface ServiceSetupDto {
     electronicForm1URL?: string;
     electronicForm2?: string;
     electronicForm2URL?: string;
+    contractType?:string
 }

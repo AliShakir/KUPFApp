@@ -16,6 +16,8 @@ import { CashierApprovalComponent } from './cashier-approval/cashier-approval.co
 import { FinancialApprovalComponent } from './financial-approval/financial-approval.component';
 import { CashierDeliveryComponent } from './cashier-delivery/cashier-delivery.component';
 import { CashierDraftComponent } from './cashier-draft/cashier-draft.component';
+import { FinancialDeliveryComponent } from './financial-delivery/financial-delivery.component';
+import { FinancialDraftComponent } from './financial-draft/financial-draft.component';
 
 const routes: Routes = [
   { path: 'service-setup-details', component: ServiceSetupDetailsComponent },
@@ -32,7 +34,9 @@ const routes: Routes = [
   { path: 'cashier-approval', component: CashierApprovalComponent }, 
   { path: 'financial-approval', component: FinancialApprovalComponent },
   { path: 'cashier-delivery', component: CashierDeliveryComponent },
-  { path: 'cashier-draft', component: CashierDraftComponent }
+  { path: 'cashier-draft', component: CashierDraftComponent },
+  { path: 'financial-delivery', component: FinancialDeliveryComponent },
+  { path: 'financial-draft', component: FinancialDraftComponent }
 ];
 
 @NgModule({

@@ -68,4 +68,5 @@ export interface TransactionHdDto{
     installmentsBegDate: Date;
     untilMonth: string;
     documentAttachmentForm: any[];
+    discountType:number;
 }

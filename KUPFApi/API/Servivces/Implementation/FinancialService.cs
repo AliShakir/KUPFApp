@@ -63,7 +63,7 @@ namespace API.Servivces.Implementation
                 {
                     return new FinancialServiceResponse
                     {
-                        IsSuccess =false,
+                        IsSuccess = false,
                         Message = "Employee is Member of a KUPF Fund Committe"
                     };
                 }
@@ -71,13 +71,13 @@ namespace API.Servivces.Implementation
                 {
                     return new FinancialServiceResponse
                     {
-                       IsSuccess = false,
-                       Message = "Employee Was Terminated Earlier"
+                        IsSuccess = false,
+                        Message = "Employee Was Terminated Earlier"
                     };
                 }
                 else
                 {
-                     
+
                     int myId = 1;
                     var attachId = _context.TransactionHddms.FromSqlRaw("select isnull(Max(AttachID+1),1) as attachId from  [TransactionHDDMS ] where TenentID='" + transactionHdDto.TenentId + "'").Select(p => p.AttachId).FirstOrDefault();
                     var serialNo = _context.TransactionHddms.FromSqlRaw("select isnull(Max(Serialno+1),1) as serialNo from  [TransactionHDDMS ] where tenentId='" + transactionHdDto.TenentId + "' and attachid=1").Select(c => c.Serialno).FirstOrDefault();
@@ -99,7 +99,7 @@ namespace API.Servivces.Implementation
                         MetaTags = transactionHdDto.MetaTags
                     };
 
-                    
+
                     //var path = "E:\\";
                     ////var path = @"/HostingSpaces/kupf1/kupfapi.erp53.com/New/ServiceAttachments/";
 
@@ -213,7 +213,11 @@ namespace API.Servivces.Implementation
                             int srId = 0;
                             for (int i = 0; i < myService.Count; i++) // myservice is one active  = true else false.
                             {
-                                if (myService[i] != "" && myService[i] != "0") // 
+                                if (myService[i] == null)
+                                {
+                                    break;
+                                }
+                                else //if (myService[i] != null && myService[i] != "0") // 
                                 {
                                     var transactionHddApprovalsDto = new TransactionHddapprovalDetailDto()
                                     {
@@ -238,7 +242,7 @@ namespace API.Servivces.Implementation
                                         Updttime = DateTime.Now,
                                         ApprovalRemarks = "BySystem",
                                         mySeq = srId + 1,
-                                        DisplayPERIOD_CODE = transactionHdDto.DisplayPERIOD_CODE                                        
+                                        DisplayPERIOD_CODE = transactionHdDto.DisplayPERIOD_CODE
                                     };
                                     //
                                     var transactionHddApprovals = _mapper.Map<TransactionHddapprovalDetail>(transactionHddApprovalsDto);
@@ -251,7 +255,7 @@ namespace API.Servivces.Implementation
                             }
                         }
                     }
-                    
+
                     #endregion
 
                     if (transactionHdDto.ServiceTypeId == 1) // Membership Subscriber ...
@@ -315,13 +319,13 @@ namespace API.Servivces.Implementation
                             myId++;
                         }
                         #endregion
-                    }                    
+                    }
                     else if (transactionHdDto.ServiceTypeId == 5) // End of Service
                     {
                         #region EndOfService-Retirement
 
                         // check if membership rejeced / terminated..
-                        var employeeMembership = _context.DetailedEmployees.FirstOrDefault(c => c.EmployeeId == transactionHdDto.EmployeeId.ToString());
+                        var employeeMembership = _context.DetailedEmployees.FirstOrDefault(c => c.EmployeeId == transactionHdDto.EmployeeId);
                         if (employeeMembership.EmpStatus == 1 ||
                             employeeMembership.EmpStatus == 9 ||
                             employeeMembership.EmpStatus == 10)
@@ -344,7 +348,7 @@ namespace API.Servivces.Implementation
                         {
                             return new FinancialServiceResponse
                             {
-                                IsSuccess =false,
+                                IsSuccess = false,
                                 Message = "TerminationDate is null...  "
                             };
                         }
@@ -352,7 +356,7 @@ namespace API.Servivces.Implementation
                         {
                             return new FinancialServiceResponse
                             {
-                                IsSuccess =false,
+                                IsSuccess = false,
                                 Message = "Termination is null... "
                             };
                         }
@@ -360,8 +364,8 @@ namespace API.Servivces.Implementation
                         {
                             return new FinancialServiceResponse
                             {
-                               IsSuccess = false,
-                               Message = "End date is null...  "
+                                IsSuccess = false,
+                                Message = "End date is null...  "
                             };
                         }
                         else if (employeeMembership.SubscribedDate == null || employeeMembership.ReSubscripedDate == null)
@@ -603,7 +607,7 @@ namespace API.Servivces.Implementation
                         #region Financial
 
                         // check if membership rejeced / terminated..
-                        var employeeMembership = _context.DetailedEmployees.FirstOrDefault(c => c.EmployeeId == transactionHdDto.EmployeeId.ToString());
+                        var employeeMembership = _context.DetailedEmployees.FirstOrDefault(c => c.EmployeeId == transactionHdDto.EmployeeId);
                         if (employeeMembership.EmpStatus == 1 ||
                             employeeMembership.EmpStatus == 9 ||
                             employeeMembership.EmpStatus == 10)
@@ -618,16 +622,16 @@ namespace API.Servivces.Implementation
                         {
                             return new FinancialServiceResponse
                             {
-                               IsSuccess = false,
-                               Message = "TerminationId is null... "
+                                IsSuccess = false,
+                                Message = "TerminationId is null... "
                             };
                         }
                         else if (employeeMembership.TerminationDate == null)
                         {
                             return new FinancialServiceResponse
                             {
-                               IsSuccess = false,
-                               Message = "TerminationDate is null..."
+                                IsSuccess = false,
+                                Message = "TerminationDate is null..."
                             };
                         }
                         else if (employeeMembership.Termination == null)
@@ -658,8 +662,8 @@ namespace API.Servivces.Implementation
                         {
                             return new FinancialServiceResponse
                             {
-                               IsSuccess = false,
-                               Message = "JoinedDate is null... "
+                                IsSuccess = false,
+                                Message = "JoinedDate is null... "
                             };
                         }
                         else
@@ -794,7 +798,7 @@ namespace API.Servivces.Implementation
                     {
                         #region Financial Loan
                         // check if membership rejeced / terminated..
-                        var employeeMembership = _context.DetailedEmployees.FirstOrDefault(c => c.EmployeeId == transactionHdDto.EmployeeId.ToString());
+                        var employeeMembership = _context.DetailedEmployees.FirstOrDefault(c => c.EmployeeId == transactionHdDto.EmployeeId);
                         if (employeeMembership.EmpStatus == 1 ||
                             employeeMembership.EmpStatus == 9 ||
                             employeeMembership.EmpStatus == 10)
@@ -870,7 +874,7 @@ namespace API.Servivces.Implementation
                                                      {
                                                          hd,
                                                          dt
-                                                     }).Where(x=>x.hd.EmployeeId ==transactionHdDto.EmployeeId).Count();
+                                                     }).Where(x => x.hd.EmployeeId == transactionHdDto.EmployeeId).Count();
                                 // To make sure Employee is not sponsored for the pending Loan Amount
                                 var pendingLoanAmount = (from hd in _context.TransactionHds
                                                          join dt in _context.TransactionDts
@@ -994,12 +998,12 @@ namespace API.Servivces.Implementation
                         }
                         #endregion
                     }
-                    
+
                     else if (transactionHdDto.ServiceTypeId == 2) // Financial Aids...
                     {
                         #region Financial Aids...
                         // check if membership rejeced / terminated..
-                        var employeeMembership = _context.DetailedEmployees.FirstOrDefault(c => c.EmployeeId == transactionHdDto.EmployeeId.ToString());
+                        var employeeMembership = _context.DetailedEmployees.FirstOrDefault(c => c.EmployeeId == transactionHdDto.EmployeeId);
                         if (employeeMembership.EmpStatus == 1 ||
                             employeeMembership.EmpStatus == 9 ||
                             employeeMembership.EmpStatus == 10)
@@ -1187,11 +1191,11 @@ namespace API.Servivces.Implementation
                         }
                         #endregion
                     }
-                    else if(transactionHdDto.ServiceTypeId == 3) // Social Loan...
+                    else if (transactionHdDto.ServiceTypeId == 3) // Social Loan...
                     {
                         #region Social Loan...
                         // check if membership rejeced / terminated..
-                        var employeeMembership = _context.DetailedEmployees.FirstOrDefault(c => c.EmployeeId == transactionHdDto.EmployeeId.ToString());
+                        var employeeMembership = _context.DetailedEmployees.FirstOrDefault(c => c.EmployeeId == transactionHdDto.EmployeeId);
                         if (employeeMembership.EmpStatus == 1 ||
                             employeeMembership.EmpStatus == 9 ||
                             employeeMembership.EmpStatus == 10)
@@ -1383,7 +1387,7 @@ namespace API.Servivces.Implementation
                     {
                         #region Miscellaneous Services Basket
                         // check if membership rejeced / terminated..
-                        var employeeMembership = _context.DetailedEmployees.FirstOrDefault(c => c.EmployeeId == transactionHdDto.EmployeeId.ToString());
+                        var employeeMembership = _context.DetailedEmployees.FirstOrDefault(c => c.EmployeeId == transactionHdDto.EmployeeId);
                         if (employeeMembership.EmpStatus == 1 ||
                             employeeMembership.EmpStatus == 9 ||
                             employeeMembership.EmpStatus == 10)
@@ -1575,7 +1579,7 @@ namespace API.Servivces.Implementation
                     {
                         #region End of Service - نهاية الخدمة
                         // check if membership rejeced / terminated..
-                        var employeeMembership = _context.DetailedEmployees.FirstOrDefault(c => c.EmployeeId == transactionHdDto.EmployeeId.ToString());
+                        var employeeMembership = _context.DetailedEmployees.FirstOrDefault(c => c.EmployeeId == transactionHdDto.EmployeeId);
                         if (employeeMembership.EmpStatus == 1 ||
                             employeeMembership.EmpStatus == 9 ||
                             employeeMembership.EmpStatus == 10)
@@ -1767,7 +1771,7 @@ namespace API.Servivces.Implementation
                     {
                         #region Death / Disability - الموت / العجز
                         // check if membership rejeced / terminated..
-                        var employeeMembership = _context.DetailedEmployees.FirstOrDefault(c => c.EmployeeId == transactionHdDto.EmployeeId.ToString());
+                        var employeeMembership = _context.DetailedEmployees.FirstOrDefault(c => c.EmployeeId == transactionHdDto.EmployeeId);
                         if (employeeMembership.EmpStatus == 1 ||
                             employeeMembership.EmpStatus == 9 ||
                             employeeMembership.EmpStatus == 10)
@@ -1959,7 +1963,7 @@ namespace API.Servivces.Implementation
                     {
                         #region Discount on Loan - خصم على القرض
                         // check if membership rejeced / terminated..
-                        var employeeMembership = _context.DetailedEmployees.FirstOrDefault(c => c.EmployeeId == transactionHdDto.EmployeeId.ToString());
+                        var employeeMembership = _context.DetailedEmployees.FirstOrDefault(c => c.EmployeeId == transactionHdDto.EmployeeId);
                         if (employeeMembership.EmpStatus == 1 ||
                             employeeMembership.EmpStatus == 9 ||
                             employeeMembership.EmpStatus == 10)
@@ -2152,7 +2156,7 @@ namespace API.Servivces.Implementation
                     {
                         #region Membership Cessation
                         // check if membership rejeced / terminated..
-                        var employeeMembership = _context.DetailedEmployees.FirstOrDefault(c => c.EmployeeId == transactionHdDto.EmployeeId.ToString());
+                        var employeeMembership = _context.DetailedEmployees.FirstOrDefault(c => c.EmployeeId == transactionHdDto.EmployeeId);
                         if (employeeMembership.EmpStatus == 1 ||
                             employeeMembership.EmpStatus == 9 ||
                             employeeMembership.EmpStatus == 10)
@@ -2331,7 +2335,7 @@ namespace API.Servivces.Implementation
                     {
                         #region Reimbursement - السداد
                         // check if membership rejeced / terminated..
-                        var employeeMembership = _context.DetailedEmployees.FirstOrDefault(c => c.EmployeeId == transactionHdDto.EmployeeId.ToString());
+                        var employeeMembership = _context.DetailedEmployees.FirstOrDefault(c => c.EmployeeId == transactionHdDto.EmployeeId);
                         if (employeeMembership.EmpStatus == 1 ||
                             employeeMembership.EmpStatus == 9 ||
                             employeeMembership.EmpStatus == 10)
@@ -2523,7 +2527,7 @@ namespace API.Servivces.Implementation
                     {
                         #region Membership-Withdrawls
                         // check if membership rejeced / terminated..
-                        var employeeMembership = _context.DetailedEmployees.FirstOrDefault(c => c.EmployeeId == transactionHdDto.EmployeeId.ToString());
+                        var employeeMembership = _context.DetailedEmployees.FirstOrDefault(c => c.EmployeeId == transactionHdDto.EmployeeId);
                         if (employeeMembership.TerminationId == null)
                         {
                             return new FinancialServiceResponse
@@ -2548,7 +2552,7 @@ namespace API.Servivces.Implementation
                                                  on hd.Mytransid equals dt.Mytransid
                                                  where hd.EmployeeId == transactionHdDto.EmployeeId &&
                                                  hd.TenentId == transactionHdDto.TenentId &&
-                                                 hd.LocationId == transactionHdDto.LocationId && 
+                                                 hd.LocationId == transactionHdDto.LocationId &&
                                                  hd.ServiceTypeId == 10 || hd.ServiceTypeId == 10
                                                  select new
                                                  {
@@ -2763,7 +2767,7 @@ namespace API.Servivces.Implementation
                     {
                         #region Termination - الفصل من العمل
                         // check if membership rejeced / terminated..
-                        var employeeMembership = _context.DetailedEmployees.FirstOrDefault(c => c.EmployeeId == transactionHdDto.EmployeeId.ToString());
+                        var employeeMembership = _context.DetailedEmployees.FirstOrDefault(c => c.EmployeeId == transactionHdDto.EmployeeId);
                         if (employeeMembership.EmpStatus == 1 ||
                             employeeMembership.EmpStatus == 9 ||
                             employeeMembership.EmpStatus == 10)
@@ -3069,7 +3073,7 @@ namespace API.Servivces.Implementation
                           select new ReturnSingleFinancialServiceById
                           {
                               Mytransid = t.Mytransid,
-                              EmployeeId = e.EmployeeId,
+                              EmployeeId = e.EmployeeId.ToString(),
                               Pfid = e.Pfid,
                               EmpCidNum = e.EmpCidNum,
                               EnglishName = e.EnglishName,
@@ -3088,6 +3092,8 @@ namespace API.Servivces.Implementation
                               Remarks = e.Remarks,
                               ServiceType = t.ServiceType,
                               ServiceSubType = t.ServiceSubType,
+                              ServiceTypeId = t.ServiceTypeId,
+                              ServiceSubTypeId = t.ServiceSubTypeId,
                               Totamt = t.Totamt,
                               Totinstallments = t.Totinstallments,
                               InstallmentAmount = t.InstallmentAmount,
@@ -3123,9 +3129,10 @@ namespace API.Servivces.Implementation
                               InstallmentsBegDate = (DateTime)t.InstallmentsBegDate,
                               UntilMonth = t.UntilMonth,
                               DownPayment = t.DownPayment,
+                              DiscountType = t.DiscountType
                           }).FirstOrDefault();
-            var hddms = _context.TransactionHddms.Where(c => c.Mytransid == id).ToList();
-            result.TransactionHDDMSDto = _mapper.Map<List<TransactionHDDMSDto>>(hddms);
+            //var hddms = _context.TransactionHddms.Where(c => c.Mytransid == id).ToList();
+            //result.TransactionHDDMSDto = _mapper.Map<List<TransactionHDDMSDto>>(hddms);
             return result;
         }
 
@@ -3141,7 +3148,7 @@ namespace API.Servivces.Implementation
 
             var data = (from employee in _context.DetailedEmployees
                         join approvals in _context.TransactionHddapprovalDetails
-                        on employee.EmployeeId equals approvals.EmployeeId.ToString()
+                        on employee.EmployeeId equals approvals.EmployeeId
 
                         join hd in _context.TransactionHds
                         on approvals.Mytransid equals hd.Mytransid
@@ -3215,7 +3222,7 @@ namespace API.Servivces.Implementation
                     .Where(c => c.Mytransid == approveRejectServiceDto.Mytransid && c.Active == true).FirstOrDefault();
 
                 // TO CHECK IF CRUP_ID IS NULL DETAILEDEMPLOYEE.
-                var detailedEmployee = _context.DetailedEmployees.Where(c => c.EmployeeId == existingtransactionHd.EmployeeId.ToString()).FirstOrDefault();
+                var detailedEmployee = _context.DetailedEmployees.Where(c => c.EmployeeId == existingtransactionHd.EmployeeId).FirstOrDefault();
                 var crupId = _context.CrupMsts.Max(c => c.CrupId);
                 var maxCrupId = crupId + 1;
                 if (detailedEmployee.CRUP_ID == null)
@@ -3314,7 +3321,7 @@ namespace API.Servivces.Implementation
             return result.ToString();
         }
 
-        public async Task<IEnumerable<ReturnServiceApprovals>> GetServiceApprovalsByEmployeeId(string employeeId)
+        public async Task<IEnumerable<ReturnServiceApprovals>> GetServiceApprovalsByEmployeeId(int employeeId)
         {
             var data = (from e in _context.DetailedEmployees
                         join hd in _context.TransactionHds
@@ -3404,9 +3411,9 @@ namespace API.Servivces.Implementation
 
         public async Task<ReturnSearchResultDto> SearchEmployee(SearchEmployeeDto searchEmployeeDto)
         {
-            if ((string.IsNullOrWhiteSpace(searchEmployeeDto.EmployeeId)
+            if (searchEmployeeDto.EmployeeId == 0
                 && string.IsNullOrWhiteSpace(searchEmployeeDto.PFId)
-                && string.IsNullOrWhiteSpace(searchEmployeeDto.CID)))
+                && string.IsNullOrWhiteSpace(searchEmployeeDto.CID))
             {
                 throw new Exception("Invalid Input");
             }
@@ -3414,7 +3421,7 @@ namespace API.Servivces.Implementation
             var employee = new Models.DetailedEmployee();
             List<TransactionDt> transactions = new List<TransactionDt>();
 
-            if (searchEmployeeDto.EmployeeId != string.Empty || !string.IsNullOrWhiteSpace(searchEmployeeDto.EmployeeId))
+            if (searchEmployeeDto.EmployeeId != 0)
             {
                 employee = await _context.DetailedEmployees.Where(c => c.EmployeeId == searchEmployeeDto.EmployeeId).FirstOrDefaultAsync();
                 transactions = _context.TransactionDts.Where(p => p.TenentId == employee.TenentId && p.LocationId == employee.LocationId && p.EmployeeId == Convert.ToInt32(employee.EmployeeId)).ToList();
@@ -3438,7 +3445,7 @@ namespace API.Servivces.Implementation
             {
                 TenentId = employee.TenentId,
                 LocationId = employee.LocationId,
-                EmployeeId = employee.EmployeeId,
+                EmployeeId = employee.EmployeeId.ToString(),
                 Pfid = employee.Pfid,
                 EmpCidNum = employee.EmpCidNum,
                 EnglishName = employee.EnglishName,
@@ -3473,7 +3480,7 @@ namespace API.Servivces.Implementation
                         on Convert.ToInt32(e.EmployeeId) equals ap.EmployeeId
                         join hd in _context.TransactionHds
                         on ap.Mytransid equals hd.Mytransid
-                        where ap.TenentId == tenentId && 
+                        where ap.TenentId == tenentId &&
                         ap.LocationId == locationId &&
                         ap.SerApprovalId == 3 &&
                         ap.DisplayPERIOD_CODE <= periodCode
@@ -3504,7 +3511,7 @@ namespace API.Servivces.Implementation
             var existingtransactionHd = _context.TransactionHds
                     .Where(c => c.Mytransid == cashierApprovalDto.TransId &&
                     c.EmployeeId == Convert.ToInt32(cashierApprovalDto.EmployeeId)).FirstOrDefault();
-            if(existingtransactionHd != null)
+            if (existingtransactionHd != null)
             {
                 existingtransactionHd.DraftNumber1 = cashierApprovalDto.DraftNumber1;
                 existingtransactionHd.DraftNumber2 = cashierApprovalDto.DraftNumber2;
@@ -3523,8 +3530,14 @@ namespace API.Servivces.Implementation
                 _context.TransactionHds.Update(existingtransactionHd);
                 result = await _context.SaveChangesAsync();
             }
-            
+
             return result;
+        }
+
+        public int GenerateFinancialServiceSerialNo()
+        {
+            int maxSerialNo = (int)_context.TransactionHds.FromSqlRaw("select ISNULL(max(ServiceID),0)+1 as ServiceId from TransactionHD").Select(p => p.ServiceId).FirstOrDefault();
+            return maxSerialNo;
         }
     }
 }

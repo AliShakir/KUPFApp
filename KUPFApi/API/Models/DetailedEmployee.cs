@@ -9,7 +9,7 @@ namespace API.Models
     {
         public int TenentId { get; set; }
         public int LocationId { get; set; }
-        public string EmployeeId { get; set; }
+        public int EmployeeId { get; set; }
         public string ContractType { get; set; }
         public string Pfid { get; set; }
         public DateTime? SubscribedDate { get; set; }

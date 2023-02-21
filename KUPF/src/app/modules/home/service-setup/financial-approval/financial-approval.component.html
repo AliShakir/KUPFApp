@@ -11,32 +11,37 @@
                     <mat-icon matPrefix class="material-icons">search</mat-icon>                        
                     <mat-icon matSuffix (click)="clearFilter()" class="material-icons">close</mat-icon>
                 </mat-form-field>
-                <div class="table-container service-details-table">
-                    <table mat-table class="w-100" [dataSource]="returnTransactionHdDto" matSort>
+                <div class="table-container">
+                    <table mat-table class="w-100" [dataSource]="financialApprovalDto" matSort>
                         <ng-container matColumnDef="action">
                             <th mat-header-cell *matHeaderCellDef>Action</th>
-                            <td mat-cell *matCellDef="let item" class="text-right">
-                                <button mat-raised-button color="warn" >Details</button> |                                
-                                <button mat-raised-button color="primary">Draft</button> |
-                                <button mat-raised-button color="accent">Deliver</button>
+                            <!-- routerLink="/service-setup/cashier-delivery/{{item.transId}}"" -->
+                            <td mat-cell *matCellDef="let item" class="text-right w-30">
+                                <button mat-raised-button color="warn" (click)="onDetailsClick(item.employeeId)">Details</button> |                                 
+                                <button mat-raised-button color="primary" (click)="navigateToFinancialDraft(item.transId,item.employeeId)" >Draft</button> |
+                                <button mat-raised-button color="accent"  (click)="navigateToFinancialDelivery(item.transId,item.employeeId)">Deliver</button>
                             </td>
                         </ng-container>
-                        <ng-container matColumnDef="employeeName">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee Name </th>
-                            <td mat-cell *matCellDef="let item" class="ArFontStyle" >{{item.englishName}} {{item.employeeId}} </td>
+                        <ng-container matColumnDef="transId">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Trans Id </th>
+                            <td mat-cell *matCellDef="let item" class="ArFontStyle" >{{item.transId}} </td>
                         </ng-container>
-                        <ng-container matColumnDef="services">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Service</th>
-                            <td mat-cell *matCellDef="let item" class="ArFontStyle">{{item.serviceType}}</td>
+                        <ng-container matColumnDef="periodCode">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Perion Code</th>
+                            <td mat-cell *matCellDef="let item" class="ArFontStyle">{{item.periodCode}}</td>
                         </ng-container> 
-                        <ng-container matColumnDef="installments">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Installment</th>
-                            <td mat-cell *matCellDef="let item" class="ArFontStyle">{{item.installment}}</td>
+                        <ng-container matColumnDef="employee">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee</th>
+                            <td mat-cell *matCellDef="let item" class="ArFontStyle">{{item.englishName}}</td>
                         </ng-container>
-                        <ng-container matColumnDef="amount">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
-                            <td mat-cell *matCellDef="let item" class="ArFontStyle">{{item.amount}}</td>
-                        </ng-container>                                               
+                        <ng-container matColumnDef="mobile">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Mobile</th>
+                            <td mat-cell *matCellDef="let item" class="ArFontStyle">{{item.mobileNumber}}</td>
+                        </ng-container>     
+                        <ng-container matColumnDef="service">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Service</th>
+                            <td mat-cell *matCellDef="let item" class="ArFontStyle">{{item.serviceName}}</td>
+                        </ng-container>                                             
                         <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky:true"
                             [ngClass]="{'hidden':!isLoadingCompleted}" class="row_header"></tr>
                         <tr mat-row *matRowDef="let formTitleHd; columns: columnsToDisplay"></tr>

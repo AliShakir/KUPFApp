@@ -64,7 +64,7 @@ namespace API.DTOs
         public string Syncby { get; set; }
         public int? SynId { get; set; }
         public bool? AllowDiscountPer { get; set; }
-        public string? DiscountType { get; set; }
+        public int? DiscountType { get; set; }
         public decimal? AllowDiscountAmount { get; set; }
         public bool? AllowDiscountDefault { get; set; }
         public string? EnglishHTML { get; set; }
@@ -92,6 +92,7 @@ namespace API.DTOs
         // menu name english
         public string? WebEnglish { get; set; }
         public bool? IsElectronicForm { get; set; }
+        public string? ContractType { get; set; }
 
 
     }

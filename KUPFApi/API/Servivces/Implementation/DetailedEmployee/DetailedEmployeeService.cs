@@ -26,7 +26,7 @@ namespace API.Servivces.Implementation.DetailedEmployee
             _mapper = mapper;
         }
 
-        public async Task<DetailedEmployeeDto> GetEmployeeByIdAsync(string id)
+        public async Task<DetailedEmployeeDto> GetEmployeeByIdAsync(int id)
         {
             var result = await _context.DetailedEmployees.Where(c => c.EmployeeId == id).FirstOrDefaultAsync();
             var data = _mapper.Map<DetailedEmployeeDto>(result);
@@ -55,9 +55,9 @@ namespace API.Servivces.Implementation.DetailedEmployee
             return await PagedList<DetailedEmployeeDto>.CreateAsync(data, paginationParams.PageNumber, paginationParams.PageSize);
         }
 
-        public async Task<string> AddEmployeeAsync(DetailedEmployeeDto detailedEmployeeDto)
+        public async Task<int> AddEmployeeAsync(DetailedEmployeeDto detailedEmployeeDto)
         {
-            string response = string.Empty;
+            int result = 0;
             if (_context != null)
             {
                 var crupId = _context.CrupMsts.Max(c => c.CrupId);
@@ -65,7 +65,7 @@ namespace API.Servivces.Implementation.DetailedEmployee
                 var newEmployee = _mapper.Map<Models.DetailedEmployee>(detailedEmployeeDto);
                 newEmployee.LocationId = 1;
                 newEmployee.CRUP_ID = maxCrupId;
-                newEmployee.EmployeeId = CommonMethods.CreateEmployeeId().ToString();
+                newEmployee.EmployeeId = CommonMethods.CreateEmployeeId();
                 await _context.DetailedEmployees.AddAsync(newEmployee);
                 await _context.SaveChangesAsync();
                 //
@@ -91,18 +91,20 @@ namespace API.Servivces.Implementation.DetailedEmployee
                     Severity = SeverityEnums.Normal.ToString()
                 };
                 await _context.Crupaudits.AddAsync(crupAudit);
-                await _context.SaveChangesAsync();
-                return response = detailedEmployeeDto.EmployeeId;
+                result = await _context.SaveChangesAsync();
+                return result;
                 
             }
-            return response;
+            return result;
 
         }
 
-        public async Task<string> UpdateEmployeeAsync(DetailedEmployeeDto detailedEmployeeDto)
+        public async Task<int> UpdateEmployeeAsync(DetailedEmployeeDto detailedEmployeeDto)
         {
+            int result = 0;
             if (_context != null)
             {
+                
                 var existingEmployee = _context.DetailedEmployees
                     .Where(c => c.EmployeeId == detailedEmployeeDto.EmployeeId).FirstOrDefault();
 
@@ -116,14 +118,14 @@ namespace API.Servivces.Implementation.DetailedEmployee
                         existingEmployee.LocationId = 1;
                         existingEmployee.CRUP_ID = maxCrupId;
                         _context.DetailedEmployees.Update(existingEmployee);
-                        await _context.SaveChangesAsync();
+                        result = await _context.SaveChangesAsync();
                     }
                     else
                     {
                         _mapper.Map(detailedEmployeeDto, existingEmployee);
                         existingEmployee.LocationId = 1;
                         _context.DetailedEmployees.Update(existingEmployee);
-                        await _context.SaveChangesAsync();
+                        result = await _context.SaveChangesAsync();
                     }
                     //                    
                     var auditInfo = _context.Reftables.FirstOrDefault(c => c.Reftype == "audit" && c.Refsubtype == "Employee");
@@ -148,13 +150,13 @@ namespace API.Servivces.Implementation.DetailedEmployee
                         Severity = SeverityEnums.High.ToString()
                     };
                     await _context.Crupaudits.AddAsync(crupAudit);
-                    await _context.SaveChangesAsync();
+                    result = await _context.SaveChangesAsync();
 
                 }
 
-                return detailedEmployeeDto.EmployeeId;
+                return result;
             };
-            return string.Empty;
+            return result;
         }
 
         public async Task<int> DeleteEmployeeAsync(DetailedEmployeeDto detailedEmployeeDto)

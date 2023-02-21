@@ -263,7 +263,7 @@
                                     lang="AR-SA">{{bodyLabel[3].title}}</label>
                                 <ng-select [items]="selectServiceType" bindLabel="shortname"
                                     formControlName="serviceType" bindValue="refId" lang="AR-SA"
-                                    (change)="onServiceTypeChange($event)" [(ngModel)]="selected"> 
+                                    (change)="onServiceTypeChange($event)" [(ngModel)]="serviceTypeSelected"> 
                                 </ng-select>
                                 <span class="text-danger"
                                     *ngIf="isFormSubmitted && addServiceFrm.serviceType.errors?.required">
@@ -275,7 +275,7 @@
                                     lang="AR-SA">{{bodyLabel[4].title}}</label>
                                 <ng-select [items]="selectServiceSubType" bindLabel="shortname"
                                     formControlName="serviceSubType" bindValue="refId" lang="AR-SA"
-                                    (change)="onServiceSubTypeChange($event)">
+                                    (change)="onServiceSubTypeChange($event)" [(ngModel)]="serviceSubTypeSelected">
                                 </ng-select>
                                 <span class="text-danger"
                                     *ngIf="isFormSubmitted && addServiceFrm.serviceSubType.errors?.required">
@@ -316,7 +316,7 @@
                                         class="text-danger">Incase of Gift By Default=Y </small> {{bodyLabel[9].title}}
                                 </label>
                                 <input type="number" class="form-control form-control-lg mb-lg-0"
-                                    formControlName="allowDiscountAmount" (keyup)="calculateInstallments()" readonly/>
+                                    formControlName="allowDiscountAmount" (keyup)="calculateInstallments()"/>
                                 <span class="text-danger"
                                     *ngIf="isFormSubmitted && addServiceFrm.allowDiscountAmount.errors?.required">
                                     Discount Amount is required
@@ -336,7 +336,7 @@
                                 <label class="col-form-label fw-bold fs-6 ArFontStyle"
                                     lang="AR-SA">{{bodyLabel[8].title}}</label>
                                 <input type="number" class="form-control form-control-lg mb-lg-0" value="0.00"
-                                    formControlName="installmentAmount" readonly/>
+                                    formControlName="installmentAmount"/>
                                 <span class="text-danger"
                                     *ngIf="isFormSubmitted && addServiceFrm.installmentAmount.errors?.required">
                                     Installment Amount is required
@@ -362,7 +362,7 @@
                                     <input type="text" class="form-control" bsDatepicker [minDate]="minDate"
                                         [bsConfig]="{ dateInputFormat: 'MMM-YYYY' }" lang="AR-SA"
                                         (bsValueChange)="calculateUntilMonth($event)"
-                                        formControlName="installmentsBegDate" [readonly]="isViewOnly"/>
+                                        formControlName="installmentsBegDate"/>
                                 </div>
                                 <span class="text-danger"
                                     *ngIf="isFormSubmitted && addServiceFrm.installmentsBegDate.errors?.required">
@@ -376,22 +376,22 @@
                                     <span class="input-group-text" id="basic-addon1">
                                         <i class="fas fa-calendar"></i>
                                     </span>
-                                    <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" readonly
-                                        formControlName="untilMonth" [readonly]="isViewOnly"/>
+                                    <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" 
+                                        formControlName="untilMonth" disabled/>
                                 </div>
                             </div>
                             <div class="col-lg-3 fv-row">
                                 <label class="col-form-label fw-bold fs-6 ArFontStyle"
                                     lang="AR-SA">{{bodyLabel[5].title}}</label>
-                                <input type="text" class="form-control form-control-lg mb-lg-0" readonly
-                                    formControlName="searialNo" />
+                                <input type="text" class="form-control form-control-lg mb-lg-0"
+                                    formControlName="searialNo" disabled/>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-3 fv-row">
                                 <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">PF Id</label>
                                 <input type="text" class="form-control form-control-lg  mb-lg-0"
-                                    [ngModelOptions]="{standalone: true}" [(ngModel)]="pfId" [readonly]="isViewOnly"/>
+                                formControlName="pfId" disabled/>
                             </div>
                         </div>
                     </form>
