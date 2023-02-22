@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.TagHelpers;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -77,13 +78,14 @@ namespace API.Servivces.Implementation
                 }
                 else
                 {
-
+                    //for the Scenario #1
+                    //select ISNull(ServiceSerialNo, 1)  from servicesetup where ServiceType = 1 and ServiceSubType = 1
+                    //Scenario #2
+                    //select ISNULL(max(ServiceID), 0) + 1 from TransactionHD where TenentID = 21
                     int myId = 1;
                     var attachId = _context.TransactionHddms.FromSqlRaw("select isnull(Max(AttachID+1),1) as attachId from  [TransactionHDDMS ] where TenentID='" + transactionHdDto.TenentId + "'").Select(p => p.AttachId).FirstOrDefault();
                     var serialNo = _context.TransactionHddms.FromSqlRaw("select isnull(Max(Serialno+1),1) as serialNo from  [TransactionHDDMS ] where tenentId='" + transactionHdDto.TenentId + "' and attachid=1").Select(c => c.Serialno).FirstOrDefault();
-                    int maxSwitch1 = _context.Reftables.Where(c => c.Reftype == "KUPF" && c.Refsubtype == "ServicesSubType"
-                       && c.Switch4 == transactionHdDto.ServiceTypeId && c.Refid == transactionHdDto.ServiceSubTypeId).Max(x => Convert.ToInt32(x.Switch1));
-                    int maxSwitch = maxSwitch1 + 1;
+                    int maxSwitch = (int)_context.TransactionHds.FromSqlRaw("select ISNULL(max(ServiceID), 0) + 1 as ServiceId from TransactionHD where TenentID ='" + transactionHdDto.TenentId + "'").Select(c => c.ServiceId).FirstOrDefault();
 
                     // Create Unique TransationId...
                     newTransaction.Mytransid = CommonMethods.CreateEmployeeId();
@@ -98,7 +100,6 @@ namespace API.Servivces.Implementation
                         Subject = transactionHdDto.Subject,
                         MetaTags = transactionHdDto.MetaTags
                     };
-
 
                     //var path = "E:\\";
                     ////var path = @"/HostingSpaces/kupf1/kupfapi.erp53.com/New/ServiceAttachments/";
@@ -244,7 +245,8 @@ namespace API.Servivces.Implementation
                                         Updttime = DateTime.Now,
                                         ApprovalRemarks = "BySystem",
                                         mySeq = srId + 1,
-                                        DisplayPERIOD_CODE = transactionHdDto.DisplayPERIOD_CODE
+                                        DisplayPERIOD_CODE = GetPeriodCode(),
+                                        
                                     };
                                     //
                                     var transactionHddApprovals = _mapper.Map<TransactionHddapprovalDetail>(transactionHddApprovalsDto);
@@ -273,7 +275,7 @@ namespace API.Servivces.Implementation
                             };
                         }
 
-                        newTransaction.Mytransid = CommonMethods.CreateEmployeeId();
+                        //newTransaction.Mytransid = CommonMethods.CreateEmployeeId();
                         newTransaction.MasterServiceId = maxSwitch;
                         await _context.TransactionHds.AddAsync(newTransaction);
                         await _context.SaveChangesAsync();
@@ -458,7 +460,7 @@ namespace API.Servivces.Implementation
                                         && totalMonths <= discountValues[i].Switch4)
                                     {
                                         // Add record to TransactionDT
-                                        newTransaction.Mytransid = CommonMethods.CreateEmployeeId();
+                                        //newTransaction.Mytransid = CommonMethods.CreateEmployeeId();
                                         newTransaction.MasterServiceId = maxSwitch;
                                         await _context.TransactionHds.AddAsync(newTransaction);
                                         await _context.SaveChangesAsync();
@@ -671,49 +673,7 @@ namespace API.Servivces.Implementation
                         else
                         {
                             if (transactionHdDto.ServiceSubType == "Financial Aid - القرض المالي")
-                            {
-                                //// To make sure Employee dont have any due Loan amount
-                                //var dueLoanamount = (from hd in _context.TransactionHds
-                                //                     join dt in _context.TransactionDts
-                                //                     on hd.Mytransid equals dt.Mytransid
-                                //                     where hd.EmployeeId == transactionHdDto.EmployeeId &&
-                                //                     hd.TenentId == transactionHdDto.TenentId &&
-                                //                     hd.LocationId == transactionHdDto.LocationId &&
-                                //                     hd.ServiceTypeId != 1 || hd.ServiceTypeId != 8
-                                //                     select new
-                                //                     {
-                                //                         hd,
-                                //                         dt
-                                //                     }).Count();
-                                //// To make sure Employee is not sponsored for the pending Loan Amount
-                                //var pendingLoanAmount = (from hd in _context.TransactionHds
-                                //                         join dt in _context.TransactionDts
-                                //                         on hd.Mytransid equals dt.Mytransid
-                                //                         where hd.SponserProvidentID == transactionHdDto.EmployeeId &&
-                                //                         hd.TenentId == transactionHdDto.TenentId &&
-                                //                         hd.LocationId == transactionHdDto.LocationId &&
-                                //                         hd.ServiceTypeId != 1 || hd.ServiceTypeId != 8
-                                //                         select new
-                                //                         {
-                                //                             hd,
-                                //                             dt
-                                //                         }).Count();
-                                //if (dueLoanamount != 0)
-                                //{
-                                //    return new FinancialServiceResponse
-                                //    {
-                                //        Response = "16" // Error...                            
-                                //    };
-                                //}
-                                //else if (pendingLoanAmount != 0)
-                                //{
-                                //    return new FinancialServiceResponse
-                                //    {
-                                //        Response = "17" // Error...                            
-                                //    };
-                                //}
-                                //else
-                                //{
+                            {                                
                                 int totalMonths = CommonMethods.CalculateMembershipDuration((DateTime)employeeMembership.SubscribedDate);
                                 var discountValues = _context.Reftables.Where(c => c.Reftype == "KUPF" && c.Refsubtype == "FinancialAid").ToList();
 
@@ -735,7 +695,7 @@ namespace API.Servivces.Implementation
                                         && totalMonths <= Convert.ToInt32(discountValues[i].Switch2))
                                     {
                                         // Add record to TransactionHD
-                                        newTransaction.Mytransid = CommonMethods.CreateEmployeeId();
+                                        //newTransaction.Mytransid = CommonMethods.CreateEmployeeId();
                                         newTransaction.MasterServiceId = maxSwitch;
                                         await _context.TransactionHds.AddAsync(newTransaction);
                                         await _context.SaveChangesAsync();
@@ -788,8 +748,6 @@ namespace API.Servivces.Implementation
                                         employeeMembership.TerminationDate = DateTime.Now;
                                         break;
                                     }
-
-                                    //}
 
                                 }
                             }
@@ -934,7 +892,7 @@ namespace API.Servivces.Implementation
                                     var subscriptionStatus = _context.Reftables.Where(c => c.Refid == 1 && c.Reftype == "KUPF" && c.Refsubtype == "SubscriptionStatus").FirstOrDefault();
 
                                     // Add record to TransactionHD
-                                    newTransaction.Mytransid = CommonMethods.CreateEmployeeId();
+                                    //newTransaction.Mytransid = CommonMethods.CreateEmployeeId();
                                     newTransaction.MasterServiceId = maxSwitch;
                                     await _context.TransactionHds.AddAsync(newTransaction);
                                     await _context.SaveChangesAsync();
@@ -2618,7 +2576,7 @@ namespace API.Servivces.Implementation
                                         && totalMonths <= discountValues[i].Switch4)
                                     {
                                         // Add record to TransactionDT
-                                        newTransaction.Mytransid = CommonMethods.CreateEmployeeId();
+                                        //newTransaction.Mytransid = CommonMethods.CreateEmployeeId();
                                         newTransaction.MasterServiceId = maxSwitch;
                                         await _context.TransactionHds.AddAsync(newTransaction);
                                         await _context.SaveChangesAsync();
@@ -2958,10 +2916,10 @@ namespace API.Servivces.Implementation
                         #endregion
                     }
 
-                    var updateSwitch1 = _context.Reftables.Where(c => c.Reftype == "KUPF" && c.Refsubtype == "ServicesSubType"
-                    && c.Switch4 == transactionHdDto.ServiceTypeId && c.Refid == transactionHdDto.ServiceSubTypeId).FirstOrDefault();
-                    updateSwitch1.Switch1 = maxSwitch.ToString();
-                    await _context.SaveChangesAsync();
+                    //var updateSwitch1 = _context.Reftables.Where(c => c.Reftype == "KUPF" && c.Refsubtype == "ServicesSubType"
+                    //&& c.Switch4 == transactionHdDto.ServiceTypeId && c.Refid == transactionHdDto.ServiceSubTypeId).FirstOrDefault();
+                    //updateSwitch1.Switch1 = maxSwitch.ToString();
+                    //await _context.SaveChangesAsync();
                     return new FinancialServiceResponse
                     {
                         Response = newTransaction.Mytransid.ToString(),
@@ -3140,7 +3098,7 @@ namespace API.Servivces.Implementation
 
         public async Task<ServiceSetupDto> GetServiceByServiceTypeAndSubType(int serviceType, int serviceSubType, int tenentId)
         {
-            var result = await _context.ServiceSetups.Where(c => c.ServiceType == serviceType && c.ServiceSubType == serviceSubType && c.TenentId == tenentId).FirstOrDefaultAsync();
+            var result = await _context.ServiceSetups.Where(c => c.Active == "1" && c.ServiceType == serviceType && c.ServiceSubType == serviceSubType && c.TenentId == tenentId).FirstOrDefaultAsync();
             var data = _mapper.Map<ServiceSetupDto>(result);
             return data;
         }
@@ -3370,13 +3328,24 @@ namespace API.Servivces.Implementation
             return data;
         }
 
-        public async Task<IEnumerable<SelectServiceTypeDto>> GetServiceType(int tenentId)
+        public IEnumerable<SelectServiceTypeDto> GetServiceType(int tenentId)
         {
-            var result = await _context.Reftables.Where(c => c.Reftype == "KUPF" && c.Refsubtype == "ServiceType").ToListAsync();
+            //var result = _context.ServiceSetups.Where(c => c.Active == "1" && c.TenentId == tenentId).ToList();
+
+            var result = _context.ServiceSetups
+                .ToList().Where(c => c.Active == "1" && c.TenentId == tenentId)
+                .GroupBy(c => new { c.ServiceType, c.ServiceName1 }).Select(c => c.First()).ToList();
             var data = _mapper.Map<IEnumerable<SelectServiceTypeDto>>(result);
             return data;
         }
+        public async Task<IEnumerable<SelectSubServiceTypeDto>> GetSubServiceTypeByServiceType(int tenentId, int serviceId)
+        {
+            var result = await _context.ServiceSetups.Where(c => c.Active == "1" && c.ServiceType == serviceId && c.TenentId == tenentId).ToListAsync();
 
+            var data = _mapper.Map<IEnumerable<SelectSubServiceTypeDto>>(result);
+
+            return data;
+        }
         public async Task<int> MakeFinancialTransactionAsync(CostCenterDto costCenterDto)
         {
             int result = 0;
@@ -3390,12 +3359,7 @@ namespace API.Servivces.Implementation
             return result;
         }
 
-        public async Task<IEnumerable<SelectServiceTypeDto>> GetSubServiceTypeByServiceType(int tenentId, int refId)
-        {
-            var result = await _context.Reftables.Where(c => c.Reftype == "KUPF" && c.Refsubtype == "ServicesSubType" && c.Switch4 == refId && c.TenentId == tenentId).ToListAsync();
-            var data = _mapper.Map<IEnumerable<SelectServiceTypeDto>>(result);
-            return data;
-        }
+
 
         public async Task<ReturnApprovalDetailsDto> GetServiceApprovalsByTransIdAsync(int tenentId, int locationId, int transId)
         {

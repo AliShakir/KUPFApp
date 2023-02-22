@@ -141,7 +141,14 @@ namespace API.Helpers
             CreateMap<TransactionHd, CashierInformationDto>();
             //
             CreateMap<Coa, SelectBankAccount>();
-
+            //
+            CreateMap<ServiceSetup, SelectServiceTypeDto>()
+                .ForMember(dest => dest.RefId, opt=>opt.MapFrom(src=>src.ServiceType))
+                .ForMember(dest => dest.Shortname, opt => opt.MapFrom(src => src.ServiceName1));
+            //
+            CreateMap<ServiceSetup, SelectSubServiceTypeDto>()
+                        .ForMember(dest => dest.RefId, opt => opt.MapFrom(src => src.ServiceSubType))
+                        .ForMember(dest => dest.ShortName, opt => opt.MapFrom(src => src.ServiceName2));
         }
     }
 }

@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable, takeUntil, takeWhile } from 'rxjs';
 import { TransactionHdDto } from 'src/app/modules/models/FinancialService/TransactionHdDto';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
+import { SelectSubServiceTypeDto } from 'src/app/modules/models/SelectSubServiceTypeDto';
 import { SelectServiceTypeDto } from 'src/app/modules/models/ServiceSetup/SelectServiceTypeDto';
 import { CommonService } from 'src/app/modules/_services/common.service';
 import { DbCommonService } from 'src/app/modules/_services/db-common.service';
@@ -52,7 +53,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
   selectServiceType$: Observable<SelectServiceTypeDto[]>;
   selectServiceType: SelectServiceTypeDto[] = [];
   selectServiceSubType$: Observable<SelectServiceTypeDto[]>;
-  selectServiceSubType: SelectServiceTypeDto[] = [];
+  selectServiceSubType: SelectSubServiceTypeDto[] = [];
   selectedServiceType: any;
   selectedServiceTypeText: any;
   selectedServiceSubType: any;
@@ -97,6 +98,8 @@ export class AddServiceComponent implements OnInit, OnDestroy {
   serviceSubTypeSelected:any;
   // To Set/Get discount type
   allowedDiscountType:any;
+  //
+  isSearched: boolean = false;
   constructor(
     private financialService: FinancialService,
     private commonService: DbCommonService,
@@ -176,6 +179,8 @@ export class AddServiceComponent implements OnInit, OnDestroy {
 
     if (this.mytransid) {
       this.common.ifEmployeeExists = true;
+      // To display other Accordians
+      this.isSearched = true;
       if(this.common.isViewOnly === true){
         // If user comes from Cashier Approval...
         this.isViewOnly = true;
@@ -317,6 +322,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     this.isSubscriber = false;
     this.common.isViewOnly = false;
     this.isPFIdNull = false;
+    this.isSearched = false;
   }
 
   setUpParentForm() {
@@ -367,10 +373,10 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       serviceSubType: new FormControl('', Validators.required),
       serviceType: new FormControl('', Validators.required),
       searialNo: new FormControl('', Validators.required),
-      totamt: new FormControl('', Validators.required),
-      totinstallments: new FormControl('', Validators.required),
+      totamt: new FormControl('0', Validators.required),
+      totinstallments: new FormControl('0', Validators.required),
       allowDiscount: new FormControl('', Validators.required),
-      installmentAmount: new FormControl('', Validators.required),
+      installmentAmount: new FormControl('0', Validators.required),
       installmentsBegDate: new FormControl('', Validators.required),
       untilMonth: new FormControl('', Validators.required),
       serviceSubTypeId: new FormControl(''),
@@ -444,8 +450,10 @@ export class AddServiceComponent implements OnInit, OnDestroy {
   saveFinancialService() {
     this.setValidators(this.notSubscriber);
     // Get Tenant Id
-    // var data = JSON.parse(localStorage.getItem("user")!);
-    // const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
+    var data = JSON.parse(localStorage.getItem("user")!);
+    const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
+    const locationId = data.map((obj: { locationId: any; }) => obj.locationId);
+    const username = data.map((obj: { username: any; }) => obj.username);
     //console.log(this.common.ifEmployeeExists);
     this.addServiceForm.patchValue({
       serviceType: this.selectedServiceTypeText,
@@ -460,7 +468,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       ...this.parentForm.value.financialForm,
       ...this.financialCalculationForm.value,
       //...this.parentForm.value.financialFormArray,
-      tenentID: 21, cruP_ID: 0, locationID: 1
+      tenentID: tenantId, cruP_ID: 0, locationID: locationId,userId:username
     }
 
     formData['installmentsBegDate'] = moment(formData['installmentsBegDate']).format("yyyy-MM-DD");
@@ -554,7 +562,6 @@ export class AddServiceComponent implements OnInit, OnDestroy {
 
   // Calculate Installments based on Installment Months...allowDiscountAmount
   calculateInstallments() {
-    console.log(this.addServiceForm.get('discountType')?.value);
     //
     let amount = this.addServiceForm.get('totamt')?.value;
     let noOfinstallments = this.addServiceForm.get('totinstallments')?.value;
@@ -568,7 +575,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     if (amount == 0 || amount == '') {
       this.toastrService.error('Please enter amount', 'Error');
     }
-    else if (noOfinstallments == 0 || noOfinstallments == '') {
+    else if (noOfinstallments == '' && this.addServiceForm.get('discountType')?.value === 1) {
       this.toastrService.error('Please enter installments', 'Error');
     } else {
       // If 1 Percentage...
@@ -577,11 +584,11 @@ export class AddServiceComponent implements OnInit, OnDestroy {
         calculatedAmount = ((amount - percentageAmount) - downPayment);
         netAmount = (calculatedAmount / noOfinstallments);
       }
-      // If 2 Fixed Amount...
-      else if (this.addServiceForm.get('discountType')?.value === 2) {
-        calculatedAmount = ((amount - allowDiscountAmount) - downPayment);
-        netAmount = (calculatedAmount / noOfinstallments);
-      }
+      // If 2 Fixed Amount and discount will be 100%...
+      // else if (this.addServiceForm.get('discountType')?.value === 2) {
+      //   calculatedAmount = ((amount - allowDiscountAmount) - downPayment);
+      //   netAmount = (calculatedAmount / noOfinstallments);
+      // }
 
       this.addServiceForm.patchValue({
         installmentAmount: netAmount.toFixed(2)
@@ -591,7 +598,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
 
   onServiceTypeChange(event: any) {
     this.commonService.GetSubServiceTypeByServiceType(21, event.refId).subscribe((response: any) => {
-      this.selectServiceSubType = response
+      this.selectServiceSubType = response      
       if (this.common.PFId != null
         && this.common.subscribedDate != null
         && this.common.terminationDate != null) {
@@ -620,29 +627,19 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     this.selectedServiceTypeText = event.shortname;
   }
 
-  onServiceSubTypeChange($event: any) {
-    this.selectedServiceSubType = $event.refId;
-    this.selectedServiceSubTypeText = $event.shortname;
-    // ServiceType and SubType is Financial Aid...
-    // No need create monthly installments...
-
-    this.financialService.GetSelectedServiceSubType(this.selectedServiceType, this.selectedServiceSubType, 21).subscribe((response: any) => {
-      // To enable back the down payment...     
-      
+  onServiceSubTypeChange($event: any) {    
+    this.financialService.GetSelectedServiceSubType(this.selectedServiceType,$event.refId, 21).subscribe((response: any) => {
+       
       // To set discount type and we will save it into TransactionHD...
       this.allowedDiscountType = response.discountType;
-
       this.addServiceForm.get('downPayment')?.enable();
       this.parentForm.patchValue({
         addServiceForm: {
-          serviceSubType: response.serviceSubType,          
-          totinstallments: response.maxInstallment,
           allowDiscount: response.allowDiscountAmount,
-          serviceSubTypeId: response.serviceSubTypeId,
-          serviceTypeId: response.serviceTypeId,
           allowDiscountPer: response.allowDiscountPer,
           discountType: response.discountType,
-          allowDiscountAmount: response.allowDiscountAmount
+          totinstallments:response.maxInstallment,
+          allowDiscountAmount:response.allowDiscountAmount
         },
         approvalDetailsForm: {
           serApproval1: +response.serApproval1,
@@ -676,9 +673,24 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           otherAct4: response.otherAct4,
           otherAct5: response.otherAct5
         },
-      });
+      });     
       if (this.addServiceForm.get('discountType')?.value === 2) {        
         this.addServiceForm.get('allowDiscountAmount')?.disable();
+        this.addServiceForm.get('totinstallments')?.disable();
+        this.addServiceForm.get('installmentAmount')?.disable();
+        this.addServiceForm.get('downPayment')?.disable(); //this.addServiceForm.get('transDate')?.setValue(moment(new Date()).format("yyyy-MM-DD"));
+        this.addServiceForm.patchValue({
+          totinstallments:0,
+          installmentAmount:0,
+          downPayment:0,
+          installmentsBegDate: moment(new Date()).format("MMM-YYYY"),
+          untilMonth:moment(new Date()).format("MMM-YYYY"),
+        })
+      } else if (this.addServiceForm.get('discountType')?.value === 1) {        
+        this.addServiceForm.get('allowDiscountAmount')?.enable();
+        this.addServiceForm.get('totinstallments')?.enable();
+        this.addServiceForm.get('installmentAmount')?.enable();
+        this.addServiceForm.get('downPayment')?.enable();        
       }
       if (this.selectedServiceType == 2 && $event.refId == 3) {
         this.parentForm.patchValue({
@@ -690,7 +702,8 @@ export class AddServiceComponent implements OnInit, OnDestroy {
         this.addServiceForm.get('downPayment')?.disable();
       }
     })
-
+    this.selectedServiceSubType = $event.refId;
+    this.selectedServiceSubTypeText = $event.shortName;
   }
 
   // To access form controls...
@@ -735,7 +748,9 @@ export class AddServiceComponent implements OnInit, OnDestroy {
   openPopUpModal(content: any) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
-
+      if (result === 'yes') { 
+        this.onOkayClick();
+      }
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
@@ -766,6 +781,8 @@ export class AddServiceComponent implements OnInit, OnDestroy {
         this.toastrService.error('Sorry, record not found', 'Error');
         this.employeeForm?.reset();
       } else {
+        // To display other Accordians
+        this.isSearched = true;
         this.common.ifEmployeeExists = true;
         this.employeeForm?.patchValue({
           employeeId: response.employeeId,
@@ -847,6 +864,8 @@ export class AddServiceComponent implements OnInit, OnDestroy {
         this.toastrService.error('Sorry, record not found', 'Error');
         this.employeeForm?.reset();
       } else {
+        // To display other Accordians
+        this.isSearched = true;
         this.common.ifEmployeeExists = true;
         this.employeeForm?.patchValue({
           employeeId: response.employeeId,
@@ -1009,6 +1028,14 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     });
 
   }
+  onOkayClick(){
+    this.redirectTo(`/service-setup/service-details`);
+  }
+  redirectTo(uri: string) {
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+      this.router.navigate([uri]));
+  }
+
 //#region 
   // To select service type while edit.
   GetServiceTypeWhileEdit(){

@@ -188,9 +188,9 @@ namespace API.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("GetServiceType")]
-        public async Task<IEnumerable<SelectServiceTypeDto>> GetServiceType(int tenentId)
+        public IEnumerable<SelectServiceTypeDto> GetServiceType(int tenentId)
         {
-            var result = await _financialService.GetServiceType(tenentId);
+            var result = _financialService.GetServiceType(tenentId);
             return result;
         }
         /// <summary>
@@ -231,7 +231,7 @@ namespace API.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("GetSubServiceTypeByServiceType")]
-        public async Task<IEnumerable<SelectServiceTypeDto>> GetSubServiceTypeByServiceType(int tenentId, int refId)
+        public async Task<IEnumerable<SelectSubServiceTypeDto>> GetSubServiceTypeByServiceType(int tenentId, int refId)
         {
             var result = await _financialService.GetSubServiceTypeByServiceType(tenentId, refId);
             return result;

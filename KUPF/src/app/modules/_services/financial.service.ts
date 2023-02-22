@@ -132,7 +132,7 @@ export class FinancialService {
   }
 
 
-  GetSelectedServiceSubType(serviceType : number, serviceSubType: number,tenentId:number) {
+  GetSelectedServiceSubType(serviceType : number,serviceSubType : number, tenentId:number) {
     return this.httpClient.get<ServiceSetupDto[]>(this.baseUrl + `FinancialService/GetServiceByServiceTypeAndSubType/${serviceType}/${serviceSubType}/${tenentId}`).pipe(
       map(serviceSetupDto => {
         this.serviceSetupDto = serviceSetupDto;

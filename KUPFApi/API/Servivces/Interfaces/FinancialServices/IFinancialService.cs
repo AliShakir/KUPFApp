@@ -17,7 +17,7 @@ namespace API.Servivces.Interfaces.FinancialServices
         Task<ReturnSingleFinancialServiceById> GetFinancialServiceByIdAsync(long id);
         Task<IEnumerable<ReturnTransactionHdDto>> GetFinancialServiceAsync();
         Task<int> DeleteFinancialServiceAsync(long id);
-        Task<ServiceSetupDto> GetServiceByServiceTypeAndSubType(int serviceType,int serviceSubType,int tenentId);
+        Task<ServiceSetupDto> GetServiceByServiceTypeAndSubType(int serviceType, int serviceSubType,int tenentId);
         Task<IEnumerable<ReturnServiceApprovals>> GetServiceApprovalsAsync();
 
         Task<string> ApproveServiceAsync(ApproveRejectServiceDto approveRejectServiceDto);
@@ -26,10 +26,10 @@ namespace API.Servivces.Interfaces.FinancialServices
         Task<string> RejectServiceAsync(ApproveRejectServiceDto approveRejectServiceDto);
         Task<IEnumerable<ReturnServiceApprovals>> GetServiceApprovalsByEmployeeId(int employeeId);
         Task<IEnumerable<ReturnServiceApprovalDetails>> GetServiceApprovalDetailByTransId(int transId);
-        Task<IEnumerable<SelectServiceTypeDto>> GetServiceType(int tenentId);
+        IEnumerable<SelectServiceTypeDto> GetServiceType(int tenentId);
 
         Task<int> MakeFinancialTransactionAsync(CostCenterDto costCenterDto);
-        Task<IEnumerable<SelectServiceTypeDto>> GetSubServiceTypeByServiceType(int tenentId, int refId);
+        Task<IEnumerable<SelectSubServiceTypeDto>> GetSubServiceTypeByServiceType(int tenentId, int refId);
 
         Task<ReturnApprovalDetailsDto> GetServiceApprovalsByTransIdAsync(int tenentId, int locationId,int transId);
 
