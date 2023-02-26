@@ -100,6 +100,8 @@ export class AddServiceComponent implements OnInit, OnDestroy {
   allowedDiscountType:any;
   //
   isSearched: boolean = false;
+  //
+  isPfIdExists:boolean = false;
   constructor(
     private financialService: FinancialService,
     private commonService: DbCommonService,
@@ -178,17 +180,23 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     //
 
     if (this.mytransid) {
+      
       this.common.ifEmployeeExists = true;
       // To display other Accordians
       this.isSearched = true;
       if(this.common.isViewOnly === true){
         // If user comes from Cashier Approval...
-        this.isViewOnly = true;
-        
-      }      
+        this.isViewOnly = true;        
+      }   
+      // To Select selected service type  
+      this.financialService.GetServiceType(tenantId).subscribe((response: any) => {         
+        this.selectServiceType = response;       
+      });
+      
       this.financialService.GetFinancialServiceById(this.mytransid).subscribe((response: any) => {       
-        this.allowedDiscountType = response.discountType;
-        this.GetServiceTypeWhileEdit();
+        this.allowedDiscountType = response.discountType; 
+        this.serviceTypeSelected =  response.serviceType;
+       console.log('edit response',response);
         this.parentForm.patchValue({
           employeeForm: {
             employeeId: response.employeeId,
@@ -209,9 +217,6 @@ export class AddServiceComponent implements OnInit, OnDestroy {
             terminationDate: response.terminationDate,
             endDate: response.endDate,
             employeeStatus: response.employeeStatus,
-            isKUEmployee: response.isKUEmployee,
-            isOnSickLeave: response.isOnSickLeave,
-            isMemberOfFund: response.isMemberOfFund,
             CountryNameEnglish: response.countryNameEnglish,
             CountryNameArabic: response.countryNameArabic,
             employeePFId: response.pfid,
@@ -228,7 +233,12 @@ export class AddServiceComponent implements OnInit, OnDestroy {
             installmentsBegDate: response.installmentsBegDate ? new Date(response.installmentsBegDate) : '',
             untilMonth: response.untilMonth,
             downPayment: response.downPayment,
-            pfId:response.pfid
+            pfId:response.pfid,
+            allowDiscountAmount:response.allowDiscountAmount,
+            discountType:response.discountType,
+            serviceTypeId: response.serviceTypeId,
+            serviceSubTypeId: response.serviceSubTypeId,
+            allowDiscountDefault:response.allowDiscountDefault
           },
           financialForm: {
             hajjAct: response.hajjAct,
@@ -240,23 +250,23 @@ export class AddServiceComponent implements OnInit, OnDestroy {
             otherAct4: response.otherAct4,
             otherAct5: response.otherAct5,
           },
-          approvalDetailsForm: {
-            serApproval1: response.serApproval1,
-            approvalBy1: response.approvalBy1,
-            approvedDate1: response.approvedDate1,
-            serApproval2: response.serApproval2,
-            approvalBy2: response.approvalBy2,
-            approvedDate2: response.approvedDate2,
-            serApproval3: response.serApproval3,
-            approvalBy3: response.approvalBy3,
-            approvedDate3: response.approvedDate3,
-            serApproval4: response.serApproval4,
-            approvalBy4: response.approvalBy4,
-            approvedDate4: response.approvedDate4,
-            serApproval5: response.serApproval5,
-            approvalBy5: response.approvalBy5,
-            approvedDate5: response.approvedDate5,
-          },
+          // approvalDetailsForm: {
+          //   serApproval1: response.serApproval1,
+          //   approvalBy1: response.approvalBy1,
+          //   approvedDate1: response.approvedDate1,
+          //   serApproval2: response.serApproval2,
+          //   approvalBy2: response.approvalBy2,
+          //   approvedDate2: response.approvedDate2,
+          //   serApproval3: response.serApproval3,
+          //   approvalBy3: response.approvalBy3,
+          //   approvedDate3: response.approvedDate3,
+          //   serApproval4: response.serApproval4,
+          //   approvalBy4: response.approvalBy4,
+          //   approvedDate4: response.approvedDate4,
+          //   serApproval5: response.serApproval5,
+          //   approvalBy5: response.approvalBy5,
+          //   approvedDate5: response.approvedDate5,
+          // },
           // documentAttachmentForm: {
           //   docType: response.transactionHDDMSDto[0].docType,
           //   docType1: response.transactionHDDMSDto[1].docType,
@@ -270,51 +280,15 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           //   attachmentByName4: response.transactionHDDMSDto[4].attachmentByName,
           // }
         })
+        this.commonService.GetSubServiceTypeByServiceType(tenantId, response.serviceTypeId).subscribe((response: any) => {        
+          this.selectServiceSubType = response; 
+        });
         
-        if(this.allowedDiscountType === 1){
-          //
-          this.addServiceForm.get('downPayment')?.disable();
-          this.addServiceForm.get('allowDiscountAmount')?.disable();
-          this.addServiceForm.get('totinstallments')?.disable();
-          this.addServiceForm.get('installmentAmount')?.disable();
-          this.addServiceForm.get('installmentsBegDate')?.disable();
-          this.addServiceForm.get('untilMonth')?.disable();
-          this.addServiceForm.get('transDate')?.disable();
-          this.addServiceForm.get('serviceType')?.disable();
-          this.addServiceForm.get('serviceSubType')?.disable();
-        }
       })
-      
-    }
-
-    // this.common.empSearchClickEvent.pipe(takeWhile(() => this.isObservableActive)).subscribe(result => {
-    //   //
-    //   this.notSubscriber = false;
-    //   this.financialService.GetServiceType(21).subscribe((response: any) => {
-    //     this.pfId = this.common.PFId;
-    //     this.selectServiceType = response;
-    //     if (this.common.PFId != null
-    //       && this.common.subscribedDate == null
-    //       && this.common.terminationDate == null) {
-    //       // remove subscribe from servicetype & Subtype
-    //       if (result.trim()) {
-    //         let index = this.selectServiceType.findIndex(x => x.refId == 1);
-    //         if (index >= 0) {
-    //           this.selectServiceType.splice(index, 1);
-    //         }
-    //       }
-    //       this.notSubscriber = true;
-    //     } else if (this.common.PFId == null
-    //       && this.common.subscribedDate == null
-    //       && this.common.terminationDate == null) {
-    //       this.selectServiceType = response;
-    //       let arr = this.selectServiceType.filter(x => x.refId == 1)
-    //       this.selectServiceType = arr;
-    //       this.isSubscriber = true;
-
-    //     }
-    //   });
-    // })
+      //
+      this.enableDisableControls(this.addServiceForm.get('allowDiscountDefault')?.value)   
+      this.addServiceForm.get('pfId')?.disable();
+    }    
   }
 
   ngOnDestroy(): void {
@@ -387,6 +361,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       allowDiscountPer: new FormControl(null),
       transDate: new FormControl(moment(new Date()).format("yyyy-MM-DD")),
       pfId:new FormControl(null),
+      allowDiscountDefault: new FormControl(null)
     })
     this.parentForm.setControl('addServiceForm', this.addServiceForm);
   }
@@ -455,12 +430,16 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     const locationId = data.map((obj: { locationId: any; }) => obj.locationId);
     const username = data.map((obj: { username: any; }) => obj.username);
     //console.log(this.common.ifEmployeeExists);
-    this.addServiceForm.patchValue({
-      serviceType: this.selectedServiceTypeText,
-      serviceSubType: this.selectedServiceSubTypeText, //selectedServiceSubTypeText
-      serviceTypeId: this.selectedServiceType,
-      serviceSubTypeId: this.selectedServiceSubType
-    })
+    // NO Need TO Use if we are in edit mode.
+    if(!this.mytransid){
+      this.addServiceForm.patchValue({
+        serviceType: this.selectedServiceTypeText,
+        serviceSubType: this.selectedServiceSubTypeText,
+        serviceTypeId: this.selectedServiceType,
+        serviceSubTypeId: this.selectedServiceSubType       
+      })
+    }
+    
     let formData = {
       ...this.parentForm.value.addServiceForm,
       ...this.parentForm.value.approvalDetailsForm,
@@ -472,9 +451,16 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     }
 
     formData['installmentsBegDate'] = moment(formData['installmentsBegDate']).format("yyyy-MM-DD");
+    formData['untilMonth'] =moment(formData['untilMonth']).format("yyyy-MM-DD");
     formData['deliveryDate'] = moment(formData['deliveryDate']).format("yyyy-MM-DD"); 
     formData['transDate'] = moment(formData['transDate']).format("yyyy-MM-DD"); 
-    formData['discountType'] = this.allowedDiscountType; 
+    formData['discountType'] = this.allowedDiscountType;
+    formData['eachInstallmentsAmt'] = this.addServiceForm.get('installmentAmount')?.value; 
+    // To get the values of disabled controls. If we are in Edit mode. 
+    if(this.mytransid){
+      formData['allowDiscountAmount'] = this.addServiceForm.get('allowDiscountAmount')?.value;
+      formData['installmentAmount'] = this.addServiceForm.get('installmentAmount')?.value;      
+    }
     let finalformData = new FormData();
     Object.keys(formData).forEach(key => finalformData.append(key, formData[key]));
     // finalformData.append('personalPhotoDocType', this.parentForm.value.documentAttachmentForm[0].docType);
@@ -496,12 +482,19 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     this.isFormSubmitted = true;
     //
     if (this.mytransid) {
-      this.financialService.UpdateFinancialService(finalformData).subscribe(() => {
-        this.toastrService.success('Updated successfully', 'Success');
-        this.parentForm.reset();
+      //console.log('edit click',formData);
+      this.financialService.UpdateFinancialService(finalformData).subscribe((response: any) => {        
+        if (response.isSuccess == false) {
+          this.toastrService.error(response.message, 'Error');
+        }else{
+          this.toastrService.success('Updated successfully', 'Success');          
+          setTimeout(()=>{                           
+           this.onOkayClick();
+        }, 2000);
+        }
       })
     } else {
-      //console.log(formData);
+      //console.log('add click',formData);
       this.financialService.AddFinacialService(finalformData).subscribe((response: any) => {
         if (response.isSuccess == false) {
           this.toastrService.error(response.message, 'Error');
@@ -516,7 +509,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           this.financialCalculationForm.reset();
           this.openPopUpModal(this.popupModal);
         }
-        //this.saveFinancialArray();   
+       //this.saveFinancialArray();   
       })
     }
 
@@ -567,22 +560,31 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     let noOfinstallments = this.addServiceForm.get('totinstallments')?.value;
     let allowDiscountAmount = this.addServiceForm.get('allowDiscountAmount')?.value;
     let downPayment = this.addServiceForm.get('downPayment')?.value;
+    let allowDiscountDefault = this.addServiceForm.get('allowDiscountDefault')?.value;
     //
     let calculatedAmount = 0;
-    let percentageAmount = 0;
     let netAmount = 0;
     //
     if (amount == 0 || amount == '') {
       this.toastrService.error('Please enter amount', 'Error');
     }
-    else if (noOfinstallments == '' && this.addServiceForm.get('discountType')?.value === 1) {
+    else if (noOfinstallments == '' && this.addServiceForm.get('discountType')?.value === 1 && this.selectedServiceSubType != 1) {
       this.toastrService.error('Please enter installments', 'Error');
     } else {
       // If 1 Percentage...
-      if (this.addServiceForm.get('discountType')?.value === 1) {
-        percentageAmount = ((amount * allowDiscountAmount) / 100);
-        calculatedAmount = ((amount - percentageAmount) - downPayment);
+      if (allowDiscountDefault && this.addServiceForm.get('discountType')?.value === 1) {
+        calculatedAmount = ((amount - allowDiscountAmount) - downPayment);
         netAmount = (calculatedAmount / noOfinstallments);
+        this.addServiceForm.patchValue({
+        installmentAmount: netAmount.toFixed(2)
+      })
+      }
+      if(!allowDiscountDefault){
+        this.addServiceForm.patchValue({
+          installmentAmount:this.addServiceForm.get('totamt')?.value,
+          totinstallments:0,
+          allowDiscountAmount:0
+        })
       }
       // If 2 Fixed Amount and discount will be 100%...
       // else if (this.addServiceForm.get('discountType')?.value === 2) {
@@ -590,9 +592,9 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       //   netAmount = (calculatedAmount / noOfinstallments);
       // }
 
-      this.addServiceForm.patchValue({
-        installmentAmount: netAmount.toFixed(2)
-      })
+      // this.addServiceForm.patchValue({
+      //   installmentAmount: netAmount.toFixed(2)
+      // })
     }
   }
 
@@ -629,7 +631,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
 
   onServiceSubTypeChange($event: any) {    
     this.financialService.GetSelectedServiceSubType(this.selectedServiceType,$event.refId, 21).subscribe((response: any) => {
-       
+      console.log('response',response);
       // To set discount type and we will save it into TransactionHD...
       this.allowedDiscountType = response.discountType;
       this.addServiceForm.get('downPayment')?.enable();
@@ -639,7 +641,8 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           allowDiscountPer: response.allowDiscountPer,
           discountType: response.discountType,
           totinstallments:response.maxInstallment,
-          allowDiscountAmount:response.allowDiscountAmount
+          allowDiscountAmount:response.allowDiscountAmount,
+          allowDiscountDefault:response.allowDiscountDefault
         },
         approvalDetailsForm: {
           serApproval1: +response.serApproval1,
@@ -673,24 +676,47 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           otherAct4: response.otherAct4,
           otherAct5: response.otherAct5
         },
-      });     
-      if (this.addServiceForm.get('discountType')?.value === 2) {        
-        this.addServiceForm.get('allowDiscountAmount')?.disable();
-        this.addServiceForm.get('totinstallments')?.disable();
-        this.addServiceForm.get('installmentAmount')?.disable();
-        this.addServiceForm.get('downPayment')?.disable(); //this.addServiceForm.get('transDate')?.setValue(moment(new Date()).format("yyyy-MM-DD"));
+      }); 
+      if(!this.addServiceForm.get('allowDiscountDefault')?.value){
         this.addServiceForm.patchValue({
+          installmentAmount:this.addServiceForm.get('totamt')?.value,
           totinstallments:0,
-          installmentAmount:0,
-          downPayment:0,
-          installmentsBegDate: moment(new Date()).format("MMM-YYYY"),
-          untilMonth:moment(new Date()).format("MMM-YYYY"),
+          allowDiscountAmount:0
+        })        
+        //
+        this.enableDisableControls(this.addServiceForm.get('allowDiscountDefault')?.value)
+      } 
+      // To add default current date...
+      this.addServiceForm.patchValue({          
+        installmentsBegDate: moment(new Date()).format("MMM-YYYY"),
+        untilMonth:moment(new Date()).format("MMM-YYYY"),
+      })   
+      // To enable/disable PF Id text box.
+      if(this.isPfIdExists){
+        this.addServiceForm.get('pfId')?.disable();  
+      }
+      // if (this.addServiceForm.get('discountType')?.value === 2 || $event.refId == 1) {        
+      //   this.addServiceForm.get('allowDiscountAmount')?.disable();
+      //   this.addServiceForm.get('totinstallments')?.disable();
+      //   this.addServiceForm.get('installmentAmount')?.disable();
+      //   this.addServiceForm.get('downPayment')?.disable();
+      //   this.addServiceForm.patchValue({
+      //     totinstallments:0,
+      //     installmentAmount:0,
+      //     downPayment:0,
+      //     installmentsBegDate: moment(new Date()).format("MMM-YYYY"),
+      //     untilMonth:moment(new Date()).format("MMM-YYYY"),
+      //   })
+      // } else if (this.addServiceForm.get('discountType')?.value === 1) {        
+      //   this.addServiceForm.get('allowDiscountAmount')?.enable();
+      //   this.addServiceForm.get('totinstallments')?.enable();
+      //   this.addServiceForm.get('installmentAmount')?.enable();
+      //   this.addServiceForm.get('downPayment')?.enable();        
+      // }
+      if($event.refId == 1){
+        this.addServiceForm.patchValue({
+          allowDiscountAmount:0
         })
-      } else if (this.addServiceForm.get('discountType')?.value === 1) {        
-        this.addServiceForm.get('allowDiscountAmount')?.enable();
-        this.addServiceForm.get('totinstallments')?.enable();
-        this.addServiceForm.get('installmentAmount')?.enable();
-        this.addServiceForm.get('downPayment')?.enable();        
       }
       if (this.selectedServiceType == 2 && $event.refId == 3) {
         this.parentForm.patchValue({
@@ -775,15 +801,20 @@ export class AddServiceComponent implements OnInit, OnDestroy {
 
     // To hide/show the financial calculation div
     this.isPFIdNull = false;
-    this.financialService.SearchEmployee(this.searchForm.value).subscribe((response: any) => {
-      if (response === null) {
-        this.common.ifEmployeeExists = false;
-        this.toastrService.error('Sorry, record not found', 'Error');
-        this.employeeForm?.reset();
-      } else {
+    this.financialService.SearchEmployee(this.searchForm.value).subscribe((response: any) => { 
+        if (response.isSuccess == false) {
+          this.common.ifEmployeeExists = false;
+          this.toastrService.error(response.message, 'Error');
+          this.employeeForm?.reset();
+        }        
+       else {
         // To display other Accordians
         this.isSearched = true;
         this.common.ifEmployeeExists = true;
+        // To check if Pf Id is already exists so will disable the control.
+        if(response.pfid){
+          this.isPfIdExists = true;
+        }
         this.employeeForm?.patchValue({
           employeeId: response.employeeId,
           englishName: response.englishName,
@@ -820,7 +851,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
         this.common.terminationDate = response.terminationDate;
         // fill service type dropdown according to searched employee Id
         this.notSubscriber = false;
-        this.financialService.GetServiceType(21).subscribe((response: any) => {
+        this.financialService.GetServiceType(tenantId).subscribe((response: any) => {
           this.pfId = this.common.PFId;
           this.selectServiceType = response;
           if (this.common.PFId != null
@@ -850,6 +881,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       }
     });
   }
+  // 
   SearchSponsor(){
     //
     var data = JSON.parse(localStorage.getItem("user")!);
@@ -859,11 +891,11 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     // To hide/show the financial calculation div
     this.isPFIdNull = false;
     this.financialService.SearchSponsor(this.searchForm.value).subscribe((response: any) => {
-      if (response === null) {
+      if (response.isSuccess == false) {
         this.common.ifEmployeeExists = false;
-        this.toastrService.error('Sorry, record not found', 'Error');
+        this.toastrService.error(response.message, 'Error');
         this.employeeForm?.reset();
-      } else {
+      }  else {
         // To display other Accordians
         this.isSearched = true;
         this.common.ifEmployeeExists = true;
@@ -903,7 +935,90 @@ export class AddServiceComponent implements OnInit, OnDestroy {
         this.common.terminationDate = response.terminationDate;
         // fill service type dropdown according to searched employee Id
         this.notSubscriber = false;
-        this.financialService.GetServiceType(21).subscribe((response: any) => {
+        this.financialService.GetServiceType(tenantId).subscribe((response: any) => {
+          this.pfId = this.common.PFId;
+          this.selectServiceType = response;
+          if (this.common.PFId != null
+            && this.common.subscribedDate == null
+            && this.common.terminationDate == null) {
+            // remove subscribe from servicetype & Subtype
+            //if (result.trim()) {
+            let index = this.selectServiceType.findIndex(x => x.refId == 1);
+            if (index >= 0) {
+              this.selectServiceType.splice(index, 1);
+            }
+            //}
+            this.notSubscriber = true;
+          } else if (this.common.PFId == null
+            && this.common.subscribedDate == null
+            && this.common.terminationDate == null) {
+            this.selectServiceType = response;
+            let arr = this.selectServiceType.filter(x => x.refId == 1)
+            this.selectServiceType = arr;
+            this.isSubscriber = true;
+          }
+        });
+      }
+    }, error => {
+      if (error.status === 500) {
+        this.toastrService.error('Please enter Employee Id or CID or PFId', 'Error');
+      }
+    });
+  }
+  SearchNewSubscriber(){
+    //
+    var data = JSON.parse(localStorage.getItem("user")!);
+    const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
+    const locationId = data.map((obj: { locationId: any; }) => obj.locationId);
+
+    // To hide/show the financial calculation div
+    this.isPFIdNull = false;
+    this.financialService.SearchNewSubscriber(this.searchForm.value).subscribe((response: any) => {
+      if (response.isSuccess == false) {
+        this.common.ifEmployeeExists = false;
+        this.toastrService.error(response.message, 'Error');
+        this.employeeForm?.reset();
+      }  else {
+        // To display other Accordians
+        this.isSearched = true;
+        this.common.ifEmployeeExists = true;
+        this.employeeForm?.patchValue({
+          employeeId: response.employeeId,
+          englishName: response.englishName,
+          arabicName: response.arabicName,
+          empGender: response.empGender,
+          joinedDate: new Date(response.joinedDate),
+          empBirthday: new Date(response.empBirthday),
+          mobileNumber: response.mobileNumber,
+          empMaritalStatus: +response.empMaritalStatus,
+          nationName: response.nationName,
+          contractType: response.contractType,
+          subscriptionAmount: response.subscriptionAmount,
+          subscriptionPaid: response.subscriptionPaid,
+          lastSubscriptionPaid: response.lastSubscriptionPaid,
+          subscriptionDueAmount: response.subscriptionDueAmount,
+          subscriptionStatus: response.subscriptionStatus,
+          terminationDate: response.terminationDate,
+          endDate: response.endDate,
+          employeeStatus: response.employeeStatus,
+          isKUEmployee: response.isKUEmployee,
+          isOnSickLeave: response.isOnSickLeave,
+          isMemberOfFund: response.isMemberOfFund,
+          CountryNameEnglish: response.countryNameEnglish,
+          CountryNameArabic: response.countryNameArabic,
+          employeePFId: response.pfid,
+          employeeCID: response.empCidNum,
+          employeeFormEmployeeId: response.employeeId,
+        })
+        this.addServiceForm.patchValue({
+          pfId:response.pfid
+        })
+        this.common.PFId = response.pfid;
+        this.common.subscribedDate = response.subscribedDate;
+        this.common.terminationDate = response.terminationDate;
+        // fill service type dropdown according to searched employee Id
+        this.notSubscriber = false;
+        this.financialService.GetServiceType(tenantId).subscribe((response: any) => {
           this.pfId = this.common.PFId;
           this.selectServiceType = response;
           if (this.common.PFId != null
@@ -1037,70 +1152,37 @@ export class AddServiceComponent implements OnInit, OnDestroy {
   }
 
 //#region 
-  // To select service type while edit.
-  GetServiceTypeWhileEdit(){
-    this.financialService.GetServiceType(21).subscribe((response: any) => {      
-      this.selectServiceType = response;
-      if (this.common.PFId != null
-        && this.common.subscribedDate == null
-        && this.common.terminationDate == null) {
-
-        // remove subscribe from servicetype & Subtype        
-        let index = this.selectServiceType.findIndex(x => x.refId == 1);
-        if (index >= 0) {
-          this.selectServiceType.splice(index, 1);
-        }
-        this.notSubscriber = true;
-      } else if (this.common.PFId == null
-        && this.common.subscribedDate == null
-        && this.common.terminationDate == null) {
-        this.selectServiceType = response;
-        let arr = this.selectServiceType.filter(x => x.refId == 1)
-        this.selectServiceType = arr;
-        this.isSubscriber = true;        
-      }      
-      this.serviceTypeSelected=this.selectServiceType[0].refId;
-      this.GetServiceSubTypeWhileEdit(this.selectServiceType[0].refId);
-      this.selectedServiceSubType= this.selectServiceType[0].shortname;
-    });
-    
-  }
-  // To select sub service type while edit.
-  GetServiceSubTypeWhileEdit(refId: any) {       
-    this.commonService.GetSubServiceTypeByServiceType(21, refId).subscribe((response: any) => {
-      this.selectServiceSubType = response
-      if (this.common.PFId != null
-        && this.common.subscribedDate != null
-        && this.common.terminationDate != null) {
-        // This is Resubscribe Case
-        if (response) {
-          let index = this.selectServiceSubType.findIndex(x => x.refId == 1);
-          if (index >= 0) {
-            this.selectServiceSubType.splice(index, 1);
-          }
-        }
-        //
-        this.notSubscriber = false;
-      }
-      if (this.isSubscriber) {
-        let index = this.selectServiceSubType.findIndex(x => x.refId == 2);
-        if (index >= 0) {
-          this.selectServiceSubType.splice(index, 2);
-        }
-        //
-        this.notSubscriber = false;
-      }
-      this.serviceSubTypeSelected = this.selectServiceSubType[0].refId;
-      this.selectedServiceSubTypeText = this.selectServiceSubType[0].shortname;      
-    });
-    if (this.selectedServiceType == 2 && this.selectServiceSubType[0].refId == 3) {
-      this.parentForm.patchValue({
-        addServiceForm: {
-          allowDiscountAmount: 100
-        }
-      });
-      //
+  // To enable/disable controls based on AllowDiscountDefault...
+  enableDisableControls(isAllowDiscount:boolean){
+    if(isAllowDiscount){
+      this.addServiceForm.get('downPayment')?.enable();
+      this.addServiceForm.get('allowDiscountAmount')?.enable();
+      this.addServiceForm.get('totinstallments')?.enable();
+      this.addServiceForm.get('installmentAmount')?.enable();
+      this.addServiceForm.get('installmentsBegDate')?.enable();
+      this.addServiceForm.get('untilMonth')?.enable();
+      this.addServiceForm.get('transDate')?.enable();
+      this.addServiceForm.get('serviceType')?.enable();
+      this.addServiceForm.get('serviceSubType')?.enable();
+    }else{
       this.addServiceForm.get('downPayment')?.disable();
+      this.addServiceForm.get('allowDiscountAmount')?.disable();
+      this.addServiceForm.get('totinstallments')?.disable();
+      this.addServiceForm.get('installmentAmount')?.disable();
+      this.addServiceForm.get('installmentsBegDate')?.disable();
+      this.addServiceForm.get('untilMonth')?.disable();
+      this.addServiceForm.get('transDate')?.disable();
+      this.addServiceForm.get('serviceType')?.disable();
+      this.addServiceForm.get('serviceSubType')?.disable();
+    }
+    if(this.addServiceForm.get('serviceType')?.value == 1 
+    || this.addServiceForm.get('serviceSubType')?.value == 2){
+      this.addServiceForm.get('pfId')?.enable()
+    }
+    
+    if(!this.mytransid){
+      this.addServiceForm.get('serviceType')?.enable();
+      this.addServiceForm.get('serviceSubType')?.enable();
     }
   }
 // #endregion

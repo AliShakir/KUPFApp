@@ -19,4 +19,7 @@ export interface CashierApprovalDto {
     receivedBy: string;
     draftNumber1: string;
     draftNumber2: string;
+    totalInstallments:number,
+    status:string;
+    active:boolean;
 }

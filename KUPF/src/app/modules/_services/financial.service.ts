@@ -32,6 +32,8 @@ export class FinancialService {
    //
    returnServiceApprovals : ReturnServiceApprovals[]=[];
    //
+   returnManagerApprovals:CashierApprovalDto[]=[];
+   //
    returnServiceApprovalDetails: ReturnServiceApprovalDetails[]=[];
 
    returnRefTableDto : RefTableDto[]=[];
@@ -141,10 +143,10 @@ export class FinancialService {
     )
   }
   
-  GetServiceApprovals() {      
-    return this.httpClient.get<ReturnServiceApprovals[]>(this.baseUrl + `FinancialService/GetServiceApprovalsAsync`).pipe(
+  GetServiceApprovals(periodCode:number,tenentId:number,locationId:number) {      
+    return this.httpClient.get<CashierApprovalDto[]>(this.baseUrl + `FinancialService/GetServiceApprovalsAsync?periodCode=${periodCode}&tenentId=${tenentId}&locationId=${locationId}`).pipe(
       map(returnServiceApprovals => {
-        this.returnServiceApprovals = returnServiceApprovals;
+        this.returnManagerApprovals = returnServiceApprovals;
         return returnServiceApprovals;
       })
     )
@@ -202,6 +204,9 @@ export class FinancialService {
   }
   SearchSponsor(searchEmployeeDto: SearchEmployeeDto) {
     return this.httpClient.post<ReturnSearchResultDto[]>(this.baseUrl + `FinancialService/SearchSponsor`,searchEmployeeDto);
+  }
+  SearchNewSubscriber(searchEmployeeDto: SearchEmployeeDto) {
+    return this.httpClient.post<ReturnSearchResultDto[]>(this.baseUrl + `FinancialService/SearchNewSubscriber`,searchEmployeeDto);
   }
   GetCashierApprovals(periodCode:number,tenentId:number,locationId:number) { 
     return this.httpClient.get<CashierApprovalDto[]>(this.baseUrl + `FinancialService/GetCashierApprovals?periodCode=${periodCode}&tenentId=${tenentId}&locationId=${locationId}`);    

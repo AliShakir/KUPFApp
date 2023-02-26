@@ -11,6 +11,7 @@ namespace API.Models
         public long Mytransid { get; set; }
         public int? LocationId { get; set; }
         public int? EmployeeId { get; set; }
+        public int? SponserProvidentID { get; set; }
         public int? ServiceId { get; set; }
         public int? MasterServiceId { get; set; }
         public int? ServiceTypeId { get; set; }
@@ -20,10 +21,16 @@ namespace API.Models
         public string Source { get; set; }
         public int? AttachId { get; set; }
         public string TransDocNo { get; set; }
+        public string? UserDefinedNumber { get; set; }
         public long? BankId { get; set; }
-        public string ChequeNumber { get; set; }
+        public string? ChequeNumber { get; set; }
         public DateTime? ChequeDate { get; set; }
         public decimal? ChequeAmount { get; set; }
+        public DateTime? CollectedDate { get; set; }
+        public string? CollectedBy { get; set; }
+        public string? Relationship { get; set; }
+        public string? CollectedPersonCID { get; set; }
+        public decimal? EachInstallmentsAmt { get; set; }
         public decimal? Totinstallments { get; set; }
         public decimal? Totamt { get; set; }
         public decimal? AmtPaid { get; set; }
@@ -53,7 +60,7 @@ namespace API.Models
         public string? ApprovalBy5 { get; set; }
         public DateTime? ApprovedDate5 { get; set; }
         public string Activitycode { get; set; }
-        public decimal? Mydocno { get; set; }
+        public int? Mydocno { get; set; }
         public string Userbatchno { get; set; }
         public string Projectno { get; set; }
         public DateTime Transdate { get; set; }
@@ -63,6 +70,7 @@ namespace API.Models
         public string Glpostref1 { get; set; }
         public int? Companyid { get; set; }
         public decimal? Discount { get; set; }
+        public decimal? DiscountedGiftAmount { get; set; }
         public int? Terms { get; set; }
         public int? RefTransId { get; set; }
         public string Signatures { get; set; }
@@ -78,13 +86,12 @@ namespace API.Models
         public decimal? InstallmentAmount { get; set; }
         public DateTime? InstallmentsBegDate { get; set; }
         public string? UntilMonth { get; set; }
-        public int? SponserProvidentID { get; set; }
         public decimal? DownPayment { get; set; }
         //
         public decimal? EntireLoanAmount { get; set; }
         public string? FinancialAidPercentage { get; set; }
         public decimal? PFFundRevenue { get; set; }
-        public string? PFFundRevenuePercentage { get; set; }
+        public decimal? PFFundRevenuePercentage { get; set; }
         public decimal? AdjustmentAmount { get; set; }
         public string? AdjustmentAmountRemarks { get; set; }
         public decimal? FinancialAmount { get; set; }
@@ -121,6 +128,11 @@ namespace API.Models
         public DateTime? ReceivedDate1 { get; set; }
         public DateTime? ReceivedDate2 { get; set; }
         public int? DiscountType { get; set; }
-
+        public int? PeriodBegin { get; set; }
+        public bool? AllowDiscountDefault { get; set; }
+        public string? SerApproval6 { get; set; }
+        public string? ApprovalBy6 { get; set; }
+        public DateTime? ApprovedDate6 { get; set; }
+        public string? PFID { get; set; }
     }
 }

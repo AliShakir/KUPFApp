@@ -69,4 +69,6 @@ export interface TransactionHdDto{
     untilMonth: string;
     documentAttachmentForm: any[];
     discountType:number;
+    eachInstallmentsAmt:number;
+    allowDiscountDefault:boolean;
 }

@@ -52,7 +52,7 @@ namespace API.Controllers
         /// <returns></returns>
         [HttpPut]
         [Route("UpdateFinancialService")]
-        public async Task<ActionResult<string>> UpdateFinancialService(TransactionHdDto transactionHdDto)
+        public async Task<ActionResult<FinancialServiceResponse>> UpdateFinancialService([FromForm]TransactionHdDto transactionHdDto)
         {
             if (transactionHdDto != null)
             {
@@ -122,9 +122,9 @@ namespace API.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("GetServiceApprovalsAsync")]
-        public async Task<IEnumerable<ReturnServiceApprovals>> GetServiceApprovalsAsync()
+        public async Task<IEnumerable<ManagerApprovalDto>> GetServiceApprovalsAsync(long periodCode, int tenentId, int locationId)
         {
-            var result = await _financialService.GetServiceApprovalsAsync();
+            var result = await _financialService.GetServiceApprovalsAsync(periodCode, tenentId, locationId);
             return result;
         }
         /// <summary>
@@ -302,6 +302,18 @@ namespace API.Controllers
         public async Task<ReturnSearchResultDto> SearchSponsor(SearchEmployeeDto searchEmployeeDto)
         {
             var result = await _financialService.SearchSponsor(searchEmployeeDto);
+            return result;
+        }
+        /// <summary>
+        /// Search New Subscriber...
+        /// </summary>
+        /// <param name="searchEmployeeDto"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("SearchNewSubscriber")]
+        public async Task<ReturnSearchResultDto> SearchNewSubscriber(SearchEmployeeDto searchEmployeeDto)
+        {
+            var result = await _financialService.SearchNewSubscriber(searchEmployeeDto);
             return result;
         }
     }

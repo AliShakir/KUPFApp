@@ -33,7 +33,7 @@ namespace API.Common
             int currentMonth = installmentBeginDate.Month;
             int months = currentMonth - 12;
             int remainingMonths = Math.Abs(months);
-            int installments = remainingMonths + 12;
+            int installments = remainingMonths + 14;
             return installments;
         }
         /// <summary>

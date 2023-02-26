@@ -34,6 +34,8 @@ namespace API.DTOs
         public int? CountryId { get; set; }
         public string? CountryNameEnglish { get; set; }
         public string? CountryNameArabic { get; set; }
-
+        // To send response type and error message.
+        public bool IsSuccess { get; set; }
+        public string Message { get; set; }
     }
 }

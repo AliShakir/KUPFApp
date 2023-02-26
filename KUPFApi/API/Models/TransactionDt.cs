@@ -12,7 +12,7 @@ namespace API.Models
         public long Mytransid { get; set; }
         public int Myid { get; set; }
         public int? EmployeeId { get; set; }
-        public decimal? InstallmentNumber { get; set; }
+        public int? InstallmentNumber { get; set; }
         public int? AttachId { get; set; }
         public long? PeriodCode { get; set; }
         public decimal? InstallmentAmount { get; set; }
@@ -33,6 +33,8 @@ namespace API.Models
         public bool? Active { get; set; }
         public string Switch1 { get; set; }
         public int? DelFlag { get; set; }
+        public string? Userid { get; set; }
+        public DateTime? Entrydate { get; set; }
 
     }
 }

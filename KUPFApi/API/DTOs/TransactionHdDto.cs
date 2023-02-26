@@ -153,6 +153,14 @@ namespace API.DTOs
         public DateTime? ReceivedDate1 { get; set; }
         public DateTime? ReceivedDate2 { get; set; }
         public int? DiscountType { get; set; }
+        public int? PeriodBegin { get; set; }
+        public decimal? EachInstallmentsAmt { get; set; }
+        public decimal? AllowDiscountAmount { get; set; }
+        public bool? AllowDiscountDefault { get; set; }
+        public string? SerApproval6 { get; set; }
+        public string? ApprovalBy6 { get; set; }
+        public DateTime? ApprovedDate6 { get; set; }
+        public string? PFID { get; set; }
     }
    
 }

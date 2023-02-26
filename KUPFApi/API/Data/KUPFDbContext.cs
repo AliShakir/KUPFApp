@@ -4042,7 +4042,7 @@ namespace API.Models
                     .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.InstallmentNumber)
-                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnType("int")
                     .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.OtherReference)
@@ -4155,7 +4155,7 @@ namespace API.Models
                     .HasComment("If there is Master Service id than unique of the ServiceSetup.ServiceID except this raw ServiceID will be in the drop Down\r\nIf this service ID Does not have any master or consecutive than it will be same as ServiceID");
 
                 entity.Property(e => e.Mydocno)
-                    .HasColumnType("numeric(20, 0)")
+                    .HasColumnType("int")
                     .HasColumnName("MYDOCNO")
                     .HasDefaultValueSql("((0))");
 

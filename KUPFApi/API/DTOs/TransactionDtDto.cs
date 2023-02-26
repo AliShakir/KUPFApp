@@ -12,7 +12,7 @@ namespace API.DTOs
         public long Mytransid { get; set; }
         public int Myid { get; set; }
         public int? EmployeeId { get; set; }
-        public decimal? InstallmentNumber { get; set; }
+        public int? InstallmentNumber { get; set; }
         public int? AttachId { get; set; }
         public long? PeriodCode { get; set; }
         public decimal? InstallmentAmount { get; set; }
@@ -35,6 +35,7 @@ namespace API.DTOs
         public int? DelFlag { get; set; }
         public DateTime InstallmentsBegDate { get; set; }
         public string UntilMonth { get; set; }
-
+        public string Userid { get; set; }
+        public DateTime? Entrydate { get; set; }
     }
 }

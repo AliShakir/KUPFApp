@@ -42,11 +42,11 @@
                             <th mat-header-cell *matHeaderCellDef class="ArFontStyle">{{bodyLabel[1].title}}</th>
                             <td mat-cell *matCellDef="let item" class="w-20 text-right">
                                 <a href="javascript:void(0)" class="text-success fw-bolder"
-                                    (click)="openApproveServiceModal(approveServiceModal,$event)" [id]="item.myTransId">
+                                    (click)="openApproveServiceModal(approveServiceModal,$event)" [id]="item.transId">
                                     Approve
                                 </a>
                                 | <a href="javascript:void(0)" class="text-danger fw-bolder"
-                                    (click)="openRejectServiceModal(rejectServiceModal,$event)" [id]="item.myTransId">
+                                    (click)="openRejectServiceModal(rejectServiceModal,$event)" [id]="item.transId">
                                     Reject
                                 </a>
                                 | <a href="javascript:void(0)" class="text-primary fw-bolder"
@@ -58,7 +58,7 @@
                         <ng-container matColumnDef="transId">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header class="ArFontStyle">
                                 Trans# </th>
-                            <td mat-cell *matCellDef="let item" class="w-70 ArFontStyle">{{item.myTransId}}</td>
+                            <td mat-cell *matCellDef="let item" class="w-70 ArFontStyle">{{item.transId}}</td>
                         </ng-container>
                         <ng-container matColumnDef="employeeId">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header class="ArFontStyle">
@@ -83,8 +83,8 @@
                         <ng-container matColumnDef="serviceType">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header class="ArFontStyle">
                                 Services</th>
-                            <td mat-cell *matCellDef="let item" class="ArFontStyle">{{item.serviceType}} - {{item.serviceSubType}}</td>
-                        </ng-container> 
+                            <td mat-cell *matCellDef="let item" class="ArFontStyle">{{item.serviceName}}</td>
+                        </ng-container>
                         <ng-container matColumnDef="source">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header class="ArFontStyle">
                                 {{bodyLabel[8].title}}</th>
@@ -93,17 +93,18 @@
                         <ng-container matColumnDef="totalInstallment">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header class="ArFontStyle">
                                 {{bodyLabel[5].title}}</th>
-                            <td mat-cell *matCellDef="let item" class="ArFontStyle text-center" >{{item.totalInstallments}}</td>
+                            <td mat-cell *matCellDef="let item" class="ArFontStyle text-center">
+                                {{item.totalInstallments}}</td>
                         </ng-container>
                         <ng-container matColumnDef="amount">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header class="ArFontStyle">
                                 {{bodyLabel[6].title}}</th>
-                            <td mat-cell *matCellDef="let item" class="ArFontStyle">{{item.amount}}</td>
+                            <td mat-cell *matCellDef="let item" class="ArFontStyle">{{item.totalAmount}}</td>
                         </ng-container>
                         <ng-container matColumnDef="status">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header class="ArFontStyle">
                                 Status</th>
-                            <td mat-cell *matCellDef="let item" class="ArFontStyle">{{item.discounted}}</td>
+                            <td mat-cell *matCellDef="let item" class="ArFontStyle">{{item.status}}</td>
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky:true"
                             [ngClass]="{'hidden':!isLoadingCompleted}" class="m_approval_thead"></tr>
@@ -119,7 +120,7 @@
     </div>
     <!--begin::Body-->
     <div class="card-footer">
-        
+
     </div>
 </div>
 
@@ -142,26 +143,40 @@
 <!--APPROVE SERVICE-->
 <ng-template #approveServiceModal let-modal>
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Approve Service</h4>
+        <h4 class="modal-title" id="modal-basic-title" lang="AR-SA">Approve Services - خدمات الموافقة</h4>
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
         <form autocomplete="off" [formGroup]="approveServiceForm" id="approveServiceForm">
-            <input type="hidden" formControlName="mytransId" />            
+            <input type="hidden" formControlName="mytransId" />
             <div class="mb-3">
                 <span class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">
-                   <strong> {{approveServiceForm.controls.totamt.value}} </strong> -
-                    {{approveServiceForm.controls.serviceType.value}} 
+                    <strong class="text-primary">{{approveServiceForm.controls.englishName.value}}</strong> <br/><br/>
+                    <strong> {{approveServiceForm.controls.totamt.value}} </strong> -
+                    {{approveServiceForm.controls.serviceType.value}}
                     {{approveServiceForm.controls.serviceSubType.value}}
+
                 </span>
-                
+
             </div>
             <div class="mb-3">
-                <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Date & Time</label>
-                <input type="datetime" class="form-control" formControlName="currentDateTime" readonly/>
-            </div>            
+                <div class="d-flex justify-content-between">
+                    <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">
+                        Date & Time</label>
+
+                    <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">
+                        </label>
+                </div>
+                <!-- <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Date & Time</label>  - ملاحظات-->
+                <input type="datetime" class="form-control" formControlName="currentDateTime" readonly />
+            </div>
             <div class="mb-3">
-                <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Remarks</label>
+                <div class="d-flex justify-content-between">
+                    <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">
+                        ملاحظات</label>
+                    <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">
+                        Remarks</label>
+                </div>
                 <textarea type="text" class="form-control form-control-lg mb-lg-0" formControlName="approvalRemarks"
                     name="approvalRemarks">
                 </textarea>
@@ -180,29 +195,45 @@
 <!--REJECT SERVICE-->
 <ng-template #rejectServiceModal let-modal>
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Reject Service</h4>
+        <h4 class="modal-title" id="modal-basic-title" lang="AR-SA">Rejection Services - خدمات الرفض</h4>
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
         <form autocomplete="off" [formGroup]="rejectServiceForm" id="rejectServiceForm">
             <input type="hidden" formControlName="mytransId" />
             <div class="mb-3">
-                <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Date & Time</label>
-                <input type="datetime" class="form-control" formControlName="currentDateTime" readonly/>
+                <div class="d-flex justify-content-between">
+                    <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">
+                        Date & Time</label>
+                    <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">
+                        </label>
+                </div>
+                <input type="datetime" class="form-control" formControlName="currentDateTime" readonly />
             </div>
             <div class="mb-3">
-                <label class="col-form-label fw-bold fs-6 ArFontStyle"><span class="">Rejection Type</span></label>                           
-                            <ng-select [items]="rejectionType$ | async" bindValue="refid" bindLabel="refsubtype"
-                                formControlName="rejectionType" lang="AR-SA">                            
-                            </ng-select>
+                <div class="d-flex justify-content-between">
+                    <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">
+                        نوع الرفض</label>
+                    <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">
+                        Rejection Type</label>
+                </div>
+                <ng-select [items]="rejectionType$ | async" bindValue="refid" bindLabel="refsubtype"
+                    formControlName="rejectionType" lang="AR-SA">
+                </ng-select>
             </div>
             <div class="mb-3">
-                <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle">Remarks</label>
+                <div class="d-flex justify-content-between">
+                    <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">
+                        ملاحظات</label>
+                    <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">
+                        Remarks</label>
+                </div>
                 <textarea type="text" class="form-control form-control-lg mb-lg-0" formControlName="rejectionRemarks"
                     name="rejectionRemarks">
                 </textarea>
                 <span class="text-danger"
-                    *ngIf="isFormSubmitted && rejectionForm.rejectionRemarks.errors?.required">Please enter remarks</span>
+                    *ngIf="isFormSubmitted && rejectionForm.rejectionRemarks.errors?.required">Please enter
+                    remarks</span>
             </div>
         </form>
     </div>

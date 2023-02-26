@@ -8,7 +8,7 @@ namespace API.DTOs
     public class ReturnSingleFinancialServiceById
     {
         public long Mytransid { get; set; }
-        public string Pfid { get; set; }
+        public string PFID { get; set; }
         public string EmployeeId { get; set; }
         public string ArabicName { get; set; }
         public string EnglishName { get; set; }
@@ -58,12 +58,14 @@ namespace API.DTOs
         public decimal? AmtPaid { get; set; }
         public decimal? InstallmentAmount { get; set; }
         public DateTime InstallmentsBegDate { get; set; }
+        public bool? AllowDiscountDefault { get; set; }
         public string UntilMonth { get; set; }
         public List<TransactionHDDMSDto> TransactionHDDMSDto { get; set; }
         public decimal? DownPayment { get; set; }
         public int? ServiceTypeId { get; set; }
         public int? ServiceSubTypeId { get; set; }
         public int? DiscountType { get; set; }
+        public decimal? AllowDiscountAmount { get; set; }
 
     }
 }

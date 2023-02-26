@@ -13,12 +13,12 @@ namespace API.Servivces.Interfaces.FinancialServices
     public interface IFinancialService
     {
         Task<FinancialServiceResponse> AddFinancialServiceAsync(TransactionHdDto transactionHdDto);
-        Task<string> UpdateFinancialServiceAsync(TransactionHdDto transactionHdDto);
+        Task<FinancialServiceResponse> UpdateFinancialServiceAsync(TransactionHdDto transactionHdDto);
         Task<ReturnSingleFinancialServiceById> GetFinancialServiceByIdAsync(long id);
         Task<IEnumerable<ReturnTransactionHdDto>> GetFinancialServiceAsync();
         Task<int> DeleteFinancialServiceAsync(long id);
         Task<ServiceSetupDto> GetServiceByServiceTypeAndSubType(int serviceType, int serviceSubType,int tenentId);
-        Task<IEnumerable<ReturnServiceApprovals>> GetServiceApprovalsAsync();
+        Task<IEnumerable<ManagerApprovalDto>> GetServiceApprovalsAsync(long periodCode, int tenentId, int locationId);
 
         Task<string> ApproveServiceAsync(ApproveRejectServiceDto approveRejectServiceDto);
 
@@ -48,6 +48,7 @@ namespace API.Servivces.Interfaces.FinancialServices
 
         Task<ReturnSearchResultDto> SearchSponsor(SearchEmployeeDto searchEmployeeDto);
 
+        Task<ReturnSearchResultDto> SearchNewSubscriber(SearchEmployeeDto searchEmployeeDto);
 
     }
 }
