@@ -69,7 +69,7 @@ namespace API.Servivces.Implementation.DetailedEmployee
                 await _context.DetailedEmployees.AddAsync(newEmployee);
                 await _context.SaveChangesAsync();
                 //
-                var auditInfo = _context.Reftables.FirstOrDefault(c => c.Reftype == "audit" && c.Refsubtype == "Employee");
+                var auditInfo = _context.Reftables.FirstOrDefault(c => c.Reftype == "Audit" && c.Refsubtype == "Employee");
                 var mySerialNo = _context.TblAudits.Max(c => c.MySerial) + 1;
                 var auditNo = _context.Crupaudits.Max(c => c.AuditNo) + 1;
                 var crupAudit = new Crupaudit
@@ -128,7 +128,7 @@ namespace API.Servivces.Implementation.DetailedEmployee
                         result = await _context.SaveChangesAsync();
                     }
                     //                    
-                    var auditInfo = _context.Reftables.FirstOrDefault(c => c.Reftype == "audit" && c.Refsubtype == "Employee");
+                    var auditInfo = _context.Reftables.FirstOrDefault(c => c.Reftype == "Audit" && c.Refsubtype == "Employee");
                     var mySerialNo = _context.TblAudits.Max(c => c.MySerial) +1;
                     var auditNo = _context.Crupaudits.Max(c => c.AuditNo) + 1;
                     var crupAudit = new Crupaudit
@@ -175,7 +175,7 @@ namespace API.Servivces.Implementation.DetailedEmployee
                     var crupId = _context.CrupMsts.Max(c => c.CrupId);
                     var maxCrupId = crupId + 1;
                     //
-                    var auditInfo = _context.Reftables.FirstOrDefault(c => c.Reftype == "audit" && c.Refsubtype == "Employee");
+                    var auditInfo = _context.Reftables.FirstOrDefault(c => c.Reftype == "Audit" && c.Refsubtype == "Employee");
                     var mySerialNo = _context.Crupaudits.Max(c => c.MySerial) + 1 ;
                     var auditNo = _context.Crupaudits.Max(c => c.AuditNo) + 1;
                     var crupAudit = new Crupaudit
