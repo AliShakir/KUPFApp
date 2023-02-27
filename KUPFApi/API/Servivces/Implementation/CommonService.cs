@@ -237,15 +237,15 @@ namespace API.Servivces.Implementation
 
         public async Task<DetailedEmployeeDto> SearchEmployee(SearchEmployeeDto searchEmployeeDto)
         {
-            if (searchEmployeeDto.EmployeeId == 0
+            if ((string.IsNullOrWhiteSpace(searchEmployeeDto.EmployeeId)
                 && string.IsNullOrWhiteSpace(searchEmployeeDto.PFId)
-                && string.IsNullOrWhiteSpace(searchEmployeeDto.CID))
+                && string.IsNullOrWhiteSpace(searchEmployeeDto.CID)))
             {
                 throw new Exception("Invalid Input");
             }
 
             var result = new Models.DetailedEmployee();
-            if (searchEmployeeDto.EmployeeId == 0)
+            if (searchEmployeeDto.EmployeeId != string.Empty || !string.IsNullOrWhiteSpace(searchEmployeeDto.EmployeeId))
             {
                 result = await _context.DetailedEmployees.Where(c => c.EmployeeId == searchEmployeeDto.EmployeeId).FirstOrDefaultAsync();
             }
@@ -473,7 +473,7 @@ namespace API.Servivces.Implementation
                                    select hd.SponserProvidentID).Count();
 
 
-                DateTime dd = (DateTime)_context.DetailedEmployees.Where(c => c.EmployeeId == employeeId).FirstOrDefault().SubscribedDate;
+                DateTime dd = (DateTime)_context.DetailedEmployees.Where(c => c.EmployeeId == employeeId.ToString()).FirstOrDefault().SubscribedDate;
 
                 double totalDays = (transactionDate - dd).TotalDays;
 
@@ -566,5 +566,45 @@ namespace API.Servivces.Implementation
                         }).FirstOrDefault();
             return data;
         }
+
+
+        public async Task<IEnumerable<SelectLetterTypeDTo>> GetLetterTypeAsync()
+        {
+            try
+            {
+                var result = await _context.Reftables
+                .Where(c => c.Reftype == "KUPF" && c.Refsubtype == "Communication").ToListAsync();
+                var data = _mapper.Map<IEnumerable<SelectLetterTypeDTo>>(result);
+                return data;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+  
+        }
+
+
+        public async Task<IEnumerable<SelectPartyTypeDTo>> GetPartyTypeAsync()
+        {
+            try
+            {
+                var result = await _context.Reftables
+                              .Where(c => c.Reftype == "KUPF" && c.Refsubtype == "Party").ToListAsync();
+                var data = _mapper.Map<IEnumerable<SelectPartyTypeDTo>>(result);
+                return data;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+          
+        }
+
+
+
     }
 }

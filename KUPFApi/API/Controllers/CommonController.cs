@@ -438,5 +438,26 @@ namespace API.Controllers
             return result;
         }
 
+
+
+        [HttpGet]
+        [Route("getLetterType")]
+        public async Task<IEnumerable<SelectLetterTypeDTo>> GetLetterType()
+        {
+            var result = await _commonServiceService.GetLetterTypeAsync();
+            return result;
+        }
+
+
+        [HttpGet]
+        [Route("getPartyType")]
+        public async Task<IEnumerable<SelectPartyTypeDTo>> GetPartyTypeAsync()
+        {
+            var result = await _commonServiceService.GetPartyTypeAsync();
+            return result;
+        }
+
+
+
     }
 }

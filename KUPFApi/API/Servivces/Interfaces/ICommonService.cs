@@ -110,5 +110,8 @@ namespace API.Servivces.Interfaces
         Task<IEnumerable<SelectBankAccount>> GetBankAccounts(int tenentId, int locationId);
 
         Task<CashierApprovalDto> GetDraftInformationByEmployeeId(int employeeId, int tenentId, int locationId, int transactionId);
+
+        Task<IEnumerable<SelectLetterTypeDTo>> GetLetterTypeAsync();
+        Task<IEnumerable<SelectPartyTypeDTo>> GetPartyTypeAsync();
     }
 }

@@ -5,10 +5,10 @@ namespace API.Common
     public static class CommonMethods
     {
         
-        public static Int32 CreateEmployeeId()
+        public static Int64 CreateEmployeeId()
         {
             Random rnd = new Random();
-            Int32 employeeId  = rnd.Next(1, 100000); 
+		    Int64 employeeId  = rnd.Next(1, 1000000); 
             return employeeId;
         }
         public static Int32 CreateUserId()
@@ -33,7 +33,7 @@ namespace API.Common
             int currentMonth = installmentBeginDate.Month;
             int months = currentMonth - 12;
             int remainingMonths = Math.Abs(months);
-            int installments = remainingMonths + 14;
+            int installments = remainingMonths + 12;
             return installments;
         }
         /// <summary>
