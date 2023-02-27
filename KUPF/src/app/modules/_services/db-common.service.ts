@@ -34,6 +34,7 @@ import { FinanaceCalculationDto } from '../models/FinancialService/FinanaceCalcu
 import { CashierInformationDto } from '../models/FinancialService/CashierInformationDto';
 import { SelectBankAccount } from '../models/SelectBankAccount';
 import { CashierApprovalDto } from '../models/FinancialService/CashierApprovalDto';
+import { SelectLetterTypeDTo, SelectPartyTypeDTo } from '../models/CommunicationDto';
 
 @Injectable({
   providedIn: 'root'
@@ -102,7 +103,9 @@ export class DbCommonService {
   //selectedMasterIds: any[] = [];
 
   //loanAct: number;
+  letterTypeDTo: SelectLetterTypeDTo[] = [];
 
+  partyType: SelectPartyTypeDTo[] = [];
   constructor(private httpClient: HttpClient, private toastr: ToastrService) { }
 
 
@@ -401,4 +404,37 @@ export class DbCommonService {
       })
     )
   }
+
+
+    // Get all Departments.
+    getLetterType() {
+      return this.httpClient.get<SelectLetterTypeDTo[]>(this.baseUrl + `Common/getLetterType`).pipe(
+        map(letterTypeDTo => {
+          
+          this.letterTypeDTo = letterTypeDTo;
+          return letterTypeDTo;
+        })
+      )
+    }
+
+    getPartyType() {
+      return this.httpClient.get<SelectPartyTypeDTo[]>(this.baseUrl + `Common/getPartyType`).pipe(
+        map(partyType => {
+          
+          this.partyType = partyType;
+          return partyType;
+        })
+      )
+    }
+
+    getFilledAtAsync() {
+      return this.httpClient.get<SelectPartyTypeDTo[]>(this.baseUrl + `Common/getFilledAtAsync`).pipe(
+        map(partyType => {
+          
+          this.partyType = partyType;
+          return partyType;
+        })
+      )
+    }
+
 }

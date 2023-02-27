@@ -11,8 +11,10 @@ import { AddIncomingLettersComponent } from './add-incoming-letters/add-incoming
 import { IncomingLetterDetailsComponent } from './incoming-letter-details/incoming-letter-details.component';
 import { SharedModule } from '../../_sharedModule/SharedModule';
 import { NgxTranslateModule } from '../../i18n/translation.module';
-
-
+import { MaterialModule } from '../../material/material.module';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SearchTabModule } from '../_partials/search-tab.module';
 @NgModule({
   declarations: [
     PrintLabelsComponent,
@@ -28,7 +30,12 @@ import { NgxTranslateModule } from '../../i18n/translation.module';
     ReactiveFormsModule, 
     FormsModule,
     SharedModule,
-    NgxTranslateModule
+    NgxTranslateModule,
+    SearchTabModule,        
+    MaterialModule,
+    NgSelectModule,
+    NgbModule,
+
   ]
 })
 export class CommunicationModule { }

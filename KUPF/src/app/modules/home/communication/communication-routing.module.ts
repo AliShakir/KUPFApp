@@ -13,6 +13,7 @@ const routes: Routes = [
   { path: 'add-outgoing-letter', component: AddOutgoingLettersComponent },
   { path: 'outgoing-letter-details', component: OutgoingLetterDetailsComponent },
   { path: 'add-incoming-letter', component: AddIncomingLettersComponent },
+  { path: 'add-incoming-letter/:mytransid', component: AddIncomingLettersComponent },
   { path: 'incoming-letter-details', component: IncomingLetterDetailsComponent },
 ];
 

@@ -4,7 +4,7 @@
     <div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
         <div class="row">
             <div class="btn-group" role="group" aria-label="Basic example" *ngFor="let bodyLabel of formBodyLabels; let i = index">
-                <button type="button" class="btn btn-primary ArFontStyle fluro_btn_shade_i1" lang="AR-SA">{{bodyLabel[0].title}}</button>
+                <button type="button" class="btn btn-primary ArFontStyle fluro_btn_shade_i1" lang="AR-SA" (click)="addIncommingCommunication()" >{{bodyLabel[0].title}}</button>
                 <button type="button" class="btn btn-primary ArFontStyle fluro_btn_shade_i2" lang="AR-SA">{{bodyLabel[1].title}}</button>
                 <button type="button" class="btn btn-primary ArFontStyle fluro_btn_shade_i3" lang="AR-SA" routerLink="/communication/incoming-letter-details" routerLinkActive="active" >{{bodyLabel[2].title}}</button>
                 <button type="button" class="btn btn-primary ArFontStyle fluro_btn_shade_i4 " lang="AR-SA">{{bodyLabel[3].title}}</button>  
@@ -31,16 +31,19 @@
             <!--end::Title-->
             <!--begin::Row-->
             <div class="row gx-9 gy-6">
-                <form autocomplete="off">
+
+              
+                    <ngb-panel>
+
+                <form autocomplete="off" [formGroup]="inCommunicationForm"  >
                     <div class="row mb-4">
                         <div class="col-lg-6 fv-row">
                             <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[4].title}}</label>
-                            <select class="form-control bg-light" aria-label="Select example">
-                                <option>-Select-</option>
-                                <option value="1">Type 1</option>
-                                <option value="2">Type 2</option>
-                                <option value="3">Type 3</option>
-                            </select>
+                            <ng-select    [items]="letterType$ | async" bindLabel="shortName"
+                              bindValue="refId" lang="AR-SA" formControlName="letterType">
+                        </ng-select>
+ 
+
                         </div>
                         <div class="col-lg-6 fv-row">
                             <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[5].title}}</label>
@@ -50,12 +53,20 @@
                     <div class="row mb-4">
                         <div class="col-lg-6 fv-row">
                             <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[6].title}}</label>
-                            <select class="form-control bg-light" aria-label="Select example">
+                            <!-- <select class="form-control bg-light" aria-label="Select example">
                                 <option>-Select-</option>
                                 <option value="1">Type 1</option>
                                 <option value="2">Type 2</option>
                                 <option value="3">Type 3</option>
-                            </select>
+                            </select> -->
+
+                            <ng-select    [items]="partyType$ | async" bindLabel="refname1"
+                              bindValue="refId" lang="AR-SA" formControlName="partyType">
+                        </ng-select>
+ 
+
+
+
                         </div>
                         <div class="col-lg-6 fv-row">
                             <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[7].title}}</label>
@@ -80,12 +91,19 @@
                     <div class="row mb-4">
                         <div class="col-lg-6 fv-row">
                             <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[10].title}}</label>
-                            <select class="form-control bg-light" aria-label="Select example">
+                            <!-- <select class="form-control bg-light" aria-label="Select example">
                                 <option>-Select-</option>
                                 <option value="1">Option 1</option>
                                 <option value="2">Option 2</option>
                                 <option value="3">Option 3</option>
-                            </select>
+                            </select> -->
+
+                            <ng-select    [items]="filledAt$ | async" bindLabel="refname1"
+                            bindValue="refId" lang="AR-SA" formControlName="filledAt">
+                      </ng-select>
+
+
+
                         </div>
                         <div class="col-lg-6 fv-row">
                             <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA" >{{bodyLabel[11].title}}</label>
@@ -100,6 +118,11 @@
                         </div>                        
                     </div>
                 </form>
+
+             
+        </ngb-panel>
+     
+
             </div>
             <!--end::Row-->
         </div>
