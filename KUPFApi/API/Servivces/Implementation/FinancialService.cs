@@ -2360,7 +2360,7 @@ namespace API.Servivces.Implementation
                         on Convert.ToInt32(e.EmployeeId) equals hd.EmployeeId
                         join app in _context.TransactionHddapprovalDetails
                         on hd.Mytransid equals app.Mytransid
-                        where e.EmployeeId == employeeId
+                        where e.EmployeeId == employeeId && app.Active ==true 
                         select new ReturnServiceApprovals
                         {
                             MyTransId = (int)hd.Mytransid,
@@ -2790,6 +2790,30 @@ namespace API.Servivces.Implementation
                 return data;
 
             }
+        }
+
+        public async Task<IEnumerable<ReturnApprovalsByEmployeeId>> GetServiceApprovalsByEmployeeIdForManager(int employeeId, int tenentId, int locationId)
+        {
+            var data = (from ap in _context.TransactionHddapprovalDetails
+                        join hd in _context.TransactionHds
+                        on ap.Mytransid equals hd.Mytransid                        
+                        where ap.TenentId == tenentId &&
+                        ap.TenentId == tenentId &&
+                        ap.LocationId == locationId &&
+                        ap.LocationId == locationId &&
+                        ap.EmployeeId == employeeId
+                        select new ReturnApprovalsByEmployeeId
+                        {
+                            TransId = (int)ap.Mytransid,
+                            TenentId = (int)ap.TenentId,
+                            LocationId = ap.LocationId,
+                            ServiceType = hd.ServiceType,
+                            ServiceSubType = hd.ServiceSubType,
+                            Status = ap.Status,
+                            ApprovalRemarks = ap.ApprovalRemarks,
+                            Active = ap.Active
+                        }).ToList();
+            return data;
         }
     }
 }

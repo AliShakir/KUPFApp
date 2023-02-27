@@ -20,6 +20,8 @@ namespace API.Servivces.Interfaces.FinancialServices
         Task<ServiceSetupDto> GetServiceByServiceTypeAndSubType(int serviceType, int serviceSubType,int tenentId);
         Task<IEnumerable<ManagerApprovalDto>> GetServiceApprovalsAsync(long periodCode, int tenentId, int locationId);
 
+        Task<IEnumerable<ReturnApprovalsByEmployeeId>> GetServiceApprovalsByEmployeeIdForManager(int employeeId, int tenentId, int locationId);
+
         Task<string> ApproveServiceAsync(ApproveRejectServiceDto approveRejectServiceDto);
 
         Task<IEnumerable<RefTableDto>> GetRejectionType();

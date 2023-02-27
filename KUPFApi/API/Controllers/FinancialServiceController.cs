@@ -316,5 +316,16 @@ namespace API.Controllers
             var result = await _financialService.SearchNewSubscriber(searchEmployeeDto);
             return result;
         }
+        /// <summary>
+        /// Api to Get service approvals for Employee
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetServiceApprovalsByEmployeeIdForManager")]
+        public async Task<IEnumerable<ReturnApprovalsByEmployeeId>> GetServiceApprovalsByEmployeeIdForManager(int employeeId, int tenentId, int locationId)
+        {
+            var result = await _financialService.GetServiceApprovalsByEmployeeIdForManager(employeeId, tenentId, locationId);
+            return result;
+        }
     }
 }

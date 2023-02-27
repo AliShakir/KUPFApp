@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { ApproveRejectServiceDto } from '../models/ApproveRejectServiceDto';
 import { DetailedEmployee } from '../models/DetailedEmployee';
 import { CashierApprovalDto } from '../models/FinancialService/CashierApprovalDto';
+import { ReturnApprovalsByEmployeeId } from '../models/FinancialService/ReturnApprovalsByEmployeeId';
 import { ReturnTransactionHdDto } from '../models/FinancialService/ReturnTransactionHdDto';
 import { TransactionHdDto } from '../models/FinancialService/TransactionHdDto';
 import { RefTableDto } from '../models/ReferenceDetails/RefTableDto';
@@ -32,6 +33,7 @@ export class FinancialService {
    //
    returnServiceApprovals : ReturnServiceApprovals[]=[];
    //
+   returnApprovalsByEmployeeId:ReturnApprovalsByEmployeeId[]=[];
    returnManagerApprovals:CashierApprovalDto[]=[];
    //
    returnServiceApprovalDetails: ReturnServiceApprovalDetails[]=[];
@@ -151,6 +153,15 @@ export class FinancialService {
       })
     )
   }
+  GetServiceApprovalsByEmployeeIdForManager(employeeId:number,tenentId:number,locationId:number) {      
+    return this.httpClient.get<ReturnApprovalsByEmployeeId[]>(this.baseUrl + `FinancialService/GetServiceApprovalsByEmployeeIdForManager?employeeId=${employeeId}&tenentId=${tenentId}&locationId=${locationId}`).pipe(
+      map(returnApprovalsByEmployeeId => {
+        this.returnApprovalsByEmployeeId = returnApprovalsByEmployeeId;
+        return returnApprovalsByEmployeeId;
+      })
+    )
+  }
+
   GetServiceApprovalsByEmployeeId(employeeId:any) {      
     return this.httpClient.get<ReturnServiceApprovals[]>(this.baseUrl + `FinancialService/GetServiceApprovalsByEmployeeId?employeeId=${employeeId}`).pipe(
       map(returnServiceApprovals => {

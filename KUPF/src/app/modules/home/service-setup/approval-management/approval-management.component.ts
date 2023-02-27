@@ -5,9 +5,11 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { CashierApprovalDto } from 'src/app/modules/models/FinancialService/CashierApprovalDto';
+import { ReturnApprovalsByEmployeeId } from 'src/app/modules/models/FinancialService/ReturnApprovalsByEmployeeId';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
 import { RefTableDto } from 'src/app/modules/models/ReferenceDetails/RefTableDto';
 import { ReturnServiceApprovals } from 'src/app/modules/models/ReturnServiceApprovals';
@@ -94,7 +96,10 @@ export class ApprovalManagementComponent implements OnInit {
   locationId: any
   periodCode: any;
   prevPeriodCode: any
-
+  employeeDetailsform: FormGroup;
+  financialData: any;
+  financialDetails: any;
+  approvalDetails: any;
   constructor(
     private modalService: NgbModal,
     private financialService: FinancialService,
@@ -155,6 +160,8 @@ export class ApprovalManagementComponent implements OnInit {
     this.initRejectionServiceForm();
     //
     this.rejectionType$ = this.financialService.GetRejectionType();
+    //
+    this.initEmployeeForm();
 
   }
 
@@ -191,7 +198,35 @@ export class ApprovalManagementComponent implements OnInit {
       locationId: new FormControl(''),
     })
   }
-
+  initEmployeeForm() {
+    this.employeeDetailsform = this.fb.group({
+      employeeId: new FormControl(''),
+      englishName: new FormControl(''),
+      arabicName: new FormControl(''),
+      empWorkEmail: new FormControl(''),
+      mobileNumber: new FormControl(''),
+      empGender: new FormControl(''),
+      empMaritalStatus: new FormControl(''),
+      departmentName: new FormControl(''),
+      jobTitleName: new FormControl(''),
+      //
+      salary: new FormControl(''),
+      joinedDate: new FormControl(''),
+      empStatus: new FormControl(''),
+      subscription_status: new FormControl(''),
+      subscriptionDate: new FormControl(null),
+      terminationId: new FormControl(''),
+      terminationDate: new FormControl(''),
+      termination: new FormControl(''),
+      totalServices: new FormControl('0.00'),
+      isMemberOfFund: new FormControl(''),
+      empBirthday: new FormControl(''),
+      next2KinName: new FormControl(''),
+      next2KinMobNumber: new FormControl(''),
+      userId: new FormControl(''),
+      deviceId: new FormControl(''),
+    })
+  }
   // Get Data...
   loadData() {
     // 
@@ -210,7 +245,51 @@ export class ApprovalManagementComponent implements OnInit {
   get rejectionForm() { return this.rejectServiceForm.controls; }
 
   openContactModal(content: any, event: any) {
-    this.commonService.employeeId = event.target.id
+    this.commonService.employeeId = event.target.id    //
+    this.employeeService.GetEmployeeById(event.target.id).subscribe((response: any) => {
+      if (response) {
+        this.employeeDetailsform.patchValue({
+          employeeId: response.employeeId,
+          englishName: response.englishName,
+          arabicName: response.englishName,
+          empWorkEmail: response.empWorkEmail,
+          mobileNumber: response.mobileNumber,
+          empGender: response.empGender,
+          empMaritalStatus: response.empMaritalStatus,
+          departmentName: response.departmentName,
+          jobTitleName: response.jobTitleName,
+          salary: response.salary,
+          joinedDate: response.joinedDate ? moment(response.joinedDate).format("DD-MM-YYYY") : '',
+          empStatus: response.empStatus,
+          subscription_status: response.subscription_status,
+          subscriptionDate: response.subscriptionDate ? moment(response.subscriptionDate).format("DD-MM-YYYY") : '',
+          terminationId: response.terminationId,
+          terminationDate: response.terminationDate ? moment(response.terminationDate).format("DD-MM-YYYY") : '',
+          termination: response.termination,
+          totalServices: response.totalServices,
+          isMemberOfFund: response.isMemberOfFund,
+          empBirthday: response.empBirthday ? moment(response.empBirthday).format("DD-MM-YYYY") : '',
+          next2KinName: response.next2KinName,
+          next2KinMobNumber: response.next2KinMobNumber,
+          userId: response.userId,
+          deviceId: response.deviceId
+        });
+      }
+
+    });
+    //
+    this.financialService.GetServiceApprovalsByEmployeeId(this.commonService.employeeId).subscribe((resp: any) => {
+      if (resp) {
+        this.financialData = resp;
+      }
+    })
+    //
+    this.financialService.GetServiceApprovalsByEmployeeIdForManager(this.commonService.employeeId, this.tenentId, this.locationId).subscribe((response: any) => {
+      console.log(response);
+      this.approvalDetails = response;
+    }, error => {
+      console.log(error);
+    });
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', modalDialogClass: 'modal-lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -228,8 +307,8 @@ export class ApprovalManagementComponent implements OnInit {
           serviceType: response.serviceType,
           serviceSubType: response.serviceSubType,
           totamt: response.totamt,
-          englishName:response.englishName,
-          arabicName:response.arabicName
+          englishName: response.englishName,
+          arabicName: response.arabicName
         })
       }
     });
@@ -237,7 +316,7 @@ export class ApprovalManagementComponent implements OnInit {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', modalDialogClass: 'modal-md' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
       if (result === 'yes') {
-        
+
         let currentDate = this.datepipe.transform((new Date));
         let currentTime = this.datepipe.transform((new Date), 'h:mm:ss');
         this.approveServiceForm.controls['approvalDate']?.setValue(currentDate);
@@ -247,13 +326,13 @@ export class ApprovalManagementComponent implements OnInit {
         this.approveServiceForm.controls['tenentId'].setValue(this.tenentId[0]);
         this.approveServiceForm.controls['locationId'].setValue(this.locationId[0]);
         //
-        this.financialService.ApproveService(this.approveServiceForm.value).subscribe(response => {          
-            this.toastrService.success('.Service approved successfully', 'Success');
-            this.isFormSubmitted = false;
-            this.loadData();
+        this.financialService.ApproveService(this.approveServiceForm.value).subscribe(response => {
+          this.toastrService.success('.Service approved successfully', 'Success');
+          this.isFormSubmitted = false;
+          this.loadData();
         })
       }
-      
+
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
@@ -279,12 +358,12 @@ export class ApprovalManagementComponent implements OnInit {
         this.rejectServiceForm.controls['tenentId'].setValue(this.tenentId[0]);
         this.rejectServiceForm.controls['locationId'].setValue(this.locationId[0]);
 
-        this.financialService.RejectService(this.rejectServiceForm.value).subscribe(response => {          
-            this.toastrService.success('.Service rejected successfully', 'Success');
-            this.isFormSubmitted = false;
-            this.rejectServiceForm.reset();
-            this.rejectServiceForm.controls['approvalDate']?.setValue(currentDate);
-            this.loadData();          
+        this.financialService.RejectService(this.rejectServiceForm.value).subscribe(response => {
+          this.toastrService.success('.Service rejected successfully', 'Success');
+          this.isFormSubmitted = false;
+          this.rejectServiceForm.reset();
+          this.rejectServiceForm.controls['approvalDate']?.setValue(currentDate);
+          this.loadData();
         })
       }
 
@@ -293,7 +372,13 @@ export class ApprovalManagementComponent implements OnInit {
     });
   }
 
-
+  openServiceDetailsModal(event: any) {
+    this.financialService.GetServiceApprovalDetailByTransId(event.target.id).subscribe((response: any) => {
+      if (response) {
+        this.financialDetails = response;
+      }
+    })
+  }
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';

@@ -21,6 +21,7 @@ export class ContactDetailsComponent implements OnInit {
   serviceType:any;
   subServiceType:any;
   lang:any;
+  employeeDetailsform:FormGroup;
   constructor(
     private modalService: NgbModal,
     private fb: FormBuilder,
@@ -30,28 +31,33 @@ export class ContactDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang');
-    // this.initContactForm();
+    // 
+    this.initEmployeeForm();
    
-     this.employeeService.GetEmployeeById(this.commonService.employeeId).subscribe((response: any) => {
-      if(response){
-        this.employeeData = response;
-      }
-    });
+    //  this.employeeService.GetEmployeeById(this.commonService.employeeId).subscribe((response: any) => {
+    //   if(response){        
+    //     this.employeeData = response;
+    //   }
+    // });
     this.financialService.GetServiceApprovalsByEmployeeId(this.commonService.employeeId).subscribe((resp:any)=>{
       if(resp){
-        console.log(resp);
+        //console.log(resp);
         this.financialData = resp;
       }
     }) 
     
   }
-  initContactForm(){
-    this.contactDetials = this.fb.group({
+  initEmployeeForm(){
+    this.employeeDetailsform = this.fb.group({
       employeeId:new FormControl(''),
       englishName:new FormControl(''),
       arabicName:new FormControl(''),
-      email:new FormControl(''),
-      mobile:new FormControl('')
+      empWorkEmail:new FormControl(''),
+      mobileNumber:new FormControl(''),
+      empGender:new FormControl(''),
+      empMaritalStatus:new FormControl(''),
+      departmentName:new FormControl(''),
+      jobTitleName:new FormControl(''),
     })
   }
   openServiceDetailsModal(event: any){
