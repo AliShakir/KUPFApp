@@ -172,7 +172,7 @@ export class AddIncomingLettersComponent implements OnInit {
       var resp= this._communicationService.getIncommingCommunicationById(Number(this.masterId) );
       //this._communicationService.getIncommingCommunicationById(Number(this.masterId) );
  
-    }
+    } 
  
   } 
 

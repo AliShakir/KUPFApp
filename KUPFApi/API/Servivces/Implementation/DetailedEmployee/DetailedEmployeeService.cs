@@ -65,7 +65,7 @@ namespace API.Servivces.Implementation.DetailedEmployee
                 var newEmployee = _mapper.Map<Models.DetailedEmployee>(detailedEmployeeDto);
                 newEmployee.LocationId = 1;
                 newEmployee.CRUP_ID = maxCrupId;
-                newEmployee.EmployeeId = CommonMethods.CreateEmployeeId();
+                newEmployee.EmployeeId = (int)CommonMethods.CreateEmployeeId();
                 await _context.DetailedEmployees.AddAsync(newEmployee);
                 await _context.SaveChangesAsync();
                 //
