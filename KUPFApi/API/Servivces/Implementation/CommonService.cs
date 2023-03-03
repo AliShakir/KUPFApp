@@ -4,10 +4,13 @@ using API.DTOs.EmployeeDto;
 using API.Models;
 using API.Servivces.Interfaces;
 using AutoMapper;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -606,6 +609,51 @@ namespace API.Servivces.Implementation
             }
           
         }
+
+
+
+
+        public loanPercentageDto GetDashboardLoanDetails()
+        {
+            loanPercentageDto curpLoan = new loanPercentageDto();
+         //   if (tenantId != 0 && locationId != 0 && crupId != 0)
+            {
+                var dbconfig = new ConfigurationBuilder()
+                  .SetBasePath(Directory.GetCurrentDirectory())
+                  .AddJsonFile("appsettings.json").Build();
+                var dbconnectionStr = dbconfig["ConnectionStrings:MsSqlConnection"];
+                using (SqlConnection connection = new SqlConnection(dbconnectionStr))
+                {
+                    string sql = "Dashboard_Loan_Percentage_Count";
+                    using (SqlCommand cmd = new SqlCommand(sql, connection))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                         
+                        connection.Open();
+                        using (SqlDataReader dataReader = cmd.ExecuteReader())
+                        {
+                            while (dataReader.Read())
+                            {
+                                curpLoan.total_count = Convert.ToInt32(dataReader["TOTAL_COUNT"]);
+                                curpLoan.hajjloan_count = Convert.ToInt32(dataReader["HAJJLOAN_COUNT"]);
+                                curpLoan.hajjloan_per = Convert.ToInt32(dataReader["HAJJLOAN_PER"]);
+                                curpLoan.socloan_count = Convert.ToInt32(dataReader["SOCLOAN_COUNT"]);
+                                curpLoan.socloan_per = Convert.ToInt32(dataReader["SOCLOAN_PER"]);
+                                curpLoan.finloange_count = Convert.ToInt32(dataReader["FINLOANGE_Count"]);
+                                curpLoan.consloan_count = Convert.ToInt32(dataReader["CONSLOAN_Count"]);
+                                curpLoan.finloange_per = Convert.ToInt32(dataReader["FINLOANGE_PER"]);
+                                curpLoan.consloan_per = Convert.ToInt32(dataReader["CONSLOAN_PER"]);
+                                
+                            }
+                            connection.Close();
+                        }
+                    }
+                }
+            }
+            return curpLoan;
+        }
+
+
 
 
 

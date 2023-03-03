@@ -459,5 +459,17 @@ namespace API.Controllers
 
 
 
+        [HttpGet]
+        [Route("getDashboarLoanDetails")]
+        public  loanPercentageDto  GetDashboardLoanDetails()
+        {
+            var result =  _commonServiceService.GetDashboardLoanDetails();
+            return result;
+        }
+
+      
+
+
+
     }
 }

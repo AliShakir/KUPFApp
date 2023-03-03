@@ -113,5 +113,8 @@ namespace API.Servivces.Interfaces
 
         Task<IEnumerable<SelectLetterTypeDTo>> GetLetterTypeAsync();
         Task<IEnumerable<SelectPartyTypeDTo>> GetPartyTypeAsync();
+
+        loanPercentageDto GetDashboardLoanDetails();
+
     }
 }
