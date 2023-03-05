@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { loanPercentageDto } from 'src/app/modules/models/CommunicationDto';
+import { DbCommonService } from 'src/app/modules/_services/db-common.service';
 import { getCSSVariableValue } from '../../../../../kt/_utils';
 @Component({
   selector: 'app-mixed-widget2',
@@ -9,16 +11,47 @@ export class MixedWidget2Component implements OnInit {
   @Input() strokeColor: string = '';
   @Input() chartHeight: string = '';
   chartOptions: any = {};
+hajjLoanPer:number=0;
+socialLoanPer:number=0;
+consumerLoanPer:number=0;
+financialLoanPer:number=0;
+objloanPercentageDto:loanPercentageDto;
+  constructor(private _commonService:DbCommonService) {
+ 
+ 
+  }
 
-  constructor() {}
 
   ngOnInit(): void {
+    this.getDashboardLoanDetails();
     this.chartOptions = getChartOptions(
       this.chartHeight,
       this.chartColor,
       this.strokeColor
     );
   }
+ 
+
+
+  getDashboardLoanDetails()
+    {
+      this._commonService.getDashboarLoanDetails().subscribe((response:any)=>{
+ 
+this.hajjLoanPer=response.hajjloan_per;
+this.socialLoanPer=response.socloan_per;
+this.financialLoanPer=response.finloange_per;
+this.consumerLoanPer=response.consloan_per;
+        //
+        // this.addServiceForm.patchValue({
+        //   searialNo:response
+        // })
+      });
+  
+
+    }
+
+
+
 }
 
 function getChartOptions(

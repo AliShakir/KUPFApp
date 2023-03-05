@@ -34,7 +34,7 @@ import { FinanaceCalculationDto } from '../models/FinancialService/FinanaceCalcu
 import { CashierInformationDto } from '../models/FinancialService/CashierInformationDto';
 import { SelectBankAccount } from '../models/SelectBankAccount';
 import { CashierApprovalDto } from '../models/FinancialService/CashierApprovalDto';
-import { SelectLetterTypeDTo, SelectPartyTypeDTo } from '../models/CommunicationDto';
+import { loanPercentageDto, SelectLetterTypeDTo, SelectPartyTypeDTo } from '../models/CommunicationDto';
 
 @Injectable({
   providedIn: 'root'
@@ -435,5 +435,12 @@ export class DbCommonService {
         })
       )
     }
+
+
+    
+    getDashboarLoanDetails() {
+      return this.httpClient.get<loanPercentageDto>(this.baseUrl + `Common/getDashboarLoanDetails`);
+    }
+  
 
 }

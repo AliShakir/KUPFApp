@@ -23,3 +23,19 @@ export interface IncommingCommunicationDto
   letterdated:string;
 
 }
+
+
+export interface loanPercentageDto
+{
+  total_count:number|0;
+  hajjloan_count:number|0;
+  hajjloan_per:number|0;
+  socloan_count:number|0;
+  socloan_per:number|0;
+  finloange_count:number|0;
+  consloan_count:number|0;
+  finloange_per:number|0;
+  consloan_per:number|0;
+ 
+
+}
