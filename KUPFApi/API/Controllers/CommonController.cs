@@ -2,6 +2,7 @@
 using API.DTOs.DropDown;
 using API.DTOs.EmployeeDto;
 using API.Models;
+using API.Servivces.Implementation;
 using API.Servivces.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -456,7 +457,13 @@ namespace API.Controllers
             var result = await _commonServiceService.GetPartyTypeAsync();
             return result;
         }
-
+        [HttpGet]
+        [Route("GetFilledAt")]
+        public async Task<ActionResult<SelectFilledTypeDTo>> GetFilledAtAsync()
+        {
+            var result = await _commonServiceService.GetFilledAtAsync();
+            return Ok(result);
+        }
 
 
     }

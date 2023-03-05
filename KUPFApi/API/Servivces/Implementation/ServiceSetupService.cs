@@ -160,7 +160,10 @@ namespace API.Servivces.Implementation
                               MinInstallment = s.MinInstallment,
                               MaxInstallment = s.MaxInstallment,
                               AllowDiscountAmount = s.AllowDiscountAmount,
-                              AllowedNonEmployes = s.AllowedNonEmployes
+                              AllowedNonEmployes = s.AllowedNonEmployes,
+                              OfferImage= s.OfferImage,
+                              ServiceIconMob = s.ServiceIconMob,
+                              ServiceIconWeb= s.ServiceIconWeb,
                           }).ToListAsync();
             return result;
         }

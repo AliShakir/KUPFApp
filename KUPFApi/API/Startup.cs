@@ -69,6 +69,10 @@ namespace API
             //
             services.AddScoped<IOfferService, OfferService>();
             //
+            services.AddScoped<IDisplayCrupAuditService, DisplayCrupAuditService>();
+            //
+            services.AddScoped<ICommunicationService, CommunicationService>();
+            //
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
             services.AddDbContext<KUPFDbContext>(options =>

@@ -22,4 +22,5 @@ export interface CashierApprovalDto {
     totalInstallments:number,
     status:string;
     active:boolean;
+    crupId:any;
 }

@@ -26,6 +26,7 @@ import { CashierDeliveryComponent } from './cashier-delivery/cashier-delivery.co
 import { CashierDraftComponent } from './cashier-draft/cashier-draft.component';
 import { FinancialDraftComponent } from './financial-draft/financial-draft.component';
 import { FinancialDeliveryComponent } from './financial-delivery/financial-delivery.component';
+import { ViewServiceDetailComponent } from './view-service-detail/view-service-detail.component';
 @NgModule({
   declarations: [
     ServiceSetupDetailsComponent,
@@ -43,6 +44,7 @@ import { FinancialDeliveryComponent } from './financial-delivery/financial-deliv
     CashierDraftComponent,
     FinancialDraftComponent,
     FinancialDeliveryComponent,
+    ViewServiceDetailComponent,
   ],
   imports: [
     CommonModule,

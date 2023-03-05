@@ -12,6 +12,8 @@ namespace API.DTOs
         public int? ServiceId { get; set; }
         public string MasterServiceId { get; set; }
         public int SerIdbyUser { get; set; }
+        public string? ServiceIconMob { get; set; }
+        public string? ServiceIconWeb { get; set; }
         public string ServiceName1 { get; set; }
         public string ServiceName2 { get; set; }
         public int? ServiceType { get; set; }

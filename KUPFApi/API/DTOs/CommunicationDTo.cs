@@ -29,6 +29,11 @@ namespace API.DTOs
 
 
     }
+    public class SelectFilledTypeDTo
+    {
+        public int refId { get; set; }
+        public string shortName { get; set; }
+    }
 
 
 

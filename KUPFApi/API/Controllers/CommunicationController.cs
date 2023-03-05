@@ -13,47 +13,56 @@ namespace API.Controllers
     public class CommunicationController : ControllerBase
     {
         private readonly ICommunicationService _communicationService;
-       // public IMapper _mapper { get; }
-       // private readonly KUPFDbContext _context;
-        //ICommunicationService
         public CommunicationController(ICommunicationService communicationService)
         {
-           // _mapper = mapper;
             _communicationService = communicationService;
-           //_context = context;
         }
 
-
-        [HttpGet]
-        [Route("getIncommingCommunication")]
-        public async Task<ActionResult<IEnumerable<IncommingCommunicationDto>>> GetIncommingCommunicationAsync()
+        [HttpPost]
+        [Route("AddIncomingLetter")]
+        public async Task<ActionResult<int>> AddIncomingLetter([FromForm]LettersHdDto lettersHdDto)
         {
-            var result = await _communicationService.GetIncommingCommunicationAsync();
+            var result = await _communicationService.AddIncomingLetter(lettersHdDto);
             return Ok(result);
         }
 
+        [HttpPut]
+        [Route("UpdateIncomingLetter")]
+        public async Task<ActionResult<int>> UpdateIncomingLetter(LettersHdDto lettersHdDto)
+        {
+            var result = await _communicationService.UpdateIncomingLetter(lettersHdDto);
+            return Ok(result);
+        } 
 
         [HttpDelete]
-        [Route("deleteIncommingCommunication")]
-        public async Task<int> DeleteRefTable(int id)
+        [Route("DeleteIncomingLetter/{id}")]
+        public async Task<int> DeleteIncomingLetter(int id)
         {
             int result = 0;
             if (id != 0)
             {
-                result = await _communicationService.deleteIncommingCommunication(id);
+                result = await _communicationService.DeleteIncomingCommunication(id);
             }
             return result;
         }
 
-
-
         [HttpGet]
-        [Route("getIncommingCommunicationById/{id}")]
-        public async Task<ActionResult<IncommingCommunicationDto>> getIncommingCommunicationByIdAsync(int id)
+        [Route("GetIncomingLetter/{id}")]
+        public async Task<ActionResult<ReturnSingleLettersHdDto>> GetIncomingLetter(int id)
         {
-            var result = await _communicationService.getIncommingCommunicationByIdAsync(id);
+            var result = await _communicationService.GetIncomingLetter(id);
             return Ok(result);
         }
+
+        [HttpGet]
+        [Route("GetIncomingLetters")]
+        public async Task<ActionResult<IEnumerable<IncommingCommunicationDto>>> GetIncomingLetters()
+        {
+            var result = await _communicationService.GetIncomingLetters();
+            return Ok(result);
+        }
+
+
 
 
 

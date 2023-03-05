@@ -41,6 +41,11 @@
                         <ng-container matColumnDef="action">
                             <th mat-header-cell *matHeaderCellDef class="ArFontStyle">{{bodyLabel[1].title}}</th>
                             <td mat-cell *matCellDef="let item" class="w-20 text-right">
+                                <a href="javascript:void(0)" class="text-info fw-bolder"
+                                    routerLink="/service-setup/view-service-detail/{{item.transId}}" [id]="item.transId">
+                                    View
+                                </a>
+                                |
                                 <a href="javascript:void(0)" class="text-success fw-bolder"
                                     (click)="openApproveServiceModal(approveServiceModal,$event)" [id]="item.transId">
                                     Approve
@@ -50,7 +55,8 @@
                                     Reject
                                 </a>
                                 | <a href="javascript:void(0)" class="text-primary fw-bolder"
-                                    (click)="openContactModal(employeePerformanceModal,$event)" [id]="item.employeeId">
+                                    (click)="openContactModal(employeePerformanceModal,$event,item)"
+                                    [id]="item.employeeId">
                                     Details
                                 </a>
                             </td>
@@ -261,67 +267,86 @@
                         <form>
                             <div class="form-group row">
                                 <label for="staticEmail" class="col-sm-2 col-form-label">Gender</label>
-                                <label for="staticEmail" class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.empGender.value === 1 ? 'Male'
+                                <label for="staticEmail"
+                                    class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.empGender.value
+                                    === 1 ? 'Male'
                                     : 'Female'}}</label>
 
                                 <label for="inputPassword" class="col-sm-2 col-form-label">Salary</label>
-                                <label for="staticEmail" class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.salary.value}}</label>
+                                <label for="staticEmail"
+                                    class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.salary.value}}</label>
                             </div>
                             <div class="form-group row">
                                 <label for="inputPassword" class="col-sm-2 col-form-label">Nationality</label>
                                 <label for="staticEmail" class="col-sm-4 col-form-label text-primary ">Kuwait</label>
 
                                 <label for="inputPassword" class="col-sm-2 col-form-label">Date of Joining </label>
-                                <label for="staticEmail" class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.joinedDate.value}}</label>
+                                <label for="staticEmail"
+                                    class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.joinedDate.value}}</label>
 
                             </div>
                             <div class="form-group row">
                                 <label for="inputPassword" class="col-sm-2 col-form-label">Emp Status</label>
-                                <label for="staticEmail" class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.empStatus.value}}</label>
+                                <label for="staticEmail"
+                                    class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.empStatus.value}}</label>
 
                                 <label for="inputPassword" class="col-sm-2 col-form-label">Subscription Status</label>
-                                <label for="staticEmail" class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.subscription_status.value}}</label>
+                                <label for="staticEmail"
+                                    class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.subscription_status.value}}</label>
                             </div>
                             <div class="form-group row">
                                 <label for="inputPassword" class="col-sm-2 col-form-label">Subscription Date</label>
-                                <label for="staticEmail" class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.subscriptionDate.value}}</label>
+                                <label for="staticEmail"
+                                    class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.subscriptionDate.value}}</label>
 
                                 <label for="inputPassword" class="col-sm-2 col-form-label">Termination Id</label>
-                                <label for="staticEmail" class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.terminationId.value}}</label>
+                                <label for="staticEmail"
+                                    class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.terminationId.value}}</label>
                             </div>
                             <div class="form-group row">
                                 <label for="inputPassword" class="col-sm-2 col-form-label">Termination Date</label>
-                                <label for="staticEmail" class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.terminationDate.value}}</label>
+                                <label for="staticEmail"
+                                    class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.terminationDate.value}}</label>
 
                                 <label for="inputPassword" class="col-sm-2 col-form-label">Termination Type</label>
-                                <label for="staticEmail" class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.termination.value}}</label>
+                                <label for="staticEmail"
+                                    class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.termination.value}}</label>
                             </div>
                             <div class="form-group row">
                                 <label for="inputPassword" class="col-sm-2 col-form-label">Total Services</label>
-                                <label for="staticEmail" class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.subscription_status.value}}</label>
+                                <label for="staticEmail"
+                                    class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.subscription_status.value}}</label>
 
                                 <label for="inputPassword" class="col-sm-2 col-form-label">Subscription Amount</label>
-                                <label for="staticEmail" class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.subscription_status.value}}</label>
+                                <label for="staticEmail"
+                                    class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.subscription_status.value}}</label>
                             </div>
                             <div class="form-group row">
                                 <label for="inputPassword" class="col-sm-2 col-form-label">Member of Fund</label>
-                                <label for="staticEmail" class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.isMemberOfFund.value === true ? 'Yes' : 'No'}}</label>
+                                <label for="staticEmail"
+                                    class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.isMemberOfFund.value
+                                    === true ? 'Yes' : 'No'}}</label>
 
                                 <label for="inputPassword" class="col-sm-2 col-form-label">Employee Birthday</label>
-                                <label for="staticEmail" class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.empBirthday.value}}</label>
+                                <label for="staticEmail"
+                                    class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.empBirthday.value}}</label>
                             </div>
                             <div class="form-group row">
                                 <label for="inputPassword" class="col-sm-2 col-form-label">Kin Name</label>
-                                <label for="staticEmail" class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.next2KinName.value}}</label>
+                                <label for="staticEmail"
+                                    class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.next2KinName.value}}</label>
 
                                 <label for="inputPassword" class="col-sm-2 col-form-label">Kin Mobile</label>
-                                <label for="staticEmail" class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.next2KinMobNumber.value}}</label>
+                                <label for="staticEmail"
+                                    class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.next2KinMobNumber.value}}</label>
                             </div>
                             <div class="form-group row">
                                 <label for="inputPassword" class="col-sm-2 col-form-label">Login Id</label>
-                                <label for="staticEmail" class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.userId.value}}</label>
+                                <label for="staticEmail"
+                                    class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.userId.value}}</label>
                                 <label for="inputPassword" class="col-sm-2 col-form-label">Device Id</label>
-                                <label for="staticEmail" class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.deviceId.value}}</label>
+                                <label for="staticEmail"
+                                    class="col-sm-4 col-form-label text-primary ">{{employeeDetailsform.controls.deviceId.value}}</label>
                             </div>
                         </form>
                     </tab>
@@ -425,7 +450,28 @@
                             </a>
                         </ng-template>
                         <div class="d-flex flex-column gap-1">
-                            <div class="fw-bold fs-5">Activity Log Goes Here....</div>
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col"><strong>Field Name</strong></th>
+                                        <th scope="col"><strong>Old Value</strong></th>
+                                        <th scope="col"><strong>New Value</strong></th>
+                                        <th scope="col"><strong>Severity</strong></th>
+                                        <th scope="col"><strong>Crud Type</strong></th>
+                                        <th scope="col"><strong>Date</strong></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of employeeActivityLog; let i = index">
+                                        <td lang="AR-SA">{{data.fieldName}}</td>
+                                        <td lang="AR-SA">{{data.oldValue}}</td>
+                                        <td lang="AR-SA">{{data.newValue}}</td>
+                                        <td lang="AR-SA">{{data.severity}}</td>
+                                        <td lang="AR-SA">{{data.crudType}}</td>
+                                        <td lang="AR-SA">{{data.createdDate | date:'mediumDate'}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </tab>
 

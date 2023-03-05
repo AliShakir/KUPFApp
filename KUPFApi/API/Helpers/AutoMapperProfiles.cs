@@ -149,6 +149,23 @@ namespace API.Helpers
             CreateMap<ServiceSetup, SelectSubServiceTypeDto>()
                         .ForMember(dest => dest.RefId, opt => opt.MapFrom(src => src.ServiceSubType))
                         .ForMember(dest => dest.ShortName, opt => opt.MapFrom(src => src.ServiceName2));
+
+            //
+            CreateMap<Crupaudit, EmployeeActivityLogDto>();
+            //
+            CreateMap<Reftable, SelectLetterTypeDTo>();
+            //
+            CreateMap<Reftable,SelectPartyTypeDTo>();
+            //
+            CreateMap<Reftable, SelectFilledTypeDTo>();
+            //
+            CreateMap<LettersHdDto, LettersHd>();
+            //
+            CreateMap<LettersHd, LettersHdDto>();
+            //
+            CreateMap<TransactionHddm, LettersHdDto>();
+            //
+            CreateMap<TransactionHddm, TransactionHDDMSDto>();
         }
     }
 }

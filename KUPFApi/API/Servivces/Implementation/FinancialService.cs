@@ -2239,7 +2239,8 @@ namespace API.Servivces.Implementation
                             TotalAmount = hd.Totamt,
                             TotalInstallments = (int)hd.Totinstallments,
                             Status = ap.Status,
-                            Active = ap.Active
+                            Active = ap.Active,
+                            CrupId = (long)e.CRUP_ID
                         }).ToList();
             return data;
 
@@ -2815,5 +2816,7 @@ namespace API.Servivces.Implementation
                         }).ToList();
             return data;
         }
+
+        
     }
 }

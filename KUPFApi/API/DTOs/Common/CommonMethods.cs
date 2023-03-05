@@ -48,6 +48,18 @@ namespace API.Common
             return totalMonths;
         }
 
-        
+        public static int CreateMyTransId()
+        {
+            Random rnd = new Random();
+            int transId = rnd.Next(1, 100000);
+            return transId;
+        }  
+        public static int GenerateFileName()
+        {
+            Random rnd = new Random();
+            int fileName = rnd.Next(1, 100000);
+            return fileName;
+        }
+
     }
 }

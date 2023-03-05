@@ -200,9 +200,5 @@ private getDismissReason(reason: any): string {
   }
   //#endregion
    
-  viewDataClick(){
-    // To enable ViewOnly view...
-    this.common.isViewOnly = true
-    
-  }
+ 
 }

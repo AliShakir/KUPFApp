@@ -18,6 +18,7 @@ import { CashierDeliveryComponent } from './cashier-delivery/cashier-delivery.co
 import { CashierDraftComponent } from './cashier-draft/cashier-draft.component';
 import { FinancialDeliveryComponent } from './financial-delivery/financial-delivery.component';
 import { FinancialDraftComponent } from './financial-draft/financial-draft.component';
+import { ViewServiceDetailComponent } from './view-service-detail/view-service-detail.component';
 
 const routes: Routes = [
   { path: 'service-setup-details', component: ServiceSetupDetailsComponent },
@@ -36,7 +37,8 @@ const routes: Routes = [
   { path: 'cashier-delivery', component: CashierDeliveryComponent },
   { path: 'cashier-draft', component: CashierDraftComponent },
   { path: 'financial-delivery', component: FinancialDeliveryComponent },
-  { path: 'financial-draft', component: FinancialDraftComponent }
+  { path: 'financial-draft', component: FinancialDraftComponent },
+  {path: 'view-service-detail/:transId',component:ViewServiceDetailComponent}
 ];
 
 @NgModule({

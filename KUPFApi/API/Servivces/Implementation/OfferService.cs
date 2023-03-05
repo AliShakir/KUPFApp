@@ -196,14 +196,23 @@ namespace API.Servivces.Implementation
 
         public async Task<ServiceSetupDto> GetOfferById(int id)
         {
-            var path = @"/HostingSpaces/kupf1/kuweb.erp53.com/wwwroot"; 
-            //var path = @"E:\\";
-
+            //var path = @"/HostingSpaces/kupf1/kuweb.erp53.com/wwwroot"; 
+            //var path = @"E:\Offers\";
+            //var path = @"/kupf1/kuweb.erp53.com/wwwroot/Offers/"; C:\HostingSpace\kupf1\kuweb.erp53.com\wwwroot\Offers
+            var path = @"C:\HostingSpace\kupf1\kuweb.erp53.com\wwwroot\Offers\";
             var result = await _context.ServiceSetups.Where(c => c.ServiceId == id && c.OfferType == "1").FirstOrDefaultAsync();
+            
             var data = _mapper.Map<ServiceSetupDto>(result);
-            data.OfferImageFile = GetFileFromFolder(path + result.OfferImage);
-            data.ElectronicForm1File = GetFileFromFolder(path + result.ElectronicForm1);
-            data.ElectronicForm2File = GetFileFromFolder(path + result.ElectronicForm2);
+            
+            if(result.OfferImage != null) 
+                data.OfferImageFile = GetFileFromFolder(path + result.OfferImage);
+
+            if(result.ElectronicForm1 != null)
+                data.ElectronicForm1File = GetFileFromFolder(path + result.ElectronicForm1);
+
+            if (result.ElectronicForm2 != null)
+                data.ElectronicForm2File = GetFileFromFolder(path + result.ElectronicForm2);
+
             return data;
         }
 
