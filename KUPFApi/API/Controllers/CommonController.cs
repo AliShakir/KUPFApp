@@ -401,7 +401,7 @@ namespace API.Controllers
         [Route("GetFinancialCalculationByEmployeeId")]
         public async Task<FinanaceCalculationDto> GetFinancialCalculationByEmployeeId(int employeeId, int tenentId, int locationId, DateTime transactionDate)
         {
-            var result = await _commonServiceService.GetFinancialCalculationByEmployeeId(employeeId, tenentId, locationId,transactionDate);
+            var result = await _commonServiceService.GetFinancialCalculationByEmployeeId(employeeId, tenentId, locationId, transactionDate);
             return result;
         }
         /// <summary>
@@ -461,14 +461,25 @@ namespace API.Controllers
 
         [HttpGet]
         [Route("getDashboarLoanDetails")]
-        public  loanPercentageDto  GetDashboardLoanDetails()
+        public loanPercentageDto GetDashboardLoanDetails()
         {
-            var result =  _commonServiceService.GetDashboardLoanDetails();
+            var result = _commonServiceService.GetDashboardLoanDetails();
             return result;
         }
 
-      
 
+
+
+
+        [HttpGet]
+        [Route("getDashboardTotalEmployees")]
+        public List<dashboardResponseDto> GetDashboardTotalEmployees()
+        {
+            var result = _commonServiceService.GetDashboardTotalEmployees();
+            return result;
+        }
+
+ 
 
 
     }

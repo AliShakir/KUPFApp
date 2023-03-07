@@ -116,5 +116,9 @@ namespace API.Servivces.Interfaces
 
         loanPercentageDto GetDashboardLoanDetails();
 
+
+        List<dashboardResponseDto> GetDashboardTotalEmployees();
+
+
     }
 }

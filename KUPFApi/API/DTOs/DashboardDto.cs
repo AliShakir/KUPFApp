@@ -12,4 +12,15 @@
         public int finloange_per { get; set; }
         public int consloan_per { get; set; }
     }
+
+    public class dashboardResponseDto
+    {
+        public string myperiodcode { get; set; }
+        public long? myid { get; set; }
+        public string mylabel1 { get; set; }
+        public long? myvalue1 { get; set; }
+        public string mylabel2 { get; set; }
+        public long? myvalue2 { get; set; }
+
+    }
 }
