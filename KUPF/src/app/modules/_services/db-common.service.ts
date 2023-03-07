@@ -428,9 +428,8 @@ export class DbCommonService {
     }
 
     getFilledAtAsync() {
-      return this.httpClient.get<SelectPartyTypeDTo[]>(this.baseUrl + `Common/getFilledAtAsync`).pipe(
-        map(partyType => {
-          
+      return this.httpClient.get<SelectPartyTypeDTo[]>(this.baseUrl + `Common/GetFilledAt`).pipe(
+        map(partyType => {          
           this.partyType = partyType;
           return partyType;
         })

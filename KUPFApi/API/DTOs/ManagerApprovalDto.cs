@@ -35,5 +35,6 @@ namespace API.DTOs
         public int? TotalInstallments { get; set; }
         public string? Status { get; set; }
         public bool? Active { get; set; }
+        public long CrupId { get; set; }
     }
 }

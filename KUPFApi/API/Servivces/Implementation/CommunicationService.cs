@@ -1,4 +1,7 @@
-﻿using API.DTOs;
+﻿using API.Common;
+using API.DTOs;
+using API.DTOs.Common.Enums;
+using API.DTOs.EmployeeDto;
 using API.Models;
 using API.Servivces.Interfaces;
 using AutoMapper;
@@ -10,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace API.Servivces.Implementation
@@ -18,39 +22,220 @@ namespace API.Servivces.Implementation
     {
         private readonly KUPFDbContext _context;
         private readonly IMapper _mapper;
-        private readonly IWebHostEnvironment _hostingEnvironment;
 
-        public CommunicationService(KUPFDbContext context, IMapper mapper, IWebHostEnvironment hostingEnvironment)
+        public CommunicationService(KUPFDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
-            _hostingEnvironment = hostingEnvironment;
         }
 
-
-
-        public Task<List<IncommingCommunicationDto>> GetIncommingCommunicationAsync()
+        public async Task<int> AddIncomingLetter(LettersHdDto lettersHdDto)
         {
-            var result = (from r in _context.Reftables
-                          join s in _context.LettersHds on r.Refid equals s.LetterType
-                          join a in _context.Reftables on s.FilledAt equals a.Refid
-                          where r.Refsubtype == "Communication" && a.Refsubtype == "Party"
-                          && r.Reftype == "KUPF" && a.Reftype == "KUPF"
-                          select new IncommingCommunicationDto
-                          {
-                              searchtag = s.SearchTag,
-                              description = s.Description,
-                              filledat = a.Refname1,
-                              letterdated = s.LetterDated.ToString(),
-                              lettertype =  r.Shortname 
-                              ,
-                              mytransid = s.Mytransid 
+            int result = 0;
+            if (_context != null)
+            {
+                var attachId = _context.TransactionHddms.FromSqlRaw("select isnull(Max(AttachID+1),1) as attachId from  [TransactionHDDMS ] where TenentID='" + lettersHdDto.TenentId + "'").Select(p => p.AttachId).FirstOrDefault();
+                var serialNo = _context.TransactionHddms.FromSqlRaw("select isnull(Max(Serialno+1),1) as serialNo from  [TransactionHDDMS ] where tenentId='" + lettersHdDto.TenentId + "' and attachid=1").Select(c => c.Serialno).FirstOrDefault();
+                // Server Path for LetterAttachments.
+                //var serverPath = @"/kupf1/kupfapi.erp53.com/New/LetterAttachments/";
+                var serverPath = @"E:\Offers\";
+                var lettersHd = _mapper.Map<LettersHd>(lettersHdDto);
+                var crupId = _context.CrupMsts.Max(c => c.CrupId);
+                var maxCrupId = crupId + 1;
 
-                          }).ToListAsync();
+                lettersHd.Mytransid = CommonMethods.CreateMyTransId();
+                lettersHd.CrupId = maxCrupId;
+                lettersHd.Active = true;
+                lettersHd.Entrydate = DateTime.Now;
+                lettersHd.Entrytime = DateTime.Now;
+
+                //
+                var attachmentsData = new TransactionHddm
+                {
+                    TenentId = (int)lettersHdDto.TenentId,
+                    Mytransid = lettersHd.Mytransid,
+                    AttachId = attachId,
+                    Remarks = lettersHdDto.Remarks,
+                    Subject = lettersHdDto.Subject,
+                    MetaTags = lettersHdDto.MetaTags,
+                    Actived = true,
+                    CrupId = maxCrupId,
+                    CreatedBy = Convert.ToInt32(lettersHdDto.Userid),
+                    CreatedDate = DateTime.Now,
+                };
+
+                var filePath = string.Empty;
+                var fileExtension = string.Empty;
+                var fileName = string.Empty;
+                var newFileName = string.Empty;
+                if (lettersHdDto.appplicationFileDocument.Length > 0 || lettersHdDto.appplicationFileDocument != null)
+                {
+                    // Getting old filename without extension...
+                    fileName = Path.GetFileNameWithoutExtension(lettersHdDto.appplicationFileDocument.FileName);
+                    
+                    // Getting file extension...
+                    fileExtension = Path.GetExtension(lettersHdDto.appplicationFileDocument.FileName);
+                    
+                    // Creating new filename and appending unique code....
+                    newFileName = fileName + "_" + CommonMethods.GenerateFileName() + fileExtension;
+                    
+                    //
+                    filePath = Path.Combine(serverPath, newFileName);
+
+                    attachmentsData.AttachmentPath = filePath;
+                    attachmentsData.DocumentType = lettersHdDto.appplicationFileDocType;
+                    attachmentsData.AttachmentByName = newFileName;
+                    attachmentsData.Serialno = serialNo;
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        lettersHdDto.appplicationFileDocument.CopyTo(stream);
+                    }
+                    await _context.TransactionHddms.AddAsync(attachmentsData);
+                    await _context.SaveChangesAsync();
+                    _context.ChangeTracker.Clear();
+                }
+                if (lettersHdDto.civilIdDocument.Length > 0 || lettersHdDto.civilIdDocument != null)
+                {
+                    fileName = Path.GetFileNameWithoutExtension(lettersHdDto.civilIdDocument.FileName);
+                    fileExtension = Path.GetExtension(lettersHdDto.civilIdDocument.FileName);
+                    
+                    // Creating new filename and appending unique code....
+                    newFileName = fileName + "_" + CommonMethods.GenerateFileName() + fileExtension;
+                    
+                    filePath = Path.Combine(serverPath, newFileName);
+
+                    attachmentsData.AttachmentPath = filePath;
+                    attachmentsData.DocumentType = lettersHdDto.civilIdDocType;
+                    attachmentsData.AttachmentByName = newFileName;
+                    attachmentsData.Serialno = attachmentsData.Serialno + 1;
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        lettersHdDto.civilIdDocument.CopyTo(stream);
+                    }
+                    await _context.TransactionHddms.AddAsync(attachmentsData);
+                    await _context.SaveChangesAsync();
+                    _context.ChangeTracker.Clear();
+                }
+                if (lettersHdDto.personalPhotoDocument.Length > 0 || lettersHdDto.personalPhotoDocument != null )
+                {
+                    fileName = Path.GetFileNameWithoutExtension(lettersHdDto.personalPhotoDocument.FileName);
+                    fileExtension = Path.GetExtension(lettersHdDto.personalPhotoDocument.FileName);
+                    
+                    // Creating new filename and appending unique code....
+                    newFileName = fileName + "_" + CommonMethods.GenerateFileName() + fileExtension;
+
+                    filePath = Path.Combine(serverPath, newFileName);
+
+                    attachmentsData.AttachmentPath = filePath;
+                    attachmentsData.DocumentType = lettersHdDto.personalPhotoDocType;
+                    attachmentsData.AttachmentByName = newFileName;
+                    attachmentsData.Serialno = attachmentsData.Serialno + 1;
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        lettersHdDto.personalPhotoDocument.CopyTo(stream);
+                    }
+                    await _context.TransactionHddms.AddAsync(attachmentsData);
+                    await _context.SaveChangesAsync();
+                    _context.ChangeTracker.Clear();
+                }
+                if (lettersHdDto.workIdDocument.Length > 0 || lettersHdDto.workIdDocument != null)
+                {
+                    fileName = Path.GetFileNameWithoutExtension(lettersHdDto.workIdDocument.FileName);
+                    fileExtension = Path.GetExtension(lettersHdDto.workIdDocument.FileName);
+                    
+                    // Creating new filename and appending unique code....
+                    newFileName = fileName + "_" + CommonMethods.GenerateFileName() + fileExtension;
+
+                    filePath = Path.Combine(serverPath, newFileName);
+
+                    attachmentsData.AttachmentPath = filePath;
+                    attachmentsData.DocumentType = lettersHdDto.workIdDocType;
+                    attachmentsData.AttachmentByName = newFileName;
+                    attachmentsData.Serialno = attachmentsData.Serialno + 1;
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        lettersHdDto.workIdDocument.CopyTo(stream);
+                    }
+                    await _context.TransactionHddms.AddAsync(attachmentsData);
+                    await _context.SaveChangesAsync();
+                    _context.ChangeTracker.Clear();
+                }
+                if (lettersHdDto.salaryDataDocument.Length > 0 || lettersHdDto.salaryDataDocument != null)
+                {
+                    fileName = Path.GetFileNameWithoutExtension(lettersHdDto.salaryDataDocument.FileName);
+                    fileExtension = Path.GetExtension(lettersHdDto.salaryDataDocument.FileName);
+
+                    // Creating new filename and appending unique code....
+                    newFileName = fileName + "_" + CommonMethods.GenerateFileName() + fileExtension;
+
+                    filePath = Path.Combine(serverPath, newFileName);
+
+                    attachmentsData.AttachmentPath = filePath;
+                    attachmentsData.DocumentType = lettersHdDto.salaryDataDocType;
+                    attachmentsData.AttachmentByName = newFileName;
+                    attachmentsData.Serialno = attachmentsData.Serialno + 1;
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        lettersHdDto.salaryDataDocument.CopyTo(stream);
+                    }
+                    await _context.TransactionHddms.AddAsync(attachmentsData);
+                    await _context.SaveChangesAsync();
+                    _context.ChangeTracker.Clear();
+                }
+
+                _context.LettersHds.Add(lettersHd);
+                result = await _context.SaveChangesAsync();
+                #region Save Into CrupAudit
+                //
+                var auditInfo = _context.Reftables.FirstOrDefault(c => c.Reftype == "Audit" && c.Refsubtype == "Employee");
+                var mySerialNo = _context.TblAudits.Max(c => c.MySerial) + 1;
+                var auditNo = _context.Crupaudits.Max(c => c.AuditNo) + 1;
+                var crupAudit = new Crupaudit
+                {
+                    TenantId = lettersHdDto.TenentId,
+                    LocationId = (int)lettersHdDto.LocationId,
+                    CrupId = maxCrupId,
+                    MySerial = mySerialNo,
+                    AuditNo = auditNo,
+                    AuditType = auditInfo.Shortname,
+                    TableName = DbTableEnums.LettersHD.ToString(),
+                    FieldName = $"",
+                    OldValue = "Non",
+                    NewValue = "Inserted",
+                    CreatedDate = DateTime.Now,
+                    CreatedUserName = lettersHdDto.Username,
+                    UserId = Convert.ToInt32(lettersHdDto.Userid),
+                    CrudType = CrudTypeEnums.Insert.ToString(),
+                    Severity = SeverityEnums.Normal.ToString()
+                };
+                await _context.Crupaudits.AddAsync(crupAudit);
+                await _context.SaveChangesAsync();
+
+                #endregion
+            }
+
             return result;
         }
 
-        public async Task<int> deleteIncommingCommunication(int id)
+        public async Task<int> UpdateIncomingLetter(LettersHdDto lettersHdDto)
+        {
+            int result = 0;
+            if (_context != null)
+            {
+                var existingLetterHd = _context.LettersHds
+                    .Where(c => c.Mytransid == lettersHdDto.Mytransid).FirstOrDefault();
+
+                if (existingLetterHd != null)
+                {
+                    _mapper.Map(lettersHdDto, existingLetterHd);
+                    _context.LettersHds.Update(existingLetterHd);
+                    result = await _context.SaveChangesAsync();
+                }
+            }
+            return result;
+        }
+
+        public async Task<int> DeleteIncomingCommunication(int id)
         {
             int result = 0;
 
@@ -69,245 +254,46 @@ namespace API.Servivces.Implementation
             return result;
         }
 
-
-
-        public async Task<IncommingCommunicationDto> getIncommingCommunicationByIdAsync(int id)
+        public async Task<ReturnSingleLettersHdDto> GetIncomingLetter(int id)
         {
-            var result = await _context.LettersHds.Where(c => c.Mytransid == id).FirstOrDefaultAsync();
-            var data = _mapper.Map<IncommingCommunicationDto>(result);
+            var lettersHd = await _context.LettersHds.Where(c => c.Mytransid == id).FirstOrDefaultAsync();
+            var transactionHddms = await _context.TransactionHddms.Where(c => c.Mytransid == id).ToListAsync();
+            var hddms = _mapper.Map<List<TransactionHDDMSDto>>(transactionHddms);
+            var data = new ReturnSingleLettersHdDto
+            {
+                Mytransid = lettersHd.Mytransid,
+                TenentId = lettersHd.TenentId,
+                LocationId = lettersHd.LocationId,
+                LetterDated = lettersHd.LetterDated,
+                SenderReceiverParty = lettersHd.SenderReceiverParty,
+                FilledAt = lettersHd.FilledAt,
+                EmployeeId = lettersHd.EmployeeId,
+                Representative = lettersHd.Representative,
+                ReceivedSentDate = lettersHd.ReceivedSentDate,
+                Description = lettersHd.Description,
+            };
+            data.TransactionHDDMSDtos = hddms;
             return data;
         }
-  
 
-
-
-
-
-
-        //public async Task<int> AddServiceSetupAsync(ServiceSetupDto serviceSetupDto)
-        //{
-        //    int result = 0;
-
-        //    if (_context != null)
-        //    {
-        //        var maxIdServiceId = (from d in _context.ServiceSetups
-        //                              where d.TenentId == serviceSetupDto.TenentId
-        //                              select new
-        //                              {
-        //                                  ServiceId = d.ServiceId + 1
-        //                              })
-        //                 .Distinct()
-        //                 .OrderBy(x => 1).Max(c => c.ServiceId);
-        //        var newService = _mapper.Map<ServiceSetup>(serviceSetupDto);
-        //        newService.ServiceId = maxIdServiceId;
-
-
-        //        string masterIds = String.Join(",", serviceSetupDto.MasterServiceId);
-        //        newService.MasterServiceId = masterIds;
-
-        //        //if (serviceSetupDto.File1 != null && serviceSetupDto.File1.Length != 0)
-        //        //{
-        //        //    newService.ElectronicForm1 = serviceSetupDto.File1.FileName;
-        //        //    var path = @"/HostingSpaces/kupf1/kuweb.erp53.com/wwwroot/contents/";
-        //        //    var filePath = Path.Combine(path, serviceSetupDto.File1.FileName);
-        //        //    using (var stream = new FileStream(filePath, FileMode.Create))
-        //        //    {
-        //        //        serviceSetupDto.File1.CopyTo(stream);
-        //        //    }
-        //        //}
-        //        //if (serviceSetupDto.File2 != null && serviceSetupDto.File2.Length != 0)
-        //        //{
-        //        //    newService.ElectronicForm2 = serviceSetupDto.File2.FileName;
-        //        //    var path = @"/HostingSpaces/kupf1/kuweb.erp53.com/wwwroot/contents/";
-        //        //    var filePath = Path.Combine(path, serviceSetupDto.File2.FileName);
-        //        //    using (var stream = new FileStream(filePath, FileMode.Create))
-        //        //    {
-        //        //        serviceSetupDto.File2.CopyTo(stream);
-        //        //    }
-        //        //}
-
-        //        await _context.ServiceSetups.AddAsync(newService);
-        //        result = await _context.SaveChangesAsync();
-        //        return result;
-        //    }
-
-        //    return result;
-        //}
-
-        //public async Task<int> EditServiceSetupAsync(ServiceSetupDto serviceSetupDto)
-        //{
-        //    int result = 0;
-        //    if (_context != null)
-        //    {
-        //        if (serviceSetupDto != null)
-        //        {
-        //            var existingService = _context.ServiceSetups.Where(c => c.ServiceId == serviceSetupDto.ServiceId).FirstOrDefault();
-
-        //            if(existingService != null)
-        //            {
-        //                if (serviceSetupDto.File1 != null && serviceSetupDto.File1.Length != 0)
-        //                {
-        //                    existingService.ElectronicForm1 = serviceSetupDto.File1.FileName;
-        //                    var path = @"/HostingSpaces/kupf1/kuweb.erp53.com/wwwroot/contents/";
-        //                    var filePath = Path.Combine(path, serviceSetupDto.File1.FileName);
-        //                    using (var stream = new FileStream(filePath, FileMode.Create))
-        //                    {
-        //                        serviceSetupDto.File1.CopyTo(stream);
-        //                    }
-        //                }
-        //                if (serviceSetupDto.File2 != null && serviceSetupDto.File2.Length != 0)
-        //                {
-        //                    existingService.ElectronicForm2 = serviceSetupDto.File2.FileName;
-        //                    var path = @"/HostingSpaces/kupf1/kuweb.erp53.com/wwwroot/contents/";
-        //                    var filePath = Path.Combine(path, serviceSetupDto.File2.FileName);
-        //                    using (var stream = new FileStream(filePath, FileMode.Create))
-        //                    {
-        //                        serviceSetupDto.File2.CopyTo(stream);
-        //                    }
-        //                }                        
-        //                string masterIds = String.Join(",", serviceSetupDto.MasterServiceId);
-        //                existingService.MasterServiceId = masterIds;
-        //                _mapper.Map(serviceSetupDto, existingService);
-        //                _context.ServiceSetups.Update(existingService);
-        //                result = await _context.SaveChangesAsync();
-        //            }
-        //            return result;
-        //        }
-
-        //    };
-        //    return result;
-        //}
-        //public async Task<int> DeleteServiceSetupAsync(int id)
-        //{
-        //    int result = 0;
-
-        //    if (_context != null)
-        //    {
-        //        var serviceSetup = await _context.ServiceSetups.FirstOrDefaultAsync(x => x.ServiceId == id);
-
-        //        if (serviceSetup != null)
-        //        {
-        //            _context.ServiceSetups.Remove(serviceSetup);
-
-        //            result = await _context.SaveChangesAsync();
-        //        }
-        //        return result;
-        //    }
-        //    return result;
-        //}
-        //public async Task<ServiceSetupDto> GetServiceSetupByIdAsync(int id)
-        //{
-        //    var result = await _context.ServiceSetups.Where(c => c.ServiceId == id).FirstOrDefaultAsync();
-        //    var data = _mapper.Map<ServiceSetupDto>(result);
-        //    return data;
-        //}
-        //public Task<List<ServiceSetupDto>> GetServiceSetupAsync()
-        //{
-        //    var result = (from r in _context.Reftables
-        //                  join s in _context.ServiceSetups
-        //                  on r.Refid equals s.ServiceType
-        //                  where r.Refsubtype == "ServiceType"
-        //                  select new ServiceSetupDto
-        //                  {
-        //                      TenentId = s.TenentId,
-        //                      ServiceId = s.ServiceId,
-        //                      ServiceName1 = s.ServiceName1,
-        //                      ServiceName2 = s.ServiceName2,
-        //                      ServiceType = s.ServiceType,
-        //                      ServiceTypeName = r.Shortname,
-        //                      MinInstallment = s.MinInstallment,
-        //                      MaxInstallment = s.MaxInstallment,
-        //                      AllowDiscountAmount = s.AllowDiscountAmount,
-        //                      AllowedNonEmployes = s.AllowedNonEmployes
-        //                  }).ToListAsync();
-        //    return result;
-        //}
-
-        //public async Task<ReturnWebContent> GetWebContentByPageNameAsync(string pageName)
-        //{
-        //    var pageContent = await _context.ServiceSetups.FirstOrDefaultAsync(x => x.EnglishWebPageName == pageName);
-        //    var data = _mapper.Map<ReturnWebContent>(pageContent);
-        //    return data;
-        //}
-
-        //public async Task<int> AddServiceSubscriptionAsync(ServiceSubscriptionDto serviceSubscriptionDto)
-        //{
-        //    int result = 0;
-        //    if (_context != null)
-        //    {
-        //        if (serviceSubscriptionDto != null)
-        //        {
-        //            var subscription = _mapper.Map<ServiceSubscription>(serviceSubscriptionDto);
-        //            await _context.ServiceSubscription.AddAsync(subscription);
-        //            result = await _context.SaveChangesAsync();                    
-        //        }
-        //    }
-        //    return result;
-        //}
-
-        public class EnglishJson
+        public Task<List<IncommingCommunicationDto>> GetIncomingLetters()
         {
-            public string para { get; set; }
-            public string file1 { get; set; }
-            public string file2 { get; set; }
-            public string link1 { get; set; }
-            public string link2 { get; set; }
+            var result = (from r in _context.Reftables
+                          join s in _context.LettersHds on r.Refid equals s.LetterType
+                          join a in _context.Reftables on s.FilledAt equals a.Refid
+                          where r.Refsubtype == "Communication" && a.Refsubtype == "Party"
+                          && r.Reftype == "KUPF" && a.Reftype == "KUPF"
+                          select new IncommingCommunicationDto
+                          {
+                              searchtag = s.SearchTag,
+                              description = s.Description,
+                              filledat = a.Refname1,
+                              letterdated = s.LetterDated.ToString(),
+                              lettertype = r.Shortname,
+                              mytransid = s.Mytransid
+                          }).ToListAsync();
+            return result;
         }
-        public class ArabicJson
-        {
-            public string para { get; set; }
-            public string file1 { get; set; }
-            public string file2 { get; set; }
-            public string link1 { get; set; }
-            public string link2 { get; set; }
-        }
-
-        //List<EnglishJson> _engData = new List<EnglishJson>();
-        //EnglishJson eng = new EnglishJson();
-        //eng.para = serviceSetupDto.EnglishHTML;
-
-        //if (serviceSetupDto.File1 != null && serviceSetupDto.File1.Length != 0)
-        //{
-        //    eng.file1 = serviceSetupDto.File1.FileName;
-        //}
-        //if (serviceSetupDto.File2 != null && serviceSetupDto.File1.Length != 0)
-        //{
-        //    eng.file2 = serviceSetupDto.File2.FileName;
-        //}
-        ////
-        //eng.link1 = serviceSetupDto.ElectronicForm1URL;
-        //eng.link2 = serviceSetupDto.ElectronicForm2URL;
-        ////
-        //_engData.Add(eng);
-        ////
-        //string jsonEnglish = JsonConvert.SerializeObject(_engData.ToArray());
-
-        ////write string to file
-        //File.WriteAllText(@"/HostingSpaces/kupf1/kuweb.erp53.com/wwwroot/contents/" + serviceSetupDto.EnglishWebPageName + ".json", jsonEnglish);
-
-        //List<ArabicJson> _arabicData = new List<ArabicJson>();
-        //ArabicJson ar = new ArabicJson();
-        //ar.para = serviceSetupDto.ArabicHTML;
-
-        //if (serviceSetupDto.ElectronicForm1 != null && serviceSetupDto.ElectronicForm1.Length != 0)
-        //{
-        //    ar.file1 = serviceSetupDto.File1.FileName;
-        //}
-        //if (serviceSetupDto.ElectronicForm2 != null && serviceSetupDto.ElectronicForm2.Length != 0)
-        //{
-        //    ar.file2 = serviceSetupDto.File2.FileName;
-        //}
-        ////
-        //ar.link1 = serviceSetupDto.ElectronicForm1URL;
-        //ar.link2 = serviceSetupDto.ElectronicForm2URL;
-
-        ////
-        //_arabicData.Add(ar);
-        ////
-        //string jsonArabic = JsonConvert.SerializeObject(_arabicData.ToArray());
-
-        ////write string to file
-        //File.WriteAllText(@"/HostingSpaces/kupf1/kuweb.erp53.com/wwwroot/ar/contents/" + serviceSetupDto.ArabicWebPageName + ".json", jsonArabic);
 
     }
 }

@@ -52,5 +52,7 @@ namespace API.Servivces.Interfaces.FinancialServices
 
         Task<ReturnSearchResultDto> SearchNewSubscriber(SearchEmployeeDto searchEmployeeDto);
 
+        
+
     }
 }

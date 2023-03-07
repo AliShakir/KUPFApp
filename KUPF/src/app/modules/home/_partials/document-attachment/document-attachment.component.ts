@@ -38,7 +38,7 @@ export class DocumentAttachmentComponent implements OnInit {
   allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
-  getForm!:FormGroup;
+  getForm!: FormGroup;
   @ViewChild('fruitInput', { static: false }) fruitInput!: ElementRef<HTMLInputElement>;
   @ViewChild('auto', { static: false }) matAutocomplete!: MatAutocomplete;
 
@@ -46,115 +46,49 @@ export class DocumentAttachmentComponent implements OnInit {
     private dbCommonService: DbCommonService) {
     this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
       startWith(null),
-      map((fruit: string | null) => fruit ? this._filter(fruit) : this.allFruits.slice()));
+    map((fruit: string | null) => fruit ? this._filter(fruit) : this.allFruits.slice()));
   }
 
   ngOnInit(): void {
     //Init document form.
-    this.initDocumentAttachments();
     this.selectDocTypeDto$ = this.dbCommonService.GetDocTypes(21);
     //
-    console.log('OK 12',this.parentFormGroup);
-    if (this.parentFormGroup) {      
-      this.parentFormGroup.setControl('documentAttachmentForm', this.documentAttachmentForm);
-      console.log(this.parentFormGroup.value.documentAttachmentForm);
-    }
-    // this.getForm = this.fb.group({
-    //   subject: ['', Validators.required],
-    //   attachmentRemarks: ['', Validators.required],
-    //   metaTag: ['', Validators.required],
-    //   docType0: ['', Validators.required],
-    //   docType1: ['', Validators.required],
-    //   docType2: ['', Validators.required],
-    //   docType3: ['', Validators.required],
-    //   docType4: ['', Validators.required],
-    // })
-
-    // this.getForm.controls['subject'].setValue(this.parentFormGroup.)
+    this.getFormdvalue();
   }
 
   onTheApplicationSelect(event: any) {
     if (event.target.files.length > 0) {
       const file: File = event.target.files[0];
-      this.documentAttachmentForm?.controls[0].get('Document')?.setValue(file);
+      this.getForm?.get('appplicationFileDocument')?.setValue(file);
     }
   }
   onPersonalPhotoSelect(event: any) {
     if (event.target.files.length > 0) {
       const file: File = event.target.files[0];
-      this.documentAttachmentForm?.controls[1].get('Document')?.setValue(file);
+      this.getForm?.get('personalPhotoDocument')?.setValue(file);
     }
   }
   onWorkIdSelect(event: any) {
     if (event.target.files.length > 0) {
       const file: File = event.target.files[0];
-      this.documentAttachmentForm?.controls[2].get('Document')?.setValue(file);
+      this.getForm?.get('workIdDocument')?.setValue(file);
     }
   }
   onCivilIdSelect(event: any) {
     if (event.target.files.length > 0) {
       const file: File = event.target.files[0];
-      this.documentAttachmentForm?.controls[3].get('Document')?.setValue(file);
+      this.getForm?.get('civilIdDocument')?.setValue(file);
     }
   }
   onSalaryDataSelect(event: any) {
     if (event.target.files.length > 0) {
       const file: File = event.target.files[0];
-      this.documentAttachmentForm?.controls[4].get('Document')?.setValue(file);
+      this.getForm?.get('salaryDataDocument')?.setValue(file);
     }
   }
   // Initialize form
-  metatagarr:any;
-  initDocumentAttachments() {
-    
-    this.documentAttachmentForm = new FormArray<any>([]);
-    this.documentAttachmentForm.push(
-      new FormGroup({
-        docType: new FormControl('', Validators.required),
-        Document: new FormControl('', Validators.required),
-        subject: new FormControl('', Validators.required),
-        metaTag: new FormControl([this.metaTag], Validators.required),
-        attachmentRemarks: new FormControl('', Validators.required),
-        attachmentByName: new FormControl('', Validators.required)
-      }));
-    this.documentAttachmentForm.push(
-      new FormGroup({
-        docType: new FormControl('', Validators.required),
-        Document: new FormControl('', Validators.required),
-        subject: new FormControl('', Validators.required),
-        metaTag: new FormControl([this.metaTag], Validators.required),
-        attachmentRemarks: new FormControl('', Validators.required),
-         attachmentByName: new FormControl('', Validators.required)
-      }));
-    this.documentAttachmentForm.push(
-      new FormGroup({
-        docType: new FormControl('', Validators.required),
-        Document: new FormControl('', Validators.required),
-        subject: new FormControl('', Validators.required),
-        metaTag: new FormControl('', Validators.required),
-        attachmentRemarks: new FormControl('', Validators.required),
-        attachmentByName: new FormControl('', Validators.required)
-      }));
-    this.documentAttachmentForm.push(
-      new FormGroup({
-        docType: new FormControl('', Validators.required),
-        Document: new FormControl('', Validators.required),
-        subject: new FormControl('', Validators.required),
-        metaTag: new FormControl('', Validators.required),
-        attachmentRemarks: new FormControl('', Validators.required),
-        attachmentByName: new FormControl('', Validators.required)
-      }));
-    this.documentAttachmentForm.push(
-      new FormGroup({
-        docType: new FormControl('', Validators.required),
-        Document: new FormControl('', Validators.required),
-        subject: new FormControl('', Validators.required),
-        metaTag: new FormControl('', Validators.required),
-        attachmentRemarks: new FormControl('', Validators.required),
-        attachmentByName: new FormControl('', Validators.required)
-      }));
-      this.parentFormGroup.setControl('documentAttachmentForm', this.documentAttachmentForm);
-  }
+  metatagarr: any;
+  
 
 
 
@@ -168,25 +102,19 @@ export class DocumentAttachmentComponent implements OnInit {
       // Add our fruit
 
       if ((value || '').trim()) {
-        this.metaTag.push(value.trim()); 
-        JSON.stringify(this.metaTag);
-        
-        // this.metatagarr= this.metaTag;
-        //     console.log(this.metatagarr)
+        this.metaTag.push(value.trim());
+        JSON.stringify(this.metaTag);              
       }
-
       // Reset the input value
       if (input) {
         input.value = '';
       }
-
       this.fruitCtrl.setValue(null);
     }
   }
 
   remove(fruit: string): void {
     const index = this.metaTag.indexOf(fruit);
-
     if (index >= 0) {
       this.metaTag.splice(index, 1);
     }
@@ -200,7 +128,39 @@ export class DocumentAttachmentComponent implements OnInit {
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-
     return this.allFruits.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
   }
+
+
+  getFormdvalue() {
+    this.getForm = this.fb.group({
+      subject: ['', Validators.required],
+      attachmentRemarks: ['', Validators.required],
+      
+      appplicationFileDocType: ['',Validators.required],
+      appplicationFileDocument: ['',Validators.required],
+      
+      civilIdDocType: ['',Validators.required],
+      civilIdDocument: ['',Validators.required],
+
+      workIdDocType: ['',Validators.required],
+      workIdDocument: ['',Validators.required],
+
+      personalPhotoDocType: ['',Validators.required],
+      personalPhotoDocument: ['',Validators.required],
+
+      salaryDataDocType: ['',Validators.required],
+      salaryDataDocument: ['',Validators.required],
+      mtag: ['', Validators.required]
+    })
+  }
+ 
+  formVal() {
+    console.log(this.metaTag);
+    this.getForm.controls['mtag'].setValue(this.metaTag);
+    console.log(this.getForm.controls['mtag'].value);
+    console.log(this.getForm);
+  }
+
+
 }

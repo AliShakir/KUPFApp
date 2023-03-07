@@ -248,7 +248,7 @@ namespace API.Servivces.Implementation
             }
 
             var result = new Models.DetailedEmployee();
-            if (searchEmployeeDto.EmployeeId == 0 )
+            if (searchEmployeeDto.EmployeeId == 0)
             {
                 result = await _context.DetailedEmployees.Where(c => c.EmployeeId == searchEmployeeDto.EmployeeId).FirstOrDefaultAsync();
             }
@@ -535,7 +535,7 @@ namespace API.Servivces.Implementation
         {
             // select Max(draftNo+1) from [TransactionHDD]
             var maxDraftNo = _context.TransactionHds.Select(c => c.DraftNumber1).Max();
-            if(maxDraftNo == null)
+            if (maxDraftNo == null)
             {
                 maxDraftNo = "1";
             }
@@ -573,41 +573,30 @@ namespace API.Servivces.Implementation
 
         public async Task<IEnumerable<SelectLetterTypeDTo>> GetLetterTypeAsync()
         {
-            try
-            {
-                var result = await _context.Reftables
-                .Where(c => c.Reftype == "KUPF" && c.Refsubtype == "Communication").ToListAsync();
+            var result = await _context.Reftables
+            .Where(c => c.Reftype == "KUPF" && c.Refsubtype == "Communication").ToListAsync();
 
-                // Missing type map configuation error occured. Please do a proper test (both FE and BE) check in 
-                // 
-                var data = _mapper.Map<IEnumerable<SelectLetterTypeDTo>>(result);
-                return data;
-
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-  
+            var data = _mapper.Map<IEnumerable<SelectLetterTypeDTo>>(result);
+            return data;
         }
 
 
         public async Task<IEnumerable<SelectPartyTypeDTo>> GetPartyTypeAsync()
         {
-            try
-            {
-                var result = await _context.Reftables
-                              .Where(c => c.Reftype == "KUPF" && c.Refsubtype == "Party").ToListAsync();
-                var data = _mapper.Map<IEnumerable<SelectPartyTypeDTo>>(result);
-                return data;
-            }
-            catch (Exception)
-            {
+            var result = await _context.Reftables
+                          .Where(c => c.Reftype == "KUPF" && c.Refsubtype == "Party").ToListAsync();
 
-                throw;
-            }
-          
+            var data = _mapper.Map<IEnumerable<SelectPartyTypeDTo>>(result);
+            return data;
+        }
+        public async Task<IEnumerable<SelectFilledTypeDTo>> GetFilledAtAsync()
+        {
+            var result = await _context.Reftables
+                          .Where(c => c.Reftype == "KUPF" && c.Refsubtype == "FilingPlace").ToListAsync();
+
+            var data = _mapper.Map<IEnumerable<SelectFilledTypeDTo>>(result);
+            return data;
+
         }
 
 

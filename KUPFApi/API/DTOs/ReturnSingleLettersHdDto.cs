@@ -1,12 +1,9 @@
-﻿using API.DTOs;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-#nullable disable
-
-namespace API.Models
+namespace API.DTOs
 {
-    public partial class LettersHd
+    public class ReturnSingleLettersHdDto
     {
         public int TenentId { get; set; }
         public long Mytransid { get; set; }
@@ -28,5 +25,6 @@ namespace API.Models
         public DateTime? Entrydate { get; set; }
         public DateTime? Entrytime { get; set; }
         public DateTime? Updttime { get; set; }
+        public List<TransactionHDDMSDto>  TransactionHDDMSDtos { get; set; }
     }
 }

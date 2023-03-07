@@ -19,13 +19,13 @@ import { CommunicationService } from 'src/app/modules/_services/communication.se
 export class IncomingLetterDetailsComponent implements OnInit {
 
 
-  columnsToDisplay: string[] = ['action','letterdated','lettertype','filledat','searchtag','description'];
+  columnsToDisplay: string[] = ['action', 'letterdated', 'lettertype', 'filledat', 'searchtag', 'description'];
 
   incommingCommunicationDto$: Observable<IncommingCommunicationDto[]>;
 
   incommingCommunicationDto: MatTableDataSource<IncommingCommunicationDto> = new MatTableDataSource<any>([]);
 
- 
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   // Sorting
@@ -46,54 +46,46 @@ export class IncomingLetterDetailsComponent implements OnInit {
   searchTerm: string = '';
   closeResult: string = '';
   // 
-  formTitle:string;
+  formTitle: string;
   lang: any = '';
-// /*********************/
-// formHeaderLabels$ :Observable<FormTitleHd[]>; 
-// formBodyLabels$ :Observable<FormTitleDt[]>; 
-// formBodyLabels :FormTitleDt[]=[]; 
-// id:string = '';
-// languageId:any;
-// // FormId to get form/App language
-// @ViewChild('IncomingLetterDetails') hidden:ElementRef;
-// /*********************/
-//#region 
-    /*----------------------------------------------------*/
+  
+  //#region 
+  /*----------------------------------------------------*/
 
-    // Language Type e.g. 1 = ENGLISH and 2 =  ARABIC
-    languageType: any;
+  // Language Type e.g. 1 = ENGLISH and 2 =  ARABIC
+  languageType: any;
 
-    // Selected Language
-    language: any;
+  // Selected Language
+  language: any;
 
-    // We will get form lables from lcale storage and will put into array.
-    AppFormLabels: FormTitleHd[] = [];
+  // We will get form lables from lcale storage and will put into array.
+  AppFormLabels: FormTitleHd[] = [];
 
-    // We will filter form header labels array
-    formHeaderLabels: any[] = [];
+  // We will filter form header labels array
+  formHeaderLabels: any[] = [];
 
-    // We will filter form body labels array
-    formBodyLabels: any[] = [];
+  // We will filter form body labels array
+  formBodyLabels: any[] = [];
 
-    // FormId
-    formId: string;
+  // FormId
+  formId: string;
 
-    /*----------------------------------------------------*/  
+  /*----------------------------------------------------*/
   //#endregion
 
   constructor(private common: CommonService,
     private _communicationService: CommunicationService,
     private modalService: NgbModal,
-    private toastrService: ToastrService) {    
-      this.formGroup = new FormGroup({
-        searchTerm: new FormControl(null)
-      })
-    }
+    private toastrService: ToastrService) {
+    this.formGroup = new FormGroup({
+      searchTerm: new FormControl(null)
+    })
+  }
 
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang');
-  
-    
+
+
     this.formTitle = this.common.getFormTitle();
     this.formTitle = '';
 
@@ -117,103 +109,78 @@ export class IncomingLetterDetailsComponent implements OnInit {
 
       for (let labels of this.AppFormLabels) {
 
-       
+
 
         if (labels.formID == this.formId && labels.language == this.languageType) {
-       
+
           this.formHeaderLabels.push(labels);
 
           this.formBodyLabels.push(labels.formTitleDTLanguage);
 
         }
       }
-       console.log(this.formBodyLabels);
+      console.log(this.formBodyLabels);
     }
     //#endregion
   }
-  // ngAfterViewInit() {
-    
-  //   // TO get the form id...
-  //   this.id = this.hidden.nativeElement.value;
-    
-  //   // TO GET THE LANGUAGE ID
-  //   this.languageId = localStorage.getItem('langType');
-    
-  //   // Get form header labels
-  //   this.formHeaderLabels$ = this.localizationService.getFormHeaderLabels(this.id,this.languageId);
-    
-  //   // Get form body labels 
-  //   this.formBodyLabels$= this.localizationService.getFormBodyLabels(this.id,this.languageId)
-    
-  //   // Get observable as normal array of items
-  //   this.formBodyLabels$.subscribe((data)=>{
-  //     this.formBodyLabels = data
-  //   },error=>{
-  //     console.log(error);
-  //   })
-  // }
 
 
 
-  loadData()
-{
-  this.incommingCommunicationDto$ = this._communicationService.getIncommingCommunication();
+  loadData() {
+    this.incommingCommunicationDto$ = this._communicationService.GetIncomingLetters();
     this.incommingCommunicationDto$.subscribe((response: IncommingCommunicationDto[]) => {
-   
       this.incommingCommunicationDto = new MatTableDataSource<IncommingCommunicationDto>(response);
       this.incommingCommunicationDto.paginator = this.paginator;
       this.incommingCommunicationDto.sort = this.sort;
       this.isLoadingCompleted = true;
-      console.log(this.incommingCommunicationDto);    
     }, error => {
       console.log(error);
       this.dataLoadingStatus = 'Error fetching the data';
       this.isError = true;
     })
-}
-
-
-filterRecords() {
-    
-  if (this.formGroup.value.searchTerm != null && this.incommingCommunicationDto) {
-    this.incommingCommunicationDto.filter = this.formGroup.value.searchTerm.trim();
   }
-}
-clearFilter() {
-  this.formGroup?.patchValue({ searchTerm: "" });
-  this.filterRecords();
-}
 
 
-openDeleteModal(content: any, id: number) {
-  this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
-    this.closeResult = `Closed with: ${result}`;
-    if (result === 'yes') {
-      console.log(id);
-      this._communicationService.deleteIncommingCommunication(id).subscribe(response => {
-        if (response === 1) {
-          this.toastrService.success('Record deleted successfully', 'Success');
-          // Refresh Grid
-          this.loadData();
-        } else {
-          this.toastrService.error('Something went wrong', 'Error');
-        }
-      });
+  filterRecords() {
+    if (this.formGroup.value.searchTerm != null && this.incommingCommunicationDto) {
+      this.incommingCommunicationDto.filter = this.formGroup.value.searchTerm.trim();
     }
-  }, (reason) => {
-    this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-  });
-
-}
-private getDismissReason(reason: any): string {
-  if (reason === ModalDismissReasons.ESC) {
-    return 'by pressing ESC';
-  } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-    return 'by clicking on a backdrop';
-  } else {
-    return `with: ${reason}`;
   }
-}
+  clearFilter() {
+    this.formGroup?.patchValue({ searchTerm: "" });
+    this.filterRecords();
+  }
+
+
+  openDeleteModal(content: any, id: number) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+      if (result === 'yes') {
+        console.log(id);
+        this._communicationService.DeleteIncomingLetter(id).subscribe(response => {
+          if (response === 1) {
+              this.toastrService.success('Record deleted successfully', 'Success');
+            // Refresh Grid
+            this.loadData();
+          } else {
+            this.toastrService.error('Something went wrong', 'Error');
+          }
+        });
+      }
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+
+  }
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
 
 
 }

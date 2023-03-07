@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { ApproveRejectServiceDto } from '../models/ApproveRejectServiceDto';
 import { DetailedEmployee } from '../models/DetailedEmployee';
 import { CashierApprovalDto } from '../models/FinancialService/CashierApprovalDto';
+import { EmployeeActivityLogDto } from '../models/FinancialService/EmployeeActivityLogDto';
 import { ReturnApprovalsByEmployeeId } from '../models/FinancialService/ReturnApprovalsByEmployeeId';
 import { ReturnTransactionHdDto } from '../models/FinancialService/ReturnTransactionHdDto';
 import { TransactionHdDto } from '../models/FinancialService/TransactionHdDto';
@@ -42,6 +43,8 @@ export class FinancialService {
   //
   employeeDetails: DetailedEmployee[]=[]
 
+  // 
+  returnEmployeeActivityLog:EmployeeActivityLogDto[]=[];
   constructor(private httpClient: HttpClient) { }
 
   AddFinacialService(response: FormData) {    
@@ -158,6 +161,15 @@ export class FinancialService {
       map(returnApprovalsByEmployeeId => {
         this.returnApprovalsByEmployeeId = returnApprovalsByEmployeeId;
         return returnApprovalsByEmployeeId;
+      })
+    )
+  }
+
+  GetEmployeeActivityLog(crupId:number,tenentId:number,locationId:number) {      
+    return this.httpClient.get<EmployeeActivityLogDto[]>(this.baseUrl + `DisplayCrupAudit/GetEmployeeActivityLog?crupId=${crupId}&tenentId=${tenentId}&locationId=${locationId}`).pipe(
+      map(returnEmployeeActivityLog => {
+        this.returnEmployeeActivityLog = returnEmployeeActivityLog;
+        return returnEmployeeActivityLog;
       })
     )
   }

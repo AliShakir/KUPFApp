@@ -100,6 +100,8 @@ export class ApprovalManagementComponent implements OnInit {
   financialData: any;
   financialDetails: any;
   approvalDetails: any;
+  employeeActivityLog:any;
+  crupId:any;
   constructor(
     private modalService: NgbModal,
     private financialService: FinancialService,
@@ -234,7 +236,7 @@ export class ApprovalManagementComponent implements OnInit {
       this.returnServiceApprovals = new MatTableDataSource<CashierApprovalDto>(response);
       this.returnServiceApprovals.paginator = this.paginator;
       this.returnServiceApprovals.sort = this.sort;
-      this.isLoadingCompleted = true;
+      this.isLoadingCompleted = true;      
     }, error => {
       console.log(error);
       this.dataLoadingStatus = 'Error fetching the data';
@@ -244,10 +246,11 @@ export class ApprovalManagementComponent implements OnInit {
   get approvalForm() { return this.approveServiceForm.controls; }
   get rejectionForm() { return this.rejectServiceForm.controls; }
 
-  openContactModal(content: any, event: any) {
+  openContactModal(content: any, event: any,crup_id:any) {
     this.commonService.employeeId = event.target.id    //
-    this.employeeService.GetEmployeeById(event.target.id).subscribe((response: any) => {
-      if (response) {
+    this.crupId =crup_id.crupId;
+    this.employeeService.GetEmployeeById(event.target.id).subscribe((response: any) => {      
+      if (response) {        
         this.employeeDetailsform.patchValue({
           employeeId: response.employeeId,
           englishName: response.englishName,
@@ -272,24 +275,35 @@ export class ApprovalManagementComponent implements OnInit {
           next2KinName: response.next2KinName,
           next2KinMobNumber: response.next2KinMobNumber,
           userId: response.userId,
-          deviceId: response.deviceId
+          deviceId: response.deviceId,
+          crupId :response.cruP_ID
         });
       }
-
+    }, error => {
+      console.log(error);
     });
     //
     this.financialService.GetServiceApprovalsByEmployeeId(this.commonService.employeeId).subscribe((resp: any) => {
       if (resp) {
         this.financialData = resp;
       }
+    }, error => {
+      console.log(error);
     })
     //
     this.financialService.GetServiceApprovalsByEmployeeIdForManager(this.commonService.employeeId, this.tenentId, this.locationId).subscribe((response: any) => {
-      console.log(response);
       this.approvalDetails = response;
     }, error => {
       console.log(error);
     });
+    //
+    this.financialService.GetEmployeeActivityLog(this.crupId,this.tenentId,this.locationId).subscribe((response:any)=>{
+      this.employeeActivityLog = response;
+      
+    },error=>{
+      console.log(error);
+    })
+
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', modalDialogClass: 'modal-lg' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {

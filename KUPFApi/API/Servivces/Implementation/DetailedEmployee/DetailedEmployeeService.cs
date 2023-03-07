@@ -68,6 +68,7 @@ namespace API.Servivces.Implementation.DetailedEmployee
                 newEmployee.EmployeeId = (int)CommonMethods.CreateEmployeeId();
                 await _context.DetailedEmployees.AddAsync(newEmployee);
                 await _context.SaveChangesAsync();
+                #region Save Into CrupAudit
                 //
                 var auditInfo = _context.Reftables.FirstOrDefault(c => c.Reftype == "Audit" && c.Refsubtype == "Employee");
                 var mySerialNo = _context.TblAudits.Max(c => c.MySerial) + 1;
@@ -76,7 +77,7 @@ namespace API.Servivces.Implementation.DetailedEmployee
                 {
                     TenantId = detailedEmployeeDto.TenentId,
                     LocationId = detailedEmployeeDto.LocationId,
-                    CrupId = maxCrupId, 
+                    CrupId = maxCrupId,
                     MySerial = mySerialNo,
                     AuditNo = auditNo,
                     AuditType = auditInfo.Shortname,
@@ -93,7 +94,9 @@ namespace API.Servivces.Implementation.DetailedEmployee
                 await _context.Crupaudits.AddAsync(crupAudit);
                 result = await _context.SaveChangesAsync();
                 return result;
-                
+                #endregion
+
+
             }
             return result;
 

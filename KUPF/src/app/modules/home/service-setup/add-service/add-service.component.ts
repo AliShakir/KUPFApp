@@ -179,8 +179,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     
     //
 
-    if (this.mytransid) {
-      
+    if (this.mytransid) {      
       this.common.ifEmployeeExists = true;
       // To display other Accordians
       this.isSearched = true;
@@ -192,11 +191,10 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       this.financialService.GetServiceType(tenantId).subscribe((response: any) => {         
         this.selectServiceType = response;       
       });
-      
+      //
       this.financialService.GetFinancialServiceById(this.mytransid).subscribe((response: any) => {       
         this.allowedDiscountType = response.discountType; 
         this.serviceTypeSelected =  response.serviceType;
-       console.log('edit response',response);
         this.parentForm.patchValue({
           employeeForm: {
             employeeId: response.employeeId,
@@ -288,7 +286,9 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       //
       this.enableDisableControls(this.addServiceForm.get('allowDiscountDefault')?.value)   
       this.addServiceForm.get('pfId')?.disable();
-    }    
+      
+    }  
+    
   }
 
   ngOnDestroy(): void {

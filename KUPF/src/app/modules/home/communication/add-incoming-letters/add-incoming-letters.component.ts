@@ -2,15 +2,19 @@ import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { IncommingCommunicationDto, SelectLetterTypeDTo, SelectPartyTypeDTo } from 'src/app/modules/models/CommunicationDto';
 import { FormTitleDt } from 'src/app/modules/models/formTitleDt';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
+import { SelectUsersDto } from 'src/app/modules/models/SelectUsersDto';
+import { SelectServiceTypeDto } from 'src/app/modules/models/ServiceSetup/SelectServiceTypeDto';
 import { CommunicationService } from 'src/app/modules/_services/communication.service';
 import { DbCommonService } from 'src/app/modules/_services/db-common.service';
 import { LocalizationService } from 'src/app/modules/_services/localization.service';
 import { environment } from 'src/environments/environment';
+import { DocumentAttachmentComponent } from '../../_partials/document-attachment/document-attachment.component';
 
 @Component({
   selector: 'app-add-incoming-letters',
@@ -18,69 +22,57 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./add-incoming-letters.component.scss']
 })
 export class AddIncomingLettersComponent implements OnInit {
-  inCommunicationForm: FormGroup;
-  transId: number;
-  employeeId: number
-  isFormSubmitted=false;
-  masterId: any;
-  baseUrl = environment.KUPFApiUrl;
 
+  inCommunicationForm: FormGroup;
+  documentAttachments: FormGroup;
+  transId: any;
+  employeeId: number
+  isFormSubmitted = false;
+  baseUrl = environment.KUPFApiUrl;
+  @ViewChild(DocumentAttachmentComponent) documentattachmentcomponent!:DocumentAttachmentComponent;
   incommingCommunicationDto$: Observable<any[]>;
- 
+
   incommingCommunicationDto: IncommingCommunicationDto[];
 
-// /*********************/
-// formHeaderLabels$ :Observable<FormTitleHd[]>; 
-// formBodyLabels$ :Observable<FormTitleDt[]>; 
-// formBodyLabels :FormTitleDt[]=[]; 
-// id:string = '';
-// languageId:any;
-// // FormId to get form/App language
-// @ViewChild('AddIncomingLetters') hidden:ElementRef;
-// /*********************/
-//#region 
-    /*----------------------------------------------------*/
+  //#region 
+  /*----------------------------------------------------*/
 
-    // Language Type e.g. 1 = ENGLISH and 2 =  ARABIC
-    languageType: any;
+  // Language Type e.g. 1 = ENGLISH and 2 =  ARABIC
+  languageType: any;
 
-    // Selected Language
-    language: any;
+  // Selected Language
+  language: any;
 
-    // We will get form lables from lcale storage and will put into array.
-    AppFormLabels: FormTitleHd[] = [];
+  // We will get form lables from lcale storage and will put into array.
+  AppFormLabels: FormTitleHd[] = [];
 
-    // We will filter form header labels array
-    formHeaderLabels: any[] = [];
+  // We will filter form header labels array
+  formHeaderLabels: any[] = [];
 
-    // We will filter form body labels array
-    formBodyLabels: any[] = [];
+  // We will filter form body labels array
+  formBodyLabels: any[] = [];
 
-    // FormId
-    formId: string;
+  // FormId
+  formId: string;
 
-    /*----------------------------------------------------*/  
+  /*----------------------------------------------------*/
   //#endregion
   letterType$: Observable<SelectLetterTypeDTo[]>;
   partyType$: Observable<SelectPartyTypeDTo[]>;
   filledAt$: Observable<SelectPartyTypeDTo[]>;
-
+  users$: Observable<SelectUsersDto[]>;
+  selectDocTypeDto$: Observable<SelectServiceTypeDto[]>;
   objIncommingCommunicationDto: IncommingCommunicationDto;
-  constructor(private localizationService: LocalizationService,private commonDbService: DbCommonService,private fb: FormBuilder,
-      private activatedRoute: ActivatedRoute,    private activatedRout: ActivatedRoute,
-    private _communicationService: CommunicationService, private http: HttpClient,private toastr: ToastrService,) { 
 
-      this.activatedRoute.queryParams.subscribe(params => {
-        this.transId = params['mytransId'];
-        this.employeeId = params['employeeId'];
-      });
-
-
-      this.masterId = this.activatedRout.snapshot.paramMap.get('mytransid');
-      //this.objIncommingCommunicationDto = new  IncommingCommunicationDto();
-
-
-    }
+  constructor(
+    private commonDbService: DbCommonService,
+    private fb: FormBuilder,
+    private activatedRoute: ActivatedRoute,
+    private _communicationService: CommunicationService,
+    private http: HttpClient,
+    private toastr: ToastrService,) {
+    this.transId = this.activatedRoute.snapshot.paramMap.get('mytransid');
+  }
 
   ngOnInit(): void {
     //#region TO SETUP THE FORM LOCALIZATION    
@@ -115,92 +107,138 @@ export class AddIncomingLettersComponent implements OnInit {
     this.initializeCommunicationDeliveryForm();
     this.letterType$ = this.commonDbService.getLetterType();
     this.partyType$ = this.commonDbService.getPartyType();
-    this.filledAt$ = this.commonDbService.getFilledAtAsync();
-    this.getIncommingCommunicationById();
-  }
-  ngAfterViewInit() {
-    
-    // // TO get the form id...
-    // this.id = this.hidden.nativeElement.value;
-    
-    // // TO GET THE LANGUAGE ID
-    // this.languageId = localStorage.getItem('langType');
-    
-    // // Get form header labels
-    // this.formHeaderLabels$ = this.localizationService.getFormHeaderLabels(this.id,this.languageId);
-    
-    // // Get form body labels 
-    // this.formBodyLabels$= this.localizationService.getFormBodyLabels(this.id,this.languageId)
-    
-    // // Get observable as normal array of items
-    // this.formBodyLabels$.subscribe((data)=>{
-    //   this.formBodyLabels = data   
-    // },error=>{
-    //   console.log(error);
-    // })
+    this.filledAt$ = this.commonDbService.getFilledAtAsync(); 
+    //
+    this.users$ = this.commonDbService.GetUsers();
+    //
+    this.selectDocTypeDto$ = this.commonDbService.GetDocTypes(21);
+
+    if (this.transId) {
+      this._communicationService.GetIncomingLetter(this.transId).subscribe((response: any) => {
+        this.inCommunicationForm.patchValue({
+          letterType: response.letterType,
+          receivedSentDate: response.receivedSentDate,
+          senderReceiverParty: response.senderReceiverParty,
+          representative: response.representative,
+          employeeId: response.employeeId,
+          letterDated: response.letterDated,
+          filledAt: response.filledAt,
+          description: response.description,
+          searchTags: response.searchTags,
+          mytransid:response.mytransid
+        })
+      }, error => {
+        console.log(error);
+      })
+    }
   }
 
 
   initializeCommunicationDeliveryForm() {
     this.inCommunicationForm = this.fb.group({
-      //totalAmount: new FormControl('0'),
-      letterType: new FormControl('',Validators.required),
-      partyType: new FormControl('',Validators.required),
-      filledAt:new FormControl('',Validators.required),
-
-      // draftNumber1: new FormControl('0'),
-      // draftDate1: new FormControl(null),
-      // receivedBy1: new FormControl(''),
-      // receivedDate1: new FormControl(null),
-      // deliveredBy1: new FormControl(),
-      // pfid: new FormControl(),
-      // empCidNum: new FormControl(),
-      // employeeId: new FormControl(),
-      // arabicName: new FormControl(),
-      // englishName: new FormControl(),
-      // deliveryDate1: new FormControl(null),
-      // transId:new FormControl('')
+      tenentId: new FormControl('0'),
+      locationId: new FormControl('0'),
+      username: new FormControl(''),
+      userId: new FormControl('0'),
+      letterType: new FormControl('', Validators.required),
+      receivedSentDate: new FormControl('', Validators.required),
+      senderReceiverParty: new FormControl('', Validators.required),
+      representative: new FormControl('', Validators.required),
+      employeeId: new FormControl('', Validators.required),
+      letterDated: new FormControl('', Validators.required),
+      filledAt: new FormControl('', Validators.required),
+      description: new FormControl('', Validators.required),
+      searchTags: new FormControl('', Validators.required),
+      mytransid:new FormControl(0)
     })
   }
 
-
-  getIncommingCommunicationById()
-  {
- 
-    if(this.masterId !=null && this.masterId !=undefined)
+  saveClick() {
+    this.documentattachmentcomponent.formVal();
     {
-      var resp= this._communicationService.getIncommingCommunicationById(Number(this.masterId) );
-      //this._communicationService.getIncommingCommunicationById(Number(this.masterId) );
- 
-    } 
- 
-  } 
+      this.isFormSubmitted = true;      
+      let formData ={
+        ...this.inCommunicationForm.value,
+        ...this.documentattachmentcomponent.formVal
+      }
+      formData['letterDated'] = moment(formData['letterDated']).format("yyyy-MM-DD");
+      
+      formData['receivedSentDate'] = moment(formData['receivedSentDate']).format("yyyy-MM-DD");
+      formData['subject'] = this.documentattachmentcomponent.getForm.get('subject')?.value;
+      formData['remarks'] = this.documentattachmentcomponent.getForm.get('attachmentRemarks')?.value;
+      formData['metaTags'] = this.documentattachmentcomponent.getForm.get('mtag')?.value;
+      formData['appplicationFileDocType'] = this.documentattachmentcomponent.getForm.get('appplicationFileDocType')?.value;
+      formData['appplicationFileDocument'] = this.documentattachmentcomponent.getForm.get('appplicationFileDocument')?.value;
+      
+      formData['civilIdDocType'] = this.documentattachmentcomponent.getForm.get('civilIdDocType')?.value;
+      formData['civilIdDocument'] = this.documentattachmentcomponent.getForm.get('civilIdDocument')?.value;
 
+      formData['workIdDocType'] = this.documentattachmentcomponent.getForm.get('workIdDocType')?.value;
+      formData['workIdDocument'] = this.documentattachmentcomponent.getForm.get('workIdDocument')?.value;
 
+      formData['personalPhotoDocType'] = this.documentattachmentcomponent.getForm.get('personalPhotoDocType')?.value;
+      formData['personalPhotoDocument'] = this.documentattachmentcomponent.getForm.get('personalPhotoDocument')?.value;
 
-  addIncommingCommunication() {
+      formData['salaryDataDocType'] = this.documentattachmentcomponent.getForm.get('salaryDataDocType')?.value;
+      formData['salaryDataDocument'] = this.documentattachmentcomponent.getForm.get('salaryDataDocument')?.value;
 
-   // const finalformData = new FormData(); 
- {
-      this.http.post(this.baseUrl + `Communication/addIncommingCommunication`, this.inCommunicationForm).subscribe({
-        next: () => {
-          //this.toastr.success('Saved successfully', 'Success');
-          //this.parentForm.reset();
-          //this.parentForm.get('addServiceSetupForm')?.patchValue({
-          //  allowDiscountPer: '',
-          // allowDiscountAmount: '0.0',
-            //serviceId: ''
-        //  });
-          
-        },
-        error: (error) => {
-          if (error.status === 500) {
-            this.toastr.error('Duplicate value found', 'Error');
-          }
+      let finalformData = new FormData();
+      Object.keys(formData).forEach(key => finalformData.append(key, formData[key]));
+      
+      if (this.inCommunicationForm.valid) {
+        // Get data from local storage
+        var data = JSON.parse(localStorage.getItem("user")!);
+        const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
+        const locationId = data.map((obj: { locationId: any; }) => obj.locationId);
+        const userId = data.map((obj: { userId: any; }) => obj.userId);
+        const username = data.map((obj: { username: any; }) => obj.username);
+        //
+        this.inCommunicationForm.get('tenentId')?.setValue(tenantId[0]);
+        this.inCommunicationForm.get('locationId')?.setValue(locationId[0]);
+        this.inCommunicationForm.get('userId')?.setValue(userId[0]);
+        this.inCommunicationForm.get('username')?.setValue(username[0]);
+        if (this.transId) {
+          //
+          this._communicationService.UpdateIncomingLetter(this.inCommunicationForm.value).subscribe((response: any) => {
+            if (response === 1) {
+              this.toastr.success("Saved Successfully", "Success");
+              this.inCommunicationForm.reset();
+            } else {
+              this.toastr.error("Something went wrong", "Error");
+            }
+          }, error => {
+            console.log(error);
+          })
+        } else {
+          //
+          this._communicationService.AddIncomingLetter(finalformData).subscribe((response: any) => {
+            if (response === 1) {
+              this.toastr.success("Saved Successfully", "Success");
+              this.inCommunicationForm.reset();
+              //this.documentattachmentcomponent.formVal().reset();
+              
+            } else {
+              this.toastr.error("Something went wrong", "Error");
+            }
+          }, error => {
+            console.log(error);
+          })
         }
-      });
-    }  
+      } 
+    }
+    // this.saveDoc();
+  }
+
+ 
+  saveDoc(){
+    this.documentattachmentcomponent.formVal();
   }
 
   
+
+
+
+  // To access form controls...
+  get inCommunicationFrm() { return this.inCommunicationForm.controls; }
+
 }
