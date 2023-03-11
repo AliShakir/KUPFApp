@@ -64,3 +64,57 @@ input:focus {
     color:rgb(21, 95, 138) !important;
     font-weight: bold !important;
   }
+
+  .navbar .navbar-brand {
+    font-size: 30px;
+  }
+  .navbar .nav-item {
+    padding: 10px 20px;
+  }
+  .navbar .nav-link {
+    font-size: 20px;
+    margin-left: 10px;
+  }
+
+  .scrollbar {
+    float: left;
+    height: calc(100vh - 250px);
+    background: #F5F5F5;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.custom-nav{
+    background-color: #f1faff!important;
+    border-style: dashed!important;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    width: 100%;
+    justify-content: space-between;
+    
+    .sm-container{
+
+    }
+    .btn-container {
+
+    }
+}
+
+/* If the screen size is 1200px wide or more, set the font-size to 80px */
+@media (min-width: 1200px) {
+    .responsive-font {
+      font-size: 14px;
+    }
+  }
+  /* If the screen size is smaller than 1200px, set the font-size to 80px */
+  @media (max-width: 1199.98px) {
+    .responsive-font {
+      font-size: 10px;
+      padding-right: 10px;
+    }
+  }
