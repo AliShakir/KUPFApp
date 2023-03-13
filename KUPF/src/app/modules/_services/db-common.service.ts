@@ -34,8 +34,9 @@ import { FinanaceCalculationDto } from '../models/FinancialService/FinanaceCalcu
 import { CashierInformationDto } from '../models/FinancialService/CashierInformationDto';
 import { SelectBankAccount } from '../models/SelectBankAccount';
 import { CashierApprovalDto } from '../models/FinancialService/CashierApprovalDto';
-import { loanPercentageDto, SelectLetterTypeDTo, SelectPartyTypeDTo } from '../models/CommunicationDto';
+
 import { CountriesDto } from '../models/CountriesDto';
+import { dashboardResponseDto, loanPercentageDto, SelectLetterTypeDTo, SelectPartyTypeDTo } from '../models/CommunicationDto';
 
 @Injectable({
   providedIn: 'root'
@@ -457,6 +458,8 @@ export class DbCommonService {
     getDashboarLoanDetails() {
       return this.httpClient.get<loanPercentageDto>(this.baseUrl + `Common/getDashboarLoanDetails`);
     }
-  
+    getDashboardTotalEmployees() {
+      return this.httpClient.get<dashboardResponseDto[]>(this.baseUrl + `Common/getDashboardTotalEmployees`);
+    }
 
 }

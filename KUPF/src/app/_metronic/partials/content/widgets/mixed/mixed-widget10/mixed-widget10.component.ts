@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { dashboardResponseDto } from 'src/app/modules/models/CommunicationDto';
+import { DbCommonService } from 'src/app/modules/_services/db-common.service';
 import { getCSSVariableValue } from '../../../../../kt/_utils';
 @Component({
   selector: 'app-mixed-widget10',
@@ -8,25 +10,61 @@ export class MixedWidget10Component implements OnInit {
   @Input() chartColor: string = '';
   @Input() chartHeight: string;
   chartOptions: any = {};
+  totalEmp:number=0;
+lidashboardResponseDto:dashboardResponseDto[];
+listTotalEmp: number[] = [];
+listTotalMyperiod: string[] = [];
+  constructor(private _commonService:DbCommonService) {
 
-  constructor() {}
+   this.lidashboardResponseDto=[];
+   this.totalEmp=0;
+  }
 
   ngOnInit(): void {
-    this.chartOptions = getChartOptions(this.chartHeight, this.chartColor);
+    this.getDashboardTotalEmployees();
   }
-}
 
-function getChartOptions(chartHeight: string, chartColor: string) {
+
+  
+  getDashboardTotalEmployees()
+    {
+      this._commonService.getDashboardTotalEmployees().subscribe((response:any)=>{
+        this.lidashboardResponseDto=response;
+        this.totalEmp=this.lidashboardResponseDto[0].myvalue2;
+ 
+        this.chartOptions = this.getChartOptions(this.chartHeight, this.chartColor);
+
+ 
+      });
+  
+
+    }
+
+ 
+
+  getChartOptions(chartHeight: string, chartColor: string ) {
   const labelColor = getCSSVariableValue('--bs-gray-800');
   const strokeColor = getCSSVariableValue('--bs-gray-300');
   const baseColor = getCSSVariableValue('--bs-' + chartColor);
   const lightColor = getCSSVariableValue('--bs-light-' + chartColor);
+ debugger
+  for (var s = 0; s < this.lidashboardResponseDto.length; s++) {
+
+  //  this.listTotalEmp.push(s+30);
+ 
+   this.listTotalEmp.push(this.lidashboardResponseDto[s].myvalue1);
+  this.listTotalMyperiod.push(this.lidashboardResponseDto[s].myperiodcode);
+
+  }
+
+  var list: number[] = [];
+  list = [...this.listTotalEmp];
 
   return {
     series: [
       {
-        name: 'Net Profit',
-        data: [15, 25, 15, 40, 20, 50],
+        name: 'Employees',
+        data:list,
       },
     ],
     chart: {
@@ -45,10 +83,11 @@ function getChartOptions(chartHeight: string, chartColor: string) {
     },
     plotOptions: {},
     legend: {
-      show: false,
+      show: true,
     },
     dataLabels: {
       enabled: false,
+    
     },
     fill: {
       type: 'solid',
@@ -61,22 +100,24 @@ function getChartOptions(chartHeight: string, chartColor: string) {
       colors: [baseColor],
     },
     xaxis: {
-      categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+      categories: this.listTotalMyperiod,
+     // categories: ['Feb', 'Mar', 'Apr'],
+     
       axisBorder: {
         show: false,
       },
       axisTicks: {
-        show: false,
+        show: true,
       },
       labels: {
-        show: false,
+        show: true,
         style: {
           colors: labelColor,
           fontSize: '12px',
         },
       },
       crosshairs: {
-        show: false,
+        show: true,
         position: 'front',
         stroke: {
           color: strokeColor,
@@ -85,14 +126,13 @@ function getChartOptions(chartHeight: string, chartColor: string) {
         },
       },
       tooltip: {
-        enabled: false,
+        enabled: true,
       },
     },
     yaxis: {
-      min: 0,
-      max: 60,
+       
       labels: {
-        show: false,
+        show: true,
         style: {
           colors: labelColor,
           fontSize: '12px',
@@ -126,7 +166,7 @@ function getChartOptions(chartHeight: string, chartColor: string) {
       },
       y: {
         formatter: function (val: number) {
-          return '$' + val + ' thousands';
+          return '' + val + ' Employees';
         },
       },
     },
@@ -134,7 +174,9 @@ function getChartOptions(chartHeight: string, chartColor: string) {
     markers: {
       colors: [lightColor],
       strokeColors: [baseColor],
-      strokeWidth: 3,
+      strokeWidth: 1,
     },
   };
+}
+
 }

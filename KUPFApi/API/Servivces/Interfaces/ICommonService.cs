@@ -123,5 +123,9 @@ namespace API.Servivces.Interfaces
         long CreateMyTransIdForTransactionHD();
         int GetDraftNumberByBank(long accountNo);
         long CreateEmployeePFId(int tenentId, int locationId);
+
+        List<dashboardResponseDto> GetDashboardTotalEmployees();
+
+
     }
 }

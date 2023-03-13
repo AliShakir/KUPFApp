@@ -39,3 +39,15 @@ export interface loanPercentageDto
  
 
 }
+
+export interface dashboardResponseDto
+{
+  myperiodcode:string;
+  myid:number;
+  mylabel1:string;
+  myvalue1:number;
+  mylabel2:string;
+  myvalue2:number;
+
+}
+

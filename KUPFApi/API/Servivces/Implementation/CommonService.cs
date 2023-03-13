@@ -656,6 +656,48 @@ namespace API.Servivces.Implementation
             long pfId = _context.DetailedEmployees.FromSqlRaw("select ISNULL(max(cast(PFID as int)),0)+1 as PFID from DetailedEmployee Where tenentid ='"+ tenentId + "' and locationId='"+locationId+"'").Select(c => Convert.ToInt64(c.Pfid)).FirstOrDefault();
             return pfId;
         }
+        public List<dashboardResponseDto> GetDashboardTotalEmployees()
+        {
+            List<dashboardResponseDto > curpEmployees = new List<dashboardResponseDto> ();   
+           
+            //   if (tenantId != 0 && locationId != 0 && crupId != 0)
+            {
+                var dbconfig = new ConfigurationBuilder()
+                  .SetBasePath(Directory.GetCurrentDirectory())
+                  .AddJsonFile("appsettings.json").Build();
+                var dbconnectionStr = dbconfig["ConnectionStrings:MsSqlConnection"];
+                using (SqlConnection connection = new SqlConnection(dbconnectionStr))
+                {
+                    string sql = "P_GET_DASHBOARD_TOTAL_EMPLOYEES";
+                    using (SqlCommand cmd = new SqlCommand(sql, connection))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        connection.Open();
+                        using (SqlDataReader dataReader = cmd.ExecuteReader())
+                        {
+                            while (dataReader.Read())
+                            {
+                                dashboardResponseDto curpLoan = new dashboardResponseDto();
+                                curpLoan.myperiodcode = dataReader["myperiodcode"].ToString();
+                                curpLoan.myid = Convert.ToInt64(dataReader["myid"] ?? "0");
+                                curpLoan.mylabel1 = dataReader["mylabel1"].ToString();
+                                curpLoan.myvalue1 = Convert.ToInt64(dataReader["myvalue1"] == DBNull.Value ? "0" : dataReader["myvalue1"]);
+                                curpLoan.mylabel2 = (dataReader["mylabel2"]).ToString();
+                                curpLoan.myvalue2 = Convert.ToInt64(dataReader["myvalue2"]== DBNull.Value?"0": dataReader["myvalue2"]);
+
+                                curpEmployees.Add(curpLoan);
+                            }
+                            connection.Close();
+                        }
+                    }
+                }
+            }
+            return curpEmployees;
+        }
+
+        //P_GET_DASHBOARD_TOTAL_EMPLOYEES
+
 
         public Task<List<CountriesDto>> GetCountryList()
         {
