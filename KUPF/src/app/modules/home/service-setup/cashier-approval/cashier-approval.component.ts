@@ -20,7 +20,7 @@ export class CashierApprovalComponent implements OnInit {
 
   //#region
   // To display table column headers
-  columnsToDisplay: string[] = ['action', 'transId','periodCode','employee', 'mobile','service'];
+  columnsToDisplay: string[] = ['action', 'transId', 'periodCode', 'employee', 'mobile', 'service'];
 
   // Getting data as abservable.
   cashierApprovalDto$: Observable<CashierApprovalDto[]>;
@@ -49,11 +49,11 @@ export class CashierApprovalComponent implements OnInit {
   // Search Term
   searchTerm: string = '';
   //#endregion
-
+  isShowAllChecked: boolean = false;
 
   constructor(private financialService: FinancialService,
-    private router: Router, 
-    private commonService: CommonService) { 
+    private router: Router,
+    private commonService: CommonService) {
     this.formGroup = new FormGroup({
       searchTerm: new FormControl(null)
     })
@@ -63,21 +63,21 @@ export class CashierApprovalComponent implements OnInit {
     //
     this.loadData();
   }
-  navigateToCashierDraft(mytransId:number,employeeId:number) {
+  navigateToCashierDraft(mytransId: number, employeeId: number) {
     this.router.navigateByUrl(`/service-setup/cashier-draft?mytransId=${mytransId}&employeeId=${employeeId}`);
   }
-  navigateToCashierDelivery(mytransId:number,employeeId:number) {
+  navigateToCashierDelivery(mytransId: number, employeeId: number) {
     this.router.navigateByUrl(`/service-setup/cashier-delivery?mytransId=${mytransId}&employeeId=${employeeId}`);
   }
-  onDetailsClick(employeeId:number){
-    this.commonService.isViewOnly = true;
-    this.redirectTo(`/service-setup/add-service/${employeeId}`);
+  onDetailsClick(transId: number) {
+    //this.commonService.isViewOnly = true;
+    this.redirectTo(`/service-setup/view-service-detail/${transId}`);
   }
   redirectTo(uri: string) {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
       this.router.navigate([uri]));
   }
-  loadData(){
+  loadData(isShowAll: boolean = false) {
     //   
     var data = JSON.parse(localStorage.getItem("user")!);
     const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
@@ -85,7 +85,7 @@ export class CashierApprovalComponent implements OnInit {
     const periodCode = data.map((obj: { periodCode: any; }) => obj.periodCode);
     const prevPeriodCode = data.map((obj: { prevPeriodCode: any; }) => obj.prevPeriodCode);
     //
-    this.financialService.GetCashierApprovals(periodCode,tenantId,locationId).subscribe((response: CashierApprovalDto[]) => {      
+    this.financialService.GetCashierApprovals(periodCode, tenantId, locationId, isShowAll).subscribe((response: CashierApprovalDto[]) => {
       this.cashierApprovalDto = new MatTableDataSource<CashierApprovalDto>(response);
       this.cashierApprovalDto.paginator = this.paginator;
       this.cashierApprovalDto.sort = this.sort;
@@ -96,4 +96,19 @@ export class CashierApprovalComponent implements OnInit {
       this.isError = true;
     })
   }
+  onShowAllChange(event: any) {
+    this.isShowAllChecked = event.target.checked;
+    this.loadData(event.target.checked)
+  }
+   //#region Material Search and Clear Filter 
+filterRecords() {
+  if (this.formGroup.value.searchTerm != null && this.cashierApprovalDto) {
+    this.cashierApprovalDto.filter = this.formGroup.value.searchTerm.trim();
+  }
+}
+clearFilter() {
+  this.formGroup?.patchValue({ searchTerm: "" });
+  this.filterRecords();
+}
+//#endregion
 }

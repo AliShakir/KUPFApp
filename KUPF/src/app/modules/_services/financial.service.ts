@@ -148,8 +148,8 @@ export class FinancialService {
     )
   }
   
-  GetServiceApprovals(periodCode:number,tenentId:number,locationId:number) {      
-    return this.httpClient.get<CashierApprovalDto[]>(this.baseUrl + `FinancialService/GetServiceApprovalsAsync?periodCode=${periodCode}&tenentId=${tenentId}&locationId=${locationId}`).pipe(
+  GetServiceApprovals(periodCode:number,tenentId:number,locationId:number,isShowAll:boolean) {      
+    return this.httpClient.get<CashierApprovalDto[]>(this.baseUrl + `FinancialService/GetServiceApprovalsAsync?periodCode=${periodCode}&tenentId=${tenentId}&locationId=${locationId}&isShowAll=${isShowAll}`).pipe(
       map(returnServiceApprovals => {
         this.returnManagerApprovals = returnServiceApprovals;
         return returnServiceApprovals;
@@ -191,11 +191,18 @@ export class FinancialService {
     )
   }
 
-  ApproveService(response: ApproveRejectServiceDto) {    
-    return this.httpClient.put(this.baseUrl +`FinancialService/ApproveServiceAsync`,response);
+  ManagerApproveService(response: ApproveRejectServiceDto) {    
+    return this.httpClient.put(this.baseUrl +`FinancialService/ManagerApproveServiceAsync`,response);//ManagerApproveServiceAsync
   }
-  RejectService(response: ApproveRejectServiceDto) {    
-    return this.httpClient.put(this.baseUrl +`FinancialService/RejectServiceAsync`,response);
+  ManagerRejectServiceAsync(response: ApproveRejectServiceDto) {    
+    return this.httpClient.put(this.baseUrl +`FinancialService/ManagerRejectServiceAsync`,response);
+  }
+
+  FinanceApproveService(response: ApproveRejectServiceDto) {    
+    return this.httpClient.put(this.baseUrl +`FinancialService/FinanceApproveServiceAsync`,response);
+  }
+  FinanceRejectServiceAsync(response: ApproveRejectServiceDto) {    
+    return this.httpClient.put(this.baseUrl +`FinancialService/FinanceRejectServiceAsync`,response);
   }
   GetRejectionType() {      
     return this.httpClient.get<RefTableDto[]>(this.baseUrl + `FinancialService/GetRejectionType`).pipe(
@@ -231,13 +238,20 @@ export class FinancialService {
   SearchNewSubscriber(searchEmployeeDto: SearchEmployeeDto) {
     return this.httpClient.post<ReturnSearchResultDto[]>(this.baseUrl + `FinancialService/SearchNewSubscriber`,searchEmployeeDto);
   }
-  GetCashierApprovals(periodCode:number,tenentId:number,locationId:number) { 
-    return this.httpClient.get<CashierApprovalDto[]>(this.baseUrl + `FinancialService/GetCashierApprovals?periodCode=${periodCode}&tenentId=${tenentId}&locationId=${locationId}`);    
+  GetCashierApprovals(periodCode:number,tenentId:number,locationId:number,isShowAll:boolean) { 
+    return this.httpClient.get<CashierApprovalDto[]>(this.baseUrl + `FinancialService/GetCashierApprovals?periodCode=${periodCode}&tenentId=${tenentId}&locationId=${locationId}&isShowAll=${isShowAll}`);    
   }
-  SaveDraftAndDeliveryInformation(response: CashierApprovalDto) {    
-    return this.httpClient.post(this.baseUrl +`FinancialService/SaveDraftAndDeliveryInformation`,response);
+  GetFinacialApprovals(periodCode:number,tenentId:number,locationId:number,isShowAll:boolean) { 
+    return this.httpClient.get<CashierApprovalDto[]>(this.baseUrl + `FinancialService/GetFinacialApprovals?periodCode=${periodCode}&tenentId=${tenentId}&locationId=${locationId}&isShowAll=${isShowAll}`);    
+  }
+  CreateCahierDelivery(response: CashierApprovalDto) {    
+    return this.httpClient.post(this.baseUrl +`FinancialService/CreateCahierDelivery`,response);
+  }
+  CreateCahierDraft(response: CashierApprovalDto) {    
+    return this.httpClient.post(this.baseUrl +`FinancialService/CreateCahierDraft`,response);
   }
   GenerateFinancialServiceSerialNo() { 
     return this.httpClient.get<any>(this.baseUrl + `FinancialService/GenerateFinancialServiceSerialNo`);    
   }
+  
 }

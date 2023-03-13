@@ -28,7 +28,7 @@ namespace API.Controllers
 
         [HttpPut]
         [Route("UpdateIncomingLetter")]
-        public async Task<ActionResult<int>> UpdateIncomingLetter(LettersHdDto lettersHdDto)
+        public async Task<ActionResult<int>> UpdateIncomingLetter([FromForm] LettersHdDto lettersHdDto)
         {
             var result = await _communicationService.UpdateIncomingLetter(lettersHdDto);
             return Ok(result);

@@ -22,8 +22,8 @@ namespace API.DTOs
         public decimal? TotalAmount { get; set; }
         public DateTime? ReceivedDate { get; set; }
         public string? ReceivedBy1 { get; set; }
-        public string? DraftNumber1 { get; set; }
-        public string? DraftNumber2 { get; set; }
+        public int? DraftNumber1 { get; set; }
+        public int? DraftNumber2 { get; set; }
         public string? BankAccount1 { get; set; }
         public string? BankAccount2 { get; set; }
         public DateTime? DeliveryDate1 { get; set; }
@@ -32,5 +32,7 @@ namespace API.DTOs
         public string? DeliveredBy2 { get; set; }
         public DateTime? ReceivedDate1 { get; set; }
         public DateTime? ReceivedDate2 { get; set; }
+        public long? CrupId  { get; set; }
+        public DateTime? EntryDate  { get; set; }
     }
 }

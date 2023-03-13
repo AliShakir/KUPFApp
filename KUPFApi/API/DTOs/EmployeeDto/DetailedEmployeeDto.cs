@@ -79,7 +79,7 @@ namespace API.DTOs.EmployeeDto
 
         public bool? IsKUEmployee { get; set; }
         public bool? IsOnSickLeave { get; set; }
-        public bool? IsMemberOfFund { get; set; }
+        public bool? IsMemberOfFund { get; set; } = false;
         public long? CRUP_ID { get; set; }
         public int? SettlementSerMonths { get; set; }
         public decimal? SettlementAmount { get; set; }
@@ -87,6 +87,7 @@ namespace API.DTOs.EmployeeDto
         public decimal? NextSetlementPayAmount { get; set; }
         public int? Subscription_status { get; set; }
         public string Username { get; set; }
+        public DateTime? CreatedDate { get; set; }
 
     }
 }

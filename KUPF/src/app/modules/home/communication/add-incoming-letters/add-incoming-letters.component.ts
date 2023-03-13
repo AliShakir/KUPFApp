@@ -29,7 +29,7 @@ export class AddIncomingLettersComponent implements OnInit {
   employeeId: number
   isFormSubmitted = false;
   baseUrl = environment.KUPFApiUrl;
-  @ViewChild(DocumentAttachmentComponent) documentattachmentcomponent!:DocumentAttachmentComponent;
+  @ViewChild(DocumentAttachmentComponent) documentattachmentcomponent!: DocumentAttachmentComponent;
   incommingCommunicationDto$: Observable<any[]>;
 
   incommingCommunicationDto: IncommingCommunicationDto[];
@@ -107,26 +107,27 @@ export class AddIncomingLettersComponent implements OnInit {
     this.initializeCommunicationDeliveryForm();
     this.letterType$ = this.commonDbService.getLetterType();
     this.partyType$ = this.commonDbService.getPartyType();
-    this.filledAt$ = this.commonDbService.getFilledAtAsync(); 
+    this.filledAt$ = this.commonDbService.getFilledAtAsync();
     //
     this.users$ = this.commonDbService.GetUsers();
     //
     this.selectDocTypeDto$ = this.commonDbService.GetDocTypes(21);
-
     if (this.transId) {
       this._communicationService.GetIncomingLetter(this.transId).subscribe((response: any) => {
         this.inCommunicationForm.patchValue({
           letterType: response.letterType,
-          receivedSentDate: response.receivedSentDate,
+          receivedSentDate: response.receivedSentDate ? moment(response.receivedSentDate).format("DD-MM-yyyy") : new Date(),
           senderReceiverParty: response.senderReceiverParty,
           representative: response.representative,
           employeeId: response.employeeId,
-          letterDated: response.letterDated,
+          letterDated: response.letterDated ? moment(response.letterDated).format("DD-MM-yyyy") : new Date(),
           filledAt: response.filledAt,
           description: response.description,
-          searchTags: response.searchTags,
-          mytransid:response.mytransid
+          searchTag: response.searchTag,
+          mytransid: response.mytransid
         })
+        // 
+        this.documentattachmentcomponent.setValueofDocForm(response);
       }, error => {
         console.log(error);
       })
@@ -148,28 +149,41 @@ export class AddIncomingLettersComponent implements OnInit {
       letterDated: new FormControl('', Validators.required),
       filledAt: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
-      searchTags: new FormControl('', Validators.required),
-      mytransid:new FormControl(0)
+      searchTag: new FormControl('', Validators.required),
+      mytransid: new FormControl(0)
     })
   }
 
   saveClick() {
+    // Get data from local storage
+    var data = JSON.parse(localStorage.getItem("user")!);
+    const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
+    const locationId = data.map((obj: { locationId: any; }) => obj.locationId);
+    const userId = data.map((obj: { userId: any; }) => obj.userId);
+    const username = data.map((obj: { username: any; }) => obj.username);
+    this.inCommunicationForm.patchValue({
+      tenentId: tenantId[0],
+      locationId: locationId[0],
+      username: username[0],
+      userId: userId[0],
+    })
+
     this.documentattachmentcomponent.formVal();
     {
-      this.isFormSubmitted = true;      
-      let formData ={
+      this.isFormSubmitted = true;
+      let formData = {
         ...this.inCommunicationForm.value,
         ...this.documentattachmentcomponent.formVal
       }
       formData['letterDated'] = moment(formData['letterDated']).format("yyyy-MM-DD");
-      
+
       formData['receivedSentDate'] = moment(formData['receivedSentDate']).format("yyyy-MM-DD");
       formData['subject'] = this.documentattachmentcomponent.getForm.get('subject')?.value;
       formData['remarks'] = this.documentattachmentcomponent.getForm.get('attachmentRemarks')?.value;
       formData['metaTags'] = this.documentattachmentcomponent.getForm.get('mtag')?.value;
       formData['appplicationFileDocType'] = this.documentattachmentcomponent.getForm.get('appplicationFileDocType')?.value;
-      formData['appplicationFileDocument'] = this.documentattachmentcomponent.getForm.get('appplicationFileDocument')?.value;
-      
+      formData['appplicationFileDocument'] = this.documentattachmentcomponent.getForm.get('appplicationFileDocument')?.value;      
+
       formData['civilIdDocType'] = this.documentattachmentcomponent.getForm.get('civilIdDocType')?.value;
       formData['civilIdDocument'] = this.documentattachmentcomponent.getForm.get('civilIdDocument')?.value;
 
@@ -181,25 +195,25 @@ export class AddIncomingLettersComponent implements OnInit {
 
       formData['salaryDataDocType'] = this.documentattachmentcomponent.getForm.get('salaryDataDocType')?.value;
       formData['salaryDataDocument'] = this.documentattachmentcomponent.getForm.get('salaryDataDocument')?.value;
+      //
+      if (this.transId) { 
+        formData['appplicationFileDocument'] = this.documentattachmentcomponent.file0;
+        formData['civilIdDocument'] =this.documentattachmentcomponent.file1;
+        formData['workIdDocument'] =this.documentattachmentcomponent.file2;
+        formData['personalPhotoDocument'] =this.documentattachmentcomponent.file3;
+        formData['salaryDataDocument'] =this.documentattachmentcomponent.file4;
+       }
 
       let finalformData = new FormData();
       Object.keys(formData).forEach(key => finalformData.append(key, formData[key]));
-      
+
       if (this.inCommunicationForm.valid) {
-        // Get data from local storage
-        var data = JSON.parse(localStorage.getItem("user")!);
-        const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
-        const locationId = data.map((obj: { locationId: any; }) => obj.locationId);
-        const userId = data.map((obj: { userId: any; }) => obj.userId);
-        const username = data.map((obj: { username: any; }) => obj.username);
-        //
-        this.inCommunicationForm.get('tenentId')?.setValue(tenantId[0]);
-        this.inCommunicationForm.get('locationId')?.setValue(locationId[0]);
-        this.inCommunicationForm.get('userId')?.setValue(userId[0]);
-        this.inCommunicationForm.get('username')?.setValue(username[0]);
-        if (this.transId) {
-          //
-          this._communicationService.UpdateIncomingLetter(this.inCommunicationForm.value).subscribe((response: any) => {
+
+        if (this.transId) {   
+         
+          console.log(finalformData);
+          console.log('Edit', formData); 
+          this._communicationService.UpdateIncomingLetter(finalformData).subscribe((response: any) => {
             if (response === 1) {
               this.toastr.success("Saved Successfully", "Success");
               this.inCommunicationForm.reset();
@@ -210,13 +224,11 @@ export class AddIncomingLettersComponent implements OnInit {
             console.log(error);
           })
         } else {
-          //
+          console.log('Add', formData);
           this._communicationService.AddIncomingLetter(finalformData).subscribe((response: any) => {
             if (response === 1) {
               this.toastr.success("Saved Successfully", "Success");
               this.inCommunicationForm.reset();
-              //this.documentattachmentcomponent.formVal().reset();
-              
             } else {
               this.toastr.error("Something went wrong", "Error");
             }
@@ -224,17 +236,17 @@ export class AddIncomingLettersComponent implements OnInit {
             console.log(error);
           })
         }
-      } 
+      }
     }
     // this.saveDoc();
   }
 
- 
-  saveDoc(){
+
+  saveDoc() {
     this.documentattachmentcomponent.formVal();
   }
 
-  
+
 
 
 

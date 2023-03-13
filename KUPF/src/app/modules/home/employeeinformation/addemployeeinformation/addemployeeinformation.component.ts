@@ -6,6 +6,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { CountriesDto } from 'src/app/modules/models/CountriesDto';
 import { DetailedEmployee } from 'src/app/modules/models/DetailedEmployee';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
 import { SelectDepartmentsDto } from 'src/app/modules/models/SelectDepartmentsDto';
@@ -41,6 +42,7 @@ export class AddemployeeinformationComponent implements OnInit {
   occupations$: Observable<SelectOccupationsDto[]>;
   departments$: Observable<SelectDepartmentsDto[]>;
   terminations$: Observable<SelectTerminationsDto[]>;
+  countries$: Observable<CountriesDto[]>;
   //
   contractType$:Observable<SelectOccupationsDto[]>;
   //
@@ -71,7 +73,7 @@ export class AddemployeeinformationComponent implements OnInit {
   //#endregion
   datePickerConfig: Partial<BsDatepickerConfig> | undefined;
   selectedStatus: number | undefined;
-  maritalStatusArray = [
+  maritalStatusArray: any = [
     { id: 1, name: 'Married' },
     { id: 2, name: 'Single' }
   ];
@@ -104,6 +106,7 @@ export class AddemployeeinformationComponent implements OnInit {
     //
     this.employeeId = this.activatedRout.snapshot.paramMap.get('employeeId');
 
+    this.countries$ = this.commonDbService.GetCountryList();
   }
   
   selectedOccupation: number | undefined;
@@ -167,7 +170,7 @@ export class AddemployeeinformationComponent implements OnInit {
             arabicName: response.arabicName,
             empBirthday: response.empBirthday ? new Date(response.empBirthday) : '',
             empGender: response.empGender,
-            empMaritalStatus: response.empMaritalStatus,
+            empMaritalStatus: +response.empMaritalStatus,
             mobileNumber: response.mobileNumber,
             empWorkTelephone: response.empWorkTelephone,
             empWorkEmail: response.empWorkEmail,
@@ -175,7 +178,8 @@ export class AddemployeeinformationComponent implements OnInit {
             next2KinMobNumber: response.next2KinMobNumber,
             isKUEmployee:response.isKUEmployee,
             isMemberOfFund:response.isMemberOfFund,
-            isOnSickLeave:response.isOnSickLeave            
+            isOnSickLeave:response.isOnSickLeave,
+            nationCode:response.nationCode            
           },
           jobDetailsForm: {            
             department: response.department,
@@ -184,7 +188,7 @@ export class AddemployeeinformationComponent implements OnInit {
             empCidNum: response.empCidNum,
             empPaciNum: response.empPaciNum,
             empOtherId: response.empOtherId,
-            contractType:response.contractType
+            contractType:+response.contractType
           },
           membershipForm: {
             membership: response.membership,
@@ -208,11 +212,12 @@ export class AddemployeeinformationComponent implements OnInit {
 
     }
 
+    this.membershipForm.get('termination')?.disable();
   }
 
   initializeForm() {
     this.addEmployeeForm = this.fb.group({
-      employeeId: new FormControl(''),
+      employeeId: new FormControl('0'),
       englishName: new FormControl('', Validators.required),
       arabicName: new FormControl('', Validators.required),
       empBirthday: new FormControl('', Validators.required),
@@ -225,7 +230,9 @@ export class AddemployeeinformationComponent implements OnInit {
       next2KinMobNumber: new FormControl(''),
       isKUEmployee: new FormControl('true'),
       isOnSickLeave: new FormControl(''),
-      isMemberOfFund: new FormControl('')
+      isMemberOfFund: new FormControl(''),
+      nationCode : new FormControl('',Validators.required),
+      nationName: new FormControl('')
     })
     this.parentForm.setControl('addEmployeeForm', this.addEmployeeForm);
   }
@@ -272,7 +279,7 @@ export class AddemployeeinformationComponent implements OnInit {
     //  TO CONVER OBJECT ARRAY AS SIMPLE ARRAY.
     this.parentForm.controls.addEmployeeForm.patchValue({
       empGender: +this.parentForm.value.addEmployeeForm.empGender,
-      empMaritalStatus: +this.parentForm.value.empMaritalStatus,
+      empMaritalStatus: +this.parentForm.value.addEmployeeForm.empMaritalStatus,
     });
     let formData = {
       ...this.parentForm.value.addEmployeeForm,
@@ -300,7 +307,7 @@ export class AddemployeeinformationComponent implements OnInit {
           })
       }
       else{ 
-        this.employeeService.ValidateEmployeeData(formData).subscribe((response:any) => {
+         this.employeeService.ValidateEmployeeData(formData).subscribe((response:any) => {
           if(response == "1")
             {
              this.toastrService.error('Duplicate Civil Id, please enter a different Civil Id', 'Error');             
@@ -320,11 +327,12 @@ export class AddemployeeinformationComponent implements OnInit {
               this.openPopUpModal(this.popupModal,formData);
             } 
             else if(response == "0")
-            {
-              
-              this.employeeService.AddEmployee(formData).subscribe((response:any) => {          
-                this.toastrService.success('Saved successfully', 'Success');                  
+            {              
+              this.employeeService.AddEmployee(formData).subscribe((response:any) => {  
+              this.toastrService.success('Saved successfully', 'Success');                  
               this.parentForm.reset();
+              this.addEmployeeForm.controls['employeeId'].setValue(0);
+              this.router.navigateByUrl('/employee/view-employee') 
             })
             }        
         }); 
@@ -338,7 +346,10 @@ export class AddemployeeinformationComponent implements OnInit {
   addChildComponent(): void {
     this.showChildComponent = true;
   }
-
+  onCountryChange(event:any){
+    console.log(event);
+    this.addEmployeeForm.controls['nationName'].setValue(event.counamE1);
+  }
   onChange(form: FormGroup<any>) {
     // reset the form value to the newly emitted form group value.
     this.addEmployeeForm = form;

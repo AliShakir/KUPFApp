@@ -16,5 +16,6 @@ namespace API.DTOs
         public int RoleId { get; set; }
         public string PeriodCode { get; set; }
         public string PrevPeriodCode { get; set; }
+        public string NextPeriodCode { get; set; }
     }
 }

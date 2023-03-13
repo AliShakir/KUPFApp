@@ -32,7 +32,7 @@
                     <div class="row gx-9 gy-6">
                         <ngb-panel>
                             <form autocomplete="off" [formGroup]="inCommunicationForm">
-                                <div class="row mb-4">
+                                <div class="row">
                                     <div class="col-lg-6 fv-row">
                                         <label class="col-form-label fw-bold fs-6 ArFontStyle"
                                             lang="AR-SA">{{bodyLabel[4].title}}</label>
@@ -61,7 +61,7 @@
                                             </span>
                                     </div>
                                 </div>
-                                <div class="row mb-4">
+                                <div class="row">
                                     <div class="col-lg-6 fv-row">
                                         <label class="col-form-label fw-bold fs-6 ArFontStyle"
                                             lang="AR-SA">{{bodyLabel[6].title}}</label>
@@ -84,7 +84,7 @@
                                             </span>
                                     </div>
                                 </div>
-                                <div class="row mb-4">
+                                <div class="row">
                                     <div class="col-lg-6 fv-row">
                                         <label class="col-form-label fw-bold fs-6 ArFontStyle"
                                             lang="AR-SA">{{bodyLabel[8].title}}</label>
@@ -114,7 +114,7 @@
                                     </span>
                                     </div>
                                 </div>
-                                <div class="row mb-4">
+                                <div class="row">
                                     <div class="col-lg-6 fv-row">
                                         <label class="col-form-label fw-bold fs-6 ArFontStyle"
                                             lang="AR-SA">{{bodyLabel[10].title}}</label>
@@ -137,14 +137,14 @@
                                             </span>
                                     </div>
                                 </div>
-                                <div class="row mb-4">
+                                <div class="row">
                                     <div class="col-lg-6 fv-row">
                                         <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"
                                             lang="AR-SA">{{bodyLabel[12].title}}</label>
                                         <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0"
-                                            formControlName="searchTags" />
+                                            formControlName="searchTag" />
                                             <span class="text-danger"
-                                                *ngIf="isFormSubmitted && inCommunicationFrm.searchTags.errors?.required">
+                                                *ngIf="isFormSubmitted && inCommunicationFrm.searchTag.errors?.required">
                                                 Search tag is required
                                             </span>
                                     </div>
@@ -157,4 +157,5 @@
         </ng-template>
     </ngb-panel>
 </ngb-accordion>
+<br/>
 <app-document-attachment></app-document-attachment>

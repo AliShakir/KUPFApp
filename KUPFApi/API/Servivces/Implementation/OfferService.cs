@@ -8,6 +8,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using API.Common;
 
 namespace API.Servivces.Implementation
 {
@@ -205,13 +206,13 @@ namespace API.Servivces.Implementation
             var data = _mapper.Map<ServiceSetupDto>(result);
             
             if(result.OfferImage != null) 
-                data.OfferImageFile = GetFileFromFolder(path + result.OfferImage);
+                data.OfferImageFile = CommonMethods.GetFileFromFolder(path + result.OfferImage);
 
             if(result.ElectronicForm1 != null)
-                data.ElectronicForm1File = GetFileFromFolder(path + result.ElectronicForm1);
+                data.ElectronicForm1File = CommonMethods.GetFileFromFolder(path + result.ElectronicForm1);
 
             if (result.ElectronicForm2 != null)
-                data.ElectronicForm2File = GetFileFromFolder(path + result.ElectronicForm2);
+                data.ElectronicForm2File = CommonMethods.GetFileFromFolder(path + result.ElectronicForm2);
 
             return data;
         }
@@ -223,15 +224,15 @@ namespace API.Servivces.Implementation
             return data;
         }
         
-        public static byte[] GetFileFromFolder(string filePath)
-        {
-            byte[] result = null;
-            if (filePath != null)
-            {
-                var file=System.IO.File.ReadAllBytes(filePath);
-                result = file;
-            }
-            return result;
-        }
+        //public static byte[] GetFileFromFolder(string filePath)
+        //{
+        //    byte[] result = null;
+        //    if (filePath != null)
+        //    {
+        //        var file=System.IO.File.ReadAllBytes(filePath);
+        //        result = file;
+        //    }
+        //    return result;
+        //}
     }
 }

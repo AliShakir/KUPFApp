@@ -51,8 +51,13 @@ namespace API.Controllers
             var firstDayCurrentMonth = new DateTime(now.Year, now.Month, 1);
             var firstDayLastMonth = firstDayCurrentMonth.AddDays(-30);
             var lastDayLastMonth = firstDayCurrentMonth.AddDays(-1);
+            var firstDayNextMonth = firstDayCurrentMonth.AddMonths(1);
+            var lastDayNextMonth = firstDayNextMonth.AddDays(30);
 
             var prePeriodCode = _context.Tblperiods.Where(c => c.PrdStartDate <= lastDayLastMonth && c.PrdEndDate >= firstDayLastMonth).FirstOrDefault().PeriodCode;
+            //
+            var nextPeriodCode = _context.Tblperiods.Where(c => c.PrdStartDate <= lastDayNextMonth && c.PrdEndDate >= firstDayNextMonth).FirstOrDefault().PeriodCode;
+            
             List<LoginDto> userList = new List<LoginDto>();
             if (user.Count() >= 1)
             {
@@ -66,7 +71,8 @@ namespace API.Controllers
                         UserId = user[i].UserId,
                         RoleId = user[i].ROLEID,
                         PeriodCode= Convert.ToString(periodCode),
-                        PrevPeriodCode = Convert.ToString(prePeriodCode)
+                        PrevPeriodCode = Convert.ToString(prePeriodCode),
+                        NextPeriodCode = Convert.ToString(nextPeriodCode)
                         //Token = _tokenService.CreateToken(user[i].LoginId)                        
                     };
                     userList.Add(dto);

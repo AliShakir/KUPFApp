@@ -122,9 +122,9 @@ namespace API.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("GetServiceApprovalsAsync")]
-        public async Task<IEnumerable<ManagerApprovalDto>> GetServiceApprovalsAsync(long periodCode, int tenentId, int locationId)
+        public async Task<IEnumerable<ManagerApprovalDto>> GetServiceApprovalsAsync(long periodCode, int tenentId, int locationId, bool isShowAll)
         {
-            var result = await _financialService.GetServiceApprovalsAsync(periodCode, tenentId, locationId);
+            var result = await _financialService.GetServiceApprovalsAsync(periodCode, tenentId, locationId, isShowAll);
             return result;
         }
         /// <summary>
@@ -132,10 +132,17 @@ namespace API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPut]
-        [Route("ApproveServiceAsync")]
-        public async Task<ActionResult<string>> ApproveServiceAsync(ApproveRejectServiceDto approveRejectServiceDto)
+        [Route("ManagerApproveServiceAsync")]
+        public async Task<ActionResult<string>> ManagerApproveServiceAsync(ApproveRejectServiceDto approveRejectServiceDto)
         {
-            var result = await _financialService.ApproveServiceAsync(approveRejectServiceDto);
+            var result = await _financialService.ManagerApproveServiceAsync(approveRejectServiceDto);
+            return result;
+        }
+        [HttpPut]
+        [Route("FinanceApproveServiceAsync")]
+        public async Task<ActionResult<string>> FinanceApproveServiceAsync(ApproveRejectServiceDto approveRejectServiceDto)
+        {
+            var result = await _financialService.FinanceApproveServiceAsync(approveRejectServiceDto);
             return result;
         }
         /// <summary>
@@ -154,10 +161,10 @@ namespace API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPut]
-        [Route("RejectServiceAsync")]
-        public async Task<ActionResult<string>> RejectServiceAsync(ApproveRejectServiceDto approveRejectServiceDto)
+        [Route("ManagerRejectServiceAsync")]
+        public async Task<ActionResult<string>> ManagerRejectServiceAsync(ApproveRejectServiceDto approveRejectServiceDto)
         {
-            var result = await _financialService.RejectServiceAsync(approveRejectServiceDto);
+            var result = await _financialService.ManagerRejectServiceAsync(approveRejectServiceDto);
             return result;
         }
         /// <summary>
@@ -264,21 +271,33 @@ namespace API.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("GetCashierApprovals")]
-        public async Task<IEnumerable<CashierApprovalDto>> GetCashierApprovals(long periodCode, int tenentId, int locationId)
+        public async Task<IEnumerable<CashierApprovalDto>> GetCashierApprovals(long periodCode, int tenentId, int locationId, bool isShowAll)
         {
-            var result = await _financialService.GetCashierApprovals(periodCode, tenentId, locationId);
+            var result = await _financialService.GetCashierApprovals(periodCode, tenentId, locationId,isShowAll);
             return result;
         }
         /// <summary>
-        /// SaveDraftAndDeliveryInformation
+        /// Create Cahier Delivery
         /// </summary>
         /// <param name="cashierApprovalDto"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("SaveDraftAndDeliveryInformation")]
-        public async Task<int> SaveDraftAndDeliveryInformation(CashierApprovalDto cashierApprovalDto)
+        [Route("CreateCahierDelivery")]
+        public async Task<int> CreateCahierDelivery(CashierApprovalDto cashierApprovalDto)
         {
-            var result = await _financialService.SaveDraftAndDeliveryInformation(cashierApprovalDto);
+            var result = await _financialService.CreateCahierDelivery(cashierApprovalDto);
+            return result;
+        }
+        /// <summary>
+        /// Create Cahie rDraft
+        /// </summary>
+        /// <param name="cashierApprovalDto"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("CreateCahierDraft")]
+        public async Task<int> CreateCahierDraft(CashierApprovalDto cashierApprovalDto)
+        {
+            var result = await _financialService.CreateCahierDraft(cashierApprovalDto);
             return result;
         }
         /// <summary>
@@ -325,6 +344,21 @@ namespace API.Controllers
         public async Task<IEnumerable<ReturnApprovalsByEmployeeId>> GetServiceApprovalsByEmployeeIdForManager(int employeeId, int tenentId, int locationId)
         {
             var result = await _financialService.GetServiceApprovalsByEmployeeIdForManager(employeeId, tenentId, locationId);
+            return result;
+        }
+        [HttpGet]
+        [Route("GetFinacialApprovals")]
+        public async Task<IEnumerable<CashierApprovalDto>> GetFinacialApprovals(long periodCode, int tenentId, int locationId,bool isShowAll)
+        {
+            var result = await _financialService.GetFinacialApprovals(periodCode, tenentId, locationId,isShowAll);
+            return result;
+        }
+
+        [HttpPut]
+        [Route("FinanceRejectServiceAsync")]
+        public async Task<ActionResult<string>> FinanceRejectServiceAsync(ApproveRejectServiceDto approveRejectServiceDto)
+        {
+            var result = await _financialService.FinanceRejectServiceAsync(approveRejectServiceDto);
             return result;
         }
     }

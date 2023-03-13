@@ -6,7 +6,8 @@
       <div class="btn-group " role="group" aria-label="Basic example"
         *ngFor="let bodyLabel of formBodyLabels; let i = index">
         <!-- Save Button -->
-        <button type="button" class="btn btn-primary float-left ArFontStyle cyan-azure" lang="AR-SA" (click)="submitForm()"
+        <button type="button" class="btn btn-primary float-left ArFontStyle cyan-azure" lang="AR-SA"
+          (click)="submitForm()"
           [disabled]="!addEmployeeForm.valid || !jobDetailsForm.valid">{{bodyLabel[0].title}}</button>
         <!-- <button type="button" class="btn btn-primary float-left ArFontStyle cyan-azure" lang="AR-SA"
           (click)="submitForm()">{{bodyLabel[0].title}}</button> -->
@@ -14,15 +15,15 @@
         <button type="button" class="btn btn-primary float-left ArFontStyle moonstone-blue "
           lang="AR-SA">{{bodyLabel[1].title}}</button>
         <!-- Back Button -->
-        <button type="button" class="btn btn-primary float-left ArFontStyle beau-blue" routerLink="/employee/view-employee"
-          routerLinkActive="active" lang="AR-SA">{{bodyLabel[2].title}}</button>
+        <button type="button" class="btn btn-primary float-left ArFontStyle beau-blue"
+          routerLink="/employee/view-employee" routerLinkActive="active" lang="AR-SA">{{bodyLabel[2].title}}</button>
       </div>
     </div>
   </div>
 </div>
 <!-- TO GET FORM ID AND SETTINGUP LANGAUGE. -->
 <ngb-accordion #acc="ngbAccordion" class="mb-2 addEmployee" activeIds="ngb-panel-0">
-  <ngb-panel>
+  <ngb-panel id="ngb-panel-0">
     <ng-template ngbPanelTitle *ngFor="let label of formHeaderLabels; let i = index">
       <h3 class="m-0 ArFontStyle header_color" lang="AR-SA" id="FinancialDetails">{{label.headerName}}</h3>
     </ng-template>
@@ -54,8 +55,8 @@
             </div>
           </div>
           <div class="row mb-6">
-            <div class="col-lg-4 fv-row">
-              <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"
+            <div class="col-lg-3 fv-row">
+              <label class="col-lg-6 col-form-label fw-bold fs-6 ArFontStyle"
                 lang="AR-SA">{{bodyLabel[6].title}}</label>
               <div class="input-group mb-5">
                 <span class="input-group-text" id="basic-addon1">
@@ -69,7 +70,7 @@
                 Birthday is required
               </span>
             </div>
-            <div class="col-lg-4 fv-row">
+            <div class="col-lg-3 fv-row">
               <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[7].title}}</label>
               <ng-select formControlName="empGender">
                 <ng-option *ngFor="let item of genderArray" [value]="item.id">{{item.name}}</ng-option>
@@ -79,7 +80,7 @@
                 Gender is required
               </span>
             </div>
-            <div class="col-lg-4 fv-row">
+            <div class="col-lg-3 fv-row">
               <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[8].title}}</label>
               <ng-select formControlName="empMaritalStatus">
                 <ng-option *ngFor="let item of maritalStatusArray" [value]="item.id">{{item.name}}</ng-option>
@@ -87,6 +88,16 @@
               <span class="text-danger"
                 *ngIf="(empForm.empMaritalStatus.touched || isFormSubmitted) && empForm.empMaritalStatus.errors?.required">
                 Marital Status is required
+              </span>
+            </div>
+            <div class="col-lg-3 fv-row">
+              <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">Country</label>
+              <ng-select formControlName="nationCode" [items]="countries$ | async" bindLabel="counamE1"
+                bindValue="countryid" (change)="onCountryChange($event)">
+              </ng-select>
+              <span class="text-danger"
+                *ngIf="(empForm.nationCode.touched || isFormSubmitted) && empForm.nationName.errors?.required">
+                Country is required
               </span>
             </div>
           </div>
@@ -213,7 +224,7 @@
               </span>
             </div>
             <div class="col-lg-4 fv-row">
-              <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[15].title}}</label>
+              <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[16].title}}</label>
               <ng-select [items]="contractType$ | async" bindLabel="shortname" bindValue="refid"
                 formControlName="contractType">
               </ng-select>
@@ -223,7 +234,7 @@
               </span>
             </div>
             <div class="col-lg-4 fv-row">
-              <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[16].title}}</label>
+              <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">{{bodyLabel[17].title}}</label>
               <ng-select [items]="occupations$ | async" bindLabel="shortname" bindValue="refid"
                 formControlName="departmentName">
               </ng-select>
@@ -236,14 +247,15 @@
           <div class="row mb-6">
             <div class="col-lg-3 fv-row">
               <label class="col-lg-6 col-form-label fw-bold fs-6 ArFontStyle"
-                lang="AR-SA">{{bodyLabel[17].title}}</label>
+                lang="AR-SA">{{bodyLabel[18].title}}</label>
               <input type="number" class="form-control form-control-lg  mb-3 mb-lg-0" formControlName="salary" />
             </div>
             <div class="col-lg-3 fv-row">
               <label class="col-lg-6 col-form-label fw-bold fs-6 ArFontStyle"
-                lang="AR-SA">{{bodyLabel[18].title}}</label>
-              <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" formControlName="empCidNum" maxlength="12"/>
-              
+                lang="AR-SA">{{bodyLabel[19].title}}</label>
+              <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" formControlName="empCidNum"
+                maxlength="12" />
+
               <span class="text-danger"
                 *ngIf="(jobForm.empCidNum.touched || isFormSubmitted) && jobForm.empCidNum.errors?.required">
                 CID is required
@@ -251,13 +263,13 @@
             </div>
             <div class="col-lg-3 fv-row">
               <label class="col-lg-6 col-form-label fw-bold fs-6 ArFontStyle"
-                lang="AR-SA">{{bodyLabel[19].title}}</label>
+                lang="AR-SA">{{bodyLabel[20].title}}</label>
               <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" name="nameInArabic"
                 formControlName="empPaciNum" />
             </div>
             <div class="col-lg-3 fv-row">
               <label class="col-lg-6 col-form-label fw-bold fs-6 ArFontStyle"
-                lang="AR-SA">{{bodyLabel[20].title}}</label>
+                lang="AR-SA">{{bodyLabel[21].title}}</label>
               <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" name="nameInArabic"
                 formControlName="empOtherId" />
             </div>
@@ -272,18 +284,18 @@
 <ngb-accordion #acc="ngbAccordion" class="mb-2 membership_details_accordian" activeIds="ngb-panel-0">
   <ngb-panel>
     <ng-template ngbPanelTitle *ngFor="let bodyLabel of formBodyLabels; let i = index">
-      <h3 class="m-0 ArFontStyle header_color" lang="AR-SA" id="FinancialDetails">{{bodyLabel[21].title}}</h3>
+      <h3 class="m-0 ArFontStyle header_color" lang="AR-SA" id="FinancialDetails">{{bodyLabel[22].title}}</h3>
     </ng-template>
     <ng-template ngbPanelContent>
       <div class="row gx-9 gy-6" *ngFor="let bodyLabel of formBodyLabels; let i = index">
         <form autocomplete="off" [formGroup]="membershipForm">
           <div class="row">
             <div class="col-lg-6 fv-row">
-              <label class="col-lg-4 col-form-label fw-bold fs-6">{{bodyLabel[22].title}}</label>
+              <label class="col-lg-4 col-form-label fw-bold fs-6">{{bodyLabel[23].title}}</label>
               <input type="text" class="form-control" name="nameInArabic" formControlName="membership" />
             </div>
             <div class="col-lg-6 fv-row">
-              <label class="col-lg-4 col-form-label fw-bold fs-6">{{bodyLabel[23].title}}</label>
+              <label class="col-lg-4 col-form-label fw-bold fs-6">{{bodyLabel[24].title}}</label>
               <div class="input-group mb-5">
                 <span class="input-group-text" id="basic-addon1">
                   <i class="fas fa-calendar"></i>
@@ -295,19 +307,19 @@
           </div>
           <div class="row">
             <div class="col-lg-6 fv-row">
-              <label class="col-lg-4 col-form-label fw-bold fs-6">{{bodyLabel[24].title}}</label>
+              <label class="col-lg-4 col-form-label fw-bold fs-6">{{bodyLabel[25].title}}</label>
               <ng-select [items]="terminations$ | async" bindLabel="shortname" bindValue="refid"
                 formControlName="termination">
               </ng-select>
             </div>
             <div class="col-lg-6 fv-row">
-              <label class="col-lg-4 col-form-label fw-bold fs-6">{{bodyLabel[25].title}}</label>
+              <label class="col-lg-4 col-form-label fw-bold fs-6">{{bodyLabel[26].title}}</label>
               <div class="input-group mb-5">
                 <span class="input-group-text" id="basic-addon1">
                   <i class="fas fa-calendar"></i>
                 </span>
                 <input type="text" class="form-control" bsDatepicker [bsConfig]="datePickerConfig"
-                  formControlName="terminationDate" />
+                  formControlName="terminationDate" disabled />
               </div>
             </div>
           </div>
@@ -323,21 +335,21 @@
 <!--PopupModal Modal-->
 <ng-template #popupModal let-modal>
   <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title"></h4>
-      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    <h4 class="modal-title" id="modal-basic-title"></h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
   </div>
   <div class="modal-body">
-      <form [formGroup]="popUpForm" id="popUpForm">
-          <div class="mb-3">
-              <span>{{popUpForm.controls.errorMessage.value}}</span>
-              <br/>
-              <br/>
-              
-          </div>
-      </form>
+    <form [formGroup]="popUpForm" id="popUpForm">
+      <div class="mb-3">
+        <span>{{popUpForm.controls.errorMessage.value}}</span>
+        <br />
+        <br />
+
+      </div>
+    </form>
   </div>
   <div class="modal-footer text-right">
-    <button mat-raised-button color="warn" (click)="modal.close('yes')">Yes</button> &nbsp;&nbsp; 
+    <button mat-raised-button color="warn" (click)="modal.close('yes')">Yes</button> &nbsp;&nbsp;
     <button mat-raised-button color="accent" (click)="modal.close('Save click')">No</button>
   </div>
 </ng-template>

@@ -42,7 +42,7 @@ namespace API.Servivces.Implementation
         {
             var result = await _context.Reftables
                 .Where(c => c.Refsubtype == "Occupation" && c.Reftype == "KUPF" && c.TenentId == 21)
-                .OrderBy(x => x.Refsubtype).ToListAsync();
+                .OrderBy(x => x.Refsubtype).OrderBy(c => c.Shortname).ToListAsync();
             var data = _mapper.Map<IEnumerable<SelectOccupationDto>>(result);
             return data;
         }
@@ -53,7 +53,7 @@ namespace API.Servivces.Implementation
         public async Task<IEnumerable<SelectDepartmentDto>> GetDepartmentsAsync()
         {
             var result = await _context.Reftables
-                .Where(c => c.Refsubtype == "Department").ToListAsync();
+                .Where(c => c.Refsubtype == "Department").OrderBy(c=>c.Shortname).ToListAsync();
             var data = _mapper.Map<IEnumerable<SelectDepartmentDto>>(result);
             return data;
         }
@@ -319,7 +319,7 @@ namespace API.Servivces.Implementation
         {
             var result = await _context.Reftables
                 .Where(c => c.Refsubtype == "ContractType" && c.Reftype == "KUPF" && c.TenentId == 21)
-                .OrderBy(x => x.Refsubtype).ToListAsync();
+                .OrderBy(x => x.Refsubtype).OrderBy(c => c.Shortname).ToListAsync();
             var data = _mapper.Map<IEnumerable<SelectOccupationDto>>(result);
             return data;
         }
@@ -526,7 +526,7 @@ namespace API.Servivces.Implementation
 
         public async Task<IEnumerable<SelectBankAccount>> GetBankAccounts(int tenentId, int locationId)
         {
-            var data = _context.Coas.Where(c => c.TenentId == tenentId && c.LocationId == locationId && c.FamilyId == 4 && c.HeadId == 15 && c.SubHeadId == 14).ToList();
+            var data = _context.Coas.FromSqlRaw("SELECT * FROM Accounts.COA WHERE AccountType_ID=3").ToList();
             var result = _mapper.Map<IEnumerable<SelectBankAccount>>(data);
             return result;
         }
@@ -537,7 +537,7 @@ namespace API.Servivces.Implementation
             var maxDraftNo = _context.TransactionHds.Select(c => c.DraftNumber1).Max();
             if (maxDraftNo == null)
             {
-                maxDraftNo = "1";
+                maxDraftNo = 1;
             }
             var data = (from emp in _context.DetailedEmployees
                         join hd in _context.TransactionHds
@@ -599,9 +599,6 @@ namespace API.Servivces.Implementation
 
         }
 
-
-
-
         public loanPercentageDto GetDashboardLoanDetails()
         {
             loanPercentageDto curpLoan = new loanPercentageDto();
@@ -642,9 +639,35 @@ namespace API.Servivces.Implementation
             return curpLoan;
         }
 
+        public long CreateMyTransIdForTransactionHD()
+        {
+            long myTransId = _context.TransactionHds.FromSqlRaw("select ISNULL(max(MYTRANSID),0)+1 as MyTransId from TransactionHD").Select(c => c.Mytransid).FirstOrDefault();
+            return myTransId;
+        }
 
+        public int GetDraftNumberByBank(long accountNo)
+        {
+            int draftNumber = (int)_context.TransactionHds.FromSqlRaw("select ISNULL(max(cast(draftnumber1 as int)),0)+1 as DraftNumber1 from TransactionHD where BankAccount1='" + accountNo+"'").Select(c=>c.DraftNumber1).FirstOrDefault();
+            return draftNumber;
+        }
 
+        public long CreateEmployeePFId(int tenentId, int locationId)
+        {
+            long pfId = _context.DetailedEmployees.FromSqlRaw("select ISNULL(max(cast(PFID as int)),0)+1 as PFID from DetailedEmployee Where tenentid ='"+ tenentId + "' and locationId='"+locationId+"'").Select(c => Convert.ToInt64(c.Pfid)).FirstOrDefault();
+            return pfId;
+        }
 
-
+        public Task<List<CountriesDto>> GetCountryList()
+        {
+            var result = (from f in _context.TblCountries
+                          select new CountriesDto
+                          {
+                              COUNTRYID = f.Countryid,
+                              COUNAME1 = f.Couname1,
+                              COUNAME2 = f.Couname2
+                          }).Distinct().ToListAsync();
+            
+            return result;
+        }
     }
 }

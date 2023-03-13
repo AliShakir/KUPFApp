@@ -18,14 +18,13 @@ namespace API.Servivces.Interfaces.FinancialServices
         Task<IEnumerable<ReturnTransactionHdDto>> GetFinancialServiceAsync();
         Task<int> DeleteFinancialServiceAsync(long id);
         Task<ServiceSetupDto> GetServiceByServiceTypeAndSubType(int serviceType, int serviceSubType,int tenentId);
-        Task<IEnumerable<ManagerApprovalDto>> GetServiceApprovalsAsync(long periodCode, int tenentId, int locationId);
+        Task<IEnumerable<ManagerApprovalDto>> GetServiceApprovalsAsync(long periodCode, int tenentId, int locationId,bool isShowAll);
 
         Task<IEnumerable<ReturnApprovalsByEmployeeId>> GetServiceApprovalsByEmployeeIdForManager(int employeeId, int tenentId, int locationId);
 
-        Task<string> ApproveServiceAsync(ApproveRejectServiceDto approveRejectServiceDto);
-
+        Task<string> ManagerApproveServiceAsync(ApproveRejectServiceDto approveRejectServiceDto);        
+        Task<string> ManagerRejectServiceAsync(ApproveRejectServiceDto approveRejectServiceDto);
         Task<IEnumerable<RefTableDto>> GetRejectionType();
-        Task<string> RejectServiceAsync(ApproveRejectServiceDto approveRejectServiceDto);
         Task<IEnumerable<ReturnServiceApprovals>> GetServiceApprovalsByEmployeeId(int employeeId);
         Task<IEnumerable<ReturnServiceApprovalDetails>> GetServiceApprovalDetailByTransId(int transId);
         IEnumerable<SelectServiceTypeDto> GetServiceType(int tenentId);
@@ -43,16 +42,22 @@ namespace API.Servivces.Interfaces.FinancialServices
         /// <returns></returns>
         Task<ReturnSearchResultDto> SearchEmployee(SearchEmployeeDto searchEmployeeDto);
 
-        Task<IEnumerable<CashierApprovalDto>> GetCashierApprovals(long periodCode, int tenentId, int locationId);
+        Task<IEnumerable<CashierApprovalDto>> GetCashierApprovals(long periodCode, int tenentId, int locationId, bool isShowAll);
 
-        Task<int> SaveDraftAndDeliveryInformation(CashierApprovalDto cashierApprovalDto);
+        Task<int> CreateCahierDelivery(CashierApprovalDto cashierApprovalDto);
         int GenerateFinancialServiceSerialNo();
 
         Task<ReturnSearchResultDto> SearchSponsor(SearchEmployeeDto searchEmployeeDto);
 
         Task<ReturnSearchResultDto> SearchNewSubscriber(SearchEmployeeDto searchEmployeeDto);
 
-        
+        Task<IEnumerable<CashierApprovalDto>> GetFinacialApprovals(long periodCode, int tenentId, int locationId, bool isShowAll);
+
+        Task<string> FinanceApproveServiceAsync(ApproveRejectServiceDto approveRejectServiceDto);
+
+        Task<string> FinanceRejectServiceAsync(ApproveRejectServiceDto approveRejectServiceDto);
+        Task<int> CreateCahierDraft(CashierApprovalDto cashierApprovalDto); 
+
 
     }
 }

@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { TransactionHdDto } from 'src/app/modules/models/FinancialService/TransactionHdDto';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
+import { SelectOccupationsDto } from 'src/app/modules/models/SelectOccupationsDto';
 import { SelectSubServiceTypeDto } from 'src/app/modules/models/SelectSubServiceTypeDto';
 import { SelectServiceTypeDto } from 'src/app/modules/models/ServiceSetup/SelectServiceTypeDto';
 import { CommonService } from 'src/app/modules/_services/common.service';
@@ -72,6 +73,7 @@ export class ViewServiceDetailComponent implements OnInit {
   isObservableActive = true;
   pfId: any;
   isSubscriber = false;
+  contractType$:Observable<SelectOccupationsDto[]>;
   // If PF Id is Not Null - SubscribeDate = Null and TerminationDate = Null
   notSubscriber: boolean = false;
   // 
@@ -152,6 +154,9 @@ export class ViewServiceDetailComponent implements OnInit {
     }
     //#endregion
 
+    // To FillUp Contract Types
+    this.contractType$ = this.commonService.GetContractType();
+
     // Getting SerialNo...
     this.financialService.GenerateFinancialServiceSerialNo().subscribe((response: any) => {
       //
@@ -182,7 +187,6 @@ export class ViewServiceDetailComponent implements OnInit {
     //
 
     if (this.mytransid) {
-      console.log(this.mytransid);
       this.common.ifEmployeeExists = true;
       // To display other Accordians
       this.isSearched = true;
@@ -210,20 +214,23 @@ export class ViewServiceDetailComponent implements OnInit {
             mobileNumber: response.mobileNumber,
             empMaritalStatus: +response.empMaritalStatus,
             nationName: response.nationName,
-            contractType: response.contractType,
+            contractType: +response.contractType,
             subscriptionAmount: response.subscriptionAmount,
             subscriptionPaid: response.subscriptionPaid,
-            lastSubscriptionPaid: response.lastSubscriptionPaid,
+            lastSubscriptionPaid: response.paidSubscriptionAmount,
             subscriptionDueAmount: response.subscriptionDueAmount,
             subscriptionStatus: response.subscriptionStatus,
             terminationDate: response.terminationDate,
             endDate: response.endDate,
-            employeeStatus: response.employeeStatus,
-            CountryNameEnglish: response.countryNameEnglish,
-            CountryNameArabic: response.countryNameArabic,
+            employeeStatus: response.empStatus,
+            CountryNameEnglish: response.nationName,
+            CountryNameArabic: response.nationName,
             employeePFId: response.pfid,
             employeeCID: response.empCidNum,
             employeeFormEmployeeId: response.employeeId,
+            kinMobile:response.kinMobile,
+            kinName:response.kinName,
+
           },
           addServiceForm: {
             mytransid: response.mytransid,
@@ -290,6 +297,7 @@ export class ViewServiceDetailComponent implements OnInit {
       //
       //this.enableDisableControls(this.addServiceForm.get('allowDiscountDefault')?.value)   
       this.addServiceForm.get('pfId')?.disable();
+      this.employeeForm?.get('contractType')?.disable();
     }
     this.addServiceForm.get('serviceType')?.disable();
     this.addServiceForm.get('serviceSubType')?.disable();  

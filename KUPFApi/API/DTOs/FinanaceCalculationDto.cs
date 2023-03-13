@@ -21,5 +21,8 @@
         public decimal? LoanInstallmentAmount { get; set; }
         public int? NoOfSponsor { get; set; }
         public string? YearOfService { get; set; }
+        public decimal? AmountMinus { get; set; }
+        public decimal? AmountPlus { get; set; }
+        public string? SystemRemarks { get; set; }
     }
 }

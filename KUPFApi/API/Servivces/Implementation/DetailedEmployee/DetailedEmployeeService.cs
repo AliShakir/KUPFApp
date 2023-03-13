@@ -48,8 +48,9 @@ namespace API.Servivces.Implementation.DetailedEmployee
                             EnglishName = e.EnglishName,
                             ArabicName = e.ArabicName,
                             RefName1 = r.Refname1,
-                            RefName2 = r.Refname2
-                        })
+                            RefName2 = r.Refname2,
+                            CreatedDate = e.DateTime
+                        }).OrderByDescending(c=>c.CreatedDate)
                         .AsQueryable();
 
             return await PagedList<DetailedEmployeeDto>.CreateAsync(data, paginationParams.PageNumber, paginationParams.PageSize);
@@ -66,6 +67,19 @@ namespace API.Servivces.Implementation.DetailedEmployee
                 newEmployee.LocationId = 1;
                 newEmployee.CRUP_ID = maxCrupId;
                 newEmployee.EmployeeId = (int)CommonMethods.CreateEmployeeId();
+                
+                if (detailedEmployeeDto.IsMemberOfFund == null)
+                    newEmployee.IsMemberOfFund = false;
+                
+                if (detailedEmployeeDto.IsOnSickLeave == null)
+                    newEmployee.IsOnSickLeave = false;
+                
+                newEmployee.EmpStatus = 1;
+                newEmployee.Subscription_status = null;
+                
+                newEmployee.EmployeeLoginId = detailedEmployeeDto.MobileNumber;
+                newEmployee.EmployeePassword = CommonMethods.EncodePass(detailedEmployeeDto.MobileNumber);
+                newEmployee.Active = true;
                 await _context.DetailedEmployees.AddAsync(newEmployee);
                 await _context.SaveChangesAsync();
                 #region Save Into CrupAudit
@@ -116,17 +130,23 @@ namespace API.Servivces.Implementation.DetailedEmployee
                     var crupId = _context.CrupMsts.Max(c => c.CrupId);
                     var maxCrupId = crupId + 1;
                     if (existingEmployee.CRUP_ID == 0 || existingEmployee.CRUP_ID == null)
-                    {                       
+                    {
+                        detailedEmployeeDto.EmpStatus = existingEmployee.EmpStatus;
+                        detailedEmployeeDto.Subscription_status = existingEmployee.Subscription_status;
                         _mapper.Map(detailedEmployeeDto, existingEmployee);
                         existingEmployee.LocationId = 1;
                         existingEmployee.CRUP_ID = maxCrupId;
+                        existingEmployee.DateTime = DateTime.Now;
                         _context.DetailedEmployees.Update(existingEmployee);
                         result = await _context.SaveChangesAsync();
                     }
                     else
                     {
+                        detailedEmployeeDto.EmpStatus = existingEmployee.EmpStatus;
+                        detailedEmployeeDto.Subscription_status = existingEmployee.Subscription_status;
                         _mapper.Map(detailedEmployeeDto, existingEmployee);
                         existingEmployee.LocationId = 1;
+                        existingEmployee.DateTime = DateTime.Now;                       
                         _context.DetailedEmployees.Update(existingEmployee);
                         result = await _context.SaveChangesAsync();
                     }

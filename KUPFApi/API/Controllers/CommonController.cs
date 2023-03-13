@@ -464,8 +464,6 @@ namespace API.Controllers
             var result = await _commonServiceService.GetFilledAtAsync();
             return Ok(result);
         }
-
-
         [HttpGet]
         [Route("getDashboarLoanDetails")]
         public  loanPercentageDto  GetDashboardLoanDetails()
@@ -473,8 +471,21 @@ namespace API.Controllers
             var result =  _commonServiceService.GetDashboardLoanDetails();
             return result;
         }
-
-      
+        [HttpGet]
+        [Route("GetDraftNumberByBank/{accountNo}")]
+        public int GetDraftNumberByBank(long accountNo)
+        {
+            int result = _commonServiceService.GetDraftNumberByBank(accountNo);
+            return result;
+        }
+        
+        [HttpGet]
+        [Route("GetCountryList")]
+        public async Task<List<CountriesDto>> GetCountryList()
+        {
+            var result = await _commonServiceService.GetCountryList();
+            return result;
+        }
 
 
 

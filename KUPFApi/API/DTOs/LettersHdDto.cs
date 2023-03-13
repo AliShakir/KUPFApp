@@ -33,7 +33,7 @@ namespace API.DTOs
         public IFormFile personalPhotoDocument { get; set; }
 
         public int appplicationFileDocType { get; set; }
-        public IFormFile appplicationFileDocument { get; set; }
+        public IFormFile appplicationFileDocument { get; set; } = null;
 
         public int workIdDocType { get; set; }
         public IFormFile workIdDocument { get; set; }

@@ -21,7 +21,7 @@ export class CommunicationService {
   AddIncomingLetter(response: FormData) {
     return this.httpClient.post(this.baseUrl + `Communication/AddIncomingLetter`, response);
   }
-  UpdateIncomingLetter(response: LettersHdDto) {    
+  UpdateIncomingLetter(response: FormData) {    
     return this.httpClient.put(this.baseUrl +`Communication/UpdateIncomingLetter`,response);
   }
   // delete service setup

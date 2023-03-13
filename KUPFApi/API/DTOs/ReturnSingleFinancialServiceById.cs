@@ -66,6 +66,16 @@ namespace API.DTOs
         public int? ServiceSubTypeId { get; set; }
         public int? DiscountType { get; set; }
         public decimal? AllowDiscountAmount { get; set; }
+        public string? KinName { get; set; }
+        public string? KinMobile { get; set; }
+        public int? SubscriptionStatus { get; set; }
+        public int? EmpStatus { get; set; }
 
+        public DateTime? EndDate { get; set; }
+        public DateTime? TerminationDate { get; set; }
+        public decimal? SubscriptionAmount { get; set; }
+        public decimal? PaidSubscriptionAmount { get; set; }
+        public decimal? SubscriptionDueAmount { get; set; }
+        public decimal? LastSubscriptionPaid { get; set; }
     }
 }

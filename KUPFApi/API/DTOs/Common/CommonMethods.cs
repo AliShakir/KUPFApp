@@ -60,6 +60,15 @@ namespace API.Common
             int fileName = rnd.Next(1, 100000);
             return fileName;
         }
-
+        public static byte[] GetFileFromFolder(string filePath)
+        {
+            byte[] result = null;
+            if (filePath != null)
+            {
+                var file = System.IO.File.ReadAllBytes(filePath);
+                result = file;
+            }
+            return result;
+        }
     }
 }

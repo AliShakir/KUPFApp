@@ -29,7 +29,8 @@ export class CashierDraftComponent implements OnInit {
     private dbCommonService: DbCommonService,
     private activatedRoute: ActivatedRoute,
     private financialService:FinancialService,
-    private toastrService:ToastrService
+    private toastrService:ToastrService,
+    private router: Router, 
   ) {
     this.activatedRoute.queryParams.subscribe(params => {
       this.transId = params['mytransId'];
@@ -73,9 +74,10 @@ export class CashierDraftComponent implements OnInit {
   onSaveClick(){
     this.isFormSubmitted = true;
     if(this.cashierDraftForm.valid){
-      this.financialService.SaveDraftAndDeliveryInformation(this.cashierDraftForm.value).subscribe((response:any)=>{
+      this.financialService.CreateCahierDraft(this.cashierDraftForm.value).subscribe((response:any)=>{
         if(response === 1){
           this.toastrService.success('Saved successfully','Success');
+          this.redirectTo(`/service-setup/cashier-approval`);
         }else{
           this.toastrService.error('Something went wrong','Error');
         }
@@ -103,9 +105,19 @@ export class CashierDraftComponent implements OnInit {
     })
   }
   onBankAccountSelect($event:any){    
-    this.cashierDraftForm.patchValue({
-      bankDetails:$event.accountNumber
+    this.dbCommonService.GetDraftNumberByBank($event.accountNumber).subscribe((response:any)=>{     
+      this.cashierDraftForm.patchValue({
+      draftNumber1:response
+    })    
+    
+    },error=>{
+      console.log(error);
     })
+  }
+  
+  redirectTo(uri: string) {
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+      this.router.navigate([uri]));
   }
   // To access form controls...
   get cashierDraftFrm() { return this.cashierDraftForm.controls; }

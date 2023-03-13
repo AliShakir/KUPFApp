@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { SelectBankAccount } from 'src/app/modules/models/SelectBankAccount';
@@ -25,7 +25,8 @@ export class CashierDeliveryComponent implements OnInit {
     private dbCommonService: DbCommonService,
     private activatedRoute: ActivatedRoute,
     private financialService:FinancialService,
-    private toastrService:ToastrService
+    private toastrService:ToastrService,
+    private router:Router
   ) {
     this.activatedRoute.queryParams.subscribe(params => {
       this.transId = params['mytransId'];
@@ -45,7 +46,7 @@ export class CashierDeliveryComponent implements OnInit {
     this.selectBankAccount$ = this.dbCommonService.GetBankAccounts(tenantId, locationId);
     //
     this.dbCommonService.GetDraftInformationByEmployeeId(this.employeeId, tenantId, locationId, this.transId).subscribe((response: any) => {
-      console.log(response);
+      
       this.cashierDeliveryForm.patchValue({
         totalAmount: response.totalAmount.toFixed(3),
         bankAccount1: +response.bankAccount1,
@@ -70,9 +71,10 @@ export class CashierDeliveryComponent implements OnInit {
   onSaveClick(){
     this.isFormSubmitted = true;
     if(this.cashierDeliveryForm.valid){
-      this.financialService.SaveDraftAndDeliveryInformation(this.cashierDeliveryForm.value).subscribe((response:any)=>{
+      this.financialService.CreateCahierDelivery(this.cashierDeliveryForm.value).subscribe((response:any)=>{
         if(response === 1){
           this.toastrService.success('Saved successfully','Success');
+          this.redirectTo(`/service-setup/cashier-approval`);
         }else{
           this.toastrService.error('Something went wrong','Error');
         }
@@ -100,10 +102,19 @@ export class CashierDeliveryComponent implements OnInit {
       transId:new FormControl('')
     })
   }
-  onBankAccountSelect($event:any){    
-    this.cashierDeliveryForm.patchValue({
-      bankDetails:$event.accountNumber
+  onBankAccountSelect($event:any){  
+    this.dbCommonService.GetDraftNumberByBank($event.accountNumber).subscribe((response:any)=>{     
+      this.cashierDeliveryForm.patchValue({
+      draftNumber1:response
+    })    
+    },error=>{
+      console.log(error);
     })
+    
+  }
+  redirectTo(uri: string) {
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+      this.router.navigate([uri]));
   }
   // To access form controls...
   get cashierDeliveryFrm() { return this.cashierDeliveryForm.controls; }

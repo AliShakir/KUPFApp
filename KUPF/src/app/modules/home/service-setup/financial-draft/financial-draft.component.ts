@@ -71,7 +71,7 @@ export class FinancialDraftComponent implements OnInit {
   onSaveClick(){
     this.isFormSubmitted = true;
     if(this.financialDraftForm.valid){
-      this.financialService.SaveDraftAndDeliveryInformation(this.financialDraftForm.value).subscribe((response:any)=>{
+      this.financialService.CreateCahierDelivery(this.financialDraftForm.value).subscribe((response:any)=>{
         if(response === 1){
           this.toastrService.success('Saved successfully','Success');
         }else{

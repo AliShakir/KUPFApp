@@ -134,7 +134,7 @@ namespace API.DTOs
         public int? NoOfSponsor { get; set; }
         //
         public decimal? PayPer1 { get; set; }
-        public string? DraftNumber1 { get; set; }
+        public int? DraftNumber1 { get; set; }
         public DateTime? DraftDate1 { get; set; }
         public decimal? DraftAmount1 { get; set; }
         public string? BankAccount1 { get; set; }
@@ -143,7 +143,7 @@ namespace API.DTOs
         public string? DeliveredBy1 { get; set; }
 
         public decimal? PayPer2 { get; set; }
-        public string? DraftNumber2 { get; set; }
+        public int? DraftNumber2 { get; set; }
         public DateTime? DraftDate2 { get; set; }
         public decimal? DraftAmount2 { get; set; }
         public string? BankAccount2 { get; set; }
@@ -161,6 +161,9 @@ namespace API.DTOs
         public string? ApprovalBy6 { get; set; }
         public DateTime? ApprovedDate6 { get; set; }
         public string? PFID { get; set; }
+        public long? PeriodCode { get; set; }
+        public long? PrevPeriodCode { get; set; }
+        public long? NextPeriodCode { get; set; }
     }
    
 }

@@ -145,8 +145,9 @@
                         <div class="col-lg-4 fv-row">
                             <label class="form-label" for="contractType " lang="AR-SA" [style]='arabicFont'>Contract
                                 Type</label>
-                            <input type="text" id="contractType" class="form-control" formControlName="contractType"
-                                name="contractType" lang="AR-SA" readonly />
+                            <ng-select [items]="contractType$ | async" bindLabel="shortname" bindValue="refid"
+                                formControlName="contractType">
+                            </ng-select>
                         </div>
                         <div class="col-lg-4 fv-row">
                             <label class="form-label" for="kinName" lang="AR-SA" [style]='arabicFont'>Kin
@@ -198,8 +199,6 @@
                                 name="subscriptionStatus" lang="AR-SA" readonly />
                         </div>
                     </div>
-
-
                     <div class="row mb-4">
                         <div class="col-lg-4 fv-row">
                             <label class="form-label" for="terminationDate " lang="AR-SA"
@@ -222,6 +221,14 @@
                                 formControlName="employeeStatus" name="employeeStatus" lang="AR-SA" readonly />
                         </div>
                     </div>
+                    <div class="row mb-4">
+                        <div class="col-lg-4 fv-row">
+                            <label class="form-label" for="employeeStatus " lang="AR-SA"
+                                [style]='arabicFont'>Salary</label>
+                            <input type="number" id="employeeStatus" class="form-control" formControlName="salary"
+                                name="salary" lang="AR-SA" readonly />
+                        </div>
+                    </div>
                 </form>
 
             </div>
@@ -230,7 +237,7 @@
 </ngb-accordion>
 <br />
 <div *ngIf="isSearched">
-    <!--Service Information-->
+    <!--Service Information -->
     <div class="card mb-5 mb-xl-10">
         <!--begin::Card header-->
         <div class="card-header card-header-stretch pb-0 panel1bgColor">
@@ -325,15 +332,13 @@
                                 </span>
                             </div>
                             <div class="col-lg-3 fv-row">
-                                <label class="col-form-label fw-bold fs-6 ArFontStyle"
-                                    lang="AR-SA">{{bodyLabel[7].title}}</label>
-                                <input type="number" class="form-control form-control-lg mb-lg-0"
-                                    formControlName="totinstallments" (keyup)="calculateInstallments()"
+                                <label class="col-form-label fw-bold fs-6 ArFontStyle" for="subscriptionStatus "
+                                    lang="AR-SA" [style]='arabicFont'>Down Payment</label>
+                                <input type="number" id="downPayment" class="form-control" formControlName="downPayment"
+                                    (keyup)="calculateInstallments()" name="downPayment" lang="AR-SA"
                                     [readonly]="isViewOnly" />
-                                <span class="text-danger"
-                                    *ngIf="isFormSubmitted && addServiceFrm.totinstallments.errors?.required">
-                                    No of Installment(s) is required
-                                </span>
+
+
                             </div>
                             <div class="col-lg-3 fv-row">
                                 <label class="col-form-label fw-bold fs-6 ArFontStyle"
@@ -349,11 +354,15 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-3 fv-row">
-                                <label class="col-form-label fw-bold fs-6 ArFontStyle" for="subscriptionStatus "
-                                    lang="AR-SA" [style]='arabicFont'>Down Payment</label>
-                                <input type="number" id="downPayment" class="form-control" formControlName="downPayment"
-                                    (keyup)="calculateInstallments()" name="downPayment" lang="AR-SA"
+                                <label class="col-form-label fw-bold fs-6 ArFontStyle"
+                                    lang="AR-SA">{{bodyLabel[7].title}}</label>
+                                <input type="number" class="form-control form-control-lg mb-lg-0"
+                                    formControlName="totinstallments" (keyup)="calculateInstallments()"
                                     [readonly]="isViewOnly" />
+                                <span class="text-danger"
+                                    *ngIf="isFormSubmitted && addServiceFrm.totinstallments.errors?.required">
+                                    No of Installment(s) is required
+                                </span>
                             </div>
 
                             <div class="col-lg-3 fv-row">
@@ -393,9 +402,9 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-3 fv-row">
-                                <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">PF Id</label>
-                                <input type="text" class="form-control form-control-lg  mb-lg-0" formControlName="pfId"
-                                    />
+                                <!-- <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">PF Id</label>
+                                <input type="text" class="form-control form-control-lg  mb-lg-0" formControlName="pfId" readonly
+                                    />-->
                             </div>
                             <div class="col-lg-9 fv-row">
                                 <div class="text-left " style="margin-top: 3rem">
@@ -445,15 +454,15 @@
                                     formControlName="noOfTransactions" readonly style="background-color: #e9e9e9;" />
                             </div>
                             <div class="col-lg-3 fv-row">
-                                <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">Paid
+                                <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">(+) Paid
                                     Subscription Amount</label>
                                 <input type="number" class="form-control form-control-lg  mb-lg-0"
                                     formControlName="subscriptionPaidAmount" readonly
                                     style="background-color: #e9e9e9;" />
                             </div>
                             <div class="col-lg-3 fv-row">
-                                <label class="col-form-label fw-bold fs-6 ArFontStyle label-color"
-                                    lang="AR-SA">Subscription Due Amount</label>
+                                <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">(+)
+                                    Subscription Due Amount</label>
                                 <input type="number" class="form-control form-control-lg  mb-lg-0"
                                     formControlName="subscriptionDueAmount" readonly
                                     style="background-color: #e9e9e9;" />
@@ -529,6 +538,26 @@
                                     formControlName="totalAmount" readonly style="background-color: #e9e9e9;" />
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-lg-3 fv-row">
+                                <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">(-)
+                                    Amount Minus</label>
+                                <input type="number" class="form-control form-control-lg  mb-lg-0"
+                                    formControlName="amountMinus" readonly style="background-color: #e9e9e9;" />
+                            </div>
+                            <div class="col-lg-3 fv-row">
+                                <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">(+)
+                                    Amount Plus</label>
+                                <input type="number" class="form-control form-control-lg  mb-lg-0"
+                                    formControlName="amountPlus" readonly style="background-color: #e9e9e9;" />
+                            </div>
+                            <div class="col-lg-6 fv-row">
+                                <label class="col-form-label fw-bold fs-6 ArFontStyle label-color" lang="AR-SA">System
+                                    Remarks</label>
+                                <input type="text" class="form-control form-control-lg  mb-lg-0"
+                                    formControlName="systemRemarks" readonly style="background-color: #e9e9e9;" />
+                            </div>
+                        </div>
                         <div class="row mt-3">
                             <div class="col-lg-12" style="background-color: #C7EA46;">
                                 <h1 lang="AR-SA" class="display-4 text-center mt-3">Sponsorship - رعاية</h1>
@@ -550,7 +579,7 @@
 
 
                             </div>
-                            <div class="col-lg-3 fv-row" style="margin-top: 43px;">
+                            <div class="col-lg-3 fv-row" style="margin-top: 46px;">
                                 <div class="text-right">
                                     <button mat-raised-button color="accent"
                                         (click)="openCashierInformation(cashierInformationModal)">Cashier

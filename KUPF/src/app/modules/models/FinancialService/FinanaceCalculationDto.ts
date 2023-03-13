@@ -17,4 +17,7 @@ export interface FinanaceCalculationDto {
         loanInstallmentAmount: number;
         noOfSponsor: number;
         yearOfService: string;
+        amountMinus:number;
+        amountPlus:number;
+        systemRemarks:string;
 }

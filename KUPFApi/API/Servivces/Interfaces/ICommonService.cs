@@ -1,6 +1,7 @@
 ﻿using API.DTOs;
 using API.DTOs.DropDown;
 using API.DTOs.EmployeeDto;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -116,5 +117,11 @@ namespace API.Servivces.Interfaces
 
         loanPercentageDto GetDashboardLoanDetails();
 
+        Task<IEnumerable<SelectFilledTypeDTo>> GetFilledAtAsync();
+
+        Task<List<CountriesDto>> GetCountryList();
+        long CreateMyTransIdForTransactionHD();
+        int GetDraftNumberByBank(long accountNo);
+        long CreateEmployeePFId(int tenentId, int locationId);
     }
 }

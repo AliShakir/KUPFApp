@@ -40,6 +40,9 @@ namespace API.Models
         public string? SerApproval5 { get; set; }
         public string? ApprovalBy5 { get; set; }
         public DateTime? ApprovedDate5 { get; set; }
+        public string? SerApproval6 { get; set; }
+        public string? ApprovalBy6 { get; set; }
+        public DateTime? ApprovedDate6 { get; set; }
         public string FinalApproval { get; set; }
         public string Remarks { get; set; }
         public string Keyword { get; set; }

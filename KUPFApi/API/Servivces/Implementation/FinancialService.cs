@@ -16,6 +16,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
@@ -30,13 +31,16 @@ namespace API.Servivces.Implementation
         private readonly IMapper _mapper;
         private readonly IFinancialTransactionService _IFinancialTransactionService;
         private readonly ICrupMstServivce _crupMstServivce;
+        private readonly ICommonService _commonService;
         public FinancialService(KUPFDbContext context, IMapper mapper,
-            IFinancialTransactionService IFinancialTransactionService, ICrupMstServivce crupMstServivce)
+            IFinancialTransactionService IFinancialTransactionService,
+            ICrupMstServivce crupMstServivce, ICommonService commonService)
         {
             _context = context;
             _mapper = mapper;
             _IFinancialTransactionService = IFinancialTransactionService;
             _crupMstServivce = crupMstServivce;
+            _commonService = commonService;
         }
         public async Task<FinancialServiceResponse> AddFinancialServiceAsync(TransactionHdDto transactionHdDto)
         {
@@ -89,7 +93,7 @@ namespace API.Servivces.Implementation
                     int maxSwitch = (int)_context.TransactionHds.FromSqlRaw("select ISNULL(max(ServiceID), 0) + 1 as ServiceId from TransactionHD where TenentID ='" + transactionHdDto.TenentId + "'").Select(c => c.ServiceId).FirstOrDefault();
 
                     // Create Unique TransationId...
-                    newTransaction.Mytransid = CommonMethods.CreateEmployeeId();
+                    newTransaction.Mytransid = _commonService.CreateMyTransIdForTransactionHD();
 
                     #region Save into TransactionHddm
                     var attachmentsData = new TransactionHddm
@@ -199,7 +203,7 @@ namespace API.Servivces.Implementation
 
 
                     #region Save Into TransactionHDDApprovalDetails
-                    var serviceApprovals = _context.ServiceSetups.Where(p => p.SerApproval1 == "1").FirstOrDefault();//Where(p => p.ServiceType == 2 && p.ServiceSubType == 5).FirstOrDefault();
+                    var serviceApprovals = _context.ServiceSetups.Where(p => p.ServiceType == newTransaction.ServiceTypeId && p.ServiceSubType == newTransaction.ServiceSubTypeId).FirstOrDefault();
                     if (serviceApprovals != null)
                     {
                         List<string> myService = new List<string>
@@ -208,60 +212,56 @@ namespace API.Servivces.Implementation
                                 serviceApprovals.SerApproval2,
                                 serviceApprovals.SerApproval3,
                                 serviceApprovals.SerApproval4,
-                                serviceApprovals.SerApproval5
+                                serviceApprovals.SerApproval5,
+                                serviceApprovals.SerApproval6
                             };
                         if (serviceApprovals != null)
                         {
+                            myService.RemoveAll(item => item == null);
                             int srId = 0;
                             for (int i = 0; i < myService.Count; i++) // myservice is one active  = true else false.
                             {
-                                if (myService[i] == null)
+                                var transactionHddApprovalsDto = new TransactionHddapprovalDetailDto()
                                 {
-                                    break;
+                                    TenentId = newTransaction.TenentId,
+                                    Mytransid = newTransaction.Mytransid,
+                                    LocationId = (int)newTransaction.LocationId,
+                                    SerApprovalId = srId + 1,
+                                    SerApproval = myService[i].ToString(),
+                                    EmployeeId = newTransaction.EmployeeId,
+                                    ServiceType = newTransaction.ServiceTypeId,
+                                    ServiceSubType = newTransaction.ServiceSubTypeId,
+                                    ServiceId = srId + 1,
+                                    MasterServiceId = maxSwitch,
+                                    ApprovalDate = null,
+                                    RejectionType = null,
+                                    RejectionRemarks = null,
+                                    AttachId = attachId,
+                                    Status = "ManagerApproval",
+                                    CrupId = 1,
+                                    Userid = newTransaction.Userid,
+                                    Entrydate = DateTime.Now,
+                                    Entrytime = DateTime.Now,
+                                    Updttime = DateTime.Now,
+                                    ApprovalRemarks = "BySystem",
+                                    mySeq = srId + 1,
+                                    DisplayPERIOD_CODE = transactionHdDto.PeriodCode
+
+                                };
+                                // We will set active first recored and other will by inactive by default.
+                                if (i == 0)
+                                {
+                                    transactionHddApprovalsDto.Active = true;
                                 }
                                 else
                                 {
-                                    var transactionHddApprovalsDto = new TransactionHddapprovalDetailDto()
-                                    {
-                                        TenentId = newTransaction.TenentId,
-                                        Mytransid = newTransaction.Mytransid,
-                                        LocationId = (int)newTransaction.LocationId,
-                                        SerApprovalId = srId + 1,
-                                        SerApproval = myService[i].ToString(),
-                                        EmployeeId = newTransaction.EmployeeId,
-                                        ServiceType = newTransaction.ServiceTypeId,
-                                        ServiceSubType = newTransaction.ServiceSubTypeId,
-                                        ServiceId = srId + 1,
-                                        MasterServiceId = maxSwitch,
-                                        ApprovalDate = null,
-                                        RejectionType = null,
-                                        RejectionRemarks = null,
-                                        AttachId = attachId,
-                                        Status = "ManagerApproval",
-                                        CrupId = 1,
-                                        Userid = newTransaction.Userid,
-                                        Entrydate = DateTime.Now,
-                                        Entrytime = DateTime.Now,
-                                        Updttime = DateTime.Now,
-                                        ApprovalRemarks = "BySystem",
-                                        mySeq = srId + 1,
-                                        DisplayPERIOD_CODE = GetPeriodCode(),
-
-                                    };
-                                    // We will set active first recored and other will by inactive by default.
-                                    if (i == 0)
-                                    {
-                                        transactionHddApprovalsDto.Active = true;
-                                    }
-                                    else
-                                    {
-                                        transactionHddApprovalsDto.Active = false;
-                                    }
-
-                                    var transactionHddApprovals = _mapper.Map<TransactionHddapprovalDetail>(transactionHddApprovalsDto);
-                                    transactionHddApprovals.MasterServiceId = maxSwitch;
-                                    await _context.TransactionHddapprovalDetails.AddAsync(transactionHddApprovals);
+                                    transactionHddApprovalsDto.Active = false;
                                 }
+
+                                var transactionHddApprovals = _mapper.Map<TransactionHddapprovalDetail>(transactionHddApprovalsDto);
+                                transactionHddApprovals.MasterServiceId = maxSwitch;
+                                await _context.TransactionHddapprovalDetails.AddAsync(transactionHddApprovals);
+
                                 await _context.SaveChangesAsync();
                                 _context.ChangeTracker.Clear();
                                 srId++;
@@ -298,13 +298,58 @@ namespace API.Servivces.Implementation
                         newTransaction.Active = false;
                         newTransaction.AttachId = attachId;
                         newTransaction.AllowDiscountDefault = transactionHdDto.AllowDiscountDefault;
-                        newTransaction.PeriodBegin = Convert.ToInt32(GetPeriodCode());
+                        newTransaction.PeriodBegin = (int)transactionHdDto.PeriodCode;
+                        newTransaction.ServiceId =(int)newTransaction.Mytransid;
+                        if(serviceApprovals != null)
+                        {
+                            newTransaction.SerApproval1 = serviceApprovals.SerApproval1;
+                            newTransaction.ApprovalBy1 = serviceApprovals.ApprovalBy1;
+                            newTransaction.ApprovedDate1 = serviceApprovals.ApprovedDate1;
+
+                            newTransaction.SerApproval2 = serviceApprovals.SerApproval2;
+                            newTransaction.ApprovalBy2 = serviceApprovals.ApprovalBy2;
+                            newTransaction.ApprovedDate2 = serviceApprovals.ApprovedDate2;
+
+                            newTransaction.SerApproval3 = serviceApprovals.SerApproval3;
+                            newTransaction.ApprovalBy3 = serviceApprovals.ApprovalBy3;
+                            newTransaction.ApprovedDate3 = serviceApprovals.ApprovedDate3;
+
+                            newTransaction.SerApproval4 = serviceApprovals.SerApproval4;
+                            newTransaction.ApprovalBy4 = serviceApprovals.ApprovalBy4;
+                            newTransaction.ApprovedDate4 = serviceApprovals.ApprovedDate4;
+
+                            newTransaction.SerApproval5 = serviceApprovals.SerApproval5;
+                            newTransaction.ApprovalBy5 = serviceApprovals.ApprovalBy5;
+                            newTransaction.ApprovedDate5 = serviceApprovals.ApprovedDate5;
+
+                            newTransaction.SerApproval6 = serviceApprovals.SerApproval6;
+                            newTransaction.ApprovalBy6 = serviceApprovals.ApprovalBy6;
+                            newTransaction.ApprovedDate6 = serviceApprovals.ApprovedDate6;
+                        }
+                        
                         await _context.TransactionHds.AddAsync(newTransaction);
                         await _context.SaveChangesAsync();
 
-                        int installments = CommonMethods.CreateSubscriberInstallments(transactionHdDto.InstallmentsBegDate);
-                        for (int i = 0; i < installments; i++)
+                        
+                        bool isNextYear = false;
+                        for (int i = 1; i <= 24; i++)
                         {
+                            int monthNo = 1;
+                            //
+                            var nextMonth = DateTime.Now.AddMonths(i).ToString("MM");
+                            monthNo = Convert.ToInt32(nextMonth)+1;
+                            string customPrd = string.Empty;
+                            var currentYear = DateTime.Now.Year;
+                            if (monthNo > 12)
+                            {
+                                isNextYear = true;
+                                
+                            }
+                            if (isNextYear)
+                            {
+                                currentYear = DateTime.Now.AddYears(1).Year;
+                            }
+                            customPrd  = currentYear + "" + nextMonth;
                             var data = new TransactionDtDto
                             {
                                 TenentId = transactionHdDto.TenentId,
@@ -314,22 +359,22 @@ namespace API.Servivces.Implementation
                                 EmployeeId = transactionHdDto.EmployeeId,
                                 InstallmentNumber = myId,
                                 AttachId = attachId,
-                                PeriodCode = GetPeriodCode(),
+                                PeriodCode = Convert.ToInt64(customPrd),
                                 InstallmentAmount = transactionHdDto.Totamt,
                                 ReceivedAmount = 0,
                                 PendingAmount = transactionHdDto.InstallmentAmount,
-                                DiscountAmount = newTransaction.Discount,
-                                DiscountReference = string.Empty,
-                                UniversityBatchNo = string.Empty,
+                                DiscountAmount = newTransaction.Discount,                                
+                                DiscountReference = null,
+                                UniversityBatchNo = null,
                                 ReceivedDate = null,
                                 EffectedAccount = null,
                                 OtherReference = null,
                                 Activityid = null,
-                                CrupId = 1,
-                                Glpost = "1",
+                                CrupId = null,
+                                Glpost = null,
                                 Glpost1 = null,
-                                Glpostref = "1",
-                                Glpostref1 = "1",
+                                Glpostref = null,
+                                Glpostref1 = null,
                                 Active = false,
                                 Switch1 = null,
                                 DelFlag = null,
@@ -337,18 +382,23 @@ namespace API.Servivces.Implementation
                                 UntilMonth = transactionHdDto.UntilMonth,
                                 Userid = newTransaction.Userid,
                                 Entrydate = DateTime.Now,
-
+                                
                             };
                             var transactionDt = _mapper.Map<TransactionDt>(data);
+                            transactionDt.PendingAmount = 0;
+                            transactionDt.DiscountAmount = 0;
                             await _context.TransactionDts.AddAsync(transactionDt);
                             await _context.SaveChangesAsync();
                             _context.ChangeTracker.Clear();
                             myId++;
                         }
                         // Update detailedEmployee if termination is true need to update the detailed employee...
+                        employeeMembership.MembershipJoiningDate = DateTime.Now;
+                        employeeMembership.SubscribedDate = DateTime.Now;
+                        employeeMembership.AgreedSubAmount = newTransaction.Totamt;
                         employeeMembership.Subscription_status = 2;
                         employeeMembership.EmpStatus = 1;
-                        employeeMembership.Pfid = newTransaction.PFID;
+                        employeeMembership.Pfid = _commonService.CreateEmployeePFId(newTransaction.TenentId, (int)newTransaction.LocationId).ToString();
                         employeeMembership.SubscriptionDate = DateTime.Now;
                         _context.DetailedEmployees.Update(employeeMembership);
                         await _context.SaveChangesAsync();
@@ -2117,7 +2167,7 @@ namespace API.Servivces.Implementation
                             Discounted = t.Discount,
                             PayDate = DateTime.Now.ToString("dd/MM/yyyy"),
 
-                        }).ToList();
+                        }).OrderByDescending(c=>c.MYTRANSID).ToList();
             return data;
         }
 
@@ -2133,7 +2183,7 @@ namespace API.Servivces.Implementation
                           {
                               Mytransid = t.Mytransid,
                               EmployeeId = e.EmployeeId.ToString(),
-                              PFID = t.PFID,
+                              PFID = e.Pfid,
                               EmpCidNum = e.EmpCidNum,
                               EnglishName = e.EnglishName,
                               ArabicName = e.ArabicName,
@@ -2191,6 +2241,16 @@ namespace API.Servivces.Implementation
                               DiscountType = t.DiscountType,
                               AllowDiscountAmount = t.DiscountedGiftAmount,
                               AllowDiscountDefault = t.AllowDiscountDefault,
+                              KinMobile = e.Next2KinMobNumber,
+                              KinName = e.Next2KinName,
+                              SubscriptionStatus = e.Subscription_status,
+                              EmpStatus = e.EmpStatus,
+                              EndDate = e.EndDate,
+                              TerminationDate = e.TerminationDate,
+                              SubscriptionAmount = t.Totamt,
+                              SubscriptionDueAmount = t.SubscriptionDueAmount,
+                              LastSubscriptionPaid = t.PaidSubscriptionAmount,
+                              PaidSubscriptionAmount = t.PaidSubscriptionAmount,
                           }).FirstOrDefault();
             //var hddms = _context.TransactionHddms.Where(c => c.Mytransid == id).ToList();
             //result.TransactionHDDMSDto = _mapper.Map<List<TransactionHDDMSDto>>(hddms);
@@ -2204,62 +2264,108 @@ namespace API.Servivces.Implementation
             return data;
         }
 
-        public async Task<IEnumerable<ManagerApprovalDto>> GetServiceApprovalsAsync(long periodCode, int tenentId, int locationId)
+        public async Task<IEnumerable<ManagerApprovalDto>> GetServiceApprovalsAsync(long periodCode, int tenentId, int locationId,bool isShowAll)
         {
-            var data = (from e in _context.DetailedEmployees
-                        join ap in _context.TransactionHddapprovalDetails
-                        on e.EmployeeId equals ap.EmployeeId
-                        join hd in _context.TransactionHds
-                        on ap.Mytransid equals hd.Mytransid
-                        where ap.TenentId == tenentId &&
-                        e.TenentId == tenentId &&
-                        e.LocationId == locationId &&
-                        ap.LocationId == locationId &&
-                        ap.SerApprovalId == 1 && // Manager Role Id
-                        ap.DisplayPERIOD_CODE <= periodCode &&
-                        ap.DisplayPERIOD_CODE >= periodCode && 
-                        ap.Active == true
-                        select new ManagerApprovalDto
-                        {
-                            TransId = (int)ap.Mytransid,
-                            EmployeeId = Convert.ToString(e.EmployeeId),
-                            EnglishName = e.EnglishName,
-                            ArabicName = e.ArabicName,
-                            ServiceName = hd.ServiceType,
-                            Pfid = e.Pfid,
-                            EmpCidNum = e.EmpCidNum,
-                            MobileNumber = e.MobileNumber,
-                            PeriodCode = Convert.ToString(ap.DisplayPERIOD_CODE),
-                            TenentId = ap.TenentId,
-                            LocationId = ap.LocationId,
-                            DraftAmount1 = hd.DraftAmount1,
-                            DraftAmount2 = hd.DraftAmount2,
-                            DraftDate1 = hd.DraftDate1,
-                            DraftDate2 = hd.DraftDate2,
-                            TotalAmount = hd.Totamt,
-                            TotalInstallments = (int)hd.Totinstallments,
-                            Status = ap.Status,
-                            Active = ap.Active,
-                            CrupId = (long)e.CRUP_ID
-                        }).ToList();
-            return data;
+            
+            if (isShowAll)
+            {
+                var data = (from e in _context.DetailedEmployees
+                            join ap in _context.TransactionHddapprovalDetails
+                            on e.EmployeeId equals ap.EmployeeId
+                            join hd in _context.TransactionHds
+                            on ap.Mytransid equals hd.Mytransid
+                            where ap.TenentId == tenentId &&
+                            e.TenentId == tenentId &&
+                            e.LocationId == locationId &&
+                            ap.LocationId == locationId &&
+                            ap.SerApprovalId == 1 && // Manager Role Id
+                            ap.DisplayPERIOD_CODE <= periodCode &&
+                            ap.DisplayPERIOD_CODE >= periodCode                             
+                            select new ManagerApprovalDto
+                            {
+                                TransId = (int)ap.Mytransid,
+                                EmployeeId = Convert.ToString(e.EmployeeId),
+                                EnglishName = e.EnglishName,
+                                ArabicName = e.ArabicName,
+                                ServiceName = hd.ServiceType,
+                                Pfid = e.Pfid,
+                                EmpCidNum = e.EmpCidNum,
+                                MobileNumber = e.MobileNumber,
+                                PeriodCode = Convert.ToString(ap.DisplayPERIOD_CODE),
+                                TenentId = ap.TenentId,
+                                LocationId = ap.LocationId,
+                                DraftAmount1 = hd.DraftAmount1,
+                                DraftAmount2 = hd.DraftAmount2,
+                                DraftDate1 = hd.DraftDate1,
+                                DraftDate2 = hd.DraftDate2,
+                                TotalAmount = hd.Totamt,
+                                TotalInstallments = (int)hd.Totinstallments,
+                                Status = ap.Status,
+                                Active = ap.Active,
+                                CrupId = (long)e.CRUP_ID
+                            }).OrderByDescending(c => c.TransId).ToList();
+                return data;
+            }
+            else
+            {
+                var data = (from e in _context.DetailedEmployees
+                            join ap in _context.TransactionHddapprovalDetails
+                            on e.EmployeeId equals ap.EmployeeId
+                            join hd in _context.TransactionHds
+                            on ap.Mytransid equals hd.Mytransid
+                            where ap.TenentId == tenentId &&
+                            e.TenentId == tenentId &&
+                            e.LocationId == locationId &&
+                            ap.LocationId == locationId &&
+                            ap.SerApprovalId == 1 && // Manager Role Id
+                            ap.DisplayPERIOD_CODE <= periodCode &&
+                            ap.DisplayPERIOD_CODE >= periodCode &&
+                            ap.Active == true
+                            select new ManagerApprovalDto
+                            {
+                                TransId = (int)ap.Mytransid,
+                                EmployeeId = Convert.ToString(e.EmployeeId),
+                                EnglishName = e.EnglishName,
+                                ArabicName = e.ArabicName,
+                                ServiceName = hd.ServiceType,
+                                Pfid = e.Pfid,
+                                EmpCidNum = e.EmpCidNum,
+                                MobileNumber = e.MobileNumber,
+                                PeriodCode = Convert.ToString(ap.DisplayPERIOD_CODE),
+                                TenentId = ap.TenentId,
+                                LocationId = ap.LocationId,
+                                DraftAmount1 = hd.DraftAmount1,
+                                DraftAmount2 = hd.DraftAmount2,
+                                DraftDate1 = hd.DraftDate1,
+                                DraftDate2 = hd.DraftDate2,
+                                TotalAmount = hd.Totamt,
+                                TotalInstallments = (int)hd.Totinstallments,
+                                Status = ap.Status,
+                                Active = ap.Active,
+                                CrupId = (long)e.CRUP_ID
+                            }).OrderByDescending(c => c.TransId).ToList();
+                return data;
+            }
+           
 
         }
 
-        public async Task<string> ApproveServiceAsync(ApproveRejectServiceDto approveRejectServiceDto)
+        public async Task<string> ManagerApproveServiceAsync(ApproveRejectServiceDto approveRejectServiceDto)
         {
             int result = 0;
             if (_context != null)
             {
                 var existingtransactionHddApprovals = _context.TransactionHddapprovalDetails
-                    .Where(c => c.Mytransid == approveRejectServiceDto.Mytransid).FirstOrDefault();
+                    .Where(c => c.Mytransid == approveRejectServiceDto.Mytransid && c.SerApprovalId == 1).FirstOrDefault();
                 //
-                var employeeDetails = _context.DetailedEmployees.Where(c => c.EmployeeId == existingtransactionHddApprovals.EmployeeId 
+                var employeeDetails = _context.DetailedEmployees.Where(c => c.EmployeeId == existingtransactionHddApprovals.EmployeeId
                 && c.TenentId == approveRejectServiceDto.TenentId && c.LocationId == approveRejectServiceDto.LocationId).FirstOrDefault();
                 //
                 var transactionDt = _context.TransactionDts.Where(e => e.Mytransid == approveRejectServiceDto.Mytransid).ToList();
                 // 
                 var existingTransactionHd = _context.TransactionHds.Where(c => c.Mytransid == existingtransactionHddApprovals.Mytransid).FirstOrDefault();
+
+                var activateNextRow = _context.TransactionHddapprovalDetails.Where(p => p.Mytransid == existingtransactionHddApprovals.Mytransid && p.SerApprovalId == 2).FirstOrDefault();
                 if (existingtransactionHddApprovals != null)
                 {
                     // Update TransactionHddapprovalDetails
@@ -2268,13 +2374,15 @@ namespace API.Servivces.Implementation
                     existingtransactionHddApprovals.ApprovalDate = approveRejectServiceDto.ApprovalDate;
                     existingtransactionHddApprovals.Entrydate = (DateTime)approveRejectServiceDto.Entrydate;
                     existingtransactionHddApprovals.Entrytime = (DateTime)approveRejectServiceDto.Entrytime;
-                    existingtransactionHddApprovals.Status = "Approved";
+                    existingtransactionHddApprovals.Status = "ManagerApproved";
+                    existingtransactionHddApprovals.ApprovalDate = DateTime.Now;
                     existingtransactionHddApprovals.ApprovalRemarks = approveRejectServiceDto.ApprovalRemarks;
                     existingtransactionHddApprovals.Active = false;
+                    existingtransactionHddApprovals.Userid = approveRejectServiceDto.UserId;
                     _context.TransactionHddapprovalDetails.Update(existingtransactionHddApprovals);
                     await _context.SaveChangesAsync();
                     _context.ChangeTracker.Clear();
-                    
+
                     // Update TransactionHD.
                     existingTransactionHd.Active = true;
                     existingTransactionHd.Status = "Approved";
@@ -2288,12 +2396,16 @@ namespace API.Servivces.Implementation
                     _context.DetailedEmployees.Update(employeeDetails);
                     result = await _context.SaveChangesAsync();
                     _context.ChangeTracker.Clear();
-                    
+
+                    //
+                    activateNextRow.Active = true;
+                    _context.TransactionHddapprovalDetails.Update(activateNextRow);
+                    _context.SaveChanges();
+                    _context.ChangeTracker.Clear();
                     // Update TransactionDt
                     foreach (var item in transactionDt)
                     {
                         item.Active = true;
-
                         _context.TransactionDts.Update(item);
                         result = await _context.SaveChangesAsync();
                         _context.ChangeTracker.Clear();
@@ -2305,14 +2417,7 @@ namespace API.Servivces.Implementation
             return result.ToString();
         }
 
-        public async Task<IEnumerable<RefTableDto>> GetRejectionType()
-        {
-            var result = await _context.Reftables.Where(c => c.Reftype == "KUPF" && c.Refsubtype == "Rejection").ToListAsync();
-            var data = _mapper.Map<IEnumerable<RefTableDto>>(result);
-            return data;
-        }
-
-        public async Task<string> RejectServiceAsync(ApproveRejectServiceDto approveRejectServiceDto)
+        public async Task<string> ManagerRejectServiceAsync(ApproveRejectServiceDto approveRejectServiceDto)
         {
             int result = 0;
             if (_context != null)
@@ -2322,12 +2427,9 @@ namespace API.Servivces.Implementation
                     .Where(c => c.Mytransid == approveRejectServiceDto.Mytransid && c.Active == true).FirstOrDefault();
 
                 // TO CHECK IF CRUP_ID IS NULL DETAILEDEMPLOYEE.
-                var detailedEmployee = _context.DetailedEmployees.Where(c => c.EmployeeId == existingtransactionHd.EmployeeId 
-                    && c.TenentId == approveRejectServiceDto.TenentId 
+                var detailedEmployee = _context.DetailedEmployees.Where(c => c.EmployeeId == existingtransactionHd.EmployeeId
+                    && c.TenentId == approveRejectServiceDto.TenentId
                     && c.LocationId == approveRejectServiceDto.LocationId).FirstOrDefault();
-                //
-                var transactionHd = _context.TransactionHds
-                    .Where(c => c.Mytransid == existingtransactionHd.Mytransid && c.Active == true).FirstOrDefault();
 
                 if (existingtransactionHd != null)
                 {
@@ -2335,24 +2437,30 @@ namespace API.Servivces.Implementation
                     existingtransactionHd.RejectionType = approveRejectServiceDto.RejectionType;
                     existingtransactionHd.RejectionRemarks = approveRejectServiceDto.RejectionRemarks;
                     existingtransactionHd.Active = false;
+                    existingtransactionHd.Status = "ManagerRejected";
+                    existingtransactionHd.ApprovalDate = DateTime.Now;
                     _context.TransactionHddapprovalDetails.Update(existingtransactionHd);
                     await _context.SaveChangesAsync();
                     _context.ChangeTracker.Clear();
-
-                    // Update TransactionHddapprovalDetails
-                    transactionHd.Active = false;
-                    _context.TransactionHds.Update(transactionHd);
-                    await _context.SaveChangesAsync();
 
                     // Update Employee Details.
                     detailedEmployee.Subscription_status = 9; // rejected
                     _context.DetailedEmployees.Update(detailedEmployee);
                     result = await _context.SaveChangesAsync();
                 }
-                
+
             }
             return result.ToString();
         }
+
+        public async Task<IEnumerable<RefTableDto>> GetRejectionType()
+        {
+            var result = await _context.Reftables.Where(c => c.Reftype == "KUPF" && c.Refsubtype == "Rejection").ToListAsync();
+            var data = _mapper.Map<IEnumerable<RefTableDto>>(result);
+            return data;
+        }
+
+        
 
         public async Task<IEnumerable<ReturnServiceApprovals>> GetServiceApprovalsByEmployeeId(int employeeId)
         {
@@ -2361,7 +2469,7 @@ namespace API.Servivces.Implementation
                         on Convert.ToInt32(e.EmployeeId) equals hd.EmployeeId
                         join app in _context.TransactionHddapprovalDetails
                         on hd.Mytransid equals app.Mytransid
-                        where e.EmployeeId == employeeId && app.Active ==true 
+                        where e.EmployeeId == employeeId && app.Active == true
                         select new ReturnServiceApprovals
                         {
                             MyTransId = (int)hd.Mytransid,
@@ -2432,11 +2540,9 @@ namespace API.Servivces.Implementation
             return result;
         }
 
-
-
         public async Task<ReturnApprovalDetailsDto> GetServiceApprovalsByTransIdAsync(int tenentId, int locationId, int transId)
         {
-            
+
             var result = (from hd in _context.TransactionHds
                           join emp in _context.DetailedEmployees
                           on hd.EmployeeId equals emp.EmployeeId
@@ -2449,16 +2555,183 @@ namespace API.Servivces.Implementation
                               ServiceType = hd.ServiceType,
                               Totamt = hd.Totamt
                           }).FirstOrDefault();
-            
+
             return result;
         }
 
-        public long GetPeriodCode()
+        public async Task<IEnumerable<CashierApprovalDto>> GetCashierApprovals(long periodCode, int tenentId, int locationId, bool isShowAll)
         {
-            long periodCode = _context.Tblperiods.FromSqlRaw("select * from tblperiods where getdate() between PRD_START_DATE and PRD_END_DATE").Select(p => p.PeriodCode).FirstOrDefault();
-            return periodCode;
+            if (isShowAll)
+            {
+                var data = (from e in _context.DetailedEmployees
+                            join ap in _context.TransactionHddapprovalDetails
+                            on Convert.ToInt32(e.EmployeeId) equals ap.EmployeeId
+                            join hd in _context.TransactionHds
+                            on ap.Mytransid equals hd.Mytransid
+                            where ap.TenentId == tenentId &&
+                            ap.LocationId == locationId &&
+                            ap.SerApprovalId == 3 && // Cashier Role Id
+                            ap.DisplayPERIOD_CODE <= periodCode
+                            select new CashierApprovalDto
+                            {
+                                TransId = (int)ap.Mytransid,
+                                EmployeeId = Convert.ToString(e.EmployeeId),
+                                EnglishName = e.EnglishName,
+                                ArabicName = e.ArabicName,
+                                ServiceName = hd.ServiceType,
+                                Pfid = e.Pfid,
+                                EmpCidNum = e.EmpCidNum,
+                                MobileNumber = e.MobileNumber,
+                                PeriodCode = Convert.ToString(ap.DisplayPERIOD_CODE),
+                                TenentId = ap.TenentId,
+                                LocationId = ap.LocationId,
+                                DraftAmount1 = hd.DraftAmount1,
+                                DraftAmount2 = hd.DraftAmount2,
+                                DraftDate1 = hd.DraftDate1,
+                                DraftDate2 = hd.DraftDate2
+                            }).ToList();
+                return data;
+            }
+            else
+            {
+                var data = (from e in _context.DetailedEmployees
+                            join ap in _context.TransactionHddapprovalDetails
+                            on Convert.ToInt32(e.EmployeeId) equals ap.EmployeeId
+                            join hd in _context.TransactionHds
+                            on ap.Mytransid equals hd.Mytransid
+                            where ap.TenentId == tenentId &&
+                            ap.LocationId == locationId &&
+                            ap.SerApprovalId == 3 && // Cashier Role Id
+                            ap.Active == true &&
+                            ap.DisplayPERIOD_CODE <= periodCode
+                            select new CashierApprovalDto
+                            {
+                                TransId = (int)ap.Mytransid,
+                                EmployeeId = Convert.ToString(e.EmployeeId),
+                                EnglishName = e.EnglishName,
+                                ArabicName = e.ArabicName,
+                                ServiceName = hd.ServiceType,
+                                Pfid = e.Pfid,
+                                EmpCidNum = e.EmpCidNum,
+                                MobileNumber = e.MobileNumber,
+                                PeriodCode = Convert.ToString(ap.DisplayPERIOD_CODE),
+                                TenentId = ap.TenentId,
+                                LocationId = ap.LocationId,
+                                DraftAmount1 = hd.DraftAmount1,
+                                DraftAmount2 = hd.DraftAmount2,
+                                DraftDate1 = hd.DraftDate1,
+                                DraftDate2 = hd.DraftDate2
+                            }).ToList();
+                return data;
+            }
         }
 
+        public async Task<int> CreateCahierDelivery(CashierApprovalDto cashierApprovalDto)
+        {
+            int result = 0;
+            var existingtransactionHd = _context.TransactionHds
+                    .Where(c => c.Mytransid == cashierApprovalDto.TransId &&
+                    c.EmployeeId == Convert.ToInt32(cashierApprovalDto.EmployeeId)).FirstOrDefault();
+
+            var existingTransactionApprovals = _context.TransactionHddapprovalDetails
+                .Where(p => p.Mytransid == cashierApprovalDto.TransId
+                && p.EmployeeId == Convert.ToInt32(cashierApprovalDto.EmployeeId)).FirstOrDefault();
+
+
+            if (existingtransactionHd != null)
+            {
+                //
+                existingTransactionApprovals.Status = "CashierDelivery";
+                existingTransactionApprovals.ApprovalDate = DateTime.Now;
+                _context.TransactionHddapprovalDetails.Update(existingTransactionApprovals);
+                result = await _context.SaveChangesAsync();
+                _context.ChangeTracker.Clear();
+                //
+
+                existingtransactionHd.DraftNumber1 = cashierApprovalDto.DraftNumber1;
+                existingtransactionHd.DraftNumber2 = cashierApprovalDto.DraftNumber2;
+                existingtransactionHd.DraftDate1 = cashierApprovalDto.DraftDate1;
+                existingtransactionHd.DraftDate2 = cashierApprovalDto.DraftDate2;
+                existingtransactionHd.TotalAmount = cashierApprovalDto.TotalAmount;
+                existingtransactionHd.BankAccount1 = cashierApprovalDto.BankAccount1;
+                existingtransactionHd.ReceivedBy1 = cashierApprovalDto.ReceivedBy1;
+                existingtransactionHd.ReceivedDate1 = cashierApprovalDto.ReceivedDate1;
+                existingtransactionHd.DeliveryDate1 = cashierApprovalDto.ReceivedDate;
+                existingtransactionHd.DeliveredBy1 = cashierApprovalDto.DeliveredBy1;
+                existingtransactionHd.Transdate = DateTime.Now;
+                existingtransactionHd.Status = "CashierDelivery";
+                existingtransactionHd.Mytransid = (long)cashierApprovalDto.TransId;
+                existingtransactionHd.EmployeeId = Convert.ToInt32(cashierApprovalDto.EmployeeId);
+                existingtransactionHd.Active = false;
+
+                _context.TransactionHds.Update(existingtransactionHd);
+                result = await _context.SaveChangesAsync();
+                _context.ChangeTracker.Clear();
+            }
+            // Update approvals
+            var approvals = _context.TransactionHddapprovalDetails.Where(c => c.Mytransid == cashierApprovalDto.TransId &&
+            c.EmployeeId == Convert.ToInt32(cashierApprovalDto.EmployeeId) && c.SerApprovalId == 3 && c.Active == true).FirstOrDefault();
+            if (approvals != null)
+            {
+                approvals.Active = false;
+                _context.TransactionHddapprovalDetails.Update(approvals);
+                result = await _context.SaveChangesAsync();
+
+            }
+
+            return result;
+        }
+
+        public async Task<int> CreateCahierDraft(CashierApprovalDto cashierApprovalDto)
+        {
+            int result = 0;
+            var existingtransactionHd = _context.TransactionHds
+                    .Where(c => c.Mytransid == cashierApprovalDto.TransId &&
+                    c.EmployeeId == Convert.ToInt32(cashierApprovalDto.EmployeeId)).FirstOrDefault();
+
+            var existingTransactionApprovals = _context.TransactionHddapprovalDetails
+                .Where(p=>p.Mytransid == cashierApprovalDto.TransId 
+                && p.EmployeeId == Convert.ToInt32(cashierApprovalDto.EmployeeId)).FirstOrDefault();
+
+            if (existingtransactionHd != null)
+            {
+                //
+                existingTransactionApprovals.Status = "CashierDraft";
+                existingTransactionApprovals.ApprovalDate = DateTime.Now;
+                _context.TransactionHddapprovalDetails.Update(existingTransactionApprovals);
+                result = await _context.SaveChangesAsync();
+                _context.ChangeTracker.Clear();
+                //
+                existingtransactionHd.DraftNumber1 = cashierApprovalDto.DraftNumber1;
+                existingtransactionHd.DraftNumber2 = cashierApprovalDto.DraftNumber2;
+                existingtransactionHd.DraftDate1 = cashierApprovalDto.DraftDate1;
+                existingtransactionHd.DraftDate2 = cashierApprovalDto.DraftDate2;
+                existingtransactionHd.TotalAmount = cashierApprovalDto.TotalAmount;
+                existingtransactionHd.BankAccount1 = cashierApprovalDto.BankAccount1;
+                existingtransactionHd.ReceivedBy1 = cashierApprovalDto.ReceivedBy1;
+                existingtransactionHd.ReceivedDate1 = cashierApprovalDto.ReceivedDate1;
+                existingtransactionHd.DeliveryDate1 = cashierApprovalDto.ReceivedDate;
+                existingtransactionHd.DeliveredBy1 = cashierApprovalDto.DeliveredBy1;
+                existingtransactionHd.Transdate = DateTime.Now;
+                existingtransactionHd.Status = "CashierDraft";
+
+                existingtransactionHd.Mytransid = (long)cashierApprovalDto.TransId;
+                existingtransactionHd.EmployeeId = Convert.ToInt32(cashierApprovalDto.EmployeeId);
+
+                _context.TransactionHds.Update(existingtransactionHd);
+                result = await _context.SaveChangesAsync();
+                _context.ChangeTracker.Clear();
+            }
+            
+
+            return result;
+        }
+        public int GenerateFinancialServiceSerialNo()
+        {
+            int maxSerialNo = (int)_context.TransactionHds.FromSqlRaw("select ISNULL(max(ServiceID),0)+1 as ServiceId from TransactionHD").Select(p => p.ServiceId).FirstOrDefault();
+            return maxSerialNo;
+        }
+        #region
         public async Task<ReturnSearchResultDto> SearchEmployee(SearchEmployeeDto searchEmployeeDto)
         {
             if (searchEmployeeDto.EmployeeId == 0
@@ -2509,7 +2782,7 @@ namespace API.Servivces.Implementation
                     return new ReturnSearchResultDto
                     {
                         IsSuccess = false,
-                        Message = "Employee is Terminated..."
+                        Message = ""+employee.EnglishName+" is Terminated On "+((DateTime)employee.TerminationDate).ToString("dd/MM/yyyy") +" Cant proceed"
                     };
                 }
 
@@ -2530,7 +2803,7 @@ namespace API.Servivces.Implementation
                     JoinedDate = employee.JoinedDate,
                     MobileNumber = employee.MobileNumber,
                     EmpMaritalStatus = employee.EmpMaritalStatus,
-                    ContractType = contractType.Refname3,
+                    ContractType = contractType.Refid.ToString(),
                     Next2KinName = employee.Next2KinName,
                     Next2KinMobNumber = employee.Next2KinMobNumber,
                     EndDate = employee.EndDate,
@@ -2545,7 +2818,8 @@ namespace API.Servivces.Implementation
                     CountryId = country.Countryid,
                     CountryNameArabic = country.Couname2,
                     CountryNameEnglish = country.Couname1,
-                    IsSuccess = true
+                    IsSuccess = true,
+                    Salary = (decimal)employee.Salary
                 };
                 return data;
 
@@ -2554,74 +2828,6 @@ namespace API.Servivces.Implementation
 
 
         }
-
-        public async Task<IEnumerable<CashierApprovalDto>> GetCashierApprovals(long periodCode, int tenentId, int locationId)
-        {
-            var data = (from e in _context.DetailedEmployees
-                        join ap in _context.TransactionHddapprovalDetails
-                        on Convert.ToInt32(e.EmployeeId) equals ap.EmployeeId
-                        join hd in _context.TransactionHds
-                        on ap.Mytransid equals hd.Mytransid
-                        where ap.TenentId == tenentId &&
-                        ap.LocationId == locationId &&
-                        ap.SerApprovalId == 3 && // Cashier Role Id
-                        ap.DisplayPERIOD_CODE <= periodCode
-                        select new CashierApprovalDto
-                        {
-                            TransId = (int)ap.Mytransid,
-                            EmployeeId = Convert.ToString(e.EmployeeId),
-                            EnglishName = e.EnglishName,
-                            ArabicName = e.ArabicName,
-                            ServiceName = hd.ServiceType,
-                            Pfid = e.Pfid,
-                            EmpCidNum = e.EmpCidNum,
-                            MobileNumber = e.MobileNumber,
-                            PeriodCode = Convert.ToString(ap.DisplayPERIOD_CODE),
-                            TenentId = ap.TenentId,
-                            LocationId = ap.LocationId,
-                            DraftAmount1 = hd.DraftAmount1,
-                            DraftAmount2 = hd.DraftAmount2,
-                            DraftDate1 = hd.DraftDate1,
-                            DraftDate2 = hd.DraftDate2
-                        }).ToList();
-            return data;
-        }
-
-        public async Task<int> SaveDraftAndDeliveryInformation(CashierApprovalDto cashierApprovalDto)
-        {
-            int result = 0;
-            var existingtransactionHd = _context.TransactionHds
-                    .Where(c => c.Mytransid == cashierApprovalDto.TransId &&
-                    c.EmployeeId == Convert.ToInt32(cashierApprovalDto.EmployeeId)).FirstOrDefault();
-            if (existingtransactionHd != null)
-            {
-                existingtransactionHd.DraftNumber1 = cashierApprovalDto.DraftNumber1;
-                existingtransactionHd.DraftNumber2 = cashierApprovalDto.DraftNumber2;
-                existingtransactionHd.DraftDate1 = cashierApprovalDto.DraftDate1;
-                existingtransactionHd.DraftDate2 = cashierApprovalDto.DraftDate2;
-                existingtransactionHd.TotalAmount = cashierApprovalDto.TotalAmount;
-                existingtransactionHd.BankAccount1 = cashierApprovalDto.BankAccount1;
-                existingtransactionHd.ReceivedBy1 = cashierApprovalDto.ReceivedBy1;
-                existingtransactionHd.ReceivedDate1 = cashierApprovalDto.ReceivedDate1;
-                existingtransactionHd.DeliveryDate1 = cashierApprovalDto.ReceivedDate;
-                existingtransactionHd.DeliveredBy1 = cashierApprovalDto.DeliveredBy1;
-                existingtransactionHd.Transdate = DateTime.Now;
-                existingtransactionHd.Mytransid = (long)cashierApprovalDto.TransId;
-                existingtransactionHd.EmployeeId = Convert.ToInt32(cashierApprovalDto.EmployeeId);
-
-                _context.TransactionHds.Update(existingtransactionHd);
-                result = await _context.SaveChangesAsync();
-            }
-
-            return result;
-        }
-
-        public int GenerateFinancialServiceSerialNo()
-        {
-            int maxSerialNo = (int)_context.TransactionHds.FromSqlRaw("select ISNULL(max(ServiceID),0)+1 as ServiceId from TransactionHD").Select(p => p.ServiceId).FirstOrDefault();
-            return maxSerialNo;
-        }
-
         public async Task<ReturnSearchResultDto> SearchSponsor(SearchEmployeeDto searchEmployeeDto)
         {
             if (searchEmployeeDto.EmployeeId == 0
@@ -2654,7 +2860,7 @@ namespace API.Servivces.Implementation
                 return new ReturnSearchResultDto
                 {
                     IsSuccess = false,
-                    Message = "Employee not found..."
+                    Message = "Sponsor not found..."
                 };
             }
             else
@@ -2672,7 +2878,7 @@ namespace API.Servivces.Implementation
                     return new ReturnSearchResultDto
                     {
                         IsSuccess = false,
-                        Message = "Employee is Terminated..."
+                        Message = "" + employee.EnglishName + " is Terminated On " + ((DateTime)employee.TerminationDate).ToString("dd/MM/yyyy") + " Cant proceed"
                     };
                 }
 
@@ -2693,7 +2899,7 @@ namespace API.Servivces.Implementation
                     JoinedDate = employee.JoinedDate,
                     MobileNumber = employee.MobileNumber,
                     EmpMaritalStatus = employee.EmpMaritalStatus,
-                    ContractType = contractType.Refname3,
+                    ContractType = contractType.Refid.ToString(),
                     Next2KinName = employee.Next2KinName,
                     Next2KinMobNumber = employee.Next2KinMobNumber,
                     EndDate = employee.EndDate,
@@ -2708,13 +2914,13 @@ namespace API.Servivces.Implementation
                     CountryId = country.Countryid,
                     CountryNameArabic = country.Couname2,
                     CountryNameEnglish = country.Couname1,
-                    IsSuccess = true
+                    IsSuccess = true,
+                    Salary = (decimal)employee.Salary
                 };
                 return data;
 
             }
         }
-
         public async Task<ReturnSearchResultDto> SearchNewSubscriber(SearchEmployeeDto searchEmployeeDto)
         {
             if (searchEmployeeDto.EmployeeId == 0
@@ -2752,7 +2958,25 @@ namespace API.Servivces.Implementation
             }
             else
             {
-
+                // 1 = Joined and null = Not Subscribered
+                if (employee.EmpStatus == 1 && employee.Subscription_status != null)
+                {
+                    return new ReturnSearchResultDto
+                    {
+                        // employe empstatus 1=joined subscription stuats =2  i consider this person is subscribed 
+                        // if termination date is null and terminationid is null than this persons is not terminated and true live subscriber
+                        IsSuccess = false,
+                        Message = "This is employee is already susbcribed. Please click on Search Employee"
+                    };
+                }
+                else if (employee.TerminationId != null)
+                {
+                    return new ReturnSearchResultDto
+                    {
+                        IsSuccess = false,
+                        Message = "" + employee.EnglishName + " is Terminated On " + ((DateTime)employee.TerminationDate).ToString("dd/MM/yyyy") + " Cant proceed"
+                    };
+                }
 
                 var country = await _context.TblCountries.Where(c => c.TenentId == employee.TenentId && c.Countryid == employee.NationCode).FirstOrDefaultAsync();
                 //
@@ -2771,7 +2995,7 @@ namespace API.Servivces.Implementation
                     JoinedDate = employee.JoinedDate,
                     MobileNumber = employee.MobileNumber,
                     EmpMaritalStatus = employee.EmpMaritalStatus,
-                    ContractType = contractType.Refname3,
+                    ContractType = contractType.Refid.ToString(),
                     Next2KinName = employee.Next2KinName,
                     Next2KinMobNumber = employee.Next2KinMobNumber,
                     EndDate = employee.EndDate,
@@ -2786,18 +3010,21 @@ namespace API.Servivces.Implementation
                     CountryId = country.Countryid,
                     CountryNameArabic = country.Couname2,
                     CountryNameEnglish = country.Couname1,
-                    IsSuccess = true
+                    IsSuccess = true,
+                    Salary = (decimal)employee.Salary
                 };
                 return data;
 
             }
         }
 
+        #endregion
+
         public async Task<IEnumerable<ReturnApprovalsByEmployeeId>> GetServiceApprovalsByEmployeeIdForManager(int employeeId, int tenentId, int locationId)
         {
             var data = (from ap in _context.TransactionHddapprovalDetails
                         join hd in _context.TransactionHds
-                        on ap.Mytransid equals hd.Mytransid                        
+                        on ap.Mytransid equals hd.Mytransid
                         where ap.TenentId == tenentId &&
                         ap.TenentId == tenentId &&
                         ap.LocationId == locationId &&
@@ -2815,6 +3042,162 @@ namespace API.Servivces.Implementation
                             Active = ap.Active
                         }).ToList();
             return data;
+        }
+
+        public async Task<IEnumerable<CashierApprovalDto>> GetFinacialApprovals(long periodCode, int tenentId, int locationId, bool isShowAll)
+        {
+            if (isShowAll)
+            {
+                var data = (from e in _context.DetailedEmployees
+                            join ap in _context.TransactionHddapprovalDetails
+                            on Convert.ToInt32(e.EmployeeId) equals ap.EmployeeId
+                            join hd in _context.TransactionHds
+                            on ap.Mytransid equals hd.Mytransid
+                            where ap.TenentId == tenentId &&
+                            ap.LocationId == locationId &&
+                            ap.SerApprovalId == 2 && // Finance Role Id Ser (ap.SerApprovalId == RoleID or RoleID==1)                            
+                            ap.DisplayPERIOD_CODE <= periodCode
+                            select new CashierApprovalDto
+                            {
+                                TransId = (int)ap.Mytransid,
+                                EmployeeId = Convert.ToString(e.EmployeeId),
+                                EnglishName = e.EnglishName,
+                                ArabicName = e.ArabicName,
+                                ServiceName = hd.ServiceType,
+                                Pfid = e.Pfid,
+                                EmpCidNum = e.EmpCidNum,
+                                MobileNumber = e.MobileNumber,
+                                PeriodCode = Convert.ToString(ap.DisplayPERIOD_CODE),
+                                TenentId = ap.TenentId,
+                                LocationId = ap.LocationId,
+                                DraftAmount1 = hd.DraftAmount1,
+                                DraftAmount2 = hd.DraftAmount2,
+                                DraftDate1 = hd.DraftDate1,
+                                DraftDate2 = hd.DraftDate2,
+                                CrupId = (long)e.CRUP_ID,
+                                EntryDate = hd.Entrydate
+                            }).OrderByDescending(c => c.TransId).ToList();
+                return data;
+            }
+            else
+            {
+                var data = (from e in _context.DetailedEmployees
+                            join ap in _context.TransactionHddapprovalDetails
+                            on Convert.ToInt32(e.EmployeeId) equals ap.EmployeeId
+                            join hd in _context.TransactionHds
+                            on ap.Mytransid equals hd.Mytransid
+                            where ap.TenentId == tenentId &&
+                            ap.LocationId == locationId &&
+                            ap.SerApprovalId == 2 && // Finance Role Id Ser (ap.SerApprovalId == RoleID or RoleID==1)
+                            ap.Active == true &&
+                            ap.DisplayPERIOD_CODE <= periodCode
+                            select new CashierApprovalDto
+                            {
+                                TransId = (int)ap.Mytransid,
+                                EmployeeId = Convert.ToString(e.EmployeeId),
+                                EnglishName = e.EnglishName,
+                                ArabicName = e.ArabicName,
+                                ServiceName = hd.ServiceType,
+                                Pfid = e.Pfid,
+                                EmpCidNum = e.EmpCidNum,
+                                MobileNumber = e.MobileNumber,
+                                PeriodCode = Convert.ToString(ap.DisplayPERIOD_CODE),
+                                TenentId = ap.TenentId,
+                                LocationId = ap.LocationId,
+                                DraftAmount1 = hd.DraftAmount1,
+                                DraftAmount2 = hd.DraftAmount2,
+                                DraftDate1 = hd.DraftDate1,
+                                DraftDate2 = hd.DraftDate2,
+                                CrupId = (long)e.CRUP_ID,
+                                EntryDate = hd.Entrydate
+                            }).OrderByDescending(c => c.TransId).ToList();
+                return data;
+            }
+        }
+
+        public async Task<string> FinanceApproveServiceAsync(ApproveRejectServiceDto approveRejectServiceDto)
+        {
+            int result = 0;
+            if (_context != null)
+            {
+                // Update status of existing record...
+                var existingtransactionHddApprovals = _context.TransactionHddapprovalDetails
+                    .Where(c => c.Mytransid == approveRejectServiceDto.Mytransid
+                    && c.TenentId == approveRejectServiceDto.TenentId
+                    && c.LocationId == approveRejectServiceDto.LocationId && c.SerApprovalId == 2).FirstOrDefault();
+
+                if (existingtransactionHddApprovals != null)
+                {
+                    // Update TransactionHddapprovalDetails
+                    existingtransactionHddApprovals.SerApproval = Convert.ToString(approveRejectServiceDto.RoleId);
+                    existingtransactionHddApprovals.Userid = approveRejectServiceDto.UserId;
+                    existingtransactionHddApprovals.ApprovalDate = approveRejectServiceDto.ApprovalDate;
+                    existingtransactionHddApprovals.Entrydate = (DateTime)approveRejectServiceDto.Entrydate;
+                    existingtransactionHddApprovals.Entrytime = (DateTime)approveRejectServiceDto.Entrytime;
+                    existingtransactionHddApprovals.Status = "FinanceApproved";
+                    existingtransactionHddApprovals.ApprovalDate = DateTime.Now;
+                    existingtransactionHddApprovals.ApprovalRemarks = approveRejectServiceDto.ApprovalRemarks;
+                    existingtransactionHddApprovals.Active = false;
+                    _context.TransactionHddapprovalDetails.Update(existingtransactionHddApprovals);
+                    await _context.SaveChangesAsync();
+                    _context.ChangeTracker.Clear();
+                }
+                var activateNextRow = _context.TransactionHddapprovalDetails
+                    .Where(c => c.Mytransid == approveRejectServiceDto.Mytransid
+                    && c.TenentId == approveRejectServiceDto.TenentId
+                    && c.LocationId == approveRejectServiceDto.LocationId && c.SerApprovalId == 3).FirstOrDefault();
+
+                if (activateNextRow != null)
+                {
+                    activateNextRow.Active = true;
+                    _context.TransactionHddapprovalDetails.Update(activateNextRow);
+                    await _context.SaveChangesAsync();
+                    _context.ChangeTracker.Clear();
+                }
+                return result.ToString();
+            }
+            return result.ToString();
+        }
+
+        public async Task<string> FinanceRejectServiceAsync(ApproveRejectServiceDto approveRejectServiceDto)
+        {
+            int result = 0;
+            if (_context != null)
+            {
+                // To get record by transId and Active...
+                var existingtransactionHd = _context.TransactionHddapprovalDetails
+                    .Where(c => c.Mytransid == approveRejectServiceDto.Mytransid && c.Active == true).FirstOrDefault();
+
+                // TO CHECK IF CRUP_ID IS NULL DETAILEDEMPLOYEE.
+                var detailedEmployee = _context.DetailedEmployees.Where(c => c.EmployeeId == existingtransactionHd.EmployeeId
+                    && c.TenentId == approveRejectServiceDto.TenentId
+                    && c.LocationId == approveRejectServiceDto.LocationId).FirstOrDefault();
+
+                if (existingtransactionHd != null)
+                {
+                    // Update TransactionHddapprovalDetails
+                    existingtransactionHd.RejectionType = approveRejectServiceDto.RejectionType;
+                    existingtransactionHd.RejectionRemarks = approveRejectServiceDto.RejectionRemarks;
+                    existingtransactionHd.Active = false;
+                    existingtransactionHd.Status = "FinanceRejected";
+                    existingtransactionHd.ApprovalDate = DateTime.Now;
+                    _context.TransactionHddapprovalDetails.Update(existingtransactionHd);
+                    await _context.SaveChangesAsync();
+                    _context.ChangeTracker.Clear();
+
+                    // Update Employee Details.
+                    detailedEmployee.Subscription_status = 9; // rejected
+                    _context.DetailedEmployees.Update(detailedEmployee);
+                    result = await _context.SaveChangesAsync();
+                }
+
+            }
+            return result.ToString();
+        }
+        public long GetPeriodCode()
+        {
+            long periodCode = _context.Tblperiods.FromSqlRaw("select * from tblperiods where getdate() between PRD_START_DATE and PRD_END_DATE").Select(p => p.PeriodCode).FirstOrDefault();
+            return periodCode;
         }
 
         

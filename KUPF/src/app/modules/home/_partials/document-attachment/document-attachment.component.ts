@@ -7,6 +7,7 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { JsonPipe } from '@angular/common';
+import * as moment from 'moment';
 export interface Fruit {
   name: string;
 }
@@ -20,13 +21,8 @@ export class DocumentAttachmentComponent implements OnInit {
   @Input() parentFormGroup: FormGroup;
   @Input() documentAccordialDetails: string;
   documentAttachmentForm: FormArray<any>;
-  selectDocTypeDto$: Observable<SelectServiceTypeDto[]>;
-  documentForm: FormGroup;
-  @Output() theAppplicationFileSelectEvent: EventEmitter<File> = new EventEmitter<File>();
-  @Output() personalPhotoFileSelectEvent: EventEmitter<any> = new EventEmitter<any>();
-  @Output() workIdFileSelectEvent: EventEmitter<any> = new EventEmitter<any>();
-  @Output() civilIdFileSelectEvent: EventEmitter<any> = new EventEmitter<any>();
-  @Output() salaryDataFileSelectEvent: EventEmitter<any> = new EventEmitter<any>();
+  selectDocTypeDto: any;
+
   addOnBlur = true;
   visible = true;
   selectable = true;
@@ -46,52 +42,67 @@ export class DocumentAttachmentComponent implements OnInit {
     private dbCommonService: DbCommonService) {
     this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
       startWith(null),
-    map((fruit: string | null) => fruit ? this._filter(fruit) : this.allFruits.slice()));
+      map((fruit: string | null) => fruit ? this._filter(fruit) : this.allFruits.slice()));
   }
 
   ngOnInit(): void {
-    //Init document form.
-    this.selectDocTypeDto$ = this.dbCommonService.GetDocTypes(21);
     //
     this.getFormdvalue();
+    //
+    this.GetDocType()
+  }
+  GetDocType() {
+    this.dbCommonService.GetDocTypes(21).subscribe((response: any) => {
+      console.log(response);
+      this.selectDocTypeDto = response;
+    }, error => {
+      console.log(error);
+    });
   }
 
+  applicationSelectFile: any;
   onTheApplicationSelect(event: any) {
     if (event.target.files.length > 0) {
       const file: File = event.target.files[0];
       this.getForm?.get('appplicationFileDocument')?.setValue(file);
+      this.applicationSelectFile = file.name;
     }
   }
+  personPhotofile: any;
   onPersonalPhotoSelect(event: any) {
     if (event.target.files.length > 0) {
       const file: File = event.target.files[0];
       this.getForm?.get('personalPhotoDocument')?.setValue(file);
+      this.personPhotofile = file.name;
+
     }
   }
+  workIdfile: any;
   onWorkIdSelect(event: any) {
     if (event.target.files.length > 0) {
       const file: File = event.target.files[0];
       this.getForm?.get('workIdDocument')?.setValue(file);
+      this.workIdfile = file.name;
     }
   }
+  civilIdfile: any;
   onCivilIdSelect(event: any) {
     if (event.target.files.length > 0) {
       const file: File = event.target.files[0];
       this.getForm?.get('civilIdDocument')?.setValue(file);
+      this.civilIdfile = file.name;
     }
   }
+  salarydateFile: any;
   onSalaryDataSelect(event: any) {
     if (event.target.files.length > 0) {
       const file: File = event.target.files[0];
       this.getForm?.get('salaryDataDocument')?.setValue(file);
+      this.salarydateFile = file.name;
     }
   }
   // Initialize form
   metatagarr: any;
-  
-
-
-
   add(event: MatChipInputEvent): void {
     // Add fruit only when MatAutocomplete is not open
     // To make sure this does not conflict with OptionSelected Event
@@ -103,7 +114,7 @@ export class DocumentAttachmentComponent implements OnInit {
 
       if ((value || '').trim()) {
         this.metaTag.push(value.trim());
-        JSON.stringify(this.metaTag);              
+        JSON.stringify(this.metaTag);
       }
       // Reset the input value
       if (input) {
@@ -136,30 +147,73 @@ export class DocumentAttachmentComponent implements OnInit {
     this.getForm = this.fb.group({
       subject: ['', Validators.required],
       attachmentRemarks: ['', Validators.required],
-      
-      appplicationFileDocType: ['',Validators.required],
-      appplicationFileDocument: ['',Validators.required],
-      
-      civilIdDocType: ['',Validators.required],
-      civilIdDocument: ['',Validators.required],
 
-      workIdDocType: ['',Validators.required],
-      workIdDocument: ['',Validators.required],
+      appplicationFileDocType: ['', Validators.required],
+      appplicationFileDocument: ['', Validators.required],
 
-      personalPhotoDocType: ['',Validators.required],
-      personalPhotoDocument: ['',Validators.required],
+      civilIdDocType: ['', Validators.required],
+      civilIdDocument: ['', Validators.required],
 
-      salaryDataDocType: ['',Validators.required],
-      salaryDataDocument: ['',Validators.required],
-      mtag: ['', Validators.required]
+      workIdDocType: ['', Validators.required],
+      workIdDocument: ['', Validators.required],
+
+      personalPhotoDocType: ['', Validators.required],
+      personalPhotoDocument: ['', Validators.required],
+
+      salaryDataDocType: ['', Validators.required],
+      salaryDataDocument: ['', Validators.required],
+      mtag: ['', Validators.required],
+      attachId: [''],
+      createdDate: ['']
     })
   }
- 
+
+  value:any;
+  setValueofDocForm(res: any) {
+    console.log(res);
+    this.value= res.transactionHDDMSDtos;
+    let val = res.transactionHDDMSDtos;
+    this.applicationSelectFile = val[0].attachmentByName;
+    this.personPhotofile = val[1].attachmentByName;
+    this.workIdfile = val[2].attachmentByName;
+    this.civilIdfile = val[3].attachmentByName;
+    this.salarydateFile = val[4].attachmentByName;
+    this.metaTag = (val[0].metaTags).split(',');
+    this.getForm.controls['subject'].setValue(val[0].subject);
+    this.getForm.controls['attachmentRemarks'].setValue(val[0].remarks);
+    this.getForm.controls['attachId'].setValue(val[0].attachId);
+    this.getForm.controls['createdDate'].setValue(moment(val[0].createdDate).format("DD-MM-yyyy"));
+    //
+    this.getForm.controls['appplicationFileDocType'].setValue(val[0].documentType);
+    this.getForm.controls['civilIdDocType'].setValue(val[1].documentType);
+    this.getForm.controls['workIdDocType'].setValue(val[2].documentType);
+    this.getForm.controls['personalPhotoDocType'].setValue(val[3].documentType);
+    this.getForm.controls['salaryDataDocType'].setValue(val[4].documentType);
+    this.convertTofile();
+    //   
+  }
+
+  file0:any;
+  file1:any;
+  file2:any;
+  file3:any;
+  file4:any;
+ convertTofile(){
+  // console.log((this.value[0].attachmentByName).substring(this.value[0].attachmentByName.lastIndexOf(".") , this.value[0].attachmentByName.length));
+  // this.file0 = new File([this.value[0].attachment], this.value[0].attachmentByName,{type : (this.value[0].attachmentByName).substring(this.value[0].attachmentByName.lastIndexOf("."), this.value[0].attachmentByName.length)});
+  // this.file1 = new File([this.value[1].attachment], this.value[1].attachmentByName, {type : (this.value[1].attachmentByName).substring(this.value[1].attachmentByName.lastIndexOf("."), this.value[1].attachmentByName.length)});
+  // this.file2 = new File([this.value[2].attachment], this.value[2].attachmentByName, {type : (this.value[2].attachmentByName).substring(this.value[2].attachmentByName.lastIndexOf("."), this.value[2].attachmentByName.length)});
+  // this.file3 = new File([this.value[3].attachment], this.value[3].attachmentByName, {type : (this.value[3].attachmentByName).substring(this.value[3].attachmentByName.lastIndexOf("."), this.value[3].attachmentByName.length)});
+  // this.file4 = new File([this.value[4].attachment], this.value[4].attachmentByName, {type : (this.value[4].attachmentByName).substring(this.value[4].attachmentByName.lastIndexOf("."), this.value[4].attachmentByName.length)});
+  this.file0 = [this.value[0].attachment];
+  this.file1 = [this.value[1].attachment];
+  this.file2 = [this.value[2].attachment];
+  this.file3 = [this.value[3].attachment];
+  this.file4 = [this.value[4].attachment];
+}
+
   formVal() {
-    console.log(this.metaTag);
     this.getForm.controls['mtag'].setValue(this.metaTag);
-    console.log(this.getForm.controls['mtag'].value);
-    console.log(this.getForm);
   }
 
 

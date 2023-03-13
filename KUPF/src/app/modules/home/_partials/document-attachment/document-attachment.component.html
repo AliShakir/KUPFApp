@@ -119,9 +119,9 @@
                        
                     </div>
                     <div class="row">
-                        <div class="col-lg-6 fv-row">
+                        <div class="col-lg-6 fv-row"> 
                             <div class="mt-4">
-                                <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">Select Document Type</label>
+                                <label for="formFile" class="forpm-label ArFontStyle" lang="AR-SA">Select Document Type</label>
                                 <ng-select [items]="selectDocTypeDto$ | async" bindLabel="shortname" bindValue="refId"
                                 [formControl]="documentAttachmentForm.controls[3].controls['docType']" lang="AR-SA">
                                 </ng-select>
@@ -176,11 +176,13 @@
                     <div class="row">
                         <div class="col-lg-4 fv-row">
                             <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">Created Date</label>
-                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" readonly />
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" 
+                            formControlName="createdDate" readonly />
                         </div>
                         <div class="col-lg-4 fv-row">
                             <label class="col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">Attach Id</label>
-                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" readonly />
+                            <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0" 
+                            formControlName="attachId" readonly />
                         </div>
                     </div>
                     <div class="row">
@@ -203,8 +205,7 @@
                                         {{fruit}}
                                         <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                                     </mat-chip>
-                                    <input #fruitInput [matAutocomplete]="auto"
-                                        [matChipInputFor]="chipList"
+                                    <input #fruitInput [matAutocomplete]="auto" [matChipInputFor]="chipList"
                                         [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                                         [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
                                 </mat-chip-list>
@@ -214,14 +215,14 @@
                             </mat-form-field>
                         </div>
                     </div>
-                    <!-- {{ metaTag | json }} -->
+                    <!-- {{ metaTag | json }} </ng-option>-->
                     <div class="row">
                         <div class="col-lg-6 fv-row">
                             <div class="mt-4">
                                 <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">Select Document
                                     Type</label>
-                                <ng-select [items]="selectDocTypeDto$ | async" bindLabel="shortname" bindValue="refId"
-                                    formControlName="appplicationFileDocType" lang="AR-SA">
+                                <ng-select formControlName="appplicationFileDocType" lang="AR-SA">
+                                    <ng-option *ngFor="let item of selectDocTypeDto" [value]="item.refId">{{item.shortname}}</ng-option>
                                 </ng-select>
                             </div>
                         </div>
@@ -229,8 +230,15 @@
                             <div class="mt-4">
                                 <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">The
                                     application</label>
-                                <input type="file" class="form-control form-control-lg  mb-3 mb-lg-0"
-                                    (change)="onTheApplicationSelect($event)" />
+                                <input #file1 type="file" class="form-control form-control-lg  mb-3 mb-lg-0"
+                                    [hidden]="true" (change)="onTheApplicationSelect($event)" title="testing" />
+                                <div class="d-flex">
+                                    <button class="btn btn-sm btn-upload" (mousedown)="file1.click()">Choose
+                                        file</button>
+                                    <div class="border border-secondary rounded p-3 w-100" style="height: 43px;">
+                                        {{!applicationSelectFile? "No file choosen":applicationSelectFile}}
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -240,8 +248,8 @@
                             <div class="mt-4">
                                 <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">Select Document
                                     Type</label>
-                                <ng-select [items]="selectDocTypeDto$ | async" bindLabel="shortname" bindValue="refId"
-                                    formControlName="personalPhotoDocType" lang="AR-SA">
+                                <ng-select formControlName="personalPhotoDocType" lang="AR-SA">
+                                    <ng-option *ngFor="let item of selectDocTypeDto" [value]="item.refId">{{item.shortname}}</ng-option>
                                 </ng-select>
                             </div>
                         </div>
@@ -249,8 +257,15 @@
                             <div class="mt-4">
                                 <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">A personal
                                     photo</label>
-                                <input type="file" class="form-control form-control-lg  mb-3 mb-lg-0"
-                                    (change)="onPersonalPhotoSelect($event)" />
+                                <input #file2 type="file" class="form-control form-control-lg  mb-3 mb-lg-0"
+                                    [hidden]="true" (change)="onPersonalPhotoSelect($event)" title="testing" />
+                                <div class="d-flex">
+                                    <button class="btn btn-sm btn-upload" (mousedown)="file2.click()">Choose
+                                        file</button>
+                                    <div class="border border-secondary rounded p-3 w-100" style="height: 43px;">
+                                        {{!personPhotofile? "No file choosen":personPhotofile}}
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -260,8 +275,8 @@
                             <div class="mt-4">
                                 <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">Select Document
                                     Type</label>
-                                <ng-select [items]="selectDocTypeDto$ | async" bindLabel="shortname" bindValue="refId"
-                                    formControlName="workIdDocType" lang="AR-SA">
+                                <ng-select formControlName="workIdDocType" lang="AR-SA">  
+                                    <ng-option *ngFor="let item of selectDocTypeDto" [value]="item.refId">{{item.shortname}}</ng-option>                                  
                                 </ng-select>
                             </div>
                         </div>
@@ -269,8 +284,15 @@
                             <div class="mt-4">
                                 <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">A copy of the work
                                     ID</label>
-                                <input type="file" class="form-control form-control-lg  mb-3 mb-lg-0"
-                                    (change)="onWorkIdSelect($event)" />
+                                <input #file3 type="file" class="form-control form-control-lg  mb-3 mb-lg-0"
+                                    [hidden]="true" (change)="onWorkIdSelect($event)" title="testing" />
+                                <div class="d-flex">
+                                    <button class="btn btn-sm btn-upload" (mousedown)="file3.click()">Choose
+                                        file</button>
+                                    <div class="border border-secondary rounded p-3 w-100" style="height: 43px;">
+                                        {{!workIdfile? "No file choosen":workIdfile}}
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -280,8 +302,8 @@
                             <div class="mt-4">
                                 <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">Select Document
                                     Type</label>
-                                <ng-select [items]="selectDocTypeDto$ | async" bindLabel="shortname" bindValue="refId"
-                                    formControlName="civilIdDocType" lang="AR-SA">
+                                <ng-select formControlName="civilIdDocType" lang="AR-SA">
+                                    <ng-option *ngFor="let item of selectDocTypeDto" [value]="item.refId">{{item.shortname}}</ng-option>
                                 </ng-select>
                             </div>
                         </div>
@@ -289,19 +311,26 @@
                             <div class="mt-4">
                                 <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">A copy of a valid
                                     civil ID</label>
-                                <input type="file" class="form-control form-control-lg  mb-3 mb-lg-0"
-                                    (change)="onCivilIdSelect($event)" />
+                                <input #file4 type="file" class="form-control form-control-lg  mb-3 mb-lg-0"
+                                    [hidden]="true" (change)="onCivilIdSelect($event)" title="testing" />
+                                <div class="d-flex">
+                                    <button class="btn btn-sm btn-upload" (mousedown)="file4.click()">Choose
+                                        file</button>
+                                    <div class="border border-secondary rounded p-3 w-100" style="height: 43px;">
+                                        {{!civilIdfile? "No file choosen":civilIdfile}}
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                     </div>
-                    <div class="row" >
+                    <div class="row">
                         <div class="col-lg-6 fv-row">
                             <div class="mt-4">
                                 <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">Select Document Type
                                     Type</label>
-                                <ng-select [items]="selectDocTypeDto$ | async" bindLabel="shortname" bindValue="refId"
-                                    formControlName="salaryDataDocType" lang="AR-SA">
+                                <ng-select formControlName="salaryDataDocType" lang="AR-SA">
+                                    <ng-option *ngFor="let item of selectDocTypeDto" [value]="item.refId">{{item.shortname}}</ng-option>
                                 </ng-select>
                             </div>
                         </div>
@@ -309,8 +338,15 @@
                             <div class="mt-4">
                                 <label for="formFile" class="form-label ArFontStyle" lang="AR-SA">Copy from System
                                     extract with job and salary data</label>
-                                <input type="file" class="form-control form-control-lg  mb-3 mb-lg-0"
-                                    (change)="onSalaryDataSelect($event)" />
+                                <input #file5 type="file" class="form-control form-control-lg  mb-3 mb-lg-0"
+                                    [hidden]="true" (change)="onSalaryDataSelect($event)" title="testing" />
+                                <div class="d-flex">
+                                    <button class="btn btn-sm btn-upload" (mousedown)="file5.click()">Choose
+                                        file</button>
+                                    <div class="border border-secondary rounded p-3 w-100" style="height: 43px;">
+                                        {{!salarydateFile? "No file choosen":salarydateFile}}
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

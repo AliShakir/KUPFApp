@@ -37,5 +37,6 @@ namespace API.DTOs
         // To send response type and error message.
         public bool IsSuccess { get; set; }
         public string Message { get; set; }
+        public decimal  Salary { get; set; }
     }
 }

@@ -166,6 +166,8 @@ namespace API.Helpers
             CreateMap<TransactionHddm, LettersHdDto>();
             //
             CreateMap<TransactionHddm, TransactionHDDMSDto>();
+            //
+            CreateMap<TblCountry,CountriesDto>();
         }
     }
 }

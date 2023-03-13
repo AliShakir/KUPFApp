@@ -49,6 +49,7 @@ namespace API.Servivces.Implementation
                 lettersHd.Entrydate = DateTime.Now;
                 lettersHd.Entrytime = DateTime.Now;
 
+                #region Save Docs
                 //
                 var attachmentsData = new TransactionHddm
                 {
@@ -68,17 +69,18 @@ namespace API.Servivces.Implementation
                 var fileExtension = string.Empty;
                 var fileName = string.Empty;
                 var newFileName = string.Empty;
-                if (lettersHdDto.appplicationFileDocument.Length > 0 || lettersHdDto.appplicationFileDocument != null)
+                //if (attachment != null && attachment.Length != 0)
+                if (lettersHdDto.appplicationFileDocument.Length != 0 && lettersHdDto.appplicationFileDocument.FileName != null)
                 {
                     // Getting old filename without extension...
                     fileName = Path.GetFileNameWithoutExtension(lettersHdDto.appplicationFileDocument.FileName);
-                    
+
                     // Getting file extension...
                     fileExtension = Path.GetExtension(lettersHdDto.appplicationFileDocument.FileName);
-                    
+
                     // Creating new filename and appending unique code....
                     newFileName = fileName + "_" + CommonMethods.GenerateFileName() + fileExtension;
-                    
+
                     //
                     filePath = Path.Combine(serverPath, newFileName);
 
@@ -94,14 +96,14 @@ namespace API.Servivces.Implementation
                     await _context.SaveChangesAsync();
                     _context.ChangeTracker.Clear();
                 }
-                if (lettersHdDto.civilIdDocument.Length > 0 || lettersHdDto.civilIdDocument != null)
+                if (lettersHdDto.civilIdDocument.Length != 0 && lettersHdDto.civilIdDocument.FileName != null)
                 {
                     fileName = Path.GetFileNameWithoutExtension(lettersHdDto.civilIdDocument.FileName);
                     fileExtension = Path.GetExtension(lettersHdDto.civilIdDocument.FileName);
-                    
+
                     // Creating new filename and appending unique code....
                     newFileName = fileName + "_" + CommonMethods.GenerateFileName() + fileExtension;
-                    
+
                     filePath = Path.Combine(serverPath, newFileName);
 
                     attachmentsData.AttachmentPath = filePath;
@@ -116,11 +118,11 @@ namespace API.Servivces.Implementation
                     await _context.SaveChangesAsync();
                     _context.ChangeTracker.Clear();
                 }
-                if (lettersHdDto.personalPhotoDocument.Length > 0 || lettersHdDto.personalPhotoDocument != null )
+                if (lettersHdDto.personalPhotoDocument.Length > 0 || lettersHdDto.personalPhotoDocument != null)
                 {
                     fileName = Path.GetFileNameWithoutExtension(lettersHdDto.personalPhotoDocument.FileName);
                     fileExtension = Path.GetExtension(lettersHdDto.personalPhotoDocument.FileName);
-                    
+
                     // Creating new filename and appending unique code....
                     newFileName = fileName + "_" + CommonMethods.GenerateFileName() + fileExtension;
 
@@ -142,7 +144,7 @@ namespace API.Servivces.Implementation
                 {
                     fileName = Path.GetFileNameWithoutExtension(lettersHdDto.workIdDocument.FileName);
                     fileExtension = Path.GetExtension(lettersHdDto.workIdDocument.FileName);
-                    
+
                     // Creating new filename and appending unique code....
                     newFileName = fileName + "_" + CommonMethods.GenerateFileName() + fileExtension;
 
@@ -185,6 +187,8 @@ namespace API.Servivces.Implementation
 
                 _context.LettersHds.Add(lettersHd);
                 result = await _context.SaveChangesAsync();
+                #endregion
+
                 #region Save Into CrupAudit
                 //
                 var auditInfo = _context.Reftables.FirstOrDefault(c => c.Reftype == "Audit" && c.Refsubtype == "Employee");
@@ -225,11 +229,180 @@ namespace API.Servivces.Implementation
                 var existingLetterHd = _context.LettersHds
                     .Where(c => c.Mytransid == lettersHdDto.Mytransid).FirstOrDefault();
 
+                var existingDoc = _context.TransactionHddms.Where(x => x.Mytransid == lettersHdDto.Mytransid).ToList();
+
                 if (existingLetterHd != null)
                 {
+                    var crupId = _context.CrupMsts.Max(c => c.CrupId);
+                    var maxCrupId = crupId + 1;
+                    //var serverPath = @"/kupf1/kupfapi.erp53.com/New/LetterAttachments/";
+                    var serverPath = @"E:\Offers\";
+
+
+                    existingLetterHd.Updttime = DateTime.Now;
                     _mapper.Map(lettersHdDto, existingLetterHd);
                     _context.LettersHds.Update(existingLetterHd);
                     result = await _context.SaveChangesAsync();
+
+                    if (existingDoc.Count > 0)
+                    {
+
+                        foreach (var item in existingDoc)
+                        {
+                            #region Save Docs
+                            item.Remarks = lettersHdDto.Remarks;
+                            item.Subject = lettersHdDto.Subject;
+                            item.MetaTags = lettersHdDto.MetaTags;
+
+
+                            var filePath = string.Empty;
+                            var fileExtension = string.Empty;
+                            var fileName = string.Empty;
+                            var newFileName = string.Empty;
+                            //if (attachment != null && attachment.Length != 0)
+                            if (lettersHdDto.appplicationFileDocument.Length != 0 && lettersHdDto.appplicationFileDocument.FileName != null)
+                            {
+                                // Getting old filename without extension...
+                                fileName = Path.GetFileNameWithoutExtension(lettersHdDto.appplicationFileDocument.FileName);
+
+                                // Getting file extension...
+                                fileExtension = Path.GetExtension(lettersHdDto.appplicationFileDocument.FileName);
+
+                                // Creating new filename and appending unique code....
+                                newFileName = fileName + "_" + CommonMethods.GenerateFileName() + fileExtension;
+
+                                //
+                                filePath = Path.Combine(serverPath, newFileName);
+
+                                item.AttachmentPath = filePath;
+                                item.DocumentType = lettersHdDto.appplicationFileDocType;
+                                item.AttachmentByName = newFileName;
+                                using (var stream = new FileStream(filePath, FileMode.Create))
+                                {
+                                    lettersHdDto.appplicationFileDocument.CopyTo(stream);
+                                }
+                                await _context.TransactionHddms.AddAsync(item);
+                                await _context.SaveChangesAsync();
+                                _context.ChangeTracker.Clear();
+                            }
+                            if (lettersHdDto.civilIdDocument.Length != 0 && lettersHdDto.civilIdDocument.FileName != null)
+                            {
+                                fileName = Path.GetFileNameWithoutExtension(lettersHdDto.civilIdDocument.FileName);
+                                fileExtension = Path.GetExtension(lettersHdDto.civilIdDocument.FileName);
+
+                                // Creating new filename and appending unique code....
+                                newFileName = fileName + "_" + CommonMethods.GenerateFileName() + fileExtension;
+
+                                filePath = Path.Combine(serverPath, newFileName);
+
+                                item.AttachmentPath = filePath;
+                                item.DocumentType = lettersHdDto.civilIdDocType;
+                                item.AttachmentByName = newFileName;
+                                using (var stream = new FileStream(filePath, FileMode.Create))
+                                {
+                                    lettersHdDto.civilIdDocument.CopyTo(stream);
+                                }
+                                await _context.TransactionHddms.AddAsync(item);
+                                await _context.SaveChangesAsync();
+                                _context.ChangeTracker.Clear();
+                            }
+                            if (lettersHdDto.personalPhotoDocument.Length > 0 || lettersHdDto.personalPhotoDocument != null)
+                            {
+                                fileName = Path.GetFileNameWithoutExtension(lettersHdDto.personalPhotoDocument.FileName);
+                                fileExtension = Path.GetExtension(lettersHdDto.personalPhotoDocument.FileName);
+
+                                // Creating new filename and appending unique code....
+                                newFileName = fileName + "_" + CommonMethods.GenerateFileName() + fileExtension;
+
+                                filePath = Path.Combine(serverPath, newFileName);
+
+                                item.AttachmentPath = filePath;
+                                item.DocumentType = lettersHdDto.personalPhotoDocType;
+                                item.AttachmentByName = newFileName;
+                                using (var stream = new FileStream(filePath, FileMode.Create))
+                                {
+                                    lettersHdDto.personalPhotoDocument.CopyTo(stream);
+                                }
+                                await _context.TransactionHddms.AddAsync(item);
+                                await _context.SaveChangesAsync();
+                                _context.ChangeTracker.Clear();
+                            }
+                            if (lettersHdDto.workIdDocument.Length > 0 || lettersHdDto.workIdDocument != null)
+                            {
+                                fileName = Path.GetFileNameWithoutExtension(lettersHdDto.workIdDocument.FileName);
+                                fileExtension = Path.GetExtension(lettersHdDto.workIdDocument.FileName);
+
+                                // Creating new filename and appending unique code....
+                                newFileName = fileName + "_" + CommonMethods.GenerateFileName() + fileExtension;
+
+                                filePath = Path.Combine(serverPath, newFileName);
+
+                                item.AttachmentPath = filePath;
+                                item.DocumentType = lettersHdDto.workIdDocType;
+                                item.AttachmentByName = newFileName;
+                                using (var stream = new FileStream(filePath, FileMode.Create))
+                                {
+                                    lettersHdDto.workIdDocument.CopyTo(stream);
+                                }
+                                await _context.TransactionHddms.AddAsync(item);
+                                await _context.SaveChangesAsync();
+                                _context.ChangeTracker.Clear();
+                            }
+                            if (lettersHdDto.salaryDataDocument.Length > 0 || lettersHdDto.salaryDataDocument != null)
+                            {
+                                fileName = Path.GetFileNameWithoutExtension(lettersHdDto.salaryDataDocument.FileName);
+                                fileExtension = Path.GetExtension(lettersHdDto.salaryDataDocument.FileName);
+
+                                // Creating new filename and appending unique code....
+                                newFileName = fileName + "_" + CommonMethods.GenerateFileName() + fileExtension;
+
+                                filePath = Path.Combine(serverPath, newFileName);
+
+                                item.AttachmentPath = filePath;
+                                item.DocumentType = lettersHdDto.salaryDataDocType;
+                                item.AttachmentByName = newFileName;
+                                using (var stream = new FileStream(filePath, FileMode.Create))
+                                {
+                                    lettersHdDto.salaryDataDocument.CopyTo(stream);
+                                }
+                                await _context.TransactionHddms.AddAsync(item);
+                                await _context.SaveChangesAsync();
+                                _context.ChangeTracker.Clear();
+                            }
+
+                            #endregion
+                        }
+
+                    }
+
+                    #region Save Into CrupAudit
+                    //
+                    var auditInfo = _context.Reftables.FirstOrDefault(c => c.Reftype == "Audit" && c.Refsubtype == "Employee");
+                    var mySerialNo = _context.TblAudits.Max(c => c.MySerial) + 1;
+                    var auditNo = _context.Crupaudits.Max(c => c.AuditNo) + 1;
+                    var crupAudit = new Crupaudit
+                    {
+                        TenantId = lettersHdDto.TenentId,
+                        LocationId = (int)lettersHdDto.LocationId,
+                        CrupId = maxCrupId,
+                        MySerial = mySerialNo,
+                        AuditNo = auditNo,
+                        AuditType = auditInfo.Shortname,
+                        TableName = DbTableEnums.LettersHD.ToString(),
+                        FieldName = $"",
+                        OldValue = "Non",
+                        NewValue = "Updated",
+                        CreatedDate = DateTime.Now,
+                        CreatedUserName = lettersHdDto.Username,
+                        UserId = Convert.ToInt32(lettersHdDto.Userid),
+                        CrudType = CrudTypeEnums.Edit.ToString(),
+                        Severity = SeverityEnums.Normal.ToString()
+                    };
+                    await _context.Crupaudits.AddAsync(crupAudit);
+                    await _context.SaveChangesAsync();
+
+                    #endregion
+
                 }
             }
             return result;
@@ -258,9 +431,10 @@ namespace API.Servivces.Implementation
         {
             var lettersHd = await _context.LettersHds.Where(c => c.Mytransid == id).FirstOrDefaultAsync();
             var transactionHddms = await _context.TransactionHddms.Where(c => c.Mytransid == id).ToListAsync();
-            var hddms = _mapper.Map<List<TransactionHDDMSDto>>(transactionHddms);
+            //var hddms = _mapper.Map<List<TransactionHDDMSDto>>(transactionHddms);
             var data = new ReturnSingleLettersHdDto
             {
+                LetterType = lettersHd.LetterType,
                 Mytransid = lettersHd.Mytransid,
                 TenentId = lettersHd.TenentId,
                 LocationId = lettersHd.LocationId,
@@ -271,8 +445,30 @@ namespace API.Servivces.Implementation
                 Representative = lettersHd.Representative,
                 ReceivedSentDate = lettersHd.ReceivedSentDate,
                 Description = lettersHd.Description,
+                SearchTag = lettersHd.SearchTag
             };
-            data.TransactionHDDMSDtos = hddms;
+            //data.TransactionHDDMSDtos = hddms;
+            List<TransactionHDDMSDto> list = new List<TransactionHDDMSDto>();
+
+            foreach (var item in transactionHddms)
+            {
+                var hddms = new TransactionHDDMSDto()
+                {
+                    AttachId = item.AttachId,
+                    Attachment = CommonMethods.GetFileFromFolder(item.AttachmentPath),
+                    AttachmentByName = item.AttachmentByName,
+                    AttachmentPath = item.AttachmentPath,
+                    DocumentType = item.DocumentType,
+                    MetaTags = item.MetaTags,
+                    Mytransid = item.Mytransid,
+                    Remarks = item.Remarks,
+                    Serialno = item.Serialno,
+                    Subject = item.Subject,
+                    TenentId = item.TenentId
+                };
+                list.Add(hddms);
+            }
+            data.TransactionHDDMSDtos = list;
             return data;
         }
 

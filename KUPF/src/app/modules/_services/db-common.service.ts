@@ -35,6 +35,7 @@ import { CashierInformationDto } from '../models/FinancialService/CashierInforma
 import { SelectBankAccount } from '../models/SelectBankAccount';
 import { CashierApprovalDto } from '../models/FinancialService/CashierApprovalDto';
 import { loanPercentageDto, SelectLetterTypeDTo, SelectPartyTypeDTo } from '../models/CommunicationDto';
+import { CountriesDto } from '../models/CountriesDto';
 
 @Injectable({
   providedIn: 'root'
@@ -106,8 +107,19 @@ export class DbCommonService {
   letterTypeDTo: SelectLetterTypeDTo[] = [];
 
   partyType: SelectPartyTypeDTo[] = [];
+  //
+  countriesList: CountriesDto[] = [];
   constructor(private httpClient: HttpClient, private toastr: ToastrService) { }
 
+
+  GetCountryList() {
+    return this.httpClient.get<CountriesDto[]>(this.baseUrl + `Common/GetCountryList`).pipe(
+      map(countriesList => {
+        this.countriesList = countriesList;
+        return countriesList;
+      })
+    )
+  }
 
   // Search employee...
   SearchEmployee(searchEmployeeDto: SearchEmployeeDto) {
@@ -124,6 +136,10 @@ export class DbCommonService {
   GetDraftInformationByEmployeeId(employeeId:number, tenentId:number, locationId:number, transactionId:number) { 
     return this.httpClient.get<CashierApprovalDto[]>(this.baseUrl + `Common/GetDraftInformationByEmployeeId?employeeId=${employeeId}&tenentId=${tenentId}&locationId=${locationId}&transactionId=${transactionId}`);    
   }
+  GetDraftNumberByBank(accountNo:number) { 
+    return this.httpClient.get<CashierApprovalDto[]>(this.baseUrl + `Common/GetDraftNumberByBank/${accountNo}`);    
+  }
+
   //#region Add Service
   GetSelectedServiceType(tenentId: number) {
     return this.httpClient.get<SelectedServiceTypeDto[]>(this.baseUrl + `Common/GetSelectedServiceType?tenentId=${tenentId}`).pipe(

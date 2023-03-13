@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable, takeUntil, takeWhile } from 'rxjs';
 import { TransactionHdDto } from 'src/app/modules/models/FinancialService/TransactionHdDto';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
+import { SelectOccupationsDto } from 'src/app/modules/models/SelectOccupationsDto';
 import { SelectSubServiceTypeDto } from 'src/app/modules/models/SelectSubServiceTypeDto';
 import { SelectServiceTypeDto } from 'src/app/modules/models/ServiceSetup/SelectServiceTypeDto';
 import { CommonService } from 'src/app/modules/_services/common.service';
@@ -71,6 +72,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
   isObservableActive = true;
   pfId: any;
   isSubscriber = false;
+  contractType$:Observable<SelectOccupationsDto[]>;
   // If PF Id is Not Null - SubscribeDate = Null and TerminationDate = Null
   notSubscriber: boolean = false;
   // 
@@ -94,14 +96,14 @@ export class AddServiceComponent implements OnInit, OnDestroy {
   //
   myTransId: any;
   //
-  serviceTypeSelected:any;
-  serviceSubTypeSelected:any;
+  serviceTypeSelected: any;
+  serviceSubTypeSelected: any;
   // To Set/Get discount type
-  allowedDiscountType:any;
+  allowedDiscountType: any;
   //
   isSearched: boolean = false;
   //
-  isPfIdExists:boolean = false;
+  isPfIdExists: boolean = false;
   constructor(
     private financialService: FinancialService,
     private commonService: DbCommonService,
@@ -151,14 +153,9 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     }
     //#endregion
 
-    // Getting SerialNo...
-    this.financialService.GenerateFinancialServiceSerialNo().subscribe((response:any)=>{
-      //
-      this.addServiceForm.patchValue({
-        searialNo:response
-      })
-    });
-
+    // To FillUp Contract Types
+    this.contractType$ = this.commonService.GetContractType();
+    //
     this.initializeAddServiceForm();
     //
     this.initPopUpModal();
@@ -176,25 +173,26 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     var data = JSON.parse(localStorage.getItem("user")!);
     const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
     const locationId = data.map((obj: { location: any; }) => obj.location);
-    
+
     //
 
-    if (this.mytransid) {      
+    if (this.mytransid) {
       this.common.ifEmployeeExists = true;
       // To display other Accordians
       this.isSearched = true;
-      if(this.common.isViewOnly === true){
+      if (this.common.isViewOnly === true) {
         // If user comes from Cashier Approval...
-        this.isViewOnly = true;        
-      }   
+        this.isViewOnly = true;
+      }
       // To Select selected service type  
-      this.financialService.GetServiceType(tenantId).subscribe((response: any) => {         
-        this.selectServiceType = response;       
+      this.financialService.GetServiceType(tenantId).subscribe((response: any) => {
+        this.selectServiceType = response;
       });
       //
-      this.financialService.GetFinancialServiceById(this.mytransid).subscribe((response: any) => {       
-        this.allowedDiscountType = response.discountType; 
-        this.serviceTypeSelected =  response.serviceType;
+      this.financialService.GetFinancialServiceById(this.mytransid).subscribe((response: any) => {
+        console.log('edit service',response);
+        this.allowedDiscountType = response.discountType;
+        this.serviceTypeSelected = response.serviceType;
         this.parentForm.patchValue({
           employeeForm: {
             employeeId: response.employeeId,
@@ -206,7 +204,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
             mobileNumber: response.mobileNumber,
             empMaritalStatus: +response.empMaritalStatus,
             nationName: response.nationName,
-            contractType: response.contractType,
+            contractType: +response.contractType,
             subscriptionAmount: response.subscriptionAmount,
             subscriptionPaid: response.subscriptionPaid,
             lastSubscriptionPaid: response.lastSubscriptionPaid,
@@ -215,11 +213,14 @@ export class AddServiceComponent implements OnInit, OnDestroy {
             terminationDate: response.terminationDate,
             endDate: response.endDate,
             employeeStatus: response.employeeStatus,
-            CountryNameEnglish: response.countryNameEnglish,
-            CountryNameArabic: response.countryNameArabic,
+            CountryNameEnglish: response.nationName,
+            CountryNameArabic: response.nationName,
             employeePFId: response.pfid,
             employeeCID: response.empCidNum,
             employeeFormEmployeeId: response.employeeId,
+            kinMobile:response.kinMobile,
+            kinName:response.kinName,
+            salary:response.salary
           },
           addServiceForm: {
             mytransid: response.mytransid,
@@ -231,12 +232,13 @@ export class AddServiceComponent implements OnInit, OnDestroy {
             installmentsBegDate: response.installmentsBegDate ? new Date(response.installmentsBegDate) : '',
             untilMonth: response.untilMonth,
             downPayment: response.downPayment,
-            pfId:response.pfid,
-            allowDiscountAmount:response.allowDiscountAmount,
-            discountType:response.discountType,
+            pfId: response.pfid,
+            allowDiscountAmount: response.allowDiscountAmount,
+            discountType: response.discountType,
             serviceTypeId: response.serviceTypeId,
             serviceSubTypeId: response.serviceSubTypeId,
-            allowDiscountDefault:response.allowDiscountDefault
+            allowDiscountDefault: response.allowDiscountDefault,
+            searialNo:response.mytransid
           },
           financialForm: {
             hajjAct: response.hajjAct,
@@ -278,17 +280,17 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           //   attachmentByName4: response.transactionHDDMSDto[4].attachmentByName,
           // }
         })
-        this.commonService.GetSubServiceTypeByServiceType(tenantId, response.serviceTypeId).subscribe((response: any) => {        
-          this.selectServiceSubType = response; 
+        this.commonService.GetSubServiceTypeByServiceType(tenantId, response.serviceTypeId).subscribe((response: any) => {
+          this.selectServiceSubType = response;
         });
-        
+
       })
       //
-      this.enableDisableControls(this.addServiceForm.get('allowDiscountDefault')?.value)   
+      this.enableDisableControls(this.addServiceForm.get('allowDiscountDefault')?.value)
       this.addServiceForm.get('pfId')?.disable();
-      
-    }  
-    
+      this.employeeForm?.get('contractType')?.disable();
+    }
+
   }
 
   ngOnDestroy(): void {
@@ -324,13 +326,14 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       endDate: new FormControl(''),
       employeeStatus: new FormControl(''),
       isKUEmployee: new FormControl(''),
-      isOnSickLeave: new FormControl(''),
-      isMemberOfFund: new FormControl(''),
+      // isOnSickLeave: new FormControl(''),
+      // isMemberOfFund: new FormControl(''),
       CountryNameEnglish: new FormControl(''),
       CountryNameArabic: new FormControl(''),
       employeePFId: new FormControl(''),
       employeeCID: new FormControl(''),
       employeeFormEmployeeId: new FormControl(''),
+      salary: new FormControl('0')
     })
     this.parentForm.setControl('employeeForm', this.employeeForm);
   }
@@ -359,8 +362,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       discountType: new FormControl(null),
       allowDiscountAmount: new FormControl('0'),
       allowDiscountPer: new FormControl(null),
-      transDate: new FormControl(moment(new Date()).format("yyyy-MM-DD")),
-      pfId:new FormControl(null),
+      transDate: new FormControl(moment(new Date()).format("DD-MM-yyyy")),
       allowDiscountDefault: new FormControl(null)
     })
     this.parentForm.setControl('addServiceForm', this.addServiceForm);
@@ -394,8 +396,11 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       totalAmount: new FormControl('0.0'),
       financialAidAmount: new FormControl('0.0'),
       UpdateToDate: new FormControl(null),
-      mySeq:new FormControl(1),
-      DisplayPERIOD_CODE:new FormControl('20230214')
+      mySeq: new FormControl(1),
+      DisplayPERIOD_CODE: new FormControl('20230214'),
+      amountMinus: new FormControl('0.0'),
+      amountPlus: new FormControl('0.0'),
+      systemRemarks: new FormControl(''),
     });
   }
 
@@ -429,17 +434,20 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
     const locationId = data.map((obj: { locationId: any; }) => obj.locationId);
     const username = data.map((obj: { username: any; }) => obj.username);
+    const periodCode = data.map((obj: { periodCode: any; }) => obj.periodCode);
+    const prevPeriodCode = data.map((obj: { prevPeriodCode: any; }) => obj.prevPeriodCode);
+    const nextPeriodCode = data.map((obj: { nextPeriodCode: any; }) => obj.nextPeriodCode);
     //console.log(this.common.ifEmployeeExists);
     // NO Need TO Use if we are in edit mode.
-    if(!this.mytransid){
+    if (!this.mytransid) {
       this.addServiceForm.patchValue({
         serviceType: this.selectedServiceTypeText,
         serviceSubType: this.selectedServiceSubTypeText,
         serviceTypeId: this.selectedServiceType,
-        serviceSubTypeId: this.selectedServiceSubType       
+        serviceSubTypeId: this.selectedServiceSubType
       })
     }
-    
+
     let formData = {
       ...this.parentForm.value.addServiceForm,
       ...this.parentForm.value.approvalDetailsForm,
@@ -447,19 +455,24 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       ...this.parentForm.value.financialForm,
       ...this.financialCalculationForm.value,
       //...this.parentForm.value.financialFormArray,
-      tenentID: tenantId, cruP_ID: 0, locationID: locationId,userId:username
+      tenentID: tenantId, cruP_ID: 0, locationID: locationId, userId: username,
+      periodCode:periodCode,prevPeriodCode:prevPeriodCode,nextPeriodCode:nextPeriodCode
     }
 
     formData['installmentsBegDate'] = moment(formData['installmentsBegDate']).format("yyyy-MM-DD");
-    formData['untilMonth'] =moment(formData['untilMonth']).format("yyyy-MM-DD");
-    formData['deliveryDate'] = moment(formData['deliveryDate']).format("yyyy-MM-DD"); 
-    formData['transDate'] = moment(formData['transDate']).format("yyyy-MM-DD"); 
+    formData['untilMonth'] = moment(formData['untilMonth']).format("yyyy-MM-DD");
+    formData['deliveryDate'] = moment(formData['deliveryDate']).format("yyyy-MM-DD");
+    formData['transDate'] = moment(formData['transDate']).format("yyyy-MM-DD");
     formData['discountType'] = this.allowedDiscountType;
-    formData['eachInstallmentsAmt'] = this.addServiceForm.get('installmentAmount')?.value; 
+    formData['eachInstallmentsAmt'] = this.addServiceForm.get('installmentAmount')?.value;
+    formData['downPayment'] = this.addServiceForm.get('downPayment')?.value;
+    formData['allowDiscountAmount'] = this.addServiceForm.get('allowDiscountAmount')?.value;
+    formData['installmentAmount'] = this.addServiceForm.get('installmentAmount')?.value;
+    formData['totinstallments'] = this.addServiceForm.get('totinstallments')?.value;
     // To get the values of disabled controls. If we are in Edit mode. 
-    if(this.mytransid){
+    if (this.mytransid) {
       formData['allowDiscountAmount'] = this.addServiceForm.get('allowDiscountAmount')?.value;
-      formData['installmentAmount'] = this.addServiceForm.get('installmentAmount')?.value;      
+      formData['installmentAmount'] = this.addServiceForm.get('installmentAmount')?.value;
     }
     let finalformData = new FormData();
     Object.keys(formData).forEach(key => finalformData.append(key, formData[key]));
@@ -483,14 +496,14 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     //
     if (this.mytransid) {
       //console.log('edit click',formData);
-      this.financialService.UpdateFinancialService(finalformData).subscribe((response: any) => {        
+      this.financialService.UpdateFinancialService(finalformData).subscribe((response: any) => {
         if (response.isSuccess == false) {
           this.toastrService.error(response.message, 'Error');
-        }else{
-          this.toastrService.success('Updated successfully', 'Success');          
-          setTimeout(()=>{                           
-           this.onOkayClick();
-        }, 2000);
+        } else {
+          this.toastrService.success('Updated successfully', 'Success');
+          setTimeout(() => {
+            this.onOkayClick();
+          }, 2000);
         }
       })
     } else {
@@ -509,13 +522,11 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           this.financialCalculationForm.reset();
           this.openPopUpModal(this.popupModal);
         }
-       //this.saveFinancialArray();   
+        //this.saveFinancialArray();   
       })
     }
 
   }
-
-  
 
   saveFinancialArray() {
     this.financialService.saveCOA(this.parentForm.value.financialFormArray, {}).subscribe(() => {
@@ -529,18 +540,12 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     // Clear search form 
     this.parentForm.reset();
     this.financialCalculationForm.reset();
-     // Getting SerialNo...
-     this.financialService.GenerateFinancialServiceSerialNo().subscribe((response:any)=>{
-      //
-      this.addServiceForm.patchValue({
-        searialNo:response
-      }) 
-    });
+   
     // Setting current date to trans date...    
     this.addServiceForm.get('transDate')?.setValue(moment(new Date()).format("yyyy-MM-DD"));
     // Clear serviceTypeSelected
-    this.selectServiceType=[];
-    this.selectServiceSubType=[];
+    this.selectServiceType = [];
+    this.selectServiceSubType = [];
   }
   calculateUntilMonth(selectedDate: Date) {
     if (selectedDate !== undefined) {
@@ -576,14 +581,14 @@ export class AddServiceComponent implements OnInit, OnDestroy {
         calculatedAmount = ((amount - allowDiscountAmount) - downPayment);
         netAmount = (calculatedAmount / noOfinstallments);
         this.addServiceForm.patchValue({
-        installmentAmount: netAmount.toFixed(2)
-      })
+          installmentAmount: netAmount.toFixed(2)
+        })
       }
-      if(!allowDiscountDefault){
+      if (!allowDiscountDefault) {
         this.addServiceForm.patchValue({
-          installmentAmount:this.addServiceForm.get('totamt')?.value,
-          totinstallments:0,
-          allowDiscountAmount:0
+          installmentAmount: this.addServiceForm.get('totamt')?.value,
+          totinstallments: 0,
+          allowDiscountAmount: 0
         })
       }
       // If 2 Fixed Amount and discount will be 100%...
@@ -600,7 +605,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
 
   onServiceTypeChange(event: any) {
     this.commonService.GetSubServiceTypeByServiceType(21, event.refId).subscribe((response: any) => {
-      this.selectServiceSubType = response      
+      this.selectServiceSubType = response
       if (this.common.PFId != null
         && this.common.subscribedDate != null
         && this.common.terminationDate != null) {
@@ -629,9 +634,8 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     this.selectedServiceTypeText = event.shortname;
   }
 
-  onServiceSubTypeChange($event: any) {    
-    this.financialService.GetSelectedServiceSubType(this.selectedServiceType,$event.refId, 21).subscribe((response: any) => {
-      console.log('response',response);
+  onServiceSubTypeChange($event: any) {
+    this.financialService.GetSelectedServiceSubType(this.selectedServiceType, $event.refId, 21).subscribe((response: any) => {
       // To set discount type and we will save it into TransactionHD...
       this.allowedDiscountType = response.discountType;
       this.addServiceForm.get('downPayment')?.enable();
@@ -640,9 +644,9 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           allowDiscount: response.allowDiscountAmount,
           allowDiscountPer: response.allowDiscountPer,
           discountType: response.discountType,
-          totinstallments:response.maxInstallment,
-          allowDiscountAmount:response.allowDiscountAmount,
-          allowDiscountDefault:response.allowDiscountDefault
+          totinstallments: response.maxInstallment,
+          allowDiscountAmount: response.allowDiscountAmount,
+          allowDiscountDefault: response.allowDiscountDefault
         },
         approvalDetailsForm: {
           serApproval1: +response.serApproval1,
@@ -676,46 +680,29 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           otherAct4: response.otherAct4,
           otherAct5: response.otherAct5
         },
-      }); 
-      if(!this.addServiceForm.get('allowDiscountDefault')?.value){
+      });
+      if (!this.addServiceForm.get('allowDiscountDefault')?.value) {
         this.addServiceForm.patchValue({
-          installmentAmount:this.addServiceForm.get('totamt')?.value,
-          totinstallments:0,
-          allowDiscountAmount:0
-        })        
+          installmentAmount: this.addServiceForm.get('totamt')?.value,
+          totinstallments: 0,
+          allowDiscountAmount: 0
+        })
         //
         this.enableDisableControls(this.addServiceForm.get('allowDiscountDefault')?.value)
-      } 
-      // To add default current date...
-      this.addServiceForm.patchValue({          
-        installmentsBegDate: moment(new Date()).format("MMM-YYYY"),
-        untilMonth:moment(new Date()).format("MMM-YYYY"),
-      })   
-      // To enable/disable PF Id text box.
-      if(this.isPfIdExists){
-        this.addServiceForm.get('pfId')?.disable();  
       }
-      // if (this.addServiceForm.get('discountType')?.value === 2 || $event.refId == 1) {        
-      //   this.addServiceForm.get('allowDiscountAmount')?.disable();
-      //   this.addServiceForm.get('totinstallments')?.disable();
-      //   this.addServiceForm.get('installmentAmount')?.disable();
-      //   this.addServiceForm.get('downPayment')?.disable();
-      //   this.addServiceForm.patchValue({
-      //     totinstallments:0,
-      //     installmentAmount:0,
-      //     downPayment:0,
-      //     installmentsBegDate: moment(new Date()).format("MMM-YYYY"),
-      //     untilMonth:moment(new Date()).format("MMM-YYYY"),
-      //   })
-      // } else if (this.addServiceForm.get('discountType')?.value === 1) {        
-      //   this.addServiceForm.get('allowDiscountAmount')?.enable();
-      //   this.addServiceForm.get('totinstallments')?.enable();
-      //   this.addServiceForm.get('installmentAmount')?.enable();
-      //   this.addServiceForm.get('downPayment')?.enable();        
-      // }
-      if($event.refId == 1){
+      // To add default current date...
+      var now = new Date();
+      this.addServiceForm.patchValue({
+        installmentsBegDate: moment(new Date(now.getFullYear(),now.getMonth()+1)).format("MMM-YYYY"),
+        untilMonth: moment(new Date(now.getFullYear(),now.getMonth()+1)).format("MMM-YYYY"),
+      })
+      // To enable/disable PF Id text box.
+      if (this.isPfIdExists) {
+        this.addServiceForm.get('pfId')?.disable();
+      }
+      if ($event.refId == 1) {
         this.addServiceForm.patchValue({
-          allowDiscountAmount:0
+          allowDiscountAmount: 0
         })
       }
       if (this.selectedServiceType == 2 && $event.refId == 3) {
@@ -774,7 +761,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
   openPopUpModal(content: any) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
-      if (result === 'yes') { 
+      if (result === 'yes') {
         this.onOkayClick();
       }
     }, (reason) => {
@@ -795,24 +782,27 @@ export class AddServiceComponent implements OnInit, OnDestroy {
 
   SearchEmployee() {
     //
+    this.selectServiceType = [];
+    this.selectServiceSubType = [];
     var data = JSON.parse(localStorage.getItem("user")!);
     const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
     const locationId = data.map((obj: { locationId: any; }) => obj.locationId);
 
     // To hide/show the financial calculation div
     this.isPFIdNull = false;
-    this.financialService.SearchEmployee(this.searchForm.value).subscribe((response: any) => { 
-        if (response.isSuccess == false) {
-          this.common.ifEmployeeExists = false;
-          this.toastrService.error(response.message, 'Error');
-          this.employeeForm?.reset();
-        }        
-       else {
+    this.isSearched = false;
+    this.financialService.SearchEmployee(this.searchForm.value).subscribe((response: any) => {
+      if (response.isSuccess == false) {
+        this.common.ifEmployeeExists = false;
+        this.toastrService.error(response.message, 'Error');
+        this.employeeForm?.reset();
+      }
+      else {
         // To display other Accordians
         this.isSearched = true;
         this.common.ifEmployeeExists = true;
         // To check if Pf Id is already exists so will disable the control.
-        if(response.pfid){
+        if (response.pfid) {
           this.isPfIdExists = true;
         }
         this.employeeForm?.patchValue({
@@ -825,7 +815,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           mobileNumber: response.mobileNumber,
           empMaritalStatus: +response.empMaritalStatus,
           nationName: response.nationName,
-          contractType: response.contractType,
+          contractType: +response.contractType,
           subscriptionAmount: response.subscriptionAmount,
           subscriptionPaid: response.subscriptionPaid,
           lastSubscriptionPaid: response.lastSubscriptionPaid,
@@ -842,9 +832,12 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           employeePFId: response.pfid,
           employeeCID: response.empCidNum,
           employeeFormEmployeeId: response.employeeId,
+          salary: response.salary,
+          kinMobile:response.next2KinMobNumber,
+          kinName:response.next2KinName,
         })
         this.addServiceForm.patchValue({
-          pfId:response.pfid
+          pfId: response.pfid
         })
         this.common.PFId = response.pfid;
         this.common.subscribedDate = response.subscribedDate;
@@ -874,6 +867,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
             this.isSubscriber = true;
           }
         });
+        this.employeeForm?.get('contractType')?.disable();
       }
     }, error => {
       if (error.status === 500) {
@@ -882,7 +876,9 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     });
   }
   // 
-  SearchSponsor(){
+  SearchSponsor() {
+    this.selectServiceType = [];
+    this.selectServiceSubType = [];
     //
     var data = JSON.parse(localStorage.getItem("user")!);
     const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
@@ -890,12 +886,13 @@ export class AddServiceComponent implements OnInit, OnDestroy {
 
     // To hide/show the financial calculation div
     this.isPFIdNull = false;
+    this.isSearched = false;
     this.financialService.SearchSponsor(this.searchForm.value).subscribe((response: any) => {
       if (response.isSuccess == false) {
         this.common.ifEmployeeExists = false;
         this.toastrService.error(response.message, 'Error');
         this.employeeForm?.reset();
-      }  else {
+      } else {
         // To display other Accordians
         this.isSearched = true;
         this.common.ifEmployeeExists = true;
@@ -909,7 +906,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           mobileNumber: response.mobileNumber,
           empMaritalStatus: +response.empMaritalStatus,
           nationName: response.nationName,
-          contractType: response.contractType,
+          contractType: +response.contractType,
           subscriptionAmount: response.subscriptionAmount,
           subscriptionPaid: response.subscriptionPaid,
           lastSubscriptionPaid: response.lastSubscriptionPaid,
@@ -926,9 +923,12 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           employeePFId: response.pfid,
           employeeCID: response.empCidNum,
           employeeFormEmployeeId: response.employeeId,
+          salary: response.salary,
+          kinMobile:response.next2KinMobNumber,
+          kinName:response.next2KinName,
         })
         this.addServiceForm.patchValue({
-          pfId:response.pfid
+          pfId: response.pfid
         })
         this.common.PFId = response.pfid;
         this.common.subscribedDate = response.subscribedDate;
@@ -938,6 +938,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
         this.financialService.GetServiceType(tenantId).subscribe((response: any) => {
           this.pfId = this.common.PFId;
           this.selectServiceType = response;
+          
           if (this.common.PFId != null
             && this.common.subscribedDate == null
             && this.common.terminationDate == null) {
@@ -965,7 +966,9 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       }
     });
   }
-  SearchNewSubscriber(){
+  SearchNewSubscriber() {
+    // this.selectServiceType=[];
+    // this.selectServiceSubType=[];
     //
     var data = JSON.parse(localStorage.getItem("user")!);
     const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
@@ -973,12 +976,13 @@ export class AddServiceComponent implements OnInit, OnDestroy {
 
     // To hide/show the financial calculation div
     this.isPFIdNull = false;
+    this.isSearched = false;
     this.financialService.SearchNewSubscriber(this.searchForm.value).subscribe((response: any) => {
       if (response.isSuccess == false) {
         this.common.ifEmployeeExists = false;
         this.toastrService.error(response.message, 'Error');
         this.employeeForm?.reset();
-      }  else {
+      } else {
         // To display other Accordians
         this.isSearched = true;
         this.common.ifEmployeeExists = true;
@@ -992,7 +996,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           mobileNumber: response.mobileNumber,
           empMaritalStatus: +response.empMaritalStatus,
           nationName: response.nationName,
-          contractType: response.contractType,
+          contractType: +response.contractType,
           subscriptionAmount: response.subscriptionAmount,
           subscriptionPaid: response.subscriptionPaid,
           lastSubscriptionPaid: response.lastSubscriptionPaid,
@@ -1009,9 +1013,12 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           employeePFId: response.pfid,
           employeeCID: response.empCidNum,
           employeeFormEmployeeId: response.employeeId,
+          salary: response.salary,
+          kinMobile:response.next2KinMobNumber,
+          kinName:response.next2KinName,
         })
         this.addServiceForm.patchValue({
-          pfId:response.pfid
+          pfId: response.pfid
         })
         this.common.PFId = response.pfid;
         this.common.subscribedDate = response.subscribedDate;
@@ -1021,25 +1028,31 @@ export class AddServiceComponent implements OnInit, OnDestroy {
         this.financialService.GetServiceType(tenantId).subscribe((response: any) => {
           this.pfId = this.common.PFId;
           this.selectServiceType = response;
+          // In case of existing employee/ subscriber...
           if (this.common.PFId != null
             && this.common.subscribedDate == null
             && this.common.terminationDate == null) {
-            // remove subscribe from servicetype & Subtype
-            //if (result.trim()) {
+            //
             let index = this.selectServiceType.findIndex(x => x.refId == 1);
             if (index >= 0) {
               this.selectServiceType.splice(index, 1);
             }
             //}
             this.notSubscriber = true;
-          } else if (this.common.PFId == null
+          } 
+          // In case of new subscriber...
+          else if (this.common.PFId == null
             && this.common.subscribedDate == null
             && this.common.terminationDate == null) {
             this.selectServiceType = response;
             let arr = this.selectServiceType.filter(x => x.refId == 1)
             this.selectServiceType = arr;
             this.isSubscriber = true;
+            let salary = this.employeeForm?.controls['salary'].value;
+            let amount = (salary / 100) * 1;
+            this.addServiceForm?.get('totamt')?.setValue(amount);
           }
+
         });
       }
     }, error => {
@@ -1055,6 +1068,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     const locationId = data.map((obj: { locationId: any; }) => obj.locationId);
     let transactionDate = moment(this.addServiceForm.get('transDate')?.value).format("yyyy-MM-DD");
     //
+    console.log('transaction date', transactionDate);
     if (!this.searchForm.value.employeeId) {
       this.toastrService.error('Employee id not found', 'Error')
     } else if (transactionDate === 'Invalid date') {
@@ -1093,7 +1107,10 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           financialAidAmountRemarks: response.finAidAmountRemarks,
           yearOfService: response.yearOfService,
           loanPendingAmount: response.loanPendingAmount.toFixed(2),
-          totalAmount: grandTotal.toFixed(2)
+          totalAmount: grandTotal.toFixed(2),
+          amountMinus: response.amountMinus.toFixed(2),
+          amountPlus: response.amountPlus.toFixed(2),
+          systemRemarks: response.systemRemarks,
         })
       })
 
@@ -1116,7 +1133,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       this.cashierInformationForm.patchValue({
         payPer1: response.payPer1,
         draftNumber1: response.draftNumber1,
-        draftDate1:  moment(response.draftDate1).format("yyyy-MM-DD"),
+        draftDate1: moment(response.draftDate1).format("yyyy-MM-DD"),
         draftAmount1: response.draftAmount1,
         bankAccount1: response.bankAccount1,
         deliveryDate1: moment(response.deliveryDate1).format("yyyy-MM-DD"),
@@ -1135,7 +1152,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       error => {
         console.log(error);
       })
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title',size:'lg',backdrop: 'static'}).result.then((result) => {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg', backdrop: 'static' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
 
     }, (reason) => {
@@ -1143,7 +1160,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     });
 
   }
-  onOkayClick(){
+  onOkayClick() {
     this.redirectTo(`/service-setup/service-details`);
   }
   redirectTo(uri: string) {
@@ -1151,40 +1168,38 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       this.router.navigate([uri]));
   }
 
-//#region 
+  //#region 
   // To enable/disable controls based on AllowDiscountDefault...
-  enableDisableControls(isAllowDiscount:boolean){
-    if(isAllowDiscount){
+  enableDisableControls(isAllowDiscount: boolean) {
+    if (isAllowDiscount) {
       this.addServiceForm.get('downPayment')?.enable();
       this.addServiceForm.get('allowDiscountAmount')?.enable();
       this.addServiceForm.get('totinstallments')?.enable();
       this.addServiceForm.get('installmentAmount')?.enable();
       this.addServiceForm.get('installmentsBegDate')?.enable();
       this.addServiceForm.get('untilMonth')?.enable();
-      this.addServiceForm.get('transDate')?.enable();
       this.addServiceForm.get('serviceType')?.enable();
       this.addServiceForm.get('serviceSubType')?.enable();
-    }else{
+    } else {
       this.addServiceForm.get('downPayment')?.disable();
       this.addServiceForm.get('allowDiscountAmount')?.disable();
       this.addServiceForm.get('totinstallments')?.disable();
       this.addServiceForm.get('installmentAmount')?.disable();
       this.addServiceForm.get('installmentsBegDate')?.disable();
       this.addServiceForm.get('untilMonth')?.disable();
-      this.addServiceForm.get('transDate')?.disable();
       this.addServiceForm.get('serviceType')?.disable();
       this.addServiceForm.get('serviceSubType')?.disable();
     }
-    if(this.addServiceForm.get('serviceType')?.value == 1 
-    || this.addServiceForm.get('serviceSubType')?.value == 2){
+    if (this.addServiceForm.get('serviceType')?.value == 1
+      || this.addServiceForm.get('serviceSubType')?.value == 2) {
       this.addServiceForm.get('pfId')?.enable()
     }
-    
-    if(!this.mytransid){
+
+    if (!this.mytransid) {
       this.addServiceForm.get('serviceType')?.enable();
       this.addServiceForm.get('serviceSubType')?.enable();
     }
   }
-// #endregion
-  
+  // #endregion
+
 }

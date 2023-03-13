@@ -10,42 +10,6 @@
         <ng-template ngbPanelContent>
             <div id="kt_account_email_preferences" class="collapse show"
                 *ngFor="let bodyLabel of formBodyLabels; let i = index">
-                <!-- <div class="flex-grow-1 rounded border-primary border border-dashed p-6">
-                    <form [formGroup]="searchForm">
-                        <div class="row mb-4">
-                            <div class="col-lg-2 fv-row">
-                                <label class="form-label _title" for="form3Example1 " lang="AR-SA"
-                                    >PF Id</label>
-                                <input type="text" class="form-control" formControlName="pfId" name="pfId" disabled/>
-                            </div>
-                            <div class="col-lg-2 fv-row">
-                                <label class="form-label _title" for="form3Example2 " lang="AR-SA"
-                                    >CID</label>
-                                <input type="text" class="form-control" formControlName="cId" name="cId" disabled/>
-                            </div>
-                            <div class="col-lg-2 fv-row">
-                                <label class="form-label _title" for="form3Example2 " lang="AR-SA"
-                                    >Employee Id</label>
-                                <input type="text" class="form-control" formControlName="employeeId"
-                                    name="employeeId" disabled/>
-                            </div>
-                            <div class="col-lg-2 fv-row">
-                                <button type="button" class="btn btn-primary mt-8 fringy_flower" lang="AR-SA"
-                                     (click)="SearchEmployee()" disabled>Search Employee</button>
-                            </div>
-                            <div class="col-lg-2 fv-row">
-                                <button type="button" class="btn btn-success mt-8 fringy_flower" lang="AR-SA"
-                                     (click)="SearchSponsor()" disabled>Search Sponsor</button>
-                            </div>
-                            <div class="col-lg-2 fv-row">
-                                <button type="button" class="btn btn-success mt-8 fringy_flower" lang="AR-SA"
-                                     (click)="SearchNewSubscriber()" disabled>New Subscriber</button>
-                            </div>
-                        </div>
-                    </form>
-
-                </div> -->
-                <!-- <div class="separator separator-dashed my-6"></div> -->
                 <form [formGroup]="employeeForm">
                     <div class="row mb-4">
                         <div class="col-lg-4 fv-row">
@@ -124,8 +88,11 @@
                         <div class="col-lg-4 fv-row">
                             <label class="form-label" for="contractType " lang="AR-SA" >Contract
                                 Type</label>
-                            <input type="text" id="contractType" class="form-control" formControlName="contractType"
-                                name="contractType" lang="AR-SA" disabled />
+                            <!-- <input type="text" id="contractType" class="form-control" formControlName="contractType"
+                                name="contractType" lang="AR-SA" disabled /> -->
+                                <ng-select [items]="contractType$ | async" bindLabel="shortname" bindValue="refid"
+                                formControlName="contractType">
+                            </ng-select>
                         </div>
                         <div class="col-lg-4 fv-row">
                             <label class="form-label" for="kinName" lang="AR-SA" >Kin
@@ -172,9 +139,9 @@
                         <div class="col-lg-4 fv-row">
                             <label class="form-label" for="subscriptionStatus " lang="AR-SA"
                                 >Subscription Status</label>
-                            <input type="text" class="form-control" bsDatepicker
-                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }" formControlName="subscriptionStatus"
-                                name="subscriptionStatus" lang="AR-SA" disabled />
+                                <input type="number" id="subscriptionStatus" class="form-control"
+                                formControlName="subscriptionStatus" name="subscriptionStatus" lang="AR-SA"
+                                disabled />
                         </div>
                     </div>
 
@@ -195,7 +162,7 @@
                                 lang="AR-SA" disabled />
                         </div>
                         <div class="col-lg-4 fv-row">
-                            <label class="form-label" for="employeeStatus " lang="AR-SA" >Employee
+                            <label class="form-label" for="employeeStatus" lang="AR-SA" >Employee
                                 Status</label>
                             <input type="number" id="employeeStatus" class="form-control"
                                 formControlName="employeeStatus" name="employeeStatus" lang="AR-SA" disabled />

@@ -49,7 +49,7 @@ export class ApprovalManagementComponent implements OnInit {
 
   //#region
   // To display table column headers
-  columnsToDisplay: string[] = ['action', 'transId', 'employeeId', 'employeeName', 'serviceType', 'source', 'totalInstallment', 'amount', 'status'];
+  columnsToDisplay: string[] = ['action', 'transId',  'employeeName', 'serviceType', 'source', 'totalInstallment', 'amount', 'status'];
 
   // Getting data as abservable.
   returnServiceApprovals$: Observable<CashierApprovalDto[]>;
@@ -95,13 +95,16 @@ export class ApprovalManagementComponent implements OnInit {
   tenentId: any;
   locationId: any
   periodCode: any;
-  prevPeriodCode: any
+  prevPeriodCode: any;
+  username: any;
+  userId: any;
   employeeDetailsform: FormGroup;
   financialData: any;
   financialDetails: any;
   approvalDetails: any;
-  employeeActivityLog:any;
-  crupId:any;
+  employeeActivityLog: any;
+  crupId: any;
+  isShowAllChecked: boolean = false;
   constructor(
     private modalService: NgbModal,
     private financialService: FinancialService,
@@ -118,6 +121,8 @@ export class ApprovalManagementComponent implements OnInit {
     this.locationId = data.map((obj: { locationId: any; }) => obj.locationId);
     this.periodCode = data.map((obj: { periodCode: any; }) => obj.periodCode);
     this.prevPeriodCode = data.map((obj: { prevPeriodCode: any; }) => obj.prevPeriodCode);
+    this.username = data.map((obj: { username: any; }) => obj.username);
+    this.userId = data.map((obj: { userId: any; }) => obj.userId);
   }
 
   ngOnInit(): void {
@@ -229,14 +234,18 @@ export class ApprovalManagementComponent implements OnInit {
       deviceId: new FormControl(''),
     })
   }
+
+  onShowAllChange(event: any) {   
+    this.loadData(event.target.checked)
+    this.isShowAllChecked = event.target.checked;
+  }
   // Get Data...
-  loadData() {
-    // 
-    this.financialService.GetServiceApprovals(this.periodCode, this.tenentId, this.locationId).subscribe((response: CashierApprovalDto[]) => {
+  loadData(isShowAll: boolean = false) {
+    this.financialService.GetServiceApprovals(this.periodCode, this.tenentId, this.locationId, isShowAll).subscribe((response: CashierApprovalDto[]) => {
       this.returnServiceApprovals = new MatTableDataSource<CashierApprovalDto>(response);
       this.returnServiceApprovals.paginator = this.paginator;
       this.returnServiceApprovals.sort = this.sort;
-      this.isLoadingCompleted = true;      
+      this.isLoadingCompleted = true;
     }, error => {
       console.log(error);
       this.dataLoadingStatus = 'Error fetching the data';
@@ -246,11 +255,11 @@ export class ApprovalManagementComponent implements OnInit {
   get approvalForm() { return this.approveServiceForm.controls; }
   get rejectionForm() { return this.rejectServiceForm.controls; }
 
-  openContactModal(content: any, event: any,crup_id:any) {
+  openContactModal(content: any, event: any, crup_id: any) {
     this.commonService.employeeId = event.target.id    //
-    this.crupId =crup_id.crupId;
-    this.employeeService.GetEmployeeById(event.target.id).subscribe((response: any) => {      
-      if (response) {        
+    this.crupId = crup_id.crupId;
+    this.employeeService.GetEmployeeById(event.target.id).subscribe((response: any) => {
+      if (response) {
         this.employeeDetailsform.patchValue({
           employeeId: response.employeeId,
           englishName: response.englishName,
@@ -276,7 +285,7 @@ export class ApprovalManagementComponent implements OnInit {
           next2KinMobNumber: response.next2KinMobNumber,
           userId: response.userId,
           deviceId: response.deviceId,
-          crupId :response.cruP_ID
+          crupId: response.cruP_ID
         });
       }
     }, error => {
@@ -297,10 +306,10 @@ export class ApprovalManagementComponent implements OnInit {
       console.log(error);
     });
     //
-    this.financialService.GetEmployeeActivityLog(this.crupId,this.tenentId,this.locationId).subscribe((response:any)=>{
+    this.financialService.GetEmployeeActivityLog(this.crupId, this.tenentId, this.locationId).subscribe((response: any) => {
       this.employeeActivityLog = response;
-      
-    },error=>{
+
+    }, error => {
       console.log(error);
     })
 
@@ -336,11 +345,11 @@ export class ApprovalManagementComponent implements OnInit {
         this.approveServiceForm.controls['approvalDate']?.setValue(currentDate);
         this.approveServiceForm.controls['entryDate']?.setValue(currentDate);
         this.approveServiceForm.controls['entryTime']?.setValue(currentTime);
-        this.approveServiceForm.controls['userId']?.setValue(1);
         this.approveServiceForm.controls['tenentId'].setValue(this.tenentId[0]);
         this.approveServiceForm.controls['locationId'].setValue(this.locationId[0]);
+        this.approveServiceForm.controls['userId']?.setValue(this.username[0]);
         //
-        this.financialService.ApproveService(this.approveServiceForm.value).subscribe(response => {
+        this.financialService.ManagerApproveService(this.approveServiceForm.value).subscribe(response => {
           this.toastrService.success('.Service approved successfully', 'Success');
           this.isFormSubmitted = false;
           this.loadData();
@@ -368,11 +377,12 @@ export class ApprovalManagementComponent implements OnInit {
         this.rejectServiceForm.controls['approvalDate']?.setValue(currentDate);
         this.rejectServiceForm.controls['entryDate']?.setValue(currentDate);
         this.rejectServiceForm.controls['entryTime']?.setValue(currentTime);
-        this.rejectServiceForm.controls['userId']?.setValue(1);
         this.rejectServiceForm.controls['tenentId'].setValue(this.tenentId[0]);
         this.rejectServiceForm.controls['locationId'].setValue(this.locationId[0]);
+        this.rejectServiceForm.controls['username']?.setValue(this.username[0]);
+        this.rejectServiceForm.controls['userId']?.setValue(this.userId[0]);
 
-        this.financialService.RejectService(this.rejectServiceForm.value).subscribe(response => {
+        this.financialService.ManagerRejectServiceAsync(this.rejectServiceForm.value).subscribe(response => {
           this.toastrService.success('.Service rejected successfully', 'Success');
           this.isFormSubmitted = false;
           this.rejectServiceForm.reset();
@@ -402,5 +412,15 @@ export class ApprovalManagementComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
-
+//#region Material Search and Clear Filter 
+filterRecords() {
+  if (this.formGroup.value.searchTerm != null && this.returnServiceApprovals) {
+    this.returnServiceApprovals.filter = this.formGroup.value.searchTerm.trim();
+  }
+}
+clearFilter() {
+  this.formGroup?.patchValue({ searchTerm: "" });
+  this.filterRecords();
+}
+//#endregion
 }
