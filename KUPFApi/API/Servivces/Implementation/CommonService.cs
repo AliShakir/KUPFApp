@@ -1,6 +1,7 @@
 ﻿using API.DTOs;
 using API.DTOs.DropDown;
 using API.DTOs.EmployeeDto;
+using API.Helpers;
 using API.Models;
 using API.Servivces.Interfaces;
 using AutoMapper;
@@ -14,6 +15,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 namespace API.Servivces.Implementation
 {
@@ -565,6 +567,10 @@ namespace API.Servivces.Implementation
                             TransId = hd.Mytransid,
                             BankAccount1 = hd.BankAccount1,
                             ReceivedDate1 = hd.ReceivedDate1,
+                            AccountantID = Convert.ToInt32(emp.LoanAct),
+                            BenefeciaryName = emp.ArabicName,
+                            ChequeAmount = hd.Totamt,
+                            
 
                         }).FirstOrDefault();
             return data;
@@ -645,11 +651,7 @@ namespace API.Servivces.Implementation
             return myTransId;
         }
 
-        public int GetDraftNumberByBank(long accountNo)
-        {
-            int draftNumber = (int)_context.TransactionHds.FromSqlRaw("select ISNULL(max(cast(draftnumber1 as int)),0)+1 as DraftNumber1 from TransactionHD where BankAccount1='" + accountNo+"'").Select(c=>c.DraftNumber1).FirstOrDefault();
-            return draftNumber;
-        }
+        
 
         public long CreateEmployeePFId(int tenentId, int locationId)
         {
@@ -711,5 +713,7 @@ namespace API.Servivces.Implementation
             
             return result;
         }
+
+       
     }
 }

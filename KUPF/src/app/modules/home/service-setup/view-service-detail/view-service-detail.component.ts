@@ -222,7 +222,7 @@ export class ViewServiceDetailComponent implements OnInit {
             subscriptionStatus: response.subscriptionStatus,
             terminationDate: response.terminationDate,
             endDate: response.endDate,
-            employeeStatus: response.empStatus,
+            employeeStatus: response.employeeStatus,
             CountryNameEnglish: response.nationName,
             CountryNameArabic: response.nationName,
             employeePFId: response.pfid,

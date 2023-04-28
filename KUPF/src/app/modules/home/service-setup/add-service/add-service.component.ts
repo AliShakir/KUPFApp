@@ -199,7 +199,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
             englishName: response.englishName,
             arabicName: response.arabicName,
             empGender: response.empGender,
-            joinedDate: new Date(response.joinedDate),
+            joinedDate: moment(response.joinedDate).format("DD-MM-yyyy"),
             empBirthday: new Date(response.empBirthday),
             mobileNumber: response.mobileNumber,
             empMaritalStatus: +response.empMaritalStatus,
@@ -370,7 +370,8 @@ export class AddServiceComponent implements OnInit, OnDestroy {
   initPopUpModal() {
     this.popUpForm = this.fb.group({
       transactionId: new FormControl(null),
-      attachId: new FormControl(null)
+      attachId: new FormControl(null),
+      pfid:new FormControl(null)
     })
   }
 
@@ -462,7 +463,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     formData['installmentsBegDate'] = moment(formData['installmentsBegDate']).format("yyyy-MM-DD");
     formData['untilMonth'] = moment(formData['untilMonth']).format("yyyy-MM-DD");
     formData['deliveryDate'] = moment(formData['deliveryDate']).format("yyyy-MM-DD");
-    formData['transDate'] = moment(formData['transDate']).format("yyyy-MM-DD");
+    formData['transDate'] = moment(formData['transDate']).format("yyyy-MM-DD");//2023-03-01
     formData['discountType'] = this.allowedDiscountType;
     formData['eachInstallmentsAmt'] = this.addServiceForm.get('installmentAmount')?.value;
     formData['downPayment'] = this.addServiceForm.get('downPayment')?.value;
@@ -514,9 +515,11 @@ export class AddServiceComponent implements OnInit, OnDestroy {
         }
         else {
           this.toastrService.success(response.message, 'Success');
+          console.log('save response',response)
           this.popUpForm.patchValue({
             transactionId: response.transactionId,
-            attachId: response.attachId
+            attachId: response.attachId,
+            pfid:response.pfId,
           })
           this.parentForm.reset();
           this.financialCalculationForm.reset();
@@ -692,9 +695,11 @@ export class AddServiceComponent implements OnInit, OnDestroy {
       }
       // To add default current date...
       var now = new Date();
+      console.log(this.addServiceForm.get('transDate')?.value);
       this.addServiceForm.patchValue({
         installmentsBegDate: moment(new Date(now.getFullYear(),now.getMonth()+1)).format("MMM-YYYY"),
         untilMonth: moment(new Date(now.getFullYear(),now.getMonth()+1)).format("MMM-YYYY"),
+        transDate:moment(new Date()).format("yyyy-MM-DD")
       })
       // To enable/disable PF Id text box.
       if (this.isPfIdExists) {
@@ -810,7 +815,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           englishName: response.englishName,
           arabicName: response.arabicName,
           empGender: response.empGender,
-          joinedDate: new Date(response.joinedDate),
+          joinedDate: moment(response.joinedDate).format("DD-MM-yyyy"),
           empBirthday: new Date(response.empBirthday),
           mobileNumber: response.mobileNumber,
           empMaritalStatus: +response.empMaritalStatus,
@@ -821,8 +826,8 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           lastSubscriptionPaid: response.lastSubscriptionPaid,
           subscriptionDueAmount: response.subscriptionDueAmount,
           subscriptionStatus: response.subscriptionStatus,
-          terminationDate: response.terminationDate,
-          endDate: response.endDate,
+          terminationDate: response.terminationDate ? moment(response.terminationDate).format("DD-MM-yyyy") : '',
+          endDate: response.endDate ? moment(response.endDate).format("DD-MM-yyyy") :  '',
           employeeStatus: response.employeeStatus,
           isKUEmployee: response.isKUEmployee,
           isOnSickLeave: response.isOnSickLeave,
@@ -901,7 +906,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           englishName: response.englishName,
           arabicName: response.arabicName,
           empGender: response.empGender,
-          joinedDate: new Date(response.joinedDate),
+          joinedDate: moment(response.joinedDate).format("DD-MM-yyyy"),
           empBirthday: new Date(response.empBirthday),
           mobileNumber: response.mobileNumber,
           empMaritalStatus: +response.empMaritalStatus,
@@ -912,8 +917,8 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           lastSubscriptionPaid: response.lastSubscriptionPaid,
           subscriptionDueAmount: response.subscriptionDueAmount,
           subscriptionStatus: response.subscriptionStatus,
-          terminationDate: response.terminationDate,
-          endDate: response.endDate,
+          terminationDate: response.terminationDate ? moment(response.terminationDate).format("DD-MM-yyyy") : '',
+          endDate: response.endDate ? moment(response.endDate).format("DD-MM-yyyy") :  '',
           employeeStatus: response.employeeStatus,
           isKUEmployee: response.isKUEmployee,
           isOnSickLeave: response.isOnSickLeave,
@@ -986,12 +991,13 @@ export class AddServiceComponent implements OnInit, OnDestroy {
         // To display other Accordians
         this.isSearched = true;
         this.common.ifEmployeeExists = true;
+        console.log('search new subscriber',response);
         this.employeeForm?.patchValue({
           employeeId: response.employeeId,
           englishName: response.englishName,
           arabicName: response.arabicName,
           empGender: response.empGender,
-          joinedDate: new Date(response.joinedDate),
+          joinedDate: moment(response.joinedDate).format("DD-MM-yyyy"),
           empBirthday: new Date(response.empBirthday),
           mobileNumber: response.mobileNumber,
           empMaritalStatus: +response.empMaritalStatus,
@@ -1002,8 +1008,8 @@ export class AddServiceComponent implements OnInit, OnDestroy {
           lastSubscriptionPaid: response.lastSubscriptionPaid,
           subscriptionDueAmount: response.subscriptionDueAmount,
           subscriptionStatus: response.subscriptionStatus,
-          terminationDate: response.terminationDate,
-          endDate: response.endDate,
+          terminationDate: response.terminationDate ? moment(response.terminationDate).format("DD-MM-yyyy") : '',
+          endDate: response.endDate ? moment(response.endDate).format("DD-MM-yyyy") :  '',
           employeeStatus: response.employeeStatus,
           isKUEmployee: response.isKUEmployee,
           isOnSickLeave: response.isOnSickLeave,
@@ -1020,6 +1026,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
         this.addServiceForm.patchValue({
           pfId: response.pfid
         })
+        
         this.common.PFId = response.pfid;
         this.common.subscribedDate = response.subscribedDate;
         this.common.terminationDate = response.terminationDate;

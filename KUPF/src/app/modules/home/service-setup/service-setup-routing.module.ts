@@ -19,6 +19,9 @@ import { CashierDraftComponent } from './cashier-draft/cashier-draft.component';
 import { FinancialDeliveryComponent } from './financial-delivery/financial-delivery.component';
 import { FinancialDraftComponent } from './financial-draft/financial-draft.component';
 import { ViewServiceDetailComponent } from './view-service-detail/view-service-detail.component';
+import { VoucherComponent } from './voucher/voucher.component';
+import { VoucherDetailsComponent } from './voucher-details/voucher-details.component';
+import { GeneralVoucherComponent } from './general-voucher/general-voucher.component';
 
 const routes: Routes = [
   { path: 'service-setup-details', component: ServiceSetupDetailsComponent },
@@ -38,7 +41,10 @@ const routes: Routes = [
   { path: 'cashier-draft', component: CashierDraftComponent },
   { path: 'financial-delivery', component: FinancialDeliveryComponent },
   { path: 'financial-draft', component: FinancialDraftComponent },
-  {path: 'view-service-detail/:transId',component:ViewServiceDetailComponent}
+  {path: 'view-service-detail/:transId',component:ViewServiceDetailComponent},
+  {path: 'voucher',component:VoucherComponent},
+  {path: 'voucher-details/:voucherId',component:VoucherDetailsComponent},
+  {path: 'general-voucher',component:GeneralVoucherComponent}
 ];
 
 @NgModule({

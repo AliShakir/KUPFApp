@@ -68,8 +68,8 @@ namespace API.DTOs
         public decimal? AllowDiscountAmount { get; set; }
         public string? KinName { get; set; }
         public string? KinMobile { get; set; }
-        public int? SubscriptionStatus { get; set; }
-        public int? EmpStatus { get; set; }
+        public string? SubscriptionStatus { get; set; }
+        public string? EmployeeStatus { get; set; }
 
         public DateTime? EndDate { get; set; }
         public DateTime? TerminationDate { get; set; }

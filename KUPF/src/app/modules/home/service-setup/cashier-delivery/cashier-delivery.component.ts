@@ -102,16 +102,7 @@ export class CashierDeliveryComponent implements OnInit {
       transId:new FormControl('')
     })
   }
-  onBankAccountSelect($event:any){  
-    this.dbCommonService.GetDraftNumberByBank($event.accountNumber).subscribe((response:any)=>{     
-      this.cashierDeliveryForm.patchValue({
-      draftNumber1:response
-    })    
-    },error=>{
-      console.log(error);
-    })
-    
-  }
+  
   redirectTo(uri: string) {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
       this.router.navigate([uri]));

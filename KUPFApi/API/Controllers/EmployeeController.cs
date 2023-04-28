@@ -111,5 +111,15 @@ namespace API.Controllers
             //await _context.SaveChangesAsync();
             return response;
         }
+
+        [HttpGet]
+        [Route("FilterEmployee")]
+        public async Task<PagedList<DetailedEmployeeDto>> FilterEmployeeListAsync([FromQuery] PaginationParams paginationParams, int filterVal)
+        {
+            var result = await _detailedEmployeeService.FilterEmployeeListAsync(paginationParams, filterVal);
+            Response.AddPaginationHeader(result.CurrentPage, result.PageSize, result.TotalCount, result.TotalPages);
+            return result;
+        }
+
     }
 }

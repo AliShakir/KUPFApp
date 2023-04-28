@@ -17,6 +17,8 @@ import { ReturnServiceApprovals } from '../models/ReturnServiceApprovals';
 import { SearchEmployeeDto } from '../models/SearchEmployeeDto';
 import { SelectServiceTypeDto } from '../models/ServiceSetup/SelectServiceTypeDto';
 import { ServiceSetupDto } from '../models/ServiceSetup/ServiceSetupDto';
+import { voucherDto } from '../models/VoucherDto';
+import { voucherDetailsDto } from '../models/voucherDetailsDto';
 
 @Injectable({
   providedIn: 'root'
@@ -108,7 +110,7 @@ export class FinancialService {
         //   postData[0].accountName = d.lblOtherAct5NameInEnglish;
         //   postData[0].arabicAccountName = d.lblOtherAct5NameInArabic;
         // }
-        
+         
         return this.httpClient.post(this.baseUrl +`FinancialService/SaveCOA`, postData);
         // .pipe(
         //   map((resp) => {
@@ -253,5 +255,10 @@ export class FinancialService {
   GenerateFinancialServiceSerialNo() { 
     return this.httpClient.get<any>(this.baseUrl + `FinancialService/GenerateFinancialServiceSerialNo`);    
   }
-  
+  GetVouchers() { 
+    return this.httpClient.get<voucherDto[]>(this.baseUrl + `Account/GetVoucher`);    
+  }
+  GetVoucherDetails(voucherId:number) { 
+    return this.httpClient.get<voucherDetailsDto[]>(this.baseUrl + `Account/GetVoucherDetails?voucherId=${voucherId}`);    
+  }
 }

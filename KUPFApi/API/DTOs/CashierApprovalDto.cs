@@ -34,5 +34,16 @@ namespace API.DTOs
         public DateTime? ReceivedDate2 { get; set; }
         public long? CrupId  { get; set; }
         public DateTime? EntryDate  { get; set; }
+        public string? UserId { get; set; }
+        public int? AccountantID { get; set; }
+        public string? BenefeciaryName { get; set; }
+        public string? ChequeNumber { get; set; }
+        public DateTime? ChequeDate { get; set; }
+        public decimal? ChequeAmount { get; set; }
+        public DateTime? CollectedDate { get; set; }
+        public string? CollectedBy { get; set; }
+        public string? Relationship { get; set; }
+        public string? CollectedPersonCID { get; set; }
+        public bool IsDraftCreated { get; set; }
     }
 }

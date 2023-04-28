@@ -137,9 +137,7 @@ export class DbCommonService {
   GetDraftInformationByEmployeeId(employeeId:number, tenentId:number, locationId:number, transactionId:number) { 
     return this.httpClient.get<CashierApprovalDto[]>(this.baseUrl + `Common/GetDraftInformationByEmployeeId?employeeId=${employeeId}&tenentId=${tenentId}&locationId=${locationId}&transactionId=${transactionId}`);    
   }
-  GetDraftNumberByBank(accountNo:number) { 
-    return this.httpClient.get<CashierApprovalDto[]>(this.baseUrl + `Common/GetDraftNumberByBank/${accountNo}`);    
-  }
+  
 
   //#region Add Service
   GetSelectedServiceType(tenentId: number) {

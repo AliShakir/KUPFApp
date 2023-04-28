@@ -50,6 +50,7 @@ export class CashierDraftComponent implements OnInit {
     this.selectBankAccount$ = this.dbCommonService.GetBankAccounts(tenantId, locationId);
     //
     this.dbCommonService.GetDraftInformationByEmployeeId(this.employeeId, tenantId, locationId, this.transId).subscribe((response: any) => {
+      
       this.cashierDraftForm.patchValue({
         totalAmount: response.totalAmount.toFixed(3),
         bankAccount1: +response.bankAccount1,
@@ -64,7 +65,12 @@ export class CashierDraftComponent implements OnInit {
         arabicName: response.arabicName,
         englishName: response.englishName,
         transId:this.transId,
-        employeeId:this.employeeId
+        employeeId:this.employeeId,
+        benefeciaryName:response.benefeciaryName,
+        accountantId:response.accountantID,
+        chequeAmount:response.chequeAmount,
+        chequeDate :response.chequeDate ? new Date(response.chequeDate) : new Date()
+
       })
     }, error => {
       console.log(error);
@@ -101,19 +107,18 @@ export class CashierDraftComponent implements OnInit {
       arabicName: new FormControl(),
       englishName: new FormControl(),
       deliveryDate1: new FormControl(null),
-      transId:new FormControl('')
+      transId:new FormControl(''),
+      accountantId: new FormControl(''),
+      benefeciaryName: new FormControl(''),
+      chequeNumber: new FormControl(''),
+      chequeDate: new FormControl(''),
+      chequeAmount: new FormControl(''),
+      collectedBy: new FormControl(''),
+      relationship: new FormControl(''),
+      collectedPersonCID: new FormControl(''),
     })
   }
-  onBankAccountSelect($event:any){    
-    this.dbCommonService.GetDraftNumberByBank($event.accountNumber).subscribe((response:any)=>{     
-      this.cashierDraftForm.patchValue({
-      draftNumber1:response
-    })    
-    
-    },error=>{
-      console.log(error);
-    })
-  }
+  
   
   redirectTo(uri: string) {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>

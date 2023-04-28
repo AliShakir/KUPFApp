@@ -90,6 +90,7 @@ export class CashierApprovalComponent implements OnInit {
       this.cashierApprovalDto.paginator = this.paginator;
       this.cashierApprovalDto.sort = this.sort;
       this.isLoadingCompleted = true;
+      console.log(response)
     }, error => {
       console.log(error);
       this.dataLoadingStatus = 'Error fetching the data';

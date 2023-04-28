@@ -25,7 +25,7 @@ namespace API.DTOs
         public decimal LastSubscriptionPaid { get; set; }
         public decimal SubscriptionDueAmount { get; set; }
         public string SubscriptionStatus { get; set; }
-        public string TerminationDate { get; set; }
+        public DateTime? TerminationDate { get; set; }
         public DateTime? EndDate { get; set; }
         public string EmployeeStatus { get; set; }
         public bool? IsKUEmployee { get; set; }

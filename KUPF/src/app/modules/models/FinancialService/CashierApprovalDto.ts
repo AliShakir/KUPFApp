@@ -23,4 +23,5 @@ export interface CashierApprovalDto {
     status:string;
     active:boolean;
     crupId:any;
+    isDraftCreated:boolean;
 }

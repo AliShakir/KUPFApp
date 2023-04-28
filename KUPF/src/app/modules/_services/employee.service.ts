@@ -55,4 +55,7 @@ export class EmployeeService {
   GetAllEmployees(userParams: UserParams) {    
     return this.httpClient.get(this.baseUrl + `Employee/GetEmployees?PageNumber=${userParams.pageNumber}&PageSize=${userParams.pageSize}`, {observe: 'response'});    
   }
+  FilterEmployee(userParams: UserParams,filterVal:any) {    
+    return this.httpClient.get(this.baseUrl + `Employee/FilterEmployee?PageNumber=${userParams.pageNumber}&PageSize=${userParams.pageSize}&filterVal=${filterVal}`, {observe: 'response'});    
+  }
 }

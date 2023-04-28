@@ -17,5 +17,6 @@ namespace API.Servivces.Interfaces.DetailedEmployee
         Task<int> DeleteEmployeeAsync(DetailedEmployeeDto detailedEmployeeDto);
          
         Task<string> ValidateEmployeeData(DetailedEmployeeDto detailedEmployeeDto);
+        Task<PagedList<DetailedEmployeeDto>> FilterEmployeeListAsync(PaginationParams paginationParams, int filterVal);
     }
 }

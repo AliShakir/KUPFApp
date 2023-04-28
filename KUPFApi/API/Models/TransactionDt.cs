@@ -19,19 +19,19 @@ namespace API.Models
         public decimal? ReceivedAmount { get; set; }
         public decimal? PendingAmount { get; set; }
         public decimal? DiscountAmount { get; set; }
-        public string DiscountReference { get; set; }
-        public string UniversityBatchNo { get; set; }
+        public string? DiscountReference { get; set; }
+        public string? UniversityBatchNo { get; set; }
         public DateTime? ReceivedDate { get; set; }
-        public string EffectedAccount { get; set; }
-        public string OtherReference { get; set; }
+        public string? EffectedAccount { get; set; }
+        public string? OtherReference { get; set; }
         public int? Activityid { get; set; }
         public long? CrupId { get; set; }
-        public string Glpost { get; set; }
-        public string Glpost1 { get; set; }
-        public string Glpostref1 { get; set; }
-        public string Glpostref { get; set; }
+        public string? Glpost { get; set; }
+        public string? Glpost1 { get; set; }
+        public string? Glpostref1 { get; set; }
+        public string? Glpostref { get; set; }
         public bool? Active { get; set; }
-        public string Switch1 { get; set; }
+        public string? Switch1 { get; set; }
         public int? DelFlag { get; set; }
         public string? Userid { get; set; }
         public DateTime? Entrydate { get; set; }

@@ -1,6 +1,7 @@
 ﻿using API.DTOs;
 using API.DTOs.DropDown;
 using API.DTOs.EmployeeDto;
+using API.Helpers;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -121,11 +122,14 @@ namespace API.Servivces.Interfaces
 
         Task<List<CountriesDto>> GetCountryList();
         long CreateMyTransIdForTransactionHD();
-        int GetDraftNumberByBank(long accountNo);
         long CreateEmployeePFId(int tenentId, int locationId);
+<<<<<<< Updated upstream
 
         List<dashboardResponseDto> GetDashboardTotalEmployees();
 
+=======
+        
+>>>>>>> Stashed changes
 
     }
 }

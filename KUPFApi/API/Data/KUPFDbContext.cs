@@ -4011,20 +4011,10 @@ namespace API.Models
                 entity.Property(e => e.EmployeeId).HasColumnName("employeeID");
 
                 entity.Property(e => e.Glpost)
-                    .IsRequired()
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .HasColumnName("GLPOST")
-                    .HasDefaultValueSql("('2')")
-                    .IsFixedLength(true);
+                    .HasColumnName("GLPOST");
 
                 entity.Property(e => e.Glpost1)
-                    .IsRequired()
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .HasColumnName("GLPOST1")
-                    .HasDefaultValueSql("('2')")
-                    .IsFixedLength(true);
+                    .HasColumnName("GLPOST1");
 
                 entity.Property(e => e.Glpostref)
                     .HasMaxLength(20)

@@ -1,6 +1,7 @@
 ﻿using API.DTOs;
 using API.DTOs.DropDown;
 using API.DTOs.EmployeeDto;
+using API.Helpers;
 using API.Models;
 using API.Servivces.Implementation;
 using API.Servivces.Interfaces;
@@ -471,14 +472,7 @@ namespace API.Controllers
             var result = _commonServiceService.GetDashboardLoanDetails();
             return result;
         }
-        [HttpGet]
-        [Route("GetDraftNumberByBank/{accountNo}")]
-        public int GetDraftNumberByBank(long accountNo)
-        {
-            int result = _commonServiceService.GetDraftNumberByBank(accountNo);
-            return result;
-        }
-        
+                
         [HttpGet]
         [Route("GetCountryList")]
         public async Task<List<CountriesDto>> GetCountryList()
@@ -486,8 +480,7 @@ namespace API.Controllers
             var result = await _commonServiceService.GetCountryList();
             return result;
         }
-
-
+        
 
 
 

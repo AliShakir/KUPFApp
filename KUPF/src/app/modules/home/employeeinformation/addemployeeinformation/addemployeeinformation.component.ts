@@ -44,7 +44,7 @@ export class AddemployeeinformationComponent implements OnInit {
   terminations$: Observable<SelectTerminationsDto[]>;
   countries$: Observable<CountriesDto[]>;
   //
-  contractType$:Observable<SelectOccupationsDto[]>;
+  contractType$: Observable<SelectOccupationsDto[]>;
   //
   editEmployeeInformation$: Observable<DetailedEmployee[]>;
   employeeId: any;
@@ -87,6 +87,7 @@ export class AddemployeeinformationComponent implements OnInit {
   //
   popUpForm: FormGroup;
   closeResult: string = '';
+  isOK: boolean = false;
   constructor(
     private cdr: ChangeDetectorRef,
     private employeeService: EmployeeService,
@@ -94,8 +95,8 @@ export class AddemployeeinformationComponent implements OnInit {
     private commonDbService: DbCommonService,
     private fb: FormBuilder,
     private activatedRout: ActivatedRoute,
-    private router:Router,
-    private modalService:NgbModal) {
+    private router: Router,
+    private modalService: NgbModal) {
 
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-dark-blue' })
     const loadingSubscr = this.isLoading$
@@ -108,7 +109,7 @@ export class AddemployeeinformationComponent implements OnInit {
 
     this.countries$ = this.commonDbService.GetCountryList();
   }
-  
+
   selectedOccupation: number | undefined;
   ngOnInit(): void {
     this.initializeForm();
@@ -159,13 +160,13 @@ export class AddemployeeinformationComponent implements OnInit {
     //#endregion
     // Get and fill data in Edit Mode...
     if (this.employeeId != null) {
-      
+      this.isOK = true;
       this.editEmployeeInformation$ = this.employeeService.GetEmployeeById(this.employeeId);
       this.editEmployeeInformation$.subscribe((response: any) => {
-        console.log('Edit employee',response);        
+
         this.parentForm.patchValue({
           addEmployeeForm: {
-            employeeId: this.employeeId,
+            employeeId: response.employeeId,
             englishName: response.englishName,
             arabicName: response.arabicName,
             empBirthday: response.empBirthday ? new Date(response.empBirthday) : '',
@@ -176,19 +177,20 @@ export class AddemployeeinformationComponent implements OnInit {
             empWorkEmail: response.empWorkEmail,
             next2KinName: response.next2KinName,
             next2KinMobNumber: response.next2KinMobNumber,
-            isKUEmployee:response.isKUEmployee,
-            isMemberOfFund:response.isMemberOfFund,
-            isOnSickLeave:response.isOnSickLeave,
-            nationCode:response.nationCode            
+            isKUEmployee: response.isKUEmployee,
+            isMemberOfFund: response.isMemberOfFund,
+            isOnSickLeave: response.isOnSickLeave,
+            nationCode: response.nationCode,
+            joinedDate: response.joinedDate ? new Date(response.joinedDate) : '',
           },
-          jobDetailsForm: {            
+          jobDetailsForm: {
             department: response.department,
             departmentName: +response.departmentName,
             salary: response.salary,
             empCidNum: response.empCidNum,
             empPaciNum: response.empPaciNum,
             empOtherId: response.empOtherId,
-            contractType:+response.contractType
+            contractType: +response.contractType
           },
           membershipForm: {
             membership: response.membership,
@@ -209,7 +211,6 @@ export class AddemployeeinformationComponent implements OnInit {
           }
         })
       })
-
     }
 
     this.membershipForm.get('termination')?.disable();
@@ -217,7 +218,7 @@ export class AddemployeeinformationComponent implements OnInit {
 
   initializeForm() {
     this.addEmployeeForm = this.fb.group({
-      employeeId: new FormControl('0'),
+      employeeId: new FormControl('', Validators.required),
       englishName: new FormControl('', Validators.required),
       arabicName: new FormControl('', Validators.required),
       empBirthday: new FormControl('', Validators.required),
@@ -231,8 +232,9 @@ export class AddemployeeinformationComponent implements OnInit {
       isKUEmployee: new FormControl('true'),
       isOnSickLeave: new FormControl(''),
       isMemberOfFund: new FormControl(''),
-      nationCode : new FormControl('',Validators.required),
-      nationName: new FormControl('')
+      nationCode: new FormControl('', Validators.required),
+      nationName: new FormControl(''),
+      joinedDate: new FormControl('', Validators.required),
     })
     this.parentForm.setControl('addEmployeeForm', this.addEmployeeForm);
   }
@@ -241,10 +243,10 @@ export class AddemployeeinformationComponent implements OnInit {
       department: new FormControl('', Validators.required),
       departmentName: new FormControl('', Validators.required),
       salary: new FormControl(''),
-      empCidNum: new FormControl('', [Validators.required,Validators.maxLength(12)]),
+      empCidNum: new FormControl('', [Validators.required, Validators.maxLength(12)]),
       empPaciNum: new FormControl(''),
       empOtherId: new FormControl(''),
-      contractType:new FormControl('',Validators.required)
+      contractType: new FormControl('', Validators.required)
     })
     this.parentForm.setControl('jobDetailsForm', this.jobDetailsForm);
   }
@@ -270,74 +272,81 @@ export class AddemployeeinformationComponent implements OnInit {
 
   //Save employee data...
   submitForm() {
-    
+
     var data = JSON.parse(localStorage.getItem("user")!);
     const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
     const locationId = data.map((obj: { locationId: any; }) => obj.locationId);
     const username = data.map((obj: { username: any; }) => obj.username);
     const userId = data.map((obj: { userId: any; }) => obj.userId);
-    //  TO CONVER OBJECT ARRAY AS SIMPLE ARRAY.
+
+    let empId = this.addEmployeeForm.get('employeeId')?.value
     this.parentForm.controls.addEmployeeForm.patchValue({
       empGender: +this.parentForm.value.addEmployeeForm.empGender,
       empMaritalStatus: +this.parentForm.value.addEmployeeForm.empMaritalStatus,
+      employeeId: +empId,
     });
+    //  TO CONVER OBJECT ARRAY AS SIMPLE ARRAY.
     let formData = {
       ...this.parentForm.value.addEmployeeForm,
       ...this.parentForm.value.jobDetailsForm,
       ...this.parentForm.value.membershipForm,
       ...this.parentForm.value.financialForm,
       tenentID: tenantId[0],
-      locationId:locationId[0],
-      username:username[0],
-      userId:userId[0]
+      locationId: locationId[0],
+      username: username[0],
+      userId: userId[0]
     }
     //
     this.isFormSubmitted = true;
     //
-    //if (this.addEmployeeForm.valid) {      
-      if(this.employeeId != null){              
-        this.employeeService.UpdateEmployee(formData).subscribe(() => {
-          this.toastrService.success('Saved successfully', 'Success');
-          this.parentForm.reset();
-          this.router.navigateByUrl('/employee/view-employee') 
-        }, error => {
-            if (error.status === 500) {
-              this.toastrService.error('Something went wrong', 'Error');
-            }
-          })
-      }
-      else{ 
-         this.employeeService.ValidateEmployeeData(formData).subscribe((response:any) => {
-          if(response == "1")
-            {
-             this.toastrService.error('Duplicate Civil Id, please enter a different Civil Id', 'Error');             
-            }
-            else if(response == "2")
-            {              
-              this.popUpForm.patchValue({
-                errorMessage: '?Duplicate mobile number found, do you want to proceed'
-              })
-              this.openPopUpModal(this.popupModal,formData);              
-            }
-            else if(response == "3")
-            {
-              this.popUpForm.patchValue({
-                errorMessage: '?Duplicate email found, do you want to proceed'
-              })
-              this.openPopUpModal(this.popupModal,formData);
-            } 
-            else if(response == "0")
-            {              
-              this.employeeService.AddEmployee(formData).subscribe((response:any) => {  
-              this.toastrService.success('Saved successfully', 'Success');                  
-              this.parentForm.reset();
-              this.addEmployeeForm.controls['employeeId'].setValue(0);
-              this.router.navigateByUrl('/employee/view-employee') 
+    if (this.addEmployeeForm.valid) {      
+    if(this.employeeId != null){              
+      this.employeeService.UpdateEmployee(formData).subscribe(() => {
+        this.toastrService.success('Saved successfully', 'Success');
+        this.parentForm.reset();
+        this.router.navigateByUrl('/employee/view-employee') 
+      }, error => {
+          if (error.status === 500) {
+            this.toastrService.error('Something went wrong', 'Error');
+          }
+        })
+    }
+    else{ 
+       this.employeeService.ValidateEmployeeData(formData).subscribe((response:any) => {
+        if(response == "1")
+          {
+           this.toastrService.error('Duplicate Civil Id, please enter a different Civil Id', 'Error');             
+          }
+          else if(response == "2")
+          {              
+            this.popUpForm.patchValue({
+              errorMessage: '?Duplicate mobile number found, do you want to proceed'
             })
-            }        
-        }); 
-      } 
-    //}
+            this.openPopUpModal(this.popupModal,formData);              
+          }
+          else if(response == "3")
+          {
+            this.popUpForm.patchValue({
+              errorMessage: '?Duplicate email found, do you want to proceed'
+            })
+            this.openPopUpModal(this.popupModal,formData);
+          } 
+          else if(response == "4")
+          {
+            this.toastrService.error('Duplicate Employee Id, please enter a different Employee Id', 'Error'); 
+          }
+          else if(response == "0")
+          {              
+            this.employeeService.AddEmployee(formData).subscribe((response:any) => {  
+            this.toastrService.success('Saved successfully', 'Success');                  
+            this.parentForm.reset();
+            this.addEmployeeForm.controls['employeeId'].setValue(0);
+            this.router.navigateByUrl('/employee/view-employee') 
+          })
+          }        
+      }); 
+    } 
+    }
   }
   //
   get empForm() { return this.addEmployeeForm.controls; }
@@ -346,7 +355,7 @@ export class AddemployeeinformationComponent implements OnInit {
   addChildComponent(): void {
     this.showChildComponent = true;
   }
-  onCountryChange(event:any){
+  onCountryChange(event: any) {
     console.log(event);
     this.addEmployeeForm.controls['nationName'].setValue(event.counamE1);
   }
@@ -365,28 +374,28 @@ export class AddemployeeinformationComponent implements OnInit {
   ngOnDestroy() {
     this.unsubscribe.forEach((sb) => sb.unsubscribe());
   }
-//#region Delete operation and Modal Config
-openPopUpModal(content: any, formData:any) {
-  this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {  
-    this.closeResult = `Closed with: ${result}`;        
-    if (result === 'yes') {        
-      this.employeeService.AddEmployee(formData).subscribe((response:any) => {          
-            this.toastrService.success('Saved successfully', 'Success');                  
+  //#region Delete operation and Modal Config
+  openPopUpModal(content: any, formData: any) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+      if (result === 'yes') {
+        this.employeeService.AddEmployee(formData).subscribe((response: any) => {
+          this.toastrService.success('Saved successfully', 'Success');
           this.parentForm.reset();
-        })      
-    }  
-  }, (reason) => {  
-    this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;  
-  });
-}
-private getDismissReason(reason: any): string {
-  if (reason === ModalDismissReasons.ESC) {
-    return 'by pressing ESC';
-  } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-    return 'by clicking on a backdrop';
-  } else {
-    return `with: ${reason}`;
+        })
+      }
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
   }
-}
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
 
 }

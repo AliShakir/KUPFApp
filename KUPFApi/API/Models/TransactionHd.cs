@@ -23,6 +23,10 @@ namespace API.Models
         public string TransDocNo { get; set; }
         public string? UserDefinedNumber { get; set; }
         public long? BankId { get; set; }
+        public string? VoucherNumber { get; set; }
+        public DateTime? VoucherDate { get; set; }
+        public int? AccountantID { get; set; }
+        public string? BenefeciaryName { get; set; }
         public string? ChequeNumber { get; set; }
         public DateTime? ChequeDate { get; set; }
         public decimal? ChequeAmount { get; set; }
@@ -137,5 +141,6 @@ namespace API.Models
         public decimal? AmountMinus { get; set; }
         public decimal? AmountPlus { get; set; }
         public string? SystemRemarks { get; set; }
+        public bool IsDraftCreated { get; set; }
     }
 }

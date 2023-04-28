@@ -60,8 +60,7 @@
                             </label>
                         </div>
                         <ng-select [items]="selectBankAccount$ | async" bindLabel="accountName"
-                            formControlName="bankAccount1" bindValue="accountNumber" lang="AR-SA"
-                            (change)="onBankAccountSelect($event)">
+                            formControlName="bankAccount1" bindValue="accountNumber" lang="AR-SA">
                         </ng-select>
                         <span class="text-danger"
                             *ngIf="isFormSubmitted && cashierDeliveryFrm.bankAccount1.errors?.required">

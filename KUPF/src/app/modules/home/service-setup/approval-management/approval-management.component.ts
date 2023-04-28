@@ -380,7 +380,7 @@ export class ApprovalManagementComponent implements OnInit {
         this.rejectServiceForm.controls['tenentId'].setValue(this.tenentId[0]);
         this.rejectServiceForm.controls['locationId'].setValue(this.locationId[0]);
         this.rejectServiceForm.controls['username']?.setValue(this.username[0]);
-        this.rejectServiceForm.controls['userId']?.setValue(this.userId[0]);
+        this.rejectServiceForm.controls['userId']?.setValue(this.username[0]);
 
         this.financialService.ManagerRejectServiceAsync(this.rejectServiceForm.value).subscribe(response => {
           this.toastrService.success('.Service rejected successfully', 'Success');

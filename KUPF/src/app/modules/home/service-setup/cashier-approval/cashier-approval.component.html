@@ -20,10 +20,11 @@
                     <table mat-table class="w-100" [dataSource]="cashierApprovalDto" matSort>
                         <ng-container matColumnDef="action">
                             <th mat-header-cell *matHeaderCellDef>Action</th>
-                            <td mat-cell *matCellDef="let item" class="text-right w-30">
+                            <td mat-cell *matCellDef="let item" class="text-right w-40">
                                 <button mat-raised-button color="warn" (click)="onDetailsClick(item.transId)">Details</button> &nbsp;                                 
                                 <button mat-raised-button color="primary" (click)="navigateToCashierDraft(item.transId,item.employeeId)" [hidden]="isShowAllChecked">Draft</button> &nbsp;
-                                <button mat-raised-button color="accent"  (click)="navigateToCashierDelivery(item.transId,item.employeeId)" [hidden]="isShowAllChecked">Deliver</button>
+                                <button mat-raised-button color="accent"  (click)="navigateToCashierDelivery(item.transId,item.employeeId)" [hidden]="isShowAllChecked" [disabled]="!item.isDraftCreated">Deliver</button>&nbsp;
+                                <button mat-raised-button color="warn" routerLink="/service-setup/voucher">JV</button> 
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="transId">

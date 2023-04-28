@@ -48,7 +48,7 @@ namespace API.Servivces.Implementation
             {
                 FinancialServiceResponse response = new FinancialServiceResponse();
                 var newTransaction = _mapper.Map<TransactionHd>(transactionHdDto);
-
+                string pfid = string.Empty;
                 if (transactionHdDto.IsKUEmployee != true)
                 {
                     return new FinancialServiceResponse
@@ -238,7 +238,6 @@ namespace API.Servivces.Implementation
                                     RejectionRemarks = null,
                                     AttachId = attachId,
                                     Status = "ManagerApproval",
-                                    CrupId = 1,
                                     Userid = newTransaction.Userid,
                                     Entrydate = DateTime.Now,
                                     Entrytime = DateTime.Now,
@@ -261,9 +260,6 @@ namespace API.Servivces.Implementation
                                 var transactionHddApprovals = _mapper.Map<TransactionHddapprovalDetail>(transactionHddApprovalsDto);
                                 transactionHddApprovals.MasterServiceId = maxSwitch;
                                 await _context.TransactionHddapprovalDetails.AddAsync(transactionHddApprovals);
-
-                                await _context.SaveChangesAsync();
-                                _context.ChangeTracker.Clear();
                                 srId++;
                             }
                         }
@@ -299,8 +295,8 @@ namespace API.Servivces.Implementation
                         newTransaction.AttachId = attachId;
                         newTransaction.AllowDiscountDefault = transactionHdDto.AllowDiscountDefault;
                         newTransaction.PeriodBegin = (int)transactionHdDto.PeriodCode;
-                        newTransaction.ServiceId =(int)newTransaction.Mytransid;
-                        if(serviceApprovals != null)
+                        newTransaction.ServiceId = (int)newTransaction.Mytransid;
+                        if (serviceApprovals != null)
                         {
                             newTransaction.SerApproval1 = serviceApprovals.SerApproval1;
                             newTransaction.ApprovalBy1 = serviceApprovals.ApprovalBy1;
@@ -326,30 +322,12 @@ namespace API.Servivces.Implementation
                             newTransaction.ApprovalBy6 = serviceApprovals.ApprovalBy6;
                             newTransaction.ApprovedDate6 = serviceApprovals.ApprovedDate6;
                         }
-                        
-                        await _context.TransactionHds.AddAsync(newTransaction);
-                        await _context.SaveChangesAsync();
 
-                        
-                        bool isNextYear = false;
-                        for (int i = 1; i <= 24; i++)
+                        await _context.TransactionHds.AddAsync(newTransaction);
+
+                        var periodCode = CommonMethods.CreateMemberShipPeriodCode();
+                        foreach (var item in periodCode)
                         {
-                            int monthNo = 1;
-                            //
-                            var nextMonth = DateTime.Now.AddMonths(i).ToString("MM");
-                            monthNo = Convert.ToInt32(nextMonth)+1;
-                            string customPrd = string.Empty;
-                            var currentYear = DateTime.Now.Year;
-                            if (monthNo > 12)
-                            {
-                                isNextYear = true;
-                                
-                            }
-                            if (isNextYear)
-                            {
-                                currentYear = DateTime.Now.AddYears(1).Year;
-                            }
-                            customPrd  = currentYear + "" + nextMonth;
                             var data = new TransactionDtDto
                             {
                                 TenentId = transactionHdDto.TenentId,
@@ -359,46 +337,38 @@ namespace API.Servivces.Implementation
                                 EmployeeId = transactionHdDto.EmployeeId,
                                 InstallmentNumber = myId,
                                 AttachId = attachId,
-                                PeriodCode = Convert.ToInt64(customPrd),
+                                PeriodCode = Convert.ToInt64(item),
                                 InstallmentAmount = transactionHdDto.Totamt,
                                 ReceivedAmount = 0,
                                 PendingAmount = transactionHdDto.InstallmentAmount,
-                                DiscountAmount = newTransaction.Discount,                                
+                                DiscountAmount = newTransaction.Discount,
                                 DiscountReference = null,
                                 UniversityBatchNo = null,
                                 ReceivedDate = null,
                                 EffectedAccount = null,
                                 OtherReference = null,
                                 Activityid = null,
-                                CrupId = null,
-                                Glpost = null,
-                                Glpost1 = null,
-                                Glpostref = null,
-                                Glpostref1 = null,
-                                Active = false,
-                                Switch1 = null,
-                                DelFlag = null,
                                 InstallmentsBegDate = transactionHdDto.InstallmentsBegDate,
                                 UntilMonth = transactionHdDto.UntilMonth,
                                 Userid = newTransaction.Userid,
                                 Entrydate = DateTime.Now,
-                                
+
                             };
                             var transactionDt = _mapper.Map<TransactionDt>(data);
                             transactionDt.PendingAmount = 0;
                             transactionDt.DiscountAmount = 0;
                             await _context.TransactionDts.AddAsync(transactionDt);
-                            await _context.SaveChangesAsync();
-                            _context.ChangeTracker.Clear();
                             myId++;
                         }
+                       
                         // Update detailedEmployee if termination is true need to update the detailed employee...
-                        employeeMembership.MembershipJoiningDate = DateTime.Now;
-                        employeeMembership.SubscribedDate = DateTime.Now;
+                        employeeMembership.MembershipJoiningDate = newTransaction.InstallmentsBegDate;
+                        employeeMembership.SubscribedDate = newTransaction.InstallmentsBegDate;
                         employeeMembership.AgreedSubAmount = newTransaction.Totamt;
                         employeeMembership.Subscription_status = 2;
                         employeeMembership.EmpStatus = 1;
                         employeeMembership.Pfid = _commonService.CreateEmployeePFId(newTransaction.TenentId, (int)newTransaction.LocationId).ToString();
+                        pfid = employeeMembership.Pfid;
                         employeeMembership.SubscriptionDate = DateTime.Now;
                         _context.DetailedEmployees.Update(employeeMembership);
                         await _context.SaveChangesAsync();
@@ -627,54 +597,58 @@ namespace API.Servivces.Implementation
 
                     else if (transactionHdDto.ServiceTypeId == 22) // Financial Loan -  قروض مالية
                     {
-                        #region Financial Loan -  قروض مالية
+                        #region Financial Loan General
+
+                        #endregion
+
+                        #region Hajj Loan
                         var employeeMembership = _context.DetailedEmployees.FirstOrDefault(c => c.EmployeeId == transactionHdDto.EmployeeId);
                         if (transactionHdDto.ServiceSubTypeId == 5)
                         {
-                            // To make sure Employee dont have any due Loan amount
-                            var dueLoanamount = (from hd in _context.TransactionHds
-                                                 join dt in _context.TransactionDts
-                                                 on hd.Mytransid equals dt.Mytransid
-                                                 where hd.EmployeeId == transactionHdDto.EmployeeId &&
-                                                 hd.TenentId == transactionHdDto.TenentId &&
-                                                 hd.LocationId == transactionHdDto.LocationId &&
-                                                 hd.ServiceTypeId != 1 || hd.ServiceTypeId != 8
-                                                 select new
-                                                 {
-                                                     hd,
-                                                     dt
-                                                 }).Where(x => x.hd.EmployeeId == transactionHdDto.EmployeeId).Count();
-                            // To make sure Employee is not sponsored for the pending Loan Amount
-                            var pendingLoanAmount = (from hd in _context.TransactionHds
-                                                     join dt in _context.TransactionDts
-                                                     on hd.Mytransid equals dt.Mytransid
-                                                     where hd.SponserProvidentID == transactionHdDto.EmployeeId &&
-                                                     hd.TenentId == transactionHdDto.TenentId &&
-                                                     hd.LocationId == transactionHdDto.LocationId &&
-                                                     hd.ServiceTypeId != 1 || hd.ServiceTypeId != 8
-                                                     select new
-                                                     {
-                                                         hd,
-                                                         dt
-                                                     }).Where(x => x.hd.EmployeeId == transactionHdDto.EmployeeId).Count();
-                            if (dueLoanamount != 0)
-                            {
-                                return new FinancialServiceResponse
-                                {
-                                    IsSuccess = false,
-                                    Message = "Employee have due Loan amount"
-                                };
-                            }
-                            else if (pendingLoanAmount != 0)
-                            {
-                                return new FinancialServiceResponse
-                                {
-                                    IsSuccess = false,
-                                    Message = "Employee is sponsored for the pending Loan Amount"
-                                };
-                            }
-                            else
-                            {
+                            //// To make sure Employee dont have any due Loan amount
+                            //var dueLoanamount = (from hd in _context.TransactionHds
+                            //                     join dt in _context.TransactionDts
+                            //                     on hd.Mytransid equals dt.Mytransid
+                            //                     where hd.EmployeeId == transactionHdDto.EmployeeId &&
+                            //                     hd.TenentId == transactionHdDto.TenentId &&
+                            //                     hd.LocationId == transactionHdDto.LocationId &&
+                            //                     hd.ServiceTypeId != 1 || hd.ServiceTypeId != 8
+                            //                     select new
+                            //                     {
+                            //                         hd,
+                            //                         dt
+                            //                     }).Where(x => x.hd.EmployeeId == transactionHdDto.EmployeeId).Count();
+                            //// To make sure Employee is not sponsored for the pending Loan Amount
+                            //var pendingLoanAmount = (from hd in _context.TransactionHds
+                            //                         join dt in _context.TransactionDts
+                            //                         on hd.Mytransid equals dt.Mytransid
+                            //                         where hd.SponserProvidentID == transactionHdDto.EmployeeId &&
+                            //                         hd.TenentId == transactionHdDto.TenentId &&
+                            //                         hd.LocationId == transactionHdDto.LocationId &&
+                            //                         hd.ServiceTypeId != 1 || hd.ServiceTypeId != 8
+                            //                         select new
+                            //                         {
+                            //                             hd,
+                            //                             dt
+                            //                         }).Where(x => x.hd.EmployeeId == transactionHdDto.EmployeeId).Count();
+                            //if (dueLoanamount != 0)
+                            //{
+                            //    return new FinancialServiceResponse
+                            //    {
+                            //        IsSuccess = false,
+                            //        Message = "Employee have due Loan amount"
+                            //    };
+                            //}
+                            //else if (pendingLoanAmount != 0)
+                            //{
+                            //    return new FinancialServiceResponse
+                            //    {
+                            //        IsSuccess = false,
+                            //        Message = "Employee is sponsored for the pending Loan Amount"
+                            //    };
+                            //}
+                            //else
+                            //{
                                 //
                                 int totalMonths = CommonMethods.CalculateMembershipDuration((DateTime)employeeMembership.JoinedDate);
                                 if (totalMonths < 6)
@@ -701,10 +675,10 @@ namespace API.Servivces.Implementation
                                 newTransaction.MasterServiceId = maxSwitch;
                                 newTransaction.Active = false;
                                 newTransaction.AllowDiscountDefault = transactionHdDto.AllowDiscountDefault;
+                                newTransaction.ServiceId = (int)newTransaction.Mytransid;
                                 await _context.TransactionHds.AddAsync(newTransaction);
-                                await _context.SaveChangesAsync();
+                                
                                 myId = 1;
-
                                 // Add record to TransactionDT
                                 var data = new TransactionDtDto
                                 {
@@ -726,26 +700,28 @@ namespace API.Servivces.Implementation
                                     EffectedAccount = null,
                                     OtherReference = null,
                                     Activityid = null,
-                                    CrupId = 1,
-                                    Glpost = "1",
-                                    Glpost1 = null,
-                                    Glpostref = "1",
-                                    Glpostref1 = "1",
-                                    Active = true,
-                                    Switch1 = null,
-                                    DelFlag = null,
                                     InstallmentsBegDate = transactionHdDto.InstallmentsBegDate,
                                     UntilMonth = transactionHdDto.UntilMonth,
                                     Userid = newTransaction.Userid,
                                     Entrydate = DateTime.Now
                                 };
                                 var transactionDt = _mapper.Map<TransactionDt>(data);
+                                pfid = employeeMembership.Pfid;
                                 await _context.TransactionDts.AddAsync(transactionDt);
                                 await _context.SaveChangesAsync();
                                 _context.ChangeTracker.Clear();
-                            }
+                            //}
                         }
                         #endregion
+
+                        #region Consumption Loan
+
+                        #endregion
+
+                        #region Medical Loan
+
+                        #endregion
+
                     }
 
                     else if (transactionHdDto.ServiceTypeId == 2) // Financial Aids... 
@@ -942,11 +918,13 @@ namespace API.Servivces.Implementation
                             newTransaction.Discount = transactionHdDto.AllowDiscountAmount;
                             newTransaction.DiscountedGiftAmount = transactionHdDto.AllowDiscountAmount;
                             newTransaction.AllowDiscountDefault = transactionHdDto.AllowDiscountDefault;
+                            newTransaction.ServiceId = (int)newTransaction.Mytransid;
                             await _context.TransactionHds.AddAsync(newTransaction);
-                            await _context.SaveChangesAsync();
                             myId = 1;
+                            var periodCodes = CommonMethods.GetSocialLoanPeriodCode().ToArray();
                             for (int i = 0; i < transactionHdDto.Totinstallments; i++)
-                            {
+                            {  
+                                string prd = periodCodes[i];
                                 // Add record to TransactionDT
                                 var data = new TransactionDtDto
                                 {
@@ -957,7 +935,7 @@ namespace API.Servivces.Implementation
                                     EmployeeId = transactionHdDto.EmployeeId,
                                     InstallmentNumber = myId,
                                     AttachId = attachId,
-                                    PeriodCode = GetPeriodCode(),
+                                    PeriodCode = Convert.ToInt64(prd),
                                     InstallmentAmount = newTransaction.InstallmentAmount,
                                     ReceivedAmount = 0,
                                     PendingAmount = transactionHdDto.InstallmentAmount,
@@ -968,26 +946,18 @@ namespace API.Servivces.Implementation
                                     EffectedAccount = null,
                                     OtherReference = null,
                                     Activityid = null,
-                                    CrupId = 1,
-                                    Glpost = "1",
-                                    Glpost1 = null,
-                                    Glpostref = "1",
-                                    Glpostref1 = "1",
-                                    Active = true,
-                                    Switch1 = null,
-                                    DelFlag = null,
                                     InstallmentsBegDate = transactionHdDto.InstallmentsBegDate,
                                     UntilMonth = transactionHdDto.UntilMonth,
                                     Userid = newTransaction.Userid,
                                     Entrydate = DateTime.Now
                                 };
                                 var transactionDt = _mapper.Map<TransactionDt>(data);
-                                await _context.TransactionDts.AddAsync(transactionDt);
-                                await _context.SaveChangesAsync();
-                                _context.ChangeTracker.Clear();
+                                await _context.TransactionDts.AddAsync(transactionDt);                                
                                 myId++;
 
                             }
+                            await _context.SaveChangesAsync();
+                            pfid = employeeMembership.Pfid;
                         }
                         #endregion
                     }
@@ -2074,11 +2044,10 @@ namespace API.Servivces.Implementation
                         AttachId = attachId.ToString(),
                         TransactionId = newTransaction.Mytransid.ToString(),
                         IsSuccess = true,
+                        PFId = pfid,
                         Message = "Saved Successfully..."
                     };
                 }
-
-
             }
             return new FinancialServiceResponse
             {
@@ -2167,7 +2136,7 @@ namespace API.Servivces.Implementation
                             Discounted = t.Discount,
                             PayDate = DateTime.Now.ToString("dd/MM/yyyy"),
 
-                        }).OrderByDescending(c=>c.MYTRANSID).ToList();
+                        }).OrderByDescending(c => c.MYTRANSID).ToList();
             return data;
         }
 
@@ -2243,8 +2212,8 @@ namespace API.Servivces.Implementation
                               AllowDiscountDefault = t.AllowDiscountDefault,
                               KinMobile = e.Next2KinMobNumber,
                               KinName = e.Next2KinName,
-                              SubscriptionStatus = e.Subscription_status,
-                              EmpStatus = e.EmpStatus,
+                              SubscriptionStatus = e.Subscription_status.ToString(),
+                              EmployeeStatus = e.EmpStatus.ToString(),
                               EndDate = e.EndDate,
                               TerminationDate = e.TerminationDate,
                               SubscriptionAmount = t.Totamt,
@@ -2252,6 +2221,17 @@ namespace API.Servivces.Implementation
                               LastSubscriptionPaid = t.PaidSubscriptionAmount,
                               PaidSubscriptionAmount = t.PaidSubscriptionAmount,
                           }).FirstOrDefault();
+            
+            string empStatus = string.Empty;
+            string subscriptionStauts = string.Empty;
+
+            if (result.EmployeeStatus != null)
+                empStatus = await _context.Reftables.Where(p => p.Refid == Convert.ToInt32(result.EmployeeStatus) && p.Reftype == "KUPF" && p.Refsubtype == "EmpStatus").Select(c => c.Shortname).FirstOrDefaultAsync();
+                result.EmployeeStatus = empStatus;
+            //
+            if (result.SubscriptionStatus != null)
+                subscriptionStauts = await _context.Reftables.Where(p => p.Refid == Convert.ToInt32(result.SubscriptionStatus) && p.Reftype == "KUPF" && p.Refsubtype == "SubscriptionStatus").Select(c => c.Shortname).FirstOrDefaultAsync();
+                result.SubscriptionStatus = subscriptionStauts;
             //var hddms = _context.TransactionHddms.Where(c => c.Mytransid == id).ToList();
             //result.TransactionHDDMSDto = _mapper.Map<List<TransactionHDDMSDto>>(hddms);
             return result;
@@ -2264,9 +2244,9 @@ namespace API.Servivces.Implementation
             return data;
         }
 
-        public async Task<IEnumerable<ManagerApprovalDto>> GetServiceApprovalsAsync(long periodCode, int tenentId, int locationId,bool isShowAll)
+        public async Task<IEnumerable<ManagerApprovalDto>> GetServiceApprovalsAsync(long periodCode, int tenentId, int locationId, bool isShowAll)
         {
-            
+
             if (isShowAll)
             {
                 var data = (from e in _context.DetailedEmployees
@@ -2280,7 +2260,7 @@ namespace API.Servivces.Implementation
                             ap.LocationId == locationId &&
                             ap.SerApprovalId == 1 && // Manager Role Id
                             ap.DisplayPERIOD_CODE <= periodCode &&
-                            ap.DisplayPERIOD_CODE >= periodCode                             
+                            ap.DisplayPERIOD_CODE >= periodCode
                             select new ManagerApprovalDto
                             {
                                 TransId = (int)ap.Mytransid,
@@ -2346,7 +2326,7 @@ namespace API.Servivces.Implementation
                             }).OrderByDescending(c => c.TransId).ToList();
                 return data;
             }
-           
+
 
         }
 
@@ -2366,6 +2346,9 @@ namespace API.Servivces.Implementation
                 var existingTransactionHd = _context.TransactionHds.Where(c => c.Mytransid == existingtransactionHddApprovals.Mytransid).FirstOrDefault();
 
                 var activateNextRow = _context.TransactionHddapprovalDetails.Where(p => p.Mytransid == existingtransactionHddApprovals.Mytransid && p.SerApprovalId == 2).FirstOrDefault();
+                
+                var serviceApprovals = _context.ServiceSetups.Where(p => p.ServiceType == existingTransactionHd.ServiceTypeId && p.ServiceSubType == existingTransactionHd.ServiceSubTypeId).FirstOrDefault();
+                
                 if (existingtransactionHddApprovals != null)
                 {
                     // Update TransactionHddapprovalDetails
@@ -2379,6 +2362,26 @@ namespace API.Servivces.Implementation
                     existingtransactionHddApprovals.ApprovalRemarks = approveRejectServiceDto.ApprovalRemarks;
                     existingtransactionHddApprovals.Active = false;
                     existingtransactionHddApprovals.Userid = approveRejectServiceDto.UserId;
+                    // Update Service Approvals
+                    if (serviceApprovals != null)
+                    {
+                        List<string> myService = new List<string>
+                            {
+                                serviceApprovals.SerApproval1,
+                                serviceApprovals.SerApproval2,
+                                serviceApprovals.SerApproval3,
+                                serviceApprovals.SerApproval4,
+                                serviceApprovals.SerApproval5,
+                                serviceApprovals.SerApproval6
+                            };
+                        if (serviceApprovals != null)
+                        {
+                            myService.RemoveAll(item => item == null);
+                            existingTransactionHd.SerApproval1 = myService[0];
+                            existingTransactionHd.ApprovalBy1 = approveRejectServiceDto.UserId;
+                            existingTransactionHd.ApprovedDate1 = DateTime.Now;
+                        }
+                    }
                     _context.TransactionHddapprovalDetails.Update(existingtransactionHddApprovals);
                     await _context.SaveChangesAsync();
                     _context.ChangeTracker.Clear();
@@ -2423,23 +2426,53 @@ namespace API.Servivces.Implementation
             if (_context != null)
             {
                 // To get record by transId and Active...
-                var existingtransactionHd = _context.TransactionHddapprovalDetails
+                var existingtransactionHdApprovalDetails = _context.TransactionHddapprovalDetails
                     .Where(c => c.Mytransid == approveRejectServiceDto.Mytransid && c.Active == true).FirstOrDefault();
 
                 // TO CHECK IF CRUP_ID IS NULL DETAILEDEMPLOYEE.
-                var detailedEmployee = _context.DetailedEmployees.Where(c => c.EmployeeId == existingtransactionHd.EmployeeId
+                var detailedEmployee = _context.DetailedEmployees.Where(c => c.EmployeeId == existingtransactionHdApprovalDetails.EmployeeId
                     && c.TenentId == approveRejectServiceDto.TenentId
                     && c.LocationId == approveRejectServiceDto.LocationId).FirstOrDefault();
 
-                if (existingtransactionHd != null)
+                // 
+                var existingTransactionHd = _context.TransactionHds.Where(c => c.Mytransid == existingtransactionHdApprovalDetails.Mytransid).FirstOrDefault();
+
+                //
+                var serviceApprovals = _context.ServiceSetups.Where(p => p.ServiceType == existingTransactionHd.ServiceTypeId && p.ServiceSubType == existingTransactionHd.ServiceSubTypeId).FirstOrDefault();
+                if (existingtransactionHdApprovalDetails != null)
                 {
                     // Update TransactionHddapprovalDetails
-                    existingtransactionHd.RejectionType = approveRejectServiceDto.RejectionType;
-                    existingtransactionHd.RejectionRemarks = approveRejectServiceDto.RejectionRemarks;
-                    existingtransactionHd.Active = false;
-                    existingtransactionHd.Status = "ManagerRejected";
-                    existingtransactionHd.ApprovalDate = DateTime.Now;
-                    _context.TransactionHddapprovalDetails.Update(existingtransactionHd);
+                    existingtransactionHdApprovalDetails.RejectionType = approveRejectServiceDto.RejectionType;
+                    existingtransactionHdApprovalDetails.RejectionRemarks = approveRejectServiceDto.RejectionRemarks;
+                    existingtransactionHdApprovalDetails.Active = false;
+                    existingtransactionHdApprovalDetails.Status = "ManagerRejected";
+                    existingtransactionHdApprovalDetails.ApprovalDate = DateTime.Now;
+                    // Update Service Approval
+                    _context.TransactionHddapprovalDetails.Update(existingtransactionHdApprovalDetails);
+                    await _context.SaveChangesAsync();
+                    _context.ChangeTracker.Clear();
+
+                    if (serviceApprovals != null)
+                    {
+                        List<string> myService = new List<string>
+                            {
+                                serviceApprovals.SerApproval1,
+                                serviceApprovals.SerApproval2,
+                                serviceApprovals.SerApproval3,
+                                serviceApprovals.SerApproval4,
+                                serviceApprovals.SerApproval5,
+                                serviceApprovals.SerApproval6
+                            };
+                        if (serviceApprovals != null)
+                        {
+                            myService.RemoveAll(item => item == null);
+                            existingTransactionHd.SerApproval1 = myService[0];
+                            existingTransactionHd.ApprovalBy1 = approveRejectServiceDto.UserId;
+                            existingTransactionHd.ApprovedDate1 = DateTime.Now;
+                        }
+                    }
+                    // Update TransactionHD.                    
+                    _context.TransactionHds.Update(existingTransactionHd);
                     await _context.SaveChangesAsync();
                     _context.ChangeTracker.Clear();
 
@@ -2460,7 +2493,7 @@ namespace API.Servivces.Implementation
             return data;
         }
 
-        
+
 
         public async Task<IEnumerable<ReturnServiceApprovals>> GetServiceApprovalsByEmployeeId(int employeeId)
         {
@@ -2588,7 +2621,8 @@ namespace API.Servivces.Implementation
                                 DraftAmount1 = hd.DraftAmount1,
                                 DraftAmount2 = hd.DraftAmount2,
                                 DraftDate1 = hd.DraftDate1,
-                                DraftDate2 = hd.DraftDate2
+                                DraftDate2 = hd.DraftDate2,
+                                IsDraftCreated = hd.IsDraftCreated
                             }).ToList();
                 return data;
             }
@@ -2620,7 +2654,8 @@ namespace API.Servivces.Implementation
                                 DraftAmount1 = hd.DraftAmount1,
                                 DraftAmount2 = hd.DraftAmount2,
                                 DraftDate1 = hd.DraftDate1,
-                                DraftDate2 = hd.DraftDate2
+                                DraftDate2 = hd.DraftDate2,
+                                IsDraftCreated = hd.IsDraftCreated
                             }).ToList();
                 return data;
             }
@@ -2636,7 +2671,8 @@ namespace API.Servivces.Implementation
             var existingTransactionApprovals = _context.TransactionHddapprovalDetails
                 .Where(p => p.Mytransid == cashierApprovalDto.TransId
                 && p.EmployeeId == Convert.ToInt32(cashierApprovalDto.EmployeeId)).FirstOrDefault();
-
+            //
+            var serviceApprovals = _context.ServiceSetups.Where(p => p.ServiceType == existingtransactionHd.ServiceTypeId && p.ServiceSubType == existingtransactionHd.ServiceSubTypeId).FirstOrDefault();
 
             if (existingtransactionHd != null)
             {
@@ -2647,6 +2683,25 @@ namespace API.Servivces.Implementation
                 result = await _context.SaveChangesAsync();
                 _context.ChangeTracker.Clear();
                 //
+                if (serviceApprovals != null)
+                {
+                    List<string> myService = new List<string>
+                            {
+                                serviceApprovals.SerApproval1,
+                                serviceApprovals.SerApproval2,
+                                serviceApprovals.SerApproval3,
+                                serviceApprovals.SerApproval4,
+                                serviceApprovals.SerApproval5,
+                                serviceApprovals.SerApproval6
+                            };
+                    if (serviceApprovals != null)
+                    {
+                        myService.RemoveAll(item => item == null);
+                        existingtransactionHd.SerApproval3 = myService[2];
+                        existingtransactionHd.ApprovalBy3 = cashierApprovalDto.DeliveredBy1;
+                        existingtransactionHd.ApprovedDate3 = DateTime.Now;
+                    }
+                }
 
                 existingtransactionHd.DraftNumber1 = cashierApprovalDto.DraftNumber1;
                 existingtransactionHd.DraftNumber2 = cashierApprovalDto.DraftNumber2;
@@ -2690,7 +2745,7 @@ namespace API.Servivces.Implementation
                     c.EmployeeId == Convert.ToInt32(cashierApprovalDto.EmployeeId)).FirstOrDefault();
 
             var existingTransactionApprovals = _context.TransactionHddapprovalDetails
-                .Where(p=>p.Mytransid == cashierApprovalDto.TransId 
+                .Where(p => p.Mytransid == cashierApprovalDto.TransId
                 && p.EmployeeId == Convert.ToInt32(cashierApprovalDto.EmployeeId)).FirstOrDefault();
 
             if (existingtransactionHd != null)
@@ -2713,16 +2768,25 @@ namespace API.Servivces.Implementation
                 existingtransactionHd.DeliveryDate1 = cashierApprovalDto.ReceivedDate;
                 existingtransactionHd.DeliveredBy1 = cashierApprovalDto.DeliveredBy1;
                 existingtransactionHd.Transdate = DateTime.Now;
-                existingtransactionHd.Status = "CashierDraft";
+                existingtransactionHd.Status = "DraftMade";
+                existingtransactionHd.IsDraftCreated = true;
 
                 existingtransactionHd.Mytransid = (long)cashierApprovalDto.TransId;
                 existingtransactionHd.EmployeeId = Convert.ToInt32(cashierApprovalDto.EmployeeId);
+                existingtransactionHd.AccountantID = cashierApprovalDto.AccountantID;
+                existingtransactionHd.BenefeciaryName = cashierApprovalDto.BenefeciaryName;
+                existingtransactionHd.ChequeNumber = cashierApprovalDto.ChequeNumber;
+                existingtransactionHd.ChequeDate = cashierApprovalDto.ChequeDate;
+                existingtransactionHd.ChequeAmount = cashierApprovalDto.ChequeAmount;
+                existingtransactionHd.CollectedBy = cashierApprovalDto.CollectedBy;
+                existingtransactionHd.Relationship = cashierApprovalDto.Relationship;
+                existingtransactionHd.CollectedPersonCID = cashierApprovalDto.CollectedPersonCID;
 
                 _context.TransactionHds.Update(existingtransactionHd);
                 result = await _context.SaveChangesAsync();
                 _context.ChangeTracker.Clear();
             }
-            
+
 
             return result;
         }
@@ -2743,7 +2807,8 @@ namespace API.Servivces.Implementation
 
             var employee = new Models.DetailedEmployee();
             List<TransactionDt> transactions = new List<TransactionDt>();
-
+            string empStatus = string.Empty;
+            string subscriptionStatus = string.Empty;
             if (searchEmployeeDto.EmployeeId != 0)
             {
                 employee = await _context.DetailedEmployees.Where(c => c.EmployeeId == searchEmployeeDto.EmployeeId).FirstOrDefaultAsync();
@@ -2782,14 +2847,19 @@ namespace API.Servivces.Implementation
                     return new ReturnSearchResultDto
                     {
                         IsSuccess = false,
-                        Message = ""+employee.EnglishName+" is Terminated On "+((DateTime)employee.TerminationDate).ToString("dd/MM/yyyy") +" Cant proceed"
+                        Message = "" + employee.EnglishName + " is Terminated On " + ((DateTime)employee.TerminationDate).ToString("dd/MM/yyyy") + " Cant proceed"
                     };
                 }
 
                 var country = await _context.TblCountries.Where(c => c.TenentId == employee.TenentId && c.Countryid == employee.NationCode).FirstOrDefaultAsync();
                 //
                 var contractType = await _context.Reftables.Where(c => c.TenentId == employee.TenentId && c.Refid == Convert.ToInt32(employee.ContractType) && c.Refsubtype == "ContractType").FirstOrDefaultAsync();
-
+                //
+                if (employee.EmpStatus != null)
+                    empStatus = await _context.Reftables.Where(p => p.Refid == (int)employee.EmpStatus && p.Reftype == "KUPF" && p.Refsubtype == "EmpStatus").Select(c => c.Shortname).FirstOrDefaultAsync();
+                //
+                if (employee.Subscription_status != null)
+                    subscriptionStatus = await _context.Reftables.Where(p => p.Refid == (int)employee.Subscription_status && p.Reftype == "KUPF" && p.Refsubtype == "SubscriptionStatus").Select(c => c.Shortname).FirstOrDefaultAsync();
                 var data = new ReturnSearchResultDto()
                 {
                     TenentId = employee.TenentId,
@@ -2807,7 +2877,8 @@ namespace API.Servivces.Implementation
                     Next2KinName = employee.Next2KinName,
                     Next2KinMobNumber = employee.Next2KinMobNumber,
                     EndDate = employee.EndDate,
-                    EmployeeStatus = employee.EmpStatus.ToString(),
+                    EmployeeStatus = empStatus,
+                    SubscriptionStatus = subscriptionStatus,
                     SubscriptionAmount = transactions.Sum(c => (decimal)c.InstallmentAmount),
                     SubscriptionPaid = transactions.Sum(c => (decimal)c.ReceivedAmount),
                     LastSubscriptionPaid = transactions.Sum(c => (decimal)c.PendingAmount),
@@ -2819,7 +2890,8 @@ namespace API.Servivces.Implementation
                     CountryNameArabic = country.Couname2,
                     CountryNameEnglish = country.Couname1,
                     IsSuccess = true,
-                    Salary = (decimal)employee.Salary
+                    Salary = (decimal)employee.Salary,
+                    TerminationDate = employee.TerminationDate
                 };
                 return data;
 
@@ -2839,7 +2911,8 @@ namespace API.Servivces.Implementation
 
             var employee = new Models.DetailedEmployee();
             List<TransactionDt> transactions = new List<TransactionDt>();
-
+            string empStatus = string.Empty;
+            string subscriptionStatus = string.Empty;
             if (searchEmployeeDto.EmployeeId != 0)
             {
                 employee = await _context.DetailedEmployees.Where(c => c.EmployeeId == searchEmployeeDto.EmployeeId && c.TerminationDate == null && c.SubscribedDate != null && c.Pfid != null).FirstOrDefaultAsync();
@@ -2885,7 +2958,12 @@ namespace API.Servivces.Implementation
                 var country = await _context.TblCountries.Where(c => c.TenentId == employee.TenentId && c.Countryid == employee.NationCode).FirstOrDefaultAsync();
                 //
                 var contractType = await _context.Reftables.Where(c => c.TenentId == employee.TenentId && c.Refid == Convert.ToInt32(employee.ContractType) && c.Refsubtype == "ContractType").FirstOrDefaultAsync();
-
+                //
+                if (employee.EmpStatus != null)
+                    empStatus = await _context.Reftables.Where(p => p.Refid == (int)employee.EmpStatus && p.Reftype == "KUPF" && p.Refsubtype == "EmpStatus").Select(c => c.Shortname).FirstOrDefaultAsync();
+                //
+                if (employee.Subscription_status != null)
+                    subscriptionStatus = await _context.Reftables.Where(p => p.Refid == (int)employee.Subscription_status && p.Reftype == "KUPF" && p.Refsubtype == "SubscriptionStatus").Select(c => c.Shortname).FirstOrDefaultAsync();
                 var data = new ReturnSearchResultDto()
                 {
                     TenentId = employee.TenentId,
@@ -2903,7 +2981,8 @@ namespace API.Servivces.Implementation
                     Next2KinName = employee.Next2KinName,
                     Next2KinMobNumber = employee.Next2KinMobNumber,
                     EndDate = employee.EndDate,
-                    EmployeeStatus = employee.EmpStatus.ToString(),
+                    EmployeeStatus = empStatus,
+                    SubscriptionStatus = subscriptionStatus,
                     SubscriptionAmount = transactions.Sum(c => (decimal)c.InstallmentAmount),
                     SubscriptionPaid = transactions.Sum(c => (decimal)c.ReceivedAmount),
                     LastSubscriptionPaid = transactions.Sum(c => (decimal)c.PendingAmount),
@@ -2915,7 +2994,8 @@ namespace API.Servivces.Implementation
                     CountryNameArabic = country.Couname2,
                     CountryNameEnglish = country.Couname1,
                     IsSuccess = true,
-                    Salary = (decimal)employee.Salary
+                    Salary = (decimal)employee.Salary,
+                    TerminationDate = employee.TerminationDate
                 };
                 return data;
 
@@ -2932,6 +3012,8 @@ namespace API.Servivces.Implementation
 
             var employee = new Models.DetailedEmployee();
             List<TransactionDt> transactions = new List<TransactionDt>();
+            string empStatus = string.Empty;
+            string subscriptionStatus = string.Empty;
 
             if (searchEmployeeDto.EmployeeId != 0)
             {
@@ -2981,7 +3063,12 @@ namespace API.Servivces.Implementation
                 var country = await _context.TblCountries.Where(c => c.TenentId == employee.TenentId && c.Countryid == employee.NationCode).FirstOrDefaultAsync();
                 //
                 var contractType = await _context.Reftables.Where(c => c.TenentId == employee.TenentId && c.Refid == Convert.ToInt32(employee.ContractType) && c.Refsubtype == "ContractType").FirstOrDefaultAsync();
-
+                //
+                if(employee.EmpStatus != null)
+                    empStatus = await _context.Reftables.Where(p => p.Refid == (int)employee.EmpStatus && p.Reftype == "KUPF" && p.Refsubtype == "EmpStatus").Select(c=>c.Shortname).FirstOrDefaultAsync();
+                //
+                if (employee.Subscription_status != null)
+                    subscriptionStatus = await _context.Reftables.Where(p => p.Refid == (int)employee.Subscription_status && p.Reftype == "KUPF" && p.Refsubtype == "SubscriptionStatus").Select(c => c.Shortname).FirstOrDefaultAsync();
                 var data = new ReturnSearchResultDto()
                 {
                     TenentId = employee.TenentId,
@@ -2999,7 +3086,8 @@ namespace API.Servivces.Implementation
                     Next2KinName = employee.Next2KinName,
                     Next2KinMobNumber = employee.Next2KinMobNumber,
                     EndDate = employee.EndDate,
-                    EmployeeStatus = employee.EmpStatus.ToString(),
+                    EmployeeStatus = empStatus,
+                    SubscriptionStatus = subscriptionStatus,
                     SubscriptionAmount = transactions.Sum(c => (decimal)c.InstallmentAmount),
                     SubscriptionPaid = transactions.Sum(c => (decimal)c.ReceivedAmount),
                     LastSubscriptionPaid = transactions.Sum(c => (decimal)c.PendingAmount),
@@ -3011,7 +3099,8 @@ namespace API.Servivces.Implementation
                     CountryNameArabic = country.Couname2,
                     CountryNameEnglish = country.Couname1,
                     IsSuccess = true,
-                    Salary = (decimal)employee.Salary
+                    Salary = (decimal)employee.Salary,
+                    TerminationDate = employee.TerminationDate
                 };
                 return data;
 
@@ -3125,7 +3214,10 @@ namespace API.Servivces.Implementation
                     .Where(c => c.Mytransid == approveRejectServiceDto.Mytransid
                     && c.TenentId == approveRejectServiceDto.TenentId
                     && c.LocationId == approveRejectServiceDto.LocationId && c.SerApprovalId == 2).FirstOrDefault();
-
+                // 
+                var existingTransactionHd = _context.TransactionHds.Where(c => c.Mytransid == existingtransactionHddApprovals.Mytransid).FirstOrDefault();
+                //
+                var serviceApprovals = _context.ServiceSetups.Where(p => p.ServiceType == existingTransactionHd.ServiceTypeId && p.ServiceSubType == existingTransactionHd.ServiceSubTypeId).FirstOrDefault();
                 if (existingtransactionHddApprovals != null)
                 {
                     // Update TransactionHddapprovalDetails
@@ -3141,6 +3233,31 @@ namespace API.Servivces.Implementation
                     _context.TransactionHddapprovalDetails.Update(existingtransactionHddApprovals);
                     await _context.SaveChangesAsync();
                     _context.ChangeTracker.Clear();
+                    //
+                    if (serviceApprovals != null)
+                    {
+                        List<string> myService = new List<string>
+                            {
+                                serviceApprovals.SerApproval1,
+                                serviceApprovals.SerApproval2,
+                                serviceApprovals.SerApproval3,
+                                serviceApprovals.SerApproval4,
+                                serviceApprovals.SerApproval5,
+                                serviceApprovals.SerApproval6
+                            };
+                        if (serviceApprovals != null)
+                        {
+                            myService.RemoveAll(item => item == null);
+                            existingTransactionHd.SerApproval2 = myService[1];
+                            existingTransactionHd.ApprovalBy2 = approveRejectServiceDto.UserId;
+                            existingTransactionHd.ApprovedDate2 = DateTime.Now;
+                        }
+                    }
+                    // Update TransactionHD.                    
+                    _context.TransactionHds.Update(existingTransactionHd);
+                    await _context.SaveChangesAsync();
+                    _context.ChangeTracker.Clear();
+
                 }
                 var activateNextRow = _context.TransactionHddapprovalDetails
                     .Where(c => c.Mytransid == approveRejectServiceDto.Mytransid
@@ -3165,23 +3282,52 @@ namespace API.Servivces.Implementation
             if (_context != null)
             {
                 // To get record by transId and Active...
-                var existingtransactionHd = _context.TransactionHddapprovalDetails
+                var existingtransactionHddApprovals = _context.TransactionHddapprovalDetails
                     .Where(c => c.Mytransid == approveRejectServiceDto.Mytransid && c.Active == true).FirstOrDefault();
 
                 // TO CHECK IF CRUP_ID IS NULL DETAILEDEMPLOYEE.
-                var detailedEmployee = _context.DetailedEmployees.Where(c => c.EmployeeId == existingtransactionHd.EmployeeId
+                var detailedEmployee = _context.DetailedEmployees.Where(c => c.EmployeeId == existingtransactionHddApprovals.EmployeeId
                     && c.TenentId == approveRejectServiceDto.TenentId
                     && c.LocationId == approveRejectServiceDto.LocationId).FirstOrDefault();
+                // 
+                var existingTransactionHd = _context.TransactionHds.Where(c => c.Mytransid == existingtransactionHddApprovals.Mytransid).FirstOrDefault();
 
-                if (existingtransactionHd != null)
+                //
+                var serviceApprovals = _context.ServiceSetups.Where(p => p.ServiceType == existingTransactionHd.ServiceTypeId && p.ServiceSubType == existingTransactionHd.ServiceSubTypeId).FirstOrDefault();
+                //
+                if (existingtransactionHddApprovals != null)
                 {
                     // Update TransactionHddapprovalDetails
-                    existingtransactionHd.RejectionType = approveRejectServiceDto.RejectionType;
-                    existingtransactionHd.RejectionRemarks = approveRejectServiceDto.RejectionRemarks;
-                    existingtransactionHd.Active = false;
-                    existingtransactionHd.Status = "FinanceRejected";
-                    existingtransactionHd.ApprovalDate = DateTime.Now;
-                    _context.TransactionHddapprovalDetails.Update(existingtransactionHd);
+                    existingtransactionHddApprovals.RejectionType = approveRejectServiceDto.RejectionType;
+                    existingtransactionHddApprovals.RejectionRemarks = approveRejectServiceDto.RejectionRemarks;
+                    existingtransactionHddApprovals.Active = false;
+                    existingtransactionHddApprovals.Status = "FinanceRejected";
+                    existingtransactionHddApprovals.ApprovalDate = DateTime.Now;
+                    _context.TransactionHddapprovalDetails.Update(existingtransactionHddApprovals);
+                    await _context.SaveChangesAsync();
+                    _context.ChangeTracker.Clear();
+                    //
+                    if (serviceApprovals != null)
+                    {
+                        List<string> myService = new List<string>
+                            {
+                                serviceApprovals.SerApproval1,
+                                serviceApprovals.SerApproval2,
+                                serviceApprovals.SerApproval3,
+                                serviceApprovals.SerApproval4,
+                                serviceApprovals.SerApproval5,
+                                serviceApprovals.SerApproval6
+                            };
+                        if (serviceApprovals != null)
+                        {
+                            myService.RemoveAll(item => item == null);
+                            existingTransactionHd.SerApproval2 = myService[1];
+                            existingTransactionHd.ApprovalBy2 = approveRejectServiceDto.UserId;
+                            existingTransactionHd.ApprovedDate2 = DateTime.Now;
+                        }
+                    }
+                    // Update TransactionHD.                    
+                    _context.TransactionHds.Update(existingTransactionHd);
                     await _context.SaveChangesAsync();
                     _context.ChangeTracker.Clear();
 
@@ -3200,6 +3346,6 @@ namespace API.Servivces.Implementation
             return periodCode;
         }
 
-        
+
     }
 }

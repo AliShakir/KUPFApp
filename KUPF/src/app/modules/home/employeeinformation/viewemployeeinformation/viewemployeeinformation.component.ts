@@ -95,6 +95,11 @@ export class ViewemployeeinformationComponent implements OnInit {
   totalRows = 0;
   pageSizeOptions: number[] = [10, 20, 50, 100];
   employeeHeaders: any = {};
+  FilterArray: any = [
+    { id: 2, name: 'Subscribed' },
+    { id: 9, name: 'Rejected' },
+    { id: 12, name: 'Terminated' }
+  ];
   constructor(
     private employeeService: EmployeeService,
     private modalService: NgbModal,
@@ -243,4 +248,26 @@ export class ViewemployeeinformationComponent implements OnInit {
   }
   //#endregion
  
+  onFilterItemSelect(e:any){
+    //
+    this.employeeService.setUserParams(this.userParams);
+    //this.detailedEmployee = [];
+    this.employeeService.FilterEmployee(this.userParams,e).subscribe((response: any) => {
+     
+     this.employeeHeaders = JSON.parse(response.headers.get('pagination'));
+
+     this.detailedEmployee = new MatTableDataSource<DetailedEmployee>(response.body);
+     this.detailedEmployee.paginator = this.paginator;
+     this.detailedEmployee.sort = this.sort;
+     this.isLoadingCompleted = true;
+     setTimeout(() => {
+       this.paginator.pageIndex = 0;
+       this.paginator.length = this.employeeHeaders.totalItems;
+     });
+   }, error => {
+     console.log(error);
+     this.dataLoadingStatus = 'Error fetching the data';
+     this.isError = true;
+   }) 
+  }
 }

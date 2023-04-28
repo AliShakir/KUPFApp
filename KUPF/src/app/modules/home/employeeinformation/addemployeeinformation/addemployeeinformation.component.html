@@ -31,7 +31,34 @@
       <div class="row gx-9 gy-6" *ngFor="let bodyLabel of formBodyLabels; let i = index">
         <form autocomplete="off" [formGroup]="addEmployeeForm" (ngSubmit)="onSubmit()" id="employeeForm">
           <div class="row mb-6">
-            <input type="hidden" formControlName="employeeId" name="empployeeId" />
+            <div class="col-lg-6 fv-row">
+              <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"
+              lang="AR-SA">Employee ID</label>
+            <input type="number" class="form-control form-control-lg  mb-3 mb-lg-0" name="employeeId"
+              formControlName="employeeId" maxlength="10" [readOnly]="isOK"/>
+              <span class="text-danger"
+                *ngIf="(empForm.employeeId.touched || isFormSubmitted) && empForm.employeeId.errors?.required">
+                Employee Id is required
+              </span>
+            </div>
+            <div class="col-lg-6 fv-row">
+              <label class="col-lg-6 col-form-label fw-bold fs-6 ArFontStyle"
+                lang="AR-SA">Join Date</label>
+              <div class="input-group">
+                <span class="input-group-text" id="basic-addon1">
+                  <i class="fas fa-calendar"></i>
+                </span>
+                <input type="text" class="form-control" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }"
+                  formControlName="joinedDate" />
+              </div>
+              <span class="text-danger"
+                *ngIf="(empForm.joinedDate.touched || isFormSubmitted) && empForm.joinedDate.errors?.required">
+                Joined date is required
+              </span>
+            </div>
+          </div>
+          <div class="row mb-6">
+            <!-- <input type="hidden" formControlName="employeeId" name="empployeeId" /> -->
 
             <div class="col-lg-6 fv-row">
               <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle"
@@ -96,7 +123,7 @@
                 bindValue="countryid" (change)="onCountryChange($event)">
               </ng-select>
               <span class="text-danger"
-                *ngIf="(empForm.nationCode.touched || isFormSubmitted) && empForm.nationName.errors?.required">
+                *ngIf="(empForm.nationCode.touched || isFormSubmitted) && empForm.nationCode.errors?.required">
                 Country is required
               </span>
             </div>

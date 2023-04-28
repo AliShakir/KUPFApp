@@ -66,8 +66,6 @@ namespace API.Servivces.Implementation.DetailedEmployee
                 var newEmployee = _mapper.Map<Models.DetailedEmployee>(detailedEmployeeDto);
                 newEmployee.LocationId = 1;
                 newEmployee.CRUP_ID = maxCrupId;
-                newEmployee.EmployeeId = (int)CommonMethods.CreateEmployeeId();
-                
                 if (detailedEmployeeDto.IsMemberOfFund == null)
                     newEmployee.IsMemberOfFund = false;
                 
@@ -150,30 +148,30 @@ namespace API.Servivces.Implementation.DetailedEmployee
                         _context.DetailedEmployees.Update(existingEmployee);
                         result = await _context.SaveChangesAsync();
                     }
-                    //                    
-                    var auditInfo = _context.Reftables.FirstOrDefault(c => c.Reftype == "Audit" && c.Refsubtype == "Employee");
-                    var mySerialNo = _context.TblAudits.Max(c => c.MySerial) +1;
-                    var auditNo = _context.Crupaudits.Max(c => c.AuditNo) + 1;
-                    var crupAudit = new Crupaudit
-                    {
-                        TenantId = detailedEmployeeDto.TenentId,
-                        LocationId = detailedEmployeeDto.LocationId,
-                        CrupId = maxCrupId,
-                        MySerial = mySerialNo,
-                        AuditNo = auditNo,
-                        AuditType = auditInfo.Shortname,
-                        TableName = DbTableEnums.DetailedEmployee.ToString(),
-                        FieldName = $"",
-                        OldValue = $"",
-                        NewValue = $"",
-                        CreatedDate = DateTime.Now,
-                        CreatedUserName = detailedEmployeeDto.Username,
-                        UserId = Convert.ToInt32(detailedEmployeeDto.UserId),
-                        CrudType = CrudTypeEnums.Edit.ToString(),
-                        Severity = SeverityEnums.High.ToString()
-                    };
-                    await _context.Crupaudits.AddAsync(crupAudit);
-                    result = await _context.SaveChangesAsync();
+                    ////                    
+                    //var auditInfo = _context.Reftables.FirstOrDefault(c => c.Reftype == "Audit" && c.Refsubtype == "Employee");
+                    //var mySerialNo = _context.TblAudits.Max(c => c.MySerial) +1;
+                    //var auditNo = _context.Crupaudits.Max(c => c.AuditNo) + 1;
+                    //var crupAudit = new Crupaudit
+                    //{
+                    //    TenantId = detailedEmployeeDto.TenentId,
+                    //    LocationId = detailedEmployeeDto.LocationId,
+                    //    CrupId = maxCrupId,
+                    //    MySerial = mySerialNo,
+                    //    AuditNo = auditNo,
+                    //    AuditType = auditInfo.Shortname,
+                    //    TableName = DbTableEnums.DetailedEmployee.ToString(),
+                    //    FieldName = $"",
+                    //    OldValue = $"",
+                    //    NewValue = $"",
+                    //    CreatedDate = DateTime.Now,
+                    //    CreatedUserName = detailedEmployeeDto.Username,
+                    //    UserId = Convert.ToInt32(detailedEmployeeDto.UserId),
+                    //    CrudType = CrudTypeEnums.Edit.ToString(),
+                    //    Severity = SeverityEnums.High.ToString()
+                    //};
+                    //await _context.Crupaudits.AddAsync(crupAudit);
+                    //result = await _context.SaveChangesAsync();
 
                 }
 
@@ -263,9 +261,69 @@ namespace API.Servivces.Implementation.DetailedEmployee
                         return response = "3"; // duplicate email
                     }
                 }
+                if (detailedEmployeeDto.EmployeeId != null && detailedEmployeeDto.EmployeeId != 0)
+                {
+                    var existingEmployee = _context.DetailedEmployees.Where(c => c.TenentId == detailedEmployeeDto.TenentId
+                    && c.LocationId == detailedEmployeeDto.LocationId && c.EmployeeId == detailedEmployeeDto.EmployeeId).FirstOrDefault();
+                    if (existingEmployee != null)
+                    {
+                        return response = "4"; // duplicate employee Id
+                    }
+                }
                 return response = "0";
             }
             return response;
+        }
+
+        public async Task<PagedList<DetailedEmployeeDto>> FilterEmployeeListAsync(PaginationParams paginationParams, int filterVal)
+        {
+            if (filterVal == 2 || filterVal == 9)
+            {
+                var data = (from e in _context.DetailedEmployees
+                            join r in _context.Reftables
+                            on e.Department equals r.Refid
+                            where r.Reftype == "KUPF" && r.Refsubtype == "Department" &&
+                            e.Subscription_status == filterVal
+                            select new DetailedEmployeeDto
+                            {
+                                EmpCidNum = e.EmpCidNum,
+                                Pfid = e.Pfid,
+                                EmployeeId = e.EmployeeId,
+                                MobileNumber = e.MobileNumber,
+                                EnglishName = e.EnglishName,
+                                ArabicName = e.ArabicName,
+                                RefName1 = r.Refname1,
+                                RefName2 = r.Refname2,
+                                CreatedDate = e.DateTime
+                            }).OrderByDescending(c => c.CreatedDate)
+                        .AsQueryable();
+
+                return await PagedList<DetailedEmployeeDto>.CreateAsync(data, paginationParams.PageNumber, paginationParams.PageSize);
+            }
+            else
+            {
+                var data = (from e in _context.DetailedEmployees
+                            join r in _context.Reftables
+                            on e.Department equals r.Refid
+                            where r.Reftype == "KUPF" && r.Refsubtype == "Department" &&
+                            e.TerminationDate != null && e.Termination == "Termination"
+                            select new DetailedEmployeeDto
+                            {
+                                EmpCidNum = e.EmpCidNum,
+                                Pfid = e.Pfid,
+                                EmployeeId = e.EmployeeId,
+                                MobileNumber = e.MobileNumber,
+                                EnglishName = e.EnglishName,
+                                ArabicName = e.ArabicName,
+                                RefName1 = r.Refname1,
+                                RefName2 = r.Refname2,
+                                CreatedDate = e.DateTime
+                            }).OrderByDescending(c => c.CreatedDate)
+                        .AsQueryable();
+
+                return await PagedList<DetailedEmployeeDto>.CreateAsync(data, paginationParams.PageNumber, paginationParams.PageSize);
+            }
+
         }
     }
 }

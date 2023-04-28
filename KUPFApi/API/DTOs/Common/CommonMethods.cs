@@ -1,10 +1,74 @@
+using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace API.Common
 {
     public static class CommonMethods
     {
-        
+        public static List<string> CreateMemberShipPeriodCode()
+        {
+            List<string> list = new List<string>();
+            int nextMonth = DateTime.Now.Month;
+            int months = (nextMonth - 12);
+            int remainingMonths = Math.Abs(months);
+            string customPrd = string.Empty;
+            for (int i = 1; i <= remainingMonths; i++)
+            {
+                var nextMonth1 = DateTime.Now.AddMonths(i).ToString("MM");
+                var currentYear = DateTime.Now.Year;
+                customPrd = currentYear + "" + nextMonth1;
+                list.Add(customPrd);
+            }
+            int nextCounter = 24 - (remainingMonths - 1);
+            for (int i = 1; i <= nextCounter; i++)
+            {
+                DateTime FirstDT;
+                if (i <= 12)
+                {
+                    FirstDT = new DateTime(DateTime.Now.AddYears(1).Year, 1, 1);
+                    customPrd = FirstDT.Year + "" + FirstDT.AddMonths(i - 1).ToString("MM");
+                    list.Add(customPrd);
+                }
+                else if (i > 12)
+                {
+                    FirstDT = new DateTime(DateTime.Now.AddYears(2).Year, 1, 1);
+                    customPrd = FirstDT.Year + "" + FirstDT.AddMonths(i - 1).ToString("MM");
+                    list.Add(customPrd);
+                }
+            }
+            return list;
+        }
+
+        public static List<string> GetSocialLoanPeriodCode()
+        {
+            List<string> list = new List<string>();
+            int nextMonth = DateTime.Now.Month;
+            int months = (nextMonth - 12);
+            int remainingMonths = Math.Abs(months);
+            string customPrd = string.Empty;
+            for (int i = 1; i <= remainingMonths; i++)
+            {
+                var nextMonth1 = DateTime.Now.AddMonths(i).ToString("MM");
+                var currentYear = DateTime.Now.Year;
+                customPrd = currentYear + "" + nextMonth1;
+                list.Add(customPrd);
+            }
+            int nextCounter = (10 - remainingMonths);
+            for (int i = 1; i <= nextCounter; i++)
+            {
+                DateTime FirstDT;
+                if (i <= 12)
+                {
+                    FirstDT = new DateTime(DateTime.Now.AddYears(1).Year, 1, 1);
+                    customPrd = FirstDT.Year + "" + FirstDT.AddMonths(i - 1).ToString("MM");
+                    list.Add(customPrd);
+                }
+            }
+            return list;
+        }
+
         public static Int64 CreateEmployeeId()
         {
             Random rnd = new Random();
@@ -69,6 +133,18 @@ namespace API.Common
                 result = file;
             }
             return result;
+        }
+        /// <summary>
+        /// To get db connection string.
+        /// </summary>
+        /// <returns></returns>
+        public static string GetDbConnection()
+        {
+            var dbconfig = new ConfigurationBuilder()
+                   .SetBasePath(Directory.GetCurrentDirectory())
+                   .AddJsonFile("appsettings.json").Build();
+            var dbconnectionStr = dbconfig["ConnectionStrings:MsSqlConnection"];
+            return dbconnectionStr;
         }
     }
 }
