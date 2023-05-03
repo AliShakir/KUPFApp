@@ -123,13 +123,11 @@ namespace API.Servivces.Interfaces
         Task<List<CountriesDto>> GetCountryList();
         long CreateMyTransIdForTransactionHD();
         long CreateEmployeePFId(int tenentId, int locationId);
-<<<<<<< Updated upstream
+
 
         List<dashboardResponseDto> GetDashboardTotalEmployees();
 
-=======
-        
->>>>>>> Stashed changes
+
 
     }
 }
