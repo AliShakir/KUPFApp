@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { FormTitleDt } from 'src/app/modules/models/formTitleDt';
 import { FormTitleHd } from 'src/app/modules/models/formTitleHd';
 import { LocalizationService } from 'src/app/modules/_services/localization.service';
+import { HtmlFormsComponent } from '../../_partials/html-forms/html-forms.component';
 
 @Component({
   selector: 'app-offer-received-maintenace',
@@ -42,7 +43,7 @@ export class OfferReceivedMaintenaceComponent implements OnInit {
 
     /*----------------------------------------------------*/  
   //#endregion
-
+  
   constructor() { }
 
   ngOnInit(): void {

@@ -28,6 +28,18 @@
                     <form autocomplete="off" [formGroup]="offerForm" id="offerForm">
                         <div class="row">
                             <div class="col-lg-6 fv-row">
+                                <label class="col-lg-4 col-form-label fw-bold fs-6 ArFontStyle" lang="AR-SA">Offer
+                                    Name</label>
+                                <input type="text" class="form-control form-control-lg  mb-3 mb-lg-0"
+                                    formControlName="offerName" name="offerName" id="offerName" />
+                                <span class="text-danger"
+                                    *ngIf="(_offerForm.offerName.touched || isFormSubmitted) && _offerForm.offerName.errors?.required">
+                                    Offer Name is required
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row"> 
+                            <div class="col-lg-6 fv-row">
                                 <div class="mt-4">
                                     <input type="hidden" formControlName="serviceId" />
                                     <label for="formFile" class="form-label ArFontStyle"
@@ -141,6 +153,10 @@
                                 <button mat-raised-button color="accent"
                                     (click)="editData(item.serviceId)">Edit</button>
                             </td>
+                        </ng-container>
+                        <ng-container matColumnDef="offerName">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="ArFontStyle">Offer Name</th>
+                            <td mat-cell *matCellDef="let item" class="ArFontStyle w-10">{{item.offerName }}</td>
                         </ng-container>
                         <ng-container matColumnDef="offerTypeName">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header class="ArFontStyle">Offer Type</th>

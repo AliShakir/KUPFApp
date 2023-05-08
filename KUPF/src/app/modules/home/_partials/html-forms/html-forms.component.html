@@ -14,13 +14,20 @@
                             </label>
                             <input type="text" class="form-control" placeholder="Web Name English"
                                 formControlName="webEnglish" />
-                               
+                                <span class="text-danger"
+                                *ngIf="(_editorForm.webEnglish.touched || isFormSubmitted) && _editorForm.webEnglish.errors?.required">
+                                Web name english is required
+                            </span>  
                         </div>
                         <div class="col-lg-6 fv-row">
                             <label class="col-lg-8 col-form-label fw-bold fs-6 ArFontStyle">Web Name Arabic
                             </label>
                             <input type="text" class="form-control" placeholder="Web Name Arabic"
                                 formControlName="webArabic" />
+                                <span class="text-danger"
+                                *ngIf="(_editorForm.webArabic.touched || isFormSubmitted) && _editorForm.webArabic.errors?.required">
+                                Web name arabic is required
+                            </span> 
                         </div>
                     </div>
                     <div class="row mb-6 ckbox">
@@ -84,6 +91,10 @@
                     <div class="col-md-6">
                         <input type="text" class="form-control" placeholder="Web URL English Page"
                             formControlName="englishWebPageName" />
+                            <span class="text-danger"
+                                *ngIf="(_editorForm.englishWebPageName.touched || isFormSubmitted) && _editorForm.englishWebPageName.errors?.required">
+                                English Web Page Name is required
+                            </span>
                     </div>
                 </div>
                 <angular-editor id="editor1" [config]="config" formControlName="englishHtml"></angular-editor>
@@ -96,6 +107,10 @@
                     <div class="col-md-6">
                         <input type="text" class="form-control" placeholder="Web URL Arabic Page"
                             formControlName="arabicWebPageName" />
+                            <span class="text-danger"
+                                *ngIf="(_editorForm.arabicWebPageName.touched || isFormSubmitted) && _editorForm.arabicWebPageName.errors?.required">
+                                Arabic Web Page Name is required
+                            </span>
                     </div>
                 </div>
                 <angular-editor id="editor2" [config]="config" formControlName="arabicHtml"

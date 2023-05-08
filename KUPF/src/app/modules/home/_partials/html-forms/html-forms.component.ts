@@ -57,23 +57,29 @@ export class HtmlFormsComponent implements OnInit {
 
   initializeEditorForm() {
     this.editorForm = new FormGroup({
-      englishHtml: new FormControl('', Validators.required),
-      arabicHtml: new FormControl('', Validators.required),
+      englishHtml: new FormControl(''),
+      arabicHtml: new FormControl(''),
       englishWebPageName: new FormControl('', Validators.required),
       arabicWebPageName: new FormControl('', Validators.required),
       // electronicForm1: new FormControl('', Validators.required),
-      electronicForm1URL: new FormControl('', Validators.required),
+      electronicForm1URL: new FormControl(''),
       // electronicForm2: new FormControl('', Validators.required),
-      electronicForm2URL: new FormControl('', Validators.required),
+      electronicForm2URL: new FormControl(''),
       webEnglish: new FormControl('', Validators.required),
       webArabic: new FormControl('', Validators.required),
       isElectronicForm:new FormControl(true)
     })
     
   }
+  get _editorForm() { return this.editorForm.controls; }
   get editorformVal(){
     console.log(this.editorForm.controls);
     return this.editorForm.controls
+  }
+  //
+  clearFileChooser(){
+    this.electricform1 = "";
+    this.electricform2 = "";
   }
   //
   

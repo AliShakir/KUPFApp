@@ -90,5 +90,6 @@ namespace API.Models
         public string? WebEnglish { get; set; }
         public bool? IsElectronicForm { get; set; }
         public string? ContractType { get; set; }
+        public string? OfferName { get; set; }
     }
 }

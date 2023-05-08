@@ -14,6 +14,7 @@ import { CommonService } from 'src/app/modules/_services/common.service';
 import { DbCommonService } from 'src/app/modules/_services/db-common.service';
 import { OffersService } from 'src/app/modules/_services/offers.service';
 import { environment } from 'src/environments/environment';
+import { HtmlFormsComponent } from '../../_partials/html-forms/html-forms.component';
 
 @Component({
   selector: 'app-special-offer-maintenace',
@@ -23,7 +24,7 @@ import { environment } from 'src/environments/environment';
 export class SpecialOfferMaintenaceComponent implements OnInit {
   //#region
   // 
-  columnsToDisplay: string[] = ['action', 'offerTypeName', 'offerStart', 'offerEnd', 'offerAmount'];
+  columnsToDisplay: string[] = ['action','offerName', 'offerTypeName', 'offerStart', 'offerEnd', 'offerAmount'];
   //
   offers$: Observable<OffersDto[]>;
 
@@ -75,7 +76,7 @@ export class SpecialOfferMaintenaceComponent implements OnInit {
 
   /*----------------------------------------------------*/
   //#endregion
-
+  @ViewChild(HtmlFormsComponent) htmlForm: any;
   //
   parentForm: FormGroup;
   //
@@ -113,6 +114,7 @@ export class SpecialOfferMaintenaceComponent implements OnInit {
       searchTerm: new FormControl(null)
     })
     this.setUpParentForm();
+    
   }
 
   ngOnInit(): void {
@@ -162,17 +164,24 @@ export class SpecialOfferMaintenaceComponent implements OnInit {
       offerAmount: new FormControl('', Validators.required),
       serviceId: new FormControl(0),
       offerImage: new FormControl('', Validators.required),
-      offerTypeName: new FormControl(null)
+      offerTypeName: new FormControl(''),
+      offerName: new FormControl('', Validators.required)
     })
     this.parentForm.setControl('offerForm', this.offerForm);
   }
   get _offerForm() { return this.offerForm.controls; }
   onOfferFormSubmit() {
+    // Get Tenant Id
+    var data = JSON.parse(localStorage.getItem("user")!);
+    const tenantId = data.map((obj: { tenantId: any; }) => obj.tenantId);
+    const locationId = data.map((obj: { locationId: any; }) => obj.locationId);
+    const username = data.map((obj: { username: any; }) => obj.username);
+
     this.isFormSubmitted = true;
     let formData = {
       ...this.parentForm.value.offerForm,
       ...this.parentForm.value.editorForm,
-      tenentID: 21, cruP_ID: 0
+      tenentID: tenantId
     }
    
     const finalformData = new FormData();
@@ -196,8 +205,10 @@ export class SpecialOfferMaintenaceComponent implements OnInit {
       this.offersService.AddOffer(finalformData).subscribe({
         next: () => {
           this.toastrService.success('Saved successfully', 'Success');
-          //this.offerForm.reset();
+          this.LoadData();
           this.parentForm.reset();
+          this.offerFile = "";
+          this.htmlForm.clearFileChooser();
         },
         error: (error) => {
           if (error.status === 500) {
@@ -211,7 +222,10 @@ export class SpecialOfferMaintenaceComponent implements OnInit {
       this.offersService.UpdateOffer(finalformData).subscribe({
         next: () => {
           this.toastrService.success('Updated successfully', 'Success');
-          this.offerForm.reset();
+          this.LoadData();
+          this.parentForm.reset();
+          this.offerFile = "";
+          this.htmlForm.clearFileChooser();
         },
         error: (error) => {
           if (error.status === 500) {
@@ -250,8 +264,8 @@ export class SpecialOfferMaintenaceComponent implements OnInit {
             electronicForm1: response.electronicForm1,
             electronicForm2: response.electronicForm2,
             electronicForm1URL: response.electronicForm1URL,
-            electronicForm2URL: response.electronicForm2URL
-           
+            electronicForm2URL: response.electronicForm2URL,
+            offerName: response.offerName
           },
           editorForm:{
             englishHtml:response.englishHTML,

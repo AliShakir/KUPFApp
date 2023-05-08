@@ -23,5 +23,6 @@ export interface OffersDto
         offerTypeName:string;
         electronicForm1File: string,
   electronicForm2File:string,
-  offerImageFile: string
+  offerImageFile: string,
+  offerName:string
 }

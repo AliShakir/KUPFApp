@@ -57,12 +57,14 @@ namespace API.Servivces.Implementation
                     WebEnglish = offersDto.WebEnglish,
                     WebArabic = offersDto.WebArabic,
                     Active = "1",
-                    IsElectronicForm = offersDto.IsElectronicForm
+                    IsElectronicForm = offersDto.IsElectronicForm,
+                    OfferName = offersDto.OfferName
+
                 };
                 newService.ServiceId = maxIdServiceId;
                 
-                //var path = @"/HostingSpaces/kupf1/kuweb.erp53.com/wwwroot/Offers/";                
-                var path = @"E:\\";
+                var path = @"C:\HostingSpace\kupf1\kuweb.erp53.com\wwwroot\Offers";                
+                //var path = @"E:\\";
                 if (offersDto.File1 != null && offersDto.File1.Length != 0)
                 {   
                     var fileExtenstion = Path.GetExtension(offersDto.File1.FileName);
@@ -149,8 +151,8 @@ namespace API.Servivces.Implementation
                     existingService.OfferTypeName = offersDto.OfferTypeName;
                     existingService.WebEnglish = offersDto.WebEnglish;
                     existingService.WebArabic = offersDto.WebArabic;
-
-                    var path = @"/HostingSpaces/kupf1/kuweb.erp53.com/wwwroot/Offers/";
+                    existingService.OfferName = offersDto.OfferName;
+                    var path = @"C:\HostingSpace\kupf1\kuweb.erp53.com\wwwroot\Offers";
                     
                     if (offersDto.File1 != null && offersDto.File1.Length != 0)
                     {
@@ -200,26 +202,26 @@ namespace API.Servivces.Implementation
             //var path = @"/HostingSpaces/kupf1/kuweb.erp53.com/wwwroot"; 
             //var path = @"E:\Offers\";
             //var path = @"/kupf1/kuweb.erp53.com/wwwroot/Offers/"; C:\HostingSpace\kupf1\kuweb.erp53.com\wwwroot\Offers
-            var path = @"C:\HostingSpace\kupf1\kuweb.erp53.com\wwwroot\Offers\";
+            //var path = @"C:\HostingSpace\kupf1\kuweb.erp53.com\wwwroot";
             var result = await _context.ServiceSetups.Where(c => c.ServiceId == id && c.OfferType == "1").FirstOrDefaultAsync();
-            
+
             var data = _mapper.Map<ServiceSetupDto>(result);
-            
-            if(result.OfferImage != null) 
-                data.OfferImageFile = CommonMethods.GetFileFromFolder(path + result.OfferImage);
 
-            if(result.ElectronicForm1 != null)
-                data.ElectronicForm1File = CommonMethods.GetFileFromFolder(path + result.ElectronicForm1);
+            //if(result.OfferImage != null) 
+            //    data.OfferImageFile = CommonMethods.GetFileFromFolder(path + result.OfferImage);
 
-            if (result.ElectronicForm2 != null)
-                data.ElectronicForm2File = CommonMethods.GetFileFromFolder(path + result.ElectronicForm2);
+            //if(result.ElectronicForm1 != null)
+            //    data.ElectronicForm1File = CommonMethods.GetFileFromFolder(path + result.ElectronicForm1);
+
+            //if (result.ElectronicForm2 != null)
+            //    data.ElectronicForm2File = CommonMethods.GetFileFromFolder(path + result.ElectronicForm2);
 
             return data;
         }
 
         public async Task<IEnumerable<ServiceSetupDto>> GetOffers()
         {
-            var result = _context.ServiceSetups.Where(c=>c.OfferType == "1").ToList();
+            var result = _context.ServiceSetups.Where(c => c.OfferType == "1").OrderByDescending(x => x.ServiceId).ToList();
             var data = _mapper.Map<IEnumerable<ServiceSetupDto>>(result);
             return data;
         }
