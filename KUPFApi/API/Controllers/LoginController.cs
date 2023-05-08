@@ -44,7 +44,7 @@ namespace API.Controllers
                 .ToListAsync();
 
             // Get period code.
-            //var periodCode = _context.Tblperiods.Where(c => c.PrdStartDate <= DateTime.Now && c.PrdEndDate >= DateTime.Now).FirstOrDefault().PeriodCode;
+            var periodCode = _context.Tblperiods.Where(c => c.PrdStartDate <= DateTime.Now && c.PrdEndDate >= DateTime.Now).FirstOrDefault().PeriodCode;
             
             // Get the previous code...
             var now = DateTime.Now;
@@ -70,7 +70,7 @@ namespace API.Controllers
                         TenantId = user[i].TenentId,
                         UserId = user[i].UserId,
                         RoleId = user[i].ROLEID,
-                        PeriodCode = "202304",// Convert.ToString(periodCode),
+                        PeriodCode = Convert.ToString(periodCode),
                         PrevPeriodCode = Convert.ToString(prePeriodCode),
                         NextPeriodCode = Convert.ToString(nextPeriodCode)
                         //Token = _tokenService.CreateToken(user[i].LoginId)                        
